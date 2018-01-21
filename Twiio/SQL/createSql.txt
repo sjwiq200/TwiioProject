@@ -1,0 +1,257 @@
+
+/////////////////////회원가입
+
+1.
+
+CREATE SEQUENCE seq_users_user_no INCREMENT BY 1 START WITH 1 ;
+CREATE  TABLE  users (
+	 user_no 	 NUMBER(10)  PRIMARY KEY,
+	 host_account	 VARCHAR2(20),
+	 profile_image	 VARCHAR2(200),
+	 gender	 CHAR(1)  DEFAULT 'M',
+	 user_type	 CHAR(1)  NOT NULL,
+	 user_id	 VARCHAR2(20)  NOT NULL,
+	 user_name	 VARCHAR2(20)  NOT NULL,
+	 password	 VARCHAR2(20),
+	 birth	 DATE,
+	 reg_date  DATE  DEFAULT  SYSDATE,
+	 phone	  VARCHAR2(15),
+	 email  VARCHAR2(20),
+	 public_state  CHAR(1),
+	 sign_up_type	 CHAR(1),
+	 resign	 CHAR(1),
+	 bank	 VARCHAR2(20)
+);
+
+2.
+
+CREATE SEQUENCE seq_friend_user_no INCREMENT BY 1 START WITH 1;
+
+CREATE  TABLE  friend(
+	 no  NUMBER(10)  PRIMARY KEY,
+ 	 user_no	 NUMBER(10)  REFERENCES  users(user_no),
+	 friend_no	 NUMBER(10)  REFERENCES  users(user_no)
+);
+
+	
+//////////////////상품
+
+3.
+
+CREATE SEQUENCE seq_refund_refund_no	 INCREMENT BY 1 START WITH 1;
+
+CREATE  TABLE  refund ( 
+	 refund_no 				 NUMBER(10)		 PRIMARY KEY,
+	 tran_no 	 NUMBER(10)		  NOT  NULL   REFERENCES  transaction(tran_no),
+	 refund_bank 				  VARCHAR2(10)		 NOT  NULL,
+	 refund_account 			 VARCHAR2(20)  NOT  NULL,
+	 refund_price 			 NUMBER(10)  NOT  NULL,
+	 refund_confirm_date		 DATE,
+	 refund_reg_date 			 DATE  DEFAULT  SYSDATE
+);
+
+4.
+
+CREATE SEQUENCE seq_product_product_no	 INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE product ( 
+	 product_no 					 NUMBER(10) 				 PRIMARY KEY,
+	 product_title 				 VARCHAR2(100) 	 NOT NULL,
+	 product_content 				 CLOB,
+	 product_price				 NUMBER(10)  NOT NULL,
+	 product_count 				 NUMBER(5)  NOT NULL,
+	 user_no 						 NUMBER(10)  NOT NULL  REFERENCES  users(user_no),
+	 reg_date 					  DATE   DEFAULT   SYSDATE,
+	 trip_date 					 DATE  NOT  NULL,
+	 head_count 					 NUMBER(3)  NOT  NULL,
+	 country 						 VARCHAR2(100)  NOT NULL,
+	 city 							 VARCHAR2(100)  NOT NULL,
+	 view_count 					 NUMBER(5)  DEFAULT 0
+);
+
+5.
+
+CREATE SEQUENCE seq_transaction_tran_no	 INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE transaction ( 
+	 tran_no 						 NUMBER(10) 			 PRIMARY KEY,
+	 tran_date 					 DATE		 DEFAULT SYSDATE,
+	 trip_date 					 DATE	 NOT NULL,
+	 requirement					 VARCHAR2(100),
+	 pay_type 					 CHAR(1)  NOT NULL,
+	 product_no					 NUMBER(10)  NOT NULL  REFERENCES product(product_no),
+	 host_no 						 NUMBER(10)  REFERENCES  users(user_no),
+	 tran_count 					 NUMBER(10)  NOT NULL,
+	 qr_code						 VARCHAR2(100),
+	 product_price 				 NUMBER(10),
+	 user_no 						 NUMBER(10)  NOT NULL  REFERENCES users(user_no),
+	 refund_code 				 CHAR(1),
+	 pay_to_host_date 			 DATE,
+	 tran_price 					 NUMBER(10)  NOT  NULL,
+	 host_star_eval 				 NUMBER(2),
+	 host_review 					 VARCHAR2(300),
+	 product_star_eval 			 NUMBER(2),
+	 product_review 				 VARCHAR2(300)
+);
+
+
+
+
+////////////////플랜
+
+6.
+
+CREATE SEQUENCE seq_main_plan_main_plan_no INCREMENT BY 1 START WITH 1;
+CREATE TABLE main_plan(
+	 main_plan_no  NUMBER(10)  PRIMARY KEY,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	departure_date DATE NOT NULL,
+	arrival_date DATE NOT NULL,
+	country VARCHAR2(100) NOT NULL,
+	city VARCHAR2(100) NOT NULL,
+	plan_title VARCHAR2(300) NOT NULL,
+	main_thumbnail VARCHAR2(300)
+);
+
+7.
+
+CREATE SEQUENCE seq_daily_plan_daily_plan_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE daily_plan(
+	daily_plan_no NUMBER(10) PRIMARY KEY,
+	main_plan_no NUMBER(10) NOT NULL REFERENCES main_plan(main_plan_no),
+	day DATE,
+	daily_date DATE,
+	daily_city VARCHAR2(100)
+);
+
+
+8.
+
+CREATE SEQUENCE seq_plan_content_content_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE plan_content(
+	content_no NUMBER(10) PRIMARY KEY,
+	daily_plan_no NUMBER(10) NOT NULL REFERENCES daily_plan(daily_plan_no),	
+	scrap_no NUMBER(10) REFERENCES scrap(scrap_no),
+	route VARCHAR2(100),
+	map_url VARCHAR2(500),
+	departure_location VARCHAR2(200),
+	arrival_location VARCHAR2(200),
+	estimated_time VARCHAR2(20),
+	route_type CHAR(1),
+	route_description VARCHAR2(3000),
+	order_no NUMBER(4),
+	content_text CLOB,
+	content_image VARCHAR2(500)
+);
+
+9.
+
+CREATE SEQUENCE seq_scrap_scrap_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE scrap(
+	scrap_no NUMBER(10) PRIMARY KEY,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	main_plan_no NUMBER(10) NOT NULL REFERENCES main_plan(main_plan_no),
+	community_no NUMBER(10) REFERENCES community(community_no),
+	scrap_title VARCHAR2(300),
+	scrap_content CLOB,
+	scrap_type CHAR(1)
+);
+
+
+///////////////////////////공통
+
+10.
+
+CREATE SEQUENCE seq_message_message_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE message (
+	message_no NUMBER(10) PRIMARY KEY, 
+	to_user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	from_user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	message_content VARCHAR2(300) NOT NULL,
+	message_reg_date DATE DEFAULT SYSDATE,
+	message_type CHAR(1) NOT NULL,
+	message_title VARCHAR2(100) NOT NULL,
+	product_no NUMBER(10) REFERENCES product(product_no)
+);
+
+
+11.
+
+CREATE SEQUENCE seq_community_community_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE community(
+	community_no NUMBER(10) PRIMARY KEY,
+	community_title VARCHAR2(100) NOT NULL,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	reg_date DATE DEFAULT SYSDATE,
+	view_count NUMBER(5) DEFAULT 0,
+	community_sub_title VARCHAR2(20),
+	community_type CHAR(1) NOT NULL,
+	community_content CLOB
+);
+
+12. 
+
+
+CREATE SEQUENCE seq_likey_likey_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE likey(
+	likey_no NUMBER(10) PRIMARY KEY,
+	likey CHAR(1) NOT NULL,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	community_no NUMBER(10) NOT NULL REFERENCES community(community_no)
+);
+
+13.
+
+
+CREATE SEQUENCE seq_reply_reply_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE reply(
+	reply_no NUMBER(10) PRIMARY KEY,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	reply_content VARCHAR2(300),
+	reply_reg_date DATE DEFAULT SYSDATE,
+	product_no NUMBER(10) REFERENCES product(product_no),
+	community_no NUMBER(10) REFERENCES community(community_no)
+);
+
+14.
+
+
+CREATE SEQUENCE seq_report_report_no INCREMENT BY 1 START WITH 1;
+
+CREATE TABLE report(
+	report_no NUMBER(10) PRIMARY KEY,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	report_content VARCHAR2(500),
+	report_title VARCHAR2(100),
+	report_reg_date DATE DEFAULT SYSDATE,
+	target_user_no NUMBER(10) REFERENCES users(user_no),
+	target_room_no NUMBER(10),
+	target_reply_no NUMBER(10) REFERENCES reply(reply_no),
+	target_community_no NUMBER(10) REFERENCES community(community_no)
+);
+
+
+
+15.
+
+
+CREATE SEQUENCE seq_usereval_user_eval_no INCREMENT BY 1 START WITH 1 CYCLE;
+
+CREATE TABLE usereval(
+	user_eval_no NUMBER(10) PRIMARY KEY,
+	user_no NUMBER(10) NOT NULL REFERENCES users(user_no),
+	schedule_no NUMBER(10),
+	profile_credit CHAR(1),
+	attendance CHAR(1),
+	target_no NUMBER(10) NOT NULL
+);
+
+
+
