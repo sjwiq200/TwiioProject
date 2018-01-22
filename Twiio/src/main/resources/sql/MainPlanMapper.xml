@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="MainPlanMapper">
+ 		
+	<resultMap id="mainPlanSelectMap" type="mainPlan">
+		<result property="mainPlanNo" column="main_plan_no" jdbcType="NUMERIC"/>
+		<result property="user.userNo" column="user_no" jdbcType="NUMERIC" />
+		<result property="departureDate" column="departure_date" jdbcType="DATE"/>
+		<result property="arriavalDate" column="arrival_date" jdbcType="DATE"/>
+		<result property="country" column="country" jdbcType="VARCHAR"/>
+		<result property="city" column="city" jdbcType="VARCHAR"/>
+		<result property="planTitle" column="plan_title" jdbcType="VARCHAR"/>
+		<result property="mainThumbnail" column="main_thumbnail" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addMainPlan"		parameterType="mainPlan" >
+	 	INSERT
+		INTO main_plan( main_plan_no , user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail) 
+		VALUES	 (	seq_main_plan_main_plan_no.NEXTVAL  , #{user.userNo:NUMERIC} , #{departureDate:DATE} ,  #{arrivalDate:DATE} , 
+							#{country:VARCHAR} , #{city:VARCHAR} , #{planTitle:VARCHAR} ,  #{mainThumbnail:VARCHAR} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getMainPlan"	parameterType="int"	resultMap="mainPlanSelectMap">
+		SELECT
+		main_plan_no , user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail 		
+		FROM main_plan 
+		WHERE main_plan_no = #{mainPlanNo}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateMainPlan"	parameterType="int" >
+	   	UPDATE main_plan
+	   	<set>
+	   		departure_date 	= #{departureDate:DATE} ,
+			arrival_date	= #{arrivalDate:DATE},
+			country 				= #{country:VARCHAR} ,
+			city				=	#{city:VARCHAR}
+			plan_title =#{planTitle:VARCHAR}
+			main_thumbnail =#{mainThumbnail:VARCHAR}
+	   	</set>
+	   	WHERE main_plan_no = #{mainPlanNo}
+	 </update>
+	  
+	  <select  id="getMainPlanList"  parameterType="mainPlan"	resultMap="mainPlanSelectMap">
+	  SELECT * 
+	  FROM(SELECT inner_table.*, ROWNUM AS row_seq
+	  				FROM (SELECT * FROM main_plan
+	  					WHERE user_no=#{user.userNo}
+	  					ORDER BY main_plan_no ASC
+	  					) inner_table
+	  			WHERE ROWNUM &lt;=#{endClick} ) 
+	  		WHERE row_seq BETWEEN #{startClick} AND {endClick}
+	  	
+	 </select>
+	
+	 <select  id="deleteMainPlan"  parameterType="int"	resultMap="mainPlanSelectMap">
+	 DELETE FROM main_plan WHERE main_plan_no = #{mainPlanNo}
+	 </select>
+	 
+	 
+</mapper>
