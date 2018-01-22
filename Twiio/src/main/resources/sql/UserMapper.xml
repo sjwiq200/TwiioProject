@@ -9,14 +9,26 @@
  	
 	<resultMap id="userSelectMap" type="user">
 		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="userName"	column="user_name" 		jdbcType="VARCHAR" />
-		<result property="password" 	column="password" 		jdbcType="VARCHAR" />
-		<result property="role" 				column="role" 					jdbcType="VARCHAR" />
-		<result property="ssn" 				column="ssn" 					jdbcType="VARCHAR" />
-		<result property="phone" 			column="cell_phone" 		jdbcType="VARCHAR" />
-		<result property="addr" 				column="addr" 					jdbcType="VARCHAR" />
-		<result property="email" 			column="email" 				jdbcType="NUMERIC"  />
-		<result property="regDate" 		column="reg_date" 			jdbcType="DATE" />
+		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
+		<result property="userEmail" 		column="email" 				jdbcType="VARCHAR" />
+		<result property="userGender" 		column="gender" 			jdbcType="CHAR" />
+		<result property="userPassword" 	column="password" 			jdbcType="VARCHAR" />
+		<result property="userBirthday" 	column="birth" 				jdbcType="DATE" />
+		<result property="userPhone" 		column="phone" 				jdbcType="VARCHAR"  />
+		<result property="userAccount" 		column="host_account" 		jdbcType="VARCHAR" />
+		<result property="userType" 		column="user_type" 			jdbcType="CHAR"  />
+		<result property="userRegisterType" column="sign_up_type" 		jdbcType="CHAR"  />
+		<result property="userImage" 		column="profile_image" 		jdbcType="VARCHAR"  />
+		<result property="userBank" 		column="bank" 				jdbcType="VARCHAR"  />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+		<result property="profilePublic" 	column="public_state" 		jdbcType="CHAR" />
+		<result property="userLeave" 		column="resign" 			jdbcType="CHAR" />
+	</resultMap>
+	
+	<resultMap id="userEvalSelectMap" type="userEval">
+		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMBER"/>
+		<result property="profileTnF"		column="profile_credit" 	jdbcType="CHAR" />
+		<result property="attendanceTnF" 	column="attendance" 		jdbcType="CHAR" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
