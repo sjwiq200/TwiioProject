@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommonMapper">	
+	<resultMap id="reportSelectMap" type="report">
+		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
+		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC" />
+		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR" />
+		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR" />
+		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
+		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC" />
+		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC" />
+		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"  />
+		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<resultMap id="friendSelectMap" type="friend">
+		<result property="no" 				column="no" 			jdbcType="NUMERIC"/>
+		<result property="userNo"			column="user_no" 		jdbcType="NUMERIC" />
+		<result property="friendNo" 		column="friend_no" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+	<resultMap id="replySelectMap" type="reply">
+		<result property="replyNo" 			column="reply_no" 			jdbcType="NUMERIC"/>
+		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="replyContent" 	column="reply_content" 		jdbcType="VARCHAR" />
+		<result property="replyRegDate" 	column="reply_reg_date" 	jdbcType="DATE" />
+		<result property="productNo" 		column="product_no" 		jdbcType="NUMERIC" />
+		<result property="communityNo" 		column="community_no" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+<!-- 	<resultMap id="totalsearchSelectMap" type="totalsearch">
+		<result property="keyword" 			column="keyword" 			jdbcType="NUMERIC"/>
+		<result property="room"				column="room" 				jdbcType="NUMERIC" />
+		<result property="weather" 			column="weather" 			jdbcType="VARCHAR" />
+		<result property="product" 			column="product" 			jdbcType="DATE" />
+		<result property="nightLife" 		column="night_life" 		jdbcType="NUMERIC" />
+		<result property="unsafeRegion" 	column="unsafe_region" 		jdbcType="NUMERIC" />
+		<result property="currency" 		column="currency" 			jdbcType="NUMERIC" />
+	</resultMap> -->
+	
+	<!--SQL : INSERT  -->
+	<insert id="addReport" parameterType="report">
+		INSERT
+		INTO REPORT
+		VALUES (
+		seq_report_report_no.nextval,
+		#{userNo:NUMERIC},
+		#{reportContent:VARCHAR},
+		#{reportTitle:VARCHAR},
+		SYSDATE,
+		#{targetUserNo:NUMERIC}
+		#{targetRoomNo:NUMERIC}
+		#{targetReplyNo:NUMERIC}
+		#{targetCommunityN:NUMERIC}
+		)
+	</insert>
+	
+	<insert id="addFriend" parameterType="friend">
+		INSERT
+		INTO FRIEND
+		VALUES (
+		#{userNo:NUMERIC},
+		#{friendNo:NUMERIC},
+		seq_friend_no.nextval
+		)
+	</insert>
+	
+	<insert id="addReply" parameterType="reply">
+		INSERT
+		INTO REPLY
+		VALUES (
+		seq_reply_reply_no.nextval,
+		#{user_no:NUMERIC},
+		#{reply_content:VARCHAR},
+		SYSDATE,
+		#{productNo:NUMERIC},
+		#{communityNo:NUMERIC}
+		)	
+	</insert>
+	
+	<!-- SQL : SELECT LIST -->
+	
+	<select id="listReport" parameterType="map" resultMap="reportSelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT
+							   REPORT_NO=#{reportNO},
+							   USER_NO=#{userNo},
+							   REPORT_CONTENT=#{reportContent},
+							   REPORT_TITLE=#{reportTitle},
+							   REPORT_REG_DATE=#{reportRegDate},
+							   TARGET_USER_NO=#{targetUserNo},
+							   TAGET_ROOM_NO=#{targetRoomNo},
+							   TARGET_COMMUNITY_NO=#{targetCommunityNo},
+							   TARGET_REPLY_NO=#{targetReplyNo}
+							   FROM 
+  							   REPORT 
+							   ORDER BY tran_no
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT * FROM 
+  							   FRIEND 
+  							   WHERE USER_NO=#{userNo}
+							   ORDER BY no
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<select id="listReply" parameterType="map" resultMap="replySelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT * FROM 
+  							   REPLY 
+  							   WHERE BUYER_ID=#{buyerId}
+							   ORDER BY tran_no
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<!-- SQL : SELECT ONE -->
+	
+	<select id="getReport" parameterType="report">
+	</select>
+	
+	<!-- SQL : UPDATE -->
+	
+	<select id="updateFriend" parameterType="friend">
+	</select>
+	
+	<!-- SQL : DELETE ONE -->>
+	
+	<delete id="deleteFriend" parameterType="friend">
+	</delete>
+	
+	<delete id="deleteReply" parameterType="reply">
+	</delete>
+	 
+</mapper>
