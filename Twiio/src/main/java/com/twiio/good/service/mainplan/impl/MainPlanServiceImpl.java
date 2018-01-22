@@ -1,5 +1,7 @@
 package com.twiio.good.service.mainplan.impl;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -12,66 +14,59 @@ import com.twiio.good.service.mainplan.MainPlanService;
 @Service("mainPlanServiceImpl")
 public class MainPlanServiceImpl implements MainPlanService {
 	
+	///Field
 	@Autowired
 	@Qualifier("mainPlanDaoImpl")
 	private MainPlanDao mainPlanDao;
 	
+	///Constructor
 	public MainPlanServiceImpl() {
-		// TODO Auto-generated constructor stub
 	}
-
+	
+	///Method
 	@Override
 	public void addMainPlan(MainPlan mainPlan) throws Exception {
-		// TODO Auto-generated method stub
-		
+		mainPlanDao.addMainPlan(mainPlan);
 	}
 
 	@Override
 	public MainPlan getMainPlan(int mainPlanNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return mainPlanDao.getMainPlan(mainPlanNo);
 	}
 
 	@Override
-	public MainPlan getMainPlanList(MainPlan mainPlan) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<MainPlan> getMainPlanList(MainPlan mainPlan) throws Exception {
+		return mainPlanDao.getMainPlanList(mainPlan);
 	}
 
 	@Override
-	public void updateMainPlan(int mainPlanNo) throws Exception {
-		// TODO Auto-generated method stub
-		
+	public void updateMainPlan(MainPlan mainPlan) throws Exception {
+		mainPlanDao.updateMainPlan(mainPlan);
 	}
 
 	@Override
 	public void deleteMainPlan(int mainPlanNo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		mainPlanDao.deleteMainPlan(mainPlanNo);
 	}
 
 	@Override
 	public void addScrap(Scrap scrap) throws Exception {
-		// TODO Auto-generated method stub
-		
+		mainPlanDao.addScrap(scrap);
 	}
 
 	@Override
 	public Scrap getScrap(int scrapNo) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return mainPlanDao.getScrap(scrapNo);
 	}
 
 	@Override
-	public Scrap getScrapList(Scrap scrap) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Scrap> getScrapList(Scrap scrap) throws Exception {
+		return mainPlanDao.getScrapList(scrap);
 	}
 
 	@Override
 	public void deleteScrap(int scrapNo) throws Exception {
-		// TODO Auto-generated method stub
-		
+		mainPlanDao.deleteScrap(scrapNo);
 	}
 
 }
