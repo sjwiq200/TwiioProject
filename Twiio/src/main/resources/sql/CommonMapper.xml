@@ -18,9 +18,9 @@
 	</resultMap>
 	
 	<resultMap id="friendSelectMap" type="friend">
-		<result property="no" 				column="no" 			jdbcType="NUMERIC"/>
-		<result property="userNo"			column="user_no" 		jdbcType="NUMERIC" />
-		<result property="friendNo" 		column="friend_no" 		jdbcType="NUMERIC" />
+		<result property="no" 					column="no" 			jdbcType="NUMERIC"/>
+		<result property="userNo"				column="user_no" 		jdbcType="NUMERIC" />
+		<result property="friendNo" 			column="friend_no" 		jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<resultMap id="replySelectMap" type="reply">
@@ -100,7 +100,7 @@
 							   TARGET_REPLY_NO=#{targetReplyNo}
 							   FROM 
   							   REPORT 
-							   ORDER BY tran_no
+							   ORDER BY report.tran_no
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -111,10 +111,14 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT * FROM 
+							   SELECT
+							   		USER_NO=#{userNo},
+							   		FRIEND_NO=#{friendNo},
+							   		NO=#{No}
+							   FROM 
   							   FRIEND 
-  							   WHERE USER_NO=#{userNo}
-							   ORDER BY no
+  							   WHERE USER_NO=#{friend.userNo}
+							   ORDER BY friend.userNo
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -125,10 +129,24 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT * FROM 
+							   SELECT
+							   		REPLY_NO=#{replyNo},
+							   		USER_NO=#{userNo},
+							   		REPLY_CONTENT=#{replyContent},
+							   		REPLY_REG_DATE=#{replyRegDate},
+							   		PRODUCT_NO=#{productNo},
+							   		COMMUNITY_NO=#{communityNo}
+							   FROM 
   							   REPLY 
-  							   WHERE BUYER_ID=#{buyerId}
-							   ORDER BY tran_no
+  							   <where>			
+									<if test="reply.productNo != null">										
+									    	productNo = #{reply.productNo}
+									</if>
+									<if test="reply.communityNo != null">
+									    	communityNo = #{reply.communityNo}
+									</if>									
+							  </where>
+							   ORDER BY reply.replyNo
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -137,20 +155,63 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getReport" parameterType="report">
+	<select id="getReport" parameterType="int" resultType="reportSelectMap">
+		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
 	</select>
 	
 	<!-- SQL : UPDATE -->
 	
-	<select id="updateFriend" parameterType="friend">
-	</select>
+	<update id="updateReply" parameterType="reply">
+		UPDATE REPLY
+	   	<set>
+	   		REPLY_NO 		= #{replyNo} ,
+			USER_NO			= #{userNo},
+			REPLY_CONTENT 	= #{replyContent} ,
+			REPLY_REG_DATE	= #{replyRegdate},
+			PRODUCT_NO		= #{productNo},
+			COMMUNITY_NO	= #{community_no}
+	   	</set>
+	   	WHERE REPLY_NO = #{replyNo}
+	</update>
 	
-	<!-- SQL : DELETE ONE -->>
+	<!-- SQL : DELETE ONE -->
 	
-	<delete id="deleteFriend" parameterType="friend">
+	 <delete id="deleteFriend" parameterType="friend">
+	DELETE FROM FRIEND WHERE FRIEND_NO=#{friendNo}
 	</delete>
 	
 	<delete id="deleteReply" parameterType="reply">
-	</delete>
+	DELETE FROM REPLY WHERE REPLY_NO=#{replyNo}
+	</delete> 
+	
+	<select  id="getTotalCountReport"  parameterType="report" resultType="int">
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  			 FROM REPORT
+				) countTable						
+	 </select>
+	 
+	 <select  id="getTotalCountFriend"  parameterType="friend" resultType="int">
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  			 FROM FRIEND
+	  			 WHERE USER_NO=#{userNo}
+				) countTable						
+	 </select>
+	 
+	 <select  id="getTotalCountReply"  parameterType="reply" resultType="int">
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  				FROM REPLY 
+  					<where>			
+						<if test="reply.productNo != null">										
+						   	productNo = #{reply.productNo}
+						</if>
+						<if test="reply.communityNo != null">
+						   	communityNo = #{reply.communityNo}
+						</if>									
+					</where>
+				) countTable						
+	 </select>
 	 
 </mapper>
