@@ -23,6 +23,7 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="profilePublic" 	column="public_state" 		jdbcType="CHAR" />
 		<result property="userLeave" 		column="resign" 			jdbcType="CHAR" />
+		<result property="userNo" 			column="user_no" 			jdbcType="NUMBER" />
 	</resultMap>
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
@@ -34,71 +35,92 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_id , user_name , password , role , ssn, cell_phone, addr, email , reg_date) 
-		VALUES	 (	#{userId} , #{userName} , #{password} , 'user' , #{ssn:VARCHAR} , 
-							#{phone:VARCHAR} , #{addr:VARCHAR} , #{email:VARCHAR} , NOW() )
+		INTO users( user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type) 
+		VALUES	 ( seq_users_user_no.nextval , 
+					#{userId} , 
+					#{userName} , 
+					#{password:VARCHAR} , 
+					1 , 
+					#{userImage:VARCHAR} , 
+					#{userPhone:VARCHAR} , 
+					#{userGender:VARCHAR} , 
+					#{userEmail:VARCHAR} , 
+					SYSDATE , 
+					#{userBirthday:VARCHAR} , 
+					#{userRegisterType} )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_id , user_name , password , role ,  cell_phone ,  addr , email , reg_date 		
+		user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank	
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="findId"	parameterType="user"	resultMap="userSelectMap">
+		SELECT
+		user_id 		
+		FROM users 
+		WHERE user_name = #{userName} AND email = #{userEmail}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updatePassword"	parameterType="user" >
+	   	UPDATE users
+	   	<set>	   		
+			password				=	#{userPassword}
+	   	</set>
+	   	WHERE user_name = #{userName} AND email = #{userEmail} AND user_id = #{userId}
+	 </update>
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
 	   		user_name 	= #{userName} ,
-			cell_phone	= #{phone},
-			addr 				= #{addr} ,
-			email				=	#{email}
+			phone	= #{userPhone},
+			password 				= #{userPassword} ,
+			profile_image 				= #{userImage} ,
+			gender 				= #{userGender} ,
+			birth 				= #{userBirthday} ,
+			public_state 				= #{profilePublic} ,
+			host_account 				= #{userAccount} ,
+			bank 				= #{userBank} ,
+			user_type 				= #{userType}		
 	   	</set>
-	   	WHERE user_id = #{userId}
+	   	WHERE user_no = #{userNo}
+	 </update>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="deleteUser"	parameterType="user" >
+	   	UPDATE users
+	   	<set>	   		
+			resign				=	#{userLeave}
+	   	</set>
+	   	WHERE user_no = #{userNo}
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
-	<!-- 
 	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , email
+	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
+	  											public_state, resign, host_account, bank
 											FROM users
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id = #{searchKeyword}
+										 				user_name = '${searchKeyword}%'
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
+										 				user_no = #{searchKeyword}
 													</if>
 												</where>
 											</if>
-											ORDER BY user_id ) inner_table
+											ORDER BY user_no ) inner_table
 						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
-	 </select>
-	  -->
-	  
-	  <select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
-	  	SELECT *
-	  	FROM (	SELECT inner_table.* , <!-- ROWNUM --> @RNUM := @RNUM+1 AS row_seq
-	  					FROM		(	SELECT user_id , user_name , email
-											FROM users
-											<if test="searchCondition != null">
-												<where>
-													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_id LIKE '%${searchKeyword}%'
-													</if>
-													<if test="searchCondition == 1 and searchKeyword !='' ">
-										 				user_name = #{searchKeyword}
-													</if>
-												</where>
-											</if>
-											ORDER BY user_id ) inner_table, (SELECT @RNUM := 0) rownum
-						WHERE <!-- ROWNUM --> @RNUM &lt;= #{endRowNum} ) test
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
 	 
@@ -116,15 +138,16 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT user_id , user_name , email
+	  	FROM(	SELECT ser_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
+	  					public_state, resign, host_account, bank
 						FROM users
 						<if test="searchCondition != null">
 							<where>
 								<if test="searchCondition == 0 and searchKeyword !='' ">
-						 			user_id LIKE '%${searchKeyword}%'
+						 			user_name LIKE '${searchKeyword}%'
 								</if>
 								<if test="searchCondition == 1 and searchKeyword !='' ">
-						 		user_name = #{searchKeyword}
+						 		user_no = #{searchKeyword}
 								</if>
 							</where>
 						</if> ) countTable						
