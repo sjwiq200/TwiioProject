@@ -32,6 +32,17 @@ public class User {
 	public User() {
 	}
 
+	
+	public int getUserNo() {
+		return userNo;
+	}
+
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+
 	public String getUserId() {
 		return userId;
 	}
@@ -216,12 +227,19 @@ public class User {
 		this.reviewHost = reviewHost;
 	}
 
+
+	@Override
 	public String toString() {
-		return "UserVO : [userId] "+userId+" [userName] "+userName+" [password] "+password+" [userBirthday] "+ userBirthday
-				+" [userGender] "+userGender+" [userPhone] "+ userPhone	+" [userEmail] "+userEmail+" [userAccount] "+ userAccount
-				+" [userType] "+userType+" [userEval] "+ userEval	+" [userImage] "+userImage+" [regDate] "+ regDate
-				+" [profilePublic] "+profilePublic+" [userRegisterType] "+ userRegisterType	+" [userLeave] "+userLeave+" [userBank] "+ userBank
-				+" [attendanceTnF] "+attendanceTnF+" [profileTnF] "+ profileTnF	+" [attendanceRate] "+attendanceRate+" [profileCredibility] "+ profileCredibility;
+		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", passwordConfirm="
+				+ passwordConfirm + ", userName=" + userName + ", userBirthday=" + userBirthday + ", userGender="
+				+ userGender + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userAccount=" + userAccount
+				+ ", userType=" + userType + ", userEval=" + userEval + ", userImage=" + userImage + ", regDate="
+				+ regDate + ", profilePublic=" + profilePublic + ", userRegisterType=" + userRegisterType
+				+ ", userLeave=" + userLeave + ", userBank=" + userBank + ", attendanceTnF=" + attendanceTnF
+				+ ", profileTnF=" + profileTnF + ", attendanceRate=" + attendanceRate + ", profileCredibility="
+				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost + "]";
 	}
+
+	
 
 }
