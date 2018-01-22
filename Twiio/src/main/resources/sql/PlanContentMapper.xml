@@ -6,7 +6,7 @@
 
 <mapper namespace="PlanContentMapper">
  		
-	<resultMap id="planContentSelectMap" type="PlanContent">
+	<resultMap id="planContentSelectMap" type="planContent">
 		<result property="contentNo" column="content_no" jdbcType="NUMERIC"/>
 		<result property="dailyPlan.dailyPlanNo" column="daily_plan_no" jdbcType="NUMERIC" />
 		<result property="scrap.scrapNo" column="scrap_no" jdbcType="NUMERIC" />
@@ -39,7 +39,7 @@
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="updatePlanContent"	parameterType="int" >
+	 <update	id="updatePlanContent"	parameterType="planContent" >
 	   	UPDATE plan_content
 	   	<set>
 	   		content_text 	= #{contentText:VARCHAR}

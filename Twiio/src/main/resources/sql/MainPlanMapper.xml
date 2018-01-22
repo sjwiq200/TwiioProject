@@ -34,14 +34,14 @@
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="updateMainPlan"	parameterType="int" >
+	 <update	id="updateMainPlan"	parameterType="mainPlan" >
 	   	UPDATE main_plan
 	   	<set>
 	   		departure_date 	= #{departureDate:DATE} ,
 			arrival_date	= #{arrivalDate:DATE},
-			country 				= #{country:VARCHAR} ,
-			city				=	#{city:VARCHAR}
-			plan_title =#{planTitle:VARCHAR}
+			country 				= #{country:VARCHAR},
+			city				=	#{city:VARCHAR},
+			plan_title =#{planTitle:VARCHAR},
 			main_thumbnail =#{mainThumbnail:VARCHAR}
 	   	</set>
 	   	WHERE main_plan_no = #{mainPlanNo}

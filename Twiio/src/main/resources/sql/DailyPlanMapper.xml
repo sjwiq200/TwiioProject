@@ -33,7 +33,7 @@
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="updateDailyPlan"	parameterType="int" >
+	 <update	id="updateDailyPlan"	parameterType="dailyPlan" >
 	   	UPDATE daily_plan
 	   	<set>
 	   		day 	= #{day:NUMERIC} ,
