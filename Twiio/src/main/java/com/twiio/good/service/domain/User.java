@@ -22,8 +22,6 @@ public class User {
 	private String userRegisterType;
 	private String userLeave;
 	private String userBank;
-	private boolean attendanceTnF;
-	private boolean profileTnF;
 	private int attendanceRate;
 	private int profileCredibility;
 	private int starEvalHost;
@@ -168,22 +166,6 @@ public class User {
 		this.userBank = userBank;
 	}
 
-	public boolean isAttendanceTnF() {
-		return attendanceTnF;
-	}
-
-	public void setAttendanceTnF(boolean attendanceTnF) {
-		this.attendanceTnF = attendanceTnF;
-	}
-
-	public boolean isProfileTnF() {
-		return profileTnF;
-	}
-
-	public void setProfileTnF(boolean profileTnF) {
-		this.profileTnF = profileTnF;
-	}
-
 	public int getAttendanceRate() {
 		return attendanceRate;
 	}
@@ -216,12 +198,20 @@ public class User {
 		this.reviewHost = reviewHost;
 	}
 
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
 	public String toString() {
 		return "UserVO : [userId] "+userId+" [userName] "+userName+" [password] "+password+" [userBirthday] "+ userBirthday
 				+" [userGender] "+userGender+" [userPhone] "+ userPhone	+" [userEmail] "+userEmail+" [userAccount] "+ userAccount
 				+" [userType] "+userType+" [userEval] "+ userEval	+" [userImage] "+userImage+" [regDate] "+ regDate
 				+" [profilePublic] "+profilePublic+" [userRegisterType] "+ userRegisterType	+" [userLeave] "+userLeave+" [userBank] "+ userBank
-				+" [attendanceTnF] "+attendanceTnF+" [profileTnF] "+ profileTnF	+" [attendanceRate] "+attendanceRate+" [profileCredibility] "+ profileCredibility;
+				+" [attendanceRate] "+attendanceRate+" [profileCredibility] "+ profileCredibility;
 	}
 
 }

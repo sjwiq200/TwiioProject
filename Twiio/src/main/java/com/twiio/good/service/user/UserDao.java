@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 
 
 
@@ -24,7 +25,7 @@ public interface UserDao {
 	
 	public void delectUser(User user) throws Exception;
 	
-	public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception;
+	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
 	
 	public List getStarEvalHost(User user) throws Exception;
 	

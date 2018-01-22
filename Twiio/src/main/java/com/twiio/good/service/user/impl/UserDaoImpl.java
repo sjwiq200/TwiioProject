@@ -11,6 +11,7 @@ import org.springframework.stereotype.Repository;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 
 	//==> 회원관리 DAO CRUD 구현
@@ -56,7 +57,7 @@ import com.twiio.good.service.user.UserDao;
 		}
 	
 		@Override
-		public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception {
+		public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
 			
 			Map map = new HashMap();
 			map.put("tagetUser", tagetUser);

@@ -23,15 +23,15 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="profilePublic" 	column="public_state" 		jdbcType="CHAR" />
 		<result property="userLeave" 		column="resign" 			jdbcType="CHAR" />
-		<result property="userNo" 			column="user_no" 			jdbcType="NUMBER" />
+		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
-		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMBER"/>
-		<result property="profileTnF"		column="profile_credit" 	jdbcType="CHAR" />
-		<result property="attendanceTnF" 	column="attendance" 		jdbcType="CHAR" />
-		<result property="userNo"			column="user_no" 			jdbcType="NUMBER" />
-		<result property="targetNo" 		column="target_no" 			jdbcType="NUMBER" />
+		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMERIC"/>
+		<result property="profileTnF"		column="profile_credit" 	jdbcType="NUMERIC" />
+		<result property="attendanceTnF" 	column="attendance" 		jdbcType="NUMERIC" />
+		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="targetNo" 		column="target_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -154,5 +154,19 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	 <insert	id="addEvalUser"  parameterType="map" >
+	   INSERT INTO	usereval
+	   	(user_eval_no, schedule_no, profile_credit, attendance, user_no, target_no )
+		VALUES(seq_usereval_user_eval_no.nextval, #{scheduleNo}, #{tagetUser.profileTnF}, #{tagetUser.attendanceTnF}, #{tagetUser.userId},
+		#{evalUser.userId})
+	</insert>
+	
+	<select 	id="getEvalUser"	parameterType="string"	resultMap="userEvalSelectMap">
+		SELECT
+		ROUND(AVG(profile_credit),2)*100, ROUND(AVG(attendance),2)*100	
+		FROM usereval 
+		WHERE target_no = #{value}
+	</select>
 	 
 </mapper>
