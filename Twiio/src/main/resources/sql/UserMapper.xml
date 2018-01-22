@@ -29,6 +29,8 @@
 		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMBER"/>
 		<result property="profileTnF"		column="profile_credit" 	jdbcType="CHAR" />
 		<result property="attendanceTnF" 	column="attendance" 		jdbcType="CHAR" />
+		<result property="userNo"			column="user_no" 			jdbcType="NUMBER" />
+		<result property="targetNo" 		column="target_no" 			jdbcType="NUMBER" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
