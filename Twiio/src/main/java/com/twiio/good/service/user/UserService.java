@@ -12,7 +12,7 @@ public interface UserService {
 	// 회원가입
 	public void addUser(User user) throws Exception;
 	
-	// 내정보확인 / 로그인
+	// 내정보확인 / 로그인 / 아이디 중복체크 
 	public User getUser(String userId) throws Exception;
 	
 	// 회원정보리스트 
@@ -21,7 +21,20 @@ public interface UserService {
 	// 회원정보수정
 	public void updateUser(User user) throws Exception;
 	
-	public void delectUser(User user) throws Exception;
+	// 회원탈퇴처리
+	public void deleteUser(User user) throws Exception;
+		
+	// 회원 아이디찾기
+	public User findId(User user) throws Exception;
+	
+	// 회원 비밀번호 찾기
+	public void findPassword(User user) throws Exception;
+	
+	// 카카오 로그인
+	public User kakaoLogin(String access_token) throws Exception;
+	
+	// 구글 로그인
+	public User googleLogin(String code) throws Exception;	
 	
 	public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception;
 	
@@ -34,8 +47,6 @@ public interface UserService {
 	public String  getEvalUser(String userId) throws Exception;
 	
 	public String  getEvalHost(String userId) throws Exception;
-	
-	// 회원 ID 중복 확인
-	public boolean checkDuplication(String userId) throws Exception;
+		
 
 }
