@@ -28,6 +28,23 @@ public class User {
 	private int profileCredibility;
 	private int starEvalHost;
 	private String reviewHost;
+	
+	/////////////////////// KakaoLogin Filed //////////////////////////	
+    private String kaccount_email;    
+    private String kaccount_email_verified;
+    private Properties properties;
+    ////////////////////// kakao/googleLogin Filed /////////////////////
+    private String id;
+    ////////////////////// GoogleLogin Filed ////////////////////////
+    private String gender;
+	private String name;
+	private String link;	
+	private String verified_email;
+	private String given_name;
+	private String locale;
+	private String family_name;
+	private String email;
+	private String picture;
 
 	public User() {
 	}
@@ -227,8 +244,113 @@ public class User {
 		this.reviewHost = reviewHost;
 	}
 
+	///////////////////////////// kakaoLogin getter/setter /////////////////////////////
+	public String getKaccount_email() {
+		return kaccount_email;
+	}
 
-	@Override
+	public void setKaccount_email(String kaccount_email) {
+		this.kaccount_email = kaccount_email;
+	}
+
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public String getKaccount_email_verified() {
+		return kaccount_email_verified;
+	}
+
+	public void setKaccount_email_verified(String kaccount_email_verified) {
+		this.kaccount_email_verified = kaccount_email_verified;
+	}
+
+	public Properties getProperties() {
+		return properties;
+	}
+
+	public void setProperties(Properties properties) {
+		this.properties = properties;
+	}
+	
+	/////////////////////////////// googleLogin getter/setter ///////////////////////////////	
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getLink() {
+		return link;
+	}
+
+	public void setLink(String link) {
+		this.link = link;
+	}
+
+	public String getVerified_email() {
+		return verified_email;
+	}
+
+	public void setVerified_email(String verified_email) {
+		this.verified_email = verified_email;
+	}
+
+	public String getGiven_name() {
+		return given_name;
+	}
+
+	public void setGiven_name(String given_name) {
+		this.given_name = given_name;
+	}
+
+	public String getLocale() {
+		return locale;
+	}
+
+	public void setLocale(String locale) {
+		this.locale = locale;
+	}
+
+	public String getFamily_name() {
+		return family_name;
+	}
+
+	public void setFamily_name(String family_name) {
+		this.family_name = family_name;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}	
+
+
 	public String toString() {
 		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", passwordConfirm="
 				+ passwordConfirm + ", userName=" + userName + ", userBirthday=" + userBirthday + ", userGender="
@@ -240,6 +362,5 @@ public class User {
 				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost + "]";
 	}
 
-	
 
 }
