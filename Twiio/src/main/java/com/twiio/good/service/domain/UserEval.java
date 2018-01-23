@@ -7,6 +7,7 @@ public class UserEval {
 	private int profileTnF;
 	private int attendanceTnF;
 	private int scheduleNo;
+	private int userEvalNo;
 	
 	public UserEval() {
 	}
@@ -51,6 +52,13 @@ public class UserEval {
 		this.scheduleNo = scheduleNo;
 	}
 	
+	public int getUserEvalNo() {
+		return userEvalNo;
+	}
+
+	public void setUserEvalNo(int userEvalNo) {
+		this.userEvalNo = userEvalNo;
+	}
 	
 	
 }

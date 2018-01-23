@@ -84,7 +84,7 @@
 	
 	<!-- SQL : SELECT LIST -->
 	
-	<select id="listReport" parameterType="map" resultMap="reportSelectMap">
+	<select id="listReport" parameterType="map" resultMap="report">
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
@@ -155,7 +155,7 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getReport" parameterType="int" resultType="reportSelectMap">
+	<select id="getReport" parameterType="int" resultType="report">
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
 	</select>
 	
