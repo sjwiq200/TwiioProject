@@ -1,11 +1,16 @@
 package com.twiio.good.service.user.impl;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
+import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +24,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.cloud.vision.v1.AnnotateImageRequest;
+import com.google.cloud.vision.v1.AnnotateImageResponse;
+import com.google.cloud.vision.v1.BatchAnnotateImagesResponse;
+import com.google.cloud.vision.v1.FaceAnnotation;
+import com.google.cloud.vision.v1.Feature;
+import com.google.cloud.vision.v1.Feature.Type;
+import com.google.cloud.vision.v1.Image;
+import com.google.cloud.vision.v1.ImageAnnotatorClient;
+import com.google.protobuf.ByteString;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
@@ -39,15 +54,17 @@ public class UserServiceImpl implements UserService{
 	private UserDao userDao;
 	public void setUserDao(UserDao userDao) {
 		this.userDao = userDao;
-	}
+	}	
 	
-//	@Value("#{apikeyProperties['googleAPPKey']}")
-//	String googleAPPKey;
-//	
-//	
-//	@Autowired
-//	@Value("#{apikeyProperties['googleAPPSecretKey']}")
-//	String googleAPPSecretKey;
+	@Value("#{apikeyProperties['googleAPPKey']}")
+	String googleAPPKey;
+	
+	@Value("#{apikeyProperties['googleAPPSecretKey']}")
+	String googleAPPSecretKey;
+	
+	////////사진 업로드////////
+	@Value("#{commonProperties['path']}")
+	String path;
 
 	public UserServiceImpl() {
 		System.out.println(this.getClass());
@@ -194,13 +211,13 @@ public class UserServiceImpl implements UserService{
 		http.setDoOutput(true);
 		http.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
 
-		//String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
-		//String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
+		String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
+		String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
 		String redirect_url = "http://127.0.0.1:8080/user/googleLogin";
 
-//		StringBuffer buffer = new StringBuffer();
-//		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
-//				+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
+				+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
 
 		// 데이터 전송
 		OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
@@ -279,8 +296,100 @@ public class UserServiceImpl implements UserService{
 		}
 
 		return dbUser;
-	}
+	}		
+	
+	@Override
+	public boolean detectFace(User user) throws Exception, IOException {
 
+		System.out.println(":: detectFaces start!! :: ");
+		boolean flag = false;
+		System.out.println(user.getFile().getContentType());
+		// System.out.println(file.getName());
+		System.out.println("업로드시 파일 이름 :: "+user.getFile().getOriginalFilename());
+		// System.out.println(file.toString());
+
+		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
+		//String fileName = file.getOriginalFilename();
+		String fileName = user.getUserId()+user.getFile().getOriginalFilename();
+		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
+		
+		PrintStream out = System.out;
+		// String filePath=file.getOriginalFilename();
+		// File file02=new File("C:\\Users\\bitcamp\\Desktop\\pic\\", fileName);
+		File file02 = new File(path, fileName);
+		user.getFile().transferTo(file02);
+		// ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
+		ByteString imgBytes = ByteString.readFrom(new FileInputStream(file02));
+
+		Image img = Image.newBuilder().setContent(imgBytes).build();
+		Feature feat = Feature.newBuilder().setType(Type.TYPE_UNSPECIFIED.FACE_DETECTION).build();
+		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+		requests.add(request);
+
+		try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+			List<AnnotateImageResponse> responses = response.getResponsesList();
+
+			for (AnnotateImageResponse res : responses) {
+				// System.out.println("[[[res]]]===================> :"+res);
+				if (res.hasError()) {
+					out.printf("Error: %s\n", res.getError().getMessage());
+					flag = false;
+				}
+				System.out.println("오냐?");
+				if (res.getFaceAnnotationsList().size() != 1) {
+					// out.close();
+					System.gc();
+					System.runFinalization();
+					if (file02.exists() == true) {
+						boolean boo = file02.delete();
+						System.out.println(boo);
+					}
+
+					System.out.println("파일삭제");
+					flag = false;
+
+				} else {
+
+					// For full list of available annotations, see http://g.co/cloud/vision/docs
+					for (FaceAnnotation annotation : res.getFaceAnnotationsList()) {
+						System.out.println("오예");
+						out.printf(
+								// "anger: %s\njoy: %s\nsurprise: %s\nposition: %s",
+								// annotation.getAngerLikelihood(),
+								// annotation.getJoyLikelihood(),
+								// annotation.getSurpriseLikelihood(),
+								"position: %s",
+								// annotation.getAllFields(),
+								// annotation.getFdBoundingPoly(),
+								// annotation.,
+								annotation.getBoundingPoly());
+					}
+					// out.close();
+					System.gc();
+					System.out.println("업로드 성공");
+					flag = true;
+				}				
+
+			}
+			// System.out.println(responses);
+			// System.out.println(responses.size());
+			// if(responses.size())
+		}
+		System.out.println(":: detectFaces end ::");
+		
+		return flag;
+	}	
+
+	@Override
+	public boolean checkDuplication(String userId) throws Exception {
+		boolean result=true;
+		User user=userDao.getUser(userId);
+		if(user != null) {
+			result=false;
+		}
+		return result;
+	}
 
 	@Override
 	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {

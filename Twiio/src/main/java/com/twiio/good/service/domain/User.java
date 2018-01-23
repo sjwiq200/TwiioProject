@@ -2,6 +2,10 @@ package com.twiio.good.service.domain;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.web.multipart.MultipartFile;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 	
 	private int userNo;
@@ -26,6 +30,7 @@ public class User {
 	private int profileCredibility;
 	private int starEvalHost;
 	private String reviewHost;
+	private MultipartFile file;
 	
 	/////////////////////// KakaoLogin Filed //////////////////////////	
     private String kaccount_email;    
@@ -226,6 +231,13 @@ public class User {
 		this.reviewHost = reviewHost;
 	}
 
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 
 	///////////////////////////// kakaoLogin getter/setter /////////////////////////////

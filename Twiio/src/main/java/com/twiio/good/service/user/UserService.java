@@ -1,7 +1,11 @@
 package com.twiio.good.service.user;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.User;
@@ -38,7 +42,13 @@ public interface UserService {
 	public User kakaoLogin(String access_token) throws Exception;
 	
 	// 구글 로그인
-	public User googleLogin(String code) throws Exception;	
+	public User googleLogin(String code) throws Exception;
+	
+	// 구글 얼굴인식
+	public boolean detectFace(User user) throws Exception, IOException;
+	
+	// 아이디 중복체크
+	public boolean checkDuplication(String userId) throws Exception;
 	
 	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
 	

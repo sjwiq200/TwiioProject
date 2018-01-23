@@ -1,19 +1,10 @@
 package com.twiio.good.web.user;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.net.URL;
 import java.util.Map;
 
-import javax.net.ssl.HttpsURLConnection;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -66,14 +57,23 @@ public class UserController {
 
 		System.out.println("/user/addUser : POST");
 		if(!user.getFile().isEmpty()) {
-			model.addAttribute("user",user);
-		return "forward:/user/naverCFR";	
+			if(userService.detectFace(user)) {
+				user.setUserImage(user.getUserId()+user.getFile().getOriginalFilename());
+				userService.addUser(user);
+				
+				model.addAttribute("user",user);
+				System.out.println(":: Twiio 자제 회원가입 완료/사진 업로드  ::");	
+			}else {
+				System.out.println(":: 회원가입 실패 =====> 얼굴을 명확히 인식할 수 있는 사진으로 다시 업로드 바람  ::");
+			}			
+					
 		}else {
-		//Business Logic
-		userService.addUser(user);
-		
-		return "redirect:/user/loginView.jsp";
+			//Business Logic
+			userService.addUser(user);
+			model.addAttribute("user",user);
+			System.out.println(":: Twiio 자제 회원가입 완료 ::");
 		}
+		return "redirect:/user/loginView.jsp";
 	}
 
 
@@ -115,10 +115,7 @@ public class UserController {
 		}
 		
 		return "redirect:/user/getUser?userId="+user.getUserId();
-	}
-	
-	
-	
+	}	
 
 	
 	@RequestMapping( value="listUser" )
@@ -163,8 +160,12 @@ public class UserController {
 		System.out.println("/user/findId : ");
 		//Business Logic
 		String userId = userService.findId(user);
+		
+		//유저 아이디 고쳐서 보내기
+		int index = userId.length()-4;
+		String userIdHint = userId.substring(index);
 		// Model 과 View 연결
-		model.addAttribute("userId", userId);
+		model.addAttribute("userIdHint", userIdHint);
 		
 		return "forward:/user/updateUser.jsp";
 	}
@@ -174,12 +175,25 @@ public class UserController {
 
 		System.out.println("/user/findPassword : ");
 		//Business Logic
-		User user = userService.getUser(userId);
+		User dbUser = userService.getUser(user.getUserId());
+		if(dbUser != null) {
+			if(user.getUserEmail().equals(dbUser.getUserEmail()) && user.getUserName().equals(dbUser.getUserName())) {
+				//임시 패스워드 발급
+				//userService.findPassword(dbUser);
+			}else {
+				System.out.println(":: 이름 또는 이메일 불일치 ::");
+			}
+		}else {
+			System.out.println(":: 존재하지 않는 아이디 ::");
+		}
+		//User user = userService.getUser(user);
 		// Model 과 View 연결
-		model.addAttribute("user", user);
+		//model.addAttribute("user", user);
 		
 		return "forward:/user/updateUser.jsp";
 	}
+	
+	
 	
 	
 }
