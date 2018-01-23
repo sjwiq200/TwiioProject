@@ -14,16 +14,29 @@
 	
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
+		<typeAlias alias="report" type="com.twiio.good.service.domain.Report" />
+		<typeAlias alias="friend" type="com.twiio.good.service.domain.Friend" />
+		<typeAlias alias="reply" type="com.twiio.good.service.domain.Reply" />
+		<typeAlias alias="totalsearch" type="com.twiio.good.service.domain.TotalSearch" />
 		<typeAlias alias="user" type="com.twiio.good.service.domain.User" />
 		<typeAlias alias="userEval" type="com.twiio.good.service.domain.UserEval" />
 		<typeAlias alias="currency" type="com.twiio.good.service.domain.Currency" />
 		<typeAlias alias="search" type="com.twiio.good.common.Search" />
+		<typeAlias alias="mainPlan" type="com.twiio.good.service.domain.MainPlan" />
+		<typeAlias alias="dailyPlan" type="com.twiio.good.service.domain.DailyPlan" />
+		<typeAlias alias="planContent" type="com.twiio.good.service.domain.PlanContent" />
+		<typeAlias alias="scrap" type="com.twiio.good.service.domain.Scrap" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
 	<mappers>
+		<mapper resource="sql/CommonMapper.xml"/>
 		<mapper resource="sql/UserMapper.xml"/>
 		<mapper resource="sql/InformationMapper.xml"/>
+		<mapper resource="sql/MainPlanMapper.xml"/>
+		<mapper resource="sql/DailyPlanMapper.xml"/>
+		<mapper resource="sql/PlanContentMapper.xml"/>
+		<mapper resource="sql/ScrapMapper.xml"/>
 	</mappers>
 
 </configuration>

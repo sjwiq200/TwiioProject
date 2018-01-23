@@ -1,15 +1,25 @@
 package com.twiio.good.service.user.impl;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.net.ssl.HttpsURLConnection;
+
 import org.apache.ibatis.session.SqlSession;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
@@ -52,10 +62,22 @@ import com.twiio.good.service.user.UserDao;
 		}
 	
 		@Override
-		public void delectUser(User user) throws Exception {
+		public void deleteUser(User user) throws Exception {
 			sqlSession.update("UserMapper.delectUser", user);
 		}
 	
+
+		public User findId(User user) throws Exception {
+			// TODO Auto-generated method stub
+			return  sqlSession.selectOne("UserMapper.findId", user);
+		}
+
+		@Override
+		public void findPassword(User user) throws Exception {
+			sqlSession.update("UserMapper.findPassword", user);
+			
+		}		
+
 		@Override
 		public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
 			

@@ -23,7 +23,14 @@ public interface UserDao {
 	// UPDATE
 	public void updateUser(User user) throws Exception ;
 	
-	public void delectUser(User user) throws Exception;
+	// UPDATE
+	public void deleteUser(User user) throws Exception;
+	
+	// SELECT ONE
+	public User findId(User user) throws Exception ;
+	
+	// UPDATE
+	public void findPassword(User user) throws Exception ;	
 	
 	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
 	
