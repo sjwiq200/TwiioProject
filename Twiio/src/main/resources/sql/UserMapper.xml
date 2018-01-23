@@ -61,6 +61,14 @@
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getUserInNo"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank	
+		FROM users 
+		WHERE user_no = #{value}
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
 	 <select 	id="findId"	parameterType="user"	resultMap="userSelectMap">
 		SELECT
 		user_id 		
@@ -105,7 +113,7 @@
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
-	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
