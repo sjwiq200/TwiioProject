@@ -5,6 +5,7 @@
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="CommonMapper">	
+
 	<resultMap id="reportSelectMap" type="report">
 		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
 		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC" />
@@ -52,9 +53,9 @@
 		#{reportContent:VARCHAR},
 		#{reportTitle:VARCHAR},
 		SYSDATE,
-		#{targetUserNo:NUMERIC}
-		#{targetRoomNo:NUMERIC}
-		#{targetReplyNo:NUMERIC}
+		#{targetUserNo:NUMERIC},
+		#{targetRoomNo:NUMERIC},
+		#{targetReplyNo:NUMERIC},
 		#{targetCommunityN:NUMERIC}
 		)
 	</insert>
@@ -169,7 +170,7 @@
 			REPLY_CONTENT 	= #{replyContent} ,
 			REPLY_REG_DATE	= #{replyRegdate},
 			PRODUCT_NO		= #{productNo},
-			COMMUNITY_NO	= #{community_no}
+			COMMUNITY_NO	= #{communityNo}
 	   	</set>
 	   	WHERE REPLY_NO = #{replyNo}
 	</update>

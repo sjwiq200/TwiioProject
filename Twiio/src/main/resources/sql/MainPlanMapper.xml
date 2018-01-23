@@ -59,9 +59,9 @@
 	  	
 	 </select>
 	
-	 <select  id="deleteMainPlan"  parameterType="int"	resultMap="mainPlanSelectMap">
+	 <delete  id="deleteMainPlan"  parameterType="int">
 	 DELETE FROM main_plan WHERE main_plan_no = #{mainPlanNo}
-	 </select>
+	 </delete>
 	 
 	 
 </mapper>

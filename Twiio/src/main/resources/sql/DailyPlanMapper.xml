@@ -50,9 +50,9 @@
 		  	ORDER BY daily_plan_no ASC
 	  </select>
 	
-	 <select  id="deleteDailyPlan"  parameterType="int"	resultMap="dailyPlanSelectMap">
+	 <delete  id="deleteDailyPlan"  parameterType="int"	>
 	 DELETE FROM daily_plan WHERE daily_plan_no = #{dailyPlanNo}
-	 </select>
+	 </delete>
 	 
 	 
 </mapper>

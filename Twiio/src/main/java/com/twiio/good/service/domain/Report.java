@@ -9,7 +9,7 @@ public class Report
   private String reportContent;
   private String reportTitle;
   private Date reportRegDate;
-  private User targetUserNo;
+  private int targetUserNo;
   private int targetRoomNo;
   private int targetReplyNo;
   private int targetCommunityNo;
@@ -60,15 +60,16 @@ public int getReportNo()
     this.reportRegDate = reportRegDate;
   }
 
-  public User getTargetUserNo() {
-    return this.targetUserNo;
-  }
 
-  public void setTargetUserNo(User targetUserNo) {
-    this.targetUserNo = targetUserNo;
-  }
+  public int getTargetUserNo() {
+	return targetUserNo;
+}
 
-  public int getTargetRoomNo() {
+public void setTargetUserNo(int targetUserNo) {
+	this.targetUserNo = targetUserNo;
+}
+
+public int getTargetRoomNo() {
     return this.targetRoomNo;
   }
 

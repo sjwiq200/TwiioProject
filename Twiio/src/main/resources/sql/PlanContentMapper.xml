@@ -55,9 +55,9 @@
 		  	ORDER BY content_no ASC
 	  </select>
 	
-	 <select  id="deletePlanContent"  parameterType="int"	resultMap="planContentSelectMap">
+	 <delete  id="deletePlanContent"  parameterType="int">
 		 DELETE FROM plan_content WHERE content_no = #{contentNo}
-	 </select>
+	 </delete>
 	 
 	 
 </mapper>
