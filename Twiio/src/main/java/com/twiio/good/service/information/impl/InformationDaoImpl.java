@@ -13,6 +13,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
 import com.twiio.good.service.domain.Currency;
@@ -26,6 +27,9 @@ public class InformationDaoImpl implements InformationDao {
 	@Qualifier("sqlSessionTemplate")
 	private SqlSession sqlSession;
 	
+	@Value("#{apikeyProperties['currencykey']}")
+	String currencyKey;
+	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -35,9 +39,9 @@ public class InformationDaoImpl implements InformationDao {
 	}
 
 	@Override
-	public List<Currency> getCurrency() throws Exception {
-		String key = "4RKuUFR6wEpqdppFDxmGS1RkUztGUN9W";
-		String req = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+key+"&data=AP01&searchdate=20180119";
+	public List<Currency> addCurrency() throws Exception {
+		//String key = "4RKuUFR6wEpqdppFDxmGS1RkUztGUN9W";
+		String req = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+currencyKey+"&data=AP01&searchdate=20180119";
 		
 		URL url = new URL(req);
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -60,20 +64,58 @@ public class InformationDaoImpl implements InformationDao {
         List<Currency> returnList = new ArrayList<Currency>();
         
 	        while ((jsonData = br.readLine()) != null) {
-	            
 	        	//json = (JSONArray)JSONValue.parse(jsonData+"\n");
-	        	
-	        	response.append(jsonData);
+	        	response.append(jsonData); 
 	        }
 	        br.close();
 	        //String jsonMany = objMapper.writeValueAsString(response);
 	        returnList = objMapper.readValue(response.toString(),new TypeReference<List<Currency>>() {
 			});
+	        sqlSession.delete("InformationMapper.deleteCurrency");
 	        for(int i = 0; i<returnList.size(); i++) {
-	        	sqlSession.update("InformationMapper.updateCurrency", returnList.get(i));
+	        	sqlSession.insert("InformationMapper.addCurrency", returnList.get(i));
 	        }
 		return returnList;
 	}
+	
+	@Override
+	public Double getCurrency(String country) throws Exception {
+		
+		String[] str  = country.split("&");
+		String[] standard = str[0].split("=");
+		String[] compare = str[1].split("=");
+		String[] inputPrice = str[2].split("=");
+		
+		Currency standardCurrency = sqlSession.selectOne("InformationMapper.findCurrency", standard[1]);
+		Currency comparedCurrency = sqlSession.selectOne("InformationMapper.findCurrency", compare[1]);
+		
+		int price = Integer.parseInt(inputPrice[1].trim());
+		String stand = null;
+		String com = null;
+		
+		if(standardCurrency.getDeal_bas_r().contains(",")) {
+			 stand = standardCurrency.getDeal_bas_r().replaceAll(",", "");
+		}else {
+			stand = standardCurrency.getDeal_bas_r();
+		}
+		
+		 if( comparedCurrency.getDeal_bas_r().contains(",")) {
+				 com = comparedCurrency.getDeal_bas_r().replaceAll(",", "");
+		 }else {
+			 com = comparedCurrency.getDeal_bas_r();
+		 }
+		Double result = (Double.parseDouble(stand )*price)/(Double.parseDouble( com));
+		
+		if(standard[1].contains("일본")) {
+			result = result/100;
+		}
+		
+		if(compare[1].contains("일본")) {
+			result = result*100;
+		}
+		return Double.parseDouble(String.format("%.4f", result));
+	}
+
 
 	@Override
 	public List getFlight() throws Exception {
@@ -110,5 +152,6 @@ public class InformationDaoImpl implements InformationDao {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
 
 }

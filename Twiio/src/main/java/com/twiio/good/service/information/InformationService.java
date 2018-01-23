@@ -7,7 +7,9 @@ import com.twiio.good.service.domain.Currency;
 public interface InformationService {
 	
 	
-	public  List<Currency> getCurrency() throws Exception;
+	public  List<Currency> addCurrency() throws Exception;
+	
+	public  Double getCurrency(String country) throws Exception;
 	
 	public  List getFlight() throws Exception;
 	
