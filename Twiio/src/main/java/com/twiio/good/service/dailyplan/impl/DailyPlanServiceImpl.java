@@ -4,11 +4,13 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import com.twiio.good.service.dailyplan.DailyPlanDao;
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
 
+@Service("dailyPlanServiceImpl")
 public class DailyPlanServiceImpl implements DailyPlanService{
 	
 	@Autowired

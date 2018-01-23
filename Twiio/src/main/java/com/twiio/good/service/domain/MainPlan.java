@@ -13,7 +13,7 @@ public class MainPlan {
 	private Date departureDate;
 	private Date arrivalDate;
 	private String country;
-	private String city;
+	private String[] city;
 	private String planTitle;
 	private String mainThumbnail;
 	
@@ -67,10 +67,10 @@ public class MainPlan {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String getCity() {
+	public String[] getCity() {
 		return city;
 	}
-	public void setCity(String city) {
+	public void setCity(String[] city) {
 		this.city = city;
 	}
 	public String getPlanTitle() {

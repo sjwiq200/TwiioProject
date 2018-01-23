@@ -85,7 +85,7 @@
 	
 	<!-- SQL : SELECT LIST -->
 	
-	<select id="listReport" parameterType="map" resultMap="report">
+	<select id="listReport" parameterType="map" resultMap="reportSelectMap">
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (

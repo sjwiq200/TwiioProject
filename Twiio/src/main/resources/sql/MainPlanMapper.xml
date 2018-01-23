@@ -18,11 +18,13 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addMainPlan"		parameterType="mainPlan" >
+	<insert 	id="addMainPlan"	parameterType="mainPlan" useGeneratedKeys="true" keyColumn="main_plan_no" keyProperty="mainPlanNo">
+	
 	 	INSERT
 		INTO main_plan( main_plan_no , user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail) 
 		VALUES	 (	seq_main_plan_main_plan_no.NEXTVAL  , #{user.userNo:NUMERIC} , #{departureDate:DATE} ,  #{arrivalDate:DATE} , 
 							#{country:VARCHAR} , #{city:VARCHAR} , #{planTitle:VARCHAR} ,  #{mainThumbnail:VARCHAR} )
+
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
