@@ -28,8 +28,8 @@
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
 		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMERIC"/>
-		<result property="profileTnF"		column="profile_credit" 	jdbcType="CHAR" />
-		<result property="attendanceTnF" 	column="attendance" 		jdbcType="CHAR" />
+		<result property="profileTnF"		column="profile_credit" 	jdbcType="NUMERIC" />
+		<result property="attendanceTnF" 	column="attendance" 		jdbcType="NUMERIC" />
 		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
 		<result property="targetNo" 		column="target_no" 			jdbcType="NUMERIC" />
 	</resultMap>
@@ -58,6 +58,14 @@
 		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank	
 		FROM users 
 		WHERE user_id = #{value}
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getUserInNo"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank	
+		FROM users 
+		WHERE user_no = #{value}
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -105,7 +113,7 @@
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
-	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
@@ -154,5 +162,19 @@
 							</where>
 						</if> ) countTable						
 	 </select>
+	 
+	 <insert	id="addEvalUser"  parameterType="map" >
+	   INSERT INTO	usereval
+	   	(user_eval_no, schedule_no, profile_credit, attendance, user_no, target_no )
+		VALUES(seq_usereval_user_eval_no.nextval, #{scheduleNo}, #{tagetUser.profileTnF}, #{tagetUser.attendanceTnF}, #{tagetUser.userId},
+		#{evalUser.userId})
+	</insert>
+	
+	<select 	id="getEvalUser"	parameterType="string"	resultMap="userEvalSelectMap">
+		SELECT
+		ROUND(AVG(profile_credit),2)*100, ROUND(AVG(attendance),2)*100	
+		FROM usereval 
+		WHERE target_no = #{value}
+	</select>
 	 
 </mapper>

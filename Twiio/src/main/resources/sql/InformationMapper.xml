@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="InformationMapper">
+ 	
+ 	
+	<resultMap id="currencySelectMap" type="currency">
+		<result property="currencyNo" 		column="currency_no" 		jdbcType="NUMERIC"/>
+		<result property="cur_unit"			column="cur_unit" 			jdbcType="VARCHAR" />
+		<result property="deal_bas_r" 		column="deal_bas_r" 		jdbcType="VARCHAR" />
+		<result property="cur_nm" 			column="cur_nm" 			jdbcType="VARCHAR" />
+		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
+	</resultMap>
+	
+	
+	 <insert 	id="addCurrency"		parameterType="currency" >
+	 	INSERT
+		INTO currency( currency_no, cur_unit, deal_bas_r, cur_nm, reg_date) 
+		VALUES	 (	seq_currency_currency_no.nextval , #{cur_unit} , #{deal_bas_r} , #{cur_nm} , SYSDATE )
+	 </insert>
+	 
+	 <select 	id="findCurrency"	parameterType="string"	resultMap="currencySelectMap">
+		SELECT
+		deal_bas_r 		
+		FROM currency 
+		WHERE cur_nm = #{cur_nm} 
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateCurrency"	parameterType="currency" >
+	   	UPDATE currency
+	   	<set>	   		
+			cur_unit				=	#{cur_unit},
+			deal_bas_r				=	#{deal_bas_r},
+			cur_nm					=	#{cur_nm},
+			reg_date				=	SYSDATE
+	   	</set>
+	   	WHERE currency_no BETWEEN 1 AND 31
+	 </update>
+	 
+	 
+</mapper>

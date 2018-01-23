@@ -21,6 +21,7 @@ import org.springframework.stereotype.Repository;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 
 	//==> 회원관리 DAO CRUD 구현
@@ -51,8 +52,14 @@ import com.twiio.good.service.user.UserDao;
 		}
 	
 		@Override
+		public User getUserInNo(int userNo) throws Exception {
+			// TODO Auto-generated method stub
+			return sqlSession.selectOne("UserMapper.getUserInNo", userNo);
+		}
+
+		@Override
 		public List<User> listUser(Search search) throws Exception {
-			return sqlSession.selectList("UserMapper.getUserList", search);
+			return sqlSession.selectList("UserMapper.listUser", search);
 		}
 	
 		@Override
@@ -65,8 +72,8 @@ import com.twiio.good.service.user.UserDao;
 			sqlSession.update("UserMapper.delectUser", user);
 		}
 	
-		@Override
-		public User findId(User user) throws Exception {
+
+		public String findId(User user) throws Exception {
 			// TODO Auto-generated method stub
 			return  sqlSession.selectOne("UserMapper.findId", user);
 		}
@@ -78,7 +85,7 @@ import com.twiio.good.service.user.UserDao;
 		}		
 
 		@Override
-		public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception {
+		public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
 			
 			Map map = new HashMap();
 			map.put("tagetUser", tagetUser);

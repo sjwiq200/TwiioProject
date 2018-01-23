@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 import com.twiio.good.service.user.UserService;
 
@@ -62,6 +63,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
+	public User getUserInNo(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.getUserInNo(userNo);
+	}
+
+	@Override
 	public Map<String, Object> listUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
@@ -80,7 +87,7 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public User findId(User user) throws Exception {
+	public String findId(User user) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -274,7 +281,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception {
+	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
 		userDao.addEvalUser(tagetUser, evalUser, scheduleNo);
 	}
 
