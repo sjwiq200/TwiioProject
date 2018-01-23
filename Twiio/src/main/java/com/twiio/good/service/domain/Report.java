@@ -8,7 +8,7 @@ public class Report
   private int userNo;
   private String reportContent;
   private String reportTitle;
-  private int reportRegDate;
+  private Date reportRegDate;
   private int targetUserNo;
   private int targetRoomNo;
   private int targetReplyNo;
@@ -21,9 +21,13 @@ public class Report
 
 
 
+
+
 public int getReportNo() {
 	return reportNo;
 }
+
+
 
 
 
@@ -33,9 +37,13 @@ public void setReportNo(int reportNo) {
 
 
 
+
+
 public int getUserNo() {
 	return userNo;
 }
+
+
 
 
 
@@ -45,9 +53,13 @@ public void setUserNo(int userNo) {
 
 
 
+
+
 public String getReportContent() {
 	return reportContent;
 }
+
+
 
 
 
@@ -57,9 +69,13 @@ public void setReportContent(String reportContent) {
 
 
 
+
+
 public String getReportTitle() {
 	return reportTitle;
 }
+
+
 
 
 
@@ -71,17 +87,19 @@ public void setReportTitle(String reportTitle) {
 
 
 
-
-
-public int getReportRegDate() {
+public Date getReportRegDate() {
 	return reportRegDate;
 }
 
 
 
-public void setReportRegDate(int reportRegDate) {
+
+
+public void setReportRegDate(Date reportRegDate) {
 	this.reportRegDate = reportRegDate;
 }
+
+
 
 
 
@@ -91,9 +109,13 @@ public int getTargetUserNo() {
 
 
 
+
+
 public void setTargetUserNo(int targetUserNo) {
 	this.targetUserNo = targetUserNo;
 }
+
+
 
 
 
@@ -103,9 +125,13 @@ public int getTargetRoomNo() {
 
 
 
+
+
 public void setTargetRoomNo(int targetRoomNo) {
 	this.targetRoomNo = targetRoomNo;
 }
+
+
 
 
 
@@ -115,9 +141,13 @@ public int getTargetReplyNo() {
 
 
 
+
+
 public void setTargetReplyNo(int targetReplyNo) {
 	this.targetReplyNo = targetReplyNo;
 }
+
+
 
 
 
@@ -127,9 +157,13 @@ public int getTargetCommunityNo() {
 
 
 
+
+
 public void setTargetCommunityNo(int targetCommunityNo) {
 	this.targetCommunityNo = targetCommunityNo;
 }
+
+
 
 
 

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ScrapMapper">
+ 		
+	<resultMap id="scrapSelectMap" type="scrap">
+		<result property="scrapNo" column="scrap_no" jdbcType="NUMERIC"/>
+		<result property="user.userNo" column="user_no" jdbcType="NUMERIC" />
+		<result property="mainPlan.mainPlanNo" column="main_plan_no" jdbcType="NUMERIC" />
+		<result property="community.communityNo" column="community_no" jdbcType="NUMERIC"/>
+		<result property="scrapTitle" column="scrap_title" jdbcType="VARCHAR"/>
+		<result property="scrapContent" column="scrap_content" jdbcType="CLOB"/>
+		<result property="scrapType" column="scrap_type" jdbcType="CHAR"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addScarp"		parameterType="scrap" >
+	 	INSERT
+		INTO scrap( scrap_no , user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type) 
+		VALUES	 (	seq_scrap_scrap_no.NEXTVAL  ,  #{user.userNo:NUMERIC} ,  #{mainPlan.mainPlanNo:NUMERIC} , 
+							#{community.communityNo:NUMERIC} , #{scrapTitle:VARCHAR} , #{scrapContent:CLOB} , #{scrapType:CHAR} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getScrap"	parameterType="int"	resultMap="scrapSelectMap">
+		SELECT
+		scrap_no , user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type
+		FROM scrap
+		WHERE scrap_no = #{scrapNo}
+	 </select>
+	  
+	  <select  id="getScrapList"  parameterType="scrap"	resultMap="scrapSelectMap">
+		  SELECT 
+		  scrap_no , user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type
+		  FROM scrap
+		  WHERE user_no=#{mainPlan.user.userNo}
+		  ORDER BY scrap_no ASC
+	  </select>
+	
+	 <select  id="deleteScrap"  parameterType="int"	resultMap="scrapSelectMap">
+	 DELETE FROM scrap WHERE scrap_no = #{scrapNo}
+	 </select>
+	 
+	 
+</mapper>

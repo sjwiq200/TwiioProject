@@ -22,8 +22,6 @@ public class User {
 	private String userRegisterType;
 	private String userLeave;
 	private String userBank;
-	private boolean attendanceTnF;
-	private boolean profileTnF;
 	private int attendanceRate;
 	private int profileCredibility;
 	private int starEvalHost;
@@ -49,13 +47,16 @@ public class User {
 	public User() {
 	}
 
+	
 	public int getUserNo() {
 		return userNo;
 	}
 
+
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
+
 
 	public String getUserId() {
 		return userId;
@@ -193,22 +194,6 @@ public class User {
 		this.userBank = userBank;
 	}
 
-	public boolean isAttendanceTnF() {
-		return attendanceTnF;
-	}
-
-	public void setAttendanceTnF(boolean attendanceTnF) {
-		this.attendanceTnF = attendanceTnF;
-	}
-
-	public boolean isProfileTnF() {
-		return profileTnF;
-	}
-
-	public void setProfileTnF(boolean profileTnF) {
-		this.profileTnF = profileTnF;
-	}
-
 	public int getAttendanceRate() {
 		return attendanceRate;
 	}
@@ -241,9 +226,12 @@ public class User {
 		this.reviewHost = reviewHost;
 	}
 
+
+
 	///////////////////////////// kakaoLogin getter/setter /////////////////////////////
 	public String getKaccount_email() {
 		return kaccount_email;
+
 	}
 
 	public void setKaccount_email(String kaccount_email) {
@@ -349,11 +337,14 @@ public class User {
 
 
 	public String toString() {
-		return "UserVO : [userId] "+userId+" [userName] "+userName+" [password] "+password+" [userBirthday] "+ userBirthday
-				+" [userGender] "+userGender+" [userPhone] "+ userPhone	+" [userEmail] "+userEmail+" [userAccount] "+ userAccount
-				+" [userType] "+userType+" [userEval] "+ userEval	+" [userImage] "+userImage+" [regDate] "+ regDate
-				+" [profilePublic] "+profilePublic+" [userRegisterType] "+ userRegisterType	+" [userLeave] "+userLeave+" [userBank] "+ userBank
-				+" [attendanceTnF] "+attendanceTnF+" [profileTnF] "+ profileTnF	+" [attendanceRate] "+attendanceRate+" [profileCredibility] "+ profileCredibility;
+		return "User [userNo=" + userNo + ", userId=" + userId + ", password=" + password + ", passwordConfirm="
+				+ passwordConfirm + ", userName=" + userName + ", userBirthday=" + userBirthday + ", userGender="
+				+ userGender + ", userPhone=" + userPhone + ", userEmail=" + userEmail + ", userAccount=" + userAccount
+				+ ", userType=" + userType + ", userEval=" + userEval + ", userImage=" + userImage + ", regDate="
+				+ regDate + ", profilePublic=" + profilePublic + ", userRegisterType=" + userRegisterType
+				+ ", userLeave=" + userLeave + ", userBank=" + userBank 
+				+ ", attendanceRate=" + attendanceRate + ", profileCredibility="
+				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost + "]";
 	}
 
 

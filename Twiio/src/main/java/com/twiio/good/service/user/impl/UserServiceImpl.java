@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 import com.twiio.good.service.user.UserService;
 
@@ -40,11 +41,13 @@ public class UserServiceImpl implements UserService{
 		this.userDao = userDao;
 	}
 	
-	@Value("#{APIKeyProperties['googleAPPKey']}")
-	String googleAPPKey;
-	
-	@Value("#{APIKeyProperties['googleAPPSecretKey']}")
-	String googleAPPSecretKey;
+//	@Value("#{apikeyProperties['googleAPPKey']}")
+//	String googleAPPKey;
+//	
+//	
+//	@Autowired
+//	@Value("#{apikeyProperties['googleAPPSecretKey']}")
+//	String googleAPPSecretKey;
 
 	public UserServiceImpl() {
 		System.out.println(this.getClass());
@@ -189,14 +192,14 @@ public class UserServiceImpl implements UserService{
 		//String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
 		String redirect_url = "http://127.0.0.1:8080/user/googleLogin";
 
-		StringBuffer buffer = new StringBuffer();
-		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
-				+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
+//		StringBuffer buffer = new StringBuffer();
+//		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
+//				+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
 
 		// 데이터 전송
 		OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
 		PrintWriter writer = new PrintWriter(outStream);
-		writer.write(buffer.toString());
+		//writer.write(buffer.toString());
 		writer.flush();
 
 		// 결과값을 불러온다.
@@ -274,7 +277,7 @@ public class UserServiceImpl implements UserService{
 
 
 	@Override
-	public void addEvalUser(User tagetUser, User evalUser, String scheduleNo) throws Exception {
+	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
 		userDao.addEvalUser(tagetUser, evalUser, scheduleNo);
 	}
 

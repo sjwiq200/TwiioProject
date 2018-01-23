@@ -1,5 +1,14 @@
 package com.twiio.good.service.community;
 
-public interface CommunityService {
+import java.util.Map;
 
+import com.twiio.good.service.domain.Community;
+
+public interface CommunityService {
+	public void addCommunity() throws Exception;
+	public Community getCommunity() throws Exception;
+	public void updateCommunity() throws Exception;
+	public void deleteCommunity() throws Exception;
+	public Map<String, Object> listCommunity() throws Exception;
+	public void getBestTripReview() throws Exception;
 }

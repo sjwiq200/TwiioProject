@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="DailyPlanMapper">
+ 		
+	<resultMap id="dailyPlanSelectMap" type="dailyPlan">
+		<result property="dailyPlanNo" column="daily_plan_no" jdbcType="NUMERIC"/>
+		<result property="mainPlan.mainPlanNo" column="main_plan_no" jdbcType="NUMERIC" />
+		<result property="user.userNo" column="user_no" jdbcType="NUMERIC" />
+		<result property="day" column="day" jdbcType="NUMERIC"/>
+		<result property="dailyDate" column="daily_date" jdbcType="DATE"/>
+		<result property="dailyCity" column="daily_city" jdbcType="VARCHAR"/>
+		<result property="dailyCountry" column="daily_country" jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addDailyPlan"		parameterType="dailyPlan" >
+	 	INSERT
+		INTO daily_plan( daily_plan_no , main_plan_no , user_no , day , daily_date, daily_city, daily_country) 
+		VALUES	 (	seq_daily_plan_daily_plan_no.NEXTVAL  , #{mainPlan.mainPlanNo:NUMERIC} , #{user.userNo:NUMERIC} ,  #{day:NUMERIC} , 
+							#{dailyDate:DATE} , #{dailyCity:VARCHAR} , #{dailyCountry:VARCHAR} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getDailyPlan"	parameterType="int"	resultMap="dailyPlanSelectMap">
+		SELECT
+		daily_plan_no , main_plan_no , user_no , day , daily_date, daily_city, daily_country
+		FROM daily_plan
+		WHERE daily_plan_no = #{dailyPlanNo}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateDailyPlan"	parameterType="dailyPlan" >
+	   	UPDATE daily_plan
+	   	<set>
+	   		day 	= #{day:NUMERIC} ,
+			daily_date	= #{dailyDate:DATE},
+			daily_city 				= #{dailyCity:VARCHAR} ,
+			daily_country				=	#{dailyCountry:VARCHAR}
+	   	</set>
+	   	WHERE daily_plan_no = #{dailyPlanNo}
+	 </update>
+	  
+	  <select  id="getDailyPlanList"  parameterType="dailyPlan"	resultMap="dailyPlanSelectMap">
+		  SELECT * FROM daily_plan
+		  	WHERE main_plan_no=#{mainPlan.mainPlanNo}
+		  	ORDER BY daily_plan_no ASC
+	  </select>
+	
+	 <select  id="deleteDailyPlan"  parameterType="int"	resultMap="dailyPlanSelectMap">
+	 DELETE FROM daily_plan WHERE daily_plan_no = #{dailyPlanNo}
+	 </select>
+	 
+	 
+</mapper>
