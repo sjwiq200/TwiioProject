@@ -28,10 +28,10 @@
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
 		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMERIC"/>
-		<result property="profileTnF"		column="profile_credit" 	jdbcType="NUMERIC" />
-		<result property="attendanceTnF" 	column="attendance" 		jdbcType="NUMERIC" />
-		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
-		<result property="targetNo" 		column="target_no" 			jdbcType="NUMERIC" />
+		<result property="profileTnF"		column="profile_credit" 	jdbcType="NUMERIC"/>
+		<result property="attendanceTnF" 	column="attendance" 		jdbcType="NUMERIC"/>
+		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC"/>
+		<result property="targetNo" 		column="target_no" 			jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
