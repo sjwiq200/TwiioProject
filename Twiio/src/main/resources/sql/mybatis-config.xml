@@ -14,7 +14,6 @@
 	
 	<!-- FQCN(Full Qualified Class Name) Alias(별칭관리) -->
 	<typeAliases>
-		<typeAlias alias="report" type="com.twiio.good.service.domain.Report" />
 		<typeAlias alias="friend" type="com.twiio.good.service.domain.Friend" />
 		<typeAlias alias="reply" type="com.twiio.good.service.domain.Reply" />
 		<typeAlias alias="totalsearch" type="com.twiio.good.service.domain.TotalSearch" />
@@ -26,6 +25,7 @@
 		<typeAlias alias="dailyPlan" type="com.twiio.good.service.domain.DailyPlan" />
 		<typeAlias alias="planContent" type="com.twiio.good.service.domain.PlanContent" />
 		<typeAlias alias="scrap" type="com.twiio.good.service.domain.Scrap" />
+		<typeAlias alias="report" type="com.twiio.good.service.domain.Report" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
