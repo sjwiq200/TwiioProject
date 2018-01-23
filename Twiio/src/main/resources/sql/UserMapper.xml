@@ -61,7 +61,15 @@
 	 </select>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="findId"	parameterType="user"	resultMap="userSelectMap">
+	 <select 	id="getUserInNo"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank	
+		FROM users 
+		WHERE user_no = #{value}
+	 </select>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="findId"	parameterType="user"	resultType="string">
 		SELECT
 		user_id 		
 		FROM users 
@@ -105,7 +113,7 @@
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
-	<select  id="getUserList"  parameterType="search"	resultMap="userSelectMap">
+	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
@@ -140,7 +148,7 @@
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">
 	  	SELECT COUNT(*)
-	  	FROM(	SELECT ser_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
+	  	FROM(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
 	  					public_state, resign, host_account, bank
 						FROM users
 						<if test="searchCondition != null">
