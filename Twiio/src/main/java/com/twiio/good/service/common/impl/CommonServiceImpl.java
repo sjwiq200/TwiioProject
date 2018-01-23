@@ -13,7 +13,6 @@ public class CommonServiceImpl implements CommonService{
   @Autowired
   @Qualifier("commonDaoImpl")
   private CommonDao commonDao;
-
   public void setCommonDao(CommonDao commonDao)
   {
     this.commonDao = commonDao;

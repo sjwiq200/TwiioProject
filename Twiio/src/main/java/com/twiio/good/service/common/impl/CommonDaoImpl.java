@@ -21,16 +21,15 @@ public class CommonDaoImpl implements CommonDao{
   @Qualifier("sqlSessionTemplate")
   private SqlSession sqlSession;
 
-  public void setSqlSession(SqlSession sqlSession)
-  {
-    this.sqlSession = sqlSession;
-  }
+  public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+}
 
   public CommonDaoImpl() {
     System.out.println(this.getClass());
   }
 
-  public void addReport(Report report) throws Exception {
+ /* public void addReport(Report report) throws Exception {
     sqlSession.insert("", report);
   }
   public void addReply(Reply reply) throws Exception {
@@ -38,9 +37,9 @@ public class CommonDaoImpl implements CommonDao{
   }
   public void addFriend(Friend friend) throws Exception {
     sqlSession.insert("", friend);
-  }
+  }*/
 
-  public void listReport(Search search, int reportNo) throws Exception {
+  /*public void listReport(Search search, int reportNo) throws Exception {
     Map map = new HashMap();
     map.put("search", search);
     map.put("reportNo", Integer.valueOf(reportNo));
@@ -57,56 +56,58 @@ public class CommonDaoImpl implements CommonDao{
     map.put("search", search);
     map.put("reportNo", Integer.valueOf(friendNo));
     //return this.sqlSession.selectList("", map);
-  }
-
+  }*/
+  
+  @Override
   public void deleteFriend() throws Exception {
     
   }
+  @Override
   public void deleteReply() throws Exception {
     
   }
-
+  @Override
   public void updateReply() throws Exception {
     
   }
+  @Override
   public void getReport() throws Exception {
     
   }
 
-@Override
-public void addReport() throws Exception {
-	// TODO Auto-generated method stub
+  @Override
+  public void addReport() throws Exception {
+	  // TODO Auto-generated method stub
 	
-}
+  }
 
-@Override
-public void addReply() throws Exception {
+  @Override
+  public void addReply() throws Exception {
 	// TODO Auto-generated method stub
 	
-}
+  }
 
-@Override
-public void addFriend() throws Exception {
+  @Override
+  public void addFriend() throws Exception {
 	// TODO Auto-generated method stub
 	
-}
+  }
 
-@Override
-public void listReport() throws Exception {
+  @Override
+  public void listReport() throws Exception {
 	// TODO Auto-generated method stub
 	
-}
+  }
 
-@Override
-public void listReply() throws Exception {
+  @Override
+  public void listReply() throws Exception {
 	// TODO Auto-generated method stub
 	
-}
+  }
 
-@Override
-public void listFriend() throws Exception {
+  @Override
+  public void listFriend() throws Exception {
 	// TODO Auto-generated method stub
 	
-}
-  
+  }
 }
