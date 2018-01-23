@@ -23,15 +23,15 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 		<result property="profilePublic" 	column="public_state" 		jdbcType="CHAR" />
 		<result property="userLeave" 		column="resign" 			jdbcType="CHAR" />
-		<result property="userNo" 			column="user_no" 			jdbcType="NUMBER" />
+		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
-		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMBER"/>
+		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMERIC"/>
 		<result property="profileTnF"		column="profile_credit" 	jdbcType="CHAR" />
 		<result property="attendanceTnF" 	column="attendance" 		jdbcType="CHAR" />
-		<result property="userNo"			column="user_no" 			jdbcType="NUMBER" />
-		<result property="targetNo" 		column="target_no" 			jdbcType="NUMBER" />
+		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="targetNo" 		column="target_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
