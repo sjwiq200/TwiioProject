@@ -28,6 +28,8 @@
 		<typeAlias alias="report" type="com.twiio.good.service.domain.Report" />
 		<typeAlias alias="community" type="com.twiio.good.service.domain.Community" />
 		<typeAlias alias="like" type="com.twiio.good.service.domain.Like" />
+		<typeAlias alias="product" 			type="com.twiio.good.service.domain.Product" />
+		<typeAlias alias="transaction" 		type="com.twiio.good.service.domain.Transaction" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -40,6 +42,8 @@
 		<mapper resource="sql/DailyPlanMapper.xml"/>
 		<mapper resource="sql/PlanContentMapper.xml"/>
 		<mapper resource="sql/ScrapMapper.xml"/>
+		<mapper resource="sql/ProductMapper.xml"/>
+		<mapper resource="sql/TransactionMapper.xml"/>
 	</mappers>
 
 </configuration>

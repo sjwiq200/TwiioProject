@@ -26,8 +26,13 @@ public class InformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public List<Currency> getCurrency() throws Exception {
-		return informationDao.getCurrency();
+	public List<Currency> addCurrency() throws Exception {
+		return informationDao.addCurrency();
+	}
+	
+	@Override
+	public Double getCurrency(String country) throws Exception {
+		return informationDao.getCurrency(country);
 	}
 
 	@Override
@@ -59,5 +64,6 @@ public class InformationServiceImpl implements InformationService {
 	public List getNightLifeDetail() throws Exception {
 		return informationDao.getNightLifeDetail();
 	}
+
 
 }

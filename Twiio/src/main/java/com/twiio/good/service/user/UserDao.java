@@ -16,6 +16,9 @@ public interface UserDao {
 
 	// SELECT ONE
 	public User getUser(String userId) throws Exception ;
+	
+	// SELECT ONE
+	public User getUserInNo(int userNo) throws Exception ;
 
 	// SELECT LIST
 	public List<User> listUser(Search search) throws Exception ;
@@ -27,7 +30,7 @@ public interface UserDao {
 	public void deleteUser(User user) throws Exception;
 	
 	// SELECT ONE
-	public User findId(User user) throws Exception ;
+	public String findId(User user) throws Exception ;
 	
 	// UPDATE
 	public void findPassword(User user) throws Exception ;	

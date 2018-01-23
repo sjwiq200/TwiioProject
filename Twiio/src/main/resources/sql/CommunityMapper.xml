@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityMapper">
+	<resultMap id="communitytSelectMap" type="community">
+		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
+		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR"/>
+		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
+		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
+		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
+		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
+		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
+		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
+	</resultMap>
+	
+	<resultMap id="likeSelectMap" type="like">
+		<result property="no" 					column="no" 			jdbcType="NUMERIC"/>
+		<result property="userNo"				column="user_no" 		jdbcType="NUMERIC" />
+		<result property="friendNo" 			column="friend_no" 		jdbcType="NUMERIC" />
+		<result property="friendNo" 			column="friend_no" 		jdbcType="NUMERIC" />
+	</resultMap>
+	
+	
+	
+	<!--SQL : INSERT  -->
+	<insert id="addCommunity" parameterType="report">
+		INTO REPORT
+		VALUES (
+		seq_report_report_no.nextval,
+		#{userNo:NUMERIC},
+		#{reportContent:VARCHAR},
+		#{reportTitle:VARCHAR},
+		SYSDATE,
+		#{targetUserNo:NUMERIC}
+		#{targetRoomNo:NUMERIC}
+		#{targetReplyNo:NUMERIC}
+		#{targetCommunityN:NUMERIC}
+		)
+	</insert>
+	
+	<insert id="getCommunity" parameterType="friend">
+		INSERT
+		INTO FRIEND
+		VALUES (
+		#{userNo:NUMERIC},
+		#{friendNo:NUMERIC},
+		seq_friend_no.nextval
+		)
+	</insert>
+	
+	<insert id="deleteCommunity" parameterType="reply">
+		INSERT
+		INTO REPLY
+		VALUES (
+		seq_reply_reply_no.nextval,
+		#{user_no:NUMERIC},
+		#{reply_content:VARCHAR},
+		SYSDATE,
+		#{productNo:NUMERIC},
+		#{communityNo:NUMERIC}
+		)	
+	</insert>
+	
+	<!-- SQL : UPDATE -->
+	
+	<update id="updateCommunity" parameterType="reply">
+		UPDATE REPLY
+	   	<set>
+	   		REPLY_NO 		= #{replyNo} ,
+			USER_NO			= #{userNo},
+			REPLY_CONTENT 	= #{replyContent} ,
+			REPLY_REG_DATE	= #{replyRegdate},
+			PRODUCT_NO		= #{productNo},
+			COMMUNITY_NO	= #{community_no}
+	   	</set>
+	   	WHERE REPLY_NO = #{replyNo}
+	</update>
+	
+	<!-- SQL : SELECT LIST -->
+	
+	<select id="listCommunity" parameterType="map" resultMap="replySelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT
+							   		REPLY_NO=#{replyNo},
+							   		USER_NO=#{userNo},
+							   		REPLY_CONTENT=#{replyContent},
+							   		REPLY_REG_DATE=#{replyRegDate},
+							   		PRODUCT_NO=#{productNo},
+							   		COMMUNITY_NO=#{communityNo}
+							   FROM 
+  							   REPLY 
+  							   <where>			
+									<if test="divCode == 0">										
+									    	productNo = #{reply.productNo}
+									</if>
+									<if test="divCode == 1">
+									    	communityNo = #{reply.communityNo}
+									</if>									
+							  </where>
+							   ORDER BY REPLY_NO
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<!-- SQL : SELECT ONE -->
+	
+	<select id="getBestTripReview" parameterType="int" resultType="report">
+		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
+	</select>
+	
+	
+	
+	<!-- SQL : DELETE ONE -->
+	
+	<select  id="getTotalCountReport"  resultType="int">
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  			 FROM REPORT
+				) countTable						
+	 </select>
+	 
+	 
+</mapper>

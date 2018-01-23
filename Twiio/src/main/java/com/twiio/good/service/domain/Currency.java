@@ -1,5 +1,8 @@
 package com.twiio.good.service.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Currency {
 
 
@@ -143,7 +146,9 @@ public class Currency {
 	}
 
 	public String toString() {
-		return "[통화코드]"+cur_unit+"[매매가격]"+deal_bas_r+"[country]"+cur_nm;
+		return "[통화코드]"+cur_unit+"[매매가격]"+deal_bas_r+"[country]"+cur_nm+
+				"[장부가격]"+bkpr+"[년환가료율]"+yy_efee_r+"[서울외국환중계장부가격]"+kftc_bkpr
+				+"[전신환(송금)받으실때]"+ttb+"[전신환(송금)보내실때]"+tts+"[서울외국환중계매매기준율]"+kftc_deal_bas_r;
 	}
 
 

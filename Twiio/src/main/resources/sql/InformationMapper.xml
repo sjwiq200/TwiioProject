@@ -41,5 +41,10 @@
 	   	WHERE currency_no BETWEEN 1 AND 31
 	 </update>
 	 
+	 <delete id="deleteCurrency">
+	
+		delete currency 
+	
+	</delete>
 	 
 </mapper>
