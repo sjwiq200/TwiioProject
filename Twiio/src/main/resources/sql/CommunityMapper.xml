@@ -42,7 +42,7 @@
 		)
 	</insert>
 	
-	<insert id="getCommunity" parameterType="friend">
+	<insert id="getCommunity" parameterType="community">
 		INSERT
 		INTO FRIEND
 		VALUES (
@@ -52,7 +52,7 @@
 		)
 	</insert>
 	
-	<insert id="deleteCommunity" parameterType="reply">
+	<insert id="deleteCommunity" parameterType="community">
 		INSERT
 		INTO REPLY
 		VALUES (
@@ -67,7 +67,7 @@
 	
 	<!-- SQL : UPDATE -->
 	
-	<update id="updateCommunity" parameterType="reply">
+	<update id="updateCommunity" parameterType="community">
 		UPDATE REPLY
 	   	<set>
 	   		REPLY_NO 		= #{replyNo} ,
@@ -82,7 +82,7 @@
 	
 	<!-- SQL : SELECT LIST -->
 	
-	<select id="listCommunity" parameterType="map" resultMap="replySelectMap">
+	<select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
@@ -112,7 +112,7 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getBestTripReview" parameterType="int" resultType="report">
+	<select id="getBestTripReview" parameterType="int" resultType="community">
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
 	</select>
 	
