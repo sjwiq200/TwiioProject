@@ -59,6 +59,7 @@ public class UserServiceImpl implements UserService{
 	@Value("#{apikeyProperties['googleAPPKey']}")
 	String googleAPPKey;
 	
+	
 	@Value("#{apikeyProperties['googleAPPSecretKey']}")
 	String googleAPPSecretKey;
 	
@@ -217,12 +218,12 @@ public class UserServiceImpl implements UserService{
 
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
-				+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
+			+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
 
 		// 데이터 전송
 		OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
 		PrintWriter writer = new PrintWriter(outStream);
-		//writer.write(buffer.toString());
+		writer.write(buffer.toString());
 		writer.flush();
 
 		// 결과값을 불러온다.

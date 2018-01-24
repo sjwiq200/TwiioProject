@@ -1,24 +1,36 @@
 package com.twiio.good.service.common;
 
+import java.util.Map;
+
+import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Friend;
+import com.twiio.good.service.domain.Reply;
+import com.twiio.good.service.domain.Report;
+
 public interface CommonService
 {
-  public void addReport() throws Exception;
+  public void addReport(Report report) throws Exception;
 
-  public void addReply() throws Exception;
+  public void addReply(Reply reply) throws Exception;
 
-  public void addFriend() throws Exception;
+  public void addFriend(Friend friend) throws Exception;
 
-  public void listReport() throws Exception;
+  public Map<String,Object> listReport(Search search) throws Exception;
 
-  public void listReply() throws Exception;
+  public Map<String,Object> listReply(Search search, int divCode, int codeNo) throws Exception;
 
-  public void listFriend() throws Exception;
+  public Map<String,Object> listFriend(Search search, int userNo) throws Exception;
 
-  public void deleteFriend() throws Exception;
+  public void deleteFriend(int no) throws Exception;
 
-  public void deleteReply() throws Exception;
+  public void deleteReply(int replyNo) throws Exception;
 
-  public void updateReply() throws Exception;
+  public void updateReply(Reply reply) throws Exception;
 
-  public void getReport() throws Exception;
+  public Report getReport(int reportNo) throws Exception;
+  
+  ///////////////////////잘모르겠습니다.///////////////////////////
+  public void searchKeyword() throws Exception;
+  
+  public void listSearch() throws Exception;
 }

@@ -38,7 +38,107 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
+	$(function() {
+				/* 
+				$("#standardCountry" ).on("change" , function() {
+						
+					//self.location = "/information/json/getCurrency?country="+$("select[name='standard']").val();
+					var country = $("#standardCountryValue").val();
+					
+					alert(country);
+					
+						$.ajax( 
+								{
+									url : "/information/json/getCurrency/" ,
+									method : "POST" ,
+									data : {
+										"country" : country
+									},
+									headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									},
+									success : function(JSONData , status) {
 		
+										alert(status);
+										alert("JSONData : \n"+JSONData.deal_bas_r);
+										//Debug...									
+										//alert(displayValue);
+										$( "#standard" ).val(JSONData.deal_bas_r);
+									}
+						});
+				});
+			
+				 $( "#compareCountry"  ).on("change" , function() {
+					
+					var country = $("#compareCountryValue").val();
+					
+					alert(country);
+					
+						$.ajax( 
+								{
+									url : "/information/json/getCurrency/" ,
+									method : "POST" ,
+									data : {
+										"country" : country
+									},
+									headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									},
+									success : function(JSONData , status) {
+		
+										alert(status);
+										alert("JSONData : \n"+JSONData.deal_bas_r);
+										//Debug...									
+										//alert(displayValue);
+										$( "#compare" ).val(JSONData.deal_bas_r);
+									}
+					});
+				
+				}); */
+				
+				
+		 $("button.btn.btn-primary").on("click" , function() {
+				
+				var standardCountry = $("#standardCountryValue").val();
+				var compareCountry = $("#compareCountryValue").val();
+				var inputPrice = $("#standard").val();
+				
+				alert(standardCountry);
+				alert(compareCountry);
+				alert(inputPrice);
+				
+					$.ajax( 
+							{
+								url : "/information/json/getCurrency/" ,
+								method : "POST" ,
+								data : {
+									"standardCountry" : standardCountry,
+									"compareCountry" : compareCountry,
+									"inputPrice" : inputPrice
+								},
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+	
+									alert(status);
+									alert("JSONData : \n"+JSONData);
+									//Debug...									
+									//alert(displayValue);
+									$( "#compare" ).val(JSONData);
+								}
+				});
+			
+			}); 
+				 
+		 
+		 
+		 
+	
+	});		
 	</script>
 	
 </head>
@@ -63,9 +163,19 @@
 	<form class="form-horizontal">
 	
 		<div class="form-group">
-		    <label for="standard" class="col-sm-offset-1 col-sm-3 control-label">기준 국가</label>
+			<div class="col-sm-3" id="standardCountry">
+				    <select class="form-control" id="standardCountryValue" >
+				    <!-- <option value="0">나라를 선택해주세요</option> -->
+						<c:set var="i" value="0" />
+		 				 <c:forEach var="currency" items="${returnList}">
+		 				 <option value="${currency.cur_nm}" >
+		 				 ${currency.cur_nm}
+		 				  </option>
+		 				 </c:forEach>
+					</select>
+				</div>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="standard" name="standard" value="${exchange.cur_nm == '아랍에미리트'}" >
+		      <input type="text" class="form-control" id="standard" name="standard"  >
 		    </div>
 		 </div>
 		 
@@ -76,13 +186,27 @@
 		  </div>
 		  
 		 <div class="form-group">
-		    <label for="compare" class="col-sm-offset-1 col-sm-3 control-label">비교 국가</label>
+		    <div class="col-sm-3" id="compareCountry">
+				    <select class="form-control"  id="compareCountryValue" >
+				   <!-- <option value="0">나라를 선택해주세요</option> -->
+						<c:set var="i" value="0" />
+		 				 <c:forEach var="currency" items="${returnList}">
+		 				 <option value="${currency.cur_nm}">
+		 				 ${currency.cur_nm}
+		 				  </option>
+		 				 </c:forEach>
+					</select>
+				</div>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="compare" name="compare"  value="${exchange.cur_nm == '아랍에미리트'}" >
+		      <input type="text" class="form-control" id="compare" name="compare" readOnly="true">
 		    </div>
 		 </div>
 	
-	
+	<div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-primary"  >계 &nbsp;산</button>
+		    </div>
+	</div>
 	</form>
 	
 	
@@ -100,13 +224,13 @@
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <c:forEach var="exchange" items="${returnList}">
+		  <c:forEach var="currency" items="${returnList}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left" >${exchange.cur_unit}</td>
-			  <td align="left">${exchange.deal_bas_r}</td>
-			  <td align="left">${exchange.cur_nm}</td>
+			  <td align="left" >${currency.cur_unit}</td>
+			  <td align="left">${currency.deal_bas_r}</td>
+			  <td align="left">${currency.cur_nm}</td>
 			  
 			</tr>
           </c:forEach>
