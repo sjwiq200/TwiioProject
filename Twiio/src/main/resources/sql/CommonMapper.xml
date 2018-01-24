@@ -4,17 +4,17 @@
 		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="CommonMapper">	
+<mapper namespace="CommonMapper">
 	<resultMap id="reportSelectMap" type="report">
 		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
-		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC" />
-		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR" />
-		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR" />
+		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR"/>
+		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
 		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
-		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC" />
-		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC" />
-		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"  />
-		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC" />
+		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
+		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
+		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
+		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
 	</resultMap>
 	
 	<resultMap id="friendSelectMap" type="friend">
@@ -32,6 +32,7 @@
 		<result property="communityNo" 		column="community_no" 		jdbcType="NUMERIC" />
 	</resultMap>
 	
+	
 <!-- 	<resultMap id="totalsearchSelectMap" type="totalsearch">
 		<result property="keyword" 			column="keyword" 			jdbcType="NUMERIC"/>
 		<result property="room"				column="room" 				jdbcType="NUMERIC" />
@@ -44,7 +45,6 @@
 	
 	<!--SQL : INSERT  -->
 	<insert id="addReport" parameterType="report">
-		INSERT
 		INTO REPORT
 		VALUES (
 		seq_report_report_no.nextval,
@@ -84,7 +84,7 @@
 	
 	<!-- SQL : SELECT LIST -->
 	
-	<select id="listReport" parameterType="map" resultMap="reportSelectMap">
+	<select id="listReport" parameterType="search" resultMap="reportSelectMap">
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
@@ -100,7 +100,7 @@
 							   TARGET_REPLY_NO=#{targetReplyNo}
 							   FROM 
   							   REPORT 
-							   ORDER BY report.tran_no
+							   ORDER BY REPORT_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -118,7 +118,7 @@
 							   FROM 
   							   FRIEND 
   							   WHERE USER_NO=#{friend.userNo}
-							   ORDER BY friend.userNo
+							   ORDER BY USER_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -139,14 +139,14 @@
 							   FROM 
   							   REPLY 
   							   <where>			
-									<if test="reply.productNo != null">										
+									<if test="divCode == 0">										
 									    	productNo = #{reply.productNo}
 									</if>
-									<if test="reply.communityNo != null">
+									<if test="divCode == 1">
 									    	communityNo = #{reply.communityNo}
 									</if>									
 							  </where>
-							   ORDER BY reply.replyNo
+							   ORDER BY REPLY_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -176,22 +176,22 @@
 	
 	<!-- SQL : DELETE ONE -->
 	
-	 <delete id="deleteFriend" parameterType="friend">
-	DELETE FROM FRIEND WHERE FRIEND_NO=#{friendNo}
+	<delete id="deleteFriend" parameterType="int">
+		DELETE FROM FRIEND WHERE NO=#{no}
 	</delete>
 	
-	<delete id="deleteReply" parameterType="reply">
-	DELETE FROM REPLY WHERE REPLY_NO=#{replyNo}
+	<delete id="deleteReply" parameterType="int">
+		DELETE FROM REPLY WHERE REPLY_NO=#{replyNo}
 	</delete> 
 	
-	<select  id="getTotalCountReport"  parameterType="report" resultType="int">
+	<select  id="getTotalCountReport"  resultType="int">
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM REPORT
 				) countTable						
 	 </select>
 	 
-	 <select  id="getTotalCountFriend"  parameterType="friend" resultType="int">
+	 <select  id="getTotalCountFriend"  parameterType="int" resultType="int">
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM FRIEND
@@ -204,14 +204,13 @@
 	  		FROM(SELECT *
 	  				FROM REPLY 
   					<where>			
-						<if test="reply.productNo != null">										
+						<if test="reply.divCode == 0">										
 						   	productNo = #{reply.productNo}
 						</if>
-						<if test="reply.communityNo != null">
+						<if test="reply.communityNo == 1">
 						   	communityNo = #{reply.communityNo}
 						</if>									
 					</where>
 				) countTable						
 	 </select>
-	 
 </mapper>

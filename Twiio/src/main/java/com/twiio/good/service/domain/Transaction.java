@@ -19,6 +19,8 @@ public class Transaction {
 	private int starEvalHost;
 	private String reviewHost;
 	private Date payToHostDate;
+	private int evalProduct;
+	private int evalHost;
 
 	public Transaction() {
 		// TODO Auto-generated constructor stub
@@ -144,13 +146,30 @@ public class Transaction {
 		this.payToHostDate = payToHostDate;
 	}
 
+	public int getEvalProduct() {
+		return evalProduct;
+	}
+
+	public void setEvalProduct(int evalProduct) {
+		this.evalProduct = evalProduct;
+	}
+
+	public int getEvalHost() {
+		return evalHost;
+	}
+
+	public void setEvalHost(int evalHost) {
+		this.evalHost = evalHost;
+	}
+
 	@Override
 	public String toString() {
 		return "Transaction [tranNo=" + tranNo + ", tranPro=" + tranPro + ", requirement=" + requirement
 				+ ", totalPrice=" + totalPrice + ", tripDate=" + tripDate + ", regDate=" + regDate + ", buyerNo="
 				+ buyerNo + ", paymentType=" + paymentType + ", count=" + count + ", refundCode=" + refundCode
 				+ ", starEvalProduct=" + starEvalProduct + ", reviewProduct=" + reviewProduct + ", starEvalHost="
-				+ starEvalHost + ", reviewHost=" + reviewHost + ", payToHostDate=" + payToHostDate + "]";
+				+ starEvalHost + ", reviewHost=" + reviewHost + ", payToHostDate=" + payToHostDate + ", evalProduct="
+				+ evalProduct + ", evalHost=" + evalHost + "]";
 	}		
 
 }

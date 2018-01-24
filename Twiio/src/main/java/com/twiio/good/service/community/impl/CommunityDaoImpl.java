@@ -1,9 +1,83 @@
 package com.twiio.good.service.community.impl;
 
-public class CommunityDaoImpl {
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-	public CommunityDaoImpl() {
-		// TODO Auto-generated constructor stub
+import org.apache.ibatis.session.SqlSession;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+
+import com.twiio.good.common.Search;
+import com.twiio.good.service.community.CommunityDao;
+import com.twiio.good.service.domain.Community;
+
+@Service("communityDaoImpl")
+public class CommunityDaoImpl implements CommunityDao{
+	@Autowired
+	@Qualifier("sqlSessionTemplate")
+	private SqlSession sqlSession;
+
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
 	}
 
+	public CommunityDaoImpl() {
+		System.out.println(this.getClass());
+	}
+
+	@Override
+	public void addCommunity(Community community) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.insert("CommunityMapper.addCommunity",community);
+	}
+
+	@Override
+	public Community getCommunity(int communityNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CommunityMapper.getCommunity", communityNo);
+	}
+
+	@Override
+	public void updateCommunity(Community community) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("CommunitMapper.updateCommunity",community);
+	}
+
+	@Override
+	public void deleteCommunity(int communityNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.delete("CommunitMapper.deleteCommunity",communityNo);
+	}
+
+	@Override
+	public List<Community> listCommunity(Search search, int communityType) throws Exception {
+		// TODO Auto-generated method stub
+		Map<String , Object>  map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("communityType", communityType);
+		
+		
+		List<Community> list = sqlSession.selectList("CommunitMapper.listCommunity", map);
+//		for (int i = 0; i < list.size(); i++) {
+//			list.get(i).setBuyer((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getBuyer().getUserId()));
+//		}
+		return list;
+	}
+
+
+	@Override
+	public int getTotalCount(int communityType) throws Exception {
+		return sqlSession.selectOne("CommunitMapper.getTotalCountReport", communityType);
+	}
+	
+	@Override
+	public void getBestTripReview() throws Exception {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	
 }

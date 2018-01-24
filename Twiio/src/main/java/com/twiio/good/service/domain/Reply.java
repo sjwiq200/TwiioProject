@@ -9,13 +9,27 @@ public class Reply {
 	private Date replyRegDate;
 	private int productNo;
 	private int communityNo;
-	
+	private int divCode;
 	
 	public Reply() {
 	}
 
 
 		
+
+	public int getDivCode() {
+		return divCode;
+	}
+
+
+
+
+	public void setDivCode(int divCode) {
+		this.divCode = divCode;
+	}
+
+
+
 
 	public int getReplyNo() {
 		return replyNo;
