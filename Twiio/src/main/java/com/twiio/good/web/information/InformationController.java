@@ -51,7 +51,9 @@ public class InformationController {
 		
 		System.out.println("/information/getWeather");
 	
-	        return "forward:/information/searchNowWeather.jsp";
+	        return "forward:/information/searchAverageWeather.jsp";
 	}
+	
+	
 
 }

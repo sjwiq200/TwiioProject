@@ -15,6 +15,11 @@
 		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
 	</resultMap>
 	
+	<resultMap id="citySelectMap" type="city">
+		<result property="cityNo" 			column="city_no" 			jdbcType="NUMERIC"/>
+		<result property="cityName"			column="city_name" 			jdbcType="VARCHAR" />
+	</resultMap>
+	
 	
 	 <insert 	id="addCurrency"		parameterType="currency" >
 	 	INSERT
@@ -46,5 +51,9 @@
 		delete currency 
 	
 	</delete>
+	
+	<select 	id="getCity"	parameterType="string"	resultMap="citySelectMap">
+		SELECT * FROM city WHERE UPPER(city_name) Like UPPER('%${value}%')
+	 </select>
 	 
 </mapper>

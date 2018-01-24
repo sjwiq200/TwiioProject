@@ -1,6 +1,7 @@
 package com.twiio.good.web.information;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
@@ -21,12 +23,14 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationService;
 
@@ -38,6 +42,7 @@ public class InformationRestController {
 	@Autowired
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
+	
 	
 	
 	public InformationRestController() {
@@ -55,6 +60,25 @@ public class InformationRestController {
 			
 		return result;
 	}
+	
+	@RequestMapping( value="json/autoComplete/" )
+	public List<String>  autoComplete(@RequestBody String keyword ) throws Exception{
+		
+		System.out.println("/information/json/autoComplete");
+		
+		String decoding = URLDecoder.decode(keyword, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		 System.out.println(str);
+		 
+		List<String> item  = informationService.findCity(str);
+		
+		return item;
+	}
+
 
 	@RequestMapping(value="json/searchNowWeather",method=RequestMethod.GET)
 	public Map<String,Object> searchNowWeather(@RequestParam String cityName) throws Exception {
@@ -63,10 +87,7 @@ public class InformationRestController {
 
 		System.out.println(" cityName : " + cityName);
 
-		
-
-		//URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+cityName.trim()+"&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
-		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Kismaayo&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
+		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+cityName.trim()+"&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 
@@ -103,14 +124,11 @@ public class InformationRestController {
        JSONArray array = (JSONArray) jsonobj.get("weather");
        String weatherResult = array.get(0).toString();
        System.out.println("weatherResult : " + weatherResult);
-
        
        //WeatherState weatherState = objectMapper.readValue(weatherResult.toString(), WeatherState.class);
 
         System.out.println("1.weatherMain : " + weatherMain);
         //System.out.println("2.weahterState : " + weatherState); 
-
-        
 
         Map<String,Object> map = new HashMap<String,Object>();
         map.put("weatherMain", weatherMain);
@@ -128,7 +146,7 @@ public class InformationRestController {
 		System.out.println("cityName : " + cityName);
 		
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
-		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
 		String[] string = null; 
 		String[] tempResult =null; // historyWeather 
@@ -189,7 +207,7 @@ public class InformationRestController {
 			driver.close(); 
 		
 		}catch(Exception e) {
-			System.out.println("Error占쌩삼옙 : " + e);
+			System.out.println("Error�뜝�뙥�궪�삕 : " + e);
 		}
 		
 		

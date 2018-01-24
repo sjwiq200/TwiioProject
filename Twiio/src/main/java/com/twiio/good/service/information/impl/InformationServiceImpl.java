@@ -1,11 +1,13 @@
 package com.twiio.good.service.information.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.information.InformationDao;
 import com.twiio.good.service.information.InformationService;
@@ -33,6 +35,11 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	public Double getCurrency(String country) throws Exception {
 		return informationDao.getCurrency(country);
+	}
+	
+	@Override
+	public List<String> findCity(String city) throws Exception {
+		return informationDao.findCity(city);
 	}
 
 	@Override

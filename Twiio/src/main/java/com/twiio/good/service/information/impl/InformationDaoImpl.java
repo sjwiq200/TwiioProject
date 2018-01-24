@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.information.InformationDao;
 
@@ -151,6 +153,22 @@ public class InformationDaoImpl implements InformationDao {
 	public List getNightLifeDetail() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public List<String> findCity(String city) throws Exception {
+		
+		String str = city.trim();
+		
+		List<City> list = sqlSession.selectList("InformationMapper.getCity", str);
+	
+		List<String> item = new ArrayList<String>();
+		
+		for(int i = 0 ; i<list.size(); i++) {
+			item.add(list.get(i).getCityName());
+			//System.out.println(list.get(i).getCityName());
+		}
+		return item;
 	}
 
 
