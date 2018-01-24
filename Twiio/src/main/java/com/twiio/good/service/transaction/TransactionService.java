@@ -34,7 +34,10 @@ public interface TransactionService {
 	//public Purchase getPurchase2(int ProdNo) throws Exception;
 	
 	// 거래 리스트
-	public Map<String,Object> listTransaction(Search search,int userNo) throws Exception;
+	public Map<String,Object> listTransaction(Search search,int buyerNo) throws Exception;
+	
+	// 호스트 판매 리스트
+	public Map<String,Object> listTransactionHost(Search search,int hostNo) throws Exception;
 	
 	// 환불 코드 변경
 	public void updateTransactionCode(int tranNo) throws Exception;
@@ -45,10 +48,11 @@ public interface TransactionService {
 	// 환불 완료 confirmDate 
 	public void updateRefund(Refund refund) throws Exception;
 	
+	// 환불 리스트
+	public Map<String, Object> listRefund(Search search) throws Exception;
+	
 	// 환불 취소
 	public void deleteRefund(int tranNo) throws Exception;
 	
-	// 호스트 판매 리스트
-	//public Map<String,Object> listTransaction(Search search,int buyerNo) throws Exception;
 
 }
