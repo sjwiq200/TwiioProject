@@ -6,78 +6,62 @@
 
 <mapper namespace="CommunityMapper">
 	<resultMap id="communitytSelectMap" type="community">
-		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
-		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC"/>
-		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR"/>
-		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
-		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
-		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
-		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
-		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
-		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
+		<result property="communityNo" 			column="community_no" 			jdbcType="NUMERIC"/>
+		<result property="communityTitle"		column="community_title" 		jdbcType="VARCHAR"/>
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="regDate" 				column="reg_date" 				jdbcType="DATE"/>
+		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
+		<result property="communitySubTitle" 	column="community_subTitle" 	jdbcType="VARCHAR"/>
+		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
+		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="likeSelectMap" type="like">
-		<result property="no" 					column="no" 			jdbcType="NUMERIC"/>
-		<result property="userNo"				column="user_no" 		jdbcType="NUMERIC" />
-		<result property="friendNo" 			column="friend_no" 		jdbcType="NUMERIC" />
-		<result property="friendNo" 			column="friend_no" 		jdbcType="NUMERIC" />
+		<result property="userNo" 				column="user_no" 			jdbcType="NUMERIC"/>
+		<result property="communityNo"			column="community_no" 		jdbcType="NUMERIC" />
+		<result property="like" 				column="like"		 		jdbcType="VARCHAR" />
+		<result property="likeNo" 				column="like_no" 			jdbcType="NUMERIC" />
 	</resultMap>
 	
 	
 	
 	<!--SQL : INSERT  -->
-	<insert id="addCommunity" parameterType="report">
-		INTO REPORT
+	<insert id="addCommunity" parameterType="community">
+		INSERT
+		INTO COMMUNITY
 		VALUES (
-		seq_report_report_no.nextval,
+		seq_community_community_no.nextval,
+		#{communityTitle:VARCHAR},
 		#{userNo:NUMERIC},
-		#{reportContent:VARCHAR},
-		#{reportTitle:VARCHAR},
 		SYSDATE,
-		#{targetUserNo:NUMERIC}
-		#{targetRoomNo:NUMERIC}
-		#{targetReplyNo:NUMERIC}
-		#{targetCommunityN:NUMERIC}
+		#{viewCount:NUMERIC},
+		#{communitySubTitle:VARCHAR},
+		#{communityType:VARCHAR},
+		#{communityContent:VARCHAR}
 		)
 	</insert>
 	
-	<insert id="getCommunity" parameterType="community">
-		INSERT
-		INTO FRIEND
-		VALUES (
-		#{userNo:NUMERIC},
-		#{friendNo:NUMERIC},
-		seq_friend_no.nextval
-		)
-	</insert>
+	<select id="getCommunity" parameterType="int" resultMap="communitytSelectMap">
+		SELECT * FROM COMMUNITY WHERE COMMUNITY_NO = #{communityNo}
+		 
+	</select>
 	
-	<insert id="deleteCommunity" parameterType="community">
-		INSERT
-		INTO REPLY
-		VALUES (
-		seq_reply_reply_no.nextval,
-		#{user_no:NUMERIC},
-		#{reply_content:VARCHAR},
-		SYSDATE,
-		#{productNo:NUMERIC},
-		#{communityNo:NUMERIC}
-		)	
-	</insert>
+	<delete id="deleteCommunity" parameterType="int">
+		DELETE 
+		FROM COMMUNITY
+		WHERE COMMUNITY_NO = #{communityNo}
+	</delete>
 	
 	<!-- SQL : UPDATE -->
 	
 	<update id="updateCommunity" parameterType="community">
-		UPDATE REPLY
+		UPDATE COMMUNITY
 	   	<set>
-	   		REPLY_NO 		= #{replyNo} ,
-			USER_NO			= #{userNo},
-			REPLY_CONTENT 	= #{replyContent} ,
-			REPLY_REG_DATE	= #{replyRegdate},
-			PRODUCT_NO		= #{productNo},
-			COMMUNITY_NO	= #{community_no}
+	   		COMMUNITY_TITLE		= #{communityTitle} ,
+	   		COMMUNITY_SUB_TITLE = #{communitySubTitle},
+			COMMUNITY_CONTENT	= #{communityContent}
 	   	</set>
-	   	WHERE REPLY_NO = #{replyNo}
+	   	WHERE COMMUNITY_NO = #{communityNo}
 	</update>
 	
 	<!-- SQL : SELECT LIST -->
@@ -87,43 +71,53 @@
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
 							   SELECT
-							   		REPLY_NO=#{replyNo},
-							   		USER_NO=#{userNo},
-							   		REPLY_CONTENT=#{replyContent},
-							   		REPLY_REG_DATE=#{replyRegDate},
-							   		PRODUCT_NO=#{productNo},
-							   		COMMUNITY_NO=#{communityNo}
+							   		seq_community_community_no.nextval,
+									#{communityTitle:VARCHAR},
+									#{userNo:NUMERIC},
+									SYSDATE,
+									#{viewCount:NUMERIC},
+									#{communitySubTitle:VARCHAR},
+									#{communityType:VARCHAR},
+									#{communityContent:VARCHAR}
 							   FROM 
-  							   REPLY 
+  							   COMMUNITY 
   							   <where>			
-									<if test="divCode == 0">										
-									    	productNo = #{reply.productNo}
+									<if test="communityType == 0">										
+									    	community_type = #{type}
 									</if>
-									<if test="divCode == 1">
-									    	communityNo = #{reply.communityNo}
+									<if test="communityType == 1">
+									    	community_type = #{type}
 									</if>									
 							  </where>
-							   ORDER BY REPLY_NO
+							   ORDER BY COMMUNITY_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>
 	
-	<!-- SQL : SELECT ONE -->
-	
+	<!-- SQL : SELECT ONE 
 	<select id="getBestTripReview" parameterType="int" resultType="community">
-		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
+		SELECT * FROM PRODUCT WHERE REPORT_NO = #{value}
 	</select>
+	-->
 	
 	
 	
 	<!-- SQL : DELETE ONE -->
 	
-	<select  id="getTotalCountReport"  resultType="int">
+	<select  id="getTotalCountReport" parameterType="int"  resultType="int" >
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
-	  			 FROM REPORT
+	  			 FROM COMMUNITY
+	  			 <where>			
+					<if test="communityType == 0">										
+					   	community_type = #{type}
+					</if>
+					<if test="communityType == 1">
+					   	community_type = #{type}
+					</if>									
+				 </where>
 				) countTable						
 	 </select>
 	 
