@@ -164,9 +164,6 @@ public class MainPlanController {
 		return "forward:/mainplan/listMainPlan.jsp";
 	}
 	
-
-	
-
 	
 	@RequestMapping(value = "getMainPlan",method=RequestMethod.GET)
 	public String getMainPlan(@RequestParam("mainPlanNo") int mainPlanNo,Model model, HttpSession session) throws Exception {
@@ -207,11 +204,9 @@ public class MainPlanController {
 		
 		System.out.println("Controller : updateMainPlan <START>"+mainPlan);
 		
-		
 		/////mainPlanUpdate////////////////////////////////////////////////////////////////
 		
 			String cityResult = "";
-			
 			for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
 				if(i==mainPlan.getCityList().length-1) {
 					cityResult += mainPlan.getCityList()[i];
@@ -219,12 +214,10 @@ public class MainPlanController {
 					cityResult += mainPlan.getCityList()[i] + ",";
 				}
 			}
-			
 			mainPlan.setCity(cityResult);
 			mainPlan.setCountry("국가");
 		//////////////////////////////////////////////////////////////////////////////////
 		
-			
 			
 			
 		/////dailyPlanUpdate//////////////////////////////////////////////////////////////
@@ -235,13 +228,10 @@ public class MainPlanController {
 		Date departureDateDB = mainPlanDB.getDepartureDate();
 		Date arrivalDateDB = mainPlanDB.getArrivalDate();
 		Boolean departureCompared = departureDate.equals(departureDateDB)&&arrivalDate.equals(arrivalDateDB);
-		//true이면 일정 변경 없음 false이면 일정 변경 있음
 		
 		String city = cityResult;
 		String cityDB = mainPlanDB.getCity();
 		Boolean cityCompared = city.equals(cityDB);
-		//true이면 city변경 없음 false이면 city 변경 있음
-		System.out.println("debug4: " + cityCompared );
 		long diffDaysDB = mainPlanService.getDayCount(mainPlanDB.getMainPlanNo());
 		
 		mainPlanService.updateMainPlan(mainPlan);
@@ -351,7 +341,6 @@ public class MainPlanController {
 							    dailyPlan.setDay(i+1);
 							    dailyPlan.setDailyDate(dailyDate);
 							    dailyPlanService.addDailyPlan(dailyPlan); 
-						        
 						}
 						
 						Calendar calendar = Calendar.getInstance();//+1위해 Calendar형식으로 변환
@@ -364,16 +353,27 @@ public class MainPlanController {
 				        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String값
 				        dailyDate=Date.valueOf(dailyDateFormat);
 				        
-					}
-				}
-			}
-		}
+					}}}}
 
 		model.addAttribute("mainPlan", mainPlan);
 		System.out.println("Controller : updateMainPlan <END>");
 		
-		return "forward:/mainplan/listMainPlan.jsp";
+		return "forward:/mainplan/listMainPlan";
 	}
 	
+	@RequestMapping(value = "deleteMainPlan")
+	public String deleteMainPlan(@RequestParam("mainPlanNo") int mainPlanNo, Model model, HttpSession session) throws Exception {
+		
+		System.out.println("Controller : deleteMainPlan <START>");
+		System.out.println("debug : " +mainPlanService.getMainPlan(mainPlanNo));
+		
+		dailyPlanService.deleteDailyPlan(mainPlanNo);
+		mainPlanService.deleteMainPlan(mainPlanNo);
+		
+		System.out.println("Controller : deleteMainPlan <END>");
+		
+		return "forward:/mainplan/listMainPlan";
+		
+	}
 	
 }

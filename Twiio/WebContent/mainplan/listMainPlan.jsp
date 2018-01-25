@@ -4,6 +4,8 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -45,7 +47,7 @@
 		});
 	});
 */	
-	function fncDeleteMainPlanList() {
+/*	function fncDeleteMainPlanList() {
 		$("form").attr("method", "POST").attr("action","/mainplan/deleteMainPlan").submit();
 	}
 
@@ -54,7 +56,7 @@
 			fncDeleteMainPlanList();
 		});
 	});
-
+*/
 	 $(function() {
 			$("button:contains('수정')").bind("click",function() {
 				var index = $("button:contains('수정')").index(this);
@@ -63,6 +65,15 @@
 				$(location).attr('href', url);
 			});
 	 });
+	 
+	 $(function() {
+			$("button:contains('삭제')").bind("click",function() {
+				var index = $("button:contains('삭제')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+	 })
  
 </script>
 

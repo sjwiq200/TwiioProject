@@ -42,8 +42,8 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 	}
 
 	@Override
-	public void deleteDailyPlan(int dailyPlanNo) {
-		sqlSession.delete("DailyPlanMapper.deleteDailyPlan",dailyPlanNo);
+	public void deleteDailyPlan(int mainPlanNo) {
+		sqlSession.delete("DailyPlanMapper.deleteDailyPlan",mainPlanNo);
 	}
 	
 

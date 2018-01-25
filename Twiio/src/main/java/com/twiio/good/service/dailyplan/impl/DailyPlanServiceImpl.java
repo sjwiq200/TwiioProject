@@ -42,8 +42,9 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 	}
 
 	@Override
-	public void deleteDailyPlan(int dailyPlanNo) throws Exception {
-		dailyPlanDao.deleteDailyPlan(dailyPlanNo);
+	public void deleteDailyPlan(int mainPlanNo) throws Exception {
+		System.out.println("¾È³ç");
+		dailyPlanDao.deleteDailyPlan(mainPlanNo);
 	}
 
 }

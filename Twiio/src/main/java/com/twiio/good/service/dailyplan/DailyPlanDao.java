@@ -14,5 +14,5 @@ public interface DailyPlanDao {
 
 	public List<DailyPlan> getDailyPlanList(DailyPlan dailyPlan);
 
-	public void deleteDailyPlan(int dailyPlanNo);
+	public void deleteDailyPlan(int mainPlanNo);
 }

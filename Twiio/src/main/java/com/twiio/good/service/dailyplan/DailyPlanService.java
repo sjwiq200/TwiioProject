@@ -15,7 +15,7 @@ public interface DailyPlanService {
 	
 	public void updateDailyPlan(DailyPlan dailyPlan) throws Exception;
 	
-	public void deleteDailyPlan(int dailyPlanNo) throws Exception;
+	public void deleteDailyPlan(int mainPlanNo) throws Exception;
 	
 
 }
