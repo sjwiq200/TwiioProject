@@ -12,7 +12,7 @@
 		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
 		<result property="userEmail" 		column="email" 				jdbcType="VARCHAR" />
 		<result property="userGender" 		column="gender" 			jdbcType="CHAR" />
-		<result property="userPassword" 	column="password" 			jdbcType="VARCHAR" />
+		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
 		<result property="userBirthday" 	column="birth" 				jdbcType="DATE" />
 		<result property="userPhone" 		column="phone" 				jdbcType="VARCHAR"  />
 		<result property="userAccount" 		column="host_account" 		jdbcType="VARCHAR" />

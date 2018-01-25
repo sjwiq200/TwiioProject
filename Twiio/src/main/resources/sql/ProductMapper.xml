@@ -21,7 +21,8 @@
 		<result property="tourHeadCount" 		column="head_count" 			jdbcType="NUMERIC" />
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
 		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />
-		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />		
+		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />
+		<result property="productThumbnail" 	column="thumbnail" 				jdbcType="VARCHAR" />	
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -127,11 +128,6 @@
 	  	FROM(	<include refid="listProductSql"/>  ) countTable						
 	 </select>
 	 
-	 <delete id="deleteProduct" parameterType="int">
-		DELETE 
-		FROM product 
-		WHERE product_no=#{productNo}	
-	</delete>
 	
 	<!-- SQL : UPDATE -->
 	 <update	id="deleteProduct"	parameterType="int" >

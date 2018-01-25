@@ -18,7 +18,7 @@ public class User {
 	private String userPhone;
 	private String userEmail;
 	private String userAccount;
-	private int userType;
+	private String userType;
 	private int userEval;
 	private String userImage;
 	private Date regDate;
@@ -135,11 +135,11 @@ public class User {
 		this.userAccount = userAccount;
 	}
 
-	public int getUserType() {
+	public String getUserType() {
 		return userType;
 	}
 
-	public void setUserType(int userType) {
+	public void setUserType(String userType) {
 		this.userType = userType;
 	}
 
