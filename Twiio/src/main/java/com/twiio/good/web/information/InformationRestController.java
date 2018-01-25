@@ -119,7 +119,7 @@ public class InformationRestController {
 	}
 
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
-	public Map<Object,String[]> searchHistoryWeather(@RequestParam String cityName) throws Exception {
+	public Map<String,List> searchHistoryWeather(@RequestParam String cityName) throws Exception {
 
 		System.out.println("json/searchHistoryWeather ");
 		System.out.println("cityName : " + cityName);
@@ -132,25 +132,41 @@ public class InformationRestController {
 		String[] aver = {};
 		for(int i = 0; i<simple.length; i++) {
 			list.add(simple[i]);
-			System.out.println("simple다오다오"+simple[i]);
 		}
 		
 		String[] past = map.get("historyWeather");
-		System.out.println("???????????????");
-		for(int i = 0; i<past.length; i++) {
-			for(int k = 0; k<k+4;) {
-				aver[i]= past[k]+past[k+1]+past[k+2]+past[k+3];
-				k=k+4;
-			}
-			System.out.println("붙었니....?"+aver[i]);
+		
+		List<String> month =  new ArrayList<String>();
+		for(int i = 0; i<past.length;i++) {
+			month.add(past[i]);
+			i = i+3;
 		}
-		System.out.println("???????????????");
+		List<String> min =  new ArrayList<String>();
+		for(int i = 1; i<past.length;i++) {
+			min.add(past[i]);
+			i = i+3;
+		}
+		List<String> max =  new ArrayList<String>();
+		for(int i = 2; i<past.length;i++) {
+			max.add(past[i]);
+			i = i+3;
+		}
+		List<String> rain =  new ArrayList<String>();
+		for(int i = 3; i<past.length;i++) {
+			rain.add(past[i]);
+			i = i+3;
+		}
+		
 		Map<String,List> last = new HashMap();
 		
 			last.put("list", list);
+			last.put("month", month);
+			last.put("min", min);
+			last.put("max", max);
+			last.put("rain", rain);
 		
 	
-		return map;
+		return last;
 
 	}
 
