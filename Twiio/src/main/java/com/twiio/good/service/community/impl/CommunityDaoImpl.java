@@ -55,13 +55,16 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public List<Community> listCommunity(Search search, String communityType) throws Exception {
 		// TODO Auto-generated method stub
+		
 		Map<String , Object>  map = new HashMap<String, Object>();
+		
 		map.put("search", search);
 		map.put("communityType", communityType);
 		
 		System.out.println("여기까지왔니 ??");
 		System.out.println("coummnityType :: "+communityType);
 		System.out.println("Search :: "+search);
+		System.out.println("제발 나와라 ㅠㅠ :: "+sqlSession.selectList("CommunityMapper.listCommunity", map));
 		List<Community> list = sqlSession.selectList("CommunityMapper.listCommunity", map);
 //		for (int i = 0; i < list.size(); i++) {
 //			list.get(i).setBuyer((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getBuyer().getUserId()));

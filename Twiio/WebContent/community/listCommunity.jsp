@@ -5,7 +5,7 @@
 
 <html lang="ko">
 <head>
-<title>구매 목록조회</title>
+<title>Community</title>
 
 <meta charset="EUC-KR">
 	
@@ -87,26 +87,50 @@
    	<div class="container">
    	
 	<div class="page-header text-info">
-		<c:if test="${community.communityType == '0'}">
+		<c:if test="${communityType == '0'}">
 			Question Q&A
 		</c:if>
-		
-		<c:if test="${community.communityType == '1'}">
+		<c:if test="${communityType == '1'}">
 			Trip Review
 		</c:if>
 	</div>
 	
- <div class="row">
- <form name="detailForm" action="/purchase/listPurchase" method="post">
-   <div class="col-md-6 text-left">
+	 <form name="detailForm" action="/community/listCommunity" method="post"></form>
+	 
+ 	<div class="row">
+
+   	<div class="col-md-6 text-left">
 		    	<p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 	</div>
 	
-	<input type="hidden" id="currentPage" name="currentPage" value="">
-	</form>
+	<div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" id="searchCondition">
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>상품명</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품가격</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default">검색</button>
+				  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
+				</form>
+	    </div>
 	</div>
+	
+	
+	
 
 	<table class="table table-hover table-striped" >
         <thead>
@@ -121,12 +145,12 @@
         
 		<tbody>
 		<c:set var="i" value="0" />
-		<c:forEach var="purchase" items="${list}">
+		<c:forEach var="community" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 		
 			<tr>
 				<td align="center">
-				<input type="hidden" name="tranbyNo" value="${purchase.tranNo}">
+				 <input type="hidden" name="communityNo" value="${community.communityNo}">
 					${i}
 				</td>
 			
@@ -144,7 +168,11 @@
 		</c:forEach>
 		</tbody>	
 	</table>
-	
+	<div class="col-md-6 text-left">
+	</div>
+	<div class="col-md-6 text-right">
+		<button type="button" class="btn btn-default">게시글 작성</button>
+	</div>
 	</div>
 		<jsp:include page="../common/pageNavigator_new.jsp"/>	
 </body>
