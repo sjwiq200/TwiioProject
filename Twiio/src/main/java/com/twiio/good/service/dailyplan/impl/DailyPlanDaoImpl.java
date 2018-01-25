@@ -37,8 +37,8 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 	}
 
 	@Override
-	public List<DailyPlan> getDailyPlanList(DailyPlan dailyPlan) {
-		return sqlSession.selectList("DailyPlanMapper.getDailyPlanList", dailyPlan);
+	public List<DailyPlan> getDailyPlanList(int mainPlanNo) {
+		return sqlSession.selectList("DailyPlanMapper.getDailyPlanList", mainPlanNo);
 	}
 
 	@Override

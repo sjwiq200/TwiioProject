@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.service.dailyplan.DailyPlanService;
+import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.MainPlan;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mainplan.MainPlanService;
@@ -34,22 +36,13 @@ public class DailyPlanController {
 	}
 	
 	@RequestMapping(value = "listDailyPlan")
-	public String listDailyPlan(Model model, HttpSession session) throws Exception {
+	public String listDailyPlan( @RequestParam("mainPlanNo") int mainPlanNo, Model model, HttpSession session) throws Exception {
 		
 		System.out.println("Controller : listDailyPlan <START>");
 		
-		///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-		User user = new User();
-		user.setUserNo(7);
-		/////////////////////////////////////////////////////////////////
+		List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
 		
-		MainPlan mainPlan = new MainPlan();
-		mainPlan.setUser(user);
-		mainPlan.setEndClick(100);
-		
-		List<MainPlan> list = new ArrayList<MainPlan>();
-		list = mainPlanService.getMainPlanList(mainPlan);
-		for(MainPlan result : list) {
+		for(DailyPlan result : list) {
 			System.out.println("result : " + result);
 		}
 		
@@ -57,7 +50,7 @@ public class DailyPlanController {
 		
 		model.addAttribute("list", list);
 		
-		return "forward:/mainplan/listMainPlan.jsp";
+		return "forward:/dailyplan/listDailyPlan.jsp";
 	}
 	
 	

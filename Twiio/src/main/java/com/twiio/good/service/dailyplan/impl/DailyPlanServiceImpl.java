@@ -32,8 +32,8 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 	}
 
 	@Override
-	public List<DailyPlan> getDailyPlanList(DailyPlan dailyPlan) throws Exception {
-		return dailyPlanDao.getDailyPlanList(dailyPlan);
+	public List<DailyPlan> getDailyPlanList(int mainPlanNo) throws Exception {
+		return dailyPlanDao.getDailyPlanList(mainPlanNo);
 	}
 
 	@Override

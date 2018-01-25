@@ -11,7 +11,7 @@ public interface DailyPlanService {
 	
 	public DailyPlan getDailyPlan(int dailyPlanNo) throws Exception;
 	
-	public List<DailyPlan> getDailyPlanList(DailyPlan dailyPlan) throws Exception;
+	public List<DailyPlan> getDailyPlanList(int mainPlanNo) throws Exception;
 	
 	public void updateDailyPlan(DailyPlan dailyPlan) throws Exception;
 	

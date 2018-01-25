@@ -240,7 +240,7 @@ public class MainPlanController {
 		if(!(cityCompared) && departureCompared) {
 			DailyPlan dailyPlan4City = new DailyPlan();
 			dailyPlan4City.setMainPlan(mainPlan);
-			List<DailyPlan> list4City = dailyPlanService.getDailyPlanList(dailyPlan4City);
+			List<DailyPlan> list4City = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
 			System.out.println("debug5: " + "일정변경없이 city만 변경된 경우" );
 			System.out.println("debug5: " + list4City );
 			for(int i = 0 ; i<list4City.size() ; i++) {
@@ -270,7 +270,7 @@ public class MainPlanController {
 					//기존 DAY수가 더 클때
 					DailyPlan dailyPlan = new DailyPlan();
 					dailyPlan.setMainPlan(mainPlanDB);
-					List<DailyPlan> list = dailyPlanService.getDailyPlanList(dailyPlan);
+					List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
 					
 					Date dailyDate = mainPlan.getDepartureDate();
 					
@@ -320,7 +320,7 @@ public class MainPlanController {
 					dailyPlan.setMainPlan(mainPlan);
 					dailyPlan.setUser(user);
 					
-					List<DailyPlan> list = dailyPlanService.getDailyPlanList(dailyPlan);
+					List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
 					
 					for(int i = 0 ; i <diffDays+1;i++) {
 						
@@ -366,6 +366,7 @@ public class MainPlanController {
 		
 		System.out.println("Controller : deleteMainPlan <START>");
 		System.out.println("debug : " +mainPlanService.getMainPlan(mainPlanNo));
+		
 		
 		dailyPlanService.deleteDailyPlan(mainPlanNo);
 		mainPlanService.deleteMainPlan(mainPlanNo);

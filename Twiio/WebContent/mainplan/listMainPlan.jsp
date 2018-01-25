@@ -36,27 +36,6 @@
 			fncAddMainPlanList();
 		});
 	});
-
-/*	function fncUpdateMainPlanList() {
-		$("form").attr("method", "POST").attr("action","/mainplan/updateMainPlanView").submit();
-	}
-
-	$(function() {
-		$("button:contains('수정')").on("click", function() {
-			fncUpdateMainPlanList();
-		});
-	});
-*/	
-/*	function fncDeleteMainPlanList() {
-		$("form").attr("method", "POST").attr("action","/mainplan/deleteMainPlan").submit();
-	}
-
-	$(function() {
-		$("button:contains('삭제')").on("click", function() {
-			fncDeleteMainPlanList();
-		});
-	});
-*/
 	 $(function() {
 			$("button:contains('수정')").bind("click",function() {
 				var index = $("button:contains('수정')").index(this);
@@ -71,6 +50,15 @@
 				var index = $("button:contains('삭제')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+	 })
+	 
+	 	 $(function() {
+			$("button:contains('선택')").bind("click",function() {
+				var index = $("button:contains('선택')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
 			});
 	 })

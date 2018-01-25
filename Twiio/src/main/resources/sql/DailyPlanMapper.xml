@@ -44,9 +44,9 @@
 	   	WHERE daily_plan_no = #{dailyPlanNo} 
 	 </update>
 	  
-	  <select  id="getDailyPlanList"  parameterType="dailyPlan"	resultMap="dailyPlanSelectMap">
+	  <select  id="getDailyPlanList"  parameterType="int"	resultMap="dailyPlanSelectMap">
 		  SELECT * FROM daily_plan
-		  	WHERE main_plan_no=#{mainPlan.mainPlanNo}
+		  	WHERE main_plan_no=#{mainPlanNo}
 		  		AND day != 0
 		  	ORDER BY day ASC 
 	  </select>
