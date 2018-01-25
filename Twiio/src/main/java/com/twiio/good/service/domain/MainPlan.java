@@ -1,6 +1,7 @@
 package com.twiio.good.service.domain;
 
 import java.sql.Date;
+import java.util.Arrays;
 
 public class MainPlan {
 
@@ -13,22 +14,21 @@ public class MainPlan {
 	private Date departureDate;
 	private Date arrivalDate;
 	private String country;
-	private String[] city;
+	private String[] cityList;
+	private String city;
 	private String planTitle;
 	private String mainThumbnail;
-	
-	private int startClick;
 	private int endClick;
 	
 	////////////////////클릭수에 따른 메인 섬네일 개수 표헌////
-	
-	
-	public int getStartClick() {
-		return startClick;
+
+	public String getCity() {
+		return city;
 	}
-	public void setStartClick(int startClick) {
-		this.startClick = startClick;
+	public void setCity(String city) {
+		this.city = city;
 	}
+
 	public int getEndClick() {
 		return endClick;
 	}
@@ -55,6 +55,7 @@ public class MainPlan {
 	public void setDepartureDate(Date departureDate) {
 		this.departureDate = departureDate;
 	}
+	
 	public Date getArrivalDate() {
 		return arrivalDate;
 	}
@@ -67,12 +68,7 @@ public class MainPlan {
 	public void setCountry(String country) {
 		this.country = country;
 	}
-	public String[] getCity() {
-		return city;
-	}
-	public void setCity(String[] city) {
-		this.city = city;
-	}
+
 	public String getPlanTitle() {
 		return planTitle;
 	}
@@ -85,12 +81,20 @@ public class MainPlan {
 	public void setMainThumbnail(String mainThumbnail) {
 		this.mainThumbnail = mainThumbnail;
 	}
+	public String[] getCityList() {
+		return cityList;
+	}
+	public void setCityList(String[] cityList) {
+		this.cityList = cityList;
+	}
 	@Override
 	public String toString() {
-		return "MainPlan [mainPlanNo=" + mainPlanNo + ", user=" + user + ", departureDate=" + departureDate
-				+ ", arrivalDate=" + arrivalDate + ", country=" + country + ", city=" + city + ", planTitle="
-				+ planTitle + ", mainThumbnail=" + mainThumbnail + ", startClick=" + startClick + ", endClick="
-				+ endClick + "]";
+		final int maxLen = 10;
+		return "MainPlan [mainPlanNo=" + mainPlanNo + ", departureDate=" + departureDate
+				+ ", arrivalDate=" + arrivalDate + ", country=" + country + ", cityList="
+				+ (cityList != null ? Arrays.asList(cityList).subList(0, Math.min(cityList.length, maxLen)) : null)
+				+ ", city=" + city + ", planTitle=" + planTitle + ", mainThumbnail=" + mainThumbnail + ", endClick="
+				+ endClick + ", user=" + user + "]";
 	}
 	
 	

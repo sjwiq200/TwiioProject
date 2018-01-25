@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductMapper">
+ 	
+ 	
+	<resultMap id="productSelectMap" type="product">
+		<result property="productNo" 			column="product_no" 			jdbcType="NUMERIC"/>
+		<result property="productName"			column="product_title" 			jdbcType="VARCHAR" />
+		<result property="productPrice" 		column="product_price" 			jdbcType="NUMERIC" />
+		<result property="productType" 			column="product_type" 			jdbcType="CHAR" />
+		<result property="tripDate" 			column="trip_date" 				jdbcType="DATE" />
+		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
+		<result property="country" 				column="country" 				jdbcType="VARCHAR" />
+		<result property="city" 				column="city" 					jdbcType="VARCHAR" />
+		<result property="hostNo" 				column="user_no" 				jdbcType="NUMERIC" />
+		<result property="description" 			column="product_content" 		jdbcType="CLOB" />
+		<result property="tourHeadCount" 		column="head_count" 			jdbcType="NUMERIC" />
+		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
+		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />		
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addProduct"		parameterType="product" >
+	 	INSERT
+		INTO product( product_no , product_title , product_price , product_type , trip_date, reg_date, country, city, user_no, product_content, head_count, view_count, product_count) 
+		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
+					#{prodName} , 
+					#{productPrice} , 
+					#{productType} , 
+					#{tripDate} , 
+					SYSDATE ,
+					#{country} ,
+					#{city} ,
+					#{hostNo} ,
+					#{description} ,
+					#{tourHeadCount} ,
+					#{viewCount} ,
+					#{productCount} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getProduct"	parameterType="string"	resultMap="productSelectMap">
+		SELECT
+		product_no , product_title , product_price , product_type , trip_date, reg_date, country, city, user_no, product_content, head_count, view_count, product_count 		
+		FROM product 
+		WHERE prod_no = #{value}
+	 </select>
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateProduct"	parameterType="product" >
+	   	UPDATE product
+	   	<set>
+	   		product_title 		= #{prodName} ,
+			product_price		= #{productPrice},
+			product_type		= #{productType} ,
+			trip_date			= #{tripDate} ,
+			country				= #{country} ,
+			city				= #{city} ,
+			product_content		= #{description} ,
+			head_count			= #{tourHeadCount} ,
+			product_count		= #{productCount}			
+	   	</set>
+	   	WHERE prod_no = #{prodNo}
+	 </update>
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="listProduct"  parameterType="map"	resultMap="productSelectMap">
+	  	SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	<include refid="listProductSql"/>
+									 ) inner_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+	 </select>
+	 
+	 <sql id="listProductSql">
+		 SELECT product_no, product_title, product_price, product_type, country, city, view_count, user_no				   
+		 FROM product		
+		<if test="search.searchCondition != null">
+			
+				<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+	 				AND country= #{search.searchKeyword}
+				</if>
+				<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+	 				AND city = #{search.searchKeyword}
+				</if>
+				<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+	 				AND product_title LIKE '${search.searchKeyword}%'
+				</if>
+				<if test="search.searchCondition == 3 and search.searchKeyword !='' ">
+	 				AND user_no LIKE '${search.searchKeyword}%'
+				</if>
+				<if test="search.searchCondition == 4 and search.searchKeyword !='' ">
+					<if test="str.length == 1">
+	 					AND product_price= #{search.searchKeyword}
+	 				</if>
+	 				<if test="str.length == 2">
+	 					AND product_price BETWEEN #{str[0]} AND #{str[1]}
+	 				</if>
+				</if>
+			
+		</if>
+		<choose>
+			<when test="search.condition == 'low'">ORDER BY price</when>
+			<when test="search.condition == 'high'">ORDER BY price DESC</when>
+		<otherwise>ORDER BY reg_date DESC</otherwise>
+		</choose>
+	 </sql>
+	 
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	<include refid="listProductSql"/>  ) countTable						
+	 </select>
+	 
+	 <delete id="deleteProduct" parameterType="int">
+		DELETE 
+		FROM product 
+		WHERE product_no=#{productNo}	
+	</delete>
+	 
+	 
+	 
+</mapper>

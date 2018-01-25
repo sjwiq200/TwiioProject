@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.twiio.good.service.domain.User;
@@ -30,6 +31,40 @@ public class UserRestController {
 		
 	public UserRestController(){
 		System.out.println(this.getClass());
+	}
+	
+	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )
+	public User getUser( @PathVariable int userNo ) throws Exception{
+		
+		System.out.println("/user/json/getUser : GET ");
+		
+		//Business Logic
+		return userService.getUserInNo(userNo);
+	}
+	
+	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
+	public boolean detectFace( @RequestBody User user ) throws Exception{
+		
+		System.out.println("/user/json/detectFace ");
+		System.out.println(user);
+		//Business Logic
+		return userService.detectFace(user);
+	}
+	
+	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
+	public Map<String, Boolean> checkDuplication( @RequestBody User user ) throws Exception{
+		
+		System.out.println("/user/json/checkDuplication : POST");
+		//Business Logic
+		//userId=userId.split("=")[1];
+		//boolean result=userService.checkDuplication(userId);		
+		
+		boolean result=userService.checkDuplication(user.getUserId());
+		
+		Map<String, Boolean> map= new HashMap<String, Boolean>();
+		map.put("result", result);
+		
+		return map;
 	}
 	
 	@RequestMapping( value="json/getStarEvalHost")

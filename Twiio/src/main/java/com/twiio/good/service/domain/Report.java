@@ -66,7 +66,6 @@ public int getReportNo()
 	return targetUserNo;
 }
 
-
 public void setTargetUserNo(int targetUserNo) {
 	this.targetUserNo = targetUserNo;
 }

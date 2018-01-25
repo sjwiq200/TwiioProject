@@ -12,6 +12,7 @@ import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,7 +28,7 @@ public class InformationController {
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
 	
-
+	
 	public InformationController() {
 		System.out.println(this.getClass());
 	}
@@ -38,11 +39,19 @@ public class InformationController {
 		System.out.println("/information/getCurrency");
 	
 		List<Currency> returnList= new ArrayList<Currency>();
-		returnList = informationService.getCurrency();
+		returnList = informationService.addCurrency();
 	        
 	        model.addAttribute("returnList", returnList);
 	        System.out.println(returnList);
 	        return "forward:/information/currency.jsp";
+	}
+	
+	@RequestMapping( value="getWeather" )
+	public String getWeather(Model model) throws Exception{
+		
+		System.out.println("/information/getWeather");
+	
+	        return "forward:/information/searchNowWeather.jsp";
 	}
 
 }

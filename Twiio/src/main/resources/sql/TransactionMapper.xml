@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="TransactionMapper">
+ 	
+ 	
+	<resultMap id="transactionSelectMap" type="transaction">
+		<result property="tranNo" 					column="tran_no" 				jdbcType="NUMERIC"/>
+		<result property="regDate"					column="tran_date" 				jdbcType="DATE" />
+		<result property="tripDate" 				column="trip_date" 				jdbcType="DATE" />
+		<result property="requirement" 				column="requirement" 			jdbcType="VARCHAR" />
+		<result property="paymentType" 				column="pay_type" 				jdbcType="CHAR" />
+		<result property="tranPro.productNo" 		column="product_no" 			jdbcType="NUMERIC" />
+		<result property="tranPro.hostNo" 			column="host_no" 				jdbcType="NUMERIC" />
+		<result property="count" 					column="tran_count" 			jdbcType="NUMERIC" />
+		<result property="tranPro.productPrice" 	column="product_price" 			jdbcType="NUMERIC" />
+		<result property="buyerNo" 					column="user_no" 				jdbcType="NUMERIC" />
+		<result property="refundCode" 				column="refund_code" 			jdbcType="CHAR" />
+		<result property="payToHostDate" 			column="pay_to_host_date" 		jdbcType="DATE" />
+		<result property="totalPrice" 				column="tran_price" 			jdbcType="NUMERIC" />
+		<result property="starEvalHost" 			column="host_star_eval" 		jdbcType="NUMERIC" />
+		<result property="reviewHost" 				column="host_review" 			jdbcType="VARCHAR" />
+		<result property="starEvalProduct" 			column="product_star_eval" 		jdbcType="NUMERIC" />
+		<result property="reviewProduct" 			column="product_review" 		jdbcType="VARCHAR" />			
+	</resultMap>
+	
+	<resultMap id="refundSelectMap" type="refund">
+		<result property="refundNo" 				column="refund_no" 				jdbcType="NUMERIC"/>
+		<result property="tranNo" 					column="tran_no" 				jdbcType="NUMERIC"/>
+		<result property="regDate"					column="refund_reg_date" 		jdbcType="NUMERIC" />
+		<result property="confirmDate" 				column="refund_confirm_date" 	jdbcType="VARCHAR" />
+		<result property="refundPrice" 				column="refund_price" 			jdbcType="CHAR" />
+		<result property="refundAccount" 			column="refund_account" 		jdbcType="VARCHAR" />
+		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />			
+	</resultMap>
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addPurchase"		parameterType="transaction" >
+	 	INSERT
+		INTO transaction( tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date) 
+		VALUES	 (	seq_TRANSACTION_TRAN_NO.NEXTVAL , 
+					#{purchaseProd.prodNo} , 
+					#{buyer.userId} , 
+					#{paymentOption:CHAR} , 
+					#{receiverName:VARCHAR} , 
+					#{receiverPhone:VARCHAR} ,
+					#{divyAddr:VARCHAR} ,
+					#{divyRequest:VARCHAR} ,
+					#{tranCode:CHAR} ,
+					SYSDATE ,
+					#{divyDate:DATE} )
+	 </insert>
+	 
+	 <!-- SQL : SELECT ONE -->
+	 <select 	id="getPurchase"	parameterType="int"	resultMap="transactionSelectMap">
+		SELECT
+		tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 		
+		FROM transaction 
+		WHERE tran_no = #{value}
+	 </select>
+	 
+	 <!-- <select 	id="getPurchase2"	parameterType="int"	resultMap="transactionSelectMap">
+		SELECT
+		tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 		
+		FROM transaction 
+		WHERE prod_no = #{value}
+	 </select> -->
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updatePurchase"	parameterType="transaction" >
+	   	UPDATE transaction
+	   	<set>
+	   		payment_option 	= #{paymentOption:CHAR} ,
+			receiver_name	= #{receiverName:VARCHAR},
+			receiver_phone	= #{receiverPhone:VARCHAR} ,
+			demailaddr		= #{divyAddr:VARCHAR} ,
+			dlvy_request	= #{divyRequest:VARCHAR},
+			dlvy_date		= #{divyDate:DATE}
+	   	</set>
+	   	WHERE tran_no = #{tranNo}
+	 </update>
+		 
+	<!-- SQL : SELECT LIST -->
+	<select  id="listPurchase"  parameterType="map"	resultMap="transactionSelectMap">
+		SELECT *
+	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  					FROM		(	SELECT 
+									  	tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 
+									  	FROM transaction 
+									  	WHERE buyer_id= #{buyerId} 
+									  	ORDER BY tran_no
+									 ) inner_table
+						WHERE ROWNUM &lt;= #{search.endRowNum} )
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+	 </select>
+	 	<!--  위 두번째 subQuery 의  
+	 			WHERE ROWNUM &lt;= #{endRowNum} ) 는
+	 			WHERE ROWNUM <= #{endRowNum} ) 의미이며..
+	 			< 는 keyword 로 &lt; 를	사용.
+	 			
+	 			<![CDATA[  ~~~  ]]> 를 이용하여 아래와 같이 사용  할 수 있다.
+	 			CDATA ==> Character Data 의 의미 Java 에서 \n 같은 특수문자 처리  
+
+				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
+		-->
+	
+	<update id="updateTranCode" parameterType="transaction">
+		UPDATE transaction 
+		SET 
+			tran_status_code=#{tranCode} 
+		WHERE tran_no=#{tranNo}	
+	</update>
+	
+	<delete id="refundPurchase" parameterType="transaction">
+		DELETE 
+		FROM transaction 
+		WHERE tran_no=#{tranNo}	
+	</delete>
+	
+	<!-- SQL : SELECT ROW Count -->	 
+	 <select  id="getTotalCount"  parameterType="string"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM(	SELECT 
+				tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 
+				FROM transaction 
+				WHERE buyer_id= #{value} 
+				ORDER BY tran_no
+			 ) countTable						
+	 </select>
+	 
+</mapper>
