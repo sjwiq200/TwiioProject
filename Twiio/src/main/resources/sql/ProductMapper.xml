@@ -20,13 +20,14 @@
 		<result property="description" 			column="product_content" 		jdbcType="CLOB" />
 		<result property="tourHeadCount" 		column="head_count" 			jdbcType="NUMERIC" />
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
-		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />		
+		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />
+		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />		
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count) 
+		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, product_delete) 
 		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
 					#{prodName} , 
 					#{productPrice} , 
@@ -37,7 +38,8 @@
 					#{hostNo} ,
 					#{description} ,
 					#{tourHeadCount} ,					
-					#{productCount} )
+					#{productCount} ,
+					'0' )
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -130,6 +132,15 @@
 		FROM product 
 		WHERE product_no=#{productNo}	
 	</delete>
+	
+	<!-- SQL : UPDATE -->
+	 <update	id="deleteProduct"	parameterType="int" >
+	   	UPDATE product
+	   	<set>	   		
+			product_delete			= '1'						
+	   	</set>
+	   	WHERE product_no = #{productNo}
+	 </update>
 	
 	<!-- SQL : UPDATE -->
 	 <update	id="updateViewCount"	parameterType="int" >

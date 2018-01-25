@@ -1,5 +1,6 @@
 package com.twiio.good.service.product;
 
+import java.util.List;
 import java.util.Map;
 
 import com.twiio.good.common.Search;
@@ -22,7 +23,7 @@ public interface ProductService {
 	public void updateProduct(Product product) throws Exception;
 	
 	// 상품 조회수 증가
-	public void updateViewCount(int productNo) throws Exception;
+	//public void updateViewCount(int productNo) throws Exception;
 	
 	// 상품 삭제
 	public void deleteProduct(int productNo) throws Exception;
@@ -34,9 +35,9 @@ public interface ProductService {
 	public Map<String,Object> listStarEvalProduct(Search search, int productNo) throws Exception;
 	
 	// 상품 평점 보기
-	public void getEvalProduct(int productNo) throws Exception;
+	public Transaction getEvalProduct(int productNo) throws Exception;
 	
 	// 베스트 상품 리스트
-	public Map<String,Object> listBestProduct(Search search) throws Exception;
+	public List<Transaction> listBestProduct(Search search) throws Exception;
 	
 }
