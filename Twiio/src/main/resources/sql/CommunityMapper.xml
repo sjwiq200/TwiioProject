@@ -26,7 +26,7 @@
 	
 	
 	<!--SQL : INSERT  -->
-	<insert id="addCommunity" parameterType="community">
+	<insert id="addCommunity" parameterType="community" useGeneratedKeys="true" keyColumn="community_no" keyProperty="communityNo">
 		INSERT
 		INTO COMMUNITY
 		VALUES (
@@ -70,23 +70,14 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT
-							   		seq_community_community_no.nextval,
-									#{communityTitle:VARCHAR},
-									#{userNo:NUMERIC},
-									SYSDATE,
-									#{viewCount:NUMERIC},
-									#{communitySubTitle:VARCHAR},
-									#{communityType:VARCHAR},
-									#{communityContent:VARCHAR}
-							   FROM 
+							   SELECT * FROM 
   							   COMMUNITY 
   							   <where>			
 									<if test="communityType == 0">										
-									    	community_type = #{type}
+									    	COMMUNITY_TYPE = #{communityType}
 									</if>
 									<if test="communityType == 1">
-									    	community_type = #{type}
+									    	COMMUNITY_TYPE = #{communityType}
 									</if>									
 							  </where>
 							   ORDER BY COMMUNITY_NO
@@ -106,19 +97,19 @@
 	
 	<!-- SQL : DELETE ONE -->
 	
-	<select  id="getTotalCountReport" parameterType="int"  resultType="int" >
+	<select  id="getTotalCount" parameterType="String"  resultType="int" >
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM COMMUNITY
 	  			 <where>			
 					<if test="communityType == 0">										
-					   	community_type = #{type}
+					   	COMMUNITY_TYPE = #{communityType}
 					</if>
 					<if test="communityType == 1">
-					   	community_type = #{type}
+					   	COMMUNITY_TYPE = #{communityType}
 					</if>									
 				 </where>
-				) countTable						
+				)countTable						
 	 </select>
 	 
 	 

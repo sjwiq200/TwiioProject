@@ -10,6 +10,6 @@ public interface CommunityService {
 	public Community getCommunity(int communityNo) throws Exception;
 	public void updateCommunity(Community community) throws Exception;
 	public void deleteCommunity(int communityNo) throws Exception;
-	public Map<String, Object> listCommunity(Search search, int communityType) throws Exception;
+	public Map<String, Object> listCommunity(Search search, String communityType) throws Exception;
 	public void getBestTripReview() throws Exception;
 }

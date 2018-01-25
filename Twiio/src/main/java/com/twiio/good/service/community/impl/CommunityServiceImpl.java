@@ -51,10 +51,15 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	
-	public Map<String, Object> listCommunity(Search search, int communityType) throws Exception{
-		
+	public Map<String, Object> listCommunity(Search search, String communityType) throws Exception{
+		System.out.println("ServiceImpl listCommunity 리스트 검색  시작");
 		List<Community> list= communityDao.listCommunity(search, communityType);
+		System.out.println("ServiceImpl listCommunity 리스트 검색 종료");
+		
+		System.out.println("ServiceImpl listCommunity totalcount 시작");
 		int totalCount = communityDao.getTotalCount(communityType);
+		System.out.println("ServiceImpl listCommunity totalcount 종료");
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount",totalCount);
