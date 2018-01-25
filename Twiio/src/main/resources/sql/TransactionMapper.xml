@@ -25,8 +25,10 @@
 		<result property="reviewHost" 				column="host_review" 			jdbcType="VARCHAR" />
 		<result property="starEvalProduct" 			column="product_star_eval" 		jdbcType="NUMERIC" />
 		<result property="reviewProduct" 			column="product_review" 		jdbcType="VARCHAR" />
-		<result property="evalProduct" 				column="product_review" 		jdbcType="NUMERIC" />
-		<result property="evalHost" 				column="product_review" 		jdbcType="NUMERIC" />			
+		<result property="evalProduct" 				column="eval_product" 			jdbcType="NUMERIC" />
+		<result property="evalHost" 				column="eval_host" 				jdbcType="NUMERIC" />
+		<result property="userName" 				column="user_name" 				jdbcType="VARCHAR" />
+		<result property="hostName" 				column="host_name" 				jdbcType="VARCHAR" />			
 	</resultMap>
 	
 	<resultMap id="refundSelectMap" type="refund">
@@ -36,11 +38,13 @@
 		<result property="confirmDate" 				column="refund_confirm_date" 	jdbcType="VARCHAR" />
 		<result property="refundPrice" 				column="refund_price" 			jdbcType="CHAR" />
 		<result property="refundAccount" 			column="refund_account" 		jdbcType="VARCHAR" />
-		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />			
+		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />
+		<result property="userNo" 					column="user_no" 				jdbcType="NUMERIC" />
+		<result property="hostNo" 					column="host_no" 				jdbcType="NUMERIC" />			
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addPurchase"		parameterType="transaction" >
+	<insert 	id="addTransaction"		parameterType="transaction" >
 	 	INSERT
 		INTO transaction( tran_no , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, refund_code, pay_to_host_date, tran_price) 
 		VALUES	 (	seq_TRANSACTION_TRAN_NO.NEXTVAL ,					
@@ -58,7 +62,7 @@
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
-	 <select 	id="getPurchase"	parameterType="int"	resultMap="transactionSelectMap">
+	 <select 	id="getTransaction"	parameterType="int"	resultMap="transactionSelectMap">
 		SELECT
 		tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, refund_code, pay_to_host_date, tran_price 		
 		FROM transaction 
@@ -73,12 +77,12 @@
 	 </select> -->
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="updateTransactionCode"	parameterType="int" >
+	 <update	id="updateTransactionCode"	parameterType="transaction" >
 	   	UPDATE transaction
 	   	<set>	   		
 			refund_code		= #{refundCode}
 	   	</set>
-	   	WHERE tran_no = #{value}
+	   	WHERE tran_no = #{tranNo}
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
@@ -86,14 +90,14 @@
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT 
-									  	tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price 
+									  	tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price, refund_code
 									  	FROM transaction
 									  	<where>
-										  	<if test="userType == user">
-							 					user_no= #{buyerNo}
+										  	<if test="user.userType == 1">
+							 					user_no= #{user.userNo}
 							 				</if>
-							 				<if test="userType == host">
-							 					host_no= #{hostNo}
+							 				<if test="user.userType == 2">
+							 					host_no= #{user.userNo}
 							 				</if>
 						 				</where>								  	 
 									  	ORDER BY tran_date DESC
@@ -128,17 +132,27 @@
 		UPDATE refund 
 		SET 
 			refund_confirm_date=#{confirmDate} 
-		WHERE refund_no=#{value}	
+		WHERE refund_no=#{refundNo}	
 	</update>
 	
 	<!-- SQL : SELECT LIST -->
-	<select  id="listRefund"  parameterType="search"	resultMap="refundSelectMap">
+	<select  id="listRefund"  parameterType="map"	resultMap="refundSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT 
-									  	refund_no, tran_no, refund_reg_date, refund_confirm_date, refund_price, refund_account, refund_bank 
-									  	FROM refund									  									  	 
-									  	ORDER BY refund_no DESC
+	  					FROM		(	SELECT r.tran_no as tran_no,
+											   r.refund_no as refund_no,
+											   r.refund_reg_date as refund_reg_date,
+											   r.refund_confirm_date as refund_confirm_date,
+											   r.refund_price as refund_price,
+											   r.refund_account as refund_account,
+											   r.refund_bank as refund_bank,
+											   t.user_no as user_no,
+											   t.host_no as host_no
+									FROM refund r, transaction t
+									WHERE r.tran_no=t.tran_no
+									<if test="user.userType==1">AND user_no=#{user.userNo}</if>
+									<if test="user.userType==2">AND host_no=#{user.userNo}</if>									
+									ORDER BY refund_reg_date DESC
 									 ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
@@ -164,13 +178,22 @@
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT
-	  									<if test="evalType == product">
-							 				product_no, tran_no , tran_date , trip_date , host_no, tran_count, user_no, product_star_eval, product_review
+	  										t.product_no as product_no , 
+	  										t.tran_no as tran_no , 
+	  										t.tran_date as tran_date , 
+	  										t.trip_date as tran_date , 
+	  										t.host_no as host_no , 
+											t.tran_count as tran_count , 
+											t.user_no as user_no , 
+											t.product_star_eval as product_star_eval , 
+											t.product_review as product_review ,
+	  									<if test="evalType == product">	  										
+											u.user_name as user_name							 				
 							 			</if>
 							 			<if test="evalType == host">
-							 				host_no, tran_no , tran_date , trip_date , product_no, tran_count, user_no, host_star_eval, host_review
+							 				u.user_name as host_name
 							 			</if>									  	
-									  	FROM transaction
+									  	FROM transaction t, users u
 									  	<where>								  	
 											<if test="evalType == product">
 								 				product_no= #{productNo}
@@ -191,13 +214,13 @@
 			host_star_eval	= #{starEvalHost} ,
 			host_review		= #{reviewHost}
 		</set>
-		WHERE tran_no = #{value}	
+		WHERE tran_no = #{tran_no}	
 	</update>
 	 
 	 <select 	id="getEval"	parameterType="map"	resultMap="transactionSelectMap">
 		SELECT
-		<if test="evalType == product">AVG(product_star_eval)</if>
-		<if test="evalType == host">AVG(host_star_eval)</if>		
+		<if test="evalType == product">AVG(product_star_eval) as eval_product</if>
+		<if test="evalType == host">AVG(host_star_eval) eval_host</if>		
 		FROM transaction
 		<where>
 			<if test="evalType == product">product_no = #{productNo}</if>
@@ -211,7 +234,7 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT
 	  									<if test="evalType == product">
-							 				host_no, AVG(product_star_eval) as product_eval
+							 				product_no, AVG(product_star_eval) as product_eval
 							 			</if>
 							 			<if test="evalType == host">
 							 				host_no, AVG(host_star_eval) as host_eval
@@ -233,20 +256,36 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT
 	  			<choose>
-	  				<when test="userType == admin">refund_no, tran_no, refund_reg_date, refund_confirm_date, refund_price, refund_account, refund_bank 
-									  			FROM refund
+	  				<when test="user.userType == 3 or user.userType == 2 or user.userType == 3">
+	  										   r.tran_no as tran_no,
+											   r.refund_no as refund_no,
+											   r.refund_reg_date as refund_reg_date,
+											   r.refund_confirm_date as refund_confirm_date,
+											   r.refund_price as refund_price,
+											   r.refund_account as refund_account,
+											   r.refund_bank as refund_bank,
+											   t.user_no as user_no,
+											   t.host_no as host_no
+									FROM refund r, transaction t
+									WHERE r.tran_no=t.tran_no									
 					</when>
 	  				<otherwise>tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
 							FROM transaction
 					</otherwise>
-	  			</choose>				 
-				<if test="userType == user">
-					WHERE user_no= #{buyerNo}
-				</if>
-				<if test="userType == host">
-					WHERE host_no= #{hostNo}
-				</if>
-				ORDER BY tran_date DESC
+	  			</choose>
+	  			<choose>												 
+				<when test="user.userType == 1">
+					AND user_no=#{user.userNo}
+					ORDER BY refund_reg_date DESC
+				</when>
+				<when test="user.userType == 2">
+					AND host_no=#{user.userNo}
+					ORDER BY refund_reg_date DESC
+				</when>
+				<otherwise>
+					ORDER BY tran_date DESC
+				</otherwise>				
+				</choose>
 			 ) countTable						
 	 </select>
 	 

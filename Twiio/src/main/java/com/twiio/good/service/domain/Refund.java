@@ -11,6 +11,9 @@ public class Refund {
 	private int refundPrice;
 	private String refundAccount;
 	private String refundBank;
+	private int userNo;
+	private int hostNo;
+	private String userType;
 
 	public Refund() {
 		// TODO Auto-generated constructor stub
@@ -72,11 +75,35 @@ public class Refund {
 		this.refundBank = refundBank;
 	}
 
+	public int getUserNo() {
+		return userNo;
+	}
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	public int getHostNo() {
+		return hostNo;
+	}
+
+	public void setHostNo(int hostNo) {
+		this.hostNo = hostNo;
+	}
+
+	public String getUserType() {
+		return userType;
+	}
+
+	public void setUserType(String userType) {
+		this.userType = userType;
+	}
+
 	@Override
 	public String toString() {
 		return "Refund [refundNo=" + refundNo + ", tranNo=" + tranNo + ", regDate=" + regDate + ", confirmDate="
 				+ confirmDate + ", refundPrice=" + refundPrice + ", refundAccount=" + refundAccount + ", refundBank="
-				+ refundBank + "]";
+				+ refundBank + ", userNo=" + userNo + ", hostNo=" + hostNo + ", userType=" + userType + "]";
 	}
 
 }

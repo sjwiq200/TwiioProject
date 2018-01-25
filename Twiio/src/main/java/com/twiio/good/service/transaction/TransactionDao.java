@@ -24,7 +24,7 @@ public interface TransactionDao {
 	//public Map<String, Object> listTransactionHost(Search search, int hostNo) throws Exception;
 
 	// UPDATE
-	public void updateTransactionCode(int tranNo) throws Exception;
+	public void updateTransactionCode(Transaction transaction) throws Exception;
 	
 	// 게시판 Page 처리를 위한 전체Row(totalCount) return
 	public int getTotalCount(Map<String, Object> map) throws Exception;
@@ -33,10 +33,10 @@ public interface TransactionDao {
 	public void addRefund(Refund refund) throws Exception;
 
 	// UPDATE
-	public void updateRefund(int refundNo) throws Exception;
+	public void updateRefund(Refund refund) throws Exception;
 	
 	// SELECT LIST
-	public List<Refund> listRefund(Search search) throws Exception;
+	public List<Refund> listRefund(Map<String, Object> map) throws Exception;
 
 	// DELETE
 	public void deleteRefund(int refundNo) throws Exception;
@@ -47,14 +47,14 @@ public interface TransactionDao {
 	// SELECT LIST
 	//public Map<String,Object> listStarEvalProduct(Search search, int productNo) throws Exception;
 	
-	// SELECT LIST  Search search, int productNo, String userType
+	// SELECT LIST  Search search, int productNo, String evalType
 	public List<Transaction> listStarEval(Map<String,Object> map) throws Exception;
 
 	// SELECT ONE 상품서비스
 	//public void getEvalProduct(int productNo) throws Exception;
 	
 	// SELECT ONE 평점서비스  int productNo, String evalType
-	public int getEval(Map<String,Object> map) throws Exception;
+	public Transaction getEval(Map<String,Object> map) throws Exception;
 
 	// SELECT LIST search
 	public List<Transaction> listBest(Map<String,Object> map) throws Exception;

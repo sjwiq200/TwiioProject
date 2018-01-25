@@ -49,9 +49,9 @@ public class TransactionDaoImpl implements TransactionDao {
 	}
 
 	@Override
-	public void updateTransactionCode(int tranNo) throws Exception {
+	public void updateTransactionCode(Transaction transaction) throws Exception {
 		// TODO Auto-generated method stub
-		sqlsession.update("TransactionMapper.updateTransactionCode", tranNo);
+		sqlsession.update("TransactionMapper.updateTransactionCode", transaction);
 	}
 
 	@Override
@@ -67,15 +67,15 @@ public class TransactionDaoImpl implements TransactionDao {
 	}
 
 	@Override
-	public void updateRefund(int refundNo) throws Exception {
+	public void updateRefund(Refund refund) throws Exception {
 		// TODO Auto-generated method stub
-		sqlsession.update("TransactionMapper.addRefund", refundNo);
+		sqlsession.update("TransactionMapper.addRefund", refund);
 	}
 
 	@Override
-	public List<Refund> listRefund(Search search) throws Exception {
+	public List<Refund> listRefund(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlsession.selectList("TransactionMapper.listRefund", search);
+		return sqlsession.selectList("TransactionMapper.listRefund", map);
 	}
 
 	@Override
@@ -97,7 +97,7 @@ public class TransactionDaoImpl implements TransactionDao {
 	}
 
 	@Override
-	public int getEval(Map<String, Object> map) throws Exception {
+	public Transaction getEval(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlsession.selectOne("TransactionMapper.getEval", map);
 	}

@@ -12,7 +12,7 @@ public interface DailyPlanDao {
 	
 	public void updateDailyPlan(DailyPlan dailyPlan);
 
-	public List<DailyPlan> getDailyPlanList(DailyPlan dailyPlan);
+	public List<DailyPlan> getDailyPlanList(int mainPlanNo);
 
-	public void DailyPlan(int dailyPlanNo);
+	public void deleteDailyPlan(int mainPlanNo);
 }

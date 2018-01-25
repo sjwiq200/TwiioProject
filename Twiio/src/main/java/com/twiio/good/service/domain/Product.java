@@ -19,6 +19,8 @@ public class Product {
 	private String targetType="0";
 	private int viewCount;
 	private int productCount;
+	private String productDelete;
+	//½æ³×ÀÏ
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -136,13 +138,21 @@ public class Product {
 		this.productCount = productCount;
 	}
 
+	public String getProductDelete() {
+		return productDelete;
+	}
+
+	public void setProductDelete(String productDelete) {
+		this.productDelete = productDelete;
+	}
+
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", productName=" + productName + ", productPrice=" + productPrice
 				+ ", productType=" + productType + ", tripDate=" + Arrays.toString(tripDate) + ", regDate=" + regDate
 				+ ", country=" + country + ", city=" + city + ", hostNo=" + hostNo + ", description=" + description
 				+ ", tourHeadCount=" + tourHeadCount + ", targetType=" + targetType + ", viewCount=" + viewCount
-				+ ", productCount=" + productCount + "]";
+				+ ", productCount=" + productCount + ", productDelete=" + productDelete + "]";
 	}
 
 }

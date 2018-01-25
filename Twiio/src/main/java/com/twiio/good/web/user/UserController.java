@@ -137,7 +137,7 @@ public class UserController {
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
+		//model.addAttribute("search", search);
 		
 		return "forward:/user/listUser.jsp";
 	}
@@ -163,7 +163,7 @@ public class UserController {
 		
 		//유저 아이디 고쳐서 보내기
 		int index = userId.length()-4;
-		String userIdHint = userId.substring(index);
+		String userIdHint = userId.substring(0,index)+"****";
 		// Model 과 View 연결
 		model.addAttribute("userIdHint", userIdHint);
 		

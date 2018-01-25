@@ -1,10 +1,12 @@
 package com.twiio.good.service.transaction;
 
+import java.util.List;
 import java.util.Map;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Refund;
 import com.twiio.good.service.domain.Transaction;
+import com.twiio.good.service.domain.User;
 
 
 
@@ -34,25 +36,37 @@ public interface TransactionService {
 	//public Purchase getPurchase2(int ProdNo) throws Exception;
 	
 	// 거래 리스트
-	public Map<String,Object> listTransaction(Search search,int buyerNo) throws Exception;
+	public Map<String,Object> listTransaction(Search search,User user) throws Exception;
 	
 	// 호스트 판매 리스트
-	public Map<String,Object> listTransactionHost(Search search,int hostNo) throws Exception;
+	//public Map<String,Object> listTransactionHost(Search search,int hostNo) throws Exception;
 	
 	// 환불 코드 변경
-	public void updateTransactionCode(int tranNo) throws Exception;
+	public void updateTransactionCode(Transaction transaction) throws Exception;
 	
 	// 환불 신청
 	public void addRefund(Refund refund) throws Exception;
 	
 	// 환불 완료 confirmDate 
 	public void updateRefund(Refund refund) throws Exception;
-	
+
 	// 환불 리스트
-	public Map<String, Object> listRefund(Search search) throws Exception;
-	
+	public Map<String, Object> listRefund(Search search, User user) throws Exception;
+
 	// 환불 취소
 	public void deleteRefund(int tranNo) throws Exception;
+
+	// 상품 별점 평가 하기
+	public void addStarEvalProduct(Transaction transaction) throws Exception;
+
+	// 상품 별점 평가 리스트
+	public Map<String, Object> listStarEvalProduct(Search search, int productNo) throws Exception;
+
+	// 상품 평점 보기
+	public Transaction getEvalProduct(int productNo) throws Exception;
+
+	// 베스트 상품 리스트
+	public List<Transaction> listBestProduct(Search search) throws Exception;
 	
 
 }

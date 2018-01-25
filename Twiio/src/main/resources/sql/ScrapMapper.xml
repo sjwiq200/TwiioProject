@@ -40,9 +40,9 @@
 		  ORDER BY scrap_no ASC
 	  </select>
 	
-	 <select  id="deleteScrap"  parameterType="int"	resultMap="scrapSelectMap">
+	 <delete  id="deleteScrap"  parameterType="int">
 	 DELETE FROM scrap WHERE scrap_no = #{scrapNo}
-	 </select>
+	 </delete>
 	 
 	 
 </mapper>

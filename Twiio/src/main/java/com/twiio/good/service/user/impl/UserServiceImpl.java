@@ -11,6 +11,7 @@ import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -91,7 +92,14 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public Map<String, Object> listUser(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<User> list = userDao.listUser(search);
+		int totalCount = userDao.getTotalCount(search);
+		
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
@@ -109,7 +117,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public String findId(User user) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		return userDao.findId(user);
 	}
 
 

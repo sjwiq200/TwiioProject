@@ -11,7 +11,7 @@
 		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE"/>
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
-		<result property="communitySubTitle" 	column="community_subTitle" 	jdbcType="VARCHAR"/>
+		<result property="communitySubTitle" 	column="community_sub_title" 	jdbcType="VARCHAR"/>
 		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
 		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
 	</resultMap>
@@ -26,7 +26,7 @@
 	
 	
 	<!--SQL : INSERT  -->
-	<insert id="addCommunity" parameterType="community">
+	<insert id="addCommunity" parameterType="community" useGeneratedKeys="true" keyColumn="community_no" keyProperty="communityNo">
 		INSERT
 		INTO COMMUNITY
 		VALUES (
@@ -70,25 +70,10 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT
-							   		seq_community_community_no.nextval,
-									#{communityTitle:VARCHAR},
-									#{userNo:NUMERIC},
-									SYSDATE,
-									#{viewCount:NUMERIC},
-									#{communitySubTitle:VARCHAR},
-									#{communityType:VARCHAR},
-									#{communityContent:VARCHAR}
-							   FROM 
+							   SELECT * FROM 
   							   COMMUNITY 
-  							   <where>			
-									<if test="communityType == 0">										
-									    	community_type = #{type}
-									</if>
-									<if test="communityType == 1">
-									    	community_type = #{type}
-									</if>									
-							  </where>
+  							   WHERE									
+						       COMMUNITY_TYPE = #{communityType}
 							   ORDER BY COMMUNITY_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
@@ -106,19 +91,12 @@
 	
 	<!-- SQL : DELETE ONE -->
 	
-	<select  id="getTotalCountReport" parameterType="int"  resultType="int" >
+	<select  id="getTotalCount" parameterType="String"  resultType="int" >
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM COMMUNITY
-	  			 <where>			
-					<if test="communityType == 0">										
-					   	community_type = #{type}
-					</if>
-					<if test="communityType == 1">
-					   	community_type = #{type}
-					</if>									
-				 </where>
-				) countTable						
+	  			 WHERE COMMUNITY_TYPE = #{communityType}
+				)countTable						
 	 </select>
 	 
 	 

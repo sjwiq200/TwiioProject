@@ -65,7 +65,7 @@ public class ProductDaoImpl implements ProductDao {
 	@Override
 	public void deleteProduct(int productNo) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("ProductMapper.deleteProduct", productNo);
+		sqlSession.update("ProductMapper.deleteProduct", productNo);
 	}
 
 	

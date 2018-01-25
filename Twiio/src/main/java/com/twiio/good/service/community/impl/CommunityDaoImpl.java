@@ -43,34 +43,42 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public void updateCommunity(Community community) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.update("CommunitMapper.updateCommunity",community);
+		sqlSession.update("CommunityMapper.updateCommunity",community);
 	}
 
 	@Override
 	public void deleteCommunity(int communityNo) throws Exception {
 		// TODO Auto-generated method stub
-		sqlSession.delete("CommunitMapper.deleteCommunity",communityNo);
+		sqlSession.delete("CommunityMapper.deleteCommunity",communityNo);
 	}
 
 	@Override
-	public List<Community> listCommunity(Search search, int communityType) throws Exception {
+	public List<Community> listCommunity(Search search, String communityType) throws Exception {
 		// TODO Auto-generated method stub
+		
 		Map<String , Object>  map = new HashMap<String, Object>();
+		
 		map.put("search", search);
 		map.put("communityType", communityType);
 		
-		
-		List<Community> list = sqlSession.selectList("CommunitMapper.listCommunity", map);
+		System.out.println("여기까지왔니 ??");
+		System.out.println("coummnityType :: "+communityType);
+		System.out.println("Search :: "+search);
+		System.out.println("제발 나와라 ㅠㅠ :: "+sqlSession.selectList("CommunityMapper.listCommunity", map));
+		List<Community> list = sqlSession.selectList("CommunityMapper.listCommunity", map);
 //		for (int i = 0; i < list.size(); i++) {
 //			list.get(i).setBuyer((User)sqlSession.selectOne("UserMapper.getUser", list.get(i).getBuyer().getUserId()));
 //		}
+		System.out.println("나오니??");
+		System.out.println("list :: "+list);
 		return list;
 	}
 
 
 	@Override
-	public int getTotalCount(int communityType) throws Exception {
-		return sqlSession.selectOne("CommunitMapper.getTotalCountReport", communityType);
+	public int getTotalCount(String communityType) throws Exception {
+		System.out.println("totalcount 시작");
+		return sqlSession.selectOne("CommunityMapper.getTotalCount", communityType);
 	}
 	
 	@Override

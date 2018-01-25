@@ -18,6 +18,8 @@ public interface MainPlanService {
 	
 	public void updateMainPlan(MainPlan mainPlan) throws Exception;
 	
+	public long getDayCount(int mainPlanNo) throws Exception;
+	
 	public void deleteMainPlan(int mainPlanNo) throws Exception;
 	
 	///////////////////////scrap/////////////////////////

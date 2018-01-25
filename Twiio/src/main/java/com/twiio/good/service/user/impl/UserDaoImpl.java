@@ -43,7 +43,9 @@ import com.twiio.good.service.user.UserDao;
 	
 		@Override
 		public void addUser(User user) throws Exception {
+			System.out.println("DAO");
 			sqlSession.insert("UserMapper.addUser", user);
+			System.out.println("DAOend");
 		}
 	
 		@Override

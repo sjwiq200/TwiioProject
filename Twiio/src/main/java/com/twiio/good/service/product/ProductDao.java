@@ -26,7 +26,7 @@ public interface ProductDao {
 	// 게시판 Page 처리를 위한 전체Row(totalCount) return
 	public int getTotalCount(Map<String, Object> map) throws Exception;
 
-	// DELETE
+	// UPDATE
 	public void deleteProduct(int productNo) throws Exception;
 	
 }
