@@ -156,7 +156,7 @@
 		});
 		
 		$( "a:contains('Weather')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getWeather");
+			$(self.location).attr("href","/information/searchNowWeather");
 		});
 		
 		$( "a:contains('UnsafeRegion')" ).on("click" , function() {
