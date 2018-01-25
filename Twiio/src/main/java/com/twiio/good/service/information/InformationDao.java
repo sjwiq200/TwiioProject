@@ -14,13 +14,15 @@ public interface InformationDao {
 	
 	public List<String> findCity(String city) throws Exception;
 	
+	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception;
+	
+	public Map<Object, String[]> searchHistoryWeather( String cityName) throws Exception;
+	
 	public  List getFlight() throws Exception;
 	
 	public  List  getHotel() throws Exception;
 	
 	public  List getUnsafeRegion() throws Exception;
-	
-	public  List getWeather() throws Exception;
 	
 	public  List listNightLife() throws Exception;
 	

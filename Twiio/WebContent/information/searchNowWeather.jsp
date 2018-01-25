@@ -186,16 +186,17 @@ body {
 						},
 
 						success : function(JSONData, status) {
-							var fahrenheit = JSONData.weatherMain.temp;
+							var fahrenheit = JSONData.temp;
 							var celsius = Math
 									.round((fahrenheit - 273));
 							var celsiusMin = Math
-									.round((JSONData.weatherMain.temp_min) - 273);
+									.round((JSONData.temp_min) - 273);
 							var celsiusMax = Math
-									.round((JSONData.weatherMain.temp_max) - 273);
+									.round((JSONData.temp_max) - 273);
 							var mainWeather = JSONData.weatherResult;
+							
 
-							displayValue = "<blockquote class=\"blockquote-reverse\">"
+							/* displayValue = "<blockquote class=\"blockquote-reverse\">"
 									+	"온도 : "+ celsius+ "℃<br/>"+ "최저온도 : "		+ celsiusMin+ "℃<br/>"
 									+ "최고온도 : "	+ celsiusMax+ "℃<br/>"
 									+ "습도 : "+ JSONData.weatherMain.humidity	+ "<br/>"
@@ -205,7 +206,13 @@ body {
 							$("#result").html(displayValue)
 									.css("background-color",
 											"white")
-									.css("color", "#003366	");
+									.css("color", "#003366	"); */
+									
+							$("#temp").html(celsius);	
+							$("#pressure").html(JSONData.pressure);	
+							$("#humidity").html(JSONData.humidity);	
+							$("#temp_min").html(celsiusMin);	
+							$("#temp_max").html(celsiusMax);	
 						}
 					});
 		
@@ -213,7 +220,7 @@ body {
 		
 		$("button:contains('이전 날씨 검색 하러가기')")
 		.on("click",function() {
-			self.location = "";
+			self.location = "/information/searchHistoryWeather?cityName="+$("#keyword").val();
 		});
 		
 		
@@ -263,7 +270,7 @@ body {
 				</select>
  -->
  
- 			<input type="text" class="form-control" id="keyword" name="keyword"  >
+ 			<input type="text" class="form-control" id="keyword" name="keyword" value="Seoul"  >
  
 			</div>
 
@@ -277,11 +284,37 @@ body {
 					id="submit"></span> 검색
 			</button>
 
-
-
-			<h5>&nbsp;</h5>
-			<h5>&nbsp;</h5>
-			<h5 id="result">&nbsp;</h5>
+	<table class="table table-hover table-striped" >
+      <thead>
+          <tr>
+            <th colspan="2" align="center">현재날씨</th>
+          </tr>
+        </thead>
+       
+		<tbody>
+			<tr>
+			  <td align="center">기온</td>
+			  <td align="center" id = temp>${result.temp}</td>
+			</tr>
+			<tr>
+			  <td align="center">기압</td>
+			  <td align="center" id="pressure">${result.pressure}</td>
+			</tr>
+			<tr>
+			  <td align="center">습도</td>
+			  <td align="center" id="humidity">${result.humidity}</td>
+			</tr>
+			<tr>
+			  <td align="center">최저온도</td>
+			  <td align="center" id=temp_min>${result.temp_min}</td>
+			</tr>
+			<tr>
+			  <td align="center">최고온도</td>
+			  <td align="center" id="temp_max">${result.temp_max}</td>
+			</tr>
+        </tbody>
+      
+      </table>	
 			
 			
 		<div class="col-sm-10">	

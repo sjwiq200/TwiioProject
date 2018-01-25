@@ -62,7 +62,7 @@ public class WeatherMain {
 	@Override
 	public String toString() {
 		return "WeatherMain [temp=" + temp + ", pressure=" + pressure + ", humidity=" + humidity + ", temp_min="
-				+ temp_min + ", temp_max=" + temp_max + "]";
+				+ temp_min + ", temp_max=" + temp_max +", grnd_level=" + grnd_level + ", sea_level="+sea_level+ "]";
 	}
 	
 	
