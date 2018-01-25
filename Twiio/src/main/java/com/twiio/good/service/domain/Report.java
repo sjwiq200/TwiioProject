@@ -20,7 +20,9 @@ public class Report
   }
 
 
-
+public void setTargetUserNo(int targetUserNo) {
+	this.targetUserNo = targetUserNo;
+}
 
 
 public int getReportNo() {
@@ -105,14 +107,6 @@ public void setReportRegDate(Date reportRegDate) {
 
 public int getTargetUserNo() {
 	return targetUserNo;
-}
-
-
-
-
-
-public void setTargetUserNo(int targetUserNo) {
-	this.targetUserNo = targetUserNo;
 }
 
 

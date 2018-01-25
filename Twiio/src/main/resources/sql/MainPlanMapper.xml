@@ -10,7 +10,7 @@
 		<result property="mainPlanNo" column="main_plan_no" jdbcType="NUMERIC"/>
 		<result property="user.userNo" column="user_no" jdbcType="NUMERIC" />
 		<result property="departureDate" column="departure_date" jdbcType="DATE"/>
-		<result property="arriavalDate" column="arrival_date" jdbcType="DATE"/>
+		<result property="arrivalDate" column="arrival_date" jdbcType="DATE"/>
 		<result property="country" column="country" jdbcType="VARCHAR"/>
 		<result property="city" column="city" jdbcType="VARCHAR"/>
 		<result property="planTitle" column="plan_title" jdbcType="VARCHAR"/>
@@ -18,11 +18,13 @@
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
-	<insert 	id="addMainPlan"		parameterType="mainPlan" >
+	<insert 	id="addMainPlan"	parameterType="mainPlan" useGeneratedKeys="true" keyColumn="main_plan_no" keyProperty="mainPlanNo">
+	
 	 	INSERT
 		INTO main_plan( main_plan_no , user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail) 
 		VALUES	 (	seq_main_plan_main_plan_no.NEXTVAL  , #{user.userNo:NUMERIC} , #{departureDate:DATE} ,  #{arrivalDate:DATE} , 
 							#{country:VARCHAR} , #{city:VARCHAR} , #{planTitle:VARCHAR} ,  #{mainThumbnail:VARCHAR} )
+
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
@@ -55,13 +57,12 @@
 	  					ORDER BY main_plan_no ASC
 	  					) inner_table
 	  			WHERE ROWNUM &lt;=#{endClick} ) 
-	  		WHERE row_seq BETWEEN #{startClick} AND {endClick}
 	  	
 	 </select>
 	
-	 <select  id="deleteMainPlan"  parameterType="int"	resultMap="mainPlanSelectMap">
+	 <delete  id="deleteMainPlan"  parameterType="int">
 	 DELETE FROM main_plan WHERE main_plan_no = #{mainPlanNo}
-	 </select>
+	 </delete>
 	 
 	 
 </mapper>

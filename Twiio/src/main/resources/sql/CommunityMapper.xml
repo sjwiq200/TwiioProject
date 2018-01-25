@@ -11,7 +11,7 @@
 		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE"/>
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
-		<result property="communitySubTitle" 	column="community_subTitle" 	jdbcType="VARCHAR"/>
+		<result property="communitySubTitle" 	column="community_sub_title" 	jdbcType="VARCHAR"/>
 		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
 		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
 	</resultMap>
@@ -72,14 +72,8 @@
   						FROM (
 							   SELECT * FROM 
   							   COMMUNITY 
-  							   <where>			
-									<if test="communityType == 0">										
-									    	COMMUNITY_TYPE = #{communityType}
-									</if>
-									<if test="communityType == 1">
-									    	COMMUNITY_TYPE = #{communityType}
-									</if>									
-							  </where>
+  							   WHERE									
+						       COMMUNITY_TYPE = #{communityType}
 							   ORDER BY COMMUNITY_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
@@ -101,14 +95,7 @@
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM COMMUNITY
-	  			 <where>			
-					<if test="communityType == 0">										
-					   	COMMUNITY_TYPE = #{communityType}
-					</if>
-					<if test="communityType == 1">
-					   	COMMUNITY_TYPE = #{communityType}
-					</if>									
-				 </where>
+	  			 WHERE COMMUNITY_TYPE = #{communityType}
 				)countTable						
 	 </select>
 	 

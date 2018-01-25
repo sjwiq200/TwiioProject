@@ -162,6 +162,7 @@ public class CommunityController {
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
+		model.addAttribute("communityType",communityType);
 		//model.addAttribute("",);
 		
 		

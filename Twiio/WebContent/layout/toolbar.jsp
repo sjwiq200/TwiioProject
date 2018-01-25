@@ -186,6 +186,7 @@
 		});
 		
 		$( "a:contains('Trip Plan')" ).on("click" , function() {
+			alert("¾È³ç!");
 			$(self.location).attr("href","/mainplan/listMainPlan");
 		});
 		

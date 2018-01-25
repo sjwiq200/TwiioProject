@@ -59,7 +59,7 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("ServiceImpl listCommunity totalcount 시작");
 		int totalCount = communityDao.getTotalCount(communityType);
 		System.out.println("ServiceImpl listCommunity totalcount 종료");
-		
+		System.out.println("totalCount :: "+totalCount);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("list", list);
 		map.put("totalCount",totalCount);

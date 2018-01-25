@@ -41,18 +41,19 @@
 			daily_city 				= #{dailyCity:VARCHAR} ,
 			daily_country				=	#{dailyCountry:VARCHAR}
 	   	</set>
-	   	WHERE daily_plan_no = #{dailyPlanNo}
+	   	WHERE daily_plan_no = #{dailyPlanNo} 
 	 </update>
 	  
-	  <select  id="getDailyPlanList"  parameterType="dailyPlan"	resultMap="dailyPlanSelectMap">
+	  <select  id="getDailyPlanList"  parameterType="int"	resultMap="dailyPlanSelectMap">
 		  SELECT * FROM daily_plan
-		  	WHERE main_plan_no=#{mainPlan.mainPlanNo}
-		  	ORDER BY daily_plan_no ASC
+		  	WHERE main_plan_no=#{mainPlanNo}
+		  		AND day != 0
+		  	ORDER BY day ASC 
 	  </select>
 	
-	 <select  id="deleteDailyPlan"  parameterType="int"	resultMap="dailyPlanSelectMap">
-	 DELETE FROM daily_plan WHERE daily_plan_no = #{dailyPlanNo}
-	 </select>
+	 <delete  id="deleteDailyPlan"  parameterType="int"	>
+	 DELETE FROM daily_plan WHERE main_plan_no = #{mainPlanNo}
+	 </delete>
 	 
 	 
 </mapper>
