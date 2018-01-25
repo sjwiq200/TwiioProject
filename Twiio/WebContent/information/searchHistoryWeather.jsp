@@ -125,6 +125,15 @@ body {
 												$("#111").html(month);
 												
 												
+
+												$("#222").empty();
+												$("#111").empty();
+												
+												$("#222").html(listtr);
+												$("#111").html(month);
+												
+												
+												
 											 
 											
 													
