@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CommunityMapper">
+	<resultMap id="communitytSelectMap" type="community">
+		<result property="communityNo" 			column="community_no" 			jdbcType="NUMERIC"/>
+		<result property="communityTitle"		column="community_title" 		jdbcType="VARCHAR"/>
+		<result property="userNo" 				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="regDate" 				column="reg_date" 				jdbcType="DATE"/>
+		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
+		<result property="communitySubTitle" 	column="community_sub_title" 	jdbcType="VARCHAR"/>
+		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
+		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
+	</resultMap>
+	
+	<resultMap id="likeSelectMap" type="like">
+		<result property="userNo" 				column="user_no" 			jdbcType="NUMERIC"/>
+		<result property="communityNo"			column="community_no" 		jdbcType="NUMERIC" />
+		<result property="like" 				column="like"		 		jdbcType="VARCHAR" />
+		<result property="likeNo" 				column="like_no" 			jdbcType="NUMERIC" />
+	</resultMap>
+	
+	
+	
+	<!--SQL : INSERT  -->
+	<insert id="addCommunity" parameterType="community" useGeneratedKeys="true" keyColumn="community_no" keyProperty="communityNo">
+		INSERT
+		INTO COMMUNITY
+		VALUES (
+		seq_community_community_no.nextval,
+		#{communityTitle:VARCHAR},
+		#{userNo:NUMERIC},
+		SYSDATE,
+		#{viewCount:NUMERIC},
+		#{communitySubTitle:VARCHAR},
+		#{communityType:VARCHAR},
+		#{communityContent:VARCHAR}
+		)
+	</insert>
+	
+	<select id="getCommunity" parameterType="int" resultMap="communitytSelectMap">
+		SELECT * FROM COMMUNITY WHERE COMMUNITY_NO = #{communityNo}
+		 
+	</select>
+	
+	<delete id="deleteCommunity" parameterType="int">
+		DELETE 
+		FROM COMMUNITY
+		WHERE COMMUNITY_NO = #{communityNo}
+	</delete>
+	
+	<!-- SQL : UPDATE -->
+	
+	<update id="updateCommunity" parameterType="community">
+		UPDATE COMMUNITY
+	   	<set>
+	   		COMMUNITY_TITLE		= #{communityTitle} ,
+	   		COMMUNITY_SUB_TITLE = #{communitySubTitle},
+			COMMUNITY_CONTENT	= #{communityContent}
+	   	</set>
+	   	WHERE COMMUNITY_NO = #{communityNo}
+	</update>
+	
+	<!-- SQL : SELECT LIST -->
+	
+	<select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT * FROM 
+  							   COMMUNITY 
+  							   WHERE									
+						       COMMUNITY_TYPE = #{communityType}
+							   ORDER BY COMMUNITY_NO
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<!-- SQL : SELECT ONE 
+	<select id="getBestTripReview" parameterType="int" resultType="community">
+		SELECT * FROM PRODUCT WHERE REPORT_NO = #{value}
+	</select>
+	-->
+	
+	
+	
+	<!-- SQL : DELETE ONE -->
+	
+	<select  id="getTotalCount" parameterType="String"  resultType="int" >
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  			 FROM COMMUNITY
+	  			 WHERE COMMUNITY_TYPE = #{communityType}
+				)countTable						
+	 </select>
+	 
+	 
+</mapper>

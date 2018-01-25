@@ -19,80 +19,147 @@ public class Report
   public Report() {
   }
 
-public int getReportNo()
-  {
-    return this.reportNo;
-  }
-
-  public void setReportNo(int reportNo) {
-    this.reportNo = reportNo;
-  }
-
-  public int getUserNo() {
-    return this.userNo;
-  }
-
-  public void setUserNo(int userNo) {
-    this.userNo = userNo;
-  }
-
-  public String getReportContent() {
-    return this.reportContent;
-  }
-
-  public void setReportContent(String reportContent) {
-    this.reportContent = reportContent;
-  }
-
-  public String getReportTitle() {
-    return this.reportTitle;
-  }
-
-  public void setReportTitle(String reportTitle) {
-    this.reportTitle = reportTitle;
-  }
-
-  public Date getReportRegDate() {
-    return this.reportRegDate;
-  }
-
-  public void setReportRegDate(Date reportRegDate) {
-    this.reportRegDate = reportRegDate;
-  }
-
-
-
-  public int getTargetUserNo() {
-	return targetUserNo;
-}
 
 public void setTargetUserNo(int targetUserNo) {
 	this.targetUserNo = targetUserNo;
 }
 
+
+public int getReportNo() {
+	return reportNo;
+}
+
+
+
+
+
+public void setReportNo(int reportNo) {
+	this.reportNo = reportNo;
+}
+
+
+
+
+
+public int getUserNo() {
+	return userNo;
+}
+
+
+
+
+
+public void setUserNo(int userNo) {
+	this.userNo = userNo;
+}
+
+
+
+
+
+public String getReportContent() {
+	return reportContent;
+}
+
+
+
+
+
+public void setReportContent(String reportContent) {
+	this.reportContent = reportContent;
+}
+
+
+
+
+
+public String getReportTitle() {
+	return reportTitle;
+}
+
+
+
+
+
+public void setReportTitle(String reportTitle) {
+	this.reportTitle = reportTitle;
+}
+
+
+
+
+
+public Date getReportRegDate() {
+	return reportRegDate;
+}
+
+
+
+
+
+public void setReportRegDate(Date reportRegDate) {
+	this.reportRegDate = reportRegDate;
+}
+
+
+
+
+
+public int getTargetUserNo() {
+	return targetUserNo;
+}
+
+
+
+
+
 public int getTargetRoomNo() {
-    return this.targetRoomNo;
-  }
+	return targetRoomNo;
+}
 
-  public void setTargetRoomNo(int targetRoomNo) {
-    this.targetRoomNo = targetRoomNo;
-  }
 
-  public int getTargetReplyNo() {
-    return this.targetReplyNo;
-  }
 
-  public void setTargetReplyNo(int targetReplyNo) {
-    this.targetReplyNo = targetReplyNo;
-  }
 
-  public int getTargetCommunityNo() {
-    return this.targetCommunityNo;
-  }
 
-  public void setTargetCommunityNo(int targetCommunityNo) {
-    this.targetCommunityNo = targetCommunityNo;
-  }
+public void setTargetRoomNo(int targetRoomNo) {
+	this.targetRoomNo = targetRoomNo;
+}
+
+
+
+
+
+public int getTargetReplyNo() {
+	return targetReplyNo;
+}
+
+
+
+
+
+public void setTargetReplyNo(int targetReplyNo) {
+	this.targetReplyNo = targetReplyNo;
+}
+
+
+
+
+
+public int getTargetCommunityNo() {
+	return targetCommunityNo;
+}
+
+
+
+
+
+public void setTargetCommunityNo(int targetCommunityNo) {
+	this.targetCommunityNo = targetCommunityNo;
+}
+
+
+
+
 
 @Override
 public String toString() {

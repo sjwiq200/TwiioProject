@@ -31,10 +31,15 @@
 		<typeAlias alias="transaction" 		type="com.twiio.good.service.domain.Transaction" />
 		<typeAlias alias="refund" 			type="com.twiio.good.service.domain.Refund" />
 
+		<typeAlias alias="city" 			type="com.twiio.good.service.domain.City" />
+		<typeAlias alias="community" 	type="com.twiio.good.service.domain.Community" />
+		<typeAlias alias="like" 		type="com.twiio.good.service.domain.Like" />
+
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
 	<mappers>
+		<mapper resource="sql/CommunityMapper.xml"/>
 		<mapper resource="sql/CommonMapper.xml"/>
 		<mapper resource="sql/UserMapper.xml"/>
 		<mapper resource="sql/InformationMapper.xml"/>

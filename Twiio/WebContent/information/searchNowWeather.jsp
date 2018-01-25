@@ -88,15 +88,18 @@ body {
 	}
 
 	$(function() {
-		$("button:contains('검색')")
+		
+		
+		
+		/* $("button:contains('검색')")
 				.on(
 						"click",
 						function() {
-							var cityName = $("#cityName").val();
+							var cityName = $("#keyword").val();
 
- 	$.ajax( 
-
-{
+					 	$.ajax( 
+					
+									{
 										url : "/information/json/searchNowWeather?cityName="
 												+ cityName,
 										method : "GET",
@@ -129,8 +132,102 @@ body {
 													.css("color", "#003366	");
 										}
 									});
-						});
-	});
+						}); */
+		
+		$( "#keyword" ).autocomplete({
+			
+		      source: function( request, response ) {
+		    	  //alert("제발요");
+		    	  //alert($("#searchCondition").val());
+		    	  //alert($("#searchKeyword").val());
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/autoComplete/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						keyword:$("#keyword").val()		    						
+		    						},
+		    					dataType:"json",
+		    					success:function(JSONData){
+		    						//alert("제발ajax");	    											
+		    						//alert("JSONData: \n"+JSONData);
+		    							    							    						
+		    						response($.map(JSONData, function (item) {
+		    				           
+		    							return item;
+		    				        }));
+		    					}
+		    				}
+		    			);
+		    	  
+		    	  //alert("제발요");
+		      },
+		      minLength:3
+		    });
+		
+		
+		
+		$( "#keyword"  ).on("change" , function() {
+			
+			var cityName = $("#keyword").val();
+			
+			alert(cityName);
+			
+			$.ajax( 
+					
+					{
+						url : "/information/json/searchNowWeather?cityName="
+								+ cityName,
+						method : "GET",
+						dataType : "json",
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+
+						success : function(JSONData, status) {
+							var fahrenheit = JSONData.temp;
+							var celsius = Math
+									.round((fahrenheit - 273));
+							var celsiusMin = Math
+									.round((JSONData.temp_min) - 273);
+							var celsiusMax = Math
+									.round((JSONData.temp_max) - 273);
+							var mainWeather = JSONData.weatherResult;
+							
+
+							/* displayValue = "<blockquote class=\"blockquote-reverse\">"
+									+	"온도 : "+ celsius+ "℃<br/>"+ "최저온도 : "		+ celsiusMin+ "℃<br/>"
+									+ "최고온도 : "	+ celsiusMax+ "℃<br/>"
+									+ "습도 : "+ JSONData.weatherMain.humidity	+ "<br/>"
+									+ "기압 : "+ JSONData.weatherMain.pressure+ "<br/>"
+									+ "</blockquote>"
+
+							$("#result").html(displayValue)
+									.css("background-color",
+											"white")
+									.css("color", "#003366	"); */
+									
+							$("#temp").html(celsius);	
+							$("#pressure").html(JSONData.pressure);	
+							$("#humidity").html(JSONData.humidity);	
+							$("#temp_min").html(celsiusMin);	
+							$("#temp_max").html(celsiusMax);	
+						}
+					});
+		
+		});
+		
+		$("button:contains('이전 날씨 검색 하러가기')")
+		.on("click",function() {
+			self.location = "/information/searchHistoryWeather?cityName="+$("#keyword").val();
+		});
+		
+		
+		
+		
+		
+			});
 </script>
 
 </head>
@@ -150,14 +247,15 @@ body {
 		<div class="page-header">
 			<h3 class=" text-info">세계 현재 날씨 확인하기</h3>
 			<h5 class="text-muted">원하는 도시명을 선택해주시기 바랍니다.</h5>
+		
 		</div>
-
+		
 
 		<div class="form-group">
 			<label for="paymentOption" class="col-sm-2 control-label">
 				도시명 </label>
 			<div class="col-sm-6">
-				<select name="cityName" class="ct_input_g" id="cityName"
+				<!-- <select name="cityName" class="ct_input_g" id="cityName"
 					style="width: 100px; height: 19px" maxLength="20">
 					<option id="Paris" value="Paris" selected="selected">Paris</option>
 					<option id="Seoul" value="Seoul">Seoul</option>
@@ -170,7 +268,10 @@ body {
 
 
 				</select>
-
+ -->
+ 
+ 			<input type="text" class="form-control" id="keyword" name="keyword" value="Seoul"  >
+ 
 			</div>
 
 		</div>
@@ -183,11 +284,46 @@ body {
 					id="submit"></span> 검색
 			</button>
 
-
-
-			<h5>&nbsp;</h5>
-			<h5>&nbsp;</h5>
-			<h5 id="result">&nbsp;</h5>
+	<table class="table table-hover table-striped" >
+      <thead>
+          <tr>
+            <th colspan="2" align="center">현재날씨</th>
+          </tr>
+        </thead>
+       
+		<tbody>
+			<tr>
+			  <td align="center">기온</td>
+			  <td align="center" id = temp>${result.temp}</td>
+			</tr>
+			<tr>
+			  <td align="center">기압</td>
+			  <td align="center" id="pressure">${result.pressure}</td>
+			</tr>
+			<tr>
+			  <td align="center">습도</td>
+			  <td align="center" id="humidity">${result.humidity}</td>
+			</tr>
+			<tr>
+			  <td align="center">최저온도</td>
+			  <td align="center" id=temp_min>${result.temp_min}</td>
+			</tr>
+			<tr>
+			  <td align="center">최고온도</td>
+			  <td align="center" id="temp_max">${result.temp_max}</td>
+			</tr>
+        </tbody>
+      
+      </table>	
+			
+			
+		<div class="col-sm-10">	
+			
+			<button type="button" class="btn btn-default"aria-label="Left Align">
+				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>이전 날씨 검색 하러가기
+			</button>
+		
+		</div>
 
 
 		</div>

@@ -1,11 +1,14 @@
 package com.twiio.good.service.information.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
+import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.information.InformationDao;
 import com.twiio.good.service.information.InformationService;
@@ -34,7 +37,24 @@ public class InformationServiceImpl implements InformationService {
 	public Double getCurrency(String country) throws Exception {
 		return informationDao.getCurrency(country);
 	}
+	
+	@Override
+	public List<String> findCity(String city) throws Exception {
+		return informationDao.findCity(city);
+	}
+	
+	@Override
+	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception {
+		return informationDao.searchNowWeather(cityName);
+	}
 
+	
+	@Override
+	public Map<Object, String[]> searchHistoryWeather( String cityName) throws Exception {
+		return informationDao.searchHistoryWeather(cityName);
+	}
+	
+	
 	@Override
 	public List getFlight() throws Exception {
 		return informationDao.getFlight();
@@ -48,11 +68,6 @@ public class InformationServiceImpl implements InformationService {
 	@Override
 	public List getUnsafeRegion() throws Exception {
 		return informationDao.getUnsafeRegion();
-	}
-
-	@Override
-	public List getWeather() throws Exception {
-		return informationDao.getWeather();
 	}
 
 	@Override

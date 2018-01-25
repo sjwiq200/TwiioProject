@@ -26,19 +26,17 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product( product_no , product_title , product_price , product_type , trip_date, reg_date, country, city, user_no, product_content, head_count, view_count, product_count) 
+		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count) 
 		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
 					#{prodName} , 
 					#{productPrice} , 
 					#{productType} , 
-					#{tripDate} , 
-					SYSDATE ,
+					#{tripDate} , 					
 					#{country} ,
 					#{city} ,
 					#{hostNo} ,
 					#{description} ,
-					#{tourHeadCount} ,
-					#{viewCount} ,
+					#{tourHeadCount} ,					
 					#{productCount} )
 	 </insert>
 	 
@@ -61,10 +59,9 @@
 			country				= #{country} ,
 			city				= #{city} ,
 			product_content		= #{description} ,
-			head_count			= #{tourHeadCount} ,
-			product_count		= #{productCount}			
+			head_count			= #{tourHeadCount}						
 	   	</set>
-	   	WHERE prod_no = #{prodNo}
+	   	WHERE product_no = #{productNo}
 	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
@@ -133,6 +130,15 @@
 		FROM product 
 		WHERE product_no=#{productNo}	
 	</delete>
+	
+	<!-- SQL : UPDATE -->
+	 <update	id="updateViewCount"	parameterType="int" >
+	   	UPDATE product
+	   	<set>	   		
+			view_count			= view_count+1						
+	   	</set>
+	   	WHERE product_no = #{productNo}
+	 </update>
 	 
 	 
 	 

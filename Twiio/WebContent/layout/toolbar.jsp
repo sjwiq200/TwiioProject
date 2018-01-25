@@ -135,10 +135,10 @@
 		/* Community*/
 		
 		$( "a:contains('Question Q&A')" ).on("click" , function() {
-			$(self.location).attr("href","/community/listCommunity");
+			$(self.location).attr("href","/community/listCommunity?communityType=0");
 		});
 		$( "a:contains('Trip Review')" ).on("click" , function() {
-			$(self.location).attr("href","/community/listCommunity");
+			$(self.location).attr("href","/community/listCommunity?communityType=1");
 		});
 		
 		/* Information */
@@ -156,7 +156,7 @@
 		});
 		
 		$( "a:contains('Weather')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getWeather");
+			$(self.location).attr("href","/information/searchNowWeather");
 		});
 		
 		$( "a:contains('UnsafeRegion')" ).on("click" , function() {

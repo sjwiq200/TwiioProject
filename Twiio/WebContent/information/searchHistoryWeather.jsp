@@ -68,37 +68,77 @@ body {
 	$(function() {
 		$("#submit").on("click",
 						function() {
-							var cityName = $("#cityName").val();
+							var cityName = $("#keyword").val();
 							alert(cityName);
 							
  						$.ajax( {
 										url : "/information/json/searchHistoryWeather?cityName="+ cityName,
 										method : "GET",
-										dataType : "json",
 										headers : {
 											"Accept" : "application/json",
 											"Content-Type" : "application/json"
 										},
 
 										success : function(JSONData, status) {
-											alert("진입성공!");
-											var quickWeatehrInfo = JSONData.quickInfo;
+											var simple = JSONData.list;
 											var history = JSONData.historyWeather;
 										
 											 
-											displayValue = "<a class=\"blockquote-reverse\">"
+											/* displayValue = "<a class=\"blockquote-reverse\">"
 													+	"간단날씨확인 : <h5>&nbsp;</h5>"+ quickWeatehrInfo+ "℃<br/>"+
 													"<h5>&nbsp;</h5><h5>&nbsp;</h5><h5>&nbsp;</h5>"+
 													"1월 - 12월 과거 날씨 : <h5>&nbsp;</h5>"	+ history+ "℃<br/>"
 													+ "</a>"
-
 											$("#result").html(displayValue)
 													.css("background-color",
 															"white")
-													.css("color", "#003366	");
+													.css("color", "#003366	"); */
+													
+											$("#info").html(simple);	
+										/* 	$("#pressure").html(JSONData.pressure);	
+											$("#humidity").html(JSONData.humidity);	
+											$("#temp_min").html(celsiusMin);	
+											$("#temp_max").html(celsiusMax); */
 										}
 									});
 						});
+		
+		
+		$( "#keyword" ).autocomplete({
+			
+		      source: function( request, response ) {
+		    	  //alert("제발요");
+		    	  //alert($("#searchCondition").val());
+		    	  //alert($("#searchKeyword").val());
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/autoComplete/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						keyword:$("#keyword").val()		    						
+		    						},
+		    					dataType:"json",
+		    					success:function(JSONData){
+		    						//alert("제발ajax");	    											
+		    						//alert("JSONData: \n"+JSONData);
+		    							    							    						
+		    						response($.map(JSONData, function (item) {
+		    				           
+		    							return item;
+		    				        }));
+		    					}
+		    				}
+		    			);
+		    	  
+		    	  //alert("제발요");
+		      },
+		      minLength:3
+		    });
+		
+		
+		
+		
+		
 	});
 </script>
 </head>
@@ -123,20 +163,9 @@ body {
 			<label for="paymentOption" class="col-sm-2 control-label">
 				도시명 </label>
 			<div class="col-sm-6">
-				<select name="cityName" class="ct_input_g" id="cityName"
-					style="width: 100px; height: 19px" maxLength="20">
-					<option id="Paris" value="Paris" selected="selected">Paris</option>
-					<option id="Seoul" value="Seoul">Seoul</option>
-					<option id="Jeju" value="Jeju">Jeju</option>
-					<option id="London" value="London">London</option>
-					<option id="Tokyo" value="Tokyo">Tokyo</option>
-					<option id="NewYork" value="NewYork">NewYork</option>
-					<option id="Sydney" value="Sydney">Sydney</option>
-
-				</select>
+				<input type="text" class="form-control" id="keyword" name="keyword"  >
 			</div>
 		</div>
-
 		<div class="pageButton-group" align="center">
 
 			<button type="button" class="btn btn-default" id="search"
@@ -144,10 +173,65 @@ body {
 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"
 					id="submit">검색</span> 
 			</button>
+			
+			
+			<table class="table table-hover table-striped" >
+			 	<thead>
+		          <tr>
+		            <th align="center">Quick Climate Info</th>
+		          </tr>
+		        </thead>
+		       
+				<tbody>
+				  <c:set var="i" value="0" />
+				  <c:forEach var="list" items="${list}">
+					<tr>
+					  <td align="center" id="info">${list}</td>
+					</tr>
+		          </c:forEach>
+		        </tbody>
+		      </table>
+							
+			<table class="table table-hover table-striped" >
+      
+        <thead>
+          <tr>
+            <th align="left">달</th>
+            <th align="left">최고기온</th>
+            <th align="left">최저기온</th>
+            <th align="left">강수량</th>
+            
+          </tr>
+        </thead>
+       
+		<tbody>
+		 <%--  <c:forEach var="abc" items="${abc}">
+			<tr>
+			<c:forEach var="abc" items="${abc}">
+			 <td align="center">${abc}</td>
+			 </c:forEach>
+			
+			 <td align="center">${abc[status.index].min}</td>
+			 <td align="center">${abc[status.index].max}</td>
+			 <td align="center">${abc[status.index].rain}</td>
+			</tr>	
+		</c:forEach> --%>
+		
+		
+		
+		<c:forEach items="${month}" varStatus="status">
+			<tr>
+			 <td align="center">${month[status.index]}</td>
+			 <td align="center">${min[status.index]}</td>
+			 <td align="center">${max[status.index]}</td>
+			 <td align="center">${rain[status.index]}</td>
+			 
+			</tr>	
+		</c:forEach>
+        </tbody>
+      
+      </table>
 
-			<h5>&nbsp;</h5>
-			<h5>&nbsp;</h5>
-			<h5 id="result">&nbsp;</h5>
 
 		</div>
 	</div>
