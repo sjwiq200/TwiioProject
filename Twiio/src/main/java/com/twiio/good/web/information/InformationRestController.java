@@ -1,6 +1,7 @@
 package com.twiio.good.web.information;
 
 import java.io.BufferedReader;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
@@ -19,14 +21,18 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationService;
 
@@ -38,6 +44,7 @@ public class InformationRestController {
 	@Autowired
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
+	
 	
 	
 	public InformationRestController() {
@@ -55,149 +62,94 @@ public class InformationRestController {
 			
 		return result;
 	}
+	
+	@RequestMapping( value="json/autoComplete/" )
+	public List<String>  autoComplete(@RequestBody String keyword ) throws Exception{
+		
+		System.out.println("/information/json/autoComplete");
+		
+		String decoding = URLDecoder.decode(keyword, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		 System.out.println(str);
+		 
+		List<String> item  = informationService.findCity(str);
+		
+		return item;
+	}
+
 
 	@RequestMapping(value="json/searchNowWeather",method=RequestMethod.GET)
 	public Map<String,Object> searchNowWeather(@RequestParam String cityName) throws Exception {
-	//public Map<String,Object> searchNowWeather(@RequestBody Search search) throws Exception {
-		System.out.println("searchNowWeather Controller  ");
-
-		System.out.println(" cityName : " + cityName);
-
 		
-
-		//URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+cityName.trim()+"&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
-		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q=Kismaayo&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
-		HttpURLConnection con = (HttpURLConnection)url.openConnection();
-		con.setRequestMethod("GET");
-
-
-		// Response Code GET
-        int responseCode = con.getResponseCode();
-
-        BufferedReader br = null;
-
-        if(responseCode==200) { 
-            br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-        } else {  
-            br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-        }
-
-        String jsonData = "";
-        StringBuffer response = new StringBuffer();
-
-        while ((jsonData = br.readLine()) != null) {
-            response.append(jsonData);
-        }
-
-        String reader = response.toString();
-        br.close();
-
-        JSONObject jsonobj = (JSONObject)JSONValue.parse(reader);
-        System.out.println("jsonobj : " + jsonobj);
-        ObjectMapper objectMapper = new ObjectMapper();
-
-        JSONObject jsonobjTemp = (JSONObject) jsonobj.get("main");
-        System.out.println("jsonobjTemp : " + jsonobjTemp);
-        WeatherMain weatherMain = objectMapper.readValue(jsonobjTemp.toString(), WeatherMain.class);
-
-       JSONArray array = (JSONArray) jsonobj.get("weather");
-       String weatherResult = array.get(0).toString();
-       System.out.println("weatherResult : " + weatherResult);
-
+		System.out.println("/information/json/searchNowWeather");
+		System.out.println(" cityName : " + cityName);
        
-       //WeatherState weatherState = objectMapper.readValue(weatherResult.toString(), WeatherState.class);
-
-        System.out.println("1.weatherMain : " + weatherMain);
-        //System.out.println("2.weahterState : " + weatherState); 
-
-        
-
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("weatherMain", weatherMain);
-        //map.put("weatherState", weatherState);
-        //map.put("weatherResult", weatherResult);
-
-		return map;
-
+		Map<String,Object> map = informationService.searchNowWeather(cityName);
+		
+		Map<String,Object> result = new HashMap<String,Object>();
+		
+		String str = (String) map.get("weather");
+		
+		String[] context =  str.split(",");
+		String[] temp  = context[0].split("=");
+		String[] pressure = context[1].split("=");
+		String[] humidity = context[2].split("=");
+		String[] temp_min = context[3].split("=");
+		String[] temp_max = context[4].split("=");
+		
+		if(context.length>5) {
+			String[] grnd_level = context[5].split("=");
+			String[] sea_level = context[6].split("=");
+			
+			result.put("grnd_level", grnd_level[1]);
+			result.put("sea_level", sea_level[1]);
+		
+		}
+		result.put("temp", temp[1]);
+		result.put("pressure", pressure[1]);
+		result.put("humidity", humidity[1]);
+		result.put("temp_min", temp_min[1]);
+		result.put("temp_max", temp_max[1]);
+		
+		return result;
 	}
 
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
-	public Map<Object, String[]> searchHistoryWeather(@RequestParam String cityName) throws Exception {
+	public Map<Object,String[]> searchHistoryWeather(@RequestParam String cityName) throws Exception {
 
-		System.out.println("searchHistoryWeather Controller ");
+		System.out.println("json/searchHistoryWeather ");
 		System.out.println("cityName : " + cityName);
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\Ïû•ÏùÄÏï†\\Desktop\\chromedriver\\chromedriver.exe");
-		DesiredCapabilities capabilities = DesiredCapabilities.firefox();
-		capabilities.setCapability("marionette", true);
-		String[] string = null; 
-		String[] tempResult =null; // historyWeather 
-		try {
-			
-			//WebDriver driver = new FirefoxDriver();
-			WebDriver driver = new ChromeDriver();
-			
-			//driver.manage().window().maximize();
-			driver.get("https://www.timeanddate.com/weather/south-korea/seoul/historic");
-			
-			//DesiredCapabilities capabilities = DesiredCapabilities.chrome();
-			//capabilities.setCapability("marionette", true);
-			
-			String title = driver.getTitle();
-			System.out.println(title);
-			
-			driver.findElement(By.cssSelector("#wcquery")).sendKeys(cityName); 
-			driver.findElement(By.cssSelector(".submit-citypicker")).click();	
-			
-			driver.findElement(By.cssSelector("a[href*='uk']")).click();
-			driver.findElement(By.cssSelector("a[title*='Historic weather']")).click();
-			
-			//List<WebElement> inputs = driver.findElements(By.xpath("//th"));
-			
-			List<WebElement> rows = driver.findElements(By.cssSelector(".tb-minimal")); // Quick Info Class 
-			
-			List<String> quickInfo = new ArrayList<String>();
-			
-			WebElement row = rows.get(0);
-			
-			List<WebElement> cellsMonth = row.findElements(By.cssSelector("tbody"));
-			
-			WebElement element = (WebElement)cellsMonth.get(0);
-			
-			String result = element.getText();
-			
-			string = result.split("\n");
-			
-			for(String quickResult : string) {
-				System.out.println("History Weather : " +quickResult);
-			}
-			
-	    	quickInfo.add(element.getText());
-	    	
-			List<WebElement> averageMonth = driver.findElements(By.cssSelector("#climategraph"));
-			
-			WebElement rowAverageMonth = averageMonth.get(0);
-			String rowAverageMonthText = rowAverageMonth.getText();
-			tempResult = rowAverageMonthText.split("\n");
-			
-			for(String allResult : tempResult) {
-				System.out.println("History Weather : " + allResult);
-			}
-			
-			Thread.sleep(1800);
-			
-			driver.close(); 
+		Map<Object,String[]> map = informationService.searchHistoryWeather(cityName);
 		
-		}catch(Exception e) {
-			System.out.println("ErrorÂç†Ïå©ÏÇºÏòô : " + e);
+		List<String> list = new ArrayList<String>();
+		
+		String[] simple = map.get("quickInfo");
+		String[] aver = {};
+		for(int i = 0; i<simple.length; i++) {
+			list.add(simple[i]);
+			System.out.println("simple¥Ÿø¿¥Ÿø¿"+simple[i]);
 		}
 		
+		String[] past = map.get("historyWeather");
+		System.out.println("???????????????");
+		for(int i = 0; i<past.length; i++) {
+			for(int k = 0; k<k+4;) {
+				aver[i]= past[k]+past[k+1]+past[k+2]+past[k+3];
+				k=k+4;
+			}
+			System.out.println("∫Ÿæ˙¥œ....?"+aver[i]);
+		}
+		System.out.println("???????????????");
+		Map<String,List> last = new HashMap();
 		
-		Map<Object,String[]> map = new HashMap<Object,String[]>();
-		map.put("quickInfo", string);
-		map.put("historyWeather", tempResult);
+			last.put("list", list);
+		
 	
-		
 		return map;
 
 	}

@@ -216,7 +216,7 @@
           <tr>
             <th align="center">No</th>
             <th align="left">통화코드</th>
-            <th align="left">매매가격율</th>
+            <th align="left">매매가격율(원)</th>
             <th align="left">국가</th>
           </tr>
         </thead>

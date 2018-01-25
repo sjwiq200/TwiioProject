@@ -1,9 +1,11 @@
 package com.twiio.good.service.domain;
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.web.multipart.MultipartFile;
 
 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class WeatherMain {
 	
 	private String temp;
@@ -11,6 +13,8 @@ public class WeatherMain {
 	private String humidity;
 	private String temp_min;
 	private String temp_max;
+	private String grnd_level;
+	private String sea_level;
 	
 	public String getTemp() {
 		return temp;
@@ -43,10 +47,22 @@ public class WeatherMain {
 		this.temp_max = temp_max;
 	}
 	
+	public String getGrnd_level() {
+		return grnd_level;
+	}
+	public void setGrnd_level(String grnd_level) {
+		this.grnd_level = grnd_level;
+	}
+	public String getSea_level() {
+		return sea_level;
+	}
+	public void setSea_level(String sea_level) {
+		this.sea_level = sea_level;
+	}
 	@Override
 	public String toString() {
 		return "WeatherMain [temp=" + temp + ", pressure=" + pressure + ", humidity=" + humidity + ", temp_min="
-				+ temp_min + ", temp_max=" + temp_max + "]";
+				+ temp_min + ", temp_max=" + temp_max +", grnd_level=" + grnd_level + ", sea_level="+sea_level+ "]";
 	}
 	
 	
