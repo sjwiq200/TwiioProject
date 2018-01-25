@@ -20,6 +20,7 @@ public class Product {
 	private int viewCount;
 	private int productCount;
 	private String productDelete;
+	//½æ³×ÀÏ
 	
 	public Product() {
 		// TODO Auto-generated constructor stub

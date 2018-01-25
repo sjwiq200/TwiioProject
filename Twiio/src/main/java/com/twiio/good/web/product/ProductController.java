@@ -17,6 +17,7 @@ import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.product.ProductService;
+import com.twiio.good.service.transaction.TransactionService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -25,6 +26,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("transactionServiceImpl")
+	private TransactionService transactionService;
 
 	public ProductController() {
 		System.out.println(this.getClass());
@@ -106,7 +111,7 @@ public class ProductController {
 		
 		System.out.println("/product/addStarEvalProduct : POST ");
 		
-		productService.addStarEvalProduct(transaction);
+		transactionService.addStarEvalProduct(transaction);
 		
 		return "forward:/product/readProduct.jsp";
 	}
@@ -116,7 +121,7 @@ public class ProductController {
 		
 		System.out.println("/product/listStarEvalProduct ");
 		
-		map = productService.listStarEvalProduct(search, productNo);
+		map = transactionService.listStarEvalProduct(search, productNo);
 		
 		return "forward:/product/readProduct.jsp";
 	}
@@ -126,7 +131,7 @@ public class ProductController {
 		
 		System.out.println("/product/getEvalProduct ");
 		
-		Transaction transaction = productService.getEvalProduct(productNo);
+		Transaction transaction = transactionService.getEvalProduct(productNo);
 		int productEval = transaction.getEvalProduct();
 		
 		map.put("productEval", productEval);
@@ -142,7 +147,7 @@ public class ProductController {
 		search.setCurrentPage(1);
 		search.setPageSize(10);//10µî±îÁö
 		
-		List<Transaction> list = productService.listBestProduct(search);
+		List<Transaction> list = transactionService.listBestProduct(search);
 				
 		
 		//map.put("list", productService.listBestProduct(search));
