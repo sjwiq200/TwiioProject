@@ -81,24 +81,33 @@ body {
 
 										success : function(JSONData, status) {
 											var simple = JSONData.list;
-											var history = JSONData.historyWeather;
-										
-											 
-											/* displayValue = "<a class=\"blockquote-reverse\">"
-													+	"간단날씨확인 : <h5>&nbsp;</h5>"+ quickWeatehrInfo+ "℃<br/>"+
-													"<h5>&nbsp;</h5><h5>&nbsp;</h5><h5>&nbsp;</h5>"+
-													"1월 - 12월 과거 날씨 : <h5>&nbsp;</h5>"	+ history+ "℃<br/>"
-													+ "</a>"
-											$("#result").html(displayValue)
-													.css("background-color",
-															"white")
-													.css("color", "#003366	"); */
-													
-											$("#info").html(simple);	
-										/* 	$("#pressure").html(JSONData.pressure);	
-											$("#humidity").html(JSONData.humidity);	
-											$("#temp_min").html(celsiusMin);	
-											$("#temp_max").html(celsiusMax); */
+											var monthin = JSONData.month;
+											var min = JSONData.min;
+											var max = JSONData.max;
+											var rain = JSONData.rain;
+											
+ 
+											var listtr = null;
+											
+											for(var i = 0 ; i<5; i++){
+												
+												listtr += '<tr id = "listtr"><td align="center" id="info">'+simple[i]+'</td>';
+												
+											}
+												
+											var month = null;
+											
+											for(var i = 0 ; i<12; i++){
+												
+												month += '<tr id="monthtr"><td align="center" id="month">'+monthin[i]+
+												'</td>'+'<td align="center" id="min">'+min[i]+'</td>'+'<td align="center" id="max">'+max[i]+
+												'</td>'+'<td align="center" id="rain">'+rain[i]+'</td></tr>';
+											}
+															
+										$("#listTbody").html(listtr);
+										$("#dataTbody").html(month);
+														
+												
 										}
 									});
 						});
@@ -182,17 +191,17 @@ body {
 		          </tr>
 		        </thead>
 		       
-				<tbody>
+				<tbody id="listTbody">
 				  <c:set var="i" value="0" />
 				  <c:forEach var="list" items="${list}">
-					<tr>
+					<tr id = "listtr">
 					  <td align="center" id="info">${list}</td>
 					</tr>
 		          </c:forEach>
 		        </tbody>
 		      </table>
 							
-			<table class="table table-hover table-striped" >
+		<table class="table table-hover table-striped"  >
       
         <thead>
           <tr>
@@ -204,7 +213,7 @@ body {
           </tr>
         </thead>
        
-		<tbody>
+		<tbody id="dataTbody">
 		 <%--  <c:forEach var="abc" items="${abc}">
 			<tr>
 			<c:forEach var="abc" items="${abc}">
@@ -220,12 +229,11 @@ body {
 		
 		
 		<c:forEach items="${month}" varStatus="status">
-			<tr>
-			 <td align="center">${month[status.index]}</td>
-			 <td align="center">${min[status.index]}</td>
-			 <td align="center">${max[status.index]}</td>
-			 <td align="center">${rain[status.index]}</td>
-			 
+			<tr id="monthtr">
+			 <td align="center" id="month">${month[status.index]}</td>
+			 <td align="center" id="min">${min[status.index]}</td>
+			 <td align="center" id="max">${max[status.index]}</td>
+			 <td align="center" id="rain">${rain[status.index]}</td>
 			</tr>	
 		</c:forEach>
         </tbody>

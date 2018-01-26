@@ -29,6 +29,7 @@ import org.springframework.stereotype.Repository;
 
 import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
+import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationDao;
 
@@ -233,7 +234,7 @@ public class InformationDaoImpl implements InformationDao {
 	    	quickInfo.add(element.getText());
 	    	
 			List<WebElement> averageMonth = driver.findElements(By.cssSelector("#climategraph"));
-			
+			new WebDriverWait(driver, 100);
 			WebElement rowAverageMonth = averageMonth.get(0);
 			String rowAverageMonthText = rowAverageMonth.getText();
 			
@@ -260,9 +261,97 @@ public class InformationDaoImpl implements InformationDao {
 	}
 	
 	@Override
-	public List getFlight() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getFlightList(Flight flight) throws Exception {
+		
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability("marionette", true);
+		
+		List<String> list = new ArrayList<String>();
+		
+		try {
+			
+			WebDriver driver = new ChromeDriver();
+			driver.get("https://www.expedia.co.kr/air");
+			Thread.sleep(1000);
+			WebElement searchField = (new WebDriverWait(driver, 100))
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[@class='text icon-before autocomplete-arrow gcw-flights-from']")));
+			driver.findElement(By.cssSelector("#flight-origin-flp")).sendKeys(flight.getDeparture());//출발지 입력
+			 searchField = (new WebDriverWait(driver, 100))
+						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#flight-destination-flp")));
+			driver.findElement(By.cssSelector("#flight-destination-flp")).sendKeys(flight.getArrival());//도착지 입력
+			driver.findElement(By.cssSelector("#flight-departing-flp")).sendKeys(flight.getDepartureDate());//출발일 입력
+			driver.findElement(By.cssSelector("#flight-returning-flp")).clear();
+			driver.findElement(By.cssSelector("#flight-returning-flp")).sendKeys(flight.getArrivalDate());//도착일 입력
+			driver.findElement(By.xpath("//button[@class='btn-primary btn-action gcw-submit']")).click();//검색 누르기
+			
+	///////////////////////////나라입력시 주석 제거////////////////////////		
+	//		searchField = (new WebDriverWait(driver, 50))
+	//				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@id='continue-search']")));//페이지 이동 기다리기
+	//		
+	//		driver.findElement(By.xpath("//button[@id='continue-search']")).click();//나라 입력 시 공항이 2개일때 '계속 누르기'
+	//////////////////////////////////////////////////////////////////////////		
+			
+			searchField = (new WebDriverWait(driver, 100))
+					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[@class='visuallyhidden']")));//페이지 이동 기다리기
+			
+		searchField = (new WebDriverWait(driver, 150))
+				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn-secondary btn-action t-select-btn']")));//페이지 이동 기다리기
+		
+		searchField = (new WebDriverWait(driver, 150))
+				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='#route-happy']")));
+		
+		String departFlight  = driver.findElement(By.id("flightModuleList")).getText();
+		String[] info = departFlight.split("만점\\)");
+		
+		
+		for(int i = 0 ; i<info.length; i++ ) {
+			//System.out.println("*****************************\n"+info[i]+"\n\n");
+			list.add(info[i]);
+		}
+			
+		driver.close();
+//		
+//	 
+//	 driver.findElement(By.xpath("//span[contains(text(), '결과 2')]/parent::span/parent::button")).click();//첫번째 가는편 선택
+//
+//	 searchField = (new WebDriverWait(driver, 150))
+//				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn-secondary btn-action t-select-btn']")));//페이지 이동 기다리기
+//	 
+//	 
+//	 String returnFlight  = driver.findElement(By.id("flightModuleList")).getText();
+//		//System.out.println(text);
+//		
+//		String[] info2 = returnFlight.split("만점\\)");
+//		
+//		List list2 = new ArrayList();
+//		
+//		for(int i = 0 ; i<info2.length; i++ ) {
+//			System.out.println("*****************************\n"+info2[i]+"\n\n");
+//			list2.add(info2[i]);
+//		}
+//		
+//		
+//		driver.findElement(By.xpath("//span[contains(text(), '결과 2')]/parent::span/parent::button")).click();//첫번째 오는편 선택
+//		
+//		
+//		
+//		
+//		/////////////////////////결과 url받아오기////////////////////////////////
+//		 
+//		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+//		    driver.switchTo().window(tabs.get(1));
+//		
+//		String url = driver.getCurrentUrl();
+//		
+//		System.out.println(url);
+//		
+	 
+		}catch (Exception e) {
+			System.out.println(e);
+
+		}
+		return list;
 	}
 
 	@Override

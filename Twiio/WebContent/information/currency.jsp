@@ -105,10 +105,6 @@
 				var compareCountry = $("#compareCountryValue").val();
 				var inputPrice = $("#standard").val();
 				
-				alert(standardCountry);
-				alert(compareCountry);
-				alert(inputPrice);
-				
 					$.ajax( 
 							{
 								url : "/information/json/getCurrency/" ,

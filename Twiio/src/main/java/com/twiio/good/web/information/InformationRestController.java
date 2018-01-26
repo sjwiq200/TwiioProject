@@ -1,39 +1,23 @@
 package com.twiio.good.web.information;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.twiio.good.service.domain.City;
-import com.twiio.good.service.domain.WeatherMain;
+import com.oracle.jrockit.jfr.FlightRecorder;
+import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.information.InformationService;
 
 
@@ -119,7 +103,7 @@ public class InformationRestController {
 	}
 
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
-	public Map<Object,String[]> searchHistoryWeather(@RequestParam String cityName) throws Exception {
+	public Map<String,List> searchHistoryWeather(@RequestParam String cityName) throws Exception {
 
 		System.out.println("json/searchHistoryWeather ");
 		System.out.println("cityName : " + cityName);
@@ -132,26 +116,50 @@ public class InformationRestController {
 		String[] aver = {};
 		for(int i = 0; i<simple.length; i++) {
 			list.add(simple[i]);
-			System.out.println("simple다오다오"+simple[i]);
 		}
 		
 		String[] past = map.get("historyWeather");
-		System.out.println("???????????????");
-		for(int i = 0; i<past.length; i++) {
-			for(int k = 0; k<k+4;) {
-				aver[i]= past[k]+past[k+1]+past[k+2]+past[k+3];
-				k=k+4;
-			}
-			System.out.println("붙었니....?"+aver[i]);
+		
+		List<String> month =  new ArrayList<String>();
+		for(int i = 0; i<past.length;i++) {
+			month.add(past[i]);
+			i = i+3;
 		}
-		System.out.println("???????????????");
+		List<String> min =  new ArrayList<String>();
+		for(int i = 1; i<past.length;i++) {
+			min.add(past[i]);
+			i = i+3;
+		}
+		List<String> max =  new ArrayList<String>();
+		for(int i = 2; i<past.length;i++) {
+			max.add(past[i]);
+			i = i+3;
+		}
+		List<String> rain =  new ArrayList<String>();
+		for(int i = 3; i<past.length;i++) {
+			rain.add(past[i]);
+			i = i+3;
+		}
+		
 		Map<String,List> last = new HashMap();
 		
 			last.put("list", list);
+			last.put("month", month);
+			last.put("min", min);
+			last.put("max", max);
+			last.put("rain", rain);
 		
 	
-		return map;
+		return last;
 
+	}
+	
+	@RequestMapping( value="json/getFlight")
+	public String  getFlight(@RequestBody String input) throws Exception{
+		System.out.println("/information/json/getFilght");
+		
+			
+		return null;
 	}
 
 	

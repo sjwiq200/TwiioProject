@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
+import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.information.InformationDao;
 import com.twiio.good.service.information.InformationService;
 
@@ -56,8 +57,8 @@ public class InformationServiceImpl implements InformationService {
 	
 	
 	@Override
-	public List getFlight() throws Exception {
-		return informationDao.getFlight();
+	public List getFlightList(Flight flight) throws Exception {
+		return informationDao.getFlightList(flight);
 	}
 
 	@Override
