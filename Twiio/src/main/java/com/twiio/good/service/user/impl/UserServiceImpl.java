@@ -38,8 +38,10 @@ import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
+import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
+import com.twiio.good.service.transaction.TransactionDao;
 import com.twiio.good.service.user.UserDao;
 import com.twiio.good.service.user.UserService;
 
@@ -57,6 +59,13 @@ public class UserServiceImpl implements UserService{
 		this.userDao = userDao;
 	}	
 	
+	@Autowired
+	@Qualifier("transactionDaoImpl")
+	private TransactionDao transactionDao;	
+	public void setTransactionDao(TransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
+	}
+
 	@Value("#{apikeyProperties['googleAPPKey']}")
 	String googleAPPKey;
 	
@@ -406,13 +415,30 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List getStarEvalHost(User user) throws Exception {
-		return userDao.getStarEvalHost(user);
+	public Map<String, Object> listStarEvalHost(Search search, int hostNo) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("productNo", hostNo);
+		map.put("evalType", evalType);
+		List<Transaction> list = transactionDao.listStarEval(map);
+		int totalCount = transactionDao.getTotalCount(map);
+		
+		//map.clear();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
-	public Map listBestHost(User user) throws Exception {
-		return null;
+	public List<Transaction> listBestHost(Search search) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Search", search);
+		map.put("evalType", evalType);
+		
+		return transactionDao.listBest(map);
 	}
 
 	@Override
@@ -421,8 +447,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getEvalHost(String userId) throws Exception {
-		return userDao.getEvalHost(userId);
+	public Transaction getEvalHost(int hostNo) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hostNo", hostNo);
+		map.put("evalType", evalType);
+		return transactionDao.getEval(map);
 	}
 
 }

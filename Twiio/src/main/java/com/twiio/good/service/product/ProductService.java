@@ -27,5 +27,17 @@ public interface ProductService {
 	
 	// 상품 삭제
 	public void deleteProduct(int productNo) throws Exception;
+
+	// 상품 별점 평가 하기
+	public void addStarEvalProduct(Transaction transaction) throws Exception;
+
+	// 상품 별점 평가 리스트
+	public Map<String, Object> listStarEvalProduct(Search search, int productNo) throws Exception;
+
+	// 상품 평점 보기
+	public Transaction getEvalProduct(int productNo) throws Exception;
+
+	// 베스트 상품 리스트
+	public List<Transaction> listBestProduct(Search search) throws Exception;
 		
 }

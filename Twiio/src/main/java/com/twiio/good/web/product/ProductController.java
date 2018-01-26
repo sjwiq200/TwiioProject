@@ -27,9 +27,9 @@ public class ProductController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
-	@Autowired
-	@Qualifier("transactionServiceImpl")
-	private TransactionService transactionService;
+//	@Autowired
+//	@Qualifier("transactionServiceImpl")
+//	private TransactionService transactionService;
 
 	public ProductController() {
 		System.out.println(this.getClass());
@@ -111,7 +111,7 @@ public class ProductController {
 		
 		System.out.println("/product/addStarEvalProduct : POST ");
 		
-		transactionService.addStarEvalProduct(transaction);
+		productService.addStarEvalProduct(transaction);
 		
 		return "forward:/product/readProduct.jsp";
 	}
@@ -121,7 +121,7 @@ public class ProductController {
 		
 		System.out.println("/product/listStarEvalProduct ");
 		
-		map = transactionService.listStarEvalProduct(search, productNo);
+		map = productService.listStarEvalProduct(search, productNo);
 		
 		return "forward:/product/readProduct.jsp";
 	}
@@ -131,8 +131,8 @@ public class ProductController {
 		
 		System.out.println("/product/getEvalProduct ");
 		
-		Transaction transaction = transactionService.getEvalProduct(productNo);
-		int productEval = transaction.getEvalProduct();
+		Transaction transaction = productService.getEvalProduct(productNo);
+		double productEval = transaction.getEvalProduct();
 		
 		map.put("productEval", productEval);
 		
@@ -147,7 +147,7 @@ public class ProductController {
 		search.setCurrentPage(1);
 		search.setPageSize(10);//10µî±îÁö
 		
-		List<Transaction> list = transactionService.listBestProduct(search);
+		List<Transaction> list = productService.listBestProduct(search);
 				
 		
 		//map.put("list", productService.listBestProduct(search));

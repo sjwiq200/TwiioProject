@@ -67,17 +67,17 @@ public class UserRestController {
 		return map;
 	}
 	
-	@RequestMapping( value="json/getStarEvalHost")
-	public User getStarEvalHost( @PathVariable String userId ) throws Exception{
+	@RequestMapping( value="json/listStarEvalHost")
+	public User listStarEvalHost( @PathVariable String userId ) throws Exception{
 		
-		System.out.println("/user/json/getStarEvalHost ");
+		System.out.println("/user/json/listStarEvalHost ");
 		
 		//Business Logic
 		return userService.getUser(userId);
 	}
 	
 	@RequestMapping( value="json/getEvalHost")
-	public String getEvalHost( ) throws Exception{
+	public void getEvalHost( ) throws Exception{
 		
 		System.out.println("/user/json/getEvalHost");
 		
@@ -87,7 +87,7 @@ public class UserRestController {
 		evalUser.setUserId("user01");
 		
 		
-		return userService.getEvalHost(evalUser.getUserId());
+		//return userService.getEvalHost(evalUser.getUserId());
 	}
 	
 	@RequestMapping( value="json/getEvalUser")

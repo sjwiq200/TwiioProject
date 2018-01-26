@@ -22,7 +22,7 @@ public class User {
 	private int userEval;
 	private String userImage;
 	private Date regDate;
-	private boolean profilePublic;
+	private String profilePublic;
 	private String userRegisterType;
 	private String userLeave;
 	private String userBank;
@@ -167,11 +167,11 @@ public class User {
 		this.regDate = regDate;
 	}
 
-	public boolean isProfilePublic() {
+	public String isProfilePublic() {
 		return profilePublic;
 	}
 
-	public void setProfilePublic(boolean profilePublic) {
+	public void setProfilePublic(String profilePublic) {
 		this.profilePublic = profilePublic;
 	}
 

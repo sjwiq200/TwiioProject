@@ -48,7 +48,7 @@
 					#{userGender:VARCHAR} , 
 					#{userEmail:VARCHAR} , 
 					SYSDATE , 
-					#{userBirthday:VARCHAR} , 
+					#{userBirthday:DATE} , 
 					#{userRegisterType} )
 	 </insert>
 	 
@@ -90,14 +90,14 @@
 	   	UPDATE users
 	   	<set>
 	   		user_name 	= #{userName} ,
-			phone	= #{userPhone},
-			password 				= #{userPassword} ,
-			profile_image 				= #{userImage} ,
-			gender 				= #{userGender} ,
-			birth 				= #{userBirthday} ,
-			public_state 				= #{profilePublic} ,
-			host_account 				= #{userAccount} ,
-			bank 				= #{userBank} ,
+			phone	= #{userPhone:VARCHAR},
+			password 				= #{password:VARCHAR} ,
+			profile_image 				= #{userImage:VARCHAR} ,
+			gender 				= #{userGender:CHAR} ,
+			birth 				= #{userBirthday:DATE} ,
+			public_state 				= #{profilePublic:CHAR} ,
+			host_account 				= #{userAccount:VARCHAR} ,
+			bank 				= #{userBank:VARCHAR} ,
 			user_type 				= #{userType}		
 	   	</set>
 	   	WHERE user_no = #{userNo}
@@ -122,7 +122,7 @@
 											<if test="searchCondition != null">
 												<where>
 													<if test="searchCondition == 0 and searchKeyword !='' ">
-										 				user_name = '${searchKeyword}%'
+										 				user_name Like '${searchKeyword}%'
 													</if>
 													<if test="searchCondition == 1 and searchKeyword !='' ">
 										 				user_no = #{searchKeyword}

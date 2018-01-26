@@ -13,7 +13,7 @@ import com.twiio.good.service.domain.Refund;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.transaction.TransactionDao;
 
-@Repository("TransactionDaoImpl")
+@Repository("transactionDaoImpl")
 public class TransactionDaoImpl implements TransactionDao {
 
 	// Field
@@ -69,7 +69,7 @@ public class TransactionDaoImpl implements TransactionDao {
 	@Override
 	public void updateRefund(Refund refund) throws Exception {
 		// TODO Auto-generated method stub
-		sqlsession.update("TransactionMapper.addRefund", refund);
+		sqlsession.update("TransactionMapper.updateRefund", refund);
 	}
 
 	@Override

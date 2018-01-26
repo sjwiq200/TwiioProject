@@ -12,7 +12,7 @@
 		<result property="productName"			column="product_title" 			jdbcType="VARCHAR" />
 		<result property="productPrice" 		column="product_price" 			jdbcType="NUMERIC" />
 		<result property="productType" 			column="product_type" 			jdbcType="CHAR" />
-		<result property="tripDate" 			column="trip_date" 				jdbcType="DATE" />
+		<result property="tripDate" 			column="trip_date" 				jdbcType="VARCHAR" />
 		<result property="regDate" 				column="reg_date" 				jdbcType="DATE" />
 		<result property="country" 				column="country" 				jdbcType="VARCHAR" />
 		<result property="city" 				column="city" 					jdbcType="VARCHAR" />
@@ -30,14 +30,14 @@
 	 	INSERT
 		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, product_delete) 
 		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
-					#{prodName} , 
+					#{productName} , 
 					#{productPrice} , 
 					#{productType} , 
 					#{tripDate} , 					
 					#{country} ,
 					#{city} ,
 					#{hostNo} ,
-					#{description} ,
+					#{description:VARCHAR} ,
 					#{tourHeadCount} ,					
 					#{productCount} ,
 					'0' )
@@ -48,20 +48,20 @@
 		SELECT
 		product_no , product_title , product_price , product_type , trip_date, reg_date, country, city, user_no, product_content, head_count, view_count, product_count 		
 		FROM product 
-		WHERE prod_no = #{value}
+		WHERE product_no = #{value}
 	 </select>
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updateProduct"	parameterType="product" >
 	   	UPDATE product
 	   	<set>
-	   		product_title 		= #{prodName} ,
+	   		product_title 		= #{productName} ,
 			product_price		= #{productPrice},
 			product_type		= #{productType} ,
 			trip_date			= #{tripDate} ,
 			country				= #{country} ,
 			city				= #{city} ,
-			product_content		= #{description} ,
+			product_content		= #{description:VARCHAR} ,
 			head_count			= #{tourHeadCount}						
 	   	</set>
 	   	WHERE product_no = #{productNo}
@@ -105,8 +105,8 @@
 			
 		</if>
 		<choose>
-			<when test="search.condition == 'low'">ORDER BY price</when>
-			<when test="search.condition == 'high'">ORDER BY price DESC</when>
+			<!-- <when test="search.condition == 'low'">ORDER BY price</when>
+			<when test="search.condition == 'high'">ORDER BY price DESC</when> -->
 		<otherwise>ORDER BY reg_date DESC</otherwise>
 		</choose>
 	 </sql>

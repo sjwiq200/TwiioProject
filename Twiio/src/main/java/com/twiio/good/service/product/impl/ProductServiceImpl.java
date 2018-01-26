@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
+import com.twiio.good.service.domain.User;
 import com.twiio.good.service.product.ProductDao;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.transaction.TransactionDao;
@@ -25,12 +26,12 @@ public class ProductServiceImpl implements ProductService {
 		this.productDao = productDao;
 	}
 	
-//	@Autowired
-//	@Qualifier("transactionDaoImpl")
-//	private TransactionDao transactionDao;
-//	public void setTransactionDao(TransactionDao transactionDao) {
-//		this.transactionDao = transactionDao;
-//	}
+	@Autowired
+	@Qualifier("transactionDaoImpl")
+	private TransactionDao transactionDao;
+	public void setTransactionDao(TransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
+	}
 
 	public ProductServiceImpl() {
 		// TODO Auto-generated constructor stub
@@ -76,5 +77,55 @@ public class ProductServiceImpl implements ProductService {
 		// TODO Auto-generated method stub
 		productDao.deleteProduct(productNo);
 	}	
+	
+	@Override
+	public void addStarEvalProduct(Transaction transaction) throws Exception {
+		// TODO Auto-generated method stub
+		transactionDao.addStarEvalProduct(transaction);
+	}
+
+	@Override
+	public Map<String, Object> listStarEvalProduct(Search search, int productNo) throws Exception {
+		// TODO Auto-generated method stub
+		String evalType="product";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("productNo", productNo);
+		map.put("evalType", evalType);
+		System.out.println("map :: "+map);
+		User user = new User();
+		user.setUserType("0");
+		map.put("user", user);
+		List<Transaction> list = transactionDao.listStarEval(map);
+		int totalCount = transactionDao.getTotalCount(map);
+		
+		//map.clear();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
+	}
+
+	@Override
+	public Transaction getEvalProduct(int productNo) throws Exception {
+		// TODO Auto-generated method stub
+		String evalType="product";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("productNo", productNo);
+		map.put("evalType", evalType);
+		return transactionDao.getEval(map);
+	}
+
+	@Override
+	public List<Transaction> listBestProduct(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		String evalType="product";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Search", search);
+		map.put("evalType", evalType);
+		System.out.println("map :: "+map);
+		
+		return transactionDao.listBest(map);
+	}
 
 }

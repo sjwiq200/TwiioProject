@@ -13,10 +13,10 @@ import com.twiio.good.service.domain.User;
 public interface TransactionService {
 	
 	// 카카오페이 거래
-	public void kakaoPayReady(Transaction transaction) throws Exception;
+	public String kakaoPayReady(Transaction transaction) throws Exception;
 
 	// 카카오페이 거래
-	public void kakaoApproval(Transaction transaction) throws Exception;
+	public void kakaoApproval(String pgToken) throws Exception;
 
 	// 카카오페이 거래
 	public void kakaoCancel(Transaction transaction) throws Exception;
@@ -25,7 +25,7 @@ public interface TransactionService {
 	public void kakaoFail(Transaction transaction) throws Exception;
 
 	// 카카오페이 거래
-	public void kakaoOrder(Transaction transaction) throws Exception;
+	public String kakaoOrder() throws Exception;
 
 	// 페이팔 거래
 	public void payPal(Transaction transaction) throws Exception;
@@ -41,8 +41,8 @@ public interface TransactionService {
 	// 호스트 판매 리스트
 	//public Map<String,Object> listTransactionHost(Search search,int hostNo) throws Exception;
 	
-	// 환불 코드 변경
-	public void updateTransactionCode(Transaction transaction) throws Exception;
+//	// 환불 코드 변경
+//	public void updateTransactionCode(Transaction transaction) throws Exception;
 	
 	// 환불 신청
 	public void addRefund(Refund refund) throws Exception;
@@ -54,19 +54,6 @@ public interface TransactionService {
 	public Map<String, Object> listRefund(Search search, User user) throws Exception;
 
 	// 환불 취소
-	public void deleteRefund(int tranNo) throws Exception;
-
-	// 상품 별점 평가 하기
-	public void addStarEvalProduct(Transaction transaction) throws Exception;
-
-	// 상품 별점 평가 리스트
-	public Map<String, Object> listStarEvalProduct(Search search, int productNo) throws Exception;
-
-	// 상품 평점 보기
-	public Transaction getEvalProduct(int productNo) throws Exception;
-
-	// 베스트 상품 리스트
-	public List<Transaction> listBestProduct(Search search) throws Exception;
-	
+	public void deleteRefund(int tranNo) throws Exception;	
 
 }
