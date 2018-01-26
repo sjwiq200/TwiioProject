@@ -1,39 +1,23 @@
 package com.twiio.good.web.information;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
-import org.json.simple.JSONValue;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.twiio.good.service.domain.City;
-import com.twiio.good.service.domain.WeatherMain;
+import com.oracle.jrockit.jfr.FlightRecorder;
+import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.information.InformationService;
 
 
@@ -168,6 +152,14 @@ public class InformationRestController {
 	
 		return last;
 
+	}
+	
+	@RequestMapping( value="json/getFlight")
+	public String  getFlight(@RequestBody String input) throws Exception{
+		System.out.println("/information/json/getFilght");
+		
+			
+		return null;
 	}
 
 	

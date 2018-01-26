@@ -81,62 +81,33 @@ body {
 
 										success : function(JSONData, status) {
 											var simple = JSONData.list;
-											var month = JSONData.month;
+											var monthin = JSONData.month;
 											var min = JSONData.min;
 											var max = JSONData.max;
 											var rain = JSONData.rain;
 											
-											alert(simple);
-											alert(month);
-											alert(min);
-											alert(max);
-											alert(rain);
+ 
+											var listtr = null;
 											
-
-												var listtr = ' <c:set var="i" value="0" />'+
-																'<tr id = "listtr">'+'<td align="center" id="info">'+simple+'</td>'+
-																'</tr>';
-																
-																
-												var month ='<tr id="monthtr">'+
-														'<td align="center" id="month">${'+month+'[status.index]}</td>'+
-												'<td align="center" id="min">${'+min+'[status.index]}</td>'+
-													'<td align="center" id="max">${'+max+'[status.index]}</td>'+
-													'<td align="center" id="rain">${'+rain+'[status.index]}</td></tr>';
+											for(var i = 0 ; i<5; i++){
+												
+												listtr += '<tr id = "listtr"><td align="center" id="info">'+simple[i]+'</td>';
+												
+											}
+												
+											var month = null;
 											
-											/* var listtr = '<td align="center" id="info">'+simple+'</td>';
-											
-											var month = '<td align="center" id="month">${'+month+'[status.index]}</td>';
-											var min =	'<td align="center" id="min">${'+min+'[status.index]}</td>';
-											var max =	'<td align="center" id="max">${'+max+'[status.index]}</td>';
-											var rain =	'<td align="center" id="rain">${'+rain+'[status.index]}</td>';
-											
-											
-											$("#info").empty(listtr);
-											$("#month").empty(month);
-											$("#min").empty(min);
-											$("#max").empty(max);
-											$("#rain").empty(rain); */
-											
-												$("#222").empty();
-												$("#111").empty();
+											for(var i = 0 ; i<12; i++){
 												
-												$("#222").html(listtr);
-												$("#111").html(month);
+												month += '<tr id="monthtr"><td align="center" id="month">'+monthin[i]+
+												'</td>'+'<td align="center" id="min">'+min[i]+'</td>'+'<td align="center" id="max">'+max[i]+
+												'</td>'+'<td align="center" id="rain">'+rain[i]+'</td></tr>';
+											}
+															
+										$("#listTbody").html(listtr);
+										$("#dataTbody").html(month);
+														
 												
-												
-
-												$("#222").empty();
-												$("#111").empty();
-												
-												$("#222").html(listtr);
-												$("#111").html(month);
-												
-												
-												
-											 
-											
-													
 										}
 									});
 						});
@@ -220,7 +191,7 @@ body {
 		          </tr>
 		        </thead>
 		       
-				<tbody id="222">
+				<tbody id="listTbody">
 				  <c:set var="i" value="0" />
 				  <c:forEach var="list" items="${list}">
 					<tr id = "listtr">
@@ -242,7 +213,7 @@ body {
           </tr>
         </thead>
        
-		<tbody id="111">
+		<tbody id="dataTbody">
 		 <%--  <c:forEach var="abc" items="${abc}">
 			<tr>
 			<c:forEach var="abc" items="${abc}">
@@ -263,7 +234,6 @@ body {
 			 <td align="center" id="min">${min[status.index]}</td>
 			 <td align="center" id="max">${max[status.index]}</td>
 			 <td align="center" id="rain">${rain[status.index]}</td>
-			 
 			</tr>	
 		</c:forEach>
         </tbody>

@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -17,10 +18,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.service.domain.Currency;
+import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.information.InformationService;
 
 @Controller
@@ -134,6 +137,93 @@ public class InformationController {
 			model.addAttribute("list",list ).addAttribute("month",month).addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain);
 		
 	        return "forward:/information/searchHistoryWeather.jsp";
+	}
+	
+	@RequestMapping( value="getFlight" )
+	public String getFlight() throws Exception{
+		
+		System.out.println("/information/getFlight");
+		
+	        return  "forward:/information/flight.jsp";
+	}
+	
+	
+	@RequestMapping( value="getFlightList" )
+	public String getFlightList(@ModelAttribute Flight flight, Model model) throws Exception{
+		
+		System.out.println("/information/getFlightList");
+		
+		System.out.println(flight);
+		
+		List<String> result = new ArrayList<>();
+		
+		String[] str = {};
+		
+		List<String>list = informationService.getFlightList(flight);
+		//String str
+		for(int i = 0 ; i<list.size(); i++) {
+			System.out.println("*****************************\n\n"+list.get(i));
+			str = (list.get(i)).split("\n");
+		}
+//		for(int i = 0; i<str.length; i++) {
+//			System.out.println("@@@@@@@@@@@@@@@"+str[i]);
+//		}
+//		
+		//for(int i = 0; i<str.length; i++) {
+			List<String> time = new ArrayList<>();
+			List<String> airline = new ArrayList<>();
+			List<String> takeTime = new ArrayList<>();
+			List<String> mark = new ArrayList<>();
+			List<String> way = new ArrayList<>();
+			List<String> price = new ArrayList<>();
+			List<String> type = new ArrayList<>();
+			
+			
+			for(int i = 2 ; i<str.length; i++) {
+				time.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 3 ; i<str.length; i++) {
+				airline.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 4 ; i<str.length; i++) {
+				takeTime.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 5 ; i<str.length; i++) {
+				mark.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 6 ; i<str.length; i++) {
+				way.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 11 ; i<str.length; i++) {
+				price.add(str[i]);
+				i=i+18;
+			}
+			for(int i = 12 ; i<str.length; i++) {
+				type.add(str[i]);
+				i=i+18;
+			}
+			
+			
+			System.out.println("시간****************"+str[2]);
+			System.out.println("항공사******************"+str[3]);
+			System.out.println("소요시간****************"+str[4]);
+			System.out.println("마크*****************"+str[5]);
+			System.out.println("직항****************"+str[6]);
+			System.out.println("가격****************"+str[11]);
+			System.out.println("유형*************"+str[12]);
+			
+			
+		//}
+	
+		
+		model.addAttribute("time", time).addAttribute("airline", airline).addAttribute("takeTime", takeTime)
+		.addAttribute("mark", mark).addAttribute("way", way).addAttribute("price", price).addAttribute("type", type);
+	        return "forward:/information/flightList.jsp";
 	}
 	
 	
