@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -152,12 +153,12 @@ public class UserServiceImpl implements UserService{
 
         conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestProperty("Authorization", "Bearer "  +access_token.trim());
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("charset", "utf-8");
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
 
-        writer = new OutputStreamWriter(conn.getOutputStream());
+        writer = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
         writer.flush();
 
         int responseCodeResult = conn.getResponseCode();
@@ -165,7 +166,7 @@ public class UserServiceImpl implements UserService{
         System.out.println("Response Code : " + responseCodeResult);
 
         InputStreamReader isr2= null;
-        isr2 = new InputStreamReader(conn.getInputStream());
+        isr2 = new InputStreamReader(conn.getInputStream(),"UTF-8");
         reader = new BufferedReader(isr2);
 
         JSONObject jsonobj = (JSONObject)JSONValue.parse(reader);
@@ -173,9 +174,9 @@ public class UserServiceImpl implements UserService{
         System.out.println("jsonobj Result : " + jsonobj);
 
         ObjectMapper objectMapper = new ObjectMapper();
-
+        	
 		 	User user = objectMapper.readValue(jsonobj.toString(), User.class);
-
+		 	
 		 	JSONObject jsonobjProperties = (JSONObject) jsonobj.get("properties");
 
 		 	Properties properties = objectMapper.readValue(jsonobjProperties.toString(), Properties.class);
@@ -227,10 +228,10 @@ public class UserServiceImpl implements UserService{
 		HttpURLConnection http = (HttpURLConnection) AccessTokenURL.openConnection();
 
 		http.setDoOutput(true);
-		http.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-
-		String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
-		String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
+		http.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		//String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
+		//String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
 		String redirect_url = "http://127.0.0.1:8080/user/googleLogin";
 
 		StringBuffer buffer = new StringBuffer();

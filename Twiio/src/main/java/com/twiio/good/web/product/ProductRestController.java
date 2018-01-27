@@ -42,7 +42,7 @@ public class ProductRestController {
 	//setter Method 구현 않음
 	
 	@Autowired
-	@Qualifier("serviceerviceImpl")
+	@Qualifier("userServiceImpl")
 	private UserService userService;
 		
 	public ProductRestController(){

@@ -52,14 +52,14 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
-	public Map<String, Boolean> checkDuplication( @RequestBody User user ) throws Exception{
+	public Map<String, Boolean> checkDuplication( @RequestBody String userId ) throws Exception{
 		
 		System.out.println("/user/json/checkDuplication : POST");
 		//Business Logic
-		//userId=userId.split("=")[1];
-		//boolean result=userService.checkDuplication(userId);		
+		userId=userId.split("=")[1];
+		boolean result=userService.checkDuplication(userId);		
 		
-		boolean result=userService.checkDuplication(user.getUserId());
+		//boolean result=userService.checkDuplication(user.getUserId());
 		
 		Map<String, Boolean> map= new HashMap<String, Boolean>();
 		map.put("result", result);
