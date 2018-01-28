@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -17,7 +18,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.oracle.jrockit.jfr.FlightRecorder;
+import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import com.twiio.good.service.domain.Flight;
+import com.twiio.good.service.domain.Hotel;
 import com.twiio.good.service.information.InformationService;
 
 
@@ -113,7 +116,6 @@ public class InformationRestController {
 		List<String> list = new ArrayList<String>();
 		
 		String[] simple = map.get("quickInfo");
-		String[] aver = {};
 		for(int i = 0; i<simple.length; i++) {
 			list.add(simple[i]);
 		}
@@ -154,12 +156,121 @@ public class InformationRestController {
 
 	}
 	
-	@RequestMapping( value="json/getFlight")
-	public String  getFlight(@RequestBody String input) throws Exception{
-		System.out.println("/information/json/getFilght");
+	@RequestMapping( value="json/getFlightList")
+	public Map<String, List>  getFlightList(@RequestBody String pram) throws Exception{
+		
+		System.out.println("/information/json/getFlightList");
+		
+		System.out.println(pram);
+		String[] str = pram.split("&");
+		String[] splitNum = str[0].split("=");
+		String num = splitNum[1];
+		String[] splitUrl = str[1].split("=");
+		String url = splitUrl[1];
+		
+		
+		Map<String, List<String>> map= informationService.getFlightListRetrun(url, num);
+		List<String> urlList= map.get("urlReturn");
+		List<String> currentUrl  = new ArrayList<String>();
+				
+		currentUrl.add(urlList.get(0));
+		
+		List<String> list = map.get("list");
+		
+			List<String> info = new ArrayList<>();
+			for(int i = 0; i<list.size()-3; i++) {
+				info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
+				i=i+6;
+			}
+			
+			List<String> price = new ArrayList<>();
+			for(int i = 5; i<list.size(); i++) {
+				price.add(list.get(i));
+				i=i+6;
+			}
+			
+			List<String> type = new ArrayList<>();
+			for(int i = 6; i<list.size(); i++) {
+				type.add(list.get(i));
+				i=i+6;
+			}
+		
+			Map<String, List> end = new HashMap();
+			
+			end.put("info", info);
+			end.put("price", price);
+			end.put("type", type);
+			end.put("currentUrl", currentUrl);
 		
 			
-		return null;
+		return end;
+	}
+	
+	@RequestMapping( value="json/getHotel" )
+	public  Map<String,List>  getHotel(@RequestBody String hotel ) throws Exception{
+		
+		System.out.println("/information/json/getHotel");
+		
+		String decoding = URLDecoder.decode(hotel, "UTF-8");
+		System.out.println(decoding);
+		
+		String[] str = decoding.split("&");
+		
+		String[] city = str[0].split("=");
+		String[] checkIn = str[1].split("=");
+		String[] checkOut = str[2].split("=");
+		String[] headCount = str[3].split("=");
+		
+		Hotel info = new Hotel();
+		
+		info.setCity(city[1]);
+		info.setCheckIn(checkIn[1]);
+		info.setCheckOut(checkOut[1]);
+		info.setHeadCount(headCount[1]);
+		
+		
+		Map<String, List<String>> map= informationService.getHotel(info);
+		
+		List<String> list = map.get("list");
+		List<String> url = map.get("url");
+		List<String> image = map.get("image");
+		
+		List<String> con = new ArrayList<>();
+		List<String> loc = new ArrayList<>();
+		List<String> price = new ArrayList<>();
+		
+		for(int i = 0; i<list.size()-5; i++) {
+			
+			con.add(list.get(i)+list.get(i+2));
+			loc.add(list.get(i+3));
+			
+			if(list.get(i+5).matches(	".*[¤¡-¤¾¤¿-¤Ó°¡-ÆR]+.*")) {
+				
+					System.out.println("°É·¯Áö´Ï@@"+list.get(i+5));
+					price.add(list.get(i+4));
+					i=i+4;
+				}else {
+					price.add(list.get(i+5));
+					i=i+5;
+				}
+				
+		}
+		
+//		List<String> type = new ArrayList<>();
+//		for(int i = 6; i<list.size(); i++) {
+//			type.add(list.get(i));
+//			i=i+6;
+//		}
+		
+		Map<String, List> end = new HashMap();
+		
+		end.put("con", con);
+		end.put("loc", loc);
+		end.put("price", price);
+		end.put("url", url);
+		end.put("image", image);
+		
+		return end;
 	}
 
 	

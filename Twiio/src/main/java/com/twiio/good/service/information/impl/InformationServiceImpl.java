@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
+import com.twiio.good.service.domain.Hotel;
 import com.twiio.good.service.information.InformationDao;
 import com.twiio.good.service.information.InformationService;
 
@@ -57,13 +58,18 @@ public class InformationServiceImpl implements InformationService {
 	
 	
 	@Override
-	public List getFlightList(Flight flight) throws Exception {
+	public Map<String, List<String>> getFlightList(Flight flight) throws Exception {
 		return informationDao.getFlightList(flight);
+	}
+	
+	@Override
+	public Map<String, List<String>> getFlightListRetrun(String url, String num) throws Exception {
+		return informationDao.getFlightListRetrun( url,  num);
 	}
 
 	@Override
-	public List getHotel() throws Exception {
-		return informationDao.getHotel();
+	public Map<String, List<String>> getHotel(Hotel hotel) throws Exception {
+		return informationDao.getHotel(hotel);
 	}
 
 	@Override

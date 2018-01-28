@@ -4,8 +4,10 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -27,9 +30,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
 
+import com.sun.jndi.toolkit.url.Uri;
 import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
+import com.twiio.good.service.domain.Hotel;
 import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationDao;
 
@@ -261,14 +266,15 @@ public class InformationDaoImpl implements InformationDao {
 	}
 	
 	@Override
-	public List<String> getFlightList(Flight flight) throws Exception {
+	public Map<String, List<String>> getFlightList(Flight flight) throws Exception {
 		
 		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
+		String[] result =null;
 		
 		List<String> list = new ArrayList<String>();
-		
+		Map<String, List<String>> map = new HashMap<>();
 		try {
 			
 			WebDriver driver = new ChromeDriver();
@@ -302,62 +308,247 @@ public class InformationDaoImpl implements InformationDao {
 				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='#route-happy']")));
 		
 		String departFlight  = driver.findElement(By.id("flightModuleList")).getText();
-		String[] info = departFlight.split("만점\\)");
+		//String[] info = departFlight.split("만점\\)");
+		
+		 result = departFlight.split("\n");
 		
 		
-		for(int i = 0 ; i<info.length; i++ ) {
+		for(int i = 0 ; i<result.length; i++ ) {
 			//System.out.println("*****************************\n"+info[i]+"\n\n");
-			list.add(info[i]);
+			list.add(result[i]);
 		}
+		System.out.println("줄이기전"+list.size());
+		
+		Iterator<String> iter = list.iterator();
+		while (iter.hasNext()) {
+			String s = iter.next();
+		 
+			if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
+					||s.contains("선택")||s.contains("비행")||s.contains("남음")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("에서")||s.contains("직항")
+					||s.contains("예약했")||s.equals("")) {
+				iter.remove();
+			}
 			
+			
+		}
+		
+		System.out.println("줄인후"+list.size());
+		
+		List<String > url = new ArrayList();
+				
+				url.add(driver.getCurrentUrl());
+		
+		map.put("list", list);
+		map.put("url", url);
+		
+		System.out.println("URL+++++++++++++"+url);
 		driver.close();
-//		
-//	 
-//	 driver.findElement(By.xpath("//span[contains(text(), '결과 2')]/parent::span/parent::button")).click();//첫번째 가는편 선택
-//
-//	 searchField = (new WebDriverWait(driver, 150))
-//				.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn-secondary btn-action t-select-btn']")));//페이지 이동 기다리기
-//	 
-//	 
-//	 String returnFlight  = driver.findElement(By.id("flightModuleList")).getText();
-//		//System.out.println(text);
-//		
-//		String[] info2 = returnFlight.split("만점\\)");
-//		
-//		List list2 = new ArrayList();
-//		
-//		for(int i = 0 ; i<info2.length; i++ ) {
-//			System.out.println("*****************************\n"+info2[i]+"\n\n");
-//			list2.add(info2[i]);
-//		}
-//		
-//		
-//		driver.findElement(By.xpath("//span[contains(text(), '결과 2')]/parent::span/parent::button")).click();//첫번째 오는편 선택
-//		
-//		
-//		
-//		
-//		/////////////////////////결과 url받아오기////////////////////////////////
-//		 
-//		ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
-//		    driver.switchTo().window(tabs.get(1));
-//		
-//		String url = driver.getCurrentUrl();
-//		
-//		System.out.println(url);
-//		
 	 
 		}catch (Exception e) {
 			System.out.println(e);
 
 		}
-		return list;
+		return map;
+	}
+	
+	@Override
+	public Map<String, List<String>> getFlightListRetrun(String url, String num) throws Exception {
+		
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		capabilities.setCapability("marionette", true);
+		
+		List<String> list = new ArrayList<String>();
+		Map<String, List<String>> map = new HashMap<>();
+		try {
+			
+			WebDriver driver = new ChromeDriver();
+			int number = Integer.parseInt(num)+1;
+			String decoding = URLDecoder.decode(url, "UTF-8");
+			
+			System.out.println("다오 urlurl++++++++++++++"+decoding);
+			driver.get(decoding);
+			Thread.sleep(1000);
+			
+			 driver.findElement(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")).click();//첫번째 가는편 선택
+			
+			 WebElement searchField = (new WebDriverWait(driver, 150))
+						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='#route-happy']")));
+			 
+				 String returnFlight  = driver.findElement(By.id("flightModuleList")).getText();
+					
+					String[] info2 = returnFlight.split("\n");
+					
+					for(int i = 0 ; i<info2.length; i++ ) {
+						//System.out.println("?????????????????\n"+info2[i]+"\n\n");
+						list.add(info2[i]);
+					}
+					
+					System.out.println("return줄이기전"+list.size());
+					
+					Iterator<String> iter = list.iterator();
+					while (iter.hasNext()) {
+						String s = iter.next();
+					 
+						if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
+								||s.contains("선택")||s.contains("비행")||s.contains("남음")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("에서")||s.contains("직항")
+								||s.contains("예약했")||s.equals("")) {
+							iter.remove();
+						}
+					}
+					
+					System.out.println("return줄인후"+list.size());
+					
+					//driver.findElement(By.xpath("//span[contains(text(), '결과 2')]/parent::span/parent::button")).click();//첫번째 오는편 선택
+
+					List<String > urlReturn = new ArrayList();
+					
+					urlReturn.add(driver.getCurrentUrl());
+					
+					map.put("list", list);
+					map.put("urlReturn", urlReturn);
+							
+					driver.close();
+					
+					/////////////////////////결과 url받아오기////////////////////////////////
+					 
+				//	ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+					//    driver.switchTo().window(tabs.get(1));
+				 
+					}catch (Exception e) {
+						System.out.println(e);
+					}
+		
+		return map;
 	}
 
 	@Override
-	public List getHotel() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public Map<String, List<String>> getHotel(Hotel hotel) throws Exception {
+		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		
+		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
+		
+		capabilities.setCapability("marionette", true);
+		List<String> list = new ArrayList<String>();
+		List<String> url = new ArrayList<String>();
+		List<String> image = new ArrayList<String>();
+		Map<String, List<String>> map = new HashMap<>();
+		
+		try {
+		WebDriver driver = new ChromeDriver();
+		
+		driver.get("https://www.expedia.co.kr/Hotels");
+		
+		Thread.sleep(1000);
+		
+		WebElement searchField = (new WebDriverWait(driver, 50))
+				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#hotel-destination-hlp")));
+
+		driver.findElement(By.cssSelector("#hotel-destination-hlp")).sendKeys(hotel.getCity());//목적지 입력
+		
+		driver.findElement(By.cssSelector("#hotel-checkin-hlp")).clear();
+		
+		driver.findElement(By.cssSelector("#hotel-checkin-hlp")).sendKeys(hotel.getCheckIn());//체크인 입력
+
+		driver.findElement(By.cssSelector("#hotel-checkout-hlp")).clear();
+		
+		driver.findElement(By.cssSelector("#hotel-checkout-hlp")).sendKeys(hotel.getCheckOut());//체크아웃 입력
+		
+		JavascriptExecutor js = (JavascriptExecutor) driver;
+		
+//		int k = 2;
+//		
+//		js.executeScript("$('#hotel-rooms-hlp').val("+k+")"); //객실개수 입력
+//		
+//		searchField = (new WebDriverWait(driver, 50))
+//				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#room"+k+"-data-hlp")));
+//
+//		
+//		for(int h = 1 ; h<=k ; h++) {
+//		
+//			js.executeScript("$('#hotel-"+h+"-adults-hlp').val("+2+")");
+//			
+//			js.executeScript("$('#hotel-"+h+"-children-hlp').val("+0+")");
+//			
+//		}
+		///객실다중 선택
+		
+		js.executeScript("$('#hotel-1-adults-hlp').val("+hotel.getHeadCount()+")"); //인원 입력
+		
+		searchField = (new WebDriverWait(driver, 50))
+				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#hotel-1-adults-hlp")));
+		
+		
+		driver.findElement(By.xpath("//button[@class='btn-primary btn-action  gcw-submit']")).click();//검색 누르기
+		
+		searchField = (new WebDriverWait(driver, 50))
+				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#hotelResultTitle")));
+		
+			searchField = (new WebDriverWait(driver, 50))
+					.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#hotelResultTitle")));
+			
+			String content  = driver.findElement(By.id("resultsContainer")).getText();
+			
+			String[] str2 = content.split("\n");
+	
+			for(int i = 0 ; i<str2.length; i++ ) {
+			//System.out.println("++++++++++++++++++++++++++++++++++++\n"+str2[i]);
+				list.add(str2[i]);
+			}
+			
+			System.out.println("return줄이기전"+list.size());
+			
+			Iterator<String> iter = list.iterator();
+			while (iter.hasNext()) {
+				String s = iter.next();
+			 
+				if (s.contains("이곳을 ")||s.contains("Guest")||s.contains("/")||s.contains("Based ")||s.contains("판매")||s.contains("이전")||s.contains("요금을")
+						||s.contains("예약하고")||s.contains("만점")||s.contains("Price")||s.contains("평균")||s.contains("세일")||s.contains("클릭")||s.contains("리스트")
+						||s.contains("VIP")||s.equals("")||s.contains("서두르세요")||s.contains("만점")||s.contains("Price")||s.contains("평균")||s.contains("세일")
+						||s.contains("예약")||s.contains("후기")||s.contains("this")||s.contains("가격")||s.contains("남음")||s.contains("스폰서")||s.contains("할인")
+						||s.contains("지난")||s.contains("오늘")||s.contains("More")||s.contains("익스피디아")||s.contains("인기")||s.contains("요금")
+						||s.contains("확인")||s.contains("무료")||s.contains("02")||s.contains("익스피디아")||s.contains("인기")||s.contains("요금")) {
+					iter.remove();
+				}
+				
+			}
+			
+			System.out.println("return줄인후"+list.size());
+			
+			 ///////////////////////////////////////////////////////상세정보 누를 때 url 가져오기/////////////////////////////////////////////////////
+			 List<WebElement> links = driver.findElements(By.xpath("//div[@class='flex-link-wrap']/a"));
+			 
+	         //System.out.println(links.size()); 
+	         
+	         List<String> hrefs = new ArrayList<String>();
+	         
+	         for ( WebElement anchor : links ) {
+	        	    hrefs.add(anchor.getAttribute("href"));
+	        	}
+	         
+	         
+	         List<WebElement> images  = driver.findElements(By.xpath("//div[@class='hotel-thumbnail']"));
+			 
+	         for ( WebElement anchor : images ) {
+	        	    image.add(anchor.getAttribute("data-image"));
+	        	}
+				
+	         	
+	         for(int i = 0; i < hrefs.size(); i++) {
+	        	 url.add(hrefs.get(i));
+	         }
+	     	map.put("list", list);
+	     	map.put("url", url);
+	     	map.put("image", image);
+	     	
+	     	driver.close();
+
+		//Thread.sleep(1000);
+		}catch (Exception e) {
+			System.out.println(e);
+
+		}
+		return map;
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,7 +106,6 @@ public class InformationController {
 		List<String> list = new ArrayList<String>();
 		
 		String[] simple = map.get("quickInfo");
-		String[] aver = {};
 		for(int i = 0; i<simple.length; i++) {
 			list.add(simple[i]);
 		}
@@ -152,78 +152,46 @@ public class InformationController {
 	public String getFlightList(@ModelAttribute Flight flight, Model model) throws Exception{
 		
 		System.out.println("/information/getFlightList");
-		
 		System.out.println(flight);
 		
-		List<String> result = new ArrayList<>();
+		Map<String, List<String>> result  = informationService.getFlightList(flight);
+		List<String> url = result.get("url");
+		String currentUrl  = url.get(0);
+		List<String> list = result.get("list");
 		
-		String[] str = {};
+		for(int i = 0; i<list.size(); i++) {
+			System.out.println("**"+list.get(i));
+			}
 		
-		List<String>list = informationService.getFlightList(flight);
-		//String str
-		for(int i = 0 ; i<list.size(); i++) {
-			System.out.println("*****************************\n\n"+list.get(i));
-			str = (list.get(i)).split("\n");
-		}
-//		for(int i = 0; i<str.length; i++) {
-//			System.out.println("@@@@@@@@@@@@@@@"+str[i]);
-//		}
-//		
-		//for(int i = 0; i<str.length; i++) {
-			List<String> time = new ArrayList<>();
-			List<String> airline = new ArrayList<>();
-			List<String> takeTime = new ArrayList<>();
-			List<String> mark = new ArrayList<>();
-			List<String> way = new ArrayList<>();
+			List<String> info = new ArrayList<>();
+			for(int i = 0; i<list.size()-3; i++) {
+				info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
+				i=i+6;
+			}
+			
 			List<String> price = new ArrayList<>();
+			for(int i = 5; i<list.size(); i++) {
+				price.add(list.get(i));
+				i=i+6;
+			}
+			
 			List<String> type = new ArrayList<>();
-			
-			
-			for(int i = 2 ; i<str.length; i++) {
-				time.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 3 ; i<str.length; i++) {
-				airline.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 4 ; i<str.length; i++) {
-				takeTime.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 5 ; i<str.length; i++) {
-				mark.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 6 ; i<str.length; i++) {
-				way.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 11 ; i<str.length; i++) {
-				price.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 12 ; i<str.length; i++) {
-				type.add(str[i]);
-				i=i+18;
+			for(int i = 6; i<list.size(); i++) {
+				type.add(list.get(i));
+				i=i+6;
 			}
 			
-			
-			System.out.println("시간****************"+str[2]);
-			System.out.println("항공사******************"+str[3]);
-			System.out.println("소요시간****************"+str[4]);
-			System.out.println("마크*****************"+str[5]);
-			System.out.println("직항****************"+str[6]);
-			System.out.println("가격****************"+str[11]);
-			System.out.println("유형*************"+str[12]);
-			
-			
-		//}
-	
+			model.addAttribute("info",info ).addAttribute("price",price).addAttribute("type",type).addAttribute("currentUrl",currentUrl);
 		
-		model.addAttribute("time", time).addAttribute("airline", airline).addAttribute("takeTime", takeTime)
-		.addAttribute("mark", mark).addAttribute("way", way).addAttribute("price", price).addAttribute("type", type);
 	        return "forward:/information/flightList.jsp";
+	}
+	
+	@RequestMapping( value="getHotel" )
+	public String getHotel() throws Exception{
+		
+		System.out.println("/information/getHotel");
+		
+	        return  "forward:/information/hotel.jsp";
 	}
 	
 	

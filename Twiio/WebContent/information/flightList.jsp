@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %> 
 
 
 <!DOCTYPE html>
@@ -14,22 +15,33 @@
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  	<link rel="stylesheet" href="/resources/demos/style.css">
-  	
-  	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<link href="/css/animate.min.css" rel="stylesheet">
+	<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
     <!-- Bootstrap Dropdown Hover JS -->
    
@@ -42,6 +54,75 @@
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
+	
+		$(function() {
+		
+		
+		$( "td:nth-child(5)" ).on("click" , function(){
+			
+			var num = $("td:nth-child(5)").index(this);
+			var urls = "${currentUrl}";
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/getFlightList/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						"num":num,
+		    						"url":urls
+		    						},
+		    						headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									},
+		    					dataType:"json",
+		    					async:false,
+		    					success:function(JSONData){
+		    						var info = JSONData.info;
+									var price = JSONData.price;
+									var type = JSONData.type;
+									var currentUrls = JSONData.currentUrl[0];
+									var list = null;
+									
+									for(var i = 0 ; i<info.length; i++){
+										
+										list += '<tr><td align="center">'+(i+1)+'</td>'+
+										'<td align="center" id="info">'+info[i]+
+										'</td>'+'<td align="center" id="type">'+type[i]+
+										'</td>'+'<td align="center" id="price">'+price[i]+'</td><td align="center" id="null">?</td>'+
+										'<td align="center" id="new"><button type="button" class="btn btn-success" id="newpick">선&nbsp;택</button></td></tr>';
+									}
+								$("#listTbody").html(list);
+								$("h4").text("오는 편 비행기를 선택해 주세요.");
+		    							    							    						
+		    					}
+		    				}
+		    			);
+			    });
+		
+	});
+	
+$(function() {	
+		
+		$( "td:nth-child(6)" ).on("click" , function(){
+			
+			alert("뀨???????");
+			
+			    });
+		
+		$( "#newpick" ).on("click" , function(){
+			
+			alert("newpick");
+			
+			    });
+		$( "#new" ).on("click" , function(){
+			
+			alert("new");
+			
+			    });
+		
+		
+		
+			});
 	
 	</script>
 	
@@ -60,40 +141,34 @@
 	<div class="page-header text-info">
 	       <h3>비행기 정보 조회</h3>
 	</div>
-		    
+		    <h4>가는 편 비행기를 선택해 주세요.</h4>
 		<table class="table table-hover table-striped" >
 	      
 	        <thead>
 	          <tr>
 	            <th align="center">No</th>
-	            <th align="left">시간</th>
-	            <th align="left">항공사</th>
-	            <th align="left">소요시간</th>
-	            <th align="left">마크</th>
-	            <th align="left">직항</th>
+	            <th align="left">정보</th>
+	            <th align="left">타입</th>
 	            <th align="left">가격</th>
-	            <th align="left">유형</th>
+	            <th align="left">선택</th>
 	          </tr>
 	        </thead>
 	       
-			<tbody>
 			
-			  <c:set var="i" value="0" />
-			  <c:forEach  items="${time}" varStatus="status">
-				<c:set var="i" value="${ i+1 }" />
-				<tr>
-				  <td align="center">${ i }</td>
-				  <td align="center" id="time">${time[status.index]}</td>
-				 <td align="center" id="airline">${airline[status.index]}</td>
-				 <td align="center" id="takeTime">${takeTime[status.index]}</td>
-				 <td align="center" id="mark">${mark[status.index]}</td>
-				 <td align="center" id="way">${way[status.index]}</td>
-				 <td align="center" id="price">${price[status.index]}</td>
-				 <td align="center" id="type">${type[status.index]}</td>
-				</tr>
-	          </c:forEach>
-	        
-	        </tbody>
+			<c:set var="i" value="0" />
+			<c:set var="i" value="${ i+1 }" />
+			
+				<tbody id="listTbody">
+				  <c:forEach  items="${info}" varStatus="status">
+					<tr>
+					 <td align="center">${ i }</td>
+					 <td align="center" id="info">${info[status.index]}</td>
+					 <td align="center" id="type">${type[status.index]}</td>
+					 <td align="center" id="price">${price[status.index]}</td>
+					 <td align="center" id="choice"><button type="button" class="btn btn-primary" id="pick">선&nbsp;택</button></td>
+					</tr>
+		          </c:forEach>
+		        </tbody>
 	      
 	      </table>
 	
