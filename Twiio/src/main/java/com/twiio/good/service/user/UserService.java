@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 
@@ -52,15 +53,15 @@ public interface UserService {
 	
 	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
 	
-	public List getStarEvalHost(User user) throws Exception;
+	public Map<String, Object> listStarEvalHost(Search search, int hostNo) throws Exception;
 	
-	public Map listBestHost(User user) throws Exception;
+	public List<Transaction> listBestHost(Search search) throws Exception;
 	
 	//public void addStarEvalHost(Transaction transaction) throws Exception;
 	
 	public String  getEvalUser(String userId) throws Exception;
 	
-	public String  getEvalHost(String userId) throws Exception;
+	public Transaction getEvalHost(int hostNo) throws Exception;
 		
 
 }

@@ -33,7 +33,7 @@
 	              
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >Messenger</span>
+	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     
@@ -41,7 +41,7 @@
 	     
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >Community</span>
+		                         <span >Blabla~</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -54,7 +54,7 @@
 	              
 	              <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >Information</span>
+	                         <span >AllAboutTrip</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
@@ -72,7 +72,7 @@
 	                 
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >Product</span>
+	                         <span >DailyTour</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
@@ -86,7 +86,7 @@
 	                 
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-	                         <span >Trip Plan</span>
+	                         <span >MyTripBook</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     
@@ -95,7 +95,12 @@
 	             </ul>
 	             
 	             <ul class="nav navbar-nav navbar-right">
-	                <li><a href="#">Login</a></li>
+	             	<c:if test="${sessionScope.user == null}">
+	                  <li><a href="#">Login</a></li>
+	                </c:if>
+	                <c:if test="${sessionScope.user != null}">
+	                  <li><a href="#">Logout</a></li>
+	                </c:if>
 	            </ul>
 		</div>
 		<!-- dropdown hover END -->	       
@@ -111,7 +116,7 @@
 		//============= logout Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('로그아웃')").on("click" , function() {
+		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
@@ -128,7 +133,9 @@
 		
 		//=============  개인정보조회회 Event  처리 =============	
 			
-		$( "a:contains('Messenger')" ).on("click" , function() {
+		/* Messenger*/
+			
+		$( "a:contains('TwiiChat')" ).on("click" , function() {
 			$(self.location).attr("href","/room/listRoom");
 		});
 		
@@ -185,13 +192,17 @@
 			$(self.location).attr("href","/product/listBestProduct");
 		});
 		
-		$( "a:contains('Trip Plan')" ).on("click" , function() {
+		/* Planer */
+		
+		$( "a:contains('MyTripBook')" ).on("click" , function() {
 			alert("안녕!");
 			$(self.location).attr("href","/mainplan/listMainPlan");
 		});
 		
+		/* Login */
+		
 		$( "a:contains('Login')" ).on("click" , function() {
-			$(self.location).attr("href","/user/loginUser");
+			$(self.location).attr("href","/user/login");
 		});
 		
 		

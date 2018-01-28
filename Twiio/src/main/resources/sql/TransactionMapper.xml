@@ -34,9 +34,9 @@
 	<resultMap id="refundSelectMap" type="refund">
 		<result property="refundNo" 				column="refund_no" 				jdbcType="NUMERIC"/>
 		<result property="tranNo" 					column="tran_no" 				jdbcType="NUMERIC"/>
-		<result property="regDate"					column="refund_reg_date" 		jdbcType="NUMERIC" />
-		<result property="confirmDate" 				column="refund_confirm_date" 	jdbcType="VARCHAR" />
-		<result property="refundPrice" 				column="refund_price" 			jdbcType="CHAR" />
+		<result property="regDate"					column="refund_reg_date" 		jdbcType="DATE" />
+		<result property="confirmDate" 				column="refund_confirm_date" 	jdbcType="DATE" />
+		<result property="refundPrice" 				column="refund_price" 			jdbcType="NUMERIC" />
 		<result property="refundAccount" 			column="refund_account" 		jdbcType="VARCHAR" />
 		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />
 		<result property="userNo" 					column="user_no" 				jdbcType="NUMERIC" />
@@ -121,7 +121,7 @@
 	 	INSERT
 		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank) 
 		VALUES	 (	seq_REFUND_REFUND_NO.NEXTVAL , 
-					#{tran_no} , 
+					#{tranNo} , 
 					SYSDATE , 
 					#{refundPrice} , 
 					#{refundAccount} , 
@@ -168,7 +168,7 @@
 		UPDATE transaction 
 		<set> 
 			product_star_eval	= #{starEvalProduct} ,
-			product_review		= #{reviewProduct}
+			product_review		= #{reviewProduct:VARCHAR}
 		</set>
 		WHERE tran_no=#{tranNo}	
 	</update>
@@ -181,24 +181,24 @@
 	  										t.product_no as product_no , 
 	  										t.tran_no as tran_no , 
 	  										t.tran_date as tran_date , 
-	  										t.trip_date as tran_date , 
+	  										t.trip_date as trip_date , 
 	  										t.host_no as host_no , 
 											t.tran_count as tran_count , 
 											t.user_no as user_no , 
 											t.product_star_eval as product_star_eval , 
 											t.product_review as product_review ,
-	  									<if test="evalType == product">	  										
+	  									<if test="evalType == 'product'">	  										
 											u.user_name as user_name							 				
 							 			</if>
-							 			<if test="evalType == host">
+							 			<if test="evalType == 'host'">
 							 				u.user_name as host_name
 							 			</if>									  	
 									  	FROM transaction t, users u
 									  	<where>								  	
-											<if test="evalType == product">
+											<if test="evalType == 'product'">
 								 				product_no= #{productNo}
 								 			</if>
-								 			<if test="evalType == host">
+								 			<if test="evalType == 'host'">
 								 				host_no= #{hostNo}
 								 			</if>
 							 			</where>					 												  	 
@@ -219,12 +219,12 @@
 	 
 	 <select 	id="getEval"	parameterType="map"	resultMap="transactionSelectMap">
 		SELECT
-		<if test="evalType == product">AVG(product_star_eval) as eval_product</if>
-		<if test="evalType == host">AVG(host_star_eval) eval_host</if>		
+		<if test="evalType == 'product'">ROUND(AVG(product_star_eval),1) as eval_product</if>
+		<if test="evalType == 'host'">ROUND(AVG(host_star_eval),1) eval_host</if>		
 		FROM transaction
 		<where>
-			<if test="evalType == product">product_no = #{productNo}</if>
-			<if test="evalType == host">host_no = #{hostNo}</if>
+			<if test="evalType == 'product'">product_no = #{productNo}</if>
+			<if test="evalType == 'host'">host_no = #{hostNo}</if>
 		</where>		
 	 </select>
 	 
@@ -233,22 +233,22 @@
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT
-	  									<if test="evalType == product">
-							 				product_no, AVG(product_star_eval) as product_eval
+	  									<if test="evalType == 'product'">
+							 				product_no, ROUND(AVG(product_star_eval),1) as product_eval
 							 			</if>
-							 			<if test="evalType == host">
-							 				host_no, AVG(host_star_eval) as host_eval
+							 			<if test="evalType == 'host'">
+							 				host_no, ROUND(AVG(host_star_eval),1) as host_eval
 							 			</if>									  	
 									  	FROM transaction
-									  	<if test="evalType == product">
+									  	<if test="evalType == 'product'">
 								 			GROUP BY product_no ORDER BY product_eval DESC
 								 		</if>
-								 		<if test="evalType == host">
+								 		<if test="evalType == 'host'">
 								 			GROUP BY host_no ORDER BY host_eval DESC
 								 		</if>
 									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+						WHERE ROWNUM &lt;= 1 )
+		WHERE row_seq BETWEEN 1 AND 10
 	 </select>	 
 	
 	<!-- SQL : SELECT ROW Count -->	 
@@ -256,7 +256,7 @@
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT
 	  			<choose>
-	  				<when test="user.userType == 3 or user.userType == 2 or user.userType == 3">
+	  				<when test="user.userType == 3 or user.userType == 2">
 	  										   r.tran_no as tran_no,
 											   r.refund_no as refund_no,
 											   r.refund_reg_date as refund_reg_date,
@@ -266,26 +266,34 @@
 											   r.refund_bank as refund_bank,
 											   t.user_no as user_no,
 											   t.host_no as host_no
-									FROM refund r, transaction t
-									WHERE r.tran_no=t.tran_no									
+									FROM refund r, transaction t																		
 					</when>
 	  				<otherwise>tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
 							FROM transaction
 					</otherwise>
-	  			</choose>
+	  			</choose>	  			
 	  			<choose>												 
 				<when test="user.userType == 1">
-					AND user_no=#{user.userNo}
-					ORDER BY refund_reg_date DESC
+					WHERE user_no=#{user.userNo}
+					ORDER BY tran_date DESC
 				</when>
 				<when test="user.userType == 2">
+					WHERE t.tran_no=r.tran_no(+)
 					AND host_no=#{user.userNo}
 					ORDER BY refund_reg_date DESC
 				</when>
 				<otherwise>
+					<choose>
+					<when test="evalType == product">
+						WHERE product_no=#{product_no}
+					</when>
+					<when test="evalType == host">
+						WHERE host_no=#{host_no}
+					</when>
+					</choose>
 					ORDER BY tran_date DESC
 				</otherwise>				
-				</choose>
+				</choose>				
 			 ) countTable						
 	 </select>
 	 

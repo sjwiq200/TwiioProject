@@ -2,10 +2,17 @@ package com.twiio.good.service.domain;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonAutoDetect;
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.codehaus.jackson.annotate.JsonPropertyOrder;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 import org.springframework.web.multipart.MultipartFile;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
+//@JsonAutoDetect()
+//@JsonPropertyOrder({"kaccount_email","kaccount_email_verified","properties","id"})
+//@JsonSerialize(include=JsonSerialize.Inclusion.NON_DEFAULT)
 public class User {
 	
 	private int userNo;
@@ -22,7 +29,7 @@ public class User {
 	private int userEval;
 	private String userImage;
 	private Date regDate;
-	private boolean profilePublic;
+	private String profilePublic;
 	private String userRegisterType;
 	private String userLeave;
 	private String userBank;
@@ -30,7 +37,12 @@ public class User {
 	private int profileCredibility;
 	private int starEvalHost;
 	private String reviewHost;
+	@JsonIgnore
 	private MultipartFile file;
+	
+	private String phone1;
+	private String phone2;
+	private String phone3;
 	
 	/////////////////////// KakaoLogin Filed //////////////////////////	
     private String kaccount_email;    
@@ -117,6 +129,12 @@ public class User {
 
 	public void setUserPhone(String userPhone) {
 		this.userPhone = userPhone;
+		
+		if(userPhone != null && userPhone.length() !=0 ){
+			phone1 = userPhone.split("-")[0];
+			phone2 = userPhone.split("-")[1];
+			phone3 = userPhone.split("-")[2];
+		}
 	}
 
 	public String getUserEmail() {
@@ -167,11 +185,11 @@ public class User {
 		this.regDate = regDate;
 	}
 
-	public boolean isProfilePublic() {
+	public String isProfilePublic() {
 		return profilePublic;
 	}
 
-	public void setProfilePublic(boolean profilePublic) {
+	public void setProfilePublic(String profilePublic) {
 		this.profilePublic = profilePublic;
 	}
 
@@ -230,13 +248,23 @@ public class User {
 	public void setReviewHost(String reviewHost) {
 		this.reviewHost = reviewHost;
 	}
-
+	@JsonIgnore
 	public MultipartFile getFile() {
 		return file;
 	}
-
+	@JsonIgnore
 	public void setFile(MultipartFile file) {
 		this.file = file;
+	}
+	
+	public String getPhone1() {
+		return phone1;
+	}
+	public String getPhone2() {
+		return phone2;
+	}
+	public String getPhone3() {
+		return phone3;
 	}
 
 

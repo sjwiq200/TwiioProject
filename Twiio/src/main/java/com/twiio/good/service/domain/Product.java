@@ -8,8 +8,8 @@ public class Product {
 	private int productNo;
 	private String productName;
 	private int productPrice;
-	private int productType;
-	private Date[] tripDate;
+	private String productType;
+	private String tripDate;//¹è¿­
 	private Date regDate;
 	private String country;
 	private String city;
@@ -50,19 +50,19 @@ public class Product {
 		this.productPrice = productPrice;
 	}
 
-	public int getProductType() {
+	public String getProductType() {
 		return productType;
 	}
 
-	public void setProductType(int productType) {
+	public void setProductType(String productType) {
 		this.productType = productType;
 	}
 
-	public Date[] getTripDate() {
+	public String getTripDate() {
 		return tripDate;
 	}
 
-	public void setTripDate(Date[] tripDate) {
+	public void setTripDate(String tripDate) {
 		this.tripDate = tripDate;
 	}
 
@@ -149,8 +149,8 @@ public class Product {
 	@Override
 	public String toString() {
 		return "Product [productNo=" + productNo + ", productName=" + productName + ", productPrice=" + productPrice
-				+ ", productType=" + productType + ", tripDate=" + Arrays.toString(tripDate) + ", regDate=" + regDate
-				+ ", country=" + country + ", city=" + city + ", hostNo=" + hostNo + ", description=" + description
+				+ ", productType=" + productType + ", tripDate=" + tripDate + ", regDate=" + regDate + ", country="
+				+ country + ", city=" + city + ", hostNo=" + hostNo + ", description=" + description
 				+ ", tourHeadCount=" + tourHeadCount + ", targetType=" + targetType + ", viewCount=" + viewCount
 				+ ", productCount=" + productCount + ", productDelete=" + productDelete + "]";
 	}

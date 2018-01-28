@@ -71,7 +71,7 @@ import com.twiio.good.service.user.UserDao;
 	
 		@Override
 		public void deleteUser(User user) throws Exception {
-			sqlSession.update("UserMapper.delectUser", user);
+			sqlSession.update("UserMapper.deleteUser", user);
 		}
 	
 

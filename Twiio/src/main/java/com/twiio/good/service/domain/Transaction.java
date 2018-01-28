@@ -11,16 +11,16 @@ public class Transaction {
 	private Date tripDate;
 	private Date regDate;
 	private int buyerNo;
-	private int paymentType;
+	private String paymentType;
 	private int count;
 	private String refundCode;
-	private int starEvalProduct;
+	private double starEvalProduct;
 	private String reviewProduct;
-	private int starEvalHost;
+	private double starEvalHost;
 	private String reviewHost;
 	private Date payToHostDate;
-	private int evalProduct;
-	private int evalHost;
+	private double evalProduct;
+	private double evalHost;
 	private String userName;
 	private String hostName;
 
@@ -84,11 +84,11 @@ public class Transaction {
 		this.buyerNo = buyerNo;
 	}
 
-	public int getPaymentType() {
+	public String getPaymentType() {
 		return paymentType;
 	}
 
-	public void setPaymentType(int paymentType) {
+	public void setPaymentType(String paymentType) {
 		this.paymentType = paymentType;
 	}
 
@@ -108,11 +108,11 @@ public class Transaction {
 		this.refundCode = refundCode;
 	}
 
-	public int getStarEvalProduct() {
+	public double getStarEvalProduct() {
 		return starEvalProduct;
 	}
 
-	public void setStarEvalProduct(int starEvalProduct) {
+	public void setStarEvalProduct(double starEvalProduct) {
 		this.starEvalProduct = starEvalProduct;
 	}
 
@@ -124,11 +124,11 @@ public class Transaction {
 		this.reviewProduct = reviewProduct;
 	}
 
-	public int getStarEvalHost() {
+	public double getStarEvalHost() {
 		return starEvalHost;
 	}
 
-	public void setStarEvalHost(int starEvalHost) {
+	public void setStarEvalHost(double starEvalHost) {
 		this.starEvalHost = starEvalHost;
 	}
 
@@ -148,19 +148,19 @@ public class Transaction {
 		this.payToHostDate = payToHostDate;
 	}
 
-	public int getEvalProduct() {
+	public double getEvalProduct() {
 		return evalProduct;
 	}
 
-	public void setEvalProduct(int evalProduct) {
+	public void setEvalProduct(double evalProduct) {
 		this.evalProduct = evalProduct;
 	}
 
-	public int getEvalHost() {
+	public double getEvalHost() {
 		return evalHost;
 	}
 
-	public void setEvalHost(int evalHost) {
+	public void setEvalHost(double evalHost) {
 		this.evalHost = evalHost;
 	}
 

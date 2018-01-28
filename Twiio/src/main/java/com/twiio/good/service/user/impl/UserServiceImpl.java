@@ -10,6 +10,7 @@ import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -38,8 +39,10 @@ import com.google.cloud.vision.v1.ImageAnnotatorClient;
 import com.google.protobuf.ByteString;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Properties;
+import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
+import com.twiio.good.service.transaction.TransactionDao;
 import com.twiio.good.service.user.UserDao;
 import com.twiio.good.service.user.UserService;
 
@@ -57,6 +60,13 @@ public class UserServiceImpl implements UserService{
 		this.userDao = userDao;
 	}	
 	
+	@Autowired
+	@Qualifier("transactionDaoImpl")
+	private TransactionDao transactionDao;	
+	public void setTransactionDao(TransactionDao transactionDao) {
+		this.transactionDao = transactionDao;
+	}
+
 	@Value("#{apikeyProperties['googleAPPKey']}")
 	String googleAPPKey;
 	
@@ -143,12 +153,12 @@ public class UserServiceImpl implements UserService{
 
         conn = (HttpsURLConnection) url.openConnection();
         conn.setRequestProperty("Authorization", "Bearer "  +access_token.trim());
-        conn.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
+        conn.setRequestProperty("Content-Type", "application/json");
         conn.setRequestProperty("charset", "utf-8");
         conn.setRequestMethod("POST");
         conn.setDoOutput(true);
 
-        writer = new OutputStreamWriter(conn.getOutputStream());
+        writer = new OutputStreamWriter(conn.getOutputStream(),"UTF-8");
         writer.flush();
 
         int responseCodeResult = conn.getResponseCode();
@@ -156,7 +166,7 @@ public class UserServiceImpl implements UserService{
         System.out.println("Response Code : " + responseCodeResult);
 
         InputStreamReader isr2= null;
-        isr2 = new InputStreamReader(conn.getInputStream());
+        isr2 = new InputStreamReader(conn.getInputStream(),"UTF-8");
         reader = new BufferedReader(isr2);
 
         JSONObject jsonobj = (JSONObject)JSONValue.parse(reader);
@@ -164,9 +174,9 @@ public class UserServiceImpl implements UserService{
         System.out.println("jsonobj Result : " + jsonobj);
 
         ObjectMapper objectMapper = new ObjectMapper();
-
+        	
 		 	User user = objectMapper.readValue(jsonobj.toString(), User.class);
-
+		 	
 		 	JSONObject jsonobjProperties = (JSONObject) jsonobj.get("properties");
 
 		 	Properties properties = objectMapper.readValue(jsonobjProperties.toString(), Properties.class);
@@ -218,10 +228,10 @@ public class UserServiceImpl implements UserService{
 		HttpURLConnection http = (HttpURLConnection) AccessTokenURL.openConnection();
 
 		http.setDoOutput(true);
-		http.setRequestProperty("Content-type", "application/x-www-form-urlencoded");
-
-		String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
-		String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
+		http.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		//String appKey = "733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com";
+		//String appSecret = "QpCX0BN2dB4aiU846LtJLWEd";
 		String redirect_url = "http://127.0.0.1:8080/user/googleLogin";
 
 		StringBuffer buffer = new StringBuffer();
@@ -406,13 +416,30 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public List getStarEvalHost(User user) throws Exception {
-		return userDao.getStarEvalHost(user);
+	public Map<String, Object> listStarEvalHost(Search search, int hostNo) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("productNo", hostNo);
+		map.put("evalType", evalType);
+		List<Transaction> list = transactionDao.listStarEval(map);
+		int totalCount = transactionDao.getTotalCount(map);
+		
+		//map.clear();
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
-	public Map listBestHost(User user) throws Exception {
-		return null;
+	public List<Transaction> listBestHost(Search search) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("Search", search);
+		map.put("evalType", evalType);
+		
+		return transactionDao.listBest(map);
 	}
 
 	@Override
@@ -421,8 +448,12 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getEvalHost(String userId) throws Exception {
-		return userDao.getEvalHost(userId);
+	public Transaction getEvalHost(int hostNo) throws Exception {
+		String evalType="host";
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("hostNo", hostNo);
+		map.put("evalType", evalType);
+		return transactionDao.getEval(map);
 	}
 
 }
