@@ -44,14 +44,6 @@
         <constructor-arg name="databaseName" value="test" />   
     </bean>
 
-
-<!-- 
-     <bean id="RoomDaoImpl"
-            class="com.model2.mvc.service.room.impl.RoomDaoImpl">
-            <property name="mongoTemplate" ref="mongoTemplate"/>    
-    </bean>
- -->     
-
 </beans>
 
 
