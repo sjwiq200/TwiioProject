@@ -88,11 +88,11 @@ public class LoginController {
 		
 		session.invalidate();
 		
-		return "redirect:/main.jsp";
+		return "redirect:/index.jsp";
 	}	
 	
 	
-	@RequestMapping(value="kakaologin", produces = "user/json")
+	@RequestMapping(value="kakaologin", produces = "user/json", method = {RequestMethod.GET, RequestMethod.POST})
 	public String kakaologin(@RequestParam("accessToken") String access_token , HttpSession session) throws Exception{
 		
             System.out.println("kakaologin Controller진입 / accessToken값 : " + access_token);                    
@@ -107,7 +107,7 @@ public class LoginController {
 
 	}
 	
-	@RequestMapping(value = "googleLogin")
+	@RequestMapping(value = "googleLogin", method = { RequestMethod.GET, RequestMethod.POST })
 	public String googleLogin( @RequestParam("code") String code, HttpSession session) throws Exception {
 
 		System.out.println("googleLogin Controller에 진입하였습니다. code값 : " +code);
