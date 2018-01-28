@@ -59,7 +59,7 @@
 				fncAddUser();
 			});
 		});	
-		
+		 
 		
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
@@ -71,37 +71,42 @@
 	
 		
 		function fncAddUser() {
-			
-			var id=$("input[name='userId']").val();
-			var pw=$("input[name='password']").val();
-			var pw_confirm=$("input[name='password2']").val();
-			var name=$("input[name='userName']").val();
-			
-			
-			if(id == null || id.length <1){
-				alert("아이디는 반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(pw == null || pw.length <1){
-				alert("패스워드는  반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(pw_confirm == null || pw_confirm.length <1){
-				alert("패스워드 확인은  반드시 입력하셔야 합니다.");
-				return;
-			}
-			if(name == null || name.length <1){
-				alert("이름은  반드시 입력하셔야 합니다.");
-				return;
-			}
-			
-			if( pw != pw_confirm ) {				
-				alert("비밀번호 확인이 일치하지 않습니다.");
-				$("input:text[name='password2']").focus();
-				return;
-			}
 						
-			$("form").attr("method" , "POST").attr("action" , "/user/addUser").attr("enctype", "multipart/form-data").submit();
+			var userName = $("#userName").val();
+			var userId = $("#userId").val();
+			var email = $("#email").val();
+			var password = $("#password").val();
+			var password2 = $("#password2").val();
+			var flag = true;
+			if (userName == "" ) {
+				//$("button.btn.btn-primary").prop("disabled", true);
+				$("#userName").css("background-color", "#FFCECE");
+				flag = false;
+			} 
+			if(email == "") {
+				$("#email").css("background-color", "#FFCECE");
+				flag = false;
+			}
+			if(password == "") {
+				$("#password").css("background-color", "#FFCECE");
+				flag = false;
+			}
+			if(password2 == "") {
+				$("#password2").css("background-color", "#FFCECE");
+				flag = false;
+			}
+			if(userId == "") {
+				$("#userId").css("background-color", "#FFCECE");
+				flag = false;
+			}
+			
+			
+			
+			if(flag){
+				//$("form").attr("method" , "POST").attr("action" , "/user/addUser").attr("enctype", "multipart/form-data").submit();
+				$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+			}
+			
 		}
 		
 
@@ -117,52 +122,24 @@
 			     }
 			});
 			 
-		});	
-		
-		
-	   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	   //==> 주민번호 유효성 check 는 이해정도로....
-		function checkSsn() {
-			var ssn1, ssn2; 
-			var nByear, nTyear; 
-			var today; 
-	
-			ssn = document.detailForm.ssn.value;
-			// 유효한 주민번호 형식인 경우만 나이 계산 진행, PortalJuminCheck 함수는 CommonScript.js 의 공통 주민번호 체크 함수임 
-			if(!PortalJuminCheck(ssn)) {
-				alert("잘못된 주민번호입니다.");
-				return false;
-			}
-		}
-	
-		function PortalJuminCheck(fieldValue){
-		    var pattern = /^([0-9]{6})-?([0-9]{7})$/; 
-			var num = fieldValue;
-		    if (!pattern.test(num)) return false; 
-		    num = RegExp.$1 + RegExp.$2;
-	
-			var sum = 0;
-			var last = num.charCodeAt(12) - 0x30;
-			var bases = "234567892345";
-			for (var i=0; i<12; i++) {
-				if (isNaN(num.substring(i,i+1))) return false;
-				sum += (num.charCodeAt(i) - 0x30) * (bases.charCodeAt(i) - 0x30);
-			}
-			var mod = sum % 11;
-			return ((11 - mod) % 10 == last) ? true : false;
-		}
+		});			
+	  
 		 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-		 var idCheck
+		 //var idCheck
 		//==>"ID중복확인" Event 처리 및 연결		
 		$(function() {
 			//alert("1111");
 			//if($("#userId").val().length>5){
 				//alert("제발111");				
-	            $("#userId").keyup(function(){
+	            $("#userId").on("keyup",function(){
 	            	//alert("제발");
 	                var userId = $('#userId').val();
 	                console.log(userId);
+	                if(userId.length<6){
+	                	$("#userId").css("background-color", "#FFCECE");
+                    	$("#text").text("6자 이상 입력하시오.");
+	                }
 	                $.ajax({
 	                	url:"/user/json/checkDuplication/",
 						method:"POST",
@@ -183,13 +160,13 @@
 		                        }else if(JSONData.result==false){
 		                        	$("#userId").css("background-color", "#FFCECE");
 		                        	$("#text").text("이미 사용중인 아이디입니다.");
-		                        	$("button.btn.btn-primary").prop("disabled", true);
+		                        	//$("button.btn.btn-primary").prop("disabled", true);
 		                        	//$("button.btn.btn-primary").css("background-color", "#4CAF50");		                        	
 		                        }
 	                        }else{
 	                        	$("#userId").css("background-color", "#FFCECE");
 	                        	$("#text").text("6자 이상 입력하시오.");
-	                        	$("button.btn.btn-primary").prop("disabled", true);
+	                        	//$("button.btn.btn-primary").prop("disabled", true);
 	                        	//$("button.btn.btn-primary").css("background-color", "#4CAF50");
 	                        }
 	                    }
@@ -197,25 +174,32 @@
 	            });
 	        //}else{$("strong").append("6자 이상 입력하시오.");}
 			
-	            $("#password2").keyup(function(){
+	            $("#password2").on("keyup",function(){
 	            	checkPwd();
-	            });
+	            });           
 	            
-	            $("#userName").keyup(function(){
+	            $("#userName").on("click" , function() {
+	            	$("#userName").css("background-color", "#fff");					 
+				});
+	            
+	            $("#email").on("click" , function() {
+	            	$("#email").css("background-color", "#fff");
+				});
+	            
+	            $("#password").on("click" , function() {
+	            	$("#password").css("background-color", "#fff");
+				});
+	            
+	           /*  $("#userName").keyup(function(){
 	            	signupCheck();
 	            });
 	            
 	            $("#email").keyup(function(){
 	            	signupCheck();
-	            });
+	            }); */
 			
-		});
+		});		
 		
-		$( function() {
-			$( "#datepicker" ).datepicker({
-				 dateFormat: "yy-mm-dd"
-			});
-		  } );
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 		//재입력 비밀번호 체크하여 가입버튼 비활성화 또는 맞지않음을 알림.
@@ -224,33 +208,35 @@
 			var reinputed = $("#password2").val();
 			if (reinputed == ""
 					&& (inputed != reinputed || inputed == reinputed)) {
-				$("button.btn.btn-primary").prop("disabled", true);
-				$("button.btn.btn-primary").css("background-color", "#aaaaaa");
+				//$("button.btn.btn-primary").prop("disabled", true);
+				//$("button.btn.btn-primary").css("background-color", "#aaaaaa");
 				$("#password2").css("background-color", "#FFCECE");
 			} else if (inputed == reinputed) {
 				$("#password2").css("background-color", "#B0F6AC");
-				pwdCheck = 1;
-				if (idCheck == 1 && pwdCheck == 1) {
-					$("button.btn.btn-primary").prop("disabled", false);
-					$("button.btn.btn-primary").css("background-color", "#4CAF50");
-					signupCheck();
-				}
+				//pwdCheck = 1;
+				//if (idCheck == 1 && pwdCheck == 1) {
+					//$("button.btn.btn-primary").prop("disabled", false);
+					//$("button.btn.btn-primary").css("background-color", "#4CAF50");
+					//signupCheck();
+				//}
 			} else if (inputed != reinputed) {
-				pwdCheck = 0;
-				$("button.btn.btn-primary").prop("disabled", true);
-				$("button.btn.btn-primary").css("background-color", "#aaaaaa");
+				//pwdCheck = 0;
+				//$("button.btn.btn-primary").prop("disabled", true);
+				//$("button.btn.btn-primary").css("background-color", "#aaaaaa");
 				$("#password2").css("background-color", "#FFCECE");
 
 			}
 		}
 		//닉네임과 이메일 입력하지 않았을 경우 가입버튼 비활성화
 		function signupCheck() {
-			var nickname = $("#userName").val();
+			var userName = $("#userName").val();
 			var email = $("#email").val();
-			if (nickname == "" || email == "") {
-				$("button.btn.btn-primary").prop("disabled", true);
-				$("button.btn.btn-primary").css("background-color", "#aaaaaa");
-			} else {
+			if (userName == "" ) {
+				//$("button.btn.btn-primary").prop("disabled", true);
+				$("#userName").css("background-color", "#FFCECE");				
+			} 
+			if(email == "") {
+				$("#email").css("background-color", "#FFCECE");
 			}
 		}
 		/* //캔슬버튼 눌렀을 눌렀을시 인풋박스 클리어
@@ -264,7 +250,7 @@
 	
 	<script>
 	  // Initialize Firebase
-	  var config = {
+	  /* var config = {
 	    apiKey: "AIzaSyAVHGmYXYa7jFoUKmWWH-8M2wSxKo1Co_w",
 	    authDomain: "fir-emailauth-98337.firebaseapp.com",
 	    databaseURL: "https://fir-emailauth-98337.firebaseio.com",
@@ -272,13 +258,31 @@
 	    storageBucket: "",
 	    messagingSenderId: "747279716078"
 	  };
-	  firebase.initializeApp(config);
+	  firebase.initializeApp(config); */
 	  
+	  var windowObj;
 	  
+	  $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$("#quickstart-sign-up").on("click" , function() {
+				openNew();
+			});
+		});
+	
+	  
+	  function openNew(){
+		// 새창에 대한 세팅(옵션)
+	        var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=200,width=200,left=0,top=0';
+	        // 자식창을 열고 자식창의 window 객체를 windowObj 변수에 저장
+	        windowObj = window.open("NewFile.jsp","자식창",settings);
+	        windowObj.$("#password").val()= $("#password").val();
+	        windowObj.$("#email").val()= $("#email").val();
+	        windowObj.handleSignUp();
+	  }
 	    /**
 	     * Sends an email verification to the user.
 	     */
-	    function handleSignUp() {
+	   /*  function handleSignUp() {
 	    	
 	    	//alert("제발");
 	    	var email = $("#email").val();
@@ -297,7 +301,8 @@
 		      firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
 		    	  var user = firebase.auth().currentUser;
 		    	  alert("currentUser::"+JSON.stringify(user));
-		    	  //user.sendEmailVerification();
+		    	  //user.sendEmailVerification();		    	  
+		    	  
 			        // Email Verification sent!
 			        // [START_EXCLUDE]
 			        //alert('Email Verification Sent!');
@@ -355,13 +360,13 @@
 	          }  
 	          
 	        });
-	        document.getElementById('quickstart-sign-up').addEventListener('click', handleSignUp, false);
-	        document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
+	        //document.getElementById('quickstart-sign-up').addEventListener('click', openNew, false);
+	        //document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
 	        
 	      }
 	      window.onload = function() {
 	        initApp();
-	      };
+	      }; */
 	    
 	 
 		 
@@ -371,13 +376,7 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
+	
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -388,52 +387,50 @@
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">아 이 디</label>
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="userId" name="userId"  >
 		       <span id="helpBlock" class="help-block">
-		      	<strong  id="text" class="text-danger">6자 이상 입력하시오.</strong>
+		      	<strong  id="text" class="text-danger"></strong>
 		      </span>
 		    </div>
 		    
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">이름</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">*이름</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
 		    </div>
 		  </div>	 
-		  
-		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">이메일</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
-		      <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-verify-email" name="verify-email">Send Email Verification</button>
-		      <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
-		    </div>          
-		  </div>
-		  
+		  		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">비밀번호</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호</label>
 		    <div class="col-sm-4">
 		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">비밀번호 확인</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호 확인</label>
 		    <div class="col-sm-4">
 		      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
 		      <!-- <span id="helpBlock" class="help-block" type="hidden">
 		      	<strong  id="text2" class="text-danger" >비밀번호가 일치하지 않습니다.</strong>
 		      </span> -->
 		    </div>
+		  </div>		  
+		  
+		   <div class="form-group">
+		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">*이메일</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+		     
+		      <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
+		    </div>          
 		  </div>
 		  
-		  
-		  
-		  <div class="form-group">
+		  <!-- <div class="form-group">
 		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">사진</label>
 		    <div class="col-sm-4">		      
 			    <label for="file">파일 업로드</label>
@@ -443,10 +440,11 @@
 		      </span>
 		    </div>
 		  </div>
-		  
+		   -->
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" disabled="disabled"  >가 &nbsp;입</button>
+		    <!-- disabled="disabled"  -->
+		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
