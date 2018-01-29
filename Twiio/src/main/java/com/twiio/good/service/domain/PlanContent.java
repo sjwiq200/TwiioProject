@@ -20,7 +20,7 @@ public class PlanContent {
 	private int orderNo;
 	private String contentText;
 	private String contentImage;
-	
+	private int contentType;
 	
 	public int getContentNo() {
 		return contentNo;
@@ -108,6 +108,13 @@ public class PlanContent {
 				+ ", routeDescription=" + routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText
 				+ ", contentImage=" + contentImage + "]";
 	}
+	public int getContentType() {
+		return contentType;
+	}
+	public void setContentType(int contentType) {
+		this.contentType = contentType;
+	}
+
 	
 	
 

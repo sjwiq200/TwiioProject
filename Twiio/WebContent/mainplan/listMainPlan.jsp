@@ -26,6 +26,16 @@
 
 <title>MainPlanList</title>
 
+
+<style>
+
+body {
+    padding-top : 50px;
+}
+
+</style>
+
+
 <script>
 	function fncAddMainPlanList() {
 		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
@@ -67,7 +77,9 @@
 
 </head>
 <body>
-
+	
+		<jsp:include page="/layout/toolbar.jsp" />
+		
 	<form class="form-horizontal">
 	
 		<div class="container">

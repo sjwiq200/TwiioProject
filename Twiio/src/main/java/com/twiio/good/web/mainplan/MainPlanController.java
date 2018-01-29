@@ -112,7 +112,8 @@ public class MainPlanController {
 		        calendar.setTime(dailyDate);
 		        calendar.add(Calendar.DATE,1);
 		        java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
-		        
+
+		
 		        final String FORMAT = "yyyy-MM-dd";
 		        SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
 		        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String°ª
@@ -165,18 +166,18 @@ public class MainPlanController {
 	}
 	
 	
-	@RequestMapping(value = "getMainPlan",method=RequestMethod.GET)
-	public String getMainPlan(@RequestParam("mainPlanNo") int mainPlanNo,Model model, HttpSession session) throws Exception {
-		
-		System.out.println("Controller : getMainPlan <START>");
-		
-		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
-		model.addAttribute("mainPlan", mainPlan);
-		System.out.println("Controller : getMainPlan <END>");
-		
-		return null;
-		//return "forward:/mainplan/listMainPlan.jsp";
-	}
+//	@RequestMapping(value = "getMainPlan",method=RequestMethod.GET)
+//	public String getMainPlan(@RequestParam("mainPlanNo") int mainPlanNo,Model model, HttpSession session) throws Exception {
+//		
+//		System.out.println("Controller : getMainPlan <START>");
+//		
+//		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+//		model.addAttribute("mainPlan", mainPlan);
+//		System.out.println("Controller : getMainPlan <END>");
+//		
+//		return null;
+//		//return "forward:/mainplan/listMainPlan.jsp";
+//	}
 	
 	
 	@RequestMapping(value = "updateMainPlanView")
