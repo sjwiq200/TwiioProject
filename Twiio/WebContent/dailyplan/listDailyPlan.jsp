@@ -25,6 +25,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <title>MainPlanList</title>
+<style>
+
+body {
+    padding-top : 50px;
+}
+
+</style>
 
 <script>
 	function fncAddMainPlanList() {
@@ -40,8 +47,9 @@
 	 	 $(function() {
 			$("button:contains('선택')").bind("click",function() {
 				var index = $("button:contains('선택')").index(this);
+				var dailyPlanNo = $($("input[name='dailyPlanNo']")[index]).val();
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
 			});
 	 })
@@ -51,6 +59,8 @@
 </head>
 <body>
 
+	<jsp:include page="/layout/toolbar.jsp" />
+	
 	<form class="form-horizontal">
 	
 		<div class="container">
@@ -61,6 +71,8 @@
 				  	<c:forEach var="dailyPlan" items="${list}">
 				  		<c:set var="i" value="${ i+1 }" />
 				  			 <input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+				  			  <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
+				  	
 				  			<ul>
 								<h3>DAY${ i }</h3>
 								<li>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</li>

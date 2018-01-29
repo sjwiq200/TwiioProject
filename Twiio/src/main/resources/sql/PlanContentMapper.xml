@@ -10,6 +10,7 @@
 		<result property="contentNo" column="content_no" jdbcType="NUMERIC"/>
 		<result property="dailyPlan.dailyPlanNo" column="daily_plan_no" jdbcType="NUMERIC" />
 		<result property="scrap.scrapNo" column="scrap_no" jdbcType="NUMERIC" />
+		<result property="contentType" column="content_type" jdbcType="NUMERIC" />
 		<result property="route" column="route" jdbcType="VARCHAR"/>
 		<result property="mapUrl" column="map_url" jdbcType="VARCHAR"/>
 		<result property="departureLocation" column="departure_location" jdbcType="VARCHAR"/>
@@ -25,18 +26,25 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addPlanContent"		parameterType="planContent" >
 	 	INSERT
-		INTO plan_content ( content_no , daily_plan_no , scrap_no , route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image) 
-		VALUES	 (	seq_plan_content_content_no.NEXTVAL  , #{dailyPlan.dailyPlanNo:NUMERIC} , #{scrap.scrapNo:NUMERIC} ,  #{route:VARCHAR} , #{mapUrl:VARCHAR} , #{departureLocation:VARCHAR} , #{arrivalLocation:VARCHAR} , 
+		INTO plan_content ( content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image) 
+		VALUES	 (	seq_plan_content_content_no.NEXTVAL  , #{dailyPlan.dailyPlanNo:NUMERIC} , #{scrap.scrapNo:NUMERIC} ,  #{contentType:NUMERIC}, #{route:VARCHAR} , #{mapUrl:VARCHAR} , #{departureLocation:VARCHAR} , #{arrivalLocation:VARCHAR} , 
 							#{estimatedTime:VARCHAR},#{routeType:CHAR} , #{routeDescription:VARCHAR} , #{orderNo:NUMERIC},#{contentText:VARCHAR},#{contentImage:VARCHAR} )
 	 </insert>
 	 
-	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getPlanContent"	parameterType="int"	resultMap="planContentSelectMap">
 		SELECT
-		content_no , daily_plan_no , scrap_no , route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
+		content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
 		FROM plan_content
-		WHERE content_no = #{contentNo}
+		WHERE daily_plan_no = #{dailyPlanNo}
 	 </select>
+	 
+	 <select 	id="getPlanContentCount"	parameterType="int"	resultType="int">
+		SELECT
+		COUNT(content_no)
+		FROM plan_content
+		WHERE daily_plan_no = #{dailyPlanNo}
+	 </select>
+	 
 	 
 	 <!-- SQL : UPDATE -->
 	 <update	id="updatePlanContent"	parameterType="planContent" >
@@ -47,16 +55,16 @@
 	   	WHERE content_no = #{contentNo}
 	 </update>
 	  
-	  <select  id="getPlanContentList"  parameterType="planContent"	resultMap="planContentSelectMap">
+	  <select  id="getPlanContentList"  parameterType="int"	resultMap="planContentSelectMap">
 		  SELECT 
-		  content_no , daily_plan_no , scrap_no , route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
+		  content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
 		   FROM plan_content
-		  	WHERE daily_plan_no=#{dailyPlan.dailyPlanNo}
+		  	WHERE daily_plan_no=#{dailyPlanNo}
 		  	ORDER BY content_no ASC
 	  </select>
 	
 	 <delete  id="deletePlanContent"  parameterType="int">
-		 DELETE FROM plan_content WHERE content_no = #{contentNo}
+		 DELETE FROM plan_content WHERE daily_plan_no=#{dailyPlanNo}
 	 </delete>
 	 
 	 

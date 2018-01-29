@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.twiio.good.service.dailyplan.DailyPlanDao;
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.PlanContent;
 
 @Service("dailyPlanServiceImpl")
 public class DailyPlanServiceImpl implements DailyPlanService{
@@ -18,7 +19,6 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 	private DailyPlanDao dailyPlanDao;
 	
 	public DailyPlanServiceImpl() {
-		// TODO Auto-generated constructor stub
 	}
 
 	@Override
@@ -43,8 +43,27 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 
 	@Override
 	public void deleteDailyPlan(int mainPlanNo) throws Exception {
-		System.out.println("¾È³ç");
 		dailyPlanDao.deleteDailyPlan(mainPlanNo);
+	}
+
+	@Override
+	public List<PlanContent> getPlanContentList(int dailyPlanNo) throws Exception {
+		return dailyPlanDao.getPlanContentList(dailyPlanNo);
+	}
+
+	@Override
+	public int getPlanContentCount(int dailyPlanNo) throws Exception {
+		return dailyPlanDao.getPlanContentCount(dailyPlanNo);
+	}
+
+	@Override
+	public void addPlanContent(PlanContent planContent) throws Exception {
+		dailyPlanDao.addPlanContent(planContent);
+	}
+
+	@Override
+	public void deletePlanContent(int dailyPlanNo) throws Exception {
+		dailyPlanDao.deletePlanContent(dailyPlanNo);
 	}
 
 }
