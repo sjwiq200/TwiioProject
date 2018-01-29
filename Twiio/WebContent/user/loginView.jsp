@@ -156,11 +156,11 @@
 					image = image;
 					alert(userId);
 					alert(userName);
-					alert('이미지 ' + image);
+					//alert('이미지 ' + image);
 					
-					$("input:text[name='userId']").val(userId);
-					$("input:text[name='userName']").val(userName);
-					$("input:file[name='multi']").val(image);
+					$("input:hidden[name='userfaceId']").val(userId);
+					$("input:hidden[name='userName']").val(userName);
+					$("input:hidden[name='multi']").val(image);
 				
 				  $("form").attr("method" , "POST").attr("enctype" , "multipart/form-data").attr("action" , "/user/facebookLogin").submit();
 				})
@@ -284,6 +284,10 @@
 					    </div>
 					    <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"> -->
 					  </div>
+					  
+					  <input type="hidden" value="" name="userfaceId"/>
+					  <input type="hidden" value="" name="userName"/>
+					  <input type="hidden" value="" name="multi"/>
 					  
 			
 					</form>

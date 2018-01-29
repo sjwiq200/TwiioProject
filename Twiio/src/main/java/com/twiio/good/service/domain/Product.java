@@ -3,6 +3,8 @@ package com.twiio.good.service.domain;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class Product {
 	
 	private int productNo;
@@ -21,6 +23,11 @@ public class Product {
 	private int productCount;
 	private String productDelete;
 	//썸네일
+	private String thumbnail;
+	private MultipartFile file;
+	//호스트 사진,이름
+	private String hostName;
+	private String hostImage;
 	
 	public Product() {
 		// TODO Auto-generated constructor stub
@@ -144,6 +151,38 @@ public class Product {
 
 	public void setProductDelete(String productDelete) {
 		this.productDelete = productDelete;
+	}
+
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+
+	public String getHostName() {
+		return hostName;
+	}
+
+	public void setHostName(String hostName) {
+		this.hostName = hostName;
+	}
+
+	public String getHostImage() {
+		return hostImage;
+	}
+
+	public void setHostImage(String hostImage) {
+		this.hostImage = hostImage;
 	}
 
 	@Override

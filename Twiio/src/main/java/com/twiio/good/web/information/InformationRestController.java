@@ -11,6 +11,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -157,43 +159,56 @@ public class InformationRestController {
 	}
 	
 	@RequestMapping( value="json/getFlightList")
-	public Map<String, List>  getFlightList(@RequestBody String pram) throws Exception{
+	public Map<String, List> getFlightList(@RequestBody String flightInfo) throws Exception{
 		
 		System.out.println("/information/json/getFlightList");
-		
-		System.out.println(pram);
-		String[] str = pram.split("&");
-		String[] splitNum = str[0].split("=");
-		String num = splitNum[1];
-		String[] splitUrl = str[1].split("=");
-		String url = splitUrl[1];
+		System.out.println(flightInfo);
 		
 		
-		Map<String, List<String>> map= informationService.getFlightListRetrun(url, num);
-		List<String> urlList= map.get("urlReturn");
+		String decoding = URLDecoder.decode(flightInfo, "UTF-8");
+		System.out.println(decoding);
+		
+		String[] context =  decoding.split("&");
+		String[] flightType  = context[0].split("=");
+		String[] departure = context[1].split("=");
+		String[] arrival = context[2].split("=");
+		String[] departureDate = context[3].split("=");
+		String[] arrivalDate = context[4].split("=");
+		String[] headCount = context[5].split("=");
+		
+		Flight flight = new Flight();
+		flight.setFlightType(flightType[1]);
+		flight.setDeparture(departure[1]);
+		flight.setArrival(arrival[1]);
+		flight.setDepartureDate(departureDate[1]);
+		flight.setArrivalDate(arrivalDate[1]);
+		flight.setHeadCount(headCount[1]);
+		
+		Map<String, List<String>> result  = informationService.getFlightList(flight);
+		List<String> url = result.get("url");
+		List<String> list = result.get("list");
 		List<String> currentUrl  = new ArrayList<String>();
-				
-		currentUrl.add(urlList.get(0));
 		
-		List<String> list = map.get("list");
+		currentUrl.add(url.get(0));
 		
 			List<String> info = new ArrayList<>();
-			for(int i = 0; i<list.size()-3; i++) {
-				info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
-				i=i+6;
-			}
-			
 			List<String> price = new ArrayList<>();
-			for(int i = 5; i<list.size(); i++) {
-				price.add(list.get(i));
-				i=i+6;
-			}
-			
 			List<String> type = new ArrayList<>();
-			for(int i = 6; i<list.size(); i++) {
-				type.add(list.get(i));
+		
+		for(int i = 0; i<list.size()-6; i++) {
+			info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
+			
+			if(list.get(i+4).matches(	".*[a-zA-Z].*")) {
+				
+				price.add(list.get(i+5));
+				type.add(list.get(i+7));
+				i=i+7;
+			}else {
+				price.add(list.get(i+5));
+				type.add(list.get(i+6));
 				i=i+6;
 			}
+		}
 		
 			Map<String, List> end = new HashMap();
 			
@@ -201,9 +216,35 @@ public class InformationRestController {
 			end.put("price", price);
 			end.put("type", type);
 			end.put("currentUrl", currentUrl);
-		
 			
 		return end;
+	}
+	
+	@RequestMapping( value="json/getFlightListReturn")
+	public Map<String, String>  getFlightListReturn(@RequestBody String flightInfo) throws Exception{
+		
+		System.out.println("/information/json/getFlightListReturn");
+		System.out.println(flightInfo);
+		
+		String[] context =  flightInfo.split("&");
+		String[] clickNum  = context[0].split("=");
+		String[] currentUrl = context[1].split("=");
+		
+		String decoding = URLDecoder.decode(currentUrl[1], "UTF-8");
+		System.out.println(decoding);
+		String[] str = decoding.split("\\[");
+		String[] str2 = str[1].split("\\]");
+		
+		Flight flight = new Flight();
+		flight.setClickNum(clickNum[1]);
+		flight.setReturnUrl(str2[0]);
+		
+		List<String> list = informationService.getFlightListUrl(flight);
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("list", list.get(0));
+		
+		return map;
 	}
 	
 	@RequestMapping( value="json/getHotel" )
@@ -256,12 +297,6 @@ public class InformationRestController {
 				
 		}
 		
-//		List<String> type = new ArrayList<>();
-//		for(int i = 6; i<list.size(); i++) {
-//			type.add(list.get(i));
-//			i=i+6;
-//		}
-		
 		Map<String, List> end = new HashMap();
 		
 		end.put("con", con);
@@ -273,6 +308,49 @@ public class InformationRestController {
 		return end;
 	}
 
-	
+	@RequestMapping( value="json/listNightLife", produces = "application/json; charset=utf8" )
+	public  Map<String,List>  listNightLife(@RequestBody String city ) throws Exception{
+		
+		System.out.println("/information/json/listNightLife");
+		
+		String decoding = URLDecoder.decode(city, "UTF-8");
+		
+		System.out.println(decoding);
+		
+		String[] cityName = decoding.split("=");
+		
+		System.out.println(cityName[1]);
+		
+		Map<String, List<String>> map = informationService.listNightLife(cityName[1]);
+		
+		List<String> context = map.get("context");
+		List<String> url = map.get("hrefs");
+		List<String> image = map.get("image");
+		
+		
+		List<String> name = new ArrayList<>();
+		List<String> no = new ArrayList<>();
+		List<String> type = new ArrayList<>();
+		
+		for(int i = 0; i<context.size()-2; i++) {
+			
+			name.add(context.get(i));
+			no.add(context.get(i+1));
+			type.add(context.get(i+2));
+			
+			i = i+2;
+				
+		}
+		
+		Map<String, List> end = new HashMap();
+		
+		end.put("name", name);
+		end.put("no", no);
+		end.put("type", type);
+		end.put("url", url);
+		end.put("image", image);
+		
+		return end;
+	}
 
 }
