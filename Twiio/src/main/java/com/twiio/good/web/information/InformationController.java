@@ -6,6 +6,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
+import com.twiio.good.service.domain.NightLife;
 import com.twiio.good.service.information.InformationService;
 
 @Controller
@@ -49,7 +51,7 @@ public class InformationController {
 	        
 	        model.addAttribute("returnList", returnList);
 	        System.out.println(returnList);
-	        return "forward:/information/currency.jsp";
+	        return "forward:/information/getCurrency.jsp";
 	}
 	
 	@RequestMapping( value="searchNowWeather" )
@@ -92,7 +94,7 @@ public class InformationController {
 		
 		model.addAttribute("result",result);
 	
-	        return "forward:/information/searchNowWeather.jsp";
+	        return "forward:/information/getNowWeather.jsp";
 	}
 	
 	@RequestMapping( value="searchHistoryWeather" )
@@ -105,7 +107,6 @@ public class InformationController {
 		List<String> list = new ArrayList<String>();
 		
 		String[] simple = map.get("quickInfo");
-		String[] aver = {};
 		for(int i = 0; i<simple.length; i++) {
 			list.add(simple[i]);
 		}
@@ -132,98 +133,111 @@ public class InformationController {
 			rain.add(past[i]);
 			i = i+3;
 		}
-		
-			
 			model.addAttribute("list",list ).addAttribute("month",month).addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain);
-		
-	        return "forward:/information/searchHistoryWeather.jsp";
+	        return "forward:/information/getHistoryWeather.jsp";
 	}
-	
-	@RequestMapping( value="getFlight" )
-	public String getFlight() throws Exception{
-		
-		System.out.println("/information/getFlight");
-		
-	        return  "forward:/information/flight.jsp";
-	}
-	
 	
 	@RequestMapping( value="getFlightList" )
-	public String getFlightList(@ModelAttribute Flight flight, Model model) throws Exception{
+	public String getFlightList() throws Exception{
 		
 		System.out.println("/information/getFlightList");
 		
+	        return  "forward:/information/listFlight.jsp";
+	}
+	
+	
+	@RequestMapping( value="getFlightListReturn" )
+	public String getFlightListReturn(@ModelAttribute Flight flight, Model model) throws Exception{
+		
+		System.out.println("/information/getFlightListReturn");
+		
 		System.out.println(flight);
 		
-		List<String> result = new ArrayList<>();
+		Map<String, List<String>> map= informationService.getFlightListRetrun(flight.getReturnUrl(), flight.getClickNum());
+		List<String> urlList= map.get("urlReturn");
+		List<String> currentUrl  = new ArrayList<String>();
+				
+		currentUrl.add(urlList.get(0));
 		
-		String[] str = {};
+		List<String> list = map.get("list");
 		
-		List<String>list = informationService.getFlightList(flight);
-		//String str
-		for(int i = 0 ; i<list.size(); i++) {
-			System.out.println("*****************************\n\n"+list.get(i));
-			str = (list.get(i)).split("\n");
-		}
-//		for(int i = 0; i<str.length; i++) {
-//			System.out.println("@@@@@@@@@@@@@@@"+str[i]);
-//		}
-//		
-		//for(int i = 0; i<str.length; i++) {
-			List<String> time = new ArrayList<>();
-			List<String> airline = new ArrayList<>();
-			List<String> takeTime = new ArrayList<>();
-			List<String> mark = new ArrayList<>();
-			List<String> way = new ArrayList<>();
+			List<String> info = new ArrayList<>();
 			List<String> price = new ArrayList<>();
 			List<String> type = new ArrayList<>();
 			
-			
-			for(int i = 2 ; i<str.length; i++) {
-				time.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 3 ; i<str.length; i++) {
-				airline.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 4 ; i<str.length; i++) {
-				takeTime.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 5 ; i<str.length; i++) {
-				mark.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 6 ; i<str.length; i++) {
-				way.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 11 ; i<str.length; i++) {
-				price.add(str[i]);
-				i=i+18;
-			}
-			for(int i = 12 ; i<str.length; i++) {
-				type.add(str[i]);
-				i=i+18;
+			for(int i = 0; i<list.size()-6; i++) {
+				info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
+				
+				if(list.get(i+4).matches(	".*[a-zA-Z].*")) {
+					
+					price.add(list.get(i+5));
+					type.add(list.get(i+7));
+					i=i+7;
+				}else if(list.get(i+4).contains(":")){
+					
+					System.out.println("걸러지니?"+list.get(i+4));
+					
+					price.add("상세정보 확인");
+					i=i+3;
+					
+				}else {
+					price.add(list.get(i+5));
+					type.add(list.get(i+6));
+					i=i+6;
+				}
 			}
 			
+			Map<String, List> end = new HashMap();
 			
-			System.out.println("시간****************"+str[2]);
-			System.out.println("항공사******************"+str[3]);
-			System.out.println("소요시간****************"+str[4]);
-			System.out.println("마크*****************"+str[5]);
-			System.out.println("직항****************"+str[6]);
-			System.out.println("가격****************"+str[11]);
-			System.out.println("유형*************"+str[12]);
-			
-			
-		//}
-	
+			end.put("info", info);
+			end.put("price", price);
+			end.put("type", type);
+			end.put("currentUrl", currentUrl);
 		
-		model.addAttribute("time", time).addAttribute("airline", airline).addAttribute("takeTime", takeTime)
-		.addAttribute("mark", mark).addAttribute("way", way).addAttribute("price", price).addAttribute("type", type);
-	        return "forward:/information/flightList.jsp";
+			model.addAttribute("info",info ).addAttribute("price",price).addAttribute("type",type).addAttribute("currentUrl",currentUrl).addAttribute("flight",flight);
+		
+	        return "forward:/information/listFlightReturn.jsp";
+	}
+	
+	@RequestMapping( value="getHotel" )
+	public String getHotel() throws Exception{
+		
+		System.out.println("/information/getHotel");
+		
+	        return  "forward:/information/getHotel.jsp";
+	}
+	
+	@RequestMapping( value="listNightLife" )
+	public String listNightLife() throws Exception{
+		
+		System.out.println("/information/listNightLife");
+		
+	        return  "forward:/information/listNightLife.jsp";
+	}
+	
+	@RequestMapping( value="getNightLifeDetail" )
+	public String getNightLifeDetail(@ModelAttribute NightLife nightLife, Model model) throws Exception{
+		
+		System.out.println("/information/getNightLifeDetail");
+		
+		System.out.println(nightLife);
+		
+		Map<String, List<String>> map = informationService.getNightLifeDetail(nightLife);
+		
+		
+		List<String> google = map.get("google");
+		List<String> image = map.get("hrefs");
+		List<String> context = map.get("context");
+		String location = google.get(0);
+		String[] str = location.split("&");
+		String[] center = str[7].split("=");
+		
+		String[] address = center[1].split(",");
+		
+		
+		model.addAttribute("lat",address[0] ).addAttribute("lng",address[1] ).addAttribute("image",image).addAttribute("context",context);
+		
+	        return  "forward:/information/getNightLifeDetail.jsp";
 	}
 	
 	
