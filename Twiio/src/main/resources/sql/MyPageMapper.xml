@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="MyPageMapper">
+
+	<resultMap id="messageSelectMap" type="message">
+		<result property="messageNo" 			column="message_no" 		jdbcType="NUMERIC"/>
+		<result property="toUserNo"				column="to_user_no" 		jdbcType="NUMERIC"/>
+		<result property="fromUserNo"	 		column="from_user_no" 		jdbcType="NUMERIC"/>
+		<result property="messageContent"		column="message_content" 	jdbcType="VARCHAR"/>
+		<result property="messageRegDate" 		column="message_reg_date" 	jdbcType="DATE" />
+		<result property="messageType"	 		column="message_type" 		jdbcType="VARCHAR"/>
+		<result property="messageTitle" 		column="message_title" 		jdbcType="VARCHAR"/>
+		<result property="productNo"	 		column="product_no" 		jdbcType="NUMERIC"/>
+	</resultMap>
+		
+	<!--SQL : INSERT  -->
+	<insert id="addMessage" parameterType="message" useGeneratedKeys="true" keyColumn="message_no" keyProperty="messageNo">
+		INSERT
+		INTO REPORT
+		VALUES (
+		seq_message_message_no.nextval,
+		#{toUserNo:NUMERIC},
+		#{fromUserNo:NUMERIC},
+		#{messageContent:VARCHAR},
+		SYSDATE,
+		#{messageType:VARCHAR},
+		#{messageTitle:VARCHAR},
+		#{productNo:NUMERIC}
+		)
+	</insert>
+	
+	<!-- SQL : SELECT LIST -->
+	
+	<select id="listMessage" parameterType="map" resultMap="messageSelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT
+							   MESSAGE_NO=#{messageNo},
+							   TO_USER_NO=#{toUserNo},
+							   FROM_USER_NO=#{fromUserNo},
+							   MESSAGE_CONTENT=#{messageContent},
+							   MESSAGE_REG_DATE=#{messageRegDate},
+							   MESSAGE_TYPE=#{messageType},
+							   MESSAGE_TITLE=#{messageTitle},
+							   PRODUCT_NO=#{productNo}
+							   FROM 
+  							   MESSAGE
+  							   WHERE
+  							   FROM_USER_NO=#{userNo} 
+							   ORDER BY MESSAGE_NO
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	
+	<!-- SQL : SELECT ONE -->
+	
+	<select id="getMessage" parameterType="int" resultType="message">
+		SELECT * FROM PRODUCT WHERE MESSAGE_NO = #{messageNo}
+	</select>
+	
+
+	
+	<!-- SQL : DELETE ONE -->
+	
+	<delete id="deleteMessage" parameterType="int">
+		DELETE FROM MESSAGE WHERE MESSAGE_NO=#{messageNo}
+	</delete>
+	
+	 
+	 <select  id="getTotalCountMessage"  parameterType="int" resultType="int">
+	  	SELECT COUNT(*)
+	  		FROM(SELECT *
+	  			 FROM MESSAGE
+	  			 WHERE TO_USER_NO=#{userNo}
+				) countTable						
+	 </select>
+</mapper>

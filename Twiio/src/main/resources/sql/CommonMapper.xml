@@ -47,6 +47,7 @@
 	
 	<!--SQL : INSERT  -->
 	<insert id="addReport" parameterType="report">
+		INSERT
 		INTO REPORT
 		VALUES (
 		seq_report_report_no.nextval,
