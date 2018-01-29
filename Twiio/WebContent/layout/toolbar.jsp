@@ -151,7 +151,7 @@
 		/* Information */
 		
 		$( "a:contains('Flight')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getFlight");
+			$(self.location).attr("href","/information/getFlightList");
 		});
 		
 		$( "a:contains('Hotel')" ).on("click" , function() {
@@ -171,7 +171,7 @@
 		});
 		
 		$( "a:contains('nightLife')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getNightLife");
+			$(self.location).attr("href","/information/listNightLife");
 		});
 		
 		$( "a:contains('Best10')" ).on("click" , function() {

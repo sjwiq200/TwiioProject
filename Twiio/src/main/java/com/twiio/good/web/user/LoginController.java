@@ -123,12 +123,11 @@ public class LoginController {
 	}
 	
 	@RequestMapping( value="facebookLogin" )
-	public String facebookLogin(@RequestParam("userId") String userId, @RequestParam("userName") String userName, @RequestParam("multi") MultipartFile image, HttpSession session) throws Exception{
+	public String facebookLogin(@RequestParam("userfaceId") String userId, @RequestParam("userName") String userName, HttpSession session) throws Exception{
 		
 		System.out.println("/user/facebookLogin");		
 		
 		User user = new User();
-		
 		if(userService.getUser(userId)!=null){
 			System.out.println(":: facebook Login ::");
 			
@@ -137,19 +136,17 @@ public class LoginController {
 			
 		}else {
 			System.out.println(":: facebook Login 이력없음 ::");
-			
 			user.setUserId(userId);
 			user.setUserName(userName);
 			user.setUserRegisterType("F");
 			
-			if(!image.isEmpty()) {
-				System.out.println(":: FileName :: "+image.getOriginalFilename());
-				user.setUserImage(image.getOriginalFilename());
-			}
+//			if(!image.isEmpty()) {
+//				System.out.println(":: FileName :: "+image.getOriginalFilename());
+//				user.setUserImage(image.getOriginalFilename());
+//			}
 			
 			userService.addUser(user);
 			System.out.println(":: facebook 회원가입 ::");
-			
 			session.setAttribute("user", user);
 		}
 		

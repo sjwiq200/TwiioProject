@@ -12,6 +12,7 @@ import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.Hotel;
+import com.twiio.good.service.domain.NightLife;
 import com.twiio.good.service.information.InformationDao;
 import com.twiio.good.service.information.InformationService;
 
@@ -66,6 +67,11 @@ public class InformationServiceImpl implements InformationService {
 	public Map<String, List<String>> getFlightListRetrun(String url, String num) throws Exception {
 		return informationDao.getFlightListRetrun( url,  num);
 	}
+	
+	@Override
+	public List<String> getFlightListUrl(Flight flight) throws Exception {
+		return informationDao.getFlightListUrl(flight);
+	}
 
 	@Override
 	public Map<String, List<String>> getHotel(Hotel hotel) throws Exception {
@@ -78,13 +84,13 @@ public class InformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public List listNightLife() throws Exception {
-		return informationDao.listNightLife();
+	public Map<String, List<String>> listNightLife(String city) throws Exception {
+		return informationDao.listNightLife(city);
 	}
 
 	@Override
-	public List getNightLifeDetail() throws Exception {
-		return informationDao.getNightLifeDetail();
+	public  Map<String, List<String>> getNightLifeDetail(NightLife nightLife) throws Exception {
+		return informationDao.getNightLifeDetail(nightLife);
 	}
 
 

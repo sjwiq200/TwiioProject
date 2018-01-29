@@ -10,17 +10,12 @@ public class Flight {
 	private String departureDate;
 	private String arrivalDate;
 	private String headCount;
-	private String travellersType;
 	private String flightType;
-	private String way;
-	private String cabinClass;
-	private int price;
-	private String departureTime;
-	private String arrivalTime;
-	private String takeTime;
-	private String airline;
-	private String airplane;
-	private String travleAgency;
+	private String returnInfo;
+	private String returnType;
+	private String returnPrice;
+	private String clickNum;
+	private String returnUrl;
 	
 
 	public Flight() {
@@ -78,16 +73,6 @@ public class Flight {
 	}
 
 
-	public String getTravellersType() {
-		return travellersType;
-	}
-
-
-	public void setTravellersType(String travellersType) {
-		this.travellersType = travellersType;
-	}
-
-
 	public String getFlightType() {
 		return flightType;
 	}
@@ -98,105 +83,64 @@ public class Flight {
 	}
 
 
-	public String getWay() {
-		return way;
+	public String getReturnInfo() {
+		return returnInfo;
 	}
 
 
-	public void setWay(String way) {
-		this.way = way;
+	public void setReturnInfo(String returnInfo) {
+		this.returnInfo = returnInfo;
 	}
 
 
-	public String getCabinClass() {
-		return cabinClass;
+	public String getReturnType() {
+		return returnType;
 	}
 
 
-	public void setCabinClass(String cabinClass) {
-		this.cabinClass = cabinClass;
+	public void setReturnType(String returnType) {
+		this.returnType = returnType;
 	}
 
 
-	public int getPrice() {
-		return price;
+	public String getReturnPrice() {
+		return returnPrice;
 	}
 
 
-	public void setPrice(int price) {
-		this.price = price;
+	public void setReturnPrice(String returnPrice) {
+		this.returnPrice = returnPrice;
+	}
+	
+	public String getClickNum() {
+		return clickNum;
 	}
 
 
-	public String getDepartureTime() {
-		return departureTime;
+	public void setClickNum(String clickNum) {
+		this.clickNum = clickNum;
 	}
 
 
-	public void setDepartureTime(String departureTime) {
-		this.departureTime = departureTime;
+	public String getReturnUrl() {
+		return returnUrl;
 	}
 
 
-	public String getArrivalTime() {
-		return arrivalTime;
-	}
-
-
-	public void setArrivalTime(String arrivalTime) {
-		this.arrivalTime = arrivalTime;
-	}
-
-
-	public String getTakeTime() {
-		return takeTime;
-	}
-
-
-	public void setTakeTime(String takeTime) {
-		this.takeTime = takeTime;
-	}
-
-
-	public String getAirline() {
-		return airline;
-	}
-
-
-	public void setAirline(String airline) {
-		this.airline = airline;
-	}
-
-
-	public String getAirplane() {
-		return airplane;
-	}
-
-
-	public void setAirplane(String airplane) {
-		this.airplane = airplane;
-	}
-
-
-	public String getTravleAgency() {
-		return travleAgency;
-	}
-
-
-	public void setTravleAgency(String travleAgency) {
-		this.travleAgency = travleAgency;
+	public void setReturnUrl(String returnUrl) {
+		this.returnUrl = returnUrl;
 	}
 
 
 	@Override
 	public String toString() {
 		return "Flight [departure=" + departure + ", arrival=" + arrival + ", departureDate=" + departureDate
-				+ ", arrivalDate=" + arrivalDate + ", headCount=" + headCount + ", travellersType=" + travellersType
-				+ ", flightType=" + flightType + ", way=" + way + ", cabinClass=" + cabinClass + ", price=" + price
-				+ ", departureTime=" + departureTime + ", arrivalTime=" + arrivalTime + ", takeTime=" + takeTime
-				+ ", airline=" + airline + ", airplane=" + airplane + ", travleAgency=" + travleAgency + "]";
+				+ ", arrivalDate=" + arrivalDate + ", headCount=" + headCount + ", flightType=" + flightType
+				+ ", returnInfo=" + returnInfo + ", returnType=" + returnType + ", returnPrice=" + returnPrice
+				+ ", clickNum=" + clickNum + ", returnUrl=" + returnUrl + "]";
 	}
-	
-	
+
+
+
 
 }
