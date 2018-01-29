@@ -15,6 +15,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+
+
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 
 <link rel="stylesheet"
@@ -24,7 +26,6 @@
 <link
 	href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
-
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -34,7 +35,6 @@
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
-
 
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
@@ -75,10 +75,9 @@ body {
 							"/dailyplan/addImage").submit();
 				});
 
-		
 	});
-	
-	
+
+    
 </script>
 
 </head>
@@ -127,7 +126,7 @@ body {
 						<div>길찾기결과 : ${planContent.routeDescription}</div>
 						<div>순서 : ${planContent.orderNo}</div>
 						<div>
-							텍스트 : ${planContent.contentText}
+							텍스트 : <strong>${planContent.contentText}</strong>
 						</div>
 
 						<div>
@@ -167,7 +166,7 @@ body {
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
 					<div class="modal-body">
-					<jsp:include page="/dailyplan/addText.jsp"  flush="true" >
+						<jsp:include page="/dailyplan/addText.jsp">
 							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 						</jsp:include>
 					</div>
@@ -224,10 +223,6 @@ body {
 		</div>
 
 		<!-- ---------------------------------------------------------------- -->
-
-
-
-
 
 		<!-- ---------------------------------------------------------------- -->
 

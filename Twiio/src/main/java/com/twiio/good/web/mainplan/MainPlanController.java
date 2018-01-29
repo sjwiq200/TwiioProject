@@ -372,6 +372,7 @@ public class MainPlanController {
 		dailyPlanService.deleteDailyPlan(mainPlanNo);
 		mainPlanService.deleteMainPlan(mainPlanNo);
 		
+		
 		System.out.println("Controller : deleteMainPlan <END>");
 		
 		return "forward:/mainplan/listMainPlan";

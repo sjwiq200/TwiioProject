@@ -1,13 +1,90 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html>
+<%@ page contentType="text/html; charset=EUC-KR"%>
+<%@ page pageEncoding="EUC-KR"%>
+
+<!DOCTYPE html>
+
+<html lang="ko">
+
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Insert title here</title>
+
+<%
+	String dailyPlanNo = (String) request.getParameter("data");
+%>
+
+<meta charset="UTF-8">
+<title>addText</title>
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+<script>
+	$(function() {
+		$("#uploadFile").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#blah').attr('src', e.target.result).attr('width', '300px');
+			}
+			reader.readAsDataURL(input.files[0]);
+			alert(e.target.result);
+		}
+	}
+
+	$(function() {
+
+		$("button[name=add]").on(
+				"click",
+				function() {
+					$("form").attr("method", "POST").attr("action",
+							"/dailyplan/addImage").submit();
+				});
+
+		$("button[name=add]").on(
+				"click",
+				function() {
+					$("form").attr("method", "POST").attr("action",
+							"/dailyplan/addImage").submit();
+				});
+	});
+</script>
+
 </head>
+
 <body>
 
-ì•ˆë…•
+
+	<form name="form" enctype="multipart/form-data">
+
+		<div class="form-group">
+			<label for="uploadFile" class="col-sm-2 control-label">»óÇ°ÀÌ¹ÌÁö
+			</label>
+			<div class="col-sm-6">
+				<input type="file" name="uploadFile" class="ct_input_g"
+					style="width: 200px; height: 19px" maxLength="13" id="uploadFile" />
+				<img id="blah" />
+			</div>
+		</div>
+
+		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+		<button name="add" type="button">ADD</button>
+
+	</form>
+
 </body>
+
+
+
+
+
+
+
 </html>
