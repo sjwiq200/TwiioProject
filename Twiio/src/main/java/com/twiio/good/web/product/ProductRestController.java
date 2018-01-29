@@ -72,7 +72,7 @@ public class ProductRestController {
 		return map;
 	}
 	
-	@RequestMapping(value="json/getEvalHost/{hostNo]", method=RequestMethod.GET)
+	@RequestMapping(value="json/getEvalHost/{hostNo}", method=RequestMethod.GET)
 	public double getEvalHost( @PathVariable int hostNo ) throws Exception{
 		
 		System.out.println("/product/json/getEvalHost : GET");
@@ -141,5 +141,6 @@ public class ProductRestController {
 //		String[] prodNames = string.split(",");
 		System.out.println(list02);				
 		return list02;
-	}
+	}	
+	
 }

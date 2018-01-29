@@ -49,20 +49,20 @@ function fncAddProduct(){
 	//var manuDate = document.detailForm.manuDate.value;
 	//var price = document.detailForm.price.value;
 	
-	var name=$("input[name='prodName']").val();
-	var detail=$("input[name='prodDetail']").val();
-	var manuDate=$("input[name='manuDate']").val();
-	var price=$("input[name='price']").val();
+	var name=$("input[name='productName']").val();
+	var description=$("textarea[name='description']").val();
+	var tripDate=$("input[name='tripDate']").val();
+	var price=$("input[name='productPrice']").val();
 
 	if(name == null || name.length<1){
 		alert("상품명은 반드시 입력하여야 합니다.");
 		return;
 	}
-	if(detail == null || detail.length<1){
+	if(description == null || description.length<1){
 		alert("상품상세정보는 반드시 입력하여야 합니다.");
 		return;
 	}
-	if(manuDate == null || manuDate.length<1){
+	if(tripDate == null || tripDate.length<1){
 		alert("제조일자는 반드시 입력하셔야 합니다.");
 		return;
 	}
@@ -92,10 +92,31 @@ $(function() {
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $( "a[href='#' ]" ).on("click" , function() {
+	 $( "#reset" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
 			$("form")[0].reset();
+	});
+});
+
+var i = 0;
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	 $( "#addTripDate" ).on("click" , function() {
+		 i++;
+		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" >' ) );
+		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({dateFormat: "yy-mm-dd"});		 
+	});
+});
+$(function() {
+	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	 $( "#removeTripDate" ).on("click" , function() {
+		 $( '#datepicker'+i ).remove();
+		 // $( "#datepicker[3]" ).remove();
+		 //$( "input[name=tripDate]" ).remove();
+		 i--;
 	});
 });
 
@@ -120,7 +141,7 @@ $(function() {
 }); */
 
 $( function() {
-	$( "#datepicker" ).datepicker({
+	$( "input[name=tripDate]" ).datepicker({
 		 dateFormat: "yy-mm-dd"
 	});
   } );
@@ -148,10 +169,10 @@ $( function() {
         	placeholder: '투어 내용을 입력해 주세요~'
         });
         
-        $("button[name=save]").on("click",function(){
+        /* $("button[name=save]").on("click",function(){
         	$("textarea").val($("#summernote").summernote("code"));
         	$("form").attr("method" , "POST").attr("action" , "/user/summernote").submit();
-        });
+        }); */
         
         
     });
@@ -184,19 +205,48 @@ $( function() {
 		       
 		    </div>
 		   </div> 
-		  
+		   
+		   <div class="form-group">
+		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label">국가</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="country" name="country" placeholder="국가">
+		       
+		    </div>
+		   </div> 
+		   
+		   <div class="form-group">
+		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시</label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="city" name="city" placeholder="도시">
+		       
+		    </div>
+		   </div> 	  
 		  
 		  <div class="form-group">
 		    <label for="tripDate" class="col-sm-offset-1 col-sm-3 control-label">투어날짜</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="datepicker" name="tripDate" readonly="readonly" >
-		      
+		    <div class="col-sm-4" name="addDate">
+		      <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate">+</a>
+		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate">-</a>
+		      <input type="text" class="form-control" id="datepicker0" name="tripDate" readonly="readonly" >		      
 		    </div>
 		    <!--<div class="col-sm-3">  -->
 		     <!-- <img src="../images/ct_icon_date.gif" width="15" height="15" 
 				onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>-->
 		    <!--</div>  -->
 		  </div>
+		  
+		   <div class="form-group">
+		    <label for="productType" class="col-sm-offset-1 col-sm-3 control-label">투어유형</label>
+		    <div class="col-sm-4">
+		      	<select name="productType">
+				  <option value="1" selected>명소투어</option>
+				  <option value="2">음식투어</option>
+				  <option value="3">트레킹</option>
+				  <option value="4">액티비티</option>
+				  <option value="5">night투어</option>
+				</select>
+		    </div>
+		   </div> 
 		  
 		  <div class="form-group">
 		    <label for="tourHeadCount" class="col-sm-offset-1 col-sm-3 control-label">1일 투어 인원</label>
@@ -227,7 +277,7 @@ $( function() {
 		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">투어 섬네일</label>
 		    <div class="col-sm-4">		      
 			    <label for="files">파일 업로드</label>
-			    <input type="file" id="files" name="files">			   
+			    <input type="file" id="file" name="file">			   
 		      <span id="helpBlock" class="help-block">
 		      	 <strong class="text-danger">업로드 gogo</strong>
 		      </span>
@@ -238,8 +288,8 @@ $( function() {
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >등 &nbsp;록</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		      <button type="button" class="btn btn-primary" >등 &nbsp;록</button>
+			  <a class="btn btn-primary btn" href="#" role="button" id="reset">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>
