@@ -27,4 +27,6 @@ public interface DailyPlanDao {
 	
 	public void addPlanContent(PlanContent planContent);
 	
+	public void deletePlanContent(int dailyPlanNo);
+	
 }

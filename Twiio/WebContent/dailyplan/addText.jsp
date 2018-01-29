@@ -23,6 +23,8 @@
   <script src="summernote.min.js"></script>
   
   <script>
+  
+  	var content;
     $(function() {
     	
         $('#summernote').summernote({
@@ -34,16 +36,16 @@
         	width: 400,
         	minHeight: null,             
         	maxHeight: null,             
-        	focus: true,                 
+        	focus: false,                 
         	placeholder: '여행지에서 필요한 물품/비행기 번호/여권번호/숙소전화번호/맛집전화번호 등의 정보를 적어보세요!'
         });
         
-        $("button[name=save]").on("click",function(){
-        	$("textarea").val($("#summernote").summernote("code"));
+        $("input[type='submit']").on("click",function(){
+        	content= $("#summernote").val();
         	$("form").attr("method" , "POST").attr("action" , "/dailyplan/addText").submit();
         });
     });
- 
+
   </script>
   
 </head>
@@ -52,10 +54,11 @@
 
   	
     <form name="form">
-    <textarea id="summernote" name="content"></textarea>
-    <!--  jsp include parameter를 통해 전달받은 값을 사용하기 위해 아래와 같이 선언했습니다. -->
-    <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-    <button name="save" type="button">ADD</button>
+	    <textarea id="summernote" name="contentText"></textarea>
+	    <!--  jsp include parameter를 통해 전달받은 값을 사용하기 위해 아래와 같이 선언했습니다. -->
+	    <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+	   <!--  <button name="save" type="button">ADD</button> -->
+	   <input type="submit" value="ADD"/>
     </form>  
 </body>
 

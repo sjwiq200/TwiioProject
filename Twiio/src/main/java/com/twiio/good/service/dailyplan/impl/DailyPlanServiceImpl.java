@@ -61,4 +61,9 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 		dailyPlanDao.addPlanContent(planContent);
 	}
 
+	@Override
+	public void deletePlanContent(int dailyPlanNo) throws Exception {
+		dailyPlanDao.deletePlanContent(dailyPlanNo);
+	}
+
 }
