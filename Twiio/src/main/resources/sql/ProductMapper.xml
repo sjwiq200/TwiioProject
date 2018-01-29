@@ -22,7 +22,9 @@
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
 		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />
 		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />
-		<result property="productThumbnail" 	column="thumbnail" 				jdbcType="VARCHAR" />	
+		<result property="productThumbnail" 	column="thumbnail" 				jdbcType="VARCHAR" />
+		<result property="hostName" 			column="user_name" 			jdbcType="VARCHAR" />
+		<result property="hostImage" 			column="profile_image" 		jdbcType="VARCHAR" />	
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -78,8 +80,25 @@
 	 </select>
 	 
 	 <sql id="listProductSql">
-		 SELECT product_no, product_title, product_price, product_type, country, city, view_count, user_no				   
-		 FROM product		
+		 SELECT
+			p.product_no as product_no, 
+			p.product_title as product_title, 
+			p.product_price as product_price, 
+			p.product_type as product_type, 
+			p.trip_date as trip_date,
+			p.reg_date as reg_date, 
+			p.country as country , 
+			p.city as city , 
+			p.user_no as user_no , 
+			p.product_content as product_content, 
+			p.head_count as head_count, 
+			p.view_count as view_count, 
+			p.product_count as product_count, 
+			u.user_name as user_name, 
+			u.profile_image as profile_image		
+		FROM product p, users u 
+		WHERE p.user_no=u.user_no
+		AND p.product_delete='0'		
 		<if test="search.searchCondition != null">
 			
 				<if test="search.searchCondition == 0 and search.searchKeyword !='' ">

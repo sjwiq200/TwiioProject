@@ -1,5 +1,6 @@
 package com.twiio.good.web.product;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
+import com.twiio.good.service.domain.User;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.transaction.TransactionService;
 
@@ -44,9 +46,25 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="addProduct", method=RequestMethod.POST)//썸네일
-	public String addProduct(@ModelAttribute("product") Product product, Map<String, Object> map) throws Exception {
+	public String addProduct(@ModelAttribute("product") Product product, HttpSession session, Map<String, Object> map) throws Exception {
 
 		System.out.println("/product/addProduct : POST");
+		//System.out.println("date :: "+product.getTripDate());
+		String[] str = product.getTripDate().split(",");
+		//System.out.println("length :: "+str.length);
+		product.setProductCount(product.getTourHeadCount()*str.length);
+		String tripDate="";
+		for(int i=0; i<str.length; i++) {
+			String[] date = str[i].split("-");
+			if(i != str.length-1) {
+				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount()+",";
+			}else {
+				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount();
+			}			
+		}
+		product.setTripDate(tripDate);
+		//User user = (User)session.getAttribute("user");
+		product.setHostNo(14);
 		productService.addProduct(product);
 		
 		return "forward:/product/addProduct.jsp";
@@ -60,7 +78,7 @@ public class ProductController {
 		
 		map.put("product", product);
 		
-		return "forward:/product/readProduct.jsp";
+		return "forward:/product/getProduct.jsp";
 	}
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.GET)
@@ -72,7 +90,7 @@ public class ProductController {
 		
 		map.put("product", product);
 		
-		return "forward:/product/readProduct.jsp";
+		return "forward:/product/listProduct.jsp";
 	}
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
@@ -94,16 +112,18 @@ public class ProductController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(20);//20개씩 더보기로
+				
+		Map productMap = productService.listProduct(search);
 		
-		map = productService.listProduct(search);
+		//map.put("list", productMap.get("list"));
 		
 		//List<Product> list = (List<Product>)map.get("list");
+		System.out.println("map :: "+map);
+		map.put("list", (List<Product>)productMap.get("list"));
+		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
+		map.put("search", search);
 		
-		//map.put("list", (List<Product>)map.get("list"));
-		//map.put("totalCount", ((Integer)map.get("totalCount")).intValue());
-		//map.put("search", search);
-		
-		return "forward:/product/readProduct.jsp";
+		return "forward:/product/listProduct.jsp";
 	}
 	
 	@RequestMapping(value="addStarEvalProduct", method=RequestMethod.POST)
