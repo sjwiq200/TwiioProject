@@ -3,6 +3,7 @@ package com.twiio.good.service.dailyplan;
 import java.util.List;
 
 import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.PlanContent;
 
 public interface DailyPlanService {
 	
@@ -17,5 +18,12 @@ public interface DailyPlanService {
 	
 	public void deleteDailyPlan(int mainPlanNo) throws Exception;
 	
-
+	//////////////////////////////////////////////////////////////////////////////
+	
+	public List<PlanContent> getPlanContentList(int dailyPlanNo) throws Exception;
+	
+	public int getPlanContentCount(int dailyPlanNo) throws Exception;
+	
+	public void addPlanContent(PlanContent planContent) throws Exception;
+	
 }

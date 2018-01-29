@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import com.twiio.good.service.dailyplan.DailyPlanDao;
 import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.PlanContent;
 
 @Repository("dailyPlanDaoImpl")
 public class DailyPlanDaoImpl implements DailyPlanDao {
@@ -44,6 +45,32 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 	@Override
 	public void deleteDailyPlan(int mainPlanNo) {
 		sqlSession.delete("DailyPlanMapper.deleteDailyPlan",mainPlanNo);
+	}
+	
+	////plan_content/////////////////////////////////////////////////////////////////////
+
+	@Override
+	public List<PlanContent> getPlanContentList(int dailyPlanNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectList("PlanContentMapper.getPlanContentList",dailyPlanNo);
+	}
+
+	@Override
+	public PlanContent getPlanContent(int dailyPlanNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("PlanContentMapper.getPlanContent",dailyPlanNo);
+	}
+
+	@Override
+	public int getPlanContentCount(int dailyPlanNo) {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("PlanContentMapper.getPlanContentCount",dailyPlanNo);
+	}
+
+	@Override
+	public void addPlanContent(PlanContent planContent) {
+		// TODO Auto-generated method stub
+		sqlSession.insert("PlanContentMapper.addPlanContent", planContent);
 	}
 	
 
