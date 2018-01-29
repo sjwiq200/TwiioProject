@@ -36,7 +36,7 @@
         	width: 400,
         	minHeight: null,             
         	maxHeight: null,             
-        	focus: true,                 
+        	focus: false,                 
         	placeholder: '여행지에서 필요한 물품/비행기 번호/여권번호/숙소전화번호/맛집전화번호 등의 정보를 적어보세요!'
         });
         

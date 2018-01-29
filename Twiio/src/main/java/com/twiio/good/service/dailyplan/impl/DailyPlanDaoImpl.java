@@ -72,6 +72,12 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 		// TODO Auto-generated method stub
 		sqlSession.insert("PlanContentMapper.addPlanContent", planContent);
 	}
+
+	@Override
+	public void deletePlanContent(int dailyPlanNo) {
+		sqlSession.delete("PlanContentMapper.deletePlanContent",dailyPlanNo);
+		
+	}
 	
 
 }

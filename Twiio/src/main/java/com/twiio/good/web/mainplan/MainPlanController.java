@@ -369,8 +369,16 @@ public class MainPlanController {
 		System.out.println("debug : " +mainPlanService.getMainPlan(mainPlanNo));
 		
 		
-		dailyPlanService.deleteDailyPlan(mainPlanNo);
-		mainPlanService.deleteMainPlan(mainPlanNo);
+		List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
+		
+		for(DailyPlan deleteList : list) {
+			int dailyPlanNo = deleteList.getDailyPlanNo();
+			dailyPlanService.deletePlanContent(dailyPlanNo); // 데일리플랜 번호로 연결된 콘텐츠 삭제 
+		}
+		
+		dailyPlanService.deleteDailyPlan(mainPlanNo); // 메인플랜 번호로 연결된 데일리 플랜 삭제 
+		
+		mainPlanService.deleteMainPlan(mainPlanNo); 
 		
 		
 		System.out.println("Controller : deleteMainPlan <END>");

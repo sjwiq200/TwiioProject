@@ -120,37 +120,47 @@ public String addText (@RequestParam("dailyPlanNo") int dailyPlanNo
 
 
 @RequestMapping( value="addImage", method=RequestMethod.POST )
-public String addImage (@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam("uploadFile") MultipartFile uploadFile, Model model) throws Exception{
+public String addImage (@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam("uploadFile") MultipartFile uploadFile, Model model,HttpSession session) throws Exception{
 
 	System.out.println("Controller : addImage <START>");
+	
+	System.out.println("f5"+session.getAttribute("f5"));
+	
+	String here = "okay";
+	String check = (String)session.getAttribute("f5");
+	
+	DailyPlan dailyPlan = null;
+	
+	if(here.equals(check)) {
+		session.setAttribute("f5", "denied");
+		dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		PlanContent planContent = new PlanContent();
+		String fileName = uploadFile.getOriginalFilename();
 
-	DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-	PlanContent planContent = new PlanContent();
-	String fileName = uploadFile.getOriginalFilename();
+		   planContent.setContentImage(fileName);
+		   planContent.setDailyPlan(dailyPlan);
+		   planContent.setContentType(2);
 
-	   planContent.setContentImage(fileName);
-	   planContent.setDailyPlan(dailyPlan);
-	   planContent.setContentType(2);
+		   try {
+		    File file = new File("C:\\Users\\bitcamp\\git\\TwiioProject\\Twiio\\WebContent\\resources\\images\\dailyPlanContent\\" + fileName);
+		    uploadFile.transferTo(file);
+		   }catch(IOException e) {
+			    e.printStackTrace();
+			   }
 
-	   try {
-	    File file = new File("C:\\Users\\bitcamp\\git\\TwiioProject\\Twiio\\WebContent\\resources\\images\\dailyPlanContent\\" + fileName);
-	    uploadFile.transferTo(file);
-	   }catch(IOException e) {
-		    e.printStackTrace();
-		   }
-
-	int a = dailyPlanService.getPlanContentCount(dailyPlanNo);
-	planContent.setOrderNo(a+1);
-	dailyPlanService.addPlanContent(planContent);
-
+		int a = dailyPlanService.getPlanContentCount(dailyPlanNo);
+		planContent.setOrderNo(a+1);
+		dailyPlanService.addPlanContent(planContent);
+		
+		return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlan.getDailyPlanNo();
+	}
+	
+	session.setAttribute("f5", "okay");
 	System.out.println("Controller : addImage <END>");
-
-	return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlan.getDailyPlanNo();
+	
+	return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
 
 }
-
- 
-
 
 
 @RequestMapping( value="addMap", method=RequestMethod.POST )
