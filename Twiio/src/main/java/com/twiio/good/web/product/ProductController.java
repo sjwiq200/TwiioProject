@@ -55,12 +55,17 @@ public class ProductController {
 		product.setProductCount(product.getTourHeadCount()*str.length);
 		String tripDate="";
 		for(int i=0; i<str.length; i++) {
-			String[] date = str[i].split("-");
+//			String[] date = str[i].split("-");
+//			if(i != str.length-1) {
+//				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount()+",";
+//			}else {
+//				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount();
+//			}
 			if(i != str.length-1) {
-				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount()+",";
+				tripDate += str[i]+"="+product.getTourHeadCount()+",";
 			}else {
-				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount();
-			}			
+				tripDate += str[i]+"="+product.getTourHeadCount();
+			}	
 		}
 		product.setTripDate(tripDate);
 		//User user = (User)session.getAttribute("user");

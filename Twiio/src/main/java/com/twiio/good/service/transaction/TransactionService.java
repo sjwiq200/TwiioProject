@@ -12,21 +12,9 @@ import com.twiio.good.service.domain.User;
 
 public interface TransactionService {
 	
-	// 카카오페이 거래
-	public String kakaoPayReady(Transaction transaction) throws Exception;
-
-	// 카카오페이 거래
-	public void kakaoApproval(String pgToken) throws Exception;
-
-	// 카카오페이 거래
-	public void kakaoCancel(Transaction transaction) throws Exception;
-
-	// 카카오페이 거래
-	public void kakaoFail(Transaction transaction) throws Exception;
-
-	// 카카오페이 거래
-	public String kakaoOrder() throws Exception;
-
+	//거래
+	public void addTransaction(Transaction transaction) throws Exception;
+	
 	// 페이팔 거래
 	public void payPal(Transaction transaction) throws Exception;
 	

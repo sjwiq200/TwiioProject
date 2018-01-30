@@ -36,7 +36,7 @@ $(function() {
 	
 	 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
 		
-		 self.location("/purchase/addPurchase?prod_no=");
+		 $("form").attr("method" , "POST").attr("action" , "/transaction/addTransaction").submit();
 	});
 });
 
@@ -48,13 +48,13 @@ $(function() {
 	});
 });
 
-$(function() {
+/* $(function() {
 	
 	 $( "button.btn.btn-primary:contains('장바구니 담기')" ).on("click" , function() {
 		
 		 self.location("/cart/addCart?prod_no=");
 	});
-});
+}); */
 
 $(function() {
 	
@@ -64,9 +64,48 @@ $(function() {
 	});
 });
 
-
-		 
+$(function() {
+	
+	 $( "#tripDate" ).on("change" , function() {
+		alert("안뇽");
+		$("option.num").remove();
+		 $.ajax(
+ 				{
+ 					url:"/product/json/findCount/",
+ 					method:"POST",	    					
+ 					data:{	    						
+ 						tripDate:$("#tripDate").val(),
+ 						productNo:$("input[name='productNo']").val()
+ 						},
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},			
+ 					dataType:"json",
+ 					success:function(JSONData){
+ 						//alert("제발ajax");	    											
+ 						//alert("JSONData: \n"+JSONData);
+ 						alert(JSONData);
+ 						var num=JSONData;
+ 						/* response($.map(JSONData, function (item) {
+ 				           
+ 							return item;
+ 				        })); */
+ 				        var string;
+ 				        for(var i=1; i<JSONData+1; i++){
+ 				        	string+="<option class='num' value='"+i+"'>"+i+"</option>";
+ 				        }
+ 						$("select[name='count']").append(string);
+ 						
+						
+					
+ 					}
+ 				}
+ 			);
+	});
 });
+		 
+
 </script>
 </head>
 
@@ -86,7 +125,7 @@ $(function() {
 	
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
-			<div class="col-xs-8 col-md-4">${product.productNo }</div>
+			<div class="col-xs-8 col-md-4">${product.productNo }</div>			
 		</div>
 		
 		<hr/>
@@ -148,6 +187,7 @@ $(function() {
 		<hr/>
 		<form>
 			<div class="row">
+				<input type="hidden" name="productNo" value="${product.productNo }"/>
 				<select class="form-control" name="tripDate" id="tripDate">
 					<option value="0">날짜선택</option>
 					<c:set var="date" value="${product.tripDate}"></c:set>
@@ -158,16 +198,16 @@ $(function() {
 					</c:forEach>
 				</select> 
 				<select class="form-control" name="count" id="count">
-					<c:set var="i" value="1"></c:set>
+					<%-- <c:set var="i" value="1"></c:set> --%>
 					<option value="0">갯수선택</option>
 					<%-- <c:set var="date_array" value="${fn:split(date,'[=,]')}"></c:set> --%>
 					<%-- <c:if test="==${fn:split(tdate,'=')[0]}"> --%>
-					<c:forEach var="num" items="${date_array}" begin="0" step="1">
+					<%-- <c:forEach var="num" items="${date_array}" begin="0" step="1">
 					
 						<c:forEach var="i" begin="1" end="${fn:split(num,'=')[1]}" step="1" >
 							<option value="${i}">${i}</option>
 						</c:forEach>
-					</c:forEach>
+					</c:forEach> --%>
 					<%-- </c:if> --%>
 				</select>
 			</div>
@@ -185,6 +225,13 @@ $(function() {
 	  		</div>
 		</div>
 		</form>
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>호스트</strong></div>
+			<div class="col-xs-8 col-md-4">${product.hostName}	</div>
+		</div>
+		
 		<hr/>
 		
 		<div class="row">
