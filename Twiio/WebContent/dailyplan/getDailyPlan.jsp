@@ -148,14 +148,15 @@
 	</form>
 
 	<div>
+
+		
 		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span>
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
 		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
 		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">길찾기</button> </span>
-	</div>
-	<!---------- Map Dialog ------------->
-	
-	<div class="modal fade" id="addMap" role="dialog">
+
+		<!---------- Text Dialog ------------->
+		<div class="modal fade" id="addText" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -167,7 +168,7 @@
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
 					<div class="modal-body">
-						<jsp:include page="/dailyplan/addMap.jsp" flush="true">
+						<jsp:include page="/dailyplan/addText.jsp" flush="true">
 							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 						</jsp:include>
 					</div>
@@ -177,9 +178,11 @@
 				</div>
 			</div>
 		</div>
-
+	</div>
 
 	<!---------- Image Dialog ------------->
+	
+	<div>
 
 		<div class="modal fade" id="addImage" role="dialog">
 			<div class="modal-dialog">
@@ -188,7 +191,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">
-							<Strong>I M A G E</Strong>
+							<Strong>Image</Strong>
 						</h4>
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
@@ -218,30 +221,6 @@
 			</div>
 		</div>
 
-		<!---------- Text Dialog ------------->
-		
-		<div class="modal fade" id="addText" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>T E X T</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-					<div class="modal-body">
-						<jsp:include page="/dailyplan/addText.jsp" flush="true">
-							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
-						</jsp:include>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
 		<!-- ---------------------------------------------------------------- -->
 
 

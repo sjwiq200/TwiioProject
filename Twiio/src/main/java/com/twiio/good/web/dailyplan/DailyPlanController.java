@@ -104,13 +104,11 @@ public String addText (@RequestParam("dailyPlanNo") int dailyPlanNo
 	dailyPlanService.addPlanContent(planContent);
 	
 	System.out.println("Controller : addText <END>");
-	
+//	List<PlanContent> list = dailyPlanService.getPlanContentList(dailyPlanNo);
+//	model.addAttribute("list", list);
+//	model.addAttribute("dailyPlan", dailyPlan);
 	return "redirect:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
 }
-
-
-
-
 
 
 @RequestMapping( value="addImage", method=RequestMethod.POST )
