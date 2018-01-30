@@ -78,7 +78,7 @@ public class PurchaseServiceTest {
 		
 	}
 	
-	//@Test
+	@Test
 	public void testGetPurchase() throws Exception {
 		
 		Transaction transaction = new Transaction();

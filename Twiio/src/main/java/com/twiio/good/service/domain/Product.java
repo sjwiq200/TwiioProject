@@ -3,8 +3,9 @@ package com.twiio.good.service.domain;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.web.multipart.MultipartFile;
-
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Product {
 	
 	private int productNo;

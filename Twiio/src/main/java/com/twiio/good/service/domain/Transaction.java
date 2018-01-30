@@ -23,6 +23,7 @@ public class Transaction {
 	private double evalHost;
 	private String userName;
 	private String hostName;
+	
 
 	public Transaction() {
 		// TODO Auto-generated constructor stub
