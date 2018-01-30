@@ -47,7 +47,7 @@
 <body>
 
 <div id="floating-panel">
- <input type="text"  id="addr1" name="address" value="ê°•ë‚¨ì—­"/>
+ <input type="text"  id="addr1" name="address" value="°­³²¿ª"/>
  <input name="submit" type="submit" value="Search" onclick='codeAddress(); return false;'/> 
 </div>
 
@@ -119,7 +119,7 @@ if (navigator.geolocation) {
     lng2 = position.coords.longitude;
     latlng2 = new google.maps.LatLng(lat2, lng2);
     
-    map.setZoom(14);
+    map.setZoom(6);
     map.setCenter(pos);
     
     GreenIcon = new google.maps.MarkerImage(
@@ -140,19 +140,19 @@ if (navigator.geolocation) {
 		map: map
 	})
   	);
-    //alert('ë§ˆì»¤ì»¤ëŸ°íŠ¸ :: '+markerCurrentLocation[0]);
+    //alert('¸¶Ä¿Ä¿·±Æ® :: '+markerCurrentLocation[0]);
     handleLocationError(markerCurrentLocation,latlng2);
     
   });
 } 
 
 google.maps.event.addListener(map, 'click', codeCoordinate);
-        /*ì•„ë«ê¸€ì—ì„œ ì„¤ëª…í•œ eventë¥¼ ì´ìš© ì§€ë„ë¥¼ 'click'í•˜ë©´ codeCoordinateí•¨ìˆ˜ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
-           codeCoordinateí•¨ìˆ˜ëŠ” í´ë¦­í•œ ì§€ì ì˜ ì¢Œí‘œë¥¼ ê°€ì§€ê³  ì£¼ì†Œë¥¼ ì°¾ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤. */
+        /*¾Æ·§±Û¿¡¼­ ¼³¸íÇÑ event¸¦ ÀÌ¿ë Áöµµ¸¦ 'click'ÇÏ¸é codeCoordinateÇÔ¼ö¸¦ ½ÇÇàÇÕ´Ï´Ù.
+           codeCoordinateÇÔ¼ö´Â Å¬¸¯ÇÑ ÁöÁ¡ÀÇ ÁÂÇ¥¸¦ °¡Áö°í ÁÖ¼Ò¸¦ Ã£´Â ÇÔ¼öÀÔ´Ï´Ù. */
 }
 
 function handleLocationError(markerCurrentLocation,latlng2){
-	//alert('ë§ˆì»¤ì»¤ëŸ°íŠ¸ :: '+markerCurrentLocation[0]);
+	//alert('¸¶Ä¿Ä¿·±Æ® :: '+markerCurrentLocation[0]);
 	geocoder2.geocode({'latLng' : latlng2}, function(results, status) {
 
 		if (status == google.maps.GeocoderStatus.OK)  {
@@ -165,7 +165,7 @@ function handleLocationError(markerCurrentLocation,latlng2){
 		infowindow.setContent(results[1].formatted_address);
 		infowindow.open(map,markerCurrentLocation[0]);
 		//infowindow.open(map, this);
-		//infowindowë¡œ ì£¼ì†Œë¥¼ í‘œì‹œí•©ë‹ˆë‹¤.
+		//infowindow·Î ÁÖ¼Ò¸¦ Ç¥½ÃÇÕ´Ï´Ù.
 		}
 		});
 		}
@@ -180,17 +180,17 @@ function Setmarker(latLng) {
 		marker[0].setMap(null);
 	}
 
-// marker.lengthëŠ” markerë¼ëŠ” ë°°ì—´ì˜ ì›ì†Œì˜ ê°œìˆ˜ì…ë‹ˆë‹¤.
+// marker.length´Â marker¶ó´Â ¹è¿­ÀÇ ¿ø¼ÒÀÇ °³¼öÀÔ´Ï´Ù.
 
-// ë§Œì•½ ì´ ê°œìˆ˜ê°€ 0ì´ ì•„ë‹ˆë¼ë©´ markerë¥¼ mapì— í‘œì‹œë˜ì§€ ì•Šê²Œ í•©ë‹ˆë‹¤.
+// ¸¸¾à ÀÌ °³¼ö°¡ 0ÀÌ ¾Æ´Ï¶ó¸é marker¸¦ map¿¡ Ç¥½ÃµÇÁö ¾Ê°Ô ÇÕ´Ï´Ù.
 
-// ì´ëŠ” ë‹¤ë¥¸ ì§€ì ì„ í´ë¦­í•  ë•Œ ê¸°ì¡´ì˜ ë§ˆì»¤ë¥¼ ì œê±°í•˜ê¸° ìœ„í•¨ì…ë‹ˆë‹¤.
+// ÀÌ´Â ´Ù¸¥ ÁöÁ¡À» Å¬¸¯ÇÒ ¶§ ±âÁ¸ÀÇ ¸¶Ä¿¸¦ Á¦°ÅÇÏ±â À§ÇÔÀÔ´Ï´Ù.
 	marker = [];
 
 	marker.length = 0;
-// markerë¥¼ ë¹ˆ ë°°ì—´ë¡œ ë§Œë“¤ê³ , marker ë°°ì—´ì˜ ê°œìˆ˜ë¥¼ 0ê°œë¡œ ë§Œë“¤ì–´ marker ë°°ì—´ì„ ì´ˆê¸°í™”í•©ë‹ˆ
+// marker¸¦ ºó ¹è¿­·Î ¸¸µé°í, marker ¹è¿­ÀÇ °³¼ö¸¦ 0°³·Î ¸¸µé¾î marker ¹è¿­À» ÃÊ±âÈ­ÇÕ´Ï
 
-// ë‹¤.
+// ´Ù.
 
   	marker.push(new google.maps.Marker({
 		position: latLng,
@@ -198,20 +198,20 @@ function Setmarker(latLng) {
 		})
   	);
 
-// marker ë°°ì—´ì— ìƒˆ marker objectë¥¼ push í•¨ìˆ˜ë¡œ ì¶”ê°€í•©ë‹ˆë‹¤.
+// marker ¹è¿­¿¡ »õ marker object¸¦ push ÇÔ¼ö·Î Ãß°¡ÇÕ´Ï´Ù.
 }
 
-/*í´ë¦­í•œ ì§€ì ì— ë§ˆì»¤ë¥¼ í‘œì‹œí•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
+/*Å¬¸¯ÇÑ ÁöÁ¡¿¡ ¸¶Ä¿¸¦ Ç¥½ÃÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
 
-   ê·¸ëŸ°ë° ì´ í•¨ìˆ˜ë¥¼ ì˜ ë´ì•¼ í•˜ëŠ” ê²ƒì´ ë°”ë¡œ markerë¥¼ ìƒì„±í•˜ì§€ ì•Šê³  markerë¼ëŠ” ë°°ì—´ ì•ˆì— Marker 
+   ±×·±µ¥ ÀÌ ÇÔ¼ö¸¦ Àß ºÁ¾ß ÇÏ´Â °ÍÀÌ ¹Ù·Î marker¸¦ »ı¼ºÇÏÁö ¾Ê°í marker¶ó´Â ¹è¿­ ¾È¿¡ Marker 
 
-   obejct  ì›ì†Œë¥¼ ê³„ì† ì¶”ê°€í•˜ê³  ìˆìŠµë‹ˆë‹¤. ì´ëŠ” ë§¤ë²ˆ í´ë¦­í•  ë•Œë§ˆë‹¤ ìƒˆë¡œìš´ ë§ˆì»¤ë¥¼ ìƒì„±í•˜ê¸° ìœ„í•¨ì…ë‹ˆ
+   obejct  ¿ø¼Ò¸¦ °è¼Ó Ãß°¡ÇÏ°í ÀÖ½À´Ï´Ù. ÀÌ´Â ¸Å¹ø Å¬¸¯ÇÒ ¶§¸¶´Ù »õ·Î¿î ¸¶Ä¿¸¦ »ı¼ºÇÏ±â À§ÇÔÀÔ´Ï
 
-   ë‹¤. */
+   ´Ù. */
 
 
 
-//ì…ë ¥ ë°›ì€ ì£¼ì†Œë¥¼ ì§€ì˜¤ì½”ë”© ìš”ì²­í•˜ê³  ê²°ê³¼ë¥¼ ë§ˆì»¤ë¡œ ì§€ë„ì— í‘œì‹œí•©ë‹ˆë‹¤.
+//ÀÔ·Â ¹ŞÀº ÁÖ¼Ò¸¦ Áö¿ÀÄÚµù ¿äÃ»ÇÏ°í °á°ú¸¦ ¸¶Ä¿·Î Áöµµ¿¡ Ç¥½ÃÇÕ´Ï´Ù.
 
 function codeAddress(event) {
 if (geocodemarker.length > 0)
@@ -231,22 +231,22 @@ geocodemarker =[];
 geocodemarker.length = 0;
 
 }
-//ì´ ë¶€ë¶„ë„ ìœ„ì™€ ê°™ì´ ì£¼ì†Œë¥¼ ì…ë ¥í•  ë•Œ í‘œì‹œë˜ëŠ” markerê°€ ë§¤ë²ˆ ìƒˆë¡œ ë‚˜íƒ€ë‚˜ê²Œ í•˜ê¸° ìœ„í•¨ì…ë‹ˆë‹¤.
+//ÀÌ ºÎºĞµµ À§¿Í °°ÀÌ ÁÖ¼Ò¸¦ ÀÔ·ÂÇÒ ¶§ Ç¥½ÃµÇ´Â marker°¡ ¸Å¹ø »õ·Î ³ªÅ¸³ª°Ô ÇÏ±â À§ÇÔÀÔ´Ï´Ù.
 var address = document.getElementById("addr1").value;
-        //ì•„ë˜ì˜ ì£¼ì†Œ ì…ë ¥ì°½ì—ì„œ ë°›ì€ ì •ë³´ë¥¼ address ë³€ìˆ˜ì— ì €ì¥í•©ë‹ˆë‹¤.
-        //ì§€ì˜¤ì½”ë”©í•˜ëŠ” ë¶€ë¶„ì…ë‹ˆë‹¤.
+        //¾Æ·¡ÀÇ ÁÖ¼Ò ÀÔ·ÂÃ¢¿¡¼­ ¹ŞÀº Á¤º¸¸¦ address º¯¼ö¿¡ ÀúÀåÇÕ´Ï´Ù.
+        //Áö¿ÀÄÚµùÇÏ´Â ºÎºĞÀÔ´Ï´Ù.
 geocoder.geocode( {'address': address}, function(results, status) {
-if (status == google.maps.GeocoderStatus.OK)  //Geocodingì´ ì„±ê³µì ì´ë¼ë©´,
+if (status == google.maps.GeocoderStatus.OK)  //GeocodingÀÌ ¼º°øÀûÀÌ¶ó¸é,
 {
 //alert(latlng);
 
-alert(results.length + "ê°œì˜ ê²°ê³¼ë¥¼ ì°¾ì•˜ìŠµë‹ˆë‹¤.");
-   //ê²°ê³¼ì˜ ê°œìˆ˜ë¥¼ í‘œì‹œí•˜ëŠ” ì°½ì„ ë„ì›ë‹ˆë‹¤. alert í•¨ìˆ˜ëŠ” ì•Œë¦¼ì°½ í•¨ìˆ˜ì…ë‹ˆë‹¤.
+alert(results.length + "°³ÀÇ °á°ú¸¦ Ã£¾Ò½À´Ï´Ù.");
+   //°á°úÀÇ °³¼ö¸¦ Ç¥½ÃÇÏ´Â Ã¢À» ¶ç¿ó´Ï´Ù. alert ÇÔ¼ö´Â ¾Ë¸²Ã¢ ÇÔ¼öÀÔ´Ï´Ù.
 for(var i=0;i<results.length;i++)
 {
 
 map.setCenter(results[i].geometry.location);
-map.setZoom(16);
+map.setZoom(8);
 
 
 geocodemarker.push(new google.maps.Marker({
@@ -276,7 +276,7 @@ service.getDetails({
       '<div><strong>' + place.formatted_address + '</strong><br>' +
           'formatted_phone_number: ' + place.formatted_phone_number + '<br>' +
           'icon: ' + place.icon + '<br>' +
-          //'opening_hours: ' + place.opening_hours.weekday_text+ '<br>' +
+          'opening_hours: ' + place.opening_hours.weekday_text+ '<br>' +
           'permanently_closed: ' + place.permanently_closed + '<br>' +
           'rating: ' + place.rating+ '<br>' +
           'reviews: ' + place.reviews[0].author_name+ '<br>' +
@@ -285,10 +285,11 @@ service.getDetails({
           'reviews: ' + place.reviews[0].text+ '<br>' +
           'types: ' + place.types  + '<br>' +
           'url: ' + place.url + '<br>' +
-          'vicinity: ' + place.vicinity + '<br>' +
-          'website: ' + place.websiteëŠ”  + '<br>' +
+          //'vicinity: ' + place.vicinity + '<br>' +
+          //'website: ' + place.website´Â  + '<br>' +
           'place_id: ' + place.place_id + '<br>' +
-          'photos: ' + place.photos[0].height+''+place.photos[0].width+ '<br></div>');
+          //'photos: ' + place.photos[0].height+''+place.photos[0].width+
+          '<br></div>');
         infowindow.open(map, this);
       });
 });
@@ -297,7 +298,7 @@ service.getDetails({
    
    
    
-                        //ê²°ê³¼ê°€ ì—¬ëŸ¬ ê°œì¼ ìˆ˜ ìˆê¸° ë•Œë¬¸ì— ëª¨ë“  ê²°ê³¼ë¥¼ ì§€ë„ì— markerì— í‘œì‹œí•©ë‹ˆë‹¤.
+                        //°á°ú°¡ ¿©·¯ °³ÀÏ ¼ö ÀÖ±â ¶§¹®¿¡ ¸ğµç °á°ú¸¦ Áöµµ¿¡ marker¿¡ Ç¥½ÃÇÕ´Ï´Ù.
 }
 
 else
@@ -311,15 +312,15 @@ else
 }
 
 
-//í´ë¦­ ì´ë²¤íŠ¸ ë°œìƒ ì‹œ ê·¸ ì¢Œí‘œë¥¼ ì£¼ì†Œë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜ì…ë‹ˆë‹¤.
+//Å¬¸¯ ÀÌº¥Æ® ¹ß»ı ½Ã ±× ÁÂÇ¥¸¦ ÁÖ¼Ò·Î º¯È¯ÇÏ´Â ÇÔ¼öÀÔ´Ï´Ù.
 
 function codeCoordinate(event) {
 	
 
 Setmarker(event.latLng);
 //alert(event.latLng);
-        //ì´ë²¤íŠ¸ ë°œìƒ ì‹œ ê·¸ ì¢Œí‘œì— ë§ˆì»¤ë¥¼ ìƒì„±í•©ë‹ˆë‹¤.
-        // ì¢Œí‘œë¥¼ ë°›ì•„ reverse geocoding(ì¢Œí‘œë¥¼ ì£¼ì†Œë¡œ ë°”ê¾¸ê¸°)ë¥¼ ì‹¤í–‰í•©ë‹ˆë‹¤.
+        //ÀÌº¥Æ® ¹ß»ı ½Ã ±× ÁÂÇ¥¿¡ ¸¶Ä¿¸¦ »ı¼ºÇÕ´Ï´Ù.
+        // ÁÂÇ¥¸¦ ¹Ş¾Æ reverse geocoding(ÁÂÇ¥¸¦ ÁÖ¼Ò·Î ¹Ù²Ù±â)¸¦ ½ÇÇàÇÕ´Ï´Ù.
 geocoder.geocode({'latLng' : event.latLng}, function(results, status) {
 
 if (status == google.maps.GeocoderStatus.OK)  {
@@ -341,9 +342,9 @@ if (status == google.maps.GeocoderStatus.OK)  {
 		          //'reviews: ' + place.reviews[0].relative_time_description+ '<br>' +
 		          //'reviews: ' + place.reviews[0].text+ '<br>' +
 		          'types: ' + place.types  + '<br>' +
-		          //'url: ' + place.url + '<br>' +
+		          'url: ' + place.url + '<br>' +
 		          //'vicinity: ' + place.vicinity + '<br>' +
-		          //'website: ' + place.websiteëŠ”  + '<br>' +
+		          //'website: ' + place.website´Â  + '<br>' +
 		          'place_id: ' + place.place_id + '<br>' +
 		          //'photos: ' + place.photos[0].height+''+place.photos[0].width+ 
 		          '<br></div>');
@@ -365,7 +366,7 @@ if (status == google.maps.GeocoderStatus.OK)  {
 	          'types: ' + place.types  + '<br>' +
 	          //'url: ' + place.url + '<br>' +
 	          //'vicinity: ' + place.vicinity + '<br>' +
-	          //'website: ' + place.websiteëŠ”  + '<br>' +
+	          //'website: ' + place.website´Â  + '<br>' +
 	          'place_id: ' + place.place_id + '<br>' +
 	          //'photos: ' + place.photos[0].height+''+place.photos[0].width+ 
 	          '<br></div>');
@@ -384,7 +385,7 @@ if (results[1])
 infowindow.setContent(results[1].formatted_address);
 infowindow.open(map,marker[0]);
 //infowindow.open(map, this);
-//infowindowë¡œ ì£¼ì†Œë¥¼ í‘œì‹œí•©ë‹ˆë‹¤.
+//infowindow·Î ÁÖ¼Ò¸¦ Ç¥½ÃÇÕ´Ï´Ù.
 }
 }); */
 

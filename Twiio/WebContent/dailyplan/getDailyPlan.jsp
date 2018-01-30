@@ -63,11 +63,10 @@
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
-
 					$("form").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
 				});
 	});
-	
+
 	
 </script>
 
@@ -102,31 +101,31 @@
 							<div>스크랩번호 : ${scrap.scrapNo }</div>
 						</c:if>
 						
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.route}">
 							<div>루트 : ${planContent.route}</div>
 						</c:if>
 						
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.departureLocation}">
 							<div>출발지 : ${planContent.departureLocation}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.arrivalLocation}">
 							<div>도착지 : ${planContent.arrivalLocation}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.estimatedTime}">
 							<div>소요시간 : ${planContent.estimatedTime}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.routeType}">
 							<div>이동방법 : ${planContent.routeType}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.routeDescription}">
 							<div>길찾기결과 : ${planContent.routeDescription}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.orderNo}">
 							<div>순서 : ${planContent.orderNo}</div>
 						</c:if>
 
@@ -149,18 +148,14 @@
 	</form>
 
 	<div>
-
-		
-		<span><button type="button" class="btn" data-toggle="modal"
-				data-target="#addText">글씨쓰기</button></span> <span><button
-				type="button" class="btn" data-toggle="modal"
-				data-target="#addImage">사진추가</button> </span> <span><button
-				type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
-		<span><button type="button" class="btn" data-toggle="modal"
-				data-target="#addRoute">길찾기</button> </span>
-
-		<!---------- Text Dialog ------------->
-		<div class="modal fade" id="addText" role="dialog">
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">길찾기</button> </span>
+	</div>
+	<!---------- Map Dialog ------------->
+	
+	<div class="modal fade" id="addMap" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -168,89 +163,6 @@
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">
 							<Strong>M A P</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-					<div class="modal-body">
-						<jsp:include page="/dailyplan/addText.jsp" flush="true">
-							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
-						</jsp:include>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<!---------- Image Dialog ------------->
-	
-	<div>
-
-		<div class="modal fade" id="addImage" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>Image</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-
-					<div class="modal-body">
-					
-						<form name="form" enctype="multipart/form-data">
-							<div class="form-group">
-								<label for="uploadFile" class="col-sm-4 control-label">상품이미지
-								</label>
-								
-								<div class="col-sm-6">
-								
-									<input type="file" name="uploadFile" class="ct_input_g"
-										style="width: 300px; height: 30px" maxLength="20"
-										id="uploadFile" /> <img id="addImageContent" />
-										<%
-											if (session.getAttribute("f5") != null) {
-												if ((session.getAttribute("f5").toString()).equals("denied")) {
-													session.setAttribute("f5", "denied");
-												} else {
-													session.setAttribute("f5", "okay");
-												}
-											} else {
-												session.setAttribute("f5", "okay");
-											}
-										%>
-								
-								</div>
-							</div>
-							<input type="hidden" name="dailyPlanNo"
-								value="${dailyPlan.dailyPlanNo}" />
-							<button name="add" type="button">ADD</button>
-							
-						</form>
-						
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<!-- ---------------------------------------------------------------- -->
-
-		<!---------- Text Dialog ------------->
-		<div class="modal fade" id="addMap" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>T E X T</Strong>
 						</h4>
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
@@ -265,14 +177,72 @@
 				</div>
 			</div>
 		</div>
-		
-		
-	</div>
-		
 
+
+	<!---------- Image Dialog ------------->
+
+		<div class="modal fade" id="addImage" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>I M A G E</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+
+					<div class="modal-body">
+					
+						<form name="form" enctype="multipart/form-data">
+							<div class="form-group">
+								<label for="uploadFile" class="col-sm-4 control-label">상품이미지
+								</label>
+								
+								<div class="col-sm-6">
+									<input type="file" name="uploadFile" class="ct_input_g"
+										style="width: 300px; height: 30px" maxLength="20"
+										id="uploadFile" /> <img id="addImageContent" />
+								</div>
+							</div>
+							<input type="hidden" name="dailyPlanNo"
+								value="${dailyPlan.dailyPlanNo}" />
+							<button name="add" type="button">ADD</button>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!---------- Text Dialog ------------->
+		
+		<div class="modal fade" id="addText" role="dialog">
+			<div class="modal-dialog">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>T E X T</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+					<div class="modal-body">
+						<jsp:include page="/dailyplan/addText.jsp" flush="true">
+							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
+						</jsp:include>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- ---------------------------------------------------------------- -->
-
-	</div>
 
 
 
