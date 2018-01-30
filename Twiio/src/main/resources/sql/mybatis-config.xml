@@ -32,9 +32,9 @@
 		<typeAlias alias="refund" 			type="com.twiio.good.service.domain.Refund" />
 		<typeAlias alias="country" 			type="com.twiio.good.service.domain.Country" />
 		<typeAlias alias="city" 			type="com.twiio.good.service.domain.City" />
-		<typeAlias alias="community" 	type="com.twiio.good.service.domain.Community" />
-		<typeAlias alias="like" 		type="com.twiio.good.service.domain.Like" />
-
+		<typeAlias alias="community" 		type="com.twiio.good.service.domain.Community" />
+		<typeAlias alias="like" 			type="com.twiio.good.service.domain.Like" />
+		<typeAlias alias="message" 			type="com.twiio.good.service.domain.Message" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -49,6 +49,7 @@
 		<mapper resource="sql/ScrapMapper.xml"/>
 		<mapper resource="sql/ProductMapper.xml"/>
 		<mapper resource="sql/TransactionMapper.xml"/>
+		<mapper resource="sql/MyPageMapper.xml"/>
 	</mappers>
 
 </configuration>

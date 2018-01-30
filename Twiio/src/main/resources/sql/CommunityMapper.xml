@@ -81,6 +81,21 @@
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>
 	
+	<!-- <select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
+	SELECT *
+  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  						FROM (
+							   SELECT * FROM 
+  							   COMMUNITY 
+  							   WHERE									
+						       COMMUNITY_TYPE = #{communityType}
+							   ORDER BY COMMUNITY_NO
+							   ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
+  		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	 -->
 	<!-- SQL : SELECT ONE 
 	<select id="getBestTripReview" parameterType="int" resultType="community">
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{value}
