@@ -52,10 +52,10 @@ public class InformationRestController {
 		return result;
 	}
 	
-	@RequestMapping( value="json/autoComplete/" )
-	public List<String>  autoComplete(@RequestBody String keyword ) throws Exception{
+	@RequestMapping( value="json/cityAutoComplete/" )
+	public List<String>  cityAutoComplete(@RequestBody String keyword ) throws Exception{
 		
-		System.out.println("/information/json/autoComplete");
+		System.out.println("/information/json/cityAutoComplete");
 		
 		String decoding = URLDecoder.decode(keyword, "UTF-8");
 		
@@ -66,6 +66,22 @@ public class InformationRestController {
 		 System.out.println(str);
 		 
 		List<String> item  = informationService.findCity(str);
+		
+		return item;
+	}
+	
+	@RequestMapping( value="json/countryAutoComplete/" )
+	public List<String>  countryAutoComplete(@RequestBody String keyword ) throws Exception{
+		
+		System.out.println("/information/json/countryAutoComplete");
+		
+		String decoding = URLDecoder.decode(keyword, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		List<String> item  = informationService.findCountry(str);
 		
 		return item;
 	}
@@ -349,6 +365,28 @@ public class InformationRestController {
 		end.put("type", type);
 		end.put("url", url);
 		end.put("image", image);
+		
+		return end;
+	}
+	
+	@RequestMapping( value="json/getUnsafeRegion")
+	public  Map<String,String>  getUnsafeRegion(@RequestBody String country ) throws Exception{
+		
+		System.out.println("/information/json/getUnsafeRegion");
+		
+		String decoding = URLDecoder.decode(country, "UTF-8");
+		
+		String[] countryName = decoding.split("=");
+		
+		List<String> list = informationService.getUnsafeRegion(countryName[1]);
+		
+		String img  = list.get(1);
+		String info = list.get(0);
+		
+		Map<String, String> end = new HashMap();
+		
+		end.put("img", img);
+		end.put("info", info);
 		
 		return end;
 	}

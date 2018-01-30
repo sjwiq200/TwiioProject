@@ -2,15 +2,22 @@ package com.twiio.good.service.information.impl;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.io.StringReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.xpath.XPath;
+import javax.xml.xpath.XPathConstants;
+import javax.xml.xpath.XPathFactory;
 
 import org.apache.ibatis.session.SqlSession;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -30,9 +37,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Repository;
+import org.w3c.dom.Document;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 import com.sun.jndi.toolkit.url.Uri;
 import com.twiio.good.service.domain.City;
+import com.twiio.good.service.domain.Country;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.Hotel;
@@ -50,6 +61,12 @@ public class InformationDaoImpl implements InformationDao {
 	
 	@Value("#{apikeyProperties['currencykey']}")
 	String currencyKey;
+	
+	@Value("#{apikeyProperties['unsaferegion']}")
+	String unsafeKey;
+	
+	@Value("#{apikeyProperties['regioncontact']}")
+	String contactKey;
 	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
@@ -430,9 +447,7 @@ public class InformationDaoImpl implements InformationDao {
 			WebDriver driver = new ChromeDriver();
 			int number = Integer.parseInt(flight.getClickNum())+1;
 			String decoding = URLDecoder.decode(flight.getReturnUrl(), "UTF-8");
-			
-			System.out.println("URLURL?????"+decoding);
-			
+
 			driver.get(decoding);
 			Thread.sleep(1000);
 			
@@ -573,9 +588,10 @@ public class InformationDaoImpl implements InformationDao {
 	     	map.put("url", url);
 	     	map.put("image", image);
 	     	
+	    	Thread.sleep(1000);
+	     	
 	     	driver.close();
 
-		//Thread.sleep(1000);
 		}catch (Exception e) {
 			System.out.println(e);
 
@@ -584,9 +600,111 @@ public class InformationDaoImpl implements InformationDao {
 	}
 
 	@Override
-	public List getUnsafeRegion() throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public List<String> getUnsafeRegion( String country) throws Exception {
+		
+		StringBuilder unsafe = new StringBuilder("http://apis.data.go.kr/1262000/TravelWarningService/getTravelWarningList");
+		StringBuilder contact = new StringBuilder("http://apis.data.go.kr/1262000/ContactService/getContactList");/*URL*/
+		
+		List<String> result = new ArrayList<>();
+		
+		Country countryCode = new Country();
+		
+		String ssn = null;
+		String unsafeImg = null;
+		
+		try {
+			unsafe.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "="+unsafeKey); /*Service Key*/
+			unsafe.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+			unsafe.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+			
+			contact.append("?" + URLEncoder.encode("ServiceKey","UTF-8") + "="+contactKey);
+			contact.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("3", "UTF-8")); /*한 페이지 결과 수*/
+			contact.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지 번호*/
+			
+			if(country.matches(	".*[a-zA-Z].*")) {
+					countryCode = sqlSession.selectOne("InformationMapper.findEnCountry", country);
+				}else {
+					countryCode= sqlSession.selectOne("InformationMapper.findKoCountry", country);
+				}
+			
+			unsafe.append("&" + URLEncoder.encode("isoCode1","UTF-8") + "=" + URLEncoder.encode(countryCode.getCountryCode(), "UTF-8")); 
+			contact.append("&" + URLEncoder.encode("isoCode1","UTF-8") + "=" + URLEncoder.encode(countryCode.getCountryCode(), "UTF-8")); 
+			
+			System.out.println(unsafe.toString());
+			System.out.println(contact.toString());
+       
+        URL unsafeUrl = new URL(unsafe.toString());
+        URL contactUrl = new URL(contact.toString());
+        HttpURLConnection unsafeConn = (HttpURLConnection) unsafeUrl.openConnection();
+        HttpURLConnection contactConn = (HttpURLConnection) contactUrl.openConnection();
+        unsafeConn.setRequestMethod("GET");
+        contactConn.setRequestMethod("GET");
+        unsafeConn.setRequestProperty("Content-type", "application/json");
+        contactConn.setRequestProperty("Content-type", "application/json");
+        System.out.println("Response code: " + unsafeConn.getResponseCode());
+        System.out.println("Response code: " + contactConn.getResponseCode());
+        BufferedReader unsafeRd;
+        BufferedReader contactRd;
+        
+        if(unsafeConn.getResponseCode() >= 200 && unsafeConn.getResponseCode() <= 300) {
+        	unsafeRd = new BufferedReader(new InputStreamReader(unsafeConn.getInputStream()));
+        } else {
+        	unsafeRd = new BufferedReader(new InputStreamReader(unsafeConn.getErrorStream()));
+        }
+        
+        if(contactConn.getResponseCode() >= 200 && contactConn.getResponseCode() <= 300) {
+        	contactRd = new BufferedReader(new InputStreamReader(contactConn.getInputStream()));
+        } else {
+        	contactRd = new BufferedReader(new InputStreamReader(contactConn.getErrorStream()));
+        }
+        
+        
+        StringBuilder unsafeSb = new StringBuilder();
+        String unsafeLine;
+        while ((unsafeLine = unsafeRd.readLine()) != null) {
+        	unsafeSb.append(unsafeLine);
+        }
+        
+        StringBuilder contactSb = new StringBuilder();
+        String contactLine;
+        while ((contactLine = contactRd.readLine()) != null) {
+        	contactSb.append(contactLine);
+        }
+        
+        unsafeRd.close();
+        unsafeConn.disconnect();
+        contactRd.close();
+        contactConn.disconnect();
+        
+        String unsafeStr = URLDecoder.decode(unsafeSb.toString(), "UTF-8");
+        String contactStr = URLDecoder.decode(contactSb.toString(), "UTF-8");
+        
+        String[] unsafeSplit = unsafeStr.split("imgUrl2");
+        
+        if(unsafeSplit.length<2) {
+        	 unsafeImg ="none";
+        }else{
+        	 unsafeImg = unsafeSplit[1].replaceAll("\\>", "").replaceAll("\\</", "").replaceAll("amp;", "");
+        }
+        InputSource is=new InputSource();
+        is.setCharacterStream(new StringReader(contactStr));
+        Document document = DocumentBuilderFactory.newInstance().newDocumentBuilder().parse(is);
+	   XPath  xpath = XPathFactory.newInstance().newXPath();
+	   String expression = "//*/contact";
+	   NodeList  cols = (NodeList) xpath.compile(expression).evaluate(document, XPathConstants.NODESET);
+	   
+	   for( int idx=0; idx<cols.getLength(); idx++ ){
+	   		 ssn=cols.item(idx).getTextContent();
+	   }
+        
+        
+        result.add(ssn);
+        result.add(unsafeImg);
+        
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@Override
@@ -673,13 +791,15 @@ public class InformationDaoImpl implements InformationDao {
         	    hrefs.add(anchor.getAttribute("href"));
         	}
          	
+         
+         Thread.sleep(1000);
+         
          driver.close();
          
          map.put("context", context);
          map.put("hrefs", hrefs);
          map.put("image", image);
 		
-		//Thread.sleep(1000);
 		}catch (Exception e) {
 			System.out.println(e);
 
@@ -699,6 +819,7 @@ public class InformationDaoImpl implements InformationDao {
 		capabilities.setCapability("marionette", true);
 		List<String> context = new ArrayList<>();
 		List<String> google = new ArrayList<>();
+		List<String> infom = new ArrayList<>();
 		Map<String, List<String>> map = new HashMap<>();
 		
 		try {
@@ -711,8 +832,6 @@ public class InformationDaoImpl implements InformationDao {
 
 		 String text  = driver.findElement(By.id("taplc_location_detail_header_attractions_0")).getText();
 			
-		System.out.println(text);
-		
 		 String[] strs = text.split("\n");
 			
 			for(int i = 0 ; i<strs.length; i++ ) {
@@ -727,6 +846,14 @@ public class InformationDaoImpl implements InformationDao {
 					iters.remove();
 				}
 			}
+			
+		String hours  = driver.findElement(By.xpath("//div[@class='section hours']")).getText();
+		String address  = driver.findElement(By.xpath("//div[@class='detail_section address']")).getText();
+		String phone  = driver.findElement(By.xpath("//div[@class='detail_section phone']")).getText();
+		
+		infom.add(hours);
+		infom.add(address);
+		infom.add(phone);
 		
 		List<WebElement> list = driver.findElements(By.xpath("//span[@class='imgWrap '] /img"));
 		
@@ -759,9 +886,12 @@ public class InformationDaoImpl implements InformationDao {
 			map.put("google", google);
 			map.put("hrefs", hrefs);
 			map.put("context", context);
+			map.put("infom", infom);
+			
+			Thread.sleep(1000);
 			
 			driver.close();
-		 
+			
 		}catch (Exception e) {
 			System.out.println(e);
 		}
@@ -781,6 +911,35 @@ public class InformationDaoImpl implements InformationDao {
 			item.add(list.get(i).getCityName());
 			//System.out.println(list.get(i).getCityName());
 		}
+		return item;
+	}
+	
+	@Override
+	public List<String> findCountry(String country) throws Exception {
+		
+		String str = country.trim();
+		
+		System.out.println("다오다오"+str);
+		
+		List<String> item = new ArrayList<String>();
+		
+		if(str.matches(	".*[a-zA-Z].*")) {
+			
+			List<Country> list = sqlSession.selectList("InformationMapper.getEnCountry", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getCountryEnName());
+				}
+			
+			}else {
+				
+			List<Country> list = sqlSession.selectList("InformationMapper.getKoCountry", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getCountryKoName());
+				}
+			
+			}
 		return item;
 	}
 

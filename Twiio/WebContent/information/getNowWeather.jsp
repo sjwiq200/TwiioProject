@@ -142,7 +142,7 @@ body {
 		    	  //alert($("#searchKeyword").val());
 		    	  $.ajax(
 		    				{
-		    					url:"/information/json/autoComplete/",
+		    					url:"/information/json/cityAutoComplete/",
 		    					method:"POST",	    					
 		    					data:{	    						
 		    						keyword:$("#keyword").val()		    						

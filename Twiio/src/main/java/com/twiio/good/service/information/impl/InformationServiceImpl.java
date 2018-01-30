@@ -47,6 +47,11 @@ public class InformationServiceImpl implements InformationService {
 	}
 	
 	@Override
+	public List<String> findCountry(String city) throws Exception {
+		return informationDao.findCountry(city);
+	}
+	
+	@Override
 	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception {
 		return informationDao.searchNowWeather(cityName);
 	}
@@ -79,8 +84,8 @@ public class InformationServiceImpl implements InformationService {
 	}
 
 	@Override
-	public List getUnsafeRegion() throws Exception {
-		return informationDao.getUnsafeRegion();
+	public List<String> getUnsafeRegion( String country) throws Exception {
+		return informationDao.getUnsafeRegion(country);
 	}
 
 	@Override

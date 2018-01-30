@@ -20,6 +20,13 @@
 		<result property="cityName"			column="city_name" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
+	<resultMap id="countrySelectMap" type="country">
+		<result property="countryNo" 				column="country_no" 				jdbcType="NUMERIC"/>
+		<result property="countryKoName"			column="country_ko_name" 			jdbcType="VARCHAR" />
+		<result property="countryEnName"			column="country_en_name" 			jdbcType="VARCHAR" />
+		<result property="countryCode"				column="country_code" 				jdbcType="VARCHAR" />
+	</resultMap>
+	
 	
 	 <insert 	id="addCurrency"		parameterType="currency" >
 	 	INSERT
@@ -54,6 +61,22 @@
 	
 	<select 	id="getCity"	parameterType="string"	resultMap="citySelectMap">
 		SELECT * FROM city WHERE UPPER(city_name) Like UPPER('%${value}%')
+	 </select>
+	 
+	 <select 	id="getKoCountry"	parameterType="string"	resultMap="countrySelectMap">
+		SELECT *   FROM country WHERE country_ko_name Like '%${value}%'
+	 </select>
+	 
+	 <select 	id="getEnCountry"	parameterType="string"	resultMap="countrySelectMap">
+		SELECT *   FROM country WHERE UPPER(country_en_name) Like UPPER('%${value}%')
+	 </select>
+	 
+	 <select 	id="findKoCountry"	parameterType="string"	resultMap="countrySelectMap">
+		SELECT *   FROM country WHERE country_ko_name Like '${value}'
+	 </select>
+	 
+	 <select 	id="findEnCountry"	parameterType="string"	resultMap="countrySelectMap">
+		SELECT *   FROM country WHERE UPPER(country_en_name) Like UPPER('${value}')
 	 </select>
 	 
 </mapper>

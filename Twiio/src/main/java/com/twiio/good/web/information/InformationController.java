@@ -228,6 +228,8 @@ public class InformationController {
 		List<String> google = map.get("google");
 		List<String> image = map.get("hrefs");
 		List<String> context = map.get("context");
+		List<String> info = map.get("infom");
+		
 		String location = google.get(0);
 		String[] str = location.split("&");
 		String[] center = str[7].split("=");
@@ -235,10 +237,20 @@ public class InformationController {
 		String[] address = center[1].split(",");
 		
 		
-		model.addAttribute("lat",address[0] ).addAttribute("lng",address[1] ).addAttribute("image",image).addAttribute("context",context);
+		model.addAttribute("lat",address[0] ).addAttribute("lng",address[1] ).addAttribute("image",image).addAttribute("context",context)
+						.addAttribute("info",info);
 		
 	        return  "forward:/information/getNightLifeDetail.jsp";
 	}
+	
+	@RequestMapping( value="getUnsafeRegion" )
+	public String getUnsafeRegion() throws Exception{
+		
+		System.out.println("/information/getUnsafeRegion");
+		
+	        return  "forward:/information/getUnsafeRegion.jsp";
+	}
+	
 	
 	
 

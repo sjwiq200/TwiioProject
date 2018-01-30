@@ -30,7 +30,7 @@
 		<typeAlias alias="product" 			type="com.twiio.good.service.domain.Product" />
 		<typeAlias alias="transaction" 		type="com.twiio.good.service.domain.Transaction" />
 		<typeAlias alias="refund" 			type="com.twiio.good.service.domain.Refund" />
-
+		<typeAlias alias="country" 			type="com.twiio.good.service.domain.Country" />
 		<typeAlias alias="city" 			type="com.twiio.good.service.domain.City" />
 		<typeAlias alias="community" 	type="com.twiio.good.service.domain.Community" />
 		<typeAlias alias="like" 		type="com.twiio.good.service.domain.Like" />
