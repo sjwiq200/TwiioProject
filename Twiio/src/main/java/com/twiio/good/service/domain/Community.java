@@ -11,9 +11,20 @@ public class Community {
 	private String communitySubTitle;
 	private String communityType;
 	private String communityContent;
+	private String userId;
 	
 	
 	public Community() {
+	}
+
+
+	public String getUserId() {
+		return userId;
+	}
+
+
+	public void setUserId(String userId) {
+		this.userId = userId;
 	}
 
 

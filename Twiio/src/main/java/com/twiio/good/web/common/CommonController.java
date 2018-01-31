@@ -114,7 +114,7 @@ public class CommonController {
 
 	@RequestMapping(value = "/common/listProductReply")
 	public String listProductReply(@ModelAttribute("search") Search search,
-			@RequestParam("divCode") int divCode,
+			@RequestParam("targetType") String targetType,
 			@RequestParam("productNo") int codeNo,
 			Model model
 			) throws Exception {
@@ -123,7 +123,7 @@ public class CommonController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		Map<String , Object> map=commonService.listReply(search, divCode, codeNo);
+		Map<String , Object> map=commonService.listReply(search, targetType, codeNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
 		
 		model.addAttribute("list", map.get("list"));
@@ -134,7 +134,7 @@ public class CommonController {
 	
 	@RequestMapping(value = "/common/listCommunityReply")
 	public String listCommunityReply(@ModelAttribute("search") Search search,
-			@RequestParam("divCode") int divCode,
+			@RequestParam("targetType") String targetType,
 			@RequestParam("communityNo") int codeNo,
 			Model model
 			) throws Exception {
@@ -143,7 +143,7 @@ public class CommonController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		Map<String , Object> map=commonService.listReply(search, divCode, codeNo);
+		Map<String , Object> map=commonService.listReply(search, targetType, codeNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
 		
 		model.addAttribute("list", map.get("list"));
