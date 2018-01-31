@@ -19,7 +19,7 @@ public interface InformationDao {
 	
 	public List<String> findCountry(String city) throws Exception;
 	
-	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception;
+	public  Map<String,List>  searchNowWeather(String cityName) throws Exception;
 	
 	public Map<Object, String[]> searchHistoryWeather( String cityName) throws Exception;
 	

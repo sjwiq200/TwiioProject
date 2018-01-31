@@ -98,7 +98,7 @@
 					<section class="main items">
 						<article class="item">
 							<header>
-								<a href="#"><img src="images/pic01.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic01.jpg" alt="" /></a>
 								<h3>Feugiat et faucibus</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
@@ -108,7 +108,7 @@
 						</article>
 						<article class="item">
 							<header>
-								<a href="#"><img src="images/pic02.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic02.jpg" alt="" /></a>
 								<h3>Blandit adipiscing</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
@@ -118,7 +118,7 @@
 						</article>
 						<article class="item">
 							<header>
-								<a href="#"><img src="images/pic03.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic03.jpg" alt="" /></a>
 								<h3>Lorem massa nulla</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
@@ -128,7 +128,7 @@
 						</article>
 						<article class="item">
 							<header>
-								<a href="#"><img src="images/pic04.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic04.jpg" alt="" /></a>
 								<h3>Ipsum sed tempus</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
@@ -143,7 +143,7 @@
 					
 					<article class="item">
 							<header>
-								<a href="#"><img src="images/pic03.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic03.jpg" alt="" /></a>
 								<h3>Lorem massa nulla</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
@@ -154,7 +154,7 @@
 						
 						<article class="item">
 							<header>
-								<a href="#"><img src="images/pic04.jpg" alt="" /></a>
+								<a href="#"><img src="/resources/images/pic04.jpg" alt="" /></a>
 								<h3>Ipsum sed tempus</h3>
 							</header>
 							<p>Fusce malesuada efficitur venenatis. Pellentesque tempor leo sed massa hendrerit hendrerit. In sed feugiat est, eu congue elit. Ut porta magna vel felis sodales vulputate. Donec faucibus dapibus lacus non ornare.</p>
