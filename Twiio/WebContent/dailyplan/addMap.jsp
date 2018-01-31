@@ -68,6 +68,12 @@
 		var latlng2;
 		var GreenIcon;
 		
+		var address;
+    	var types;
+    	var url;
+    	var phone;
+    	var name;
+		
 		$(document).ready(function(){
 		    $("#addMap").on('shown.bs.modal', function () {
 		        google.maps.event.trigger(map, 'resize');
@@ -161,6 +167,8 @@
 				geocoder.geocode( {'address': address}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK)  //Geocoding이 성공적이라면,
 						{
+							
+							
 						for(var i=0;i<results.length;i++)
 						{
 								map.setCenter(results[i].geometry.location);
@@ -178,6 +186,21 @@
 							        map: map,
 							        position: results[0].geometry.location
 							      });
+								
+								address=place.formatted_address;
+		        		    	types=place.types;
+		        		    	url = place.url;
+		        		    	phone = place.formatted_phone_number;
+		        		    	name = place.name;
+		        		    	
+		        		    	$(".testmap").remove();
+		        		    	
+								$("#resultMap")
+		        		    	.append("<div class=\"testmap\" align=\"center\"><strong>["+name+"]</strong></div>")
+		        		    	.append("<div class=\"testmap\" align=\"center\"><strong>주소 : </strong>"+address+"</div>")
+		        		    	.append("<div class=\"testmap\" align=\"center\"><strong>전화번호 : </strong>"+phone+"</div>");
+								
+								
 							    google.maps.event.addListener(servicemarker, 'click', function() {
 							    	console.log(JSON.stringify(place));
 							        infowindow.setContent(
@@ -189,18 +212,6 @@
 							          '<strong>URL</strong>: ' + place.url + '<br>' +
 							          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br>' );
 							        infowindow.open(map, this);
-							        
-							        var address=place.formatted_address;
-			        		    	var types=place.types;
-			        		    	var url = place.url;
-			        		    	var phone = place.formatted_phone_number;
-			        		    	var name = place.name;
-			        		    	
-			        		    	$("#resultMap")
-			        		    	.append("<div align=\"center\"><strong>["+name+"]</strong></div>")
-			        		    	.append("<div align=\"center\"><strong>주소 : </strong>"+address+"</div>")
-			        		    	.append("<div align=\"center\"><strong>전화번호 : </strong>"+phone+"</div>");
-			        		    	
 							      });
 							});
 						} 
