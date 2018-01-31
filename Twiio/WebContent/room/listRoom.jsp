@@ -33,7 +33,7 @@
   	$(function() {
 		 
 		 $( "button.btn.btn-default:contains('¹æ»ý¼º')" ).on("click" , function() {
-			 $("form").attr("method" , "GET").attr("action" , "/messenger/addRoom").submit();
+			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
 		});
 		 
 		 $("td:nth-child(3)").on("click",function(){
@@ -42,7 +42,8 @@
 			 //alert($($("td:nth-child(4)")[index]).html().split('value="')[1].split('"')[0]);
 			 var roomKey = $($("td:nth-child(4)")[index]).html().split('value="')[1].split('"')[0];
 			 console.log("http://localhost:6789/"+roomKey+"?username=${user.userId}");
-			 window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			 window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 		 })
 		 
 	 });

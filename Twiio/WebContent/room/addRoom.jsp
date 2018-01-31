@@ -29,9 +29,11 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		 $(function() {		
+		//============= "가입"  Event 연결 =============
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
-				$("form").attr("method" , "POST").attr("action" , "/schedule/addSchedule").submit();
+				$("form").attr("method" , "POST").attr("action" , "/messenger/addRoom").submit();
 			});
 		});	
 		
@@ -62,35 +64,24 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">일정 등록</h1>
+		<h1 class="bg-primary text-center">채팅방 생성 </h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 날짜 </label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">채팅방 이름 </label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="roomname" name="roomname" placeholder="채팅방 이름 ">
 		    </div>
 		  </div>
-		  
-		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="roomname" name="roomname" placeholder="채팅방 이름 ">
-		    </div>
-		  </div>
-		  
-		
-		  
-		  
 		  
 		  
 		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >확 &nbsp;정</button>
+		      <button type="button" class="btn btn-primary"  >생 &nbsp;성</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
