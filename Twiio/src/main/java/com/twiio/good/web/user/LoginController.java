@@ -88,7 +88,7 @@ public class LoginController {
 		
 		session.invalidate();
 		
-		return "redirect:/index.jsp";
+		return "redirect:/main.jsp";
 	}	
 	
 	

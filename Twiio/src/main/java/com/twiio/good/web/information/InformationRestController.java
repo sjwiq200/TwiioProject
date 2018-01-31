@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -23,6 +24,7 @@ import com.oracle.jrockit.jfr.FlightRecorder;
 import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.Hotel;
+import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationService;
 
 
@@ -52,10 +54,10 @@ public class InformationRestController {
 		return result;
 	}
 	
-	@RequestMapping( value="json/autoComplete/" )
-	public List<String>  autoComplete(@RequestBody String keyword ) throws Exception{
+	@RequestMapping( value="json/cityAutoComplete/" )
+	public List<String>  cityAutoComplete(@RequestBody String keyword ) throws Exception{
 		
-		System.out.println("/information/json/autoComplete");
+		System.out.println("/information/json/cityAutoComplete");
 		
 		String decoding = URLDecoder.decode(keyword, "UTF-8");
 		
@@ -69,42 +71,82 @@ public class InformationRestController {
 		
 		return item;
 	}
+	
+	@RequestMapping( value="json/countryAutoComplete/" )
+	public List<String>  countryAutoComplete(@RequestBody String keyword ) throws Exception{
+		
+		System.out.println("/information/json/countryAutoComplete");
+		
+		String decoding = URLDecoder.decode(keyword, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		List<String> item  = informationService.findCountry(str);
+		
+		return item;
+	}
 
 
 	@RequestMapping(value="json/searchNowWeather",method=RequestMethod.GET)
-	public Map<String,Object> searchNowWeather(@RequestParam String cityName) throws Exception {
+	public Map<String,List> searchNowWeather(@RequestParam String cityName) throws Exception {
 		
 		System.out.println("/information/json/searchNowWeather");
 		System.out.println(" cityName : " + cityName);
        
-		Map<String,Object> map = informationService.searchNowWeather(cityName);
+		Map<String,List> map = informationService.searchNowWeather(cityName);
 		
 		Map<String,Object> result = new HashMap<String,Object>();
 		
-		String str = (String) map.get("weather");
+		List<String>  dateList = map.get("dateList");
+		List<WeatherMain> mainList = map.get("mainList");
 		
-		String[] context =  str.split(",");
-		String[] temp  = context[0].split("=");
-		String[] pressure = context[1].split("=");
-		String[] humidity = context[2].split("=");
-		String[] temp_min = context[3].split("=");
-		String[] temp_max = context[4].split("=");
-		
-		if(context.length>5) {
-			String[] grnd_level = context[5].split("=");
-			String[] sea_level = context[6].split("=");
-			
-			result.put("grnd_level", grnd_level[1]);
-			result.put("sea_level", sea_level[1]);
-		
+		List<String> resultDate = new ArrayList<>();
+		List<Long> resultTemp = new ArrayList<>();
+
+		for(int i =0; i<dateList.size()-1; i++) {
+			resultDate.add(dateList.get(i));
+			i = i+1;
 		}
-		result.put("temp", temp[1]);
-		result.put("pressure", pressure[1]);
-		result.put("humidity", humidity[1]);
-		result.put("temp_min", temp_min[1]);
-		result.put("temp_max", temp_max[1]);
+		System.out.println(resultDate.size());
 		
-		return result;
+		for(int i =0; i<mainList.size()-1; i++) {
+			Double tmp = Double.parseDouble(mainList.get(i).getTemp());
+			System.out.println("tmp"+tmp);
+			resultTemp.add(Math.round(tmp-273));
+			i = i+1;
+		}
+		System.out.println(resultTemp.size());
+		
+		map.put("resultDate", resultDate);
+		map.put("resultTemp", resultTemp);
+		
+		
+		//		String str = (String) map.get("weather");
+//		
+//		String[] context =  str.split(",");
+//		String[] temp  = context[0].split("=");
+//		String[] pressure = context[1].split("=");
+//		String[] humidity = context[2].split("=");
+//		String[] temp_min = context[3].split("=");
+//		String[] temp_max = context[4].split("=");
+//		
+//		if(context.length>5) {
+//			String[] grnd_level = context[5].split("=");
+//			String[] sea_level = context[6].split("=");
+//			
+//			result.put("grnd_level", grnd_level[1]);
+//			result.put("sea_level", sea_level[1]);
+//		
+//		}
+//		result.put("temp", temp[1]);
+//		result.put("pressure", pressure[1]);
+//		result.put("humidity", humidity[1]);
+//		result.put("temp_min", temp_min[1]);
+//		result.put("temp_max", temp_max[1]);
+		
+		return map;
 	}
 
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
@@ -349,6 +391,28 @@ public class InformationRestController {
 		end.put("type", type);
 		end.put("url", url);
 		end.put("image", image);
+		
+		return end;
+	}
+	
+	@RequestMapping( value="json/getUnsafeRegion")
+	public  Map<String,String>  getUnsafeRegion(@RequestBody String country ) throws Exception{
+		
+		System.out.println("/information/json/getUnsafeRegion");
+		
+		String decoding = URLDecoder.decode(country, "UTF-8");
+		
+		String[] countryName = decoding.split("=");
+		
+		List<String> list = informationService.getUnsafeRegion(countryName[1]);
+		
+		String img  = list.get(1);
+		String info = list.get(0);
+		
+		Map<String, String> end = new HashMap();
+		
+		end.put("img", img);
+		end.put("info", info);
 		
 		return end;
 	}

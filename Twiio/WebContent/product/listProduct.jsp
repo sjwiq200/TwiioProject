@@ -241,7 +241,7 @@ $(function() {
 		    <div class="col-sm-3 " >
 		      <div class="thumbnail" name="getPro">
 		      	<input type="hidden" name="productNo" value="${product.productNo }"/>
-		        <img src="http://i.huffpost.com/gen/5177890/thumbs/o-APPLE-570.jpg?3" alt="..." class="img-rounded">
+		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">
 		            <h3>${product.productName} </h3>		            
 		            <p>${product.productType}</p>

@@ -28,7 +28,7 @@ public interface MainPlanService {
 	
 	public Scrap getScrap(int scrapNo) throws Exception;
 	
-	public List<Scrap> getScrapList(Scrap scrap) throws Exception;
+	public List<Scrap> listScrap(int userNo) throws Exception;
 	
 	public void deleteScrap(int scrapNo) throws Exception;
 	

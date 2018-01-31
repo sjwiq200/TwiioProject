@@ -1,9 +1,19 @@
 package com.twiio.good.web.transaction;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -54,41 +64,264 @@ public class TransactionController {
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
 	
+	private String cid="TC0ONETIME";
+	private String tid;
+	private String partner_user_id;
+	private String partner_order_id="TWIIO";
+	private Transaction transactiondb;
 	
-	//@RequestMapping("/addPurchaseView.do")
-	@RequestMapping(value="addTransaction", method=RequestMethod.GET)
-	public String addPurchase(@RequestParam("prod_no") int prodNo, Map<String, Object> map) throws Exception {
+	//@RequestParam("productNo") int productNo,@RequestParam("tripDate") String tripDate,@RequestParam("count") int count,
+	//@RequestMapping("/addPurchaseView.do")@ModelAttribute("transaction") Transaction transaction, @ModelAttribute("product") Product product,
+	@RequestMapping(value="addTransaction", method=RequestMethod.POST)
+	public String addTransaction(@ModelAttribute("transaction") Transaction transaction, @RequestParam("productNo") int productNo, Map<String, Object> map) throws Exception {
 
-		System.out.println("/transaction/addPurchase : GET");
+		System.out.println("/transaction/addTransaction : POST");
+		System.out.println(transaction);
+		Product dbProduct =productService.getProduct(productNo);
+		transaction.setTranPro(dbProduct);
+		transaction.setTotalPrice(dbProduct.getProductPrice()*transaction.getCount());
+		map.put("transaction", transaction);
 				
-		return "forward:/purchase/addPurchaseView.jsp";
+		return "forward:/transaction/addTransaction.jsp";
 	}
 	
 	@RequestMapping(value="kakaoPayReady", method=RequestMethod.POST)//@RequestParam("buyerNo") int buyerNo,
-	public String kakaoPayReady(@ModelAttribute("transaction") Transaction transaction, @ModelAttribute("product") Product product, Map<String, Object> map) throws Exception{
+	public String kakaoPayReady(@ModelAttribute("transaction") Transaction transaction, @RequestParam("productNo") int productNo, Map<String, Object> map) throws Exception{
 		
 		System.out.println("/transaction/kakaoPayReady : POST");
+		System.out.println("transaction :: "+transaction);
+		Product dbproduct = productService.getProduct(productNo);
+		transaction.setTranPro(dbproduct);
+		transactiondb = transaction;
+//				
+//		String URL = transactionService.kakaoPayReady(transaction);
+		partner_user_id = String.valueOf(transaction.getBuyerNo());
+		String item_name = transaction.getTranPro().getProductName();
+		//System.out.println("요기");
+		String item_code = String.valueOf(transaction.getTranPro().getProductNo());
+		int quantity = transaction.getCount();
+		int total_amount = transaction.getTotalPrice();
+		int tax_free_amount = 0;
+		//System.out.println("여기 ::::::::::::::");
+		String approval_url = "http://192.168.0.35:8080/transaction/kakaoApproval";
+		String cancel_url = "http://192.168.0.35:8080/transaction/kakaoCancel";
+		String fail_url = "http://192.168.0.35:8080/transaction/kakaoFail";
+		String readyPayURL = "https://kapi.kakao.com/v1/payment/ready";
 		
-		product = productService.getProduct(product.getProductNo());
-		transaction.setTranPro(product);
-				
-		String URL = transactionService.kakaoPayReady(transaction);
+		//System.out.println("여기2 ::::::::::::::::::");
+		URL url = new URL(readyPayURL);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		//System.out.println("33333333333333333333");
+		StringBuffer sb = new StringBuffer("cid=" + cid);
+		sb.append("&partner_order_id=" + partner_order_id);
+		//System.out.println(partner_user_id);
+		sb.append("&partner_user_id=" + partner_user_id);
+		//System.out.println("33333333333333333333");
+		sb.append("&item_name=" + URLEncoder.encode(item_name, "UTF-8"));
+		sb.append("&item_code=" + item_code);
+		sb.append("&quantity=" + quantity);
+		sb.append("&total_amount=" + total_amount);
+		sb.append("&tax_free_amount=" + tax_free_amount);
+		sb.append("&approval_url=" + approval_url);
+		sb.append("&cancel_url=" + cancel_url);
+		sb.append("&fail_url=" + fail_url);
 		
-		return URL;
+		////////////////////////////////////////////////////////
+		
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
+		out.write(sb.toString());
+		out.flush();
+		out.close();
+		System.out.println("44444444444444444444");
+		// Response Code GET
+		int responseCode = con.getResponseCode();
+		System.out.println("responseCode==" + responseCode);
+
+		BufferedReader br = null;
+
+		if (responseCode == 200/* HttpURLConnection.HTTP_OK */) {
+			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		} else {
+
+			// System.out.println(con.getErrorStream());
+			System.out.println(con.getResponseMessage());
+			br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			System.out.println(br);
+			transactiondb = null;
+		}
+
+		// JSON Data 읽기
+		String jsonData = "";
+		StringBuffer response = new StringBuffer();
+
+		while ((jsonData = br.readLine()) != null) {
+			response.append(jsonData);
+		}
+
+		br.close();
+
+		System.out.println("HTTP 응답 코드 : " + responseCode);
+		System.out.println("HTTP body : " + response.toString());
+
+		JSONObject jsonobj = (JSONObject) JSONValue.parse(response.toString());
+		System.out.println(jsonobj);
+
+		tid = jsonobj.get("tid").toString();// server에 값저장
+		System.out.println(jsonobj.get("tid"));
+		String redirectPCURL = jsonobj.get("next_redirect_pc_url").toString();
+		System.out.println(redirectPCURL);
+		// Business Logic
+		// purchaseService.addPurchase(purchase);
+
+		// map.put("purchase", purchase);
+
+		return "redirect:" + redirectPCURL;
+		
+		//return URL;
 	}
 	
 	@RequestMapping(value="kakaoApproval", method=RequestMethod.GET)
-	public void kakaoApproval(@RequestParam("pg_token") String pgToken) throws Exception{
+	public String kakaoApproval(@RequestParam("pg_token") String pgToken) throws Exception{
 		System.out.println("/transaction/kakaoApproval : GET");
 		System.out.println("pgToken : "+pgToken);
 		
-		kakaoApproval(pgToken);
+		//kakaoApproval(pgToken);
+		
+		StringBuffer sb= new StringBuffer("cid="+cid);
+		sb.append("&tid="+tid);
+		sb.append("&partner_order_id="+partner_order_id);
+		sb.append("&partner_user_id="+partner_user_id);
+		sb.append("&pg_token="+pgToken);		
+		
+		String approvePayURL="https://kapi.kakao.com/v1/payment/approve";
+		
+		URL url=new URL(approvePayURL);
+		HttpURLConnection con= (HttpURLConnection)url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		con.setDoOutput(true);
+		con.setDoInput(true);
+	
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(),"UTF-8");
+		out.write(sb.toString());
+		out.flush();
+		out.close();
+		
+		// Response Code GET
+        int responseCode = con.getResponseCode();
+        System.out.println("responseCode=="+responseCode);
+       
+        BufferedReader br= null;
+        
+        if(responseCode==200/*HttpURLConnection.HTTP_OK*/) {
+        	br=new BufferedReader(new InputStreamReader(con.getInputStream(),"UTF-8"));
+        }else {
+        	//System.out.println(con.getErrorStream());
+        	System.out.println(con.getResponseMessage());
+        	br=new BufferedReader(new InputStreamReader(con.getErrorStream(),"UTF-8"));
+        	System.out.println(br);
+        	transactiondb = null;
+        }
+        
+        //JSON Data 읽기
+        String jsonData = "";
+        StringBuffer response = new StringBuffer();
+        
+        while ((jsonData = br.readLine()) != null) {
+            response.append(jsonData);
+        }
+        
+        br.close();
+        
+        System.out.println("HTTP 응답 코드 : " + responseCode);
+        System.out.println("HTTP body : " + response.toString());
+        
+        JSONObject jsonobj = (JSONObject)JSONValue.parse(response.toString());
+        System.out.println("jsonobj :: "+jsonobj);
+        
+        //tid = jsonobj.get("tid").toString();//server에 값저장
+        System.out.println("item_name : "+URLDecoder.decode(jsonobj.get("item_name").toString(), "UTF-8"));
+        System.out.println("tid : "+jsonobj.get("tid"));
+        System.out.println("amount : "+jsonobj.get("amount"));
+        
+        //ObjectMapper objectMapper = new ObjectMapper();
+        //Transaction kakaoTransaction = objectMapper.readValue(jsonobj.toString(), Transaction.class);        
+        //System.out.println("kakaoTransaction :: "+kakaoTransaction);
+        transactiondb.setPaymentType("1");
+        transactionService.addTransaction(transactiondb);
+        
+        return "forward:/transaction/popup.jsp";
 		
 	}
 	
 	@RequestMapping(value="kakaoCancel", method=RequestMethod.GET)
 	public void kakaoCancel(@RequestParam("tranNo") int tranNo) throws Exception{
 		System.out.println("/transaction/kakaoCancel : GET");
+		
+		String status= this.kakaoOrder();
+		
+		if(status.equals("CANCEL_PAYMENT")) {
+			StringBuffer sb = new StringBuffer("cid="+cid);
+			sb.append("&tid="+tid);
+			sb.append("&cancel_amount="+tid);
+			sb.append("&cancel_tax_free_amount="+tid);
+			sb.append("&cancel_vat_amount="+tid);
+			
+			String cancelPayURL="https://kapi.kakao.com/v1/payment/cancel";
+			
+			URL url=new URL(cancelPayURL);
+			HttpURLConnection con= (HttpURLConnection)url.openConnection();
+			con.setRequestMethod("POST");
+			con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
+			con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+			
+			con.setDoOutput(true);
+			con.setDoInput(true);
+			
+			OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(),"UTF-8");
+			out.write(sb.toString());
+			out.flush();
+			out.close();
+			
+			// Response Code GET
+	        int responseCode = con.getResponseCode();
+	        System.out.println("responseCode=="+responseCode);
+	       
+	        BufferedReader br= null;
+	        
+	        if(responseCode==200/*HttpURLConnection.HTTP_OK*/) {
+	        	br=new BufferedReader(new InputStreamReader(con.getInputStream()));
+	        }else {
+	        	//System.out.println(con.getErrorStream());
+	        	System.out.println(con.getResponseMessage());
+	        	br=new BufferedReader(new InputStreamReader(con.getErrorStream()));
+	        	System.out.println(br);
+	        }
+	        
+	        //JSON Data 읽기
+	        String jsonData = "";
+	        StringBuffer response = new StringBuffer();
+	        
+	        while ((jsonData = br.readLine()) != null) {
+	            response.append(jsonData);
+	        }
+	        
+	        br.close();
+	        
+	        System.out.println("HTTP 응답 코드 : " + responseCode);
+	        System.out.println("HTTP body : " + response.toString());
+	        
+	        JSONObject jsonobj = (JSONObject)JSONValue.parse(response.toString());
+	        System.out.println(jsonobj);
+        }
 	}
 	
 	@RequestMapping(value="kakaoFail", method=RequestMethod.GET)
@@ -97,8 +330,64 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value="kakaoOrder", method=RequestMethod.POST)
-	public void kakaoOrder() throws Exception{
+	public String kakaoOrder() throws Exception{
 		System.out.println("/transaction/kakaoOrder : POST");
+		
+		StringBuffer sb = new StringBuffer("cid="+cid);
+		sb.append("&tid="+tid);
+		
+		String cancelPayURL="https://kapi.kakao.com/v1/payment/order";
+		
+		URL url=new URL(cancelPayURL);
+		HttpURLConnection con= (HttpURLConnection)url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+		
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(),"UTF-8");
+		out.write(sb.toString());
+		out.flush();
+		out.close();
+		
+		// Response Code GET
+        int responseCode = con.getResponseCode();
+        System.out.println("responseCode=="+responseCode);
+       
+        BufferedReader br= null;
+        
+        if(responseCode==200/*HttpURLConnection.HTTP_OK*/) {
+        	br=new BufferedReader(new InputStreamReader(con.getInputStream()));
+        }else {
+        	//System.out.println(con.getErrorStream());
+        	System.out.println(con.getResponseMessage());
+        	br=new BufferedReader(new InputStreamReader(con.getErrorStream()));
+        	System.out.println(br);
+        }
+        
+        //JSON Data 읽기
+        String jsonData = "";
+        StringBuffer response = new StringBuffer();
+        
+        while ((jsonData = br.readLine()) != null) {
+            response.append(jsonData);
+        }
+        
+        br.close();
+        
+        System.out.println("HTTP 응답 코드 : " + responseCode);
+        System.out.println("HTTP body : " + response.toString());
+        
+        JSONObject jsonobj = (JSONObject)JSONValue.parse(response.toString());
+        System.out.println("status : "+jsonobj.get("status").toString());
+//		//Business Logic
+//		purchaseService.updatePurchase(purchase);
+//						
+//		return "redirect:/purchase/getPurchase?tranNo="+purchase.getTranNo();
+        
+        return jsonobj.get("status").toString();
 	}
 	
 	@RequestMapping(value="payPal", method=RequestMethod.POST)

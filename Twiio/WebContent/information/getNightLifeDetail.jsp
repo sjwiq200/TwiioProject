@@ -40,7 +40,13 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-<!--  ///////////////////////// CSS ////////////////////////// -->
+<!--  ///////////////////////// 추가 ////////////////////////// -->
+   			
+   			<script src="/resources/assets/js/jquery.min.js"></script>
+			<script src="/resources/assets/js/skel.min.js"></script>
+			<script src="/resources/assets/js/util.js"></script>
+			<script src="/resources/assets/js/main.js"></script>
+			<link rel="stylesheet" href="/resources/assets/css/main.css" />
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -63,7 +69,7 @@
 		
 		//alert(num1);alert(num2);
 		
-        var uluru = {lat:${lat} , lng:${lng}};
+        var uluru = {lat:${lat}, lng:${lng}};
         
         var map = new google.maps.Map(document.getElementById('map'), {
           zoom: 18,
@@ -107,11 +113,62 @@
 		<hr>
 		
 		<div class="row">
-			<div class="col-xs-12"><img src="${hrefs[0]}"/></div>
-			 	<c:forEach  items="${hrefs}" varStatus="status">
-			 		<div class="col-xs-8 col-md-4"><img src="${hrefs[status.index]}"/></div>
+		<c:if test="${image != null}">
+			<c:if test="${image.size()==2}">
+				<div class="col-xs-6 col-lg-4"><img src="${image[0]}"  style="width: 400px; height: 450px;"/> </div>
+			</c:if>
+			
+			<c:if test="${image.size()>2}">
+				<div class="col-xs-6 col-lg-4">
+							<c:set var="i" value="2" />
+								<c:forEach  items="${image}" varStatus="status">	
+									<img src="${image[i]}"  style="width: 200px; height: 150px;"/>
+								</c:forEach>	
+									
+				</div>
+			</c:if>
+		</c:if>
+		<c:if test="${image == null}">
+			<div class="col-xs-6 col-lg-4"><img src="http://placehold.it/400X450"  /> </div>
+			<div class="col-xs-6 col-lg-4">	<img src="http://placehold.it/200X150"  />
+									<img src="http://placehold.it/200X150" />
+									<img src="http://placehold.it/200X150" />
+			</div>
+		</c:if>
+		
+			<div class="col-xs-6 col-lg-4">
+				<table class="table table-hover table-striped" >
+		
+			        <thead>
+			          <tr>
+			            <th align="center" >정보</th>
+			          </tr>
+			        </thead>
+					
+					<tbody id="listTbody">
+					
+						<c:forEach  items="${info}" varStatus="status">	
+							<tr>
+							 <td align="center" id="info">${info[status.index]}</td>
+							</tr>
+						</c:forEach>
+			        </tbody>
+	      
+	      		</table>
+			
+			</div>
+			<%--  <div class="col-xs-8 col-md-4">	
+			 	<c:forEach  items="${image}" varStatus="status">
+			 		<img src="${image[status.index]}"  style="width: 150px; height: 150px;"/>
 			 	</c:forEach>
+			 </div>	 --%>
 		</div>
+		
+		<div></div>
+		<div></div>
+		<hr>
+		<div></div>
+		<div></div>
 		
 		<div id="map"></div>
 		

@@ -17,7 +17,9 @@ public interface InformationDao {
 	
 	public List<String> findCity(String city) throws Exception;
 	
-	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception;
+	public List<String> findCountry(String city) throws Exception;
+	
+	public  Map<String,List>  searchNowWeather(String cityName) throws Exception;
 	
 	public Map<Object, String[]> searchHistoryWeather( String cityName) throws Exception;
 	
@@ -29,7 +31,7 @@ public interface InformationDao {
 	
 	public  Map<String, List<String>>  getHotel(Hotel hotel) throws Exception;
 	
-	public  List getUnsafeRegion() throws Exception;
+	public  List<String> getUnsafeRegion( String country) throws Exception;
 	
 	public  Map<String, List<String>> listNightLife(String city) throws Exception;
 	

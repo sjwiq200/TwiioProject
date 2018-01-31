@@ -108,6 +108,26 @@ public class ProductRestController {
 		return map;
 	}
 	
+	@RequestMapping( value="json/findCount" )
+	public int findCount( @RequestBody String product) throws Exception{
+		
+		System.out.println("/product/json/findCount : ");
+		System.out.println("prodcut :: "+product);
+		int productNo =Integer.parseInt(product.split("[=&]")[3]);
+		String tripDate = URLDecoder.decode(product.split("[=&]")[1],"UTF-8");
+		System.out.println("tripDate :: "+tripDate);
+		int num=0;
+		// Business logic ผ๖วเ
+		Product dbProduct=productService.getProduct(productNo);
+		String[] str=dbProduct.getTripDate().split("[,]");
+		for(int i=0; i<str.length; i++) {
+			if(tripDate.equals(str[i].substring(0, 10))) {
+				num= Integer.parseInt(str[i].split("=")[1]);
+			}
+		}
+		return num;
+	}
+	
 	@RequestMapping( value="/json/autoComplate" )
 	public List<String> autoComplate( @RequestBody String autoComplate ) throws Exception{
 		

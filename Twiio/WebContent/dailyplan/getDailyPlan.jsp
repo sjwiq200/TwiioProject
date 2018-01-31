@@ -8,8 +8,6 @@
 <head>
 <meta charset="EUC-KR">
 
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -27,11 +25,16 @@
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
-
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
+
+
+<!--  구글  -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    
+    
 <title>MainPlanList</title>
 
 <style>
@@ -40,10 +43,43 @@
     padding-top : 100px;
 }
 
+
+      #map {
+        height: 300px;
+        width: 500px;
+
+      }
+      html, body {
+        height: 100%;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+      }
+      #floating-panel {
+/*         position: absolute;
+        top: 10px;
+        left: 50%; */
+        z-index: 10;
+        background-color: #fff;
+        padding: 5px;
+        border: 1px solid #999;
+        text-align: center;
+        font-family: 'Roboto','sans-serif';
+        line-height: 30px;
+        padding-left: 10px;
+      }
+      
+      .pac-container {
+    z-index: 100000;
+}
+
+
+
 </style>
 
 <script type="text/javascript">
 
+	
 	$(function() {
 		$("#uploadFile").on('change', function() {
 			readURL(this);
@@ -63,14 +99,105 @@
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
-
 					$("form").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
 				});
 	});
 	
+	</script>
 	
-</script>
+	
+	<script type = "text/javascript" async defer
+	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initMap&sensor=true">
+	</script>
+	
+	    <script>
+	/////Google Map Script////////
+	
+	
+	
+  	var service;
+  	 var map;
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 5,
+        });
+  
+        var geocoder = new google.maps.Geocoder;
+		var infowindow = new google.maps.InfoWindow;
+		var address = document.getElementById('address');
+		service = new google.maps.places.PlacesService(map);
+		var autocomplete = new google.maps.places.Autocomplete(address);
+        document.getElementById('submit').addEventListener('click', function() {
+        geocodeAddress(geocoder, map);
+        });
+      }
 
+      function geocodeAddress(geocoder, resultsMap) {
+        var address = document.getElementById('address').value;
+ 
+        geocoder.geocode({'address': address}, function(results, status) {
+        	if (status === 'OK') {
+        		service.getDetails({
+        		    placeId:results[0].place_id
+        		}, function(place, status) {
+        		    	var log = {
+        		    				formatted_address:JSON.stringify(place.formatted_address),
+									types:JSON.stringify(place.types),
+									url:JSON.stringify(place.url),
+									formatted_phone_number:(JSON.stringify(place.formatted_phone_number)==null?0:JSON.stringify(place.formatted_phone_number)),
+									international_phone_number:(JSON.stringify(place.international_phone_number)==null?0:JSON.stringify(place.international_phone_number)),
+									rating:(JSON.stringify(place.rating)==null?0:JSON.stringify(place.rating)),
+									website:(JSON.stringify(place.website)==null?0:JSON.stringify(place.website))
+									};
+        		    	console.log(log);
+        		    
+        		    	var address=JSON.stringify(place.formatted_address);
+        		    	var types=JSON.stringify(place.types);
+        		    	var url = JSON.stringify(place.url);
+        		    	
+        		    	$("#resultMap")
+        		    	.append("<div align=\"center\">"+address+"</div>")
+        		    	.append("<div align=\"center\">"+types+"</div>")
+        		    	.append("<div align=\"center\">"+url+"</div>");
+        		    	
+        		    	
+        		});
+           
+          } else {
+            alert('찾으시는 장소가 검색되지 않네요 흑흑 다른 검색어로 한번 다시 해볼까요?' + status);
+          }
+        });
+      }
+      
+/*       $('#addMap').on('shown', function () {
+    	  alert("안녕");
+    	  console.log("안녕");
+    	  google.maps.event.trigger(map, 'resize');
+    	  map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
+    	});
+      
+      
+      $('button[name=addMapIcon]').on('click', function () {
+    	  alert("안녕");
+    	  console.log("안녕");
+    	  //google.maps.event.trigger(map, 'resize');
+    	  //map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
+    	}); */
+      
+      $(function() {
+  		$("button:contains('지도')").on("click", function() {
+  			alert("안녕!");
+  		google.maps.event.trigger(map, 'resize');
+      	  map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
+  		});
+  	});
+      
+      
+    </script>
+ 
+
+
+	
 </head>
 <body id="mainBody">
 
@@ -102,31 +229,31 @@
 							<div>스크랩번호 : ${scrap.scrapNo }</div>
 						</c:if>
 						
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.route}">
 							<div>루트 : ${planContent.route}</div>
 						</c:if>
 						
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.departureLocation}">
 							<div>출발지 : ${planContent.departureLocation}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.arrivalLocation}">
 							<div>도착지 : ${planContent.arrivalLocation}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.estimatedTime}">
 							<div>소요시간 : ${planContent.estimatedTime}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.routeType}">
 							<div>이동방법 : ${planContent.routeType}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.routeDescription}">
 							<div>길찾기결과 : ${planContent.routeDescription}</div>
 						</c:if>
 
-						<c:if test="${!empty planContent.contentText}">
+						<c:if test="${!empty planContent.orderNo}">
 							<div>순서 : ${planContent.orderNo}</div>
 						</c:if>
 
@@ -151,15 +278,44 @@
 	<div>
 
 		
-		<span><button type="button" class="btn" data-toggle="modal"
-				data-target="#addText">글씨쓰기</button></span> <span><button
-				type="button" class="btn" data-toggle="modal"
-				data-target="#addImage">사진추가</button> </span> <span><button
-				type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
-		<span><button type="button" class="btn" data-toggle="modal"
-				data-target="#addRoute">길찾기</button> </span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span>
+		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">지도</button></span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">길찾기</button> </span>
 
-		<!---------- Text Dialog ------------->
+		<!---------- Map Dialog ------------->
+		<div class="modal fade" id="addMap"  role="dialog">
+			<div class="modal-dialog modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>M A P</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+					<div class="modal-body">
+
+					<!-- Google Map  -->
+						<div id="floating-panel">
+							<input id="address" type="textbox" value=""> <input
+								id="submit" type="button" value="검색">
+							<div id="resultMap" type="textbox" value="">-</div>
+						</div>
+						<div id="map"></div>
+					<!-- Google Map  -->
+
+
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!---------- Text Dialog ------------->
 		<div class="modal fade" id="addText" role="dialog">
 			<div class="modal-dialog">
 				<!-- Modal content-->
@@ -167,7 +323,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">
-							<Strong>M A P</Strong>
+							<Strong>T E X T</Strong>
 						</h4>
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
@@ -189,7 +345,7 @@
 	<div>
 
 		<div class="modal fade" id="addImage" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
@@ -208,30 +364,15 @@
 								</label>
 								
 								<div class="col-sm-6">
-								
 									<input type="file" name="uploadFile" class="ct_input_g"
 										style="width: 300px; height: 30px" maxLength="20"
 										id="uploadFile" /> <img id="addImageContent" />
-										<%
-											if (session.getAttribute("f5") != null) {
-												if ((session.getAttribute("f5").toString()).equals("denied")) {
-													session.setAttribute("f5", "denied");
-												} else {
-													session.setAttribute("f5", "okay");
-												}
-											} else {
-												session.setAttribute("f5", "okay");
-											}
-										%>
-								
 								</div>
 							</div>
 							<input type="hidden" name="dailyPlanNo"
 								value="${dailyPlan.dailyPlanNo}" />
 							<button name="add" type="button">ADD</button>
-							
 						</form>
-						
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -241,38 +382,6 @@
 		</div>
 
 		<!-- ---------------------------------------------------------------- -->
-
-		<!---------- Text Dialog ------------->
-		<div class="modal fade" id="addMap" role="dialog">
-			<div class="modal-dialog">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>T E X T</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-					<div class="modal-body">
-						<jsp:include page="/dailyplan/addMap.jsp" flush="true">
-							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
-						</jsp:include>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		
-	</div>
-		
-
-		<!-- ---------------------------------------------------------------- -->
-
-	</div>
 
 
 
