@@ -8,19 +8,15 @@
     <title>Geocoding service</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    
-    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 	<script src="/js/viewTinted.js"></script>
- 	
- 	
- <style>
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
       #map {
-        height: 300px;
-        width: 500px;
-
+        height: 80%;
+        width: 50%;
+        display: none;
       }
+      /* Optional: Makes the sample page fill the window. */
       html, body {
         height: 100%;
         width: 100%;
@@ -28,9 +24,9 @@
         padding: 0;
       }
       #floating-panel {
-/*         position: absolute;
+        position: absolute;
         top: 10px;
-        left: 50%; */
+        left: 25%;
         z-index: 10;
         background-color: #fff;
         padding: 5px;
@@ -40,11 +36,6 @@
         line-height: 30px;
         padding-left: 10px;
       }
-      
-      .pac-container {
-    z-index: 100000;
-}
-
     </style>
   </head>
   <body>
@@ -52,22 +43,12 @@
   	
     <div id="floating-panel">
       <input id="address" type="textbox" value="">
-      <input id="submit" type="button" value="검색">
-      <div id="resultMap" type="textbox" value=""> - </div>
+      <input id="submit" type="button" value="Geocode">
     </div>
     
-    <div id="map">
-    </div>
-    
-    
-    
+    <div id="map"></div>
     <script>
       
-
-    $(function(){
-        $(document).viewTinted();
-    });
-    
   	var service;
       function initMap() {
         var map = new google.maps.Map(document.getElementById('map'), {
@@ -94,56 +75,28 @@
         		service.getDetails({
         		    placeId:results[0].place_id
         		}, function(place, status) {
+        		    	//alert(JSON.stringify(place));
+        		    	alert(JSON.stringify(place.url));
         		    	var log = {
         		    				formatted_address:JSON.stringify(place.formatted_address),
+        		    				formatted_phone_number:(JSON.stringify(place.formatted_phone_number)==null?0:JSON.stringify(place.formatted_phone_number)),
+									international_phone_number:(JSON.stringify(place.international_phone_number)==null?0:JSON.stringify(place.international_phone_number)),
+									weekday_text:(JSON.stringify(place.opening_hours.weekday_text)==null?0:JSON.stringify(place.opening_hours.weekday_text)),
+									rating:JSON.stringify(place.rating),
 									types:JSON.stringify(place.types),
 									url:JSON.stringify(place.url),
-									formatted_phone_number:(JSON.stringify(place.formatted_phone_number)==null?0:JSON.stringify(place.formatted_phone_number)),
-									international_phone_number:(JSON.stringify(place.international_phone_number)==null?0:JSON.stringify(place.international_phone_number)),
-									rating:(JSON.stringify(place.rating)==null?0:JSON.stringify(place.rating)),
-									website:(JSON.stringify(place.website)==null?0:JSON.stringify(place.website))
+									website:JSON.stringify(place.website)
 									};
         		    	console.log(log);
-        		    
-        		    	var address=JSON.stringify(place.formatted_address);
-        		    	var types=JSON.stringify(place.types);
-        		    	var url = JSON.stringify(place.url);
-        		    	
-        		    	$("#resultMap")
-        		    	.append("<div align=\"center\">"+address+"</div>")
-        		    	.append("<div align=\"center\">"+types+"</div>")
-        		    	.append("<div align=\"center\">"+url+"</div>");
-        		    	
-        		    	
         		});
            
           } else {
-            alert('찾으시는 장소가 검색되지 않네요 흑흑 다른 검색어로 한번 다시 해볼까요?' + status);
+            alert('Geocode was not successful for the following reason: ' + status);
           }
         });
       }
       
 			
-      
-      $('#addMap').on('show.bs.modal', function() {
-   	   //Must wait until the render of the modal appear, thats why we use the resizeMap and NOT resizingMap!! ;-)
-   	   resizeMap();
-   	})
-
-   	function resizeMap() {
-   	   if(typeof map =="undefined") return;
-   	   setTimeout( function(){resizingMap();} , 400);
-   	}
-
-   	function resizingMap() {
-   	   if(typeof map =="undefined") return;
-   	   var center = map.getCenter();
-   	   google.maps.event.trigger(map, "resize");
-   	   map.setCenter(center); 
-   	}
-   	
-   	
-   	
     </script>
     <script type = "text/javascript" async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initMap&sensor=true">
