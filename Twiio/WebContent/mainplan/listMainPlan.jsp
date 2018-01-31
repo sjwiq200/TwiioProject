@@ -158,6 +158,59 @@ body {
 					</button>
 				</div>
 	
+	<script src="https://www.paypalobjects.com/api/checkout.js"></script>	
+	
+	<div id="paypal-button-container"></div>
+
+    <script>
+    
+    var price = ${product.price};
+        paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            client: {
+                sandbox:  'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+              //production: 'ATZhLEsWCW78Cnm90yst37XvU4iqSbRDRH4f3Cq730PT3P40m0xXlZ-garJpO3Miw77PXUbpnZmAmvnf'
+            },
+
+            // 'Pay Now' button 
+            commit: true,
+
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: price, currency: 'USD' }
+                            }   ]  }
+                });
+            },
+
+            // 구입 완료되면 실행된다.
+            onAuthorize: function(data, actions) {
+            		$("#cash").attr("selected",false);
+            		$("#paypal").attr("selected",true);
+  				
+   
+            		fncAddPurchase();
+   
+            },
+            
+            onCancel: function(data, actions) {
+               alert("취소하였습니다. 다시 결제 부탁드립니다. ");
+              },
+        
+              onError: function(err) {
+               alert("에러가 발생하였습니다. 다시 결제 부탁드립니다.");
+              }
+              
+        }, '#paypal-button-container');
+
+    </script>
+    
+    
+    
 	
 			</div>
 		</div>
