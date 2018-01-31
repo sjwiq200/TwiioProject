@@ -19,13 +19,14 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
 
 	
-	<!-- Bootstrap Dropdown Hover CSS 
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">-->
-    <!-- Bootstrap Dropdown Hover JS 
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>-->
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery UI toolTip 사용 CSS-->
@@ -41,42 +42,53 @@
     </style>
 
 <script type="text/javascript">
-
 	var page = 1;
-	
-		$(window).scroll(function(){			
-			if(($(window).scrollTop()+30) >= $(document).height() - $(window).height()){
-				$.ajax( 
+	var flag = 0;
+	var communityNo = ${resultPage.totalCount};
+		$(window).scroll(function(){
+			if(($(window).scrollTop()) >= $(document).height() - $(window).height()){
+				page = page + 1;
+				 $.ajax( 
 						{
-						url : "/community/json/listCommunity/"+page,
-						method : "GET" ,
+						url : "/community/json/listCommunity/",
+						method : "POST" ,
 						dataType : "json" ,
+						data : {
+							resultpage:page,
+    						communitytype:${communityType}
+						},
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
 							},
 							success : function(JSONData , status) {
-							var displayValue = '<div class="col">'+
+								if(flag==0){
+									communityNo=communityNo-JSONData.length;
+									flag=1;
+								}
+								
+							for(var i=0; i<JSONData.length;i++){								
+							var displayValue = 
 						    '<div class="col-md-3">'+
 						      '<div class="thumbnail">'+
 						        '<img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>'+
 						         ' <div class="caption">'+
-						          	'안녕하세요'+
-						          	'저희는 twiio 입니다.'+ 
-						            '<h3>제목과</h3>'+
-						            '<p>내용도 넣을 수 있다.</p>'+
+						          	'[ 게판번호 :'+communityNo+' ]'+
+						          	'<p>[ 제   목 :'+JSONData[i].communityTitle+' ]</p>'+ 
+						            '<p>[ 작성자 :'+JSONData[i].userId+' ]</p>'+
+						            '<p>[ 등록일 :'+JSONData[i].regDate+' ]</p>'+
+						            '<p>[ 조회소 :'+JSONData[i].viewCount+' ]</p>'+
+						            '<p>[ 커뮤니티번호 :'+JSONData[i].communityNo+' ]</p>'+
 						            '<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>'+
 						        '</div>'+
 						      '</div>'+
-						    '</div>'+ 
 						 	'</div>';
-
-								alert(JSONData);
-								/* for(var i=0; i<JSONData.list.length();i++){
-									$(.row).append(displayValue);
-								} */
+						 
+								communityNo=communityNo-1;
+									$('.row2').append(displayValue);
+								}
 							}
-					});
+					}); 
 			}	
 		});
 
@@ -84,18 +96,19 @@
 	
 
 	
-	/* $(function() {	
-		$("td:nth-child(2)").on("click" , function() {
+	 $(function() {	
+		$("#write").on("click" , function() {
 			//alert("ㅁㄴㅇㄻㄴㅇㄻ");
 			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
-			self.location="/user/getUser?userId=${user.role}";
+			self.location="/community/addCommunity?communityType="+${communityType};
 			//}
 		});	
 	});
-	
+	 
+	 
 	$(function() {	
-		$("td:nth-child(6):contains('물건도착')").on("click" , function() {
+		$(".getButton").on("click" , function() {
 			//alert("ㅁㄴㅇㄻㄴㅇㄻ");
 			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
@@ -104,6 +117,7 @@
 		});	
 	});
 	
+	/*
 	$(function() {
 		$("td:nth-child(1)").on("click" , function() {
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(1)').index(this)]).val() == ''){
@@ -117,9 +131,6 @@
 </head>
 
 <body>
-
-
-
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -146,7 +157,9 @@
 	
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    
+			    	
+			      <button type="button" id="write" class="btn btn-default">글 쓰 기</button>
+				  
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
@@ -168,25 +181,28 @@
 	    </div>
 	</div>
 	
-	<c:set var="i" value="0" />
+	
+	<div class="row2">
+	<c:set var="i" value="${resultPage.totalCount }" />
 		<c:forEach var="community" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
- 	<div class="col">
+		
     <div class="col-md-3">
       <div class="thumbnail">
         <img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>
           <div class="caption">
-          	안녕하세요
-          	저희는 twiio 입니다. 
-            <h3>제목과</h3>
-            <p>내용도 넣을 수 있다.</p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-        </div>
+          <p>[게시판번호  : ${i}]</p>
+    	  <p>[제   목 : ${community.communityTitle }]</p>
+          <p>[작성자 : ${community.userId }]</p>
+          <p>[등록일 : ${community.regDate }]</p>
+          <p>[조회소 : ${community.viewCount }]</p>
+          <p>[커뮤니티번호 : ${community.communityNo }]</p>     
+            <p><a class="btn btn-primary" id="getButton">상세보기</a></p>
+          </div>
       </div>
-    </div> 
- 	</div>
+    </div>
+    <c:set var="i" value="${ i-1 }" /> 
  	</c:forEach>
- 
+ 	</div>
 </div>    
 </body>
 </html>

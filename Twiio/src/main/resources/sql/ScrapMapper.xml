@@ -32,11 +32,11 @@
 		WHERE scrap_no = #{scrapNo}
 	 </select>
 	  
-	  <select  id="getScrapList"  parameterType="scrap"	resultMap="scrapSelectMap">
+	  <select  id="listScrap"  parameterType="int"	resultMap="scrapSelectMap">
 		  SELECT 
 		  scrap_no , user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type
 		  FROM scrap
-		  WHERE user_no=#{mainPlan.user.userNo}
+		  WHERE user_no=#{userNo}
 		  ORDER BY scrap_no ASC
 	  </select>
 	

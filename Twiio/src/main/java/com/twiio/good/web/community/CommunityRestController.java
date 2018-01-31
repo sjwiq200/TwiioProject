@@ -55,24 +55,31 @@ public class CommunityRestController {
 		System.out.println(getClass());
 	}
 	
-	@RequestMapping(value = "json/listCommunity/{page}/{communityType}")
-	public List listCommunity(@PathVariable String page,
-							  @PathVariable String communityType 
+	@RequestMapping(value = "json/listCommunity")
+	public List listCommunity(@RequestBody String pageInfo
 							 ) throws Exception {
-		Search search = null;
 		
+		System.out.println(pageInfo);
+		String[] info = pageInfo.split("&");
+		String[] resultpage = info[0].split("=");
+		String[] communitytype = info[1].split("=");
+			
+		Search search = new Search();
+		search.setCurrentPage(Integer.parseInt(resultpage[1]));
+
+
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
-		
-		System.out.println("search:::"+search);
+
 		search.setPageSize(pageSize);
-		
-		Map<String , Object> map = communityService.listCommunity(search, communityType);
+		System.out.println("아이들어오니??");
+		Map<String , Object> map = communityService.listCommunity(search, communitytype[1]);
 		System.out.println("search2:::"+search);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
-		
-		
+
+		System.out.println("list :: "+map.get("list"));
+		System.out.println("listsize :: "+((List)map.get("list")).size());
 		//Map<String, Object> map2 = new HashMap<>();
 		//List list = ;
 		
@@ -85,5 +92,6 @@ public class CommunityRestController {
 		
 
 		return (List)map.get("list");
+		//return null;
 	}
 }

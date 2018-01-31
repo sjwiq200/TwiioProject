@@ -1,5 +1,7 @@
 package com.twiio.good.web.community;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,7 @@ import com.twiio.good.service.domain.Community;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.user.UserService;
 
 
 @Controller
@@ -35,6 +38,10 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService usersService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -51,10 +58,13 @@ public class CommunityController {
 	
 	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.GET )
 	public String addCommunity(@RequestParam("communityType") String communityType,
-							   Model model) throws Exception {
-		System.out.println("/community/addCommunity : GET");
+							   Model model,
+							   HttpSession session) throws Exception {
+		System.out.println("/community/addCommunityView : GET");
+		User user = (User)session.getAttribute("user");
+		System.out.println(user);
 		model.addAttribute("communityType",communityType);
-		return "forward:/community/addCommunity.jsp";
+		return "forward:/community/addCommunityView.jsp";
 	}
 	
 	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.POST )
@@ -68,19 +78,22 @@ public class CommunityController {
 		
 		User user = (User)session.getAttribute("user");
 		community.setUserNo(user.getUserNo());
+		community.setUserId(user.getUserId());
 		community.setCommunityType(communityType);
 		communityService.addCommunity(community);
 		
+		System.out.println(community.getCommunityNo());
 		Community community2 = communityService.getCommunity(community.getCommunityNo());
 		
-		Map<String , Object> map = commonService.listReply(search, 1, community2.getCommunityNo());
+		Map<String , Object> map = commonService.listReply(search, "1", community2.getCommunityNo());
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+		System.out.println("왔니??");
 		model.addAttribute("community",community2);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
-		
+		System.out.println("여기까지왔니??");
 		return "forward:/community/getCommunity.jsp";
 	}
 	
@@ -92,14 +105,26 @@ public class CommunityController {
 		System.out.println("/community/getCommunity");
 		
 		Community community = communityService.getCommunity(communityNo);
+		User user = usersService.getUserInNo(community.getUserNo());
+		System.out.println("여기까지들어왔니 ???3");
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
 		
-		Map<String , Object> map = commonService.listReply(search, 1, communityNo);
+		search.setPageSize(pageSize);
+		
+		Map<String , Object> map = commonService.listReply(search, "1", communityNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+		System.out.println("여기까지들어왔니 ???2");
 		model.addAttribute("community",community);
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("totalCountReply", map.get("totalCountReply"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		return "forward:/common/getCommunity.jsp";
+		model.addAttribute("user",user);
+		System.out.println("여기까지들어왔니 ???1");
+		
+		return "forward:/community/getCommunity.jsp";
 	}
 	
 	@RequestMapping(value = "/community/deleteCommunity", method = RequestMethod.GET )

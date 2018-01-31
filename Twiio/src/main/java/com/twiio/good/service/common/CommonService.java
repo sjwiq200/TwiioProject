@@ -17,7 +17,7 @@ public interface CommonService
 
   public Map<String,Object> listReport(Search search) throws Exception;
 
-  public Map<String,Object> listReply(Search search, int divCode, int codeNo) throws Exception;
+  public Map<String,Object> listReply(Search search, String targetType, int codeNo) throws Exception;
 
   public Map<String,Object> listFriend(Search search, int userNo) throws Exception;
 

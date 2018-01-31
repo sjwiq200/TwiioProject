@@ -31,7 +31,13 @@
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Dropdown Hover JS -->
+    <!--  ///////////////////////// Ãß°¡ ////////////////////////// -->
+   			
+   			<script src="/resources/assets/js/jquery.min.js"></script>
+			<script src="/resources/assets/js/skel.min.js"></script>
+			<script src="/resources/assets/js/util.js"></script>
+			<script src="/resources/assets/js/main.js"></script>
+			<link rel="stylesheet" href="/resources/assets/css/main.css" />
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>

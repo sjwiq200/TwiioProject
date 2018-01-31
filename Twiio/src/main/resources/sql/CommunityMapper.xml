@@ -14,6 +14,7 @@
 		<result property="communitySubTitle" 	column="community_sub_title" 	jdbcType="VARCHAR"/>
 		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
 		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
+		<result property="userId" 				column="user_id" 				jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="likeSelectMap" type="like">
@@ -27,18 +28,17 @@
 	
 	<!--SQL : INSERT  -->
 	<insert id="addCommunity" parameterType="community" useGeneratedKeys="true" keyColumn="community_no" keyProperty="communityNo">
-		INSERT
-		INTO COMMUNITY
-		VALUES (
-		seq_community_community_no.nextval,
+		INSERT 
+		INTO COMMUNITY 
+		VALUES (seq_community_community_no.nextval,
 		#{communityTitle:VARCHAR},
 		#{userNo:NUMERIC},
 		SYSDATE,
 		#{viewCount:NUMERIC},
 		#{communitySubTitle:VARCHAR},
 		#{communityType:VARCHAR},
-		#{communityContent:VARCHAR}
-		)
+		#{communityContent:VARCHAR}),
+		#{userId:VARCHAR})
 	</insert>
 	
 	<select id="getCommunity" parameterType="int" resultMap="communitytSelectMap">
@@ -74,28 +74,13 @@
   							   COMMUNITY 
   							   WHERE									
 						       COMMUNITY_TYPE = #{communityType}
-							   ORDER BY COMMUNITY_NO
+							   ORDER BY COMMUNITY_NO DESC
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>
-	
-	<!-- <select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
-	SELECT *
-  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
-  						FROM (
-							   SELECT * FROM 
-  							   COMMUNITY 
-  							   WHERE									
-						       COMMUNITY_TYPE = #{communityType}
-							   ORDER BY COMMUNITY_NO
-							   ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-  		AND #{search.currentPage}*#{search.pageSize}
-	</select>
-	 -->
+		
 	<!-- SQL : SELECT ONE 
 	<select id="getBestTripReview" parameterType="int" resultType="community">
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{value}
