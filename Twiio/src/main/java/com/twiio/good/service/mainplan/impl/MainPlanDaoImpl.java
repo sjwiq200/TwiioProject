@@ -61,13 +61,13 @@ public class MainPlanDaoImpl implements MainPlanDao{
 	}
 
 	@Override
-	public List<Scrap> getScrapList(Scrap scrap) {
-		return sqlSession.selectList("ScrapMapper.getScrapList", scrap);
+	public List<Scrap> listScrap(int userNo) {
+		return sqlSession.selectList("ScrapMapper.listScrap", userNo);
 	}
 
 	@Override
 	public void deleteScrap(int scrapNo) {
-		sqlSession.delete("ScrapMapper.getScrapList",scrapNo);
+		sqlSession.delete("ScrapMapper.deleteScrap",scrapNo);
 	}
 
 }

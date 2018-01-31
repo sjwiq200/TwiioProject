@@ -39,8 +39,13 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-<!--  ///////////////////////// CSS ////////////////////////// -->
+<!--  ///////////////////////// 추가 ////////////////////////// -->
+   			
+   			<script src="/resources/assets/js/jquery.min.js"></script>
+			<script src="/resources/assets/js/skel.min.js"></script>
+			<script src="/resources/assets/js/util.js"></script>
+			<script src="/resources/assets/js/main.js"></script>
+			<link rel="stylesheet" href="/resources/assets/css/main.css" />
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>

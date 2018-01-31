@@ -50,12 +50,12 @@ public class CommonServiceImpl implements CommonService {
 		return map;
 	}
 
-	public Map<String, Object> listReply(Search search, int divCode, int codeNo) throws Exception {
-		int totalCountReply = commonDao.getTotalCountReply(divCode, codeNo);
+	public Map<String, Object> listReply(Search search, String targetType, int codeNo) throws Exception {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("totalCountReply", totalCountReply);
-		map.put("list", commonDao.listReply(search, divCode, codeNo));
+		map.put("totalCountReply", commonDao.getTotalCountReply(targetType, codeNo));
+		map.put("list", commonDao.listReply(search, targetType, codeNo));
 		map.put("codeNo", codeNo);
+		System.out.println("³ª¿Ô´Ï???");
 		return map;
 	}
 

@@ -14,6 +14,7 @@ import java.util.Map;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.NightLife;
+import com.twiio.good.service.domain.WeatherMain;
 import com.twiio.good.service.information.InformationService;
 
 @Controller
@@ -59,41 +61,31 @@ public class InformationController {
 		
 		System.out.println("/information/getWeather");
 		
-		Map<String,Object> map = informationService.searchNowWeather("Seoul");
-		Map<String,Object> result = new HashMap<String,Object>();
-		
-		String str = (String) map.get("weather");
-		String[] context =   str.split(",");
-		String[] temp  = context[0].split("=");
-		String[] pressure = context[1].split("=");
-		String[] humidity = context[2].split("=");
-		String[] temp_min = context[3].split("=");
-		String[] temp_max = context[4].split("=");
-		
+		Map<String,List> map = informationService.searchNowWeather("Seoul");
 
-		if(context.length>6) {
-			String[] grnd_level = context[5].split("=");
-			String[] sea_level = context[6].split("=");
-			
-			result.put("grnd_level", grnd_level[1]);
-			result.put("sea_level", sea_level[1]);
+		List<String>  dateList = map.get("dateList");
+		List<WeatherMain> mainList = map.get("mainList");
 		
+		List<String> resultDate = new ArrayList<>();
+		List<Long> resultTemp = new ArrayList<>();
+
+		for(int i =0; i<dateList.size()-1; i++) {
+			resultDate.add(dateList.get(i));
+			i = i+1;
 		}
+		System.out.println(resultDate.size());
 		
-		Double temp1 =Double.parseDouble(temp[1]);
-		Double pressure1 = Double.parseDouble( pressure[1]);
-		Double humidity1 = Double.parseDouble( humidity[1]);
-		Double temp_min1 = Double.parseDouble( temp_min[1]);
-		Double temp_max1 = Double.parseDouble(temp_max[1]);
+		for(int i =0; i<mainList.size()-1; i++) {
+			Double tmp = Double.parseDouble(mainList.get(i).getTemp());
+			System.out.println("tmp"+tmp);
+			System.out.println("Math.round(tmp-273)"+Math.round(tmp-273));
+			resultTemp.add(Math.round(tmp-273));
+			i = i+1;
+		}
+		System.out.println(resultTemp.size());
 		
-		result.put("temp", Math.round(temp1-273));
-		result.put("pressure", pressure1);
-		result.put("humidity", humidity1);
-		result.put("temp_min", Math.round(temp_min1-273));
-		result.put("temp_max",  Math.round(temp_max1-273));
-		
-		model.addAttribute("result",result);
-	
+			model.addAttribute("resultDate",resultDate).addAttribute("resultTemp",resultTemp);
+//	
 	        return "forward:/information/getNowWeather.jsp";
 	}
 	

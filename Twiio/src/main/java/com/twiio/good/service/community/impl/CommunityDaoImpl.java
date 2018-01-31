@@ -31,6 +31,7 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public void addCommunity(Community community) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("Daoimpl :: "+community);
 		sqlSession.insert("CommunityMapper.addCommunity",community);
 	}
 

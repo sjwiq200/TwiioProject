@@ -66,21 +66,15 @@ public String listDailyPlan( @RequestParam("mainPlanNo") int mainPlanNo, Model m
 
 }
 
-
-
 @RequestMapping(value = "getDailyPlan")
 public String getDailyPlan( @RequestParam("dailyPlanNo") int dailyPlanNo,  Model model, HttpSession session) throws Exception {
 
 	System.out.println("Controller : getDailyPlan <START>");
 
 	DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-	if(dailyPlanService.getPlanContentList(dailyPlanNo) == null) {
-		System.out.println("입력된 내용이 없습니다.");
-	}else {
+	
+	if(dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
 		List<PlanContent> list = dailyPlanService.getPlanContentList(dailyPlanNo);
-		for(PlanContent result : list) {
-			System.out.println("result : " + result);
-		}
 		model.addAttribute("list", list);
 	}
 
@@ -110,29 +104,21 @@ public String addText (@RequestParam("dailyPlanNo") int dailyPlanNo
 	dailyPlanService.addPlanContent(planContent);
 	
 	System.out.println("Controller : addText <END>");
-	
-	return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlan.getDailyPlanNo();
+//	List<PlanContent> list = dailyPlanService.getPlanContentList(dailyPlanNo);
+//	model.addAttribute("list", list);
+//	model.addAttribute("dailyPlan", dailyPlan);
+	return "redirect:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
 }
-
-
-
-
 
 
 @RequestMapping( value="addImage", method=RequestMethod.POST )
 public String addImage (@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam("uploadFile") MultipartFile uploadFile, Model model,HttpSession session) throws Exception{
 
 	System.out.println("Controller : addImage <START>");
-	
-	System.out.println("f5"+session.getAttribute("f5"));
-	
-	String here = "okay";
-	String check = (String)session.getAttribute("f5");
-	
+
 	DailyPlan dailyPlan = null;
-	
-	if(here.equals(check)) {
-		session.setAttribute("f5", "denied");
+
+		
 		dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		PlanContent planContent = new PlanContent();
 		String fileName = uploadFile.getOriginalFilename();
@@ -152,13 +138,8 @@ public String addImage (@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestPa
 		planContent.setOrderNo(a+1);
 		dailyPlanService.addPlanContent(planContent);
 		
-		return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlan.getDailyPlanNo();
-	}
 	
-	session.setAttribute("f5", "okay");
-	System.out.println("Controller : addImage <END>");
-	
-	return "forward:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
+	return "redirect:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
 
 }
 

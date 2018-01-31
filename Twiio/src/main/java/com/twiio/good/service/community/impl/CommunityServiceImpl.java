@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.common.CommonDao;
 import com.twiio.good.service.community.CommunityDao;
 import com.twiio.good.service.community.CommunityService;
 import com.twiio.good.service.domain.Community;
@@ -21,8 +22,16 @@ public class CommunityServiceImpl implements CommunityService {
 	@Qualifier("communityDaoImpl")
 	private CommunityDao communityDao;
 	
+	@Autowired
+	@Qualifier("commonDaoImpl")
+	private CommonDao commonDao;
+	
 	public void setCommunityDao(CommunityDao communityDao) {
 		this.communityDao = communityDao;
+	}
+	
+	public void setCommonDao(CommonDao commonDao) {
+		this.commonDao = commonDao;
 	}
 	
 	
@@ -31,12 +40,13 @@ public class CommunityServiceImpl implements CommunityService {
 	}
 	
 	public void addCommunity(Community community) throws Exception{
+			System.out.println("serviceImpl :: "+community);
 			communityDao.addCommunity(community);
 	}
 	
 	
 	public Community getCommunity(int communityNo) throws Exception{
-		
+		//List<Reply> list = commonDao.listReply(search, targetType, codeNo);
 		return communityDao.getCommunity(communityNo);
 	}
 	
