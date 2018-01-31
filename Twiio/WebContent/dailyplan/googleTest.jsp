@@ -45,7 +45,6 @@
 	</div>
 	
 	<div id="map"></div>
-	<div id="resultMap"> </div>
 	<script type = "text/javascript" async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initialize&sensor=true">
 	</script>
@@ -157,53 +156,55 @@
 						}
 				
 				var address = document.getElementById("addr1").value;
-				
 				geocoder.geocode( {'address': address}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK)  //Geocoding이 성공적이라면,
 						{
 						for(var i=0;i<results.length;i++)
 						{
-								map.setCenter(results[i].geometry.location);
-								map.setZoom(12);
-								geocodemarker.push(new google.maps.Marker({
-								center: results[i].geometry.location,
-								position: results[i].geometry.location,
-								map: map
-							})
-							);
-							service.getDetails({
-							    placeId:results[0].place_id
-							}, function(place, status) {
-								servicemarker = new google.maps.Marker({
-							        map: map,
-							        position: results[0].geometry.location
-							      });
-							    google.maps.event.addListener(servicemarker, 'click', function() {
-							    	console.log(JSON.stringify(place));
-							        infowindow.setContent(
-							      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br>' +
-							          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br>' +
-							          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br>' +
-							          '<strong>평점</strong>: ' + place.rating+ '<br>' +
-							          '<strong>장소유형</strong>: ' + place.types  + '<br>' +
-							          '<strong>URL</strong>: ' + place.url + '<br>' +
-							          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br>' );
-							        infowindow.open(map, this);
-							        
-							        var address=place.formatted_address;
-			        		    	var types=place.types;
-			        		    	var url = place.url;
-			        		    	var phone = place.formatted_phone_number;
-			        		    	var name = place.name;
-			        		    	
-			        		    	$("#resultMap")
-			        		    	.append("<div align=\"center\"><strong>["+name+"]</strong></div>")
-			        		    	.append("<div align=\"center\"><strong>주소 : </strong>"+address+"</div>")
-			        		    	.append("<div align=\"center\"><strong>전화번호 : </strong>"+phone+"</div>");
-			        		    	
-							      });
-							});
-						} 
+							map.setCenter(results[i].geometry.location);
+							map.setZoom(12);
+							geocodemarker.push(new google.maps.Marker({
+							center: results[i].geometry.location,
+							position: results[i].geometry.location,
+							map: map
+						})
+						);
+						service.getDetails({
+						    placeId:results[0].place_id
+						}, function(place, status) {
+							servicemarker = new google.maps.Marker({
+						        map: map,
+						        position: results[0].geometry.location
+						      });
+						    google.maps.event.addListener(servicemarker, 'click', function() {
+						    	console.log(JSON.stringify(place));
+						        infowindow.setContent(
+						      '<div><strong>' + place.formatted_address + '</strong><br>' +
+						          'formatted_phone_number: ' + place.formatted_phone_number + '<br>' +
+						          'opening_hours: ' + place.opening_hours.weekday_text+ '<br>' +
+						          'rating: ' + place.rating+ '<br>' +
+						          'types: ' + place.types  + '<br>' +
+						          'url: ' + place.url + '<br>' +
+						          'website: ' + place.website는  + '<br>' );
+						        infowindow.open(map, this);
+						        
+						        var address=place.formatted_address;
+		        		    	var types=place.types;
+		        		    	var url = place.url;
+		        		    	var phone = "123";
+		        		    	if(place.formatted_phone_number == "")
+		        		   
+		        		    	alert(address + types + url + place.formatted_phone_number); 
+		        		    	
+						   /*      $("#resultMap")
+		        		    	.append("<div align=\"center\">"+address+"</div>")
+		        		    	.append("<div align=\"center\">"+types+"</div>")
+		        		    	.append("<div align=\"center\">"+url+"</div>");
+						        .append("<div align=\"center\">"+phone+"</div>"); */
+						         
+						      });
+						});
+					} 
 				}else{ alert("검색 결과가 없습니다. 재입력 부탁드립니다." + status); }
 		});
 		}
