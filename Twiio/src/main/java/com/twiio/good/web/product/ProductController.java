@@ -1,5 +1,7 @@
 package com.twiio.good.web.product;
 
+import java.io.File;
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,6 +32,8 @@ public class ProductController {
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
 	
+	@Value("#{commonProperties['productFilePath']}")
+	String productFilePath;
 //	@Autowired
 //	@Qualifier("transactionServiceImpl")
 //	private TransactionService transactionService;
@@ -68,9 +73,23 @@ public class ProductController {
 			}	
 		}
 		product.setTripDate(tripDate);
-		//User user = (User)session.getAttribute("user");
-		product.setHostNo(14);
-		productService.addProduct(product);
+		User user = (User)session.getAttribute("user");
+		product.setHostNo(user.getUserNo());
+		System.out.println("섬네일등록전");
+		//////////////////////////썸네일 등록/////////////////////////////
+		if(!product.getFile().isEmpty()) {			
+			String thumbnail = user.getUserNo()+"="+product.getFile().getOriginalFilename();
+			File file = new File(productFilePath, thumbnail);
+			product.getFile().transferTo(file);
+			
+			product.setThumbnail(thumbnail);
+			System.out.println(product);
+			productService.addProduct(product);
+		}else {
+			System.out.println(product);
+			productService.addProduct(product);
+		}
+		
 		
 		return "forward:/product/addProduct.jsp";
 	}

@@ -1,10 +1,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <html lang="ko">
 <head>
 <meta charset="EUC-KR">
-<title>±¸¸Åµî·Ï</title>
+<title>êµ¬ë§¤ë“±ë¡</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -109,11 +109,11 @@ $(function() {
 	      },
 	
 	      onCancel: function(data, actions) {
-	    	alert("°áÁ¦ ÁøÇàÀÌ Ãë¼ÒµÇ¾ú½À´Ï´Ù. ´Ù½Ã °áÁ¦ ºÎÅ¹µå¸³´Ï´Ù. :: ");
+	    	alert("ê²°ì œ ì§„í–‰ì´ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ê²°ì œ ë¶€íƒë“œë¦½ë‹ˆë‹¤. :: ");
 	      },
         
         onError: function(err) {
-            alert("°áÁ¦¿¡ ½ÇÆĞÇÏ¿´½À´Ï´Ù. ´Ù½Ã °áÁ¦ ºÎÅ¹µå¸³´Ï´Ù. :: ");
+            alert("ê²°ì œì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ê²°ì œ ë¶€íƒë“œë¦½ë‹ˆë‹¤. :: ");
            }
 
     }, '#paypal-button');
@@ -131,24 +131,24 @@ $(function() {
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">»óÇ°»ó¼¼Á¶È¸</h1>
+		<h1 class="bg-primary text-center">ìƒí’ˆìƒì„¸ì¡°íšŒ</h1>
 		<input type="hidden" name="USDprice" value="" />
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm">
 			<input type="hidden" name="productNo" value="${transaction.tranPro.productNo}" />
 		 
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î¸í</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ëª…</label>
 		    <div class="col-sm-4">
 		      ${transaction.tranPro.productName}
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î³¯Â¥</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ë‚ ì§œ</label>
 		    <input type="hidden" name="tripDate" value="${transaction.tripDate}" />
 		    <div class="col-sm-4">
 		      ${transaction.tripDate}
@@ -156,7 +156,7 @@ $(function() {
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">±¸¸Å°¹¼ö</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">êµ¬ë§¤ê°¯ìˆ˜</label>
 		    <input type="hidden" name="count" value="${transaction.count}" />
 		    <div class="col-sm-4">
 		      ${transaction.count}
@@ -164,14 +164,14 @@ $(function() {
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">1ÀÎ´ç Åõ¾î °¡°İ</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">1ì¸ë‹¹ íˆ¬ì–´ ê°€ê²©</label>
 		    <div class="col-sm-4">
 		      ${transaction.tranPro.productPrice}
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">°¡°İ</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">ê°€ê²©</label>
 		    <input type="hidden" name="totalPrice" value="${transaction.totalPrice}" />
 		    <div class="col-sm-4">
 		      ${transaction.totalPrice}
@@ -179,7 +179,7 @@ $(function() {
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">È£½ºÆ®</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">í˜¸ìŠ¤íŠ¸</label>
 		    <input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo}" />
 		    <div class="col-sm-4">
 		      ${transaction.tranPro.hostName}
@@ -187,7 +187,7 @@ $(function() {
 		  </div>
 		  
 		  <div class="form-group">
-		    <label class="col-sm-offset-1 col-sm-3 control-label">±¸¸ÅÀÚ</label>
+		    <label class="col-sm-offset-1 col-sm-3 control-label">êµ¬ë§¤ì</label>
 		    <input type="hidden" name="buyerNo" value="${user.userNo}" />
 		    <div class="col-sm-4">
 		     ${user.userName}		     
@@ -195,7 +195,7 @@ $(function() {
 		  </div>	
 				  		  
 		  <div class="form-group">
-		    <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">¿äÃ»»çÇ×</label>
+		    <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">ìš”ì²­ì‚¬í•­</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="requirement" name="requirement" >
 		    </div>
@@ -204,7 +204,7 @@ $(function() {
 		  		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">		     
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
 			  <a id="kakaoPay-btn" href="#" role="button">
 				<img src="/resources/images/payment_icon_yellow_medium.png"/>
 			  </a>			  
@@ -216,6 +216,6 @@ $(function() {
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 </body>
 </html>

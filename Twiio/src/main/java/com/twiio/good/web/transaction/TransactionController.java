@@ -409,6 +409,7 @@ public class TransactionController {
 		
 		transaction.setTranPro(productService.getProduct(productNo));
 		transaction.setPaymentType("2");
+		System.out.println(transaction);
 		transactionService.addTransaction(transaction);
 		
 		return "forward:/transaction/popup.jsp"; 

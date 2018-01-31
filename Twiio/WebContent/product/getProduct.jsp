@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 <!DOCTYPE html>
 
@@ -9,7 +9,7 @@
 <head>
 	<meta charset="EUC-KR">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -34,9 +34,9 @@
 <script type="text/javascript">
 $(function() {
 	
-	 $( "button.btn.btn-primary:contains('±¸¸Å')" ).on("click" , function() {
+	 $( "button.btn.btn-primary:contains('êµ¬ë§¤')" ).on("click" , function() {
 		if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){
-			alert("³¯Â¥¿Í °¹¼ö¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä :: ");	
+			alert("ë‚ ì§œì™€ ê°¯ìˆ˜ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš” :: ");	
 			return
 		}
 		
@@ -46,7 +46,7 @@ $(function() {
 
 $(function() {
 	
-	 $( "button.btn.btn-primary:contains('ÀÌÀü')" ).on("click" , function() {
+	 $( "button.btn.btn-primary:contains('ì´ì „')" ).on("click" , function() {
 		
 		 history.go(-1);
 	});
@@ -54,7 +54,7 @@ $(function() {
 
 /* $(function() {
 	
-	 $( "button.btn.btn-primary:contains('Àå¹Ù±¸´Ï ´ã±â')" ).on("click" , function() {
+	 $( "button.btn.btn-primary:contains('ì¥ë°”êµ¬ë‹ˆ ë‹´ê¸°')" ).on("click" , function() {
 		
 		 self.location("/cart/addCart?prod_no=");
 	});
@@ -62,7 +62,7 @@ $(function() {
 
 $(function() {
 	
-	 $( "button.btn.btn-primary:contains('È®ÀÎ')" ).on("click" , function() {
+	 $( "button.btn.btn-primary:contains('í™•ì¸')" ).on("click" , function() {
 		
 		 self.location("/product/listProduct?menu=manage");
 	});
@@ -71,7 +71,7 @@ $(function() {
 $(function() {
 	
 	 $( "#tripDate" ).on("change" , function() {
-		//alert("¾È´¨");
+		//alert("ì•ˆë‡½");
 		$("option.num").remove();
 		 $.ajax(
  				{
@@ -87,7 +87,7 @@ $(function() {
 					},			
  					dataType:"json",
  					success:function(JSONData){
- 						//alert("Á¦¹ßajax");	    											
+ 						//alert("ì œë°œajax");	    											
  						//alert("JSONData: \n"+JSONData);
  						//alert(JSONData);
  						//var num=JSONData;
@@ -110,7 +110,7 @@ $(function() {
 	 
 	 $("select[name='count']").on("click",function(){
 		if($( "#tripDate" ).val()==0){
-			alert("³¯Â¥¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä :: ");
+			alert("ë‚ ì§œë¥¼ ì„ íƒí•´ì£¼ì„¸ìš” :: ");
 		} 
 	 });
 });
@@ -125,72 +125,72 @@ $(function() {
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">»óÇ°»ó¼¼Á¶È¸</h3>
-	       <h5 class="text-muted">»óÇ°À» <strong class="text-danger">ÃÖ½ÅÁ¤º¸·Î °ü¸®</strong>ÇØ ÁÖ¼¼¿ä.</h5>
+	       <h3 class=" text-info">ìƒí’ˆìƒì„¸ì¡°íšŒ</h3>
+	       <h5 class="text-muted">ìƒí’ˆì„ <strong class="text-danger">ìµœì‹ ì •ë³´ë¡œ ê´€ë¦¬</strong>í•´ ì£¼ì„¸ìš”.</h5>
 	    </div>
 	
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>»óÇ°¹øÈ£</strong></div>
+	  		<div class="col-xs-4 col-md-2"><strong>ìƒí’ˆë²ˆí˜¸</strong></div>
 			<div class="col-xs-8 col-md-4">${product.productNo }</div>			
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>»óÇ°¸í</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ìƒí’ˆëª…</strong></div>
 			<div class="col-xs-8 col-md-4">${product.productName }</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>»óÇ°ºĞ·ù</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ìƒí’ˆë¶„ë¥˜</strong></div>
 			<div class="col-xs-8 col-md-4">${product.productType }</div>
 		</div>
 				
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>±¹°¡</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>êµ­ê°€</strong></div>
 			<div class="col-xs-8 col-md-4">${product.country }</div>
 		</div>
 				
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>µµ½Ã</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ë„ì‹œ</strong></div>
 			<div class="col-xs-8 col-md-4">${product.city }</div>
 		</div>
 				
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>Á¶È¸¼ö</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ì¡°íšŒìˆ˜</strong></div>
 			<div class="col-xs-8 col-md-4">${product.viewCount }</div>
 		</div>
 				
 		<hr/>
 				
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>Åõ¾îÀÏÀÚ</strong></div>
+	  		<div class="col-xs-4 col-md-2"><strong>íˆ¬ì–´ì¼ì</strong></div>
 			<div class="col-xs-8 col-md-4">${product.tripDate}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>°¡°İ</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ê°€ê²©</strong></div>
 			<div class="col-xs-8 col-md-4">${product.productPrice}</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>µî·ÏÀÏÀÚ</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ë“±ë¡ì¼ì</strong></div>
 			<div class="col-xs-8 col-md-4">${product.regDate}</div>
 		</div>
 		
@@ -199,7 +199,7 @@ $(function() {
 			<div class="row">
 				<input type="hidden" name="productNo" value="${product.productNo }"/>
 				<select class="form-control" name="tripDate" id="tripDate">
-					<option value="0" >³¯Â¥¼±ÅÃ</option>
+					<option value="0" >ë‚ ì§œì„ íƒ</option>
 					<c:set var="date" value="${product.tripDate}"></c:set>
 					<c:set var="date_array" value="${fn:split(date,',')}"></c:set>
 					<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
@@ -209,7 +209,7 @@ $(function() {
 				</select> 
 				<select class="form-control" name="count" id="count">
 					<%-- <c:set var="i" value="1"></c:set> --%>
-					<option value="0" >°¹¼ö¼±ÅÃ</option>
+					<option value="0" >ê°¯ìˆ˜ì„ íƒ</option>
 					<%-- <c:set var="date_array" value="${fn:split(date,'[=,]')}"></c:set> --%>
 					<%-- <c:if test="==${fn:split(tdate,'=')[0]}"> --%>
 					<%-- <c:forEach var="num" items="${date_array}" begin="0" step="1">
@@ -225,12 +225,12 @@ $(function() {
 			<div class="row">
 	  		<div class="col-md-12 text-center ">
 	  			<%-- <c:if test="${param.menu=='search'}"> --%>
-	  				<button type="button" class="btn btn-primary">±¸¸Å</button>
-	  				<button type="button" class="btn btn-primary">ÀÌÀü</button>
+	  				<button type="button" class="btn btn-primary">êµ¬ë§¤</button>
+	  				<button type="button" class="btn btn-primary">ì´ì „</button>
 	  				
 	  			<%-- </c:if>
 				<c:if test="${param.menu!='search'}">
-					<button type="button" class="btn btn-primary">È®ÀÎ</button>
+					<button type="button" class="btn btn-primary">í™•ì¸</button>
 				</c:if> --%>
 	  		</div>
 		</div>
@@ -238,14 +238,14 @@ $(function() {
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>È£½ºÆ®</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>í˜¸ìŠ¤íŠ¸</strong></div>
 			<div class="col-xs-8 col-md-4">${product.hostName}	</div>
 		</div>
 		
 		<hr/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>»óÇ°»ó¼¼Á¤º¸</strong></div>
+	  		<div class="col-xs-4 col-md-2 "><strong>ìƒí’ˆìƒì„¸ì •ë³´</strong></div>
 			<div class="col-xs-8 col-md-4">${product.description}	</div>
 		</div>
 		
@@ -253,7 +253,7 @@ $(function() {
 		
 		
  	</div>
- 	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 
 </body>
 </html>
