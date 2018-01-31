@@ -23,7 +23,7 @@ public interface MainPlanDao {
 	
 	public Scrap getScrap(int scrapNo);
 	
-	public List<Scrap> getScrapList(Scrap scrap);
+	public List<Scrap> listScrap(int userNo);
 	
 	public void deleteScrap(int scrapNo);
 	

@@ -64,8 +64,8 @@ public class MainPlanServiceImpl implements MainPlanService {
 	}
 
 	@Override
-	public List<Scrap> getScrapList(Scrap scrap) throws Exception {
-		return mainPlanDao.getScrapList(scrap);
+	public List<Scrap> listScrap(int userNo) throws Exception {
+		return mainPlanDao.listScrap(userNo);
 	}
 
 	@Override

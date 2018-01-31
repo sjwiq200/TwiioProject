@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.MainPlan;
+import com.twiio.good.service.domain.Scrap;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mainplan.MainPlanService;
 
@@ -133,10 +134,6 @@ public class MainPlanController {
 		return "forward:/mainplan/listMainPlan";
 	}
 
-	
-	
-	
-	
 	
 	@RequestMapping(value = "listMainPlan")
 	public String listMainPlan(Model model, HttpSession session) throws Exception {
@@ -386,5 +383,32 @@ public class MainPlanController {
 		return "forward:/mainplan/listMainPlan";
 		
 	}
+	
+	///////////////////////////////// SCRAP ////////////////////////////////////////
+	
+	@RequestMapping(value = "listScrap")
+	public String listScrap(Model model, HttpSession session) throws Exception {
+		
+		System.out.println("Controller : listScrap <START>");
+		User user = (User)session.getAttribute("user");
+		List<Scrap> list = mainPlanService.listScrap(user.getUserNo());
+		model.addAttribute("list",list);
+		System.out.println("Controller : listScrap <END>");
+		
+		return "forward:/mainplan/listScrap.jsp";
+	}
+	
+	@RequestMapping(value = "deleteScrap")
+	public String deleteScrap(@RequestParam("scrapNo") int scrapNo,Model model, HttpSession session) throws Exception {
+		
+		System.out.println("Controller : deleteScrap <START>");
+		mainPlanService.deleteScrap(scrapNo);
+		System.out.println("Controller : deleteScrap <END>");
+		
+		return "forward:/mainplan/listScrap";
+	}
+	
+	
+	
 	
 }

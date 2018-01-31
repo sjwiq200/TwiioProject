@@ -37,6 +37,16 @@ body {
 
 
 <script>
+
+
+	//버튼 TEST//
+
+	
+	
+
+	////////////
+	
+	
 	function fncAddMainPlanList() {
 		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
 	}
@@ -46,6 +56,8 @@ body {
 			fncAddMainPlanList();
 		});
 	});
+	
+	
 	 $(function() {
 			$("button:contains('수정')").bind("click",function() {
 				var index = $("button:contains('수정')").index(this);
@@ -58,8 +70,9 @@ body {
 	 $(function() {
 			$("button:contains('삭제')").bind("click",function() {
 				var index = $("button:contains('삭제')").index(this);
-				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
+				var scrapNo = $($("input[name='scrapNo']")[index]).val();
+				alert(scrapNo);
+				var url = "/mainplan/deleteScrap?scrapNo="+scrapNo;
 				$(location).attr('href', url);
 			});
 	 })
@@ -72,6 +85,14 @@ body {
 				$(location).attr('href', url);
 			});
 	 })
+	 
+	 $(function(){
+		 $("#listScrap").bind("click",function(){
+			 alert("안녕");
+			 var url = "/mainplan/listScrap";
+			 $(location).attr('href', url);
+		 })
+	 })
  
 </script>
 
@@ -80,30 +101,38 @@ body {
 	
 		<jsp:include page="/layout/toolbar.jsp" />
 		
-	<form class="form-horizontal">
-	
-		<div class="container">
 
+	<form class="form-horizontal">
+		
+		<div class="container">
+			
+				
 			<div class = "mainPlanList" align = "center">
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<button type="button" class="btn" id="listScrap"><Strong>Scrap</Strong></button> 
+			<div> ㅡ </div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
 			
 				  <c:set var="i" value="0" />
 				  	<c:forEach var="mainPlan" items="${list}">
 				  		<c:set var="i" value="${ i+1 }" />
 				  		
 				  			 <input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" />
-				  			<ul>
-								<li>[${ i }]</li>
-								<li>플랜번호 : ${mainPlan.mainPlanNo}</li>
-								<li>유저번호 : ${mainPlan.user.userNo}</li>
-								<li>출발일 : ${mainPlan.departureDate }</li>
-								<li>도착일 : ${mainPlan.arrivalDate}</li>
-								<li>국가명 : ${mainPlan.country}</li>
-								<li>도시명 : ${mainPlan.city}</li>
-								<li>플랜제목 : ${mainPlan.planTitle}</li>
-								<li>섬네일이미지 : ${mainPlan.mainThumbnail}</li>
-								<li> </li>
-								
-						
+				  			
+								<div>[${ i }]</div>
+								<div>플랜번호 : ${mainPlan.mainPlanNo}</div>
+								<div>유저번호 : ${mainPlan.user.userNo}</div>
+								<div>출발일 : ${mainPlan.departureDate }</div>
+								<div>도착일 : ${mainPlan.arrivalDate}</div>
+								<div>국가명 : ${mainPlan.country}</div>
+								<div>도시명 : ${mainPlan.city}</div>
+								<div>플랜제목 : ${mainPlan.planTitle}</div>
+								<div>섬네일이미지 : ${mainPlan.mainThumbnail}</div>
+														
 							<div class="pageButton-group" align="center">
 								<button type="button" class="btn btn-default" aria-label="Right Align">
 									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="update"></span>수정
@@ -116,10 +145,10 @@ body {
 								<button type="button" class="btn btn-default" aria-label="Right Align">
 									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>선택
 								</button>
-	
+			
 							</div>
 	
-						</ul>
+							<div> ㅡ </div>
 				  	 </c:forEach>
 			
 			
@@ -129,6 +158,59 @@ body {
 					</button>
 				</div>
 	
+	<script src="https://www.paypalobjects.com/api/checkout.js"></script>	
+	
+	<div id="paypal-button-container"></div>
+
+    <script>
+    
+    var price = ${product.price};
+        paypal.Button.render({
+
+            env: 'sandbox', // sandbox | production
+
+            client: {
+                sandbox:  'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
+              //production: 'ATZhLEsWCW78Cnm90yst37XvU4iqSbRDRH4f3Cq730PT3P40m0xXlZ-garJpO3Miw77PXUbpnZmAmvnf'
+            },
+
+            // 'Pay Now' button 
+            commit: true,
+
+            payment: function(data, actions) {
+                return actions.payment.create({
+                    payment: {
+                        transactions: [
+                            {
+                                amount: { total: price, currency: 'USD' }
+                            }   ]  }
+                });
+            },
+
+            // 구입 완료되면 실행된다.
+            onAuthorize: function(data, actions) {
+            		$("#cash").attr("selected",false);
+            		$("#paypal").attr("selected",true);
+  				
+   
+            		fncAddPurchase();
+   
+            },
+            
+            onCancel: function(data, actions) {
+               alert("취소하였습니다. 다시 결제 부탁드립니다. ");
+              },
+        
+              onError: function(err) {
+               alert("에러가 발생하였습니다. 다시 결제 부탁드립니다.");
+              }
+              
+        }, '#paypal-button-container');
+
+    </script>
+    
+    
+    
 	
 			</div>
 		</div>
