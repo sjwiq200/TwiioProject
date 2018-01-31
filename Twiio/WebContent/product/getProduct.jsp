@@ -35,6 +35,10 @@
 $(function() {
 	
 	 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
+		if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){
+			alert("날짜와 갯수를 선택해주세요 :: ");	
+			return
+		}
 		
 		 $("form").attr("method" , "POST").attr("action" , "/transaction/addTransaction").submit();
 	});
@@ -67,7 +71,7 @@ $(function() {
 $(function() {
 	
 	 $( "#tripDate" ).on("change" , function() {
-		alert("안뇽");
+		//alert("안뇽");
 		$("option.num").remove();
 		 $.ajax(
  				{
@@ -85,8 +89,8 @@ $(function() {
  					success:function(JSONData){
  						//alert("제발ajax");	    											
  						//alert("JSONData: \n"+JSONData);
- 						alert(JSONData);
- 						var num=JSONData;
+ 						//alert(JSONData);
+ 						//var num=JSONData;
  						/* response($.map(JSONData, function (item) {
  				           
  							return item;
@@ -103,6 +107,12 @@ $(function() {
  				}
  			);
 	});
+	 
+	 $("select[name='count']").on("click",function(){
+		if($( "#tripDate" ).val()==0){
+			alert("날짜를 선택해주세요 :: ");
+		} 
+	 });
 });
 		 
 
@@ -189,7 +199,7 @@ $(function() {
 			<div class="row">
 				<input type="hidden" name="productNo" value="${product.productNo }"/>
 				<select class="form-control" name="tripDate" id="tripDate">
-					<option value="0">날짜선택</option>
+					<option value="0" >날짜선택</option>
 					<c:set var="date" value="${product.tripDate}"></c:set>
 					<c:set var="date_array" value="${fn:split(date,',')}"></c:set>
 					<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
@@ -199,7 +209,7 @@ $(function() {
 				</select> 
 				<select class="form-control" name="count" id="count">
 					<%-- <c:set var="i" value="1"></c:set> --%>
-					<option value="0">갯수선택</option>
+					<option value="0" >갯수선택</option>
 					<%-- <c:set var="date_array" value="${fn:split(date,'[=,]')}"></c:set> --%>
 					<%-- <c:if test="==${fn:split(tdate,'=')[0]}"> --%>
 					<%-- <c:forEach var="num" items="${date_array}" begin="0" step="1">

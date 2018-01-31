@@ -36,6 +36,11 @@ function fncKakaoPay() {
 	$("form").attr("method" , "POST").attr("action" , "/transaction/kakaoPayReady").submit();
 }
 
+function fncPayPal() {
+	//document.addPurchase.submit();
+	$("form").attr("method" , "POST").attr("action" , "/transaction/payPal").submit();
+}
+
 $(function() {
 	$( "a.btn.btn-primary.btn" ).bind("click" , function() {
 		history.go(-1);
@@ -51,6 +56,67 @@ $(function() {
 });
 
 
+
+</script>
+
+  <script>
+//////////////////////////////////////////////////////////////PayPal////////////////////////////////////////////////////////
+  
+  	var USDprice = ${USDprice};
+  	var productNo = ${transaction.tranPro.productNo};
+    paypal.Button.render({
+
+        env: 'sandbox', // sandbox | production
+
+        client: {
+            sandbox:    'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R',
+            production: productNo
+        },
+        
+        commit: true, // Show a 'Pay Now' button
+
+        style: {
+        	label: 'checkout',
+            size:  'small',    // small | medium | large | responsive
+            shape: 'pill',     // pill | rect
+            color: 'gold'      // gold | blue | silver | black
+        },
+
+        payment: function(data, actions) {
+        	        	
+            return actions.payment.create({
+                payment: {
+                    transactions: [
+                        {
+                            amount: { total: USDprice, currency: 'USD' }
+                        }
+                    ]
+                }
+            });
+        },
+
+        // Wait for the payment to be authorized by the customer
+        
+         onAuthorize: function(data, actions) {
+        	 
+        	// Execute the payment
+
+             return actions.payment.execute().then(function() {
+            	 //alert('Payment Complete!');
+            	 fncPayPal();
+             });
+        	 
+	      },
+	
+	      onCancel: function(data, actions) {
+	    	alert("결제 진행이 취소되었습니다. 다시 결제 부탁드립니다. :: ");
+	      },
+        
+        onError: function(err) {
+            alert("결제에 실패하였습니다. 다시 결제 부탁드립니다. :: ");
+           }
+
+    }, '#paypal-button');
 
 </script>
 </head>
@@ -69,7 +135,7 @@ $(function() {
 	<div class="container">
 	
 		<h1 class="bg-primary text-center">상품상세조회</h1>
-		
+		<input type="hidden" name="USDprice" value="" />
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm">
 			<input type="hidden" name="productNo" value="${transaction.tranPro.productNo}" />
@@ -142,54 +208,10 @@ $(function() {
 			  <a id="kakaoPay-btn" href="#" role="button">
 				<img src="/resources/images/payment_icon_yellow_medium.png"/>
 			  </a>			  
+			  <div id="paypal-button"></div>      
 		    </div>
 		  </div>
-		  <div id="paypal-button-container"></div>
-
-    <script>
-    
-    var price = ${product.price};
-        paypal.Button.render({
-
-            env: 'sandbox', // sandbox | production
-
-            client: {
-                sandbox:  'AZDxjDScFpQtjWTOUtWKbyN_bDt4OgqaF4eYXlewfBP4-8aqX3PiV8e1GWU6liB2CUXlkA59kJXE7M6R'
-              //production: 'ATZhLEsWCW78Cnm90yst37XvU4iqSbRDRH4f3Cq730PT3P40m0xXlZ-garJpO3Miw77PXUbpnZmAmvnf'
-            },
-
-            // 'Pay Now' button 
-            commit: true,
-
-            payment: function(data, actions) {
-                return actions.payment.create({
-                    payment: {
-                        transactions: [
-                            {
-                                amount: { total: price, currency: 'USD' }
-                            }   ]  }
-                });
-            },
-
-            // 구입 완료되면 실행된다.
-            onAuthorize: function(data, actions) {
-            		$("#cash").attr("selected",false);
-            		$("#paypal").attr("selected",true);
-  			fncAddPurchase();
-   
-            },
-            
-            onCancel: function(data, actions) {
-               alert("취소하였습니다. 다시 결제 부탁드립니다. ");
-              },
-        
-              onError: function(err) {
-               alert("에러가 발생하였습니다. 다시 결제 부탁드립니다.");
-              }
-              
-        }, '#paypal-button-container');
-
-    </script>
+		  
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
