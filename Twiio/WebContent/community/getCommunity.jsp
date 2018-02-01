@@ -67,6 +67,50 @@
 	  height: 100px;
 	  resize: none;
 		}
+		
+		#container{
+ 		 width:715px;
+ 		 height:230px;
+		 margin:50px auto;
+		}
+		.button-2{
+  width:140px;
+  height:50px;
+  border:2px solid #34495e;
+  float:left;
+  text-align:center;
+  cursor:pointer;
+  position:relative;
+  box-sizing:border-box;
+  overflow:hidden;
+  margin:0 0 40px 50px;
+}
+.button-2 a{
+  font-family:arial;
+  font-size:16px;
+  color:#34495e;
+  text-decoration:none;
+  line-height:50px;
+  transition:all .5s ease;
+  z-index:2;
+  position:relative;
+}
+.eff-2{
+  width:140px;
+  height:50px;
+  top:-50px;
+  background:#34495e;
+  position:absolute;
+  transition:all .5s ease;
+  z-index:1;
+}
+.button-2:hover .eff-2{
+  top:0;
+}
+.button-2:hover a{
+  color:#fff;
+}
+
 	</style>
 
 <script type="text/javascript">
@@ -213,9 +257,22 @@ $(function() {
     		<div class="col-md-10 col-md-offset-1">
     			${reply.replyRegDate}
     		</div>
+    		<div class="col-xs-10 col-xs-offset-1">
+			<hr sytle="border-style:dotted">
+			</div>
  		</c:forEach>
  		</div>
+ 		
+ 		<div class="col-xs-2 col-xs-offset-5">
+			<div class="button-2">
+    		<div class="eff-2"></div>
+    		<a href="#"> Touch me </a>
+  			</div>
+		</div>
 		
+		<div class="col-xs-10 col-xs-offset-1">
+			<hr sytle="border-style:dotted">
+		</div>
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 	</div>
