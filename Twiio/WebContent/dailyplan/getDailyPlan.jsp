@@ -1,12 +1,12 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -19,7 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- ´ÙÀÌ¾ó·Î±×  -->
+<!-- ë‹¤ì´ì–¼ë¡œê·¸  -->
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -31,7 +31,7 @@
 
 
 
-<!--  ±¸±Û  -->
+<!--  êµ¬ê¸€  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
@@ -98,49 +98,78 @@
 					<c:set var="i" value="${ i+1 }" />
 					<input type="hidden" name="planContentNo" value="${planContentNo}" />
 					<div>
-						<h7> ¤Ñ </h7>
-						<div>ÄÜÅÙÃ÷ ¹øÈ£ : ${planContent.contentNo}</div>
-						<div>µ¥ÀÏ¸®ÇÃ·£¹øÈ£ : ${dailyPlan.dailyPlanNo}</div>
-						<div>ÄÜÅÙÃ÷Å¸ÀÔ : ${planContent.contentType}</div>
+						<h7> ã…¡ </h7>
+						<div>ì½˜í…ì¸  ë²ˆí˜¸ : ${planContent.contentNo}</div>
+						<div>ë°ì¼ë¦¬í”Œëœë²ˆí˜¸ : ${dailyPlan.dailyPlanNo}</div>
+						<div>ì½˜í…ì¸ íƒ€ì… : ${planContent.contentType}</div>
+						
+						<c:if test="${!empty planContent.orderNo}">
+							<div>ìˆœì„œ : ${planContent.orderNo}</div>
+						</c:if>
 						
 						<c:if test="${!empty scrap.scrapNo }">
-							<div>½ºÅ©·¦¹øÈ£ : ${scrap.scrapNo }</div>
+							<div>ìŠ¤í¬ë©ë²ˆí˜¸ : ${scrap.scrapNo }</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.route}">
-							<div>·çÆ® : ${planContent.route}</div>
+							<div>ë£¨íŠ¸ : ${planContent.route}</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.departureLocation}">
-							<div>Ãâ¹ßÁö : ${planContent.departureLocation}</div>
+							<div>ì¶œë°œì§€ : ${planContent.departureLocation}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.arrivalLocation}">
-							<div>µµÂøÁö : ${planContent.arrivalLocation}</div>
+							<div>ë„ì°©ì§€ : ${planContent.arrivalLocation}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.estimatedTime}">
-							<div>¼Ò¿ä½Ã°£ : ${planContent.estimatedTime}</div>
+							<div>ì†Œìš”ì‹œê°„ : ${planContent.estimatedTime}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.routeType}">
-							<div>ÀÌµ¿¹æ¹ı : ${planContent.routeType}</div>
+							<div>ì´ë™ë°©ë²• : ${planContent.routeType}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.routeDescription}">
-							<div>±æÃ£±â°á°ú : ${planContent.routeDescription}</div>
+							<div>ê¸¸ì°¾ê¸°ê²°ê³¼ : ${planContent.routeDescription}</div>
 						</c:if>
-
-						<c:if test="${!empty planContent.orderNo}">
-							<div>¼ø¼­ : ${planContent.orderNo}</div>
+						
+						
+						<c:if test="${!empty planContent.mapName}">
+							<div>${planContent.mapName} </div>
 						</c:if>
-
+						
+						<c:if test="${!empty planContent.mapUrl}">
+							<div>ì§€ë„ URL : ${planContent.mapUrl}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapAddress}">
+							<div>ì§€ë„ ì£¼ì†Œ : ${planContent.mapAddress}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapPhone}">
+							<div>PHONE : ${planContent.mapPhone}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapWebsite}">
+							<div>ì›¹ì‚¬ì´íŠ¸ : ${planContent.mapWebsite}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapImage}">
+							<div>ì§€ë„ì´ë¯¸ì§€ : ${planContent.mapImage}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapType}">
+							<div>ì§€ë„ìœ í˜• : ${planContent.mapType}</div>
+						</c:if>
+						
 						<c:if test="${!empty planContent.contentText}">
-							<div>ÅØ½ºÆ® : ${planContent.contentText}</div>
+							<div>í…ìŠ¤íŠ¸ : ${planContent.contentText}</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.contentImage}">
-							<div>ÀÌ¹ÌÁö : </div>
+							<div>ì´ë¯¸ì§€ : </div>
 							<div><img src="/resources/images/dailyPlanContent/${planContent.contentImage}" width="300px" /></div>
 						</c:if>
 
@@ -156,10 +185,10 @@
 	<div>
 
 		
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">±Û¾¾¾²±â</button></span>
-		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">»çÁøÃß°¡</button> </span> 
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">Áöµµ</button></span>
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">±æÃ£±â</button> </span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">ê¸€ì”¨ì“°ê¸°</button></span>
+		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">ì‚¬ì§„ì¶”ê°€</button> </span> 
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">ì§€ë„</button></span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">ê¸¸ì°¾ê¸°</button> </span>
 
 		<!---------- Map Dialog ------------->
 		<div class="modal fade" id="addMap"  role="dialog">
@@ -177,10 +206,9 @@
 						<jsp:include page="/dailyplan/addMap.jsp" flush="false">
 							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 						</jsp:include>
-
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">ë‚˜ê°€ê¸°</button>
 					</div>
 				</div>
 			</div>
@@ -231,7 +259,7 @@
 					
 						<form name="form" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="uploadFile" class="col-sm-4 control-label">»óÇ°ÀÌ¹ÌÁö
+								<label for="uploadFile" class="col-sm-4 control-label">ìƒí’ˆì´ë¯¸ì§€
 								</label>
 								
 								<div class="col-sm-6">

@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <head>
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -17,12 +17,12 @@
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 
-<!-- Ä¶¸°´õ -->
+<!-- ìº˜ë¦°ë” -->
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <link rel="stylesheet" href="/resources/demos/style.css">
 <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<!-- Ä¶¸°´õ -->
+<!-- ìº˜ë¦°ë” -->
 
 <title>MainPlanList</title>
 
@@ -33,8 +33,8 @@
 	}
 	
 	$(function() {
-		 $( "button:contains('È®ÀÎ')" ).on("click", function() {
-			 alert("¾È³ç");
+		 $( "button:contains('í™•ì¸')" ).on("click", function() {
+			 alert("ì•ˆë…•");
 			 fncAddMainPlan();
 		});
 	});	
@@ -80,12 +80,12 @@
 		</div>
 		
 		<div class="form-group">
-				<label for="departureDate" class="col-sm-2 control-label">Ãâ¹ßÀÏ</label>
+				<label for="departureDate" class="col-sm-2 control-label">ì¶œë°œì¼</label>
 					<div class="col-sm-12">
 						<input type="text" id="datepicker1" name="departureDate" ></p>
 					</div>
 				
-				<label for="arrivalDate" class="col-sm-2 control-label">µµÂøÀÏ</label>
+				<label for="arrivalDate" class="col-sm-2 control-label">ë„ì°©ì¼</label>
 					<div class="col-sm-12">
 						<input type="text" id="datepicker2" name="arrivalDate" ></p>
 					</div>
@@ -101,7 +101,7 @@
 			
 			<div class="pageButton-group" align="center">
 				<button type="button" class="btn btn-default" aria-label="Right Align">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>È®ÀÎ
+					<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>í™•ì¸
 				</button>
 			</div>
 			

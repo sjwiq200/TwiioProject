@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,9 +9,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -39,14 +39,14 @@ body {
 	}
 
 	$(function() {
-		$("button:contains('Ãß°¡')").on("click", function() {
+		$("button:contains('ì¶”ê°€')").on("click", function() {
 			fncAddMainPlanList();
 		});
 	});
 	 
 	 	 $(function() {
-			$("button:contains('¼±ÅÃ')").bind("click",function() {
-				var index = $("button:contains('¼±ÅÃ')").index(this);
+			$("button:contains('ì„ íƒ')").bind("click",function() {
+				var index = $("button:contains('ì„ íƒ')").index(this);
 				var dailyPlanNo = $($("input[name='dailyPlanNo']")[index]).val();
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
@@ -75,16 +75,16 @@ body {
 				  	
 				  			<ul>
 								<h3>DAY${ i }</h3>
-								<li>µ¥ÀÏ¸®ÇÃ·£¹øÈ£ : ${dailyPlan.dailyPlanNo}</li>
-								<li>¸ŞÀÎÇÃ·£¹øÈ£ : ${dailyPlan.mainPlan.mainPlanNo}</li>
-								<li>À¯Àú¹øÈ£ : ${dailyPlan.user.userNo }</li>
-								<li>µ¥ÀÏ¸®³¯Â¥ : ${dailyPlan.dailyDate}</li>
-								<li>µµ½Ã¸í : ${dailyPlan.dailyCity}</li>
-								<li>±¹°¡¸í : ${dailyPlan.dailyCountry}</li>
+								<li>ë°ì¼ë¦¬í”Œëœë²ˆí˜¸ : ${dailyPlan.dailyPlanNo}</li>
+								<li>ë©”ì¸í”Œëœë²ˆí˜¸ : ${dailyPlan.mainPlan.mainPlanNo}</li>
+								<li>ìœ ì €ë²ˆí˜¸ : ${dailyPlan.user.userNo }</li>
+								<li>ë°ì¼ë¦¬ë‚ ì§œ : ${dailyPlan.dailyDate}</li>
+								<li>ë„ì‹œëª… : ${dailyPlan.dailyCity}</li>
+								<li>êµ­ê°€ëª… : ${dailyPlan.dailyCountry}</li>
 								<li> </li>
 							<div class="pageButton-group" align="center">
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>¼±ÅÃ
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>ì„ íƒ
 								</button>
 							</div>
 	
@@ -94,7 +94,7 @@ body {
 			
 				<div class="pageButton-group" align="center">
 					<button type="button" class="btn btn-default" aria-label="Right Align">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>Ãß°¡
+						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>ì¶”ê°€
 					</button>
 				</div>
 	

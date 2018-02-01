@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,9 +9,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -39,7 +39,7 @@ body {
 <script>
 
 
-	//¹öÆ° TEST//
+	//ë²„íŠ¼ TEST//
 
 	
 	
@@ -52,15 +52,15 @@ body {
 	}
 
 	$(function() {
-		$("button:contains('Ãß°¡')").on("click", function() {
+		$("button:contains('ì¶”ê°€')").on("click", function() {
 			fncAddMainPlanList();
 		});
 	});
 	
 	
 	 $(function() {
-			$("button:contains('¼öÁ¤')").bind("click",function() {
-				var index = $("button:contains('¼öÁ¤')").index(this);
+			$("button:contains('ìˆ˜ì •')").bind("click",function() {
+				var index = $("button:contains('ìˆ˜ì •')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/updateMainPlanView?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -68,18 +68,17 @@ body {
 	 });
 	 
 	 $(function() {
-			$("button:contains('»èÁ¦')").bind("click",function() {
-				var index = $("button:contains('»èÁ¦')").index(this);
-				var scrapNo = $($("input[name='scrapNo']")[index]).val();
-				alert(scrapNo);
-				var url = "/mainplan/deleteScrap?scrapNo="+scrapNo;
+			$("button:contains('ì‚­ì œ')").bind("click",function() {
+				var index = $("button:contains('ì‚­ì œ')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
 			});
 	 })
 	 
 	 	 $(function() {
-			$("button:contains('¼±ÅÃ')").bind("click",function() {
-				var index = $("button:contains('¼±ÅÃ')").index(this);
+			$("button:contains('ì„ íƒ')").bind("click",function() {
+				var index = $("button:contains('ì„ íƒ')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -88,7 +87,7 @@ body {
 	 
 	 $(function(){
 		 $("#listScrap").bind("click",function(){
-			 alert("¾È³ç");
+			 alert("ì•ˆë…•");
 			 var url = "/mainplan/listScrap";
 			 $(location).attr('href', url);
 		 })
@@ -112,7 +111,7 @@ body {
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<button type="button" class="btn" id="listScrap"><Strong>Scrap</Strong></button> 
-			<div> ¤Ñ </div>
+			<div> ã…¡ </div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
@@ -124,37 +123,37 @@ body {
 				  			 <input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" />
 				  			
 								<div>[${ i }]</div>
-								<div>ÇÃ·£¹øÈ£ : ${mainPlan.mainPlanNo}</div>
-								<div>À¯Àú¹øÈ£ : ${mainPlan.user.userNo}</div>
-								<div>Ãâ¹ßÀÏ : ${mainPlan.departureDate }</div>
-								<div>µµÂøÀÏ : ${mainPlan.arrivalDate}</div>
-								<div>±¹°¡¸í : ${mainPlan.country}</div>
-								<div>µµ½Ã¸í : ${mainPlan.city}</div>
-								<div>ÇÃ·£Á¦¸ñ : ${mainPlan.planTitle}</div>
-								<div>¼¶³×ÀÏÀÌ¹ÌÁö : ${mainPlan.mainThumbnail}</div>
+								<div>í”Œëœë²ˆí˜¸ : ${mainPlan.mainPlanNo}</div>
+								<div>ìœ ì €ë²ˆí˜¸ : ${mainPlan.user.userNo}</div>
+								<div>ì¶œë°œì¼ : ${mainPlan.departureDate }</div>
+								<div>ë„ì°©ì¼ : ${mainPlan.arrivalDate}</div>
+								<div>êµ­ê°€ëª… : ${mainPlan.country}</div>
+								<div>ë„ì‹œëª… : ${mainPlan.city}</div>
+								<div>í”Œëœì œëª© : ${mainPlan.planTitle}</div>
+								<div>ì„¬ë„¤ì¼ì´ë¯¸ì§€ : ${mainPlan.mainThumbnail}</div>
 														
 							<div class="pageButton-group" align="center">
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="update"></span>¼öÁ¤
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="update"></span>ìˆ˜ì •
 								</button>
 								
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>»èÁ¦
+									<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>ì‚­ì œ
 								</button>
 								
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>¼±ÅÃ
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>ì„ íƒ
 								</button>
 			
 							</div>
 	
-							<div> ¤Ñ </div>
+							<div> ã…¡ </div>
 				  	 </c:forEach>
 			
 			
 				<div class="pageButton-group" align="center">
 					<button type="button" class="btn btn-default" aria-label="Right Align">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>Ãß°¡
+						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>ì¶”ê°€
 					</button>
 				</div>
 	
@@ -187,7 +186,7 @@ body {
                 });
             },
 
-            // ±¸ÀÔ ¿Ï·áµÇ¸é ½ÇÇàµÈ´Ù.
+            // êµ¬ì… ì™„ë£Œë˜ë©´ ì‹¤í–‰ëœë‹¤.
             onAuthorize: function(data, actions) {
             		$("#cash").attr("selected",false);
             		$("#paypal").attr("selected",true);
@@ -198,11 +197,11 @@ body {
             },
             
             onCancel: function(data, actions) {
-               alert("Ãë¼ÒÇÏ¿´½À´Ï´Ù. ´Ù½Ã °áÁ¦ ºÎÅ¹µå¸³´Ï´Ù. ");
+               alert("ì·¨ì†Œí•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ê²°ì œ ë¶€íƒë“œë¦½ë‹ˆë‹¤. ");
               },
         
               onError: function(err) {
-               alert("¿¡·¯°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù. ´Ù½Ã °áÁ¦ ºÎÅ¹µå¸³´Ï´Ù.");
+               alert("ì—ëŸ¬ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤. ë‹¤ì‹œ ê²°ì œ ë¶€íƒë“œë¦½ë‹ˆë‹¤.");
               }
               
         }, '#paypal-button-container');

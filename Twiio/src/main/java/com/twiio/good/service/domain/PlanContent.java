@@ -13,6 +13,13 @@ public class PlanContent {
 	private Scrap scrap;
 	private String route;
 	private String mapUrl;
+	private String mapAddress;
+	private String mapPhone;
+	private String mapWebsite;
+	private String mapName;
+	private String mapImage;
+	private String mapType;
+	
 	private String departureLocation;
 	private String arrivalLocation;
 	private String estimatedTime;
@@ -144,15 +151,64 @@ public class PlanContent {
 		this.uploadFile = uploadFile;
 	}
 
-	@Override
-
-	public String toString() {
-		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan + ", scrap=" + scrap + ", route="
-				+ route + ", mapUrl=" + mapUrl + ", departureLocation=" + departureLocation + ", arrivalLocation="
-				+ arrivalLocation + ", estimatedTime=" + estimatedTime + ", routeType=" + routeType
-				+ ", routeDescription=" + routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText
-				+ ", contentImage=" + contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType
-				+ "]";
+	public String getMapAddress() {
+		return mapAddress;
 	}
 
+	public void setMapAddress(String mapAddress) {
+		this.mapAddress = mapAddress;
+	}
+
+	public String getMapPhone() {
+		return mapPhone;
+	}
+
+	public void setMapPhone(String mapPhone) {
+		this.mapPhone = mapPhone;
+	}
+
+	public String getMapWebsite() {
+		return mapWebsite;
+	}
+
+	public void setMapWebsite(String mapWebsite) {
+		this.mapWebsite = mapWebsite;
+	}
+
+	public String getMapName() {
+		return mapName;
+	}
+
+	public void setMapName(String mapName) {
+		this.mapName = mapName;
+	}
+
+	public String getMapImage() {
+		return mapImage;
+	}
+
+	public void setMapImage(String mapImage) {
+		this.mapImage = mapImage;
+	}
+
+	public String getMapType() {
+		return mapType;
+	}
+
+	public void setMapType(String mapType) {
+		this.mapType = mapType;
+	}
+
+	@Override
+	public String toString() {
+		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan + ", scrap=" + scrap + ", route="
+				+ route + ", mapUrl=" + mapUrl + ", mapAddress=" + mapAddress + ", mapPhone=" + mapPhone
+				+ ", mapWebsite=" + mapWebsite + ", mapName=" + mapName + ", mapImage=" + mapImage + ", mapType="
+				+ mapType + ", departureLocation=" + departureLocation + ", arrivalLocation=" + arrivalLocation
+				+ ", estimatedTime=" + estimatedTime + ", routeType=" + routeType + ", routeDescription="
+				+ routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText + ", contentImage="
+				+ contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType + "]";
+	}
+
+	
 }

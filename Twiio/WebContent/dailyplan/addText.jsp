@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -37,7 +37,7 @@
         	minHeight: null,             
         	maxHeight: null,             
         	focus: false,                 
-        	placeholder: '¿©ÇàÁö¿¡¼­ ÇÊ¿äÇÑ ¹°Ç°/ºñÇà±â ¹øÈ£/¿©±Ç¹øÈ£/¼÷¼ÒÀüÈ­¹øÈ£/¸ÀÁıÀüÈ­¹øÈ£ µîÀÇ Á¤º¸¸¦ Àû¾îº¸¼¼¿ä!'
+        	placeholder: 'ì—¬í–‰ì§€ì—ì„œ í•„ìš”í•œ ë¬¼í’ˆ/ë¹„í–‰ê¸° ë²ˆí˜¸/ì—¬ê¶Œë²ˆí˜¸/ìˆ™ì†Œì „í™”ë²ˆí˜¸/ë§›ì§‘ì „í™”ë²ˆí˜¸ ë“±ì˜ ì •ë³´ë¥¼ ì ì–´ë³´ì„¸ìš”!'
         });
         
         $("input[type='submit']").on("click",function(){
@@ -55,7 +55,7 @@
   	
     <form name="form">
 	    <textarea id="summernote" name="contentText"></textarea>
-	    <!--  jsp include parameter¸¦ ÅëÇØ Àü´Ş¹ŞÀº °ªÀ» »ç¿ëÇÏ±â À§ÇØ ¾Æ·¡¿Í °°ÀÌ ¼±¾ğÇß½À´Ï´Ù. -->
+	    <!--  jsp include parameterë¥¼ í†µí•´ ì „ë‹¬ë°›ì€ ê°’ì„ ì‚¬ìš©í•˜ê¸° ìœ„í•´ ì•„ë˜ì™€ ê°™ì´ ì„ ì–¸í–ˆìŠµë‹ˆë‹¤. -->
 	    <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
 	   <!--  <button name="save" type="button">ADD</button> -->
 	   <input type="submit" value="ADD"/>

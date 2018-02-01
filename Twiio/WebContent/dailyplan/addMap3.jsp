@@ -7,12 +7,8 @@
 
 <head>
 
-<% 
-	String dailyPlanNo = (String) request.getParameter("data"); 
-%>
+<% String dailyPlanNo = (String) request.getParameter("data");  %>
 
-
- <title>Geocoding service</title>
  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
  <meta charset="UTF-8">
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -212,6 +208,7 @@
 								$("#mapUrl").val(url);
 								$("#mapType").val(types);
 								
+								alert(name);
 								alert($("#mapName").val());
 						
 							    google.maps.event.addListener(servicemarker, 'click', function() {
@@ -268,46 +265,49 @@
 		}
 
 		$(function(){
-			$("button[name='addMapToPlan']").on("click",function(){
-
+			$("input[name='addMapToPlan']").on("click",function(){
 				var mapUrl= $("#mapUrl").val().toString();
 				var mapName = document.getElementById("addr1").value;
 				var mapType = $("#mapType").val().toString();
 				var mapPhone = $("#mapPhone").val().toString();
 				var name=$("#addr1").val();
 				var mapAddress = $("#mapAddress").val();
-				var korName = encodeURI(encodeURIComponent(mapName));
-				var korAddress= encodeURI(encodeURIComponent(mapAddress));
-				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress;
 				
-				//$("form").attr("method", "POST").attr("action",	"/dailyplan/addMap").submit();
+				alert(name);
+				
+				alert(document.getElementById("addr1").value);
+				self.location = "/dailyplan/addMap?mapUrl="+mapUrl+"&mapName="+name+"&mapType="+mapType+"&mapPhone="+mapPhone+"&mapAddress="+mapAddress;
+				
+				
+				/* alert("::"+$("#mapName").val());
+				$("form").attr("method", "POST").attr("action",	"/dailyplan/addMap").submit(); */
 			});
 		});
 
 </script>
+
 <body>
 		<div>
 			<input type="text" id="addr1" name="address" value="" />
 			<span> &nbsp; </span>
-			<button name="submit" value="okay" onclick='codeAddress(); return false;'>♥</button>
+			<a name="hey" value="okay" onclick='codeAddress(); return false;'>♥SEARCH</a>
 		</div>
 		<div> &nbsp; </div>
 		<div id="map"></div>
-		<div id="resultMap">
-		
-				<form>
-				  <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-				  <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
-				  <input type="hidden" name="mapAddress" id="mapAddress"value="기본값"  />
-				  <input type="hidden" name="mapName" id="mapName"  value="기본값" />
-				  <input type="hidden" name="mapPhone"  id="mapPhone" value="기본값" />
-				  <input type="hidden" name="mapWebsite"  id="mapWebsite" value="기본값"  />
-				  <input type="hidden" name="mapType" id="mapType" value=""  />
+		<div id="resultMap">	
+				  <form name="form">
+					  <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+					  <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
+					  <input type="hidden" name="mapAddress" id="mapAddress"value="기본값"  />
+					  <input type="hidden" name="mapName" id="mapName"  value="기본값" />
+					  <input type="hidden" name="mapPhone"  id="mapPhone" value="기본값" />
+					  <input type="hidden" name="mapWebsite"  id="mapWebsite" value="기본값"  />
+					  <input type="hidden" name="mapType" id="mapType" value="기본값"  />
+					  <input type="submit" name="addMapToPlan" value="내플랜에추가하기" />
 				 </form>
 		</div>
 		<div> &nbsp; </div>
-		<button type="button" class="btn btn-default" data-dismiss="modal" name="addMapToPlan">내 플랜에 추가하기</button>
 
 </body>
+
 </html>
