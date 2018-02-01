@@ -98,7 +98,7 @@ public class ProductServiceImpl implements ProductService {
 		map.put("user", user);
 		List<Transaction> list = transactionDao.listStarEval(map);
 		int totalCount = transactionDao.getTotalCount(map);
-		
+		System.out.println("totalCount :: "+totalCount);
 		//map.clear();
 		map.put("list", list);
 		map.put("totalCount", totalCount);

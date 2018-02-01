@@ -32,7 +32,7 @@
 		<result property="replyRegDate" 	column="reply_reg_date" 	jdbcType="DATE" />
 		<result property="productNo" 		column="product_no" 		jdbcType="NUMERIC" />
 		<result property="communityNo" 		column="community_no" 		jdbcType="NUMERIC" />
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR" />
+		<result property="userName" 		column="user_name" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -67,9 +67,9 @@
 		INSERT
 		INTO FRIEND
 		VALUES (
+		seq_friend_no.nextval,
 		#{userNo:NUMERIC},
-		#{friendNo:NUMERIC},
-		seq_friend_no.nextval
+		#{friendNo:NUMERIC}
 		)
 	</insert>
 	
@@ -83,7 +83,7 @@
 		SYSDATE,
 		#{productNo:NUMERIC},
 		#{communityNo:NUMERIC},
-		#{userId:VARCHAR}
+		#{userName:VARCHAR}
 		)	
 	</insert>
 	
@@ -141,7 +141,7 @@
 							   		REPLY_REG_DATE,
 							   		PRODUCT_NO,
 							   		COMMUNITY_NO,
-							   		USER_ID
+							   		USER_NAME
 							   FROM 
   							   REPLY 
   							   <where>			

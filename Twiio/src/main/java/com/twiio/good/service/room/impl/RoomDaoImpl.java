@@ -1,6 +1,7 @@
 package com.twiio.good.service.room.impl;
 
 import java.security.MessageDigest;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Repository;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Room;
+import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.room.RoomDao;
 
@@ -33,12 +35,11 @@ public class RoomDaoImpl implements RoomDao {
 	}
 
 	@Override
-	public List<Room> getRoomList(Search search) throws Exception {
+	public List<Room> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		
-		
-		Query query = new Query(new Criteria("roomname").all("nice"));
-		System.out.println(mongoTemplate.find(query, Room.class, "rooms"));
+//		Query query = new Query(new Criteria("roomname").all("nice"));
+//		System.out.println(mongoTemplate.find(query, Room.class, "rooms"));
 		List<Room> list = mongoTemplate.findAll(Room.class,"rooms");
 		for (Room messenger : list) {
 			System.out.println(messenger);
@@ -82,6 +83,74 @@ public class RoomDaoImpl implements RoomDao {
 				mongoTemplate.createCollection("chat"+retVal);
 		
 	}
+
+	@Override
+	public void addRoomUser(String roomKey, int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println("addRoomUser()");
+		
+		boolean flag = false;
+		
+		
+		RoomUser roomUser = new RoomUser();
+		roomUser.setRoomKey(roomKey);
+		roomUser.setUserNo(userNo);
+		
+		
+		Criteria criteria = new Criteria("userNo");
+		criteria.is(userNo);
+		
+		Query query = new Query(criteria);
+		
+		List<RoomUser> list = mongoTemplate.find(query, RoomUser.class,"roomUser");
+		
+		
+		for (RoomUser roomUserList : list) {
+			System.out.println("roomUserList.getRoomKey()==>"+roomUserList.getRoomKey());
+			if(roomUserList.getRoomKey().equals(roomKey)) {
+				flag = true;
+				break;
+			}
+		}
+		
+		if(!flag) {
+			mongoTemplate.insert(roomUser,"roomUser");
+		}
+		
+	}
+
+	@Override
+	public List<RoomUser> listMyRoom(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Criteria criteria = new Criteria("userNo");
+		criteria.is(userNo);
+		 
+				
+		Query query = new Query(criteria);
+		System.out.println(mongoTemplate.find(query, RoomUser.class, "roomUser"));
+		return mongoTemplate.find(query, RoomUser.class, "roomUser");
+	}
+
+	@Override
+	public Room getRoom(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		
+		Criteria criteria = new Criteria("key");
+		criteria.is(roomKey);
+		 
+		Query query = new Query(criteria);
+		
+		
+		return mongoTemplate.findOne(query, Room.class, "rooms");
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -17,13 +17,12 @@
 <html lang="ko">
 <head>
 <title>Insert title here</title>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta charset="EUC-KR">
+
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- ///////////////////////summnernote/////////////////////////// -->
@@ -51,9 +50,9 @@
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -69,22 +68,22 @@
 <script type="text/javascript">
 
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ý ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ý Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $("button.btn.btn-primary").bind("click" , function() {
 		 $("form").attr("method" , "POST").attr("action" , "/community/listCommunity").submit();
 	});
 });	
 
 
-/*============= jQuery º¯°æ ÁÖ¼®Ã³¸® =============
+/*============= jQuery ë³€ê²½ ì£¼ì„ì²˜ë¦¬ =============
 function resetData() {
 		document.detailForm.reset();
 }========================================	*/
-//==> Ãß°¡µÈºÎºÐ : "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á
+//==> ì¶”ê°€ëœë¶€ë¶„ : "ì·¨ì†Œ"  Event ì²˜ë¦¬ ë°  ì—°ê²°
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ý ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ý Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $("a[href='#']").on("click" , function() {
 		 history.go(-1);
 	});
@@ -137,27 +136,27 @@ $(function() {
    	
    	 <div class="container">
 		<div class="page-header text-info">
-		<h1 >Ä¿ ¹Â ´Ï Æ¼ ±Û ÀÛ ¼º</h1>
+		<h1 >ì»¤ ë®¤ ë‹ˆ í‹° ê¸€ ìž‘ ì„±</h1>
 		</div>
 		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
-		<input type="hidden" name = "communityType" id = "communityType" value="${communityType }"/>
+		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
 		
 		<div class="form-group">
 		    <div class="col-xs-6 col-sm-4">
 		      <select class="form-control" name="communitySubTitle" id="communitySubTitle">
-		      		<option value="">¸»¸Ó¸®¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä</option>
-				  	<option value="0">µµ½Ã</option>
-					<option value="1">·çÆ®</option>
-					<option value="2">±³Åë</option>
-					<option value="3">¼÷¼Ò</option>
-					<option value="4">¼îÇÎ</option>  
-					<option value="5">±âÅ¸</option>
+		      		<option value="">ë§ë¨¸ë¦¬ë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”</option>
+				  	<option value="0">ë„ì‹œ</option>
+					<option value="1">ë£¨íŠ¸</option>
+					<option value="2">êµí†µ</option>
+					<option value="3">ìˆ™ì†Œ</option>
+					<option value="4">ì‡¼í•‘</option>  
+					<option value="5">ê¸°íƒ€</option>
 				</select>
 		    </div>
 		
 		    <div class="col-xs-8">
-		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="Á¦¸ñÀ» ÀÔ·Â ÇØÁÖ¼¼¿ä.">
+		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="ì œëª©ì„ ìž…ë ¥ í•´ì£¼ì„¸ìš”.">
 		    </div>
 		</div>
 		
@@ -167,8 +166,8 @@ $(function() {
 
 	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="save" class="btn btn-primary">ÀÛ ¼º</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+		      <button type="button" name="save" class="btn btn-primary">ìž‘ ì„±</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
 		    </div>
 	</div>
    <!-- ToolBar End /////////////////////////////////////-->

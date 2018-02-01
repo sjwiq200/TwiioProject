@@ -24,6 +24,7 @@ public class Transaction {
 	private String userName;
 	private String hostName;
 	
+	
 
 	public Transaction() {
 		// TODO Auto-generated constructor stub
@@ -180,6 +181,7 @@ public class Transaction {
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
+
 
 	@Override
 	public String toString() {
