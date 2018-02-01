@@ -22,7 +22,7 @@
 		<result property="viewCount" 			column="view_count" 			jdbcType="NUMERIC" />
 		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />
 		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />
-		<result property="productThumbnail" 	column="thumbnail" 				jdbcType="VARCHAR" />
+		<result property="thumbnail" 			column="thumbnail" 				jdbcType="VARCHAR" />
 		<result property="hostName" 			column="user_name" 			jdbcType="VARCHAR" />
 		<result property="hostImage" 			column="profile_image" 		jdbcType="VARCHAR" />	
 	</resultMap>
@@ -30,7 +30,7 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, product_delete) 
+		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, thumbnail, product_delete) 
 		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
 					#{productName} , 
 					#{productPrice} , 
@@ -42,6 +42,7 @@
 					#{description:VARCHAR} ,
 					#{tourHeadCount} ,					
 					#{productCount} ,
+					#{thumbnail:VARCHAR} ,
 					'0' )
 	 </insert>
 	 
@@ -108,7 +109,8 @@
 			p.product_content as product_content, 
 			p.head_count as head_count, 
 			p.view_count as view_count, 
-			p.product_count as product_count, 
+			p.product_count as product_count,
+			p.thumbnail as thumbnail, 
 			u.user_name as user_name, 
 			u.profile_image as profile_image		
 		FROM product p, users u 
@@ -123,10 +125,10 @@
 	 				AND city = #{search.searchKeyword}
 				</if>
 				<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
-	 				AND product_title LIKE '${search.searchKeyword}%'
+	 				AND product_title LIKE '%${search.searchKeyword}%'
 				</if>
 				<if test="search.searchCondition == 3 and search.searchKeyword !='' ">
-	 				AND user_no LIKE '${search.searchKeyword}%'
+	 				AND user_name LIKE '${search.searchKeyword}%'
 				</if>
 				<if test="search.searchCondition == 4 and search.searchKeyword !='' ">
 					<if test="str.length == 1">
