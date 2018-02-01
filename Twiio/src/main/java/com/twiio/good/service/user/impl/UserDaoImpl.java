@@ -4,10 +4,20 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.net.URL;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeUtility;
 import javax.net.ssl.HttpsURLConnection;
 
 import org.apache.ibatis.session.SqlSession;
@@ -19,7 +29,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.twiio.good.common.Search;
-import com.twiio.good.service.domain.Properties;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
@@ -130,6 +139,55 @@ import com.twiio.good.service.user.UserDao;
 		@Override
 		public int getTotalCount(Search search) throws Exception {
 			return sqlSession.selectOne("UserMapper.getTotalCount", search);
+		}
+
+		@Override
+		public void sendMail(String email, String authNum) throws Exception {
+			
+			String host = "smtp.gmail.com";// smtp서버
+			String subject = "Twiio 인증번호 전송";
+			String fromName = "Twiio 관리자";
+			String from = "eunae10193@gmail.com";// 관리자 메일 주소
+			String to = email;// 인증번호 받을 유저의이메일
+			
+			String content = "인증번호[" + authNum + "]";
+			
+			try {
+
+				Properties props = new Properties();
+				props.put("mail.smtp.starttls.enable", "true");
+				props.put("mail.transport.protocol", "smtp");
+				props.put("mail.smtp.host", host);
+				props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+				props.put("mail.smtp.port", "465");
+				props.put("mail.smtp.user", from);
+				props.put("mail.smtp.auth", "true");
+
+				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
+					protected PasswordAuthentication getPasswordAuthentication() {
+						return new PasswordAuthentication(from, "1379dlek");
+					}
+				});
+				Message msg = new MimeMessage(mailSession);
+				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
+
+				InternetAddress[] address1 = { new InternetAddress(to) };
+				msg.setRecipients(Message.RecipientType.TO, address1);// 받는사람
+				msg.setSubject(subject);// 메일제목
+				msg.setSentDate(new Date());// 보내는 날짜
+				msg.setContent(content, "text/html;charset=euc-kr");// 내용 설정(HTML형식)
+
+				Transport.send(msg);// 메일보내기
+				
+			} catch (MessagingException e) {
+				e.printStackTrace();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+ 
+			
 		}
 		
 	}

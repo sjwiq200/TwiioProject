@@ -456,4 +456,8 @@ public class UserServiceImpl implements UserService{
 		return transactionDao.getEval(map);
 	}
 
+	@Override
+	public void sendMail(String emai, String authNum) throws Exception {
+		 userDao.sendMail(emai, authNum);
+	}
 }

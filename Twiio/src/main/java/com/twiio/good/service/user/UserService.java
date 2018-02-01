@@ -62,6 +62,8 @@ public interface UserService {
 	public String  getEvalUser(String userId) throws Exception;
 	
 	public Transaction getEvalHost(int hostNo) throws Exception;
+	
+	public void sendMail(String emai, String authNum)throws Exception;
 		
 
 }

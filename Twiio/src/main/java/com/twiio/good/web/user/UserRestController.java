@@ -1,12 +1,15 @@
 package com.twiio.good.web.user;
 
+import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -150,5 +153,47 @@ public class UserRestController {
 		return map;
 		
 	}
+	
+	@RequestMapping( value="json/getEmailVer")
+	public Map  getEmailVer(@RequestBody String email	) throws Exception{
+	
+		System.out.println("/user/json/getEmailVer");
+		//Business Logic
+		
+		String decoding = URLDecoder.decode(email, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		 String authNum = RandomNum();
+		
+		System.out.println("입력한 이메일"+str);
+		System.out.println("생성한 인증번호"+authNum);
+		
+		userService.sendMail(str, authNum);
+		
+		
+		Map<String, String> map = new HashMap<>();
+		map.put("email", str);
+		map.put("authNum", authNum);
+		
+		
+		return map;
+		
+	}
+	
+	public String RandomNum() {
+
+		StringBuffer buffer = new StringBuffer();
+		for (int i = 0; i <= 6; i++) {
+			int n = (int) (Math.random() * 10);
+			buffer.append(n);
+
+		}
+		return buffer.toString();
+	}
+	
+
 	
 }

@@ -37,6 +37,7 @@ public class User {
 	private int profileCredibility;
 	private int starEvalHost;
 	private String reviewHost;
+	private String emailVer;
 	@JsonIgnore
 	private MultipartFile file;
 	
@@ -248,6 +249,16 @@ public class User {
 	public void setReviewHost(String reviewHost) {
 		this.reviewHost = reviewHost;
 	}
+	
+	public String getEmailVer() {
+		return emailVer;
+	}
+
+
+	public void setEmailVer(String emailVer) {
+		this.emailVer = emailVer;
+	}
+
 	@JsonIgnore
 	public MultipartFile getFile() {
 		return file;

@@ -461,10 +461,8 @@ public class InformationDaoImpl implements InformationDao {
 					 
 			List<String> tabs = new ArrayList<String> (driver.getWindowHandles());
 			 driver.switchTo().window(tabs.get(1));
-			 driver.close();
 			 
 			urlReturn.add(driver.getCurrentUrl());
-			 driver.close();
 				 
 					}catch (Exception e) {
 						System.out.println(e);
