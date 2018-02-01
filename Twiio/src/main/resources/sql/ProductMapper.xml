@@ -141,8 +141,8 @@
 			
 		</if>
 		<choose>
-			<!-- <when test="search.condition == 'low'">ORDER BY price</when>
-			<when test="search.condition == 'high'">ORDER BY price DESC</when> -->
+			<when test="search.priceCondition == 'low'">ORDER BY price</when>
+			<when test="search.priceCondition == 'high'">ORDER BY price DESC</when>
 		<otherwise>ORDER BY reg_date DESC</otherwise>
 		</choose>
 	 </sql>

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
@@ -37,6 +38,10 @@ public class ProductController {
 //	@Autowired
 //	@Qualifier("transactionServiceImpl")
 //	private TransactionService transactionService;
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
 
 	public ProductController() {
 		System.out.println(this.getClass());
@@ -95,12 +100,25 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("productNo") int productNo, Map<String, Object> map) throws Exception {
+	public String getProduct( @RequestParam("productNo") int productNo, @ModelAttribute("search") Search search, Map<String, Object> map) throws Exception {
 		
 		System.out.println("/product/getProduct : GET");
 		Product product = productService.getProduct(productNo);
+		Transaction transaction = productService.getEvalProduct(productNo);
 		
+		//Search search = new Search();
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}		
+		search.setPageSize(5);
+		Map<String, Object> starMap = productService.listStarEvalProduct(search, productNo);
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)starMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());
+		
+		map.put("list", (List<Transaction>)starMap.get("list"));
+		map.put("totalCount", starMap.get("totalCount"));
+		map.put("resultPage", resultPage);
 		map.put("product", product);
+		map.put("transaction", transaction);
 		
 		return "forward:/product/getProduct.jsp";
 	}
@@ -137,14 +155,15 @@ public class ProductController {
 		}
 		search.setPageSize(20);//20개씩 더보기로
 				
-		Map productMap = productService.listProduct(search);
-		
+		Map<String, Object> productMap = productService.listProduct(search);
+		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
 		//map.put("list", productMap.get("list"));
 		
 		//List<Product> list = (List<Product>)map.get("list");
 		System.out.println("map :: "+map);
 		map.put("list", (List<Product>)productMap.get("list"));
 		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
+		//map.put("resultPage", resultPage);
 		map.put("search", search);
 		
 		return "forward:/product/listProduct.jsp";
@@ -191,12 +210,11 @@ public class ProductController {
 		search.setCurrentPage(1);
 		search.setPageSize(10);//10등까지
 		
-		List<Transaction> list = productService.listBestProduct(search);
-				
+		//List<Transaction> list = productService.listBestProduct(search);				
 		
-		//map.put("list", productService.listBestProduct(search));
+		map.put("list", (List<Transaction>)productService.listBestProduct(search));
 		
-		return "forward:/product/readProduct.jsp";
+		return "forward:/product/best10.jsp";
 	}
 
 }
