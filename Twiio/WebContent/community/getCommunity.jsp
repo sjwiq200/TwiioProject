@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
@@ -17,13 +17,9 @@
 <html lang="ko">
 <head>
 <title>Insert title here</title>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
-	<meta charset="EUC-KR">
-	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- ///////////////////////summnernote/////////////////////////// -->
@@ -51,9 +47,9 @@
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	
  	
@@ -76,22 +72,22 @@
 <script type="text/javascript">
 
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $("button.btn.btn-primary").bind("click" , function() {
 		 $("form").attr("method" , "POST").attr("action" , "/community/listCommunity").submit();
 	});
 });	
 
 
-/*============= jQuery º¯°æ ÁÖ¼®Ã³¸® =============
+/*============= jQuery ë³€ê²½ ì£¼ì„ì²˜ë¦¬ =============
 function resetData() {
 		document.detailForm.reset();
 }========================================	*/
-//==> Ãß°¡µÈºÎºĞ : "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á
+//==> ì¶”ê°€ëœë¶€ë¶„ : "ì·¨ì†Œ"  Event ì²˜ë¦¬ ë°  ì—°ê²°
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $("a[href='#']").on("click" , function() {
 		 history.go(-1);
 	});
@@ -138,7 +134,7 @@ $(function() {
    	 <div class="container">
    	
 		<div class="col-xs-10 col-xs-offset-1 page-header text-info">
-		<h1>Ä¿ ¹Â ´Ï Æ¼ ±Û º¸ ±â</h1>
+		<h1>ì»¤ ë®¤ ë‹ˆ í‹° ê¸€ ë³´ ê¸°</h1>
 		</div>
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType }"/>
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
@@ -146,35 +142,34 @@ $(function() {
 		   
 		    <div class="col-md-5 col-md-offset-1">
 		    <h4><strong><c:if test="${community.communitySubTitle == 0}">
-		    	[µµ½Ã]
+		    	[ë„ì‹œ]
 		    </c:if>
 		    <c:if test="${community.communitySubTitle == 1}">
-		   	 	[·çÆ®]
+		   	 	[ë£¨íŠ¸]
 		    </c:if>
 		    <c:if test="${community.communitySubTitle == 2}">
-		   	 	[±³Åë]
+		   	 	[êµí†µ]
 		    </c:if>
 		    <c:if test="${community.communitySubTitle == 3}">
-		    	[¼÷¼Ò]
+		    	[ìˆ™ì†Œ]
 		    </c:if>
 		    <c:if test="${community.communitySubTitle == 4}">
-		    	[¼îÇÎ]
+		    	[ì‡¼í•‘]
 		    </c:if>
 		    <c:if test="${community.communitySubTitle == 5}">
-		    	[±âÅ¸]
+		    	[ê¸°íƒ€]
 		    </c:if> 
 		       |   ${community.communityTitle}
 		    
 		   </strong></h4>
 		   </div>
-			<div class="col-md-3 col-md-offset-3"><h4><strong>${community.regDate}</strong></h4></div>
-		
+			<div class="col-md-4 col-md-offset-2"><h4><strong>ì¡°íšŒìˆ˜  :  ${community.viewCount} / ë“±ë¡ì¼  :  ${community.regDate}</strong></h4></div>
 		</div>
 		<div class="col-xs-10 col-xs-offset-1">
 		<hr sytle="border-style:dotted">
 		</div>
 		<div class="form-group">
-		    <div class="col-xs-11 col-xs-offset-1"><strong>[${user.userId}]</strong></div>
+		    <div class="col-xs-11 col-xs-offset-1"><strong>[  ì‘ì„±ì  :  ${community.userName}  ]</strong></div>
 		</div>
 		<div class="form-group">
 			<div class="col-xs-11 col-xs-offset-1">
@@ -189,7 +184,7 @@ $(function() {
 				<textarea  name="comment_content" row="6" col="50"></textarea>
 			</div>
 			<div class="col-md-1">
-				<button type="button" style="" id="write" class="btn btn-default">´ñ±ÛÀÔ·Â</button>
+				<button type="button" style="" id="write" class="btn btn-default">ëŒ“ê¸€ì…ë ¥</button>
 			</div>
 		</div>
 		<br>
@@ -197,10 +192,10 @@ $(function() {
 		<br>
 		<div class="form-group">
 			<div class="col-md-2 col-md-offset-1">
-				<strong>´ñ ±Û ¸ñ ·Ï</strong>		
+				<strong>ëŒ“ ê¸€ ëª© ë¡</strong>		
 			</div>
 			<div class="col-md-2">
-				Á¶È¸¼ö : <c:if test="${totalCountReply == null}">0</c:if>
+				ëŒ“ê¸€ìˆ˜  : <c:if test="${totalCountReply == null}">0</c:if>
 					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
 			</div>
 		</div>
@@ -210,7 +205,7 @@ $(function() {
 		<div class="row">
 		<c:forEach var="reply" items="${list}">
 			<div class="col-md-10 col-md-offset-1">
-    			${reply.userId}
+    			${reply.userName}
     		</div>
     		<div class="col-md-10 col-md-offset-1">
     			${reply.replyContent}

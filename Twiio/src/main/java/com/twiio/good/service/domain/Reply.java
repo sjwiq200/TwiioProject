@@ -2,10 +2,12 @@ package com.twiio.good.service.domain;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Reply {
 	private int replyNo;
 	private int userNo;
-	private String userId;
+	private String userName;
 	private String replyContent;
 	private Date replyRegDate;
 	private int productNo;
@@ -15,27 +17,15 @@ public class Reply {
 	public Reply() {
 	}
 
-
-		
-
-
-
-
-
-	public String getUserId() {
-		return userId;
+	public String getUserName() {
+		return userName;
 	}
 
 
-
-
-
-
-
-
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
 
 
 
@@ -154,7 +144,7 @@ public class Reply {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", replyContent=" + replyContent + ", replyRegDate="
-		+ replyRegDate + ", productNo=" + productNo + ", communityNo=" + communityNo + " ]";
+		+ replyRegDate + ", productNo=" + productNo + ", communityNo=" + communityNo + ",userName="+userName+" ]";
 	}
 	
 	

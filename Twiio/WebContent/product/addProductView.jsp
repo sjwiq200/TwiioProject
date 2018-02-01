@@ -107,24 +107,31 @@ $(function() {
 	});
 });
 
-var i = 0;
+var i = 1;
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 	 $( "#addTripDate" ).on("click" , function() {
+		 if(i==1){
+			 $( "#removeTripDate" ).prop("disabled", false);
+		 }
 		 i++;
-		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" >' ) );
-		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({dateFormat: "yy-mm-dd"});		 
+		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" placeholder="투어날짜'+i+'" >' ) );
+		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({minDate: 0, dateFormat: "yy-mm-dd"});		 
 	});
 });
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 	 $( "#removeTripDate" ).on("click" , function() {
-		 $( '#datepicker'+i ).remove();
+		 if(i>1){
+			 $( '#datepicker'+i ).remove();
+			 i--;
+		 }else{
+			 $( "#removeTripDate" ).prop("disabled", true);
+		 }		 
 		 // $( "#datepicker[3]" ).remove();
-		 //$( "input[name=tripDate]" ).remove();
-		 i--;
+		 //$( "input[name=tripDate]" ).remove();		 
 	});
 });
 

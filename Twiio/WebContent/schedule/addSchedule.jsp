@@ -40,7 +40,8 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+				/* $("form")[0].reset(); */
+				window.close();
 			});
 		});	
 	
@@ -54,7 +55,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<div class="navbar  navbar-default">
         <div class="container">
-        	<a class="navbar-brand" href="/index.jsp">Model2 MVC Shop</a>
+        	
    		</div>
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -67,17 +68,24 @@
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
+		<div class="form-group">
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 제목 </label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="title" name="title" value="">
+		    </div>
+		  </div>
+		
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 날짜 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="roomname" name="roomname" placeholder="채팅방 이름 ">
+		      <input type="date" class="form-control" id="date" name="date" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="roomname" name="roomname" placeholder="채팅방 이름 ">
+		      <input type="text" class="form-control" id="region" name="region" value="">
 		    </div>
 		  </div>
 		  

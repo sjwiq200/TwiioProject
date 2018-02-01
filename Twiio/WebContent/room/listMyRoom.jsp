@@ -81,7 +81,7 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>메신저 방목록 조회 </h3>
+	       <h3>참여한 방목록 조회 </h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -124,14 +124,14 @@
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro" style="height:500px;">
+		      <div class="thumbnail" name="getPro">
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">
 		            <h3>${room.roomName} </h3>		            
 		            <p>Date : ${room.date}</p>
 		            <p>country : ${room.country}</p>
-		            <p>city : ${room.city}</p>
+		            <p> city : ${room.city}</p>
 		            <p>${room.headCount}명</p>
 		            <c:if test="${!empty user}">
 			            <a href="#">

@@ -14,7 +14,7 @@
 		<result property="communitySubTitle" 	column="community_sub_title" 	jdbcType="VARCHAR"/>
 		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
 		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
-		<result property="userId" 				column="user_id" 				jdbcType="VARCHAR"/>
+		<result property="userName" 			column="user_name" 				jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="likeSelectMap" type="like">
@@ -37,8 +37,8 @@
 		#{viewCount:NUMERIC},
 		#{communitySubTitle:VARCHAR},
 		#{communityType:VARCHAR},
-		#{communityContent:VARCHAR}),
-		#{userId:VARCHAR})
+		#{communityContent:VARCHAR},
+		#{userName:VARCHAR})
 	</insert>
 	
 	<select id="getCommunity" parameterType="int" resultMap="communitytSelectMap">
@@ -64,6 +64,14 @@
 	   	WHERE COMMUNITY_NO = #{communityNo}
 	</update>
 	
+	<update id="updateViewCommunity" parameterType="community">
+		UPDATE COMMUNITY
+	   	<set>
+	   		VIEW_COUNT = #{viewCount}
+	   	</set>
+	   	WHERE COMMUNITY_NO = #{communityNo}
+	</update>
+	
 	<!-- SQL : SELECT LIST -->
 	
 	<select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
@@ -74,8 +82,21 @@
   							   COMMUNITY 
   							   WHERE									
 						       COMMUNITY_TYPE = #{communityType}
-							   ORDER BY COMMUNITY_NO DESC
-							   ) inner_table
+						       <choose>
+						       	<when test="search.searchKeyword == null">
+						       	</when>
+						       <otherwise>
+								<if test="search.searchCondition != null">
+									<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+								  	 	AND COMMUNITY_TITLE LIKE '%${search.searchKeyword}%'
+									</if>
+									<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+								 		AND USER_ID LIKE '%${search.searchKeyword}%'
+									</if>
+								</if>
+							   </otherwise>
+							   </choose>
+							   ORDER BY COMMUNITY_NO DESC) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
@@ -91,11 +112,25 @@
 	
 	<!-- SQL : DELETE ONE -->
 	
-	<select  id="getTotalCount" parameterType="String"  resultType="int" >
+	<select  id="getTotalCount" parameterType="map"  resultType="int" >
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  			 FROM COMMUNITY
 	  			 WHERE COMMUNITY_TYPE = #{communityType}
+	  			 <choose>
+						       	<when test="search.searchKeyword == null">
+						       	</when>
+						       <otherwise>
+								<if test="search.searchCondition != null">
+									<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+								  	 	AND COMMUNITY_TITLE LIKE '%${search.searchKeyword}%'
+									</if>
+									<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+								 		AND USER_ID LIKE '%${search.searchKeyword}%'
+									</if>
+								</if>
+							   </otherwise>
+							   </choose>
 				)countTable						
 	 </select>
 	 

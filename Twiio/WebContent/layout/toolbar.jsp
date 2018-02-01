@@ -36,7 +36,13 @@
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
-	                     
+	                     <c:if test="${!empty user}">
+	                     	<ul class="dropdown-menu">
+		                         <li><a href="#">My TwiiChat List</a></li>
+		                         <li class="divider"></li>
+		                         
+		                     </ul>
+	                     </c:if>
 	                 </li>
 	     
 		              <li class="dropdown">
@@ -137,6 +143,10 @@
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
 			$(self.location).attr("href","/room/listRoom");
+		});
+		
+		$( "a:contains('My TwiiChat List')" ).on("click" , function() {
+			$(self.location).attr("href","/room/listMyRoom");
 		});
 		
 		/* Community*/
