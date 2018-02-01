@@ -62,14 +62,7 @@ public class MainPlanController {
 			}
 		}
 		
-		///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-		User user = new User();
-		user.setUserId("user04");
-		user.setUserType("T");
-		user.setUserName("다영이");
-		user.setUserNo(7);
-
-		/////////////////////////////////////////////////////////////////
+		User user = (User) session.getAttribute("user");
 		
 		mainPlan.setCity(cityResult);
 		mainPlan.setUser(user);
@@ -140,10 +133,7 @@ public class MainPlanController {
 		
 		System.out.println("Controller : listMainPlan <START>");
 		
-		///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-		User user = new User();
-		user.setUserNo(7);
-		/////////////////////////////////////////////////////////////////
+		User user = (User)session.getAttribute("user");
 		
 		MainPlan mainPlan = new MainPlan();
 		mainPlan.setUser(user);
@@ -306,13 +296,7 @@ public class MainPlanController {
 					System.out.println("새로 입력한 DAY수가 기존 입력 DAY수 보다 큽니다.");
 					Date dailyDate = mainPlan.getDepartureDate();
 					
-					///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-					User user = new User();
-					user.setUserId("user04");
-					user.setUserType("T");
-					user.setUserName("다영이");
-					user.setUserNo(7);
-					/////////////////////////////////////////////////////////////////
+					User user = (User) session.getAttribute("user");
 					
 					DailyPlan dailyPlan = new DailyPlan();
 					dailyPlan.setMainPlan(mainPlan);

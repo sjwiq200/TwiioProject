@@ -38,21 +38,13 @@ body {
 
 <script>
 
-
-	//버튼 TEST//
-
-	
-	
-
-	////////////
-	
 	
 	function fncAddMainPlanList() {
 		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
 	}
 
 	$(function() {
-		$("button:contains('추가')").on("click", function() {
+		$("#addMainPlan").bind("click", function() {
 			fncAddMainPlanList();
 		});
 	});
@@ -87,7 +79,6 @@ body {
 	 
 	 $(function(){
 		 $("#listScrap").bind("click",function(){
-			 alert("안녕");
 			 var url = "/mainplan/listScrap";
 			 $(location).attr('href', url);
 		 })
@@ -97,31 +88,44 @@ body {
 
 </head>
 <body>
-	
 		<jsp:include page="/layout/toolbar.jsp" />
-		
 
-	<form class="form-horizontal">
+	<form>
 		
 		<div class="container">
 			
-				
-			<div class = "mainPlanList" align = "center">
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
-			<button type="button" class="btn" id="listScrap"><Strong>Scrap</Strong></button> 
-			<div> ㅡ </div>
+			<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button> 
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+			<button type="button" class="btn" id="addMainPlan" ><Strong>ADD</Strong></button>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			
-				  <c:set var="i" value="0" />
+			
+
+			<c:set var="i" value="0" />
 				  	<c:forEach var="mainPlan" items="${list}">
 				  		<c:set var="i" value="${ i+1 }" />
-				  		
-				  			 <input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" />
-				  			
+
+				<div class="col">
+					<div class="col-md-6">
+						<div class="thumbnail">
+							
+							<img
+								src="/resources/images/thumbnail_plan/main_thumbnail4.jpg"
+								style="width: 300px; " />
+							
+							
+							<div class="caption">
+
+								<input type="hidden" name="mainPlanNo"
+									value="${mainPlan.mainPlanNo}" />
+
 								<div>[${ i }]</div>
 								<div>플랜번호 : ${mainPlan.mainPlanNo}</div>
 								<div>유저번호 : ${mainPlan.user.userNo}</div>
@@ -131,31 +135,32 @@ body {
 								<div>도시명 : ${mainPlan.city}</div>
 								<div>플랜제목 : ${mainPlan.planTitle}</div>
 								<div>섬네일이미지 : ${mainPlan.mainThumbnail}</div>
-														
-							<div class="pageButton-group" align="center">
-								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="update"></span>수정
+
+
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"
+										id="update"></span>수정
 								</button>
-								
-								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>삭제
+
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"
+										id="delete"></span>삭제
 								</button>
-								
-								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>선택
+
+								<button type="button" class="btn btn-default">
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"
+										id="submit"></span>선택
 								</button>
-			
+
 							</div>
-	
-							<div> ㅡ </div>
-				  	 </c:forEach>
-			
-			
-				<div class="pageButton-group" align="center">
-					<button type="button" class="btn btn-default" aria-label="Right Align">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>추가
-					</button>
+						</div>
+					</div>
 				</div>
+
+			</c:forEach>
+			
+			
+			
 	
 	<script src="https://www.paypalobjects.com/api/checkout.js"></script>	
 	
@@ -211,7 +216,7 @@ body {
     
     
 	
-			</div>
+			
 		</div>
 	</form>
 </body>

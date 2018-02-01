@@ -66,31 +66,32 @@ body {
 		<div class="container">
 
 			<div class = "mainPlanList" align = "center">
-			
+				<ul class="list-group">
 				  <c:set var="i" value="0" />
 				  	<c:forEach var="dailyPlan" items="${list}">
 				  		<c:set var="i" value="${ i+1 }" />
+				  		<li class="list-group-item">
 				  			 <input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
 				  			  <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
 				  	
-				  			<ul>
+				  			
 								<h3>DAY${ i }</h3>
-								<li>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</li>
-								<li>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</li>
-								<li>유저번호 : ${dailyPlan.user.userNo }</li>
-								<li>데일리날짜 : ${dailyPlan.dailyDate}</li>
-								<li>도시명 : ${dailyPlan.dailyCity}</li>
-								<li>국가명 : ${dailyPlan.dailyCountry}</li>
-								<li> </li>
+								<p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
+								<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p>
+								<p>유저번호 : ${dailyPlan.user.userNo }</p>
+								<p>데일리날짜 : ${dailyPlan.dailyDate}</p>
+								<p>도시명 : ${dailyPlan.dailyCity}</p>
+								<p>국가명 : ${dailyPlan.dailyCountry}</p>
+								<p> </p>
 							<div class="pageButton-group" align="center">
 								<button type="button" class="btn btn-default" aria-label="Right Align">
 									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>선택
 								</button>
 							</div>
 	
-						</ul>
+						</li>
 				  	 </c:forEach>
-			
+				</ul>
 			
 				<div class="pageButton-group" align="center">
 					<button type="button" class="btn btn-default" aria-label="Right Align">

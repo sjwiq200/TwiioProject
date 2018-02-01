@@ -137,7 +137,8 @@
 						
 						
 						<c:if test="${!empty planContent.mapImage}">
-							<div>지도이미지 : <img src ="${planContent.mapImage}"/></div>
+							<div><Strong> Your Map Information</Strong></div>
+							<div> <img src ="${planContent.mapImage}" width="350px" onclick="javascript:location.href='${planContent.mapUrl}';"/></div>
 						</c:if>
 						
 						

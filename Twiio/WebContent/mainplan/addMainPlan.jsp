@@ -26,6 +26,14 @@
 
 <title>MainPlanList</title>
 
+
+<style>
+	body {
+	    padding-top : 50px;
+	}
+</style>
+
+
 <script>
 
 	function fncAddMainPlan() {
@@ -57,6 +65,8 @@
 
 </head>
 <body>
+
+<jsp:include page="/layout/toolbar.jsp" />
 
 <div class="container">
 
