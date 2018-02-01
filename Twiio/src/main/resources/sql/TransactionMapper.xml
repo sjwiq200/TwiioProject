@@ -28,7 +28,12 @@
 		<result property="evalProduct" 				column="eval_product" 			jdbcType="NUMERIC" />
 		<result property="evalHost" 				column="eval_host" 				jdbcType="NUMERIC" />
 		<result property="userName" 				column="user_name" 				jdbcType="VARCHAR" />
-		<result property="hostName" 				column="host_name" 				jdbcType="VARCHAR" />			
+		<result property="hostName" 				column="host_name" 				jdbcType="VARCHAR" />
+		<result property="tranPro.thumbnail" 		column="thumbnail" 				jdbcType="VARCHAR" />
+		<result property="tranPro.hostImage" 		column="profile_image" 			jdbcType="VARCHAR" />
+		<result property="tranPro.country" 			column="country" 				jdbcType="VARCHAR" />
+		<result property="tranPro.city" 			column="city" 					jdbcType="VARCHAR" />
+		<result property="tranPro.productName" 		column="product_title" 			jdbcType="VARCHAR" />			
 	</resultMap>
 	
 	<resultMap id="refundSelectMap" type="refund">
@@ -192,19 +197,22 @@
 							 			</if>
 							 			<if test="evalType == 'host'">
 							 				u.user_name as host_name
-							 			</if>									  	
-									  	FROM transaction t, users u
-									  	<where>								  	
-											<if test="evalType == 'product'">
-								 				product_no= #{productNo}
-								 			</if>
-								 			<if test="evalType == 'host'">
-								 				host_no= #{hostNo}
-								 			</if>
-							 			</where>					 												  	 
-									  	ORDER BY tran_date DESC
-									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
+							 			</if>
+										FROM transaction t, users u
+										WHERE t.user_no=u.user_no
+									
+										<if test="evalType == 'product'">
+											AND product_no= #{productNo}
+											AND (product_star_eval IS NOT NULL OR product_review IS NOT NULL)
+										</if>
+										<if test="evalType == 'host'">
+											AND host_no= #{hostNo}
+											AND (host_star_eval IS NOT NULL OR host_review IS NOT NULL)
+										</if>
+									
+										ORDER BY tran_date DESC
+										) inner_table
+		WHERE ROWNUM &lt;= #{search.endRowNum} )
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	 </select>	 
 	 	 
@@ -230,25 +238,53 @@
 	 
 	 <!-- SQL : SELECT LIST -->
 	<select  id="listBest"  parameterType="map"	resultMap="transactionSelectMap">
-		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT
-	  									<if test="evalType == 'product'">
-							 				product_no, ROUND(AVG(product_star_eval),1) as product_eval
-							 			</if>
-							 			<if test="evalType == 'host'">
-							 				host_no, ROUND(AVG(host_star_eval),1) as host_eval
-							 			</if>									  	
-									  	FROM transaction
-									  	<if test="evalType == 'product'">
-								 			GROUP BY product_no ORDER BY product_eval DESC
-								 		</if>
-								 		<if test="evalType == 'host'">
-								 			GROUP BY host_no ORDER BY host_eval DESC
-								 		</if>
-									 ) inner_table
-						WHERE ROWNUM &lt;= 1 )
-		WHERE row_seq BETWEEN 1 AND 10
+		SELECT 	
+			<if test="evalType == 'product'">
+				vt.product_no as product_no,
+				vt.eval_product as eval_product ,
+				p.product_title as product_title ,
+				p.country as country,
+				p.thumbnail as thumbnail,
+				p.city as city
+			</if>
+			<if test="evalType == 'host'">
+				vt.host_no as host_no,
+				vt.eval_host as eval_host ,
+				u.user_name as host_name ,
+				u.profile_image as profile_image
+			</if>
+		<if test="evalType == 'product'">
+		FROM product p,(
+		</if>
+		<if test="evalType == 'host'">
+		FROM users u,(
+		</if>
+				SELECT *
+			  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+			  					FROM		(	SELECT
+			  									<if test="evalType == 'product'">
+									 				product_no, ROUND(AVG(product_star_eval),1) as eval_product
+									 			</if>
+									 			<if test="evalType == 'host'">
+									 				host_no, ROUND(AVG(host_star_eval),1) as eval_host
+									 			</if>									  	
+											  	FROM transaction
+											  	<if test="evalType == 'product'">
+										 			GROUP BY product_no ORDER BY eval_product DESC
+										 		</if>
+										 		<if test="evalType == 'host'">
+										 			GROUP BY host_no ORDER BY eval_host DESC
+										 		</if>
+										 		NULLS LAST
+											 ) inner_table
+								WHERE ROWNUM &lt;= 10 )
+						WHERE row_seq BETWEEN 1 AND 10) vt
+		<if test="evalType == 'product'">	
+		WHERE p.product_no=vt.product_no
+		</if>
+		<if test="evalType == 'host'">
+		WHERE u.user_no=vt.host_no
+		</if>
 	 </select>	 
 	
 	<!-- SQL : SELECT ROW Count -->	 
@@ -284,11 +320,13 @@
 				</when>
 				<otherwise>
 					<choose>
-					<when test="evalType == product">
-						WHERE product_no=#{product_no}
+					<when test="evalType == 'product'">
+						WHERE product_no=#{productNo}
+						AND (product_star_eval IS NOT NULL OR product_review IS NOT NULL)						
 					</when>
-					<when test="evalType == host">
-						WHERE host_no=#{host_no}
+					<when test="evalType == 'host'">
+						WHERE host_no=#{hostNo}
+						AND (host_star_eval IS NOT NULL OR host_review IS NOT NULL)
 					</when>
 					</choose>
 					ORDER BY tran_date DESC

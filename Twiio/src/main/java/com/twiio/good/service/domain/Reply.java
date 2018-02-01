@@ -2,6 +2,8 @@ package com.twiio.good.service.domain;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Reply {
 	private int replyNo;
 	private int userNo;
@@ -15,13 +17,6 @@ public class Reply {
 	public Reply() {
 	}
 
-
-		
-
-
-
-
-
 	public String getUserName() {
 		return userName;
 	}
@@ -30,6 +25,7 @@ public class Reply {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+
 
 
 

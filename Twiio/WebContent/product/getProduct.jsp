@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -27,11 +28,99 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
- 		body {
-            padding-top : 50px;
-        }
-     </style>
+		body {
+			padding-top: 50px;
+		}
+		
+		textarea {
+			width: 100%;
+			height: 100px;
+			resize: none;
+		}
+	</style>
 <script type="text/javascript">
+
+ function fncGetUserList(currentPage) {
+	//alert("???");
+	var productNo = $("input[name='productNo']").val();
+   	$("#currentPage").val(currentPage);
+   	$("tr[name='n']").remove();
+   	$("p.text-primary").empty();
+	$("div[name='eval']").empty();
+   	$.ajax(
+				{
+					url:"/product/json/listStarEvalProduct/",
+					method:"POST",	    					
+					data:{	    						
+						currentPage : $("#currentPage").val(),	
+						productNo : $("input[name='productNo']").val()
+						},
+					headers : {
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},			
+					dataType:"json",
+					success:function(JSONData){
+						//alert("제발ajax");	    											
+						//alert("JSONData: \n"+JSONData);
+						//alert(JSON.stringify(JSONData));
+						
+						//alert(JSON.stringify(JSONData.list));
+						var list = JSONData.list;
+						//alert("list"+JSON.stringify(list));
+						//alert(list.length);
+						//alert(list[0]);
+						//$("#currentPage").val();
+						var string;						
+						for(var i=0; i<list.length; i++){
+							//string += JSON.stringify(list[i].userName);
+							string += "<tr name='n'>";
+							string += "<td align='left'>"+JSON.stringify(list[i].userName)+"</td>";
+							string += "<td align='left'>"+JSON.stringify(list[i].reviewProduct)+"</td>";
+							string += "<td align='left'>"+JSON.stringify(list[i].starEvalProduct)+"</td>";
+							string += "</tr>";
+						}
+						//alert(string);
+						//
+						$("p.text-primary").append("전체  "+JSON.stringify(JSONData.totalCount)+" 건수, 현재 "+JSON.stringify(JSONData.resultPage.currentPage)+"  페이지");
+						$("tbody").append(string);
+							//alert("dddd");					
+						$.ajax(
+								{
+									url:"/product/json/getEvalProduct/"+productNo,
+									method:"GET",	    					
+									/* data:{					
+										productNo : $("input[name='productNo']").val()
+										}, */
+									headers : {
+										"Accept" : "application/json",
+										"Content-Type" : "application/json"
+									},			
+									dataType:"json",
+									success:function(JSONData){
+																					
+										//alert(JSON.stringify(JSONData));
+										$("div[name='eval']").append(JSON.stringify(JSONData));
+										
+										
+								        				
+									}
+								}
+							);
+						//var num=JSONData;
+						/* response($.map(JSONData, function (item) {
+				           
+							return item;
+				        })); */	
+				        				
+					}
+				}
+			);
+   	
+   
+	//$("form").attr("method" , "POST").attr("action" , "/transaction/listPurchase").submit();
+}
+
 $(function() {
 	
 	 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
@@ -114,7 +203,37 @@ $(function() {
 		} 
 	 });
 });
-		 
+
+$(function() {
+	
+	 $( "#write" ).on("click" , function() {
+		alert("dkfjlksfjlksd");
+		 $.ajax(
+	 				{
+	 					url:"/common/json/addReply/",
+	 					method:"POST",	    					
+	 					data:{	    						
+	 						targetType : "0",
+	 						replyContent : $("textarea").val(),
+	 						userNo : $("input[name='userNo']").val(),
+	 						userName : $("input[name='userName']").val(),
+	 						productNo : $("input[name='productNo']").val(),
+	 						replyNo : "",
+	 						replyRegDate : "",
+	 						communityNo : ""
+	 						},
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},			
+	 					dataType:"json",
+	 					success:function(JSONData){
+	 						con.log("댓글등록");							
+	 					}
+	 				}
+	 			);
+	});
+});
 
 </script>
 </head>
@@ -127,10 +246,11 @@ $(function() {
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+		<input type="hidden" name="userNo" value="${user.userNo }"/>
+		<input type="hidden" name="userName" value="${user.userName }"/>
 		<div class="page-header">
-	       <h3 class=" text-info">상품상세조회</h3>
-	       <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5>
+	       <h3 class=" text-info">${product.productName }</h3>
+	       <!-- <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5> -->
 	    </div>
 	
 		<div class="row">
@@ -140,12 +260,12 @@ $(function() {
 		
 		<hr/>
 		
-		<div class="row">
+		<%-- <div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
 			<div class="col-xs-8 col-md-4">${product.productName }</div>
 		</div>
 		
-		<hr/>
+		<hr/> --%>
 		
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2 "><strong>상품분류</strong></div>
@@ -249,11 +369,76 @@ $(function() {
 			<div class="col-xs-8 col-md-4">${product.description}	</div>
 		</div>
 		
-		<br/>	
+		<hr/>
 		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>평점</strong></div>
+			<div class="col-xs-8 col-md-4" name="eval">${transaction.evalProduct}	</div>
+		</div>
 		
+		<hr/>		
+	  
  	</div>
- 	<!--  화면구성 div Start /////////////////////////////////////-->
+ 	<!--  화면구성 div End /////////////////////////////////////-->
+ 	
+ 	<div >
+ 		<div><strong>리뷰/별점</strong></div>
+ 		<p class="text-primary">
+		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    	</p>
+ 	<!--  table Start /////////////////////////////////////-->
+      <table class="table  table-striped" >
+      <input type="hidden" id="currentPage" name="currentPage" value=""/>
+        <thead>
+          <tr>
+            <th align="left">이름</th>
+            <th align="left" >리뷰</th>                       
+            <th align="left">별점</th>
+          </tr>
+        </thead>
+       
+		<tbody>
+		
+		  <c:set var="i" value="0" />
+		  <c:forEach var="transaction" items="${list}">
+			<c:set var="i" value="${ i+1 }" /> 
+			<tr name="n">
+			  <td align="left" >${transaction.userName}</td>			  
+			  <td align="left" >${transaction.reviewProduct}</td>
+			  <td align="left" >${transaction.starEvalProduct}</td>			  
+			</tr>
+          </c:forEach>
+        
+        </tbody>
+      
+      </table>
+	  <!--  table End /////////////////////////////////////-->
+ 	
+ 	<!-- PageNavigation Start... -->
+	<jsp:include page="../common/pageNavigator_review.jsp"/> 
+	<!-- PageNavigation End... -->	
+	</div>
+	<hr/>
+	<div class="form-group">
+		<div class="col-md-8 col-md-offset-1">
+			<textarea name="comment_content" row="6" col="50"></textarea>
+		</div>
+		<div class="col-md-1">
+			<button type="button" style="" id="write" class="btn btn-default">댓글입력</button>
+		</div>
+	</div>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	
+	<div class="form-group">
+		<div >
+			<strong>댓 글 목 록</strong>
+		</div>
+	</div>
 
 </body>
 </html>
