@@ -136,6 +136,11 @@
 						</c:if>
 						
 						
+						<c:if test="${!empty planContent.mapImage}">
+							<div>지도이미지 : <img src ="${planContent.mapImage}"/></div>
+						</c:if>
+						
+						
 						<c:if test="${!empty planContent.mapName}">
 							<div>${planContent.mapName} </div>
 						</c:if>
@@ -154,10 +159,6 @@
 						
 						<c:if test="${!empty planContent.mapWebsite}">
 							<div>웹사이트 : ${planContent.mapWebsite}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapImage}">
-							<div>지도이미지 : ${planContent.mapImage}</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.mapType}">

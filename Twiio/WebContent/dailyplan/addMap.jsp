@@ -72,6 +72,8 @@
     	var mapPhone;
     	var mapName;
     	var mapWebsite;
+    	var staticMapUrl;
+    	var mapImage;
 		
 		$(document).ready(function(){
 		    $("#addMap").on('shown.bs.modal', function () {
@@ -168,69 +170,71 @@
 				geocoder.geocode( {'address': address}, function(results, status) {
 						if (status == google.maps.GeocoderStatus.OK)  //Geocoding이 성공적이라면,
 						{
-							
-							
-						for(var i=0;i<results.length;i++)
-						{
-								map.setCenter(results[i].geometry.location);
-								map.setZoom(12);
-								geocodemarker.push(new google.maps.Marker({
-								center: results[i].geometry.location,
-								position: results[i].geometry.location,
-								map: map
-							})
-							);
-							service.getDetails({
-							    placeId:results[0].place_id
-							}, function(place, status) {
-								servicemarker = new google.maps.Marker({
-							        map: map,
-							        position: results[0].geometry.location
-							      });
-								
-								address=place.formatted_address;
-		        		    	types=place.types;
-		        		    	url = place.url;
-		        		    	phone = place.formatted_phone_number;
-		        		    	name = place.name;
-		        		    	website = place.website;
-		        		    	
-		        		    	$(".testmap").remove();
-		        		    	
-								$("#resultMap")
-		        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>["+name+"]</strong></div>")
-		        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶주소 : </strong>"+address+"</div>")
-		        		    	.append("<div class=\"testmap\" align=\"center\"><strong>▶전화번호 : </strong>"+phone+"</div>")
-		        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶웹사이트 : </strong>"+website+"</div>")
-								.append("<div class=\"testmap\"  align=\"center\"><strong>▶URL : </strong>"+url+"</div>")
-								.append("<div class=\"testmap\"  align=\"center\"><strong>▶유형 : </strong>"+types+"</div>");
-								
-								$("#mapName").val(name);
-								$("#mapAddress").val(address);
-								$("#mapPhone").val(phone);
-								$("#mapWebsite").val(website);
-								$("#mapUrl").val(url);
-								$("#mapType").val(types);
-								
-								alert($("#mapName").val());
-						
-							    google.maps.event.addListener(servicemarker, 'click', function() {
-							    	console.log(JSON.stringify(place));
-							        infowindow.setContent(
-							      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br>' +
-							          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br>' +
-							          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br>' +
-							          '<strong>평점</strong>: ' + place.rating+ '<br>' +
-							          '<strong>장소유형</strong>: ' + place.types  + '<br>' +
-							          '<strong>URL</strong>: ' + place.url + '<br>' +
-							          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br>' );
-							        infowindow.open(map, this);
-							      });
-							});
-						} 
+							for(var i=0;i<results.length;i++)
+							{
+									map.setCenter(results[i].geometry.location);
+									map.setZoom(12);
+									geocodemarker.push(new google.maps.Marker({
+									center: results[i].geometry.location,
+									position: results[i].geometry.location,
+									map: map
+								})
+								);
+								service.getDetails({
+								    placeId:results[0].place_id
+								}, function(place, status) {
+									servicemarker = new google.maps.Marker({
+								        map: map,
+								        position: results[0].geometry.location
+								      });
+									
+									address=place.formatted_address;
+			        		    	types=place.types;
+			        		    	url = place.url;
+			        		    	phone = place.formatted_phone_number;
+			        		    	name = place.name;
+			        		    	website = place.website;
+			        		    	alert(results[0].geometry.location);
+			        		    	
+			        		    	$(".testmap").remove();
+			        		    	
+									$("#resultMap")
+			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>["+name+"]</strong></div>")
+			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶주소 : </strong>"+address+"</div>")
+			        		    	.append("<div class=\"testmap\" align=\"center\"><strong>▶전화번호 : </strong>"+phone+"</div>")
+			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶웹사이트 : </strong>"+website+"</div>")
+									.append("<div class=\"testmap\"  align=\"center\"><strong>▶URL : </strong>"+url+"</div>")
+									.append("<div class=\"testmap\"  align=\"center\"><strong>▶유형 : </strong>"+types+"</div>");
+									
+									$("#mapName").val(name);
+									$("#mapAddress").val(address);
+									$("#mapPhone").val(phone);
+									$("#mapWebsite").val(website);
+									$("#mapUrl").val(url);
+									$("#mapType").val(types);
+									
+									
+									mapImage = results[0].geometry.location;
+									
+								    google.maps.event.addListener(servicemarker, 'click', function() {
+								    	console.log(JSON.stringify(place));
+								        infowindow.setContent(
+								      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br>' +
+								          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br>' +
+								          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br>' +
+								          '<strong>평점</strong>: ' + place.rating+ '<br>' +
+								          '<strong>장소유형</strong>: ' + place.types  + '<br>' +
+								          '<strong>URL</strong>: ' + place.url + '<br>' +
+								          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br>' );
+								        infowindow.open(map, this);
+								      });
+								});
+							} 
 				}else{ alert("검색 결과가 없습니다. 재입력 부탁드립니다." + status); }
 		});
 		}
+
+		
 		
 		function codeCoordinate(event) {
 		
@@ -269,7 +273,8 @@
 
 		$(function(){
 			$("button[name='addMapToPlan']").on("click",function(){
-
+				
+				
 				var mapUrl= $("#mapUrl").val().toString();
 				var mapName = document.getElementById("addr1").value;
 				var mapType = $("#mapType").val().toString();
@@ -279,7 +284,7 @@
 				var korName = encodeURI(encodeURIComponent(mapName));
 				var korAddress= encodeURI(encodeURIComponent(mapAddress));
 				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress;
+				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
 				
 				//$("form").attr("method", "POST").attr("action",	"/dailyplan/addMap").submit();
 			});
@@ -295,7 +300,6 @@
 		<div> &nbsp; </div>
 		<div id="map"></div>
 		<div id="resultMap">
-		
 				<form>
 				  <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
 				  <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />

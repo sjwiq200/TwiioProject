@@ -138,15 +138,20 @@ public class DailyPlanController {
 			@RequestParam("mapType") String mapType, 
 			@RequestParam("mapPhone") String mapPhone, 
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
+			@RequestParam("mapImage") String mapImage,
 			HttpServletRequest request,
 			Model model) throws Exception {
 
-		System.out.println("Controller : addMap <START>");
-		
 		String mapName = URLDecoder.decode(request.getParameter("korName"),"UTF-8");
 		String mapAddress = URLDecoder.decode(request.getParameter("korAddress"),"UTF-8");
 		
-		System.out.println("debug : "+dailyPlanNo);
+		mapImage = mapImage.replaceAll("[(]", "");
+		mapImage =mapImage.replaceAll("[)]","");
+		mapImage =mapImage.replaceAll(" ","");
+		
+
+		String mapImageResult = "https://maps.googleapis.com/maps/api/staticmap";
+		mapImageResult += "?center=" + mapImage+ "&size=400x400&zoom=15&maptype=google.maps.MapTypeId.ROADMAP&markers=color:red|" + mapImage;
 		
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		
@@ -160,6 +165,7 @@ public class DailyPlanController {
 		planContent.setMapName(mapName);
 		planContent.setDailyPlan(dailyPlan);
 		planContent.setOrderNo(countForOrder+1);
+		planContent.setMapImage(mapImageResult);
 		
 		dailyPlanService.addPlanContent(planContent);
 
