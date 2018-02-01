@@ -58,7 +58,7 @@ public class UserController {
 		System.out.println("/user/addUser : POST");
 		if(!user.getFile().isEmpty()) {
 			if(userService.detectFace(user)) {
-				user.setUserImage(user.getUserId()+user.getFile().getOriginalFilename());
+				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
 				
 				model.addAttribute("user",user);
@@ -103,7 +103,7 @@ public class UserController {
 	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.POST )
-	public String updateUser( @ModelAttribute("user") User user , Model model , HttpSession session) throws Exception{
+	public String updateUser( @ModelAttribute("user") User user , HttpSession session) throws Exception{
 
 		System.out.println("/user/updateUser : POST");
 		//Business Logic

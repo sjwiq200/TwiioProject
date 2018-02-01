@@ -7,6 +7,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.text.DecimalFormat;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -28,6 +29,7 @@ import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Refund;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.information.InformationService;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.transaction.TransactionService;
 import com.twiio.good.service.user.UserService;
@@ -44,6 +46,10 @@ public class TransactionController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("informationServiceImpl")
+	private InformationService informationService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -77,10 +83,17 @@ public class TransactionController {
 
 		System.out.println("/transaction/addTransaction : POST");
 		System.out.println(transaction);
+						
 		Product dbProduct =productService.getProduct(productNo);
 		transaction.setTranPro(dbProduct);
 		transaction.setTotalPrice(dbProduct.getProductPrice()*transaction.getCount());
+		
+		///////원-->USD//////
+		Double USDprice = informationService.getCurrency("standardCountry=한국 원&compareCountry=미국 달러&inputPrice="+transaction.getTotalPrice());
+		USDprice = Double.parseDouble(String.format("%.2f",USDprice));
+		
 		map.put("transaction", transaction);
+		map.put("USDprice", USDprice);
 				
 		return "forward:/transaction/addTransaction.jsp";
 	}
@@ -391,28 +404,16 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value="payPal", method=RequestMethod.POST)
-	public void payPal(Transaction transaction) throws Exception{
+	public String payPal(@ModelAttribute("transaction") Transaction transaction, @RequestParam("productNo") int productNo, Map<String, Object> map) throws Exception{
 		System.out.println("/transaction/payPal : POST");
-	}
-	
-	
-	
-//	//@RequestMapping("/addPurchase.do")
-//	@RequestMapping(value="addTransaction", method=RequestMethod.POST)
-//	public String addPurchase( @ModelAttribute("purchase") Purchase purchase, @ModelAttribute("product") Product product, @RequestParam("buyerId") String buyerId, Map<String, Object> map) throws Exception {
-//
-//		System.out.println("/purchase/addPurchase : POST");
-//		
-//		purchase.setPurchaseProd(product);
-//		purchase.setBuyer(userService.getUser(buyerId));
-//		
-//		//Business Logic
-//		purchaseService.addPurchase(purchase);
-//		
-//		map.put("purchase", purchase);
-//		
-//		return "forward:/purchase/addPurchase.jsp";
-//	}
+		
+		transaction.setTranPro(productService.getProduct(productNo));
+		transaction.setPaymentType("2");
+		System.out.println(transaction);
+		transactionService.addTransaction(transaction);
+		
+		return "forward:/transaction/popup.jsp"; 
+	}	
 	
 	//@RequestMapping("/getPurchase.do")
 	@RequestMapping(value="getTransaction", method=RequestMethod.GET)
@@ -426,23 +427,6 @@ public class TransactionController {
 		
 		return "forward:/purchase/getPurchase.jsp";
 	}
-	
-	//@RequestMapping("/updatePurchaseView.do")
-//	@RequestMapping(value="updateTransactionCode", method=RequestMethod.GET)
-//	public String updateTransactionCode(@RequestParam("tranNo") int tranNo , Map<String, Object> map ) throws Exception{
-//
-//		System.out.println("/purchase/updatePurchaseCode : GET");
-//		
-//		//Business Logic
-//		Transaction transaction = new Transaction();
-//		transaction.setTranNo(tranNo);
-//		transaction.setRefundCode("2");
-//		transactionService.updateTransactionCode(transaction);
-//		// Model 과 View 연결
-//		//model.addAttribute("purchase", purchase);
-//		
-//		return "forward:/purchase/updatePurchaseView.jsp";
-//	}	
 		
 	//@RequestMapping("/listPurchase.do")
 	@RequestMapping( value="listTransaction" )
@@ -502,16 +486,5 @@ public class TransactionController {
 		
 		return "forward:/product/listProduct?menu=manage";
 	}
-	
-//	//@RequestMapping("/refundPurchase.do")
-//	@RequestMapping(value="listHostPurchase", method=RequestMethod.GET)
-//	public String listHostPurchase(@RequestParam("tranNo") int tranNo) throws Exception {
-//
-//		System.out.println("/transaction/listHostPurchase : GET");
-//		
-//		
-//		
-//		return "forward:/purchase/listPurchase";
-//	}
 
 }

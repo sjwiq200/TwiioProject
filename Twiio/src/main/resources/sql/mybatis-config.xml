@@ -35,6 +35,7 @@
 		<typeAlias alias="community" 		type="com.twiio.good.service.domain.Community" />
 		<typeAlias alias="like" 			type="com.twiio.good.service.domain.Like" />
 		<typeAlias alias="message" 			type="com.twiio.good.service.domain.Message" />
+		<typeAlias alias="continent" 		type="com.twiio.good.service.domain.Continent" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->

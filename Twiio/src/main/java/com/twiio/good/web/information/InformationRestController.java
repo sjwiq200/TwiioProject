@@ -87,6 +87,22 @@ public class InformationRestController {
 		
 		return item;
 	}
+	
+	@RequestMapping( value="json/continentAutoComplete/" )
+	public List<String>  continentAutoComplete(@RequestBody String keyword ) throws Exception{
+		
+		System.out.println("/information/json/continentAutoComplete");
+		
+		String decoding = URLDecoder.decode(keyword, "UTF-8");
+		
+		String[] word = decoding.split("=");
+		
+		 String str = word[1];
+		
+		List<String> item  = informationService.findContinent(str);
+		
+		return item;
+	}
 
 
 	@RequestMapping(value="json/searchNowWeather",method=RequestMethod.GET)
