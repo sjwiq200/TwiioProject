@@ -31,7 +31,7 @@ import com.twiio.good.service.domain.User;
 
 
 @RestController
-@RequestMapping({"/community/*"})
+@RequestMapping("/community/*")
 public class CommunityRestController {
 	
 	@Autowired
@@ -63,11 +63,20 @@ public class CommunityRestController {
 		String[] info = pageInfo.split("&");
 		String[] resultpage = info[0].split("=");
 		String[] communitytype = info[1].split("=");
+		String[] searchCondition = info[2].split("=");
+		String[] searchKeyword = info[3].split("=");
+		String sk="";
+		
+		if(searchKeyword.length == 2) {	
+			sk=searchKeyword[1];
+		}
 			
 		Search search = new Search();
 		search.setCurrentPage(Integer.parseInt(resultpage[1]));
-
-
+		search.setSearchCondition(searchCondition[1]);
+		search.setSearchKeyword(sk);
+		System.out.println("Searchhhh::"+search);
+		
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}

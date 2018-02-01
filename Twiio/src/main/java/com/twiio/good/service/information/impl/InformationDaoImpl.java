@@ -43,6 +43,7 @@ import org.xml.sax.InputSource;
 
 import com.sun.jndi.toolkit.url.Uri;
 import com.twiio.good.service.domain.City;
+import com.twiio.good.service.domain.Continent;
 import com.twiio.good.service.domain.Country;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
@@ -919,8 +920,6 @@ public class InformationDaoImpl implements InformationDao {
 		
 		String str = country.trim();
 		
-		System.out.println("다오다오"+str);
-		
 		List<String> item = new ArrayList<String>();
 		
 		if(str.matches(	".*[a-zA-Z].*")) {
@@ -942,6 +941,34 @@ public class InformationDaoImpl implements InformationDao {
 			}
 		return item;
 	}
+	
+	@Override
+	public List<String> findContinent(String keyword) throws Exception {
+		
+		String str = keyword.trim();
+		
+		List<String> item = new ArrayList<String>();
+		
+		if(str.matches(	".*[a-zA-Z].*")) {
+			
+			List<Continent> list = sqlSession.selectList("InformationMapper.getEnContinent", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getContinentEnName());
+				}
+			
+			}else {
+				
+			List<Continent> list = sqlSession.selectList("InformationMapper.getKoContinent", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getContinentKoName());
+				}
+			
+			}
+		return item;
+	}
+
 
 
 }

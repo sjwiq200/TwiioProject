@@ -15,9 +15,6 @@ public interface TransactionService {
 	//거래
 	public void addTransaction(Transaction transaction) throws Exception;
 	
-	// 페이팔 거래
-	public void payPal(Transaction transaction) throws Exception;
-	
 	// 거래 정보	
 	public Transaction getTransaction(int tranNo) throws Exception;
 	

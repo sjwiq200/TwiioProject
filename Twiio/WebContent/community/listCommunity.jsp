@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
@@ -7,9 +7,9 @@
 <head>
 <title>Community</title>
 
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -29,9 +29,9 @@
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -44,23 +44,54 @@
 <script type="text/javascript">
 	var page = 1;
 	var flag = 0;
+	var flag2 = 0;
 	var communityNo = ${resultPage.totalCount};
+	
+	 if (self.name != 'reload') {
+         self.name = 'reload';
+         self.location.reload(true);
+     }
+     else self.name = ''; 
+	
+	$(document).ready(function(){
 		$(window).scroll(function(){
-			if(($(window).scrollTop()) >= $(document).height() - $(window).height()){
+			
+			var scrollHeight=$(window).scrollTop() + $(window).height();
+			var documentHeight=$(document).height();
+			
+			console.log('$(window).scrollTop() :: '+($(window).scrollTop()));
+			console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
+			
+			if(($(window).scrollTop()) != $(document).height() - $(window).height()&flag2==1){
+				flag2 = 0;
+				console.log('flag :: '+flag2);
+			}
+		
+			if(($(window).scrollTop()+0.8) >= $(document).height() - $(window).height()&flag2==0){
+				flag2 = 1;
+				console.log('$(window).scrollTop() :: '+$(window).scrollTop());
+				console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
 				page = page + 1;
+				var sc=$('#searchKeword').val();
+				if($('#searchKeword').val()==null)
+					sc=null;
+				 
 				 $.ajax( 
 						{
-						url : "/community/json/listCommunity/",
+						url : "/community/json/listCommunity",
 						method : "POST" ,
 						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
 						data : {
-							resultpage:page,
-    						communitytype:${communityType}
+							"currentPage":page,
+							"targetType":"${communityType}",
+							"searchCondition":$('#searchCondition').val(),
+							"searchKeyword": sc
 						},
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
-							},
+						},
 							success : function(JSONData , status) {
 								if(flag==0){
 									communityNo=communityNo-JSONData.length;
@@ -70,16 +101,19 @@
 							for(var i=0; i<JSONData.length;i++){								
 							var displayValue = 
 						    '<div class="col-md-3">'+
-						      '<div class="thumbnail">'+
+						      '<div class="thumbnail" style="height:400px">'+
+						      '<input type="hidden" name="communityNo" value="'+JSONData[i].communityNo+'"/>'+
+							  '<input type="hidden" name="userNo" value="'+JSONData[i].userNo+'"/>'+
 						        '<img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>'+
 						         ' <div class="caption">'+
-						          	'[ °ÔÆÇ¹øÈ£ :'+communityNo+' ]'+
-						          	'<p>[ Á¦   ¸ñ :'+JSONData[i].communityTitle+' ]</p>'+ 
-						            '<p>[ ÀÛ¼ºÀÚ :'+JSONData[i].userId+' ]</p>'+
-						            '<p>[ µî·ÏÀÏ :'+JSONData[i].regDate+' ]</p>'+
-						            '<p>[ Á¶È¸¼Ò :'+JSONData[i].viewCount+' ]</p>'+
-						            '<p>[ Ä¿¹Â´ÏÆ¼¹øÈ£ :'+JSONData[i].communityNo+' ]</p>'+
-						            '<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>'+
+						          	'[ ê²ŒíŒë²ˆí˜¸ :'+communityNo+' ]'+
+						          	'<p>[ ì œ   ëª© :'+JSONData[i].communityTitle+' ]</p>'+ 
+						            '<p>[ ì‘ì„±ì :'+JSONData[i].userName+' ]</p>'+
+						            '<p>[ ë“±ë¡ì¼ :'+JSONData[i].regDate+' ]</p>'+
+						            '<p>[ ì¡°íšŒìˆ˜ :'+JSONData[i].viewCount+' ]</p>'+
+						            '<p>[ ì»¤ë®¤ë‹ˆí‹°ë²ˆí˜¸ :'+JSONData[i].communityNo+' ]</p>'+
+						            '<p><a class="btn btn-primary" id="getButton">ìƒì„¸ë³´ê¸°</a>'+ 
+						            '<a class="btn btn-default" id="reprtButton">ì‹ ê³ í•˜ê¸°</a></p>'+
 						        '</div>'+
 						      '</div>'+
 						 	'</div>';
@@ -91,14 +125,14 @@
 					}); 
 			}	
 		});
-
+	});
 	
 	
 
 	
 	 $(function() {	
 		$("#write").on("click" , function() {
-			//alert("¤±¤¤¤·¤«¤¤¤·¤«");
+			//alert("ã…ã„´ã…‡ã„»ã„´ã…‡ã„»");
 			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
 			self.location="/community/addCommunity?communityType="+${communityType};
@@ -107,15 +141,27 @@
 	});
 	 
 	 
+
+	$(document).on('click' ,'#getButton', function() {
+		self.location="/community/getCommunity?communityNo="+$($('input[name=communityNo]')[$('a[id=getButton]').index(this)]).val();
+	});	
+
+	
+	function fncGetCommunityList(currentPage) {
+		//document.getElementById("currentPage").value = currentPage;
+	   //	document.detailForm.submit();
+	   $("#currentPage").val(currentPage)
+	   $("form").attr("method" , "POST").attr("action" , "/community/listCommunity?communityType=${communityType}").submit();
+	}
+	
 	$(function() {	
-		$(".getButton").on("click" , function() {
-			//alert("¤±¤¤¤·¤«¤¤¤·¤«");
-			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
-			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
-			self.location="/purchase/updateTranCode?tranNo="+$($('input[name=tranbyNo]')[$('td:nth-child(6)').index(this)]).val()+"&TranCode=2";
-			//}
-		});	
+	$("#searchButton").on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('ê²€ìƒ‰')" ).html() );
+		fncGetCommunityList(1);
+	})
 	});
+
 	
 	/*
 	$(function() {
@@ -151,34 +197,38 @@
  	<div class="row">
    	<div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
+		    		ì „ì²´  ${resultPage.totalCount } ê±´ìˆ˜
 		    	</p>
 	</div>
 	
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
 			    	
-			      <button type="button" id="write" class="btn btn-default">±Û ¾² ±â</button>
+			      <button type="button" id="write" class="btn btn-default">ê¸€ ì“° ê¸°</button>
 				  
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>Á¦¸ñ</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ÀÛ¼ºÀÚ</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ì œëª©</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì‘ì„±ì</option>
 					</select>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+				    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
 				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default">°Ë»ö</button>
+				  <button type="button" class="btn btn-default" id="searchButton">ê²€ìƒ‰</button>
 				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
 				</form>
 	    </div>
+	</div>
+	
+	<div class="col-md-12">
+		<hr sytle="border-style:dotted">
 	</div>
 	
 	
@@ -187,16 +237,19 @@
 		<c:forEach var="community" items="${list}">
 		
     <div class="col-md-3">
-      <div class="thumbnail">
+      <div class="thumbnail" style="height:400px">
+        <input type="hidden" name="communityNo" value="${community.communityNo}"/>
+		<input type="hidden" name="userNo" value="${community.userNo}"/>
         <img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>
           <div class="caption">
-          <p>[°Ô½ÃÆÇ¹øÈ£  : ${i}]</p>
-    	  <p>[Á¦   ¸ñ : ${community.communityTitle }]</p>
-          <p>[ÀÛ¼ºÀÚ : ${community.userId }]</p>
-          <p>[µî·ÏÀÏ : ${community.regDate }]</p>
-          <p>[Á¶È¸¼Ò : ${community.viewCount }]</p>
-          <p>[Ä¿¹Â´ÏÆ¼¹øÈ£ : ${community.communityNo }]</p>     
-            <p><a class="btn btn-primary" id="getButton">»ó¼¼º¸±â</a></p>
+          <p>[ê²Œì‹œíŒë²ˆí˜¸  : ${i}]</p>
+    	  <p>[ì œ   ëª© : ${community.communityTitle }]</p>
+          <p>[ì‘ì„±ì : ${community.userName }]</p>
+          <p>[ë“±ë¡ì¼ : ${community.regDate }]</p>
+          <p>[ì¡°íšŒìˆ˜ : ${community.viewCount }]</p>
+          <p>[ì»¤ë®¤ë‹ˆí‹°ë²ˆí˜¸ : ${community.communityNo }]</p>     
+            <p><a class="btn btn-primary" id="getButton">ìƒì„¸ë³´ê¸°</a>
+               <a href="#" class="btn btn-default" id="reportButton">ì‹ ê³ í•˜ê¸°</a></p>
           </div>
       </div>
     </div>
