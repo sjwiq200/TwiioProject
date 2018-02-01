@@ -56,7 +56,7 @@ public class CommunityController {
 		System.out.println(getClass());
 	}
 	
-	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "addCommunity", method = RequestMethod.GET )
 	public String addCommunity(@RequestParam("communityType") String communityType,
 							   Model model,
 							   HttpSession session) throws Exception {
@@ -67,7 +67,7 @@ public class CommunityController {
 		return "forward:/community/addCommunityView.jsp";
 	}
 	
-	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.POST )
+	@RequestMapping(value = "addCommunity", method = RequestMethod.POST )
 	public String addCommunity(@ModelAttribute Community community,
 							  @RequestParam("communityType") String communityType,
 							  Search search,
@@ -78,7 +78,7 @@ public class CommunityController {
 		
 		User user = (User)session.getAttribute("user");
 		community.setUserNo(user.getUserNo());
-		community.setUserId(user.getUserId());
+		community.setUserName(user.getUserName());
 		community.setCommunityType(communityType);
 		communityService.addCommunity(community);
 		
@@ -97,7 +97,7 @@ public class CommunityController {
 		return "forward:/community/getCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/getCommunity")
+	@RequestMapping(value = "getCommunity",method = RequestMethod.GET)
 	public String getCommunity(@RequestParam("communityNo") int communityNo,
 							   Search search,
 							   Model model
@@ -106,7 +106,8 @@ public class CommunityController {
 		
 		Community community = communityService.getCommunity(communityNo);
 		User user = usersService.getUserInNo(community.getUserNo());
-		System.out.println("여기까지들어왔니 ???3");
+		
+		System.out.println("controller :: "+community.getViewCount());
 		if(search.getCurrentPage() == 0 ){
 			search.setCurrentPage(1);
 		}
@@ -115,19 +116,19 @@ public class CommunityController {
 		
 		Map<String , Object> map = commonService.listReply(search, "1", communityNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
-		System.out.println("여기까지들어왔니 ???2");
+
 		model.addAttribute("community",community);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("totalCountReply", map.get("totalCountReply"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		model.addAttribute("user",user);
-		System.out.println("여기까지들어왔니 ???1");
+
 		
 		return "forward:/community/getCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/deleteCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "deleteCommunity", method = RequestMethod.GET )
 	public String deleteCommunity(@RequestParam("communityNo") int communityNo,
 							Model model,
 							HttpSession session
@@ -139,7 +140,7 @@ public class CommunityController {
 		return "forward:/common/listCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/updateCommunity", method = RequestMethod.POST )
+	@RequestMapping(value = "updateCommunity", method = RequestMethod.POST )
 	public String updateCommunity(@ModelAttribute("community") Community community ,
 							Model model
 							) throws Exception {
@@ -151,7 +152,7 @@ public class CommunityController {
 		return "forward:/community/getCommunity?communityNo="+community.getCommunityNo();
 	}
 	
-	@RequestMapping(value = "/community/updateCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "updateCommunity", method = RequestMethod.GET )
 	public String updateCommunity(@RequestParam("communityNo") int communityNo ,
 							Model model
 							) throws Exception {
@@ -163,7 +164,7 @@ public class CommunityController {
 		return "forward:/community/updateCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/listCommunity")
+	@RequestMapping(value = "listCommunity")
 	public String listCommunity(@ModelAttribute("search") Search search,
 								@RequestParam("communityType") String communityType,
 								Model model
@@ -197,7 +198,7 @@ public class CommunityController {
 	
 	
 	//////////////////////////////??///////////////////////////////////////////////////
-	@RequestMapping(value = "/community/getBestTripReview")
+	@RequestMapping(value = "getBestTripReview")
 	public String getBestTripReview(@ModelAttribute("report") Report report,
 							Model model
 							) throws Exception {

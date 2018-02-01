@@ -47,7 +47,12 @@ public class CommunityServiceImpl implements CommunityService {
 	
 	public Community getCommunity(int communityNo) throws Exception{
 		//List<Reply> list = commonDao.listReply(search, targetType, codeNo);
-		return communityDao.getCommunity(communityNo);
+		Community community = communityDao.getCommunity(communityNo);
+		System.out.println("serviceImpl 전 :: "+community.getViewCount());
+		communityDao.updateViewCommunity(community);
+		System.out.println("serviceImpl 후 :: "+community.getViewCount());
+		System.out.println("serviceImpl 업데이트 :: "+community.getViewCount());
+		return community;
 	}
 	
 	
@@ -67,7 +72,7 @@ public class CommunityServiceImpl implements CommunityService {
 		System.out.println("ServiceImpl listCommunity 리스트 검색 종료");
 		
 		System.out.println("ServiceImpl listCommunity totalcount 시작");
-		int totalCount = communityDao.getTotalCount(communityType);
+		int totalCount = communityDao.getTotalCount(search,communityType);
 		System.out.println("ServiceImpl listCommunity totalcount 종료");
 		System.out.println("totalCount :: "+totalCount);
 		Map<String, Object> map = new HashMap<String, Object>();

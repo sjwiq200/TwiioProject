@@ -1,7 +1,8 @@
 package com.twiio.good.common;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
-//==>����Ʈȭ���� �𵨸�(�߻�ȭ/ĸ��ȭ)�� Bean 
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Search {
 	
 	///Field
@@ -11,15 +12,33 @@ public class Search {
 	private int pageSize;
 	private int endRowNum;
 	private int startRowNum;
+	private String targetType;
+	
 	
 	///Constructor
 	public Search() {
 	}
 	
+	
 	///Method
+	
+	
+	
+	
+	
 	public int getPageSize() {
 		return pageSize;
 	}
+	public String getTargetType() {
+		return targetType;
+	}
+
+
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
+	}
+
+
 	public void setPageSize(int paseSize) {
 		this.pageSize = paseSize;
 	}

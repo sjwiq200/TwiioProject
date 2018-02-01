@@ -11,21 +11,27 @@ public class Community {
 	private String communitySubTitle;
 	private String communityType;
 	private String communityContent;
-	private String userId;
+	private String userName;
 	
 	
 	public Community() {
 	}
 
 
-	public String getUserId() {
-		return userId;
+	
+
+	public String getUserName() {
+		return userName;
 	}
 
 
-	public void setUserId(String userId) {
-		this.userId = userId;
+
+
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
+
+
 
 
 	public int getCommunityNo() {
@@ -113,7 +119,7 @@ public class Community {
 		// TODO Auto-generated method stub
 		return "Community [communityNo=" + communityNo + ", communityTitle=" + communityTitle + ", userNo=" + userNo + ", regDate="
 				+ regDate + ", viewCount=" + viewCount + ", communitySubTitle=" + communitySubTitle + ", communityType=" + communityType
-				+ ", communityContent=" + communityContent+" ]";
+				+ ", communityContent=" + communityContent+", userName="+userName+" ]";
 	}
 	
 }
