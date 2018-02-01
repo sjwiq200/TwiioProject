@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
@@ -60,16 +61,36 @@ public class ProductRestController {
 	int pageSize;
 		
 		
-	@RequestMapping(value="json/listStarEvalProduct")
-	public Map<String, Object> listStarEvalProduct( @PathVariable int productNo, @RequestBody Search search ) throws Exception {
+	@RequestMapping(value="/json/listStarEvalProduct")
+	public Map<String, Object> listStarEvalProduct( @RequestBody String search ) throws Exception {
 		
-		System.out.println("/product/json/listStarEvalProduct : ");
+		System.out.println("/product/json/listStarEvalProduct ");
+		System.out.println(search);
+		Search search2 = new Search();
+		String[] str = search.split("[&=]");
+		if(Integer.parseInt(str[1])==0) {
+			search2.setCurrentPage(1);
+		}else {
+			search2.setCurrentPage(Integer.parseInt(str[1]));
+		}
+		search2.setPageSize(5);
+		Map<String, Object> starMap = productService.listStarEvalProduct(search2, Integer.parseInt(str[3]));
+		Page resultPage = new Page( search2.getCurrentPage(), ((Integer)starMap.get("totalCount")).intValue(), pageUnit, search2.getPageSize());
+		starMap.put("resultPage", resultPage);
+						
+		return starMap;
+	}
+	
+	@RequestMapping(value="/json/getEvalProduct/{productNo}", method=RequestMethod.GET)
+	public double getEvalProduct( @PathVariable int productNo) throws Exception {
+		
+		System.out.println("/product/json/getEvalProduct ");
 		System.out.println("productNo :: "+productNo);
-		System.out.println("search :: "+search);
-		
-		//Business Logic	
-		Map<String, Object> map = productService.listStarEvalProduct(search, productNo);
-		return map;
+		Transaction transaction = productService.getEvalProduct(productNo);
+		double productEval = transaction.getEvalProduct();
+		System.out.println("productEval :: "+productEval);
+				
+		return productEval;
 	}
 	
 	@RequestMapping(value="json/getEvalHost/{hostNo}", method=RequestMethod.GET)
@@ -143,7 +164,7 @@ public class ProductRestController {
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(pageSize);
+		search.setPageSize(10);
 		
 		// Business logic ผ๖วเ
 		Map<String , Object> map=productService.listProduct(search);
@@ -155,7 +176,16 @@ public class ProductRestController {
 		List<String> list02= new ArrayList<>();
 //		String string="";
 		for(int i=0; i < list.size(); i++) {
-			list02.add(list.get(i).getProductName());
+			if(search.getSearchCondition().equals("0")) {
+				list02.add(list.get(i).getCountry());
+			}else if(search.getSearchCondition().equals("1")) {
+				list02.add(list.get(i).getCity());
+			}else if(search.getSearchCondition().equals("2")) {
+				list02.add(list.get(i).getProductName());
+			}else if(search.getSearchCondition().equals("3")) {
+				list02.add(list.get(i).getHostName());
+			}
+			
 		}
 //		
 //		String[] prodNames = string.split(",");

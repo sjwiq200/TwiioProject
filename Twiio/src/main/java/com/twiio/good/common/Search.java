@@ -2,6 +2,7 @@ package com.twiio.good.common;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
+
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Search {
 	
@@ -12,8 +13,11 @@ public class Search {
 	private int pageSize;
 	private int endRowNum;
 	private int startRowNum;
-	private String targetType;
-	
+	//////product price//////////////
+	private String priceCondition;
+	////////starProduct/////////////
+	private int productNo;
+
 	
 	///Constructor
 	public Search() {
@@ -29,15 +33,7 @@ public class Search {
 	public int getPageSize() {
 		return pageSize;
 	}
-	public String getTargetType() {
-		return targetType;
-	}
-
-
-	public void setTargetType(String targetType) {
-		this.targetType = targetType;
-	}
-
+	
 
 	public void setPageSize(int paseSize) {
 		this.pageSize = paseSize;
@@ -71,6 +67,22 @@ public class Search {
 	//==> Select Query �� ROWNUM ���� ��
 	public int getStartRowNum() {
 		return (getCurrentPage()-1)*getPageSize()+1;
+	}
+
+	public String getPriceCondition() {
+		return priceCondition;
+	}
+
+	public void setPriceCondition(String priceCondition) {
+		this.priceCondition = priceCondition;
+	}
+
+	public int getProductNo() {
+		return productNo;
+	}
+
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
 	}
 
 	@Override

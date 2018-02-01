@@ -42,13 +42,13 @@
         }
     </style>
 <script type="text/javascript">
-function fncGetUserList(currentPage,condition) {
+function fncGetUserList(currentPage,priceCondition) {
 	//document.getElementById("currentPage").value = currentPage;
 	//document.getElementById("condition").value = condition;
     //document.detailForm.submit();		
    $("#currentPage").val(currentPage);
-   $("#condition").val(condition);
-   $("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${param.menu}").submit();
+   $("#priceCondition").val(priceCondition);
+   $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 }
 
 $(function() {
@@ -66,15 +66,9 @@ $(function() {
 		}
 	});
 	
-	$( "font[name='get']" ).bind("click" , function() {
-		//alert($($("input[name='prodNo']")[$(".ct_list_pop td:nth-child(1)").text()]).val());
-		alert($(this).html().split("value=")[1].split("\"")[1]);
-		self.location="/product/getProduct?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&menu=${param.menu}";
-		
-	});
 	
 	//'<img src = "/images/uploadFiles/'+$(this).html().split("value=")[2].split("\"")[1].split(",")[0]+'"/>'
-	$( "td[name='img']" ).hover(
+	/* $( "td[name='img']" ).hover(
 					
 			function() {
 				var prodNo=$(this).html().split("value=")[1].split("\"")[1];
@@ -110,7 +104,7 @@ $(function() {
 				$( this ).find( "br" ).remove();
 				$( this ).find( "p" ).remove();				
 			}
-	);
+	); */
 	
 	
 	$( "#searchKeyword" ).autocomplete({
@@ -160,17 +154,9 @@ $(function() {
 		fncGetUserList('${resultPage.currentPage }','low');
 	});
 	
-	$( "td:nth-child(5):contains('배송하기')" ).bind("click" , function() {
-		//Debug..
-		//alert( $(this).html().split("value=")[1].split("\"")[1]);
-		//"/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=2"
-				//alert("/purchase/updateTranCodeByProd?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&tranCode=2");
-		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&tranCode=2";
-	});
-	$( "td:nth-child(5):contains('배송하기')" ).css("color" , "red");
-	$("h7").css("color" , "blue");
 	
-	$("div[name='getPro']").bind("click",function(){
+	
+	$("a[name='getPro']").bind("click",function(){
 		//function(){
 			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
 		//}
@@ -194,7 +180,7 @@ $(function() {
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>${param.menu=='manage' ? "상품 관리" : "상품 목록조회"}</h3>
+	      <%--  <h3>${param.menu=='manage' ? "상품 관리" : "상품 목록조회"}</h3> --%>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -232,7 +218,7 @@ $(function() {
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  <input type="hidden" id="condition" name="condition" value=""/>
+				  <input type="hidden" id="priceCondition" name="priceCondition" value=""/>
 					<p><font color="blue" name="high">가격높은순</font>
 						<font color="blue" name="low">가격낮은순</font></p>
 				</form>
@@ -246,7 +232,7 @@ $(function() {
 		  <c:forEach var="product" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro">
+		      <a href="#" class="thumbnail" name="getPro" style="height:400px;">
 		      	<input type="hidden" name="productNo" value="${product.productNo }"/>
 		      	<c:if test="${! empty product.thumbnail}">
 		        <img src="/resources/images/productThumbnail/${product.thumbnail}" style="width:290px; height:175px;" alt="..." class="img-rounded">
@@ -266,11 +252,11 @@ $(function() {
 		            <p>${product.productPrice}원</p>
 		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
 		        </div>
-		      </div>
+		      </a>
 		    </div>
 		    <!-- </div> -->
 		  </c:forEach>
-	    
+	    </div>
 	    
 	  
 
