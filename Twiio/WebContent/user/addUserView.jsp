@@ -14,7 +14,6 @@
 	
 	<!--  ///////////////////////// Firebase Eamil Auth ////////////////////////// -->
 	
-	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 	
 	<!-- Material Design Theming -->
 	  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -28,7 +27,8 @@
 	  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
 	  <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
-	  <script src="https://cookie.firebaseapp.com/__/firebase/init.js"></script>	 
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+	  <script src="/__/firebase/init.js"></script>	 
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -285,43 +285,29 @@
 		      }
 		      // Sign in with email and pass.
 		      // [START createwithemail]
-		      	alert("제발");
-		      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(user) {
-		    	  var user = firebase.auth().currentUser;
-		    	  alert("제발");
-		    	  alert("currentUser::"+JSON.stringify(user));
-		    	  alert("제발");
-		    	  sendEmailVerification();		    	  
-		    	  
-			        // Email Verification sent!
-			        // [START_EXCLUDE]
-			        //alert('Email Verification Sent!');
-			        // [END_EXCLUDE]
-		       
-		      },function(error) {
-		    	  // Handle Errors here.
-			        var errorCode = error.code;
-			        var errorMessage = error.message;
-			        // [START_EXCLUDE]
-			        if (errorCode == 'auth/weak-password') {
-			          alert('The password is too weak.');
-			        } else {
-			          alert(errorMessage);
-			        }
-			        console.log(error);
-			        // [END_EXCLUDE]	    	  
-		    	 
-			      });
+		      alert("제발111");
+		      firebase.auth().createUserWithEmailAndPassword(email, password).catch(function(error) {
+		          // Handle Errors here.
+		          var errorCode = error.code;
+		          var errorMessage = error.message;
+		          // [START_EXCLUDE]
+		          if (errorCode == 'auth/weak-password') {
+		            alert('The password is too weak.');
+		          } else {
+		            alert(errorMessage);
+		          }
+		          console.log(error);
+		          // [END_EXCLUDE]
+		        });
 		      // [END createwithemail]
-	    	//sendEmail();
+		      sendEmailVerification();
 	      
 	    }
 	    
 	     function sendEmailVerification(){
-	    	//alert("sendEmail");
+	    	alert("sendEmail");
 	    	// [START sendemailverification]
 		      firebase.auth().currentUser.sendEmailVerification().then(function() {
-		    	 // alert("어휴");
 		        // Email Verification sent!
 		        // [START_EXCLUDE]
 		        alert('Email Verification Sent!');
