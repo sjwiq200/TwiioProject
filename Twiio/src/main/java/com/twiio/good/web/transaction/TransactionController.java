@@ -276,17 +276,19 @@ public class TransactionController {
 	}
 	
 	@RequestMapping(value="kakaoCancel", method=RequestMethod.GET)
-	public void kakaoCancel(@RequestParam("tranNo") int tranNo) throws Exception{
+	public String kakaoCancel() throws Exception{
 		System.out.println("/transaction/kakaoCancel : GET");
 		
 		String status= this.kakaoOrder();
 		
-		if(status.equals("CANCEL_PAYMENT")) {
+		if(status.equals("QUIT_PAYMENT")) {
+			return "forward:/transaction/cancel.jsp";
+		}else if(status.equals("CANCEL_PAYMENT")) {			
 			StringBuffer sb = new StringBuffer("cid="+cid);
 			sb.append("&tid="+tid);
-			sb.append("&cancel_amount="+tid);
-			sb.append("&cancel_tax_free_amount="+tid);
-			sb.append("&cancel_vat_amount="+tid);
+			sb.append("&cancel_amount="+transactiondb.getTotalPrice());
+			sb.append("&cancel_tax_free_amount="+0);
+			//sb.append("&cancel_vat_amount="+tid);
 			
 			String cancelPayURL="https://kapi.kakao.com/v1/payment/cancel";
 			
@@ -334,6 +336,10 @@ public class TransactionController {
 	        
 	        JSONObject jsonobj = (JSONObject)JSONValue.parse(response.toString());
 	        System.out.println(jsonobj);
+	        
+	        return "forward:/transaction/cancel.jsp";
+        }else {
+        	 return "forward:/transaction/cancel.jsp";
         }
 	}
 	

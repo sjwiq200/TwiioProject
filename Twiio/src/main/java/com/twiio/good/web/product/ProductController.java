@@ -24,6 +24,7 @@ import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.transaction.TransactionService;
+import com.twiio.good.service.user.UserService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -32,6 +33,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 	
 	@Value("#{commonProperties['productFilePath']}")
 	String productFilePath;
@@ -213,6 +218,7 @@ public class ProductController {
 		//List<Transaction> list = productService.listBestProduct(search);				
 		
 		map.put("list", (List<Transaction>)productService.listBestProduct(search));
+		map.put("list02", (List<Transaction>)userService.listBestHost(search));
 		
 		return "forward:/product/best10.jsp";
 	}

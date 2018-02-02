@@ -203,7 +203,8 @@
 									
 										<if test="evalType == 'product'">
 											AND product_no= #{productNo}
-											AND (product_star_eval IS NOT NULL OR product_review IS NOT NULL)
+											AND product_star_eval IS NOT NULL
+											<!-- AND (product_star_eval IS NOT NULL OR product_review IS NOT NULL) -->
 										</if>
 										<if test="evalType == 'host'">
 											AND host_no= #{hostNo}
