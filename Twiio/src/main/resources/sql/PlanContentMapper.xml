@@ -11,29 +11,41 @@
 		<result property="dailyPlan.dailyPlanNo" column="daily_plan_no" jdbcType="NUMERIC" />
 		<result property="scrap.scrapNo" column="scrap_no" jdbcType="NUMERIC" />
 		<result property="contentType" column="content_type" jdbcType="NUMERIC" />
-		<result property="route" column="route" jdbcType="VARCHAR"/>
+		<result property="orderNo" column="order_no" jdbcType="NUMERIC"/>
+		<result property="contentText" column="content_text" jdbcType="CLOB"/>
+		<result property="contentImage" column="content_image" jdbcType="VARCHAR"/>	
+		
 		<result property="mapUrl" column="map_url" jdbcType="VARCHAR"/>
+		<result property="mapAddress" column="map_address" jdbcType="VARCHAR"/>
+		<result property="mapPhone" column="map_phone" jdbcType="VARCHAR"/>
+		<result property="mapWebsite" column="map_website" jdbcType="VARCHAR"/>
+		<result property="mapName" column="map_name" jdbcType="VARCHAR"/>
+		<result property="mapImage" column="map_image" jdbcType="VARCHAR"/>
+		<result property="mapType" column="map_type" jdbcType="VARCHAR"/>
+				
+		<result property="route" column="route" jdbcType="VARCHAR"/>
 		<result property="departureLocation" column="departure_location" jdbcType="VARCHAR"/>
 		<result property="arrivalLocation" column="arrival_location" jdbcType="VARCHAR"/>
 		<result property="estimatedTime" column="estimated_time" jdbcType="VARCHAR"/>
 		<result property="routeType" column="route_type" jdbcType="CHAR"/>
 		<result property="routeDescription" column="route_description" jdbcType="VARCHAR"/>
-		<result property="orderNo" column="order_no" jdbcType="NUMERIC"/>
-		<result property="contentText" column="content_text" jdbcType="CLOB"/>
-		<result property="contentImage" column="content_image" jdbcType="VARCHAR"/>	
+		
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addPlanContent"		parameterType="planContent" >
 	 	INSERT
-		INTO plan_content ( content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image) 
+		INTO plan_content ( content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image,
+								map_address,map_phone,map_website,map_name,map_image,map_type) 
 		VALUES	 (	seq_plan_content_content_no.NEXTVAL  , #{dailyPlan.dailyPlanNo:NUMERIC} , #{scrap.scrapNo:NUMERIC} ,  #{contentType:NUMERIC}, #{route:VARCHAR} , #{mapUrl:VARCHAR} , #{departureLocation:VARCHAR} , #{arrivalLocation:VARCHAR} , 
-							#{estimatedTime:VARCHAR},#{routeType:CHAR} , #{routeDescription:VARCHAR} , #{orderNo:NUMERIC},#{contentText:VARCHAR},#{contentImage:VARCHAR} )
+							#{estimatedTime:VARCHAR},#{routeType:CHAR} , #{routeDescription:VARCHAR} , #{orderNo:NUMERIC},#{contentText:VARCHAR},#{contentImage:VARCHAR} 
+							,#{mapAddress:VARCHAR},#{mapPhone:VARCHAR},#{mapWebsite:VARCHAR},#{mapName:VARCHAR},#{mapImage:VARCHAR},#{mapType:VARCHAR})
 	 </insert>
 	 
 	 <select 	id="getPlanContent"	parameterType="int"	resultMap="planContentSelectMap">
 		SELECT
-		content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
+		content_no , daily_plan_no , scrap_no , content_type, route , map_url, map_address,map_phone,map_type,
+		map_website,map_name,map_image,departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
 		FROM plan_content
 		WHERE daily_plan_no = #{dailyPlanNo}
 	 </select>
@@ -57,7 +69,8 @@
 	  
 	  <select  id="getPlanContentList"  parameterType="int"	resultMap="planContentSelectMap">
 		  SELECT 
-		  content_no , daily_plan_no , scrap_no , content_type, route , map_url, departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
+		content_no , daily_plan_no , scrap_no , content_type, route , map_url, map_address,map_phone,
+		map_website,map_name,map_image,map_type,departure_location, arrival_location,estimated_time,route_type,route_description,order_no,content_text,content_image
 		   FROM plan_content
 		  	WHERE daily_plan_no=#{dailyPlanNo}
 		  	ORDER BY content_no ASC

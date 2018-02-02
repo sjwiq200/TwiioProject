@@ -1,12 +1,12 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -19,7 +19,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
-<!-- ´ÙÀÌ¾ó·Î±×  -->
+<!-- ë‹¤ì´ì–¼ë¡œê·¸  -->
 
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
@@ -31,7 +31,7 @@
 
 
 
-<!--  ±¸±Û  -->
+<!--  êµ¬ê¸€  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     
     
@@ -42,37 +42,6 @@
 #mainBody {
     padding-top : 100px;
 }
-
-
-      #map {
-        height: 300px;
-        width: 500px;
-
-      }
-      html, body {
-        height: 100%;
-        width: 100%;
-        margin: 0;
-        padding: 0;
-      }
-      #floating-panel {
-/*         position: absolute;
-        top: 10px;
-        left: 50%; */
-        z-index: 10;
-        background-color: #fff;
-        padding: 5px;
-        border: 1px solid #999;
-        text-align: center;
-        font-family: 'Roboto','sans-serif';
-        line-height: 30px;
-        padding-left: 10px;
-      }
-      
-      .pac-container {
-    z-index: 100000;
-}
-
 
 
 </style>
@@ -103,99 +72,57 @@
 				});
 	});
 	
+	$(function() {
+	
+		$("#friendRecButton").bind("click",function() {
+			var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
+			var user;
+			var result ="";
+
+			 $.ajax({
+	    				url:"/dailyplan/json/listFriendRec?dailyPlanNo="+dailyPlanNo,
+	    				method:"GET",	    					
+	    				dataType:"json",
+	    				headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+	    				success:function(JSONData){
+	    					user = JSONData.userList;
+		    					for(var i=0;i<user.length;i++){
+		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
+		    								+'<span>  [ì•„ì´ë””] : '+user[i].userId+'</span>'
+		    								+'<span>  [ì´ë¦„] : '+user[i].userName+'</span>'
+		    								+'<span>  [ì„±ë³„] : '+user[i].userGender+'</span>'
+		    								+'<span>  [ì‚¬ì§„] : '+user[i].userImage+'</span>'
+		    								+'<span>&nbsp;</span>'
+		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">ì¹œêµ¬ì¶”ê°€</button><p>&nbsp;</p>';
+		    					}
+		    				 $('#friendListForRec').html(result);
+		    				 $('#friendRec').modal('show'); 
+	    					}
+			
+								
+			    });
+			 
+			 
+			 
+		});
+	 });
+	 
+	function addFriend(userNo) {
+	    
+	    $.ajax({
+            url:'/dailyplan/json/addFriend?userNo='+userNo,
+            type:'get'
+         });
+	    
+	    $("#addToMyFriendList").remove();
+	    
+	}
+	
 	</script>
 	
-	
-	<script type = "text/javascript" async defer
-	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initMap&sensor=true">
-	</script>
-	
-	    <script>
-	/////Google Map Script////////
-	
-	
-	
-  	var service;
-  	 var map;
-      function initMap() {
-        map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 5,
-        });
-  
-        var geocoder = new google.maps.Geocoder;
-		var infowindow = new google.maps.InfoWindow;
-		var address = document.getElementById('address');
-		service = new google.maps.places.PlacesService(map);
-		var autocomplete = new google.maps.places.Autocomplete(address);
-        document.getElementById('submit').addEventListener('click', function() {
-        geocodeAddress(geocoder, map);
-        });
-      }
-
-      function geocodeAddress(geocoder, resultsMap) {
-        var address = document.getElementById('address').value;
- 
-        geocoder.geocode({'address': address}, function(results, status) {
-        	if (status === 'OK') {
-        		service.getDetails({
-        		    placeId:results[0].place_id
-        		}, function(place, status) {
-        		    	var log = {
-        		    				formatted_address:JSON.stringify(place.formatted_address),
-									types:JSON.stringify(place.types),
-									url:JSON.stringify(place.url),
-									formatted_phone_number:(JSON.stringify(place.formatted_phone_number)==null?0:JSON.stringify(place.formatted_phone_number)),
-									international_phone_number:(JSON.stringify(place.international_phone_number)==null?0:JSON.stringify(place.international_phone_number)),
-									rating:(JSON.stringify(place.rating)==null?0:JSON.stringify(place.rating)),
-									website:(JSON.stringify(place.website)==null?0:JSON.stringify(place.website))
-									};
-        		    	console.log(log);
-        		    
-        		    	var address=JSON.stringify(place.formatted_address);
-        		    	var types=JSON.stringify(place.types);
-        		    	var url = JSON.stringify(place.url);
-        		    	
-        		    	$("#resultMap")
-        		    	.append("<div align=\"center\">"+address+"</div>")
-        		    	.append("<div align=\"center\">"+types+"</div>")
-        		    	.append("<div align=\"center\">"+url+"</div>");
-        		    	
-        		    	
-        		});
-           
-          } else {
-            alert('Ã£À¸½Ã´Â Àå¼Ò°¡ °Ë»öµÇÁö ¾Ê³×¿ä ÈæÈæ ´Ù¸¥ °Ë»ö¾î·Î ÇÑ¹ø ´Ù½Ã ÇØº¼±î¿ä?' + status);
-          }
-        });
-      }
-      
-/*       $('#addMap').on('shown', function () {
-    	  alert("¾È³ç");
-    	  console.log("¾È³ç");
-    	  google.maps.event.trigger(map, 'resize');
-    	  map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
-    	});
-      
-      
-      $('button[name=addMapIcon]').on('click', function () {
-    	  alert("¾È³ç");
-    	  console.log("¾È³ç");
-    	  //google.maps.event.trigger(map, 'resize');
-    	  //map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
-    	}); */
-      
-      $(function() {
-  		$("button:contains('Áöµµ')").on("click", function() {
-  			alert("¾È³ç!");
-  		google.maps.event.trigger(map, 'resize');
-      	  map.setCenter(new google.maps.LatLng(42.7369792, -84.48386540000001));
-  		});
-  	});
-      
-      
-    </script>
- 
-
 
 	
 </head>
@@ -206,13 +133,22 @@
 	<form class="form-horizontal">
 
 		<div class="container">
+			
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<div align="center">
+			<input type="button" id="friendRecButton"  name="friendRecButton" class="btn btn-primary" value="ê°™ì´ ê°ˆ ì¹œêµ¬ê°€ í•„ìš”í•œê°€ìš”?"/>
+			 <!-- data-toggle="modal" data-target="#friendRec"  -->
+			</div>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			
 			<div align="center">
 				<h1>DAY :<strong>${dailyPlan.day}</strong></h1>
 				<h4>DailyDate : ${dailyPlan.dailyDate}</h4>
-				<h4>DailyCity : ${dailyPlan.dailyCity}	</h4>
+				<h4>DailyCity : ${dailyPlan.dailyCity}	</h4> 
 			</div>
-
-
+			
 			<div class="PlanContentList" align="center">
 
 				<c:set var="i" value="0" />
@@ -220,49 +156,80 @@
 					<c:set var="i" value="${ i+1 }" />
 					<input type="hidden" name="planContentNo" value="${planContentNo}" />
 					<div>
-						<h7> ¤Ñ </h7>
-						<div>ÄÜÅÙÃ÷ ¹øÈ£ : ${planContent.contentNo}</div>
-						<div>µ¥ÀÏ¸®ÇÃ·£¹øÈ£ : ${dailyPlan.dailyPlanNo}</div>
-						<div>ÄÜÅÙÃ÷Å¸ÀÔ : ${planContent.contentType}</div>
+						<h7> ã…¡ </h7>
+						<div>ì½˜í…ì¸  ë²ˆí˜¸ : ${planContent.contentNo}</div>
+						<div>ë°ì¼ë¦¬í”Œëœë²ˆí˜¸ : ${dailyPlan.dailyPlanNo}</div>
+						<div>ì½˜í…ì¸ íƒ€ì… : ${planContent.contentType}</div>
+						
+						<c:if test="${!empty planContent.orderNo}">
+							<div>ìˆœì„œ : ${planContent.orderNo}</div>
+						</c:if>
 						
 						<c:if test="${!empty scrap.scrapNo }">
-							<div>½ºÅ©·¦¹øÈ£ : ${scrap.scrapNo }</div>
+							<div>ìŠ¤í¬ë©ë²ˆí˜¸ : ${scrap.scrapNo }</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.route}">
-							<div>·çÆ® : ${planContent.route}</div>
+							<div>ë£¨íŠ¸ : ${planContent.route}</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.departureLocation}">
-							<div>Ãâ¹ßÁö : ${planContent.departureLocation}</div>
+							<div>ì¶œë°œì§€ : ${planContent.departureLocation}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.arrivalLocation}">
-							<div>µµÂøÁö : ${planContent.arrivalLocation}</div>
+							<div>ë„ì°©ì§€ : ${planContent.arrivalLocation}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.estimatedTime}">
-							<div>¼Ò¿ä½Ã°£ : ${planContent.estimatedTime}</div>
+							<div>ì†Œìš”ì‹œê°„ : ${planContent.estimatedTime}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.routeType}">
-							<div>ÀÌµ¿¹æ¹ı : ${planContent.routeType}</div>
+							<div>ì´ë™ë°©ë²• : ${planContent.routeType}</div>
 						</c:if>
 
 						<c:if test="${!empty planContent.routeDescription}">
-							<div>±æÃ£±â°á°ú : ${planContent.routeDescription}</div>
+							<div>ê¸¸ì°¾ê¸°ê²°ê³¼ : ${planContent.routeDescription}</div>
 						</c:if>
-
-						<c:if test="${!empty planContent.orderNo}">
-							<div>¼ø¼­ : ${planContent.orderNo}</div>
+						
+						
+						<c:if test="${!empty planContent.mapImage}">
+							<div><Strong> Your Map Information</Strong></div>
+							<div> <img src ="${planContent.mapImage}" width="350px" onclick="javascript:location.href='${planContent.mapUrl}';"/></div>
 						</c:if>
-
+						
+						
+						<c:if test="${!empty planContent.mapName}">
+							<div>${planContent.mapName} </div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapUrl}">
+							<div>ì§€ë„ URL : ${planContent.mapUrl}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapAddress}">
+							<div>ì§€ë„ ì£¼ì†Œ : ${planContent.mapAddress}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapPhone}">
+							<div>PHONE : ${planContent.mapPhone}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapWebsite}">
+							<div>ì›¹ì‚¬ì´íŠ¸ : ${planContent.mapWebsite}</div>
+						</c:if>
+						
+						<c:if test="${!empty planContent.mapType}">
+							<div>ì§€ë„ìœ í˜• : ${planContent.mapType}</div>
+						</c:if>
+						
 						<c:if test="${!empty planContent.contentText}">
-							<div>ÅØ½ºÆ® : ${planContent.contentText}</div>
+							<div>í…ìŠ¤íŠ¸ : ${planContent.contentText}</div>
 						</c:if>
 						
 						<c:if test="${!empty planContent.contentImage}">
-							<div>ÀÌ¹ÌÁö : </div>
+							<div>ì´ë¯¸ì§€ : </div>
 							<div><img src="/resources/images/dailyPlanContent/${planContent.contentImage}" width="300px" /></div>
 						</c:if>
 
@@ -278,10 +245,10 @@
 	<div>
 
 		
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">±Û¾¾¾²±â</button></span>
-		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">»çÁøÃß°¡</button> </span> 
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">Áöµµ</button></span>
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">±æÃ£±â</button> </span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">ê¸€ì”¨ì“°ê¸°</button></span>
+		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">ì‚¬ì§„ì¶”ê°€</button> </span> 
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">ì§€ë„</button></span>
+		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">ê¸¸ì°¾ê¸°</button> </span>
 
 		<!---------- Map Dialog ------------->
 		<div class="modal fade" id="addMap"  role="dialog">
@@ -296,20 +263,12 @@
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
 					<div class="modal-body">
-
-					<!-- Google Map  -->
-						<div id="floating-panel">
-							<input id="address" type="textbox" value=""> <input
-								id="submit" type="button" value="°Ë»ö">
-							<div id="resultMap" type="textbox" value="">-</div>
-						</div>
-						<div id="map"></div>
-					<!-- Google Map  -->
-
-
+						<jsp:include page="/dailyplan/addMap.jsp" flush="false">
+							<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
+						</jsp:include>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">ë‚˜ê°€ê¸°</button>
 					</div>
 				</div>
 			</div>
@@ -360,7 +319,7 @@
 					
 						<form name="form" enctype="multipart/form-data">
 							<div class="form-group">
-								<label for="uploadFile" class="col-sm-4 control-label">»óÇ°ÀÌ¹ÌÁö
+								<label for="uploadFile" class="col-sm-4 control-label">ìƒí’ˆì´ë¯¸ì§€
 								</label>
 								
 								<div class="col-sm-6">
@@ -382,7 +341,35 @@
 		</div>
 
 		<!-- ---------------------------------------------------------------- -->
+		
+		<!---------- FriendRec Dialog ------------->
+	
+	<div>
 
+		<div class="modal fade" id="friendRec" role="dialog">
+			<div class="modal-dialog modal-md">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>ë‚˜ì™€ ê°™ì€ ê³³, ê°™ì€ ë‚ ì§œì— ê°€ëŠ” ì—¬í–‰ì</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+
+					<div class="modal-body" align="center">
+						
+						<div id="friendListForRec" > </div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 
 
 </body>

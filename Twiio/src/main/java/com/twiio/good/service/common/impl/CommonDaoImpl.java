@@ -126,6 +126,11 @@ public class CommonDaoImpl implements CommonDao {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public List<Friend> listFriendOnly(int userNo) throws Exception {
+		return sqlSession.selectList("CommonMapper.listFriendOnly",userNo);
+	}
 	
 
 }
