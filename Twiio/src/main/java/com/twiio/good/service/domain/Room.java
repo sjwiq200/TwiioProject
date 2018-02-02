@@ -4,13 +4,16 @@ public class Room {
 	
 	private String _id;
 	private String roomName;
-	private String key;
+	private String roomKey;
 	private String type; //말머리
 	private String country;
 	private String city;
 	private String region;
 	private int headCount;
 	private String date;
+	private int userNo; //방장
+	private boolean open = true;
+	private boolean fix = false;
 
 	public Room() {
 		// TODO Auto-generated constructor stub
@@ -33,12 +36,12 @@ public class Room {
 		this.roomName = roomName;
 	}
 
-	public String getKey() {
-		return key;
+	public String getRoomKey() {
+		return roomKey;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
+	public void setRoomKey(String roomKey) {
+		this.roomKey = roomKey;
 	}
 
 	public String getType() {
@@ -89,13 +92,44 @@ public class Room {
 		this.date = date;
 	}
 
-	@Override
-	public String toString() {
-		return "Room [_id=" + _id + ", roomName=" + roomName + ", key=" + key + ", type=" + type + ", country="
-				+ country + ", city=" + city + ", region=" + region + ", headCount=" + headCount + ", date=" + date
-				+ "]";
+	public int getUserNo() {
+		return userNo;
 	}
 
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
+	}
+
+	public boolean isOpen() {
+		return open;
+	}
+
+	public void setOpen(boolean open) {
+		this.open = open;
+	}
+
+	public boolean isFix() {
+		return fix;
+	}
+
+	public void setFix(boolean fix) {
+		this.fix = fix;
+	}
+
+	@Override
+	public String toString() {
+		return "Room [_id=" + _id + ", roomName=" + roomName + ", roomKey=" + roomKey + ", type=" + type + ", country="
+				+ country + ", city=" + city + ", region=" + region + ", headCount=" + headCount + ", date=" + date
+				+ ", userNo=" + userNo + ", open=" + open + ", fix=" + fix + "]";
+	}
+
+	
+	
+	
+	
+	
+
+	
 
 	
 

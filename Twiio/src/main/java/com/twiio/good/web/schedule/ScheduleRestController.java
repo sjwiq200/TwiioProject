@@ -55,8 +55,6 @@ public class ScheduleRestController {
 		schedule.setCountry(room.getCountry());
 		scheduleService.addSchedule(schedule);
 		
-		System.out.println("gdgdgdgd");
-		
 		return true;
 	}
 

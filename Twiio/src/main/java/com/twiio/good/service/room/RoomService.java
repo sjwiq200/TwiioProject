@@ -19,5 +19,9 @@ public interface RoomService {
 	public Room getRoom(String roomKey) throws Exception;
 
 	public List<RoomUser> listRoomUser(String roomKey) throws Exception;
+	
+	public void updateRoom(Room room) throws Exception;
+	
+	public void deleteRoom(Room room) throws Exception;
 
 }

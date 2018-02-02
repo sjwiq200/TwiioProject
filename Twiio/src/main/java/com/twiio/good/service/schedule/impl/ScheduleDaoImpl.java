@@ -53,13 +53,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"listSchedule()");
 		
-		Criteria criteria = new Criteria("userNo");
-		criteria.is(userNo);
 
-		Query query = new Query(criteria);
+		Query query = new Query();
+		query.addCriteria(Criteria.where("userNo").all(userNo));
 		
 		System.out.println("listSchedule Result = >"+mongoTemplate.find(query, Schedule.class,"schedules"));
-		return null;
+		return mongoTemplate.find(query, Schedule.class,"schedules");
 	}
 	
 	

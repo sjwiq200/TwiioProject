@@ -10,8 +10,10 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.mongodb.WriteResult;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Room;
 import com.twiio.good.service.domain.RoomUser;
@@ -37,9 +39,8 @@ public class RoomDaoImpl implements RoomDao {
 	@Override
 	public List<Room> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".listRoom()");
 
-//		Query query = new Query(new Criteria("roomname").all("nice"));
-//		System.out.println(mongoTemplate.find(query, Room.class, "rooms"));
 		List<Room> list = mongoTemplate.findAll(Room.class,"rooms");
 		for (Room messenger : list) {
 			System.out.println(messenger);
@@ -55,7 +56,7 @@ public class RoomDaoImpl implements RoomDao {
 	public void addRoom(Room room) throws Exception {
 		// TODO Auto-generated method stub
 
-		System.out.println(this.getClass()+"addRoom()");
+		System.out.println(this.getClass()+".addRoom()");
 
 		//SHA-1 encrypto
 		MessageDigest md = MessageDigest.getInstance("SHA-1");
@@ -71,16 +72,19 @@ public class RoomDaoImpl implements RoomDao {
             sb.append(Integer.toString((byteData[i]&0xff) + 0x100, 16).substring(1));
         }
 
-        String retVal = sb.toString().substring(0,6);
-        ////////////////////////////////////////////////////////////////////////
-        room.setKey(retVal);
+        String retVal = sb.toString().substring(0,6); //encypto Key
+        
+        room.setRoomKey(retVal);
 
-
-
-
-
+        //Add Room & Create Chat
 		mongoTemplate.insert(room,"rooms");
 		mongoTemplate.createCollection("chat"+retVal);
+		
+		//Add RoomUser
+		RoomUser roomUser = new RoomUser();
+		roomUser.setRoomKey(retVal);
+		roomUser.setUserNo(room.getUserNo());
+		mongoTemplate.insert(roomUser,"roomUser");
 
 	}
 
@@ -95,7 +99,6 @@ public class RoomDaoImpl implements RoomDao {
 		RoomUser roomUser = new RoomUser();
 		roomUser.setRoomKey(roomKey);
 		roomUser.setUserNo(userNo);
-
 
 		Criteria criteria = new Criteria("userNo");
 		criteria.is(userNo);
@@ -116,28 +119,27 @@ public class RoomDaoImpl implements RoomDao {
 		if(!flag) {
 			mongoTemplate.insert(roomUser,"roomUser");
 		}
-
 	}
 
 	@Override
 	public List<RoomUser> listMyRoom(int userNo) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+"listMyRoom()");
 
 		Criteria criteria = new Criteria("userNo");
 		criteria.is(userNo);
-
 
 		Query query = new Query(criteria);
 		System.out.println(mongoTemplate.find(query, RoomUser.class, "roomUser"));
 		return mongoTemplate.find(query, RoomUser.class, "roomUser");
 	}
 
-	//room detail information
 	@Override
 	public Room getRoom(String roomKey) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".getRoom()");
 
-		Criteria criteria = new Criteria("key");
+		Criteria criteria = new Criteria("roomKey");
 		criteria.is(roomKey);
 
 		Query query = new Query(criteria);
@@ -149,28 +151,67 @@ public class RoomDaoImpl implements RoomDao {
 	@Override
 	public List<RoomUser> listRoomUser(String roomKey) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".listRoomUser()");
 
 		Criteria criteria = new Criteria("roomKey");
 		criteria.is(roomKey);
 
 		Query query = new Query(criteria);
 
-		System.out.println("RoomDaoImpl.listRoomUser()1 ==>" +roomKey);
-		System.out.println("RoomDaoImpl.listRoomUser()3 ==>" +mongoTemplate.find(query, RoomUser.class, "roomUser"));
-
-
 		return mongoTemplate.find(query, RoomUser.class, "roomUser");
 	}
 
+	@Override
+	public void updateRoom(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+"updateRoom()");
+		
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(room.getRoomKey());
 
+		Query query = new Query(criteria);
+		
+		Update update = new Update();
+		update.set("roomName", room.getRoomName());
+		update.set("type", room.getType());
+		update.set("region", room.getRegion());
+		update.set("headCount", room.getHeadCount());
+		update.set("date", room.getDate());
 
+		mongoTemplate.updateFirst(query, update ,RoomUser.class, "rooms");
+		
+		
+		
+	}
 
-
-
-
-
-
-
+	@Override
+	public void deleteRoom(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".deleteRoom()");
+		
+		
+		// drop of rooms
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(room.getRoomKey());
+		Query query = new Query(criteria);
+		
+		WriteResult roomResult = mongoTemplate.remove(query, "rooms");
+		
+		System.out.println("delete roomResult"+roomResult.getN());
+		
+		// drop chat collection
+		mongoTemplate.dropCollection("chat"+room.getRoomKey());
+		
+		//drop of roomUser
+		WriteResult roomUserResult = mongoTemplate.remove(query, "roomUser");
+		System.out.println("delete roomUserResult"+roomUserResult.getN());
+		
+		
+	}
+	
+	
+	
+	
 
 
 }

@@ -39,6 +39,7 @@
 		 $("a:contains('참가')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 console.log(roomKey);
 			 
 			 $.ajax({
 				 url : "/room/json/addRoomUser/"+roomKey,
@@ -54,9 +55,14 @@
 			 })
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			 /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
-			 window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');  
+			 /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
 		 })
+		 
+		 $("a:contains('방 수정')").on("click",function(){
+			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 self.location = "/room/updateRoom/"+roomKey;
+		 });
 		 
 	 });
   </script>
@@ -101,25 +107,6 @@
 	    		</div>
 	    	
 		</div>
-		
-	
-		
-		  <%-- <c:set var="i" value="0" />
-		  <c:forEach var="room" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${room.roomName}</td>
-			  <td>
-			  	<!--  <a href="http://localhost:6789/${room.key}?username=${user.userId}">참가</a> -->
-			  	<a href="#">참가</a>
-			  </td>
-			  <td>
-			  	<input type="hidden" id="roomKey" value="${room.key}">
-			  </td>
-		  	</tr>
-			  
-          </c:forEach> --%>
           
           <c:set var="i" value="0" />
 		  <c:forEach var="room" items="${list}">
@@ -134,12 +121,16 @@
 		            <p>country : ${room.country}</p>
 		            <p> city : ${room.city}</p>
 		            <p>${room.headCount}명</p>
+		            <p>
 		            <c:if test="${!empty user}">
-			            <a href="#">
-			            참가
-			            <input type="hidden" id="roomKey" value="${room.key}">
-			            </a>
+			            <a href="#">참가<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
 		            </c:if>
+		            <p>
+		            <p>
+		            <c:if test="${user.userNo == room.userNo }">
+		            		<a href="#">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
+		            </c:if>
+		            </p>
 		            
 		        </div>
 		      </div>

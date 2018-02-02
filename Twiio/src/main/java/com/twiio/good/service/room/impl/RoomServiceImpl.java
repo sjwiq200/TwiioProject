@@ -67,14 +67,17 @@ public class RoomServiceImpl implements RoomService {
 		return roomDao.listRoomUser(roomKey);
 	}
 
+	@Override
+	public void updateRoom(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		roomDao.updateRoom(room);
+		
+	}
 
-
-
-
-
-
-
-
-
+	@Override
+	public void deleteRoom(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		roomDao.deleteRoom(room);
+	}
 
 }

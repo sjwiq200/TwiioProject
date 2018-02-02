@@ -1,14 +1,14 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -25,18 +25,18 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   	$(function() {
 		 
-		 $( "button.btn.btn-default:contains('¹æ»ı¼º')" ).on("click" , function() {
+		 $( "button.btn.btn-default:contains('ë°©ìƒì„±')" ).on("click" , function() {
 			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
 		});
 		 
-		 $("a:contains('Âü°¡')").on("click",function(){
+		 $("a:contains('ì°¸ê°€')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 
@@ -54,8 +54,8 @@
 			 })
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			 /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			 window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 })
 		 
 	 });
@@ -78,48 +78,29 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>¸Ş½ÅÀú ¹æ¸ñ·Ï Á¶È¸ </h3>
+	       <h3>ë©”ì‹ ì € ë°©ëª©ë¡ ì¡°íšŒ </h3>
 	    </div>
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	    <div class="row">
 	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
+		    		ì „ì²´  ${resultPage.totalCount } ê±´ìˆ˜, í˜„ì¬ ${resultPage.currentPage}  í˜ì´ì§€
 		    	</p>
 		    </div>
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-				  <button type="button" class="btn btn-default">¹æ»ı¼º</button>
+				  <button type="button" class="btn btn-default">ë°©ìƒì„±</button>
 				</form>
 	    		</div>
 	    	
 		</div>
-		
-	
-		
-		  <%-- <c:set var="i" value="0" />
-		  <c:forEach var="room" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : È¸¿øÁ¤º¸ È®ÀÎ">${room.roomName}</td>
-			  <td>
-			  	<!--  <a href="http://localhost:6789/${room.key}?username=${user.userId}">Âü°¡</a> -->
-			  	<a href="#">Âü°¡</a>
-			  </td>
-			  <td>
-			  	<input type="hidden" id="roomKey" value="${room.key}">
-			  </td>
-		  	</tr>
-			  
-          </c:forEach> --%>
           
           <c:set var="i" value="0" />
 		  <c:forEach var="room" items="${list}">
@@ -133,11 +114,11 @@
 		            <p>Date : ${room.date}</p>
 		            <p>country : ${room.country}</p>
 		            <p>city : ${room.city}</p>
-		            <p>${room.headCount}¸í</p>
+		            <p>${room.headCount}ëª…</p>
 		            <c:if test="${!empty user}">
 			            <a href="#">
-			            Âü°¡
-			            <input type="hidden" id="roomKey" value="${room.key}">
+			            ì°¸ê°€
+			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            </a>
 		            </c:if>
 		            
@@ -150,7 +131,7 @@
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>
- 	<!--  È­¸é±¸¼º div End /////////////////////////////////////-->
+ 	<!--  í™”ë©´êµ¬ì„± div End /////////////////////////////////////-->
  	
  	
  	<!-- PageNavigation Start... -->

@@ -38,18 +38,19 @@ public class ScheduleController {
 		System.out.println(this.getClass().getName());
 	}
 	
-	@RequestMapping( value="addSchedule/{roomKey}", method=RequestMethod.GET )
+	@RequestMapping( value="/addSchedule/{roomKey}", method=RequestMethod.GET )
 	public String addSchedule(@PathVariable String roomKey, HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/addSchedule : GET");
 		request.setAttribute("roomKey", roomKey);
 		return "forward:/schedule/addSchedule.jsp";
 	}
 	
-	@RequestMapping(value = "listSchedule")
-	public String listSchedule(HttpSession session) throws Exception {
+	@RequestMapping(value = "/listSchedule")
+	public String listSchedule(HttpSession session,HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/listSchedule : ");
 		User user = (User)session.getAttribute("user");
-		scheduleService.listSchedule(user.getUserNo());
+		List<Schedule> list = scheduleService.listSchedule(user.getUserNo());
+		request.setAttribute("list", list);
 
 		return "forward:/schedule/listSchedule.jsp";
 	}
