@@ -66,9 +66,9 @@
 		INSERT
 		INTO FRIEND
 		VALUES (
+		seq_friend_user_no.nextval,
 		#{userNo:NUMERIC},
-		#{friendNo:NUMERIC},
-		seq_friend_no.nextval
+		#{friendNo:NUMERIC}
 		)
 	</insert>
 	
@@ -126,6 +126,12 @@
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
+	</select>
+	
+	<select id="listFriendOnly" parameterType="friend" resultMap="friendSelectMap">
+		SELECT * FROM 
+  		 friend 
+  		WHERE user_no=#{userNo}
 	</select>
 	
 	<select id="listReply" parameterType="map" resultMap="replySelectMap">

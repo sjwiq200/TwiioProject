@@ -20,6 +20,8 @@ public interface CommonDao
   public List<Reply> listReply(Search search, int divCode, int codeNo) throws Exception;
 
   public List<Friend> listFriend(Search search, int userNo) throws Exception;
+  
+  public List<Friend> listFriendOnly(int userNo) throws Exception;
 
   public void deleteFriend(int no) throws Exception;
 

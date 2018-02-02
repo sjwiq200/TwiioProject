@@ -90,12 +90,13 @@
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
 		    					for(var i=0;i<user.length;i++){
-		    						result +='<p> USER NO : '+user[i].userNo+ '</p>'
-		    								+'<span>  아이디 : '+user[i].userId+'</span>'
-		    								+'<span>  이름 : '+user[i].userName+'</span>'
-		    								+'<span>  성별 : '+user[i].userGender+'</span>'
-		    								+'<span>  사진 : '+user[i].userImage+'</span>'
-		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">친구추가</button>';
+		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
+		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
+		    								+'<span>  [이름] : '+user[i].userName+'</span>'
+		    								+'<span>  [성별] : '+user[i].userGender+'</span>'
+		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
+		    								+'<span>&nbsp;</span>'
+		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">친구추가</button><p>&nbsp;</p>';
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
@@ -357,7 +358,7 @@
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
 
-					<div class="modal-body">
+					<div class="modal-body" align="center">
 						
 						<div id="friendListForRec" > </div>
 						
