@@ -5,6 +5,7 @@ import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Reply;
+import com.twiio.good.service.domain.Reply2;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
@@ -15,6 +16,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -26,8 +28,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/common/*")
 public class CommonRestController {
 
@@ -60,12 +63,13 @@ public class CommonRestController {
 	}
 
 
-	@RequestMapping(value = "json/addReply" )
-	public Reply addReply(@RequestBody Reply reply,
-			Model model
+	@RequestMapping(value = "json/addReply", method = RequestMethod.POST )
+	public Reply addReply(@RequestBody Reply reply
 			) throws Exception {
 		System.out.println("/common/addReply : POST");
 		commonService.addReply(reply);
+		System.out.println("들어왔음");
+		System.out.println(reply);
 		return reply;
 	}
 

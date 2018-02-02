@@ -62,14 +62,7 @@ public class MainPlanController {
 			}
 		}
 		
-		///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-		User user = new User();
-		user.setUserId("user04");
-		user.setUserType("T");
-		user.setUserName("다영이");
-		user.setUserNo(7);
-
-		/////////////////////////////////////////////////////////////////
+		User user = (User) session.getAttribute("user");
 		
 		mainPlan.setCity(cityResult);
 		mainPlan.setUser(user);
@@ -100,8 +93,8 @@ public class MainPlanController {
 	        
 	        for(int i = 0 ; i <diffDays+1 ; i++) {
 	        	
-	        	dailyPlan.setDailyCity(cityResult);
-			    dailyPlan.setDailyCountry(mainPlan.getCountry());
+	        	//dailyPlan.setDailyCity(cityResult);
+			    //dailyPlan.setDailyCountry(mainPlan.getCountry());
 			    dailyPlan.setDay(i+1);
 			    dailyPlan.setDailyDate(dailyDate);
 			    dailyPlan.setMainPlan(mainPlan);
@@ -121,8 +114,8 @@ public class MainPlanController {
 		        dailyDate=Date.valueOf(dailyDateFormat);
 	        }
 		} else {
-			dailyPlan.setDailyCity(cityResult);
-	        dailyPlan.setDailyCountry(mainPlan.getCountry());
+			//dailyPlan.setDailyCity(cityResult);
+	        //dailyPlan.setDailyCountry(mainPlan.getCountry());
 	        dailyPlan.setDay(1);
 	        dailyPlan.setDailyDate(mainPlan.getArrivalDate());
 	        dailyPlan.setMainPlan(mainPlan);
@@ -140,10 +133,7 @@ public class MainPlanController {
 		
 		System.out.println("Controller : listMainPlan <START>");
 		
-		///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-		User user = new User();
-		user.setUserNo(7);
-		/////////////////////////////////////////////////////////////////
+		User user = (User)session.getAttribute("user");
 		
 		MainPlan mainPlan = new MainPlan();
 		mainPlan.setUser(user);
@@ -203,7 +193,6 @@ public class MainPlanController {
 		System.out.println("Controller : updateMainPlan <START>"+mainPlan);
 		
 		/////mainPlanUpdate////////////////////////////////////////////////////////////////
-		
 			String cityResult = "";
 			for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
 				if(i==mainPlan.getCityList().length-1) {
@@ -235,19 +224,19 @@ public class MainPlanController {
 		mainPlanService.updateMainPlan(mainPlan);
 		
 		////Case1 : 일정변경없이 city만 변경된 경우 => dailyPlan city 초기화하기 
-		if(!(cityCompared) && departureCompared) {
-			DailyPlan dailyPlan4City = new DailyPlan();
-			dailyPlan4City.setMainPlan(mainPlan);
-			List<DailyPlan> list4City = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
-			System.out.println("debug5: " + "일정변경없이 city만 변경된 경우" );
-			System.out.println("debug5: " + list4City );
-			for(int i = 0 ; i<list4City.size() ; i++) {
-			
-				list4City.get(i).setDailyCity(cityResult);
-				list4City.get(i).setDailyCountry("");
-				dailyPlanService.updateDailyPlan(list4City.get(i)); // 변경된 도시명으로 daily_plan업데이트
-			}
-		}
+//		if(!(cityCompared) && departureCompared) {
+//			DailyPlan dailyPlan4City = new DailyPlan();
+//			dailyPlan4City.setMainPlan(mainPlan);
+//			List<DailyPlan> list4City = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
+//			System.out.println("debug: " + "일정변경없이 city만 변경된 경우" );
+//			System.out.println("debug: " + list4City );
+//			for(int i = 0 ; i<list4City.size() ; i++) {
+//			
+//				list4City.get(i).setDailyCity(cityResult);
+//				list4City.get(i).setDailyCountry("");
+//				dailyPlanService.updateDailyPlan(list4City.get(i)); // 변경된 도시명으로 daily_plan업데이트
+//			}
+//		}
 		
 		
 		////Case2 : 일정이 변경된 경우 => day수와 dailyDate변경 & dailyPlan city까지 초기화하기!
@@ -281,7 +270,7 @@ public class MainPlanController {
 							dailyPlanService.updateDailyPlan(dailyPlanCheck);
 						}else {
 							
-							dailyPlanCheck.setDailyCity(cityResult);
+							dailyPlanCheck.setDailyCity("");
 							dailyPlanCheck.setDailyCountry("");
 							dailyPlanCheck.setDay(i+1);
 							dailyPlanCheck.setDailyDate(dailyDate);
@@ -306,13 +295,7 @@ public class MainPlanController {
 					System.out.println("새로 입력한 DAY수가 기존 입력 DAY수 보다 큽니다.");
 					Date dailyDate = mainPlan.getDepartureDate();
 					
-					///////////삭제 - UserController완성 시 Session으로 가져올 예정//
-					User user = new User();
-					user.setUserId("user04");
-					user.setUserType("T");
-					user.setUserName("다영이");
-					user.setUserNo(7);
-					/////////////////////////////////////////////////////////////////
+					User user = (User) session.getAttribute("user");
 					
 					DailyPlan dailyPlan = new DailyPlan();
 					dailyPlan.setMainPlan(mainPlan);
@@ -328,13 +311,13 @@ public class MainPlanController {
 							DailyPlan dailyPlanCheck = list.get(i);
 							dailyPlanCheck.setDay(i+1);
 							dailyPlanCheck.setDailyDate(dailyDate);
-							dailyPlanCheck.setDailyCity(cityResult);
+							dailyPlanCheck.setDailyCity("");
 							dailyPlanCheck.setDailyCountry("");
 							dailyPlanService.updateDailyPlan(dailyPlanCheck);
 							System.out.println("국가&도시 미표기 처리 된 dailyPlan 정보 : " + dailyPlanCheck);
 						
 						}else { //추가되야 할 데이터들 5-10
-					        	dailyPlan.setDailyCity(cityResult);
+					        	dailyPlan.setDailyCity("");
 							    dailyPlan.setDailyCountry("");
 							    dailyPlan.setDay(i+1);
 							    dailyPlan.setDailyDate(dailyDate);

@@ -78,7 +78,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">결제를 성공적으로 완료하셨스니다</h1>
+		<h1 class="bg-primary text-center">결제를 성공적으로 완료하셨습니다</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		

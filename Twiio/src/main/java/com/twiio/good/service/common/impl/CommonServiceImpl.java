@@ -9,6 +9,7 @@ import com.twiio.good.service.domain.Report;
 
 import java.io.PrintStream;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,9 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public void addReply(Reply reply) throws Exception {
+		System.out.println("들어오니 replyServiceImpl");
 		commonDao.addReply(reply);
+		System.out.println("나오니 replyServiceImpl");
 	}
 
 	public void addFriend(Friend friend) throws Exception {
@@ -90,5 +93,10 @@ public class CommonServiceImpl implements CommonService {
 	  
 	public void listSearch() throws Exception{
 		
+	}
+
+	@Override
+	public List<Friend> listFriendOnly(int userNo) throws Exception {
+		return commonDao.listFriendOnly(userNo);
 	}
 }

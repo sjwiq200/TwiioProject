@@ -61,45 +61,76 @@
 
 <body>
 
-<!-- ToolBar Start /////////////////////////////////////-->
+	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<!-- ToolBar End /////////////////////////////////////-->
+
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-		<div class="page-header text-info">
-	      
-	    </div>
-	    		
+
+		<div class="page-header text-info"></div>
+
 		<c:set var="i" value="0" />
-		  <c:forEach var="transaction" items="${list}">
+		<c:forEach var="transaction" items="${list}">
 			<div class="row">
-			<c:set var="i" value="${i+1}" />
-			 <strong>${ i }위</strong>
+				<!-- best10product -->
+				<c:set var="i" value="${i+1}" />
+				<strong>${ i }위</strong>
+				<div class="col-sm-3 ">
+					<a href="#" class="thumbnail" name="getPro" style="height: 400px;">
+						<input type="hidden" name="productNo"
+						value="${transaction.tranPro.productNo }" /> <c:if
+							test="${! empty transaction.tranPro.thumbnail}">
+							<img
+								src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}"
+								style="width: 290px; height: 175px;" alt="..."
+								class="img-rounded">
+						</c:if> <c:if test="${empty transaction.tranPro.thumbnail}">
+							<img
+								src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg"
+								style="width: 290px; height: 175px;" alt="..."
+								class="img-rounded">
+						</c:if>
+						<div class="caption">
+							<h3>${transaction.tranPro.productName}</h3>
+							<h5>${transaction.evalProduct}</h5>
+							<p>${transaction.tranPro.country}|
+								${transaction.tranPro.city}</p>
+
+							<!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+						</div>
+					</a>
+				</div>
+			</div>
+		</c:forEach>
+
+
+		<!-- best10host -->
+		 <c:set var="j" value="0" />
+		  <c:forEach var="transaction" items="${list02}">				
+			<c:set var="j" value="${j+1}" />
+		   <strong>${ j }위</strong>
 		    <div class="col-sm-3 " >
 		      <a href="#" class="thumbnail" name="getPro" style="height:400px;">
-		      	<input type="hidden" name="productNo" value="${transaction.tranPro.productNo }"/>
-		      	<c:if test="${! empty transaction.tranPro.thumbnail}">
-		        <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		      	<input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo }"/>
+		      	<c:if test="${! empty transaction.tranPro.hostImage}">
+		        <img src="/resources/images/userThumbnail/${transaction.tranPro.hostImage}" style="width:290px; height:175px;" alt="..." class="img-rounded">
 		        </c:if>
-		        <c:if test="${empty transaction.tranPro.thumbnail}">
-		        <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		        <c:if test="${empty transaction.tranPro.hostImage}">
+		        <img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width:290px; height:175px;" alt="..." class="img-rounded">
 		        </c:if>
 		          <div class="caption">
-		            <h3>${transaction.tranPro.productName} </h3>		            
-		            <h5>${transaction.evalProduct} </h5>
-		            <p>${transaction.tranPro.country} | ${transaction.tranPro.city}</p>
-		            
+		            <h3>${transaction.hostName} </h3>		            
+		            <h5>${transaction.evalHost} </h5>		            
 		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
 		        </div>
 		      </a>
 		    </div>
-		    </div>
-		  </c:forEach>
-	    </div> 
-	   
+		    </c:forEach>
 
-	
+	</div>
+
+
+
 </body>
 </html>

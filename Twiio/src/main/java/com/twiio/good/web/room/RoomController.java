@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -27,10 +28,6 @@ import com.twiio.good.service.room.RoomService;
 @RequestMapping("/room/*")
 public class RoomController {
 	
-//	@Autowired
-//	@Qualifier("roomDaoImpl")
-//	private RoomDao roomDao;
-	
 	@Autowired
 	@Qualifier("roomServiceImpl")
 	private RoomService roomService;
@@ -44,6 +41,7 @@ public class RoomController {
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
 	
+	
 	@RequestMapping( value="addRoom", method=RequestMethod.GET )
 	public String addRoom(HttpServletRequest request) throws Exception {
 		System.out.println("/room/addRoom : GET");
@@ -51,13 +49,12 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value="addRoom", method=RequestMethod.POST)
-	public String addRoom(@ModelAttribute("room") Room room) throws Exception{
+	public String addRoom(@ModelAttribute("room") Room room,HttpSession session) throws Exception{
 		
 		System.out.println("/room/addRoom : POST");
-		System.out.println(room);
+		User user = (User)session.getAttribute("user");
+		room.setUserNo(user.getUserNo());
 				
-		
-//		roomDao.addRoom(room);
 		roomService.addRoom(room);
 		
 		return "redirect:/room/listRoom";
@@ -85,17 +82,41 @@ public class RoomController {
 		List<Room> listRoom = new Vector<Room>();
 		
 		for (RoomUser roomUser : list) {
-			System.out.println("RoomController ==>" + roomUser);
 			listRoom.add(roomService.getRoom(roomUser.getRoomKey()));
-		}
-		
-		for (Room room : listRoom) {
-			System.out.println("RoomController 22222 ==>"+room);
 		}
 		
 		request.setAttribute("list", listRoom);
 		
 		return "forward:/room/listMyRoom.jsp";
+	}
+	
+	@RequestMapping(value = "/updateRoom/{roomKey}", method=RequestMethod.GET)
+	public String updateRoom(@PathVariable String roomKey, HttpServletRequest request) throws Exception{
+		System.out.println("room/updateRoom/{roomKey} : GET" );
+		System.out.println("roomKey ==>" + roomKey);
+		Room room = roomService.getRoom(roomKey);
+		System.out.println("room ==>" + room);
+		request.setAttribute("room", room);
+		return "forward:/room/updateRoom.jsp";
+		
+	}
+	
+	@RequestMapping(value = "/updateRoom" , method=RequestMethod.POST)
+	public String updateRoom(@ModelAttribute("room") Room room, HttpSession session) throws Exception{
+		System.out.println("/room/updateRoom : POST");
+		System.out.println("room ==>" + room);
+		User user =  (User)session.getAttribute("user");
+		room.setUserNo(user.getUserNo());
+		roomService.updateRoom(room);
+		return "redirect:/room/listMyRoom";
+	}
+	
+	@RequestMapping(value = "/deleteRoom")
+	public String deleteRoom(@ModelAttribute("room") Room room) throws Exception{
+		System.out.println("/room/updateRoom : ");
+		System.out.println(room);
+		roomService.deleteRoom(room);
+		return "redirect:/room/listMyRoom";
 	}
 	
 	
