@@ -43,7 +43,7 @@
 	<!-- jQuery UI toolTip 사용 JS-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!-- Bootstrap Dropdown Hover JS -->
+    <!--  ///////////////////////// 추가 ////////////////////////// -->
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>

@@ -2,31 +2,56 @@ package com.twiio.good.service.domain;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Reply {
 	private int replyNo;
 	private int userNo;
+	private String userName;
 	private String replyContent;
 	private Date replyRegDate;
 	private int productNo;
 	private int communityNo;
-	private int divCode;
+	private String targetType;
 	
 	public Reply() {
 	}
 
+	public String getUserName() {
+		return userName;
+	}
 
-		
 
-	public int getDivCode() {
-		return divCode;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 
 
 
-	public void setDivCode(int divCode) {
-		this.divCode = divCode;
+
+
+
+
+
+	public String getTargetType() {
+		return targetType;
 	}
+
+
+
+
+
+
+
+
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
+	}
+
+
+
+
 
 
 
@@ -119,7 +144,7 @@ public class Reply {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "Reply [replyNo=" + replyNo + ", userNo=" + userNo + ", replyContent=" + replyContent + ", replyRegDate="
-		+ replyRegDate + ", productNo=" + productNo + ", communityNo=" + communityNo + " ]";
+		+ replyRegDate + ", productNo=" + productNo + ", communityNo=" + communityNo + ",userName="+userName+" ]";
 	}
 	
 	

@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -7,14 +7,13 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Firebase Eamil Auth ////////////////////////// -->
 	
-	<script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
 	
 	<!-- Material Design Theming -->
 	  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
@@ -26,9 +25,10 @@
 	  <!-- Import and configure the Firebase SDK -->
 	  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
 	  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-	  <script src="/__/firebase/4.0.0/firebase-app.js"></script>
-	  <script src="/__/firebase/4.0.0/firebase-auth.js"></script>
-	  <script src="/__/firebase/init.js"></script>		
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
+	<script src="https://cookie-189904.firebaseapp.com/__/firebase/init.js"></script>	 
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -52,18 +52,18 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "°¡ÀÔ"  Event ¿¬°á =============
+		//============= "ê°€ì…"  Event ì—°ê²° =============
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				fncAddUser();
 			});
 		});	
 		 
 		
-		//============= "Ãë¼Ò"  Event Ã³¸® ¹×  ¿¬°á =============
+		//============= "ì·¨ì†Œ"  Event ì²˜ë¦¬ ë°  ì—°ê²° =============
 		$(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
 				$("form")[0].reset();
 			});
@@ -108,9 +108,8 @@
 			}
 			
 		}
-		
 
-		//==>"ÀÌ¸ŞÀÏ" À¯È¿¼ºCheck  Event Ã³¸® ¹× ¿¬°á
+		//==>"ì´ë©”ì¼" ìœ íš¨ì„±Check  Event ì²˜ë¦¬ ë° ì—°ê²°
 		 $(function() {
 			 
 			 $("input[name='email']").on("change" , function() {
@@ -118,27 +117,85 @@
 				 var email=$("input[name='email']").val();
 			    
 				 if(email != "" && (email.indexOf('@') < 1 || email.indexOf('.') == -1) ){
-			    	alert("ÀÌ¸ŞÀÏ Çü½ÄÀÌ ¾Æ´Õ´Ï´Ù.");
+			    	alert("ì´ë©”ì¼ í˜•ì‹ì´ ì•„ë‹™ë‹ˆë‹¤.");
 			     }
 			});
 			 
-		});			
+		});
+		////////////////////////////////////ì´ë©”ì¼ ì¸ì¦////////////////////////////////////////////////////////////
+		
+ 		$(function() {
+			 
+			 $("button#emailVer").on("click" , function() {
+				 
+				 var email = $("#email").val();
+				 alert(email);
+				
+				 $.ajax(
+		    				{
+		    					url:"/user/json/getEmailVer",
+		    					method:"POST",
+		    					data:{
+		    						"userEmail" : email
+		    					},
+		    					dataType: "json",
+		    					contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
+		    					headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+
+		    					success:function(JSONData){
+		    						
+		    						var authNum = $("#emailAuth").val(JSONData.authNum);
+		    						
+				    					}
+				    				}
+				    			);
+				 
+					     });
+					});
+		
+		
+ 		$(function() {
+			 
+			 $("button#goAuth").on("click" , function() {
+				 
+				 var inputNum = $("#inputNum").val();
+				 var authNum = $("#emailAuth").val();
+					
+				 if(inputNum==authNum){
+					 
+					 alert("ì¸ì¦ë²ˆí˜¸ê°€ í™•ì¸ë˜ì—ˆìŠµë‹ˆë‹¤.");
+					 
+					 $("button#emailVer").disabled = true;
+				 }else{
+					 
+					 alert("ì¸ì¦ë²ˆí˜¸ê°€ ë‹¤ë¦„ë‹ˆë‹¤. ë‹¤ì‹œì…ë ¥í•´ì£¼ì„¸ìš”.");
+				 }
+				 
+				 
+				 
+					     });
+					});
+			 
+	
 	  
 		 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 		 //var idCheck
-		//==>"IDÁßº¹È®ÀÎ" Event Ã³¸® ¹× ¿¬°á		
+		//==>"IDì¤‘ë³µí™•ì¸" Event ì²˜ë¦¬ ë° ì—°ê²°		
 		$(function() {
 			//alert("1111");
 			//if($("#userId").val().length>5){
-				//alert("Á¦¹ß111");				
+				//alert("ì œë°œ111");				
 	            $("#userId").on("keyup",function(){
-	            	//alert("Á¦¹ß");
+	            	//alert("ì œë°œ");
 	                var userId = $('#userId').val();
 	                console.log(userId);
 	                if(userId.length<6){
 	                	$("#userId").css("background-color", "#FFCECE");
-                    	$("#text").text("6ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ½Ã¿À.");
+                    	$("#text").text("6ì ì´ìƒ ì…ë ¥í•˜ì‹œì˜¤.");
 	                }
 	                $.ajax({
 	                	url:"/user/json/checkDuplication/",
@@ -153,26 +210,26 @@
 	                        if(userId.length>5){
 		                        if(JSONData.result==true && $("#userId").val() != ""){
 		                        	$("#userId").css("background-color", "#B0F6AC");
-		                        	$("#text").text("»ç¿ë°¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		                        	$("#text").text("ì‚¬ìš©ê°€ëŠ¥í•œ ì•„ì´ë””ì…ë‹ˆë‹¤.");
 		                        	//$("button.btn.btn-primary").prop("disabled", false);
 		                        	idCheck=1;
 		                        	//$("button.btn.btn-primary").css("background-color", "#aaaaaa");
 		                        }else if(JSONData.result==false){
 		                        	$("#userId").css("background-color", "#FFCECE");
-		                        	$("#text").text("ÀÌ¹Ì »ç¿ëÁßÀÎ ¾ÆÀÌµğÀÔ´Ï´Ù.");
+		                        	$("#text").text("ì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ ì•„ì´ë””ì…ë‹ˆë‹¤.");
 		                        	//$("button.btn.btn-primary").prop("disabled", true);
 		                        	//$("button.btn.btn-primary").css("background-color", "#4CAF50");		                        	
 		                        }
 	                        }else{
 	                        	$("#userId").css("background-color", "#FFCECE");
-	                        	$("#text").text("6ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ½Ã¿À.");
+	                        	$("#text").text("6ì ì´ìƒ ì…ë ¥í•˜ì‹œì˜¤.");
 	                        	//$("button.btn.btn-primary").prop("disabled", true);
 	                        	//$("button.btn.btn-primary").css("background-color", "#4CAF50");
 	                        }
 	                    }
 	                });
 	            });
-	        //}else{$("strong").append("6ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ½Ã¿À.");}
+	        //}else{$("strong").append("6ì ì´ìƒ ì…ë ¥í•˜ì‹œì˜¤.");}
 			
 	            $("#password2").on("keyup",function(){
 	            	checkPwd();
@@ -202,7 +259,7 @@
 		
 		//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
-		//ÀçÀÔ·Â ºñ¹Ğ¹øÈ£ Ã¼Å©ÇÏ¿© °¡ÀÔ¹öÆ° ºñÈ°¼ºÈ­ ¶Ç´Â ¸ÂÁö¾ÊÀ½À» ¾Ë¸².
+		//ì¬ì…ë ¥ ë¹„ë°€ë²ˆí˜¸ ì²´í¬í•˜ì—¬ ê°€ì…ë²„íŠ¼ ë¹„í™œì„±í™” ë˜ëŠ” ë§ì§€ì•ŠìŒì„ ì•Œë¦¼.
 		function checkPwd() {
 			var inputed = $("#password").val();
 			var reinputed = $("#password2").val();
@@ -227,7 +284,7 @@
 
 			}
 		}
-		//´Ğ³×ÀÓ°ú ÀÌ¸ŞÀÏ ÀÔ·ÂÇÏÁö ¾Ê¾ÒÀ» °æ¿ì °¡ÀÔ¹öÆ° ºñÈ°¼ºÈ­
+		//ë‹‰ë„¤ì„ê³¼ ì´ë©”ì¼ ì…ë ¥í•˜ì§€ ì•Šì•˜ì„ ê²½ìš° ê°€ì…ë²„íŠ¼ ë¹„í™œì„±í™”
 		function signupCheck() {
 			var userName = $("#userName").val();
 			var email = $("#email").val();
@@ -239,7 +296,8 @@
 				$("#email").css("background-color", "#FFCECE");
 			}
 		}
-		/* //Äµ½½¹öÆ° ´­·¶À» ´­·¶À»½Ã ÀÎÇ²¹Ú½º Å¬¸®¾î
+		
+		/* //ìº”ìŠ¬ë²„íŠ¼ ëˆŒë €ì„ ëˆŒë €ì„ì‹œ ì¸í’‹ë°•ìŠ¤ í´ë¦¬ì–´
 		$(".cancelbtn").click(function() {
 			$(".id").val(null);
 			$(".pass").val('');
@@ -249,42 +307,29 @@
 	</script>		
 	
 	<script>
-	  // Initialize Firebase
-	  /* var config = {
-	    apiKey: "AIzaSyAVHGmYXYa7jFoUKmWWH-8M2wSxKo1Co_w",
-	    authDomain: "fir-emailauth-98337.firebaseapp.com",
-	    databaseURL: "https://fir-emailauth-98337.firebaseio.com",
-	    projectId: "fir-emailauth-98337",
-	    storageBucket: "",
-	    messagingSenderId: "747279716078"
-	  };
-	  firebase.initializeApp(config); */
+	 /*  // Initialize Firebase
+	    var config = {
+		    apiKey: "AIzaSyCQcAhyYv-X3Vi25pftJWtPQooTCYPB9sw",
+		    authDomain: "cookie-189904.firebaseapp.com",
+		    databaseURL: "https://cookie-189904.firebaseio.com",
+		    projectId: "cookie-189904",
+		    storageBucket: "cookie-189904.appspot.com",
+		    messagingSenderId: "1060831931954"
+		  };
+		  firebase.initializeApp(config);
 	  
 	  var windowObj;
 	  
 	  $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#quickstart-sign-up").on("click" , function() {
-				openNew();
+				handleSignUp();
 			});
 		});
-	
 	  
-	  function openNew(){
-		// »õÃ¢¿¡ ´ëÇÑ ¼¼ÆÃ(¿É¼Ç)
-	        var settings ='toolbar=0,directories=0,status=no,menubar=0,scrollbars=auto,resizable=no,height=200,width=200,left=0,top=0';
-	        // ÀÚ½ÄÃ¢À» ¿­°í ÀÚ½ÄÃ¢ÀÇ window °´Ã¼¸¦ windowObj º¯¼ö¿¡ ÀúÀå
-	        windowObj = window.open("NewFile.jsp","ÀÚ½ÄÃ¢",settings);
-	        windowObj.$("#password").val()= $("#password").val();
-	        windowObj.$("#email").val()= $("#email").val();
-	        windowObj.handleSignUp();
-	  }
-	    /**
-	     * Sends an email verification to the user.
-	     */
-	   /*  function handleSignUp() {
+	     function handleSignUp() {
 	    	
-	    	//alert("Á¦¹ß");
+	    	//alert("ì œë°œ");
 	    	var email = $("#email").val();
 		      var password = $("#password").val();
 		      //alert(email);
@@ -298,57 +343,60 @@
 		      }
 		      // Sign in with email and pass.
 		      // [START createwithemail]
-		      firebase.auth().createUserWithEmailAndPassword(email, password).then(function(user) {
-		    	  var user = firebase.auth().currentUser;
-		    	  alert("currentUser::"+JSON.stringify(user));
-		    	  //user.sendEmailVerification();		    	  
-		    	  
-			        // Email Verification sent!
-			        // [START_EXCLUDE]
-			        //alert('Email Verification Sent!');
-			        // [END_EXCLUDE]
-		       
-		      },function(error) {
-		    	  // Handle Errors here.
-			        var errorCode = error.code;
-			        var errorMessage = error.message;
-			        // [START_EXCLUDE]
-			        if (errorCode == 'auth/weak-password') {
-			          alert('The password is too weak.');
-			        } else {
-			          alert(errorMessage);
-			        }
-			        console.log(error);
-			        // [END_EXCLUDE]	    	  
-		    	 
-			      });
+		      firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
+		    	  sendEmailVerification();
+		      
+		      }).catch(function(error) {
+		          // Handle Errors here.
+		          var errorCode = error.code;
+		          var errorMessage = error.message;
+		          // [START_EXCLUDE]
+		          if (errorCode == 'auth/weak-password') {
+		            alert('The password is too weak.');
+		          } else {
+		            alert(errorMessage);
+		          }
+		          console.log(error);
+		          // [END_EXCLUDE]
+		        });
 		      // [END createwithemail]
-	    	//sendEmail();
-	      
 	    }
 	    
 	     function sendEmailVerification(){
-	    	//alert("sendEmail");
+	    	alert("sendEmail");
 	    	// [START sendemailverification]
 		      firebase.auth().currentUser.sendEmailVerification().then(function() {
-		    	 // alert("¾îÈŞ");
 		        // Email Verification sent!
 		        // [START_EXCLUDE]
 		        alert('Email Verification Sent!');
+		        
+		        checkEmail();
 		        // [END_EXCLUDE]
 		      });
+	    	
 		      // [END sendemailverification]
 	    } 
+	     
+	   function checkEmail(){   
+		   
+		   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function(){
+		    	  alert("??????");
+	   		 }).catch(function(error) {
+	             console.error('ì¸ì¦ ìƒíƒœ ì„¤ì • ì¤‘ ì—ëŸ¬ ë°œìƒ' , error);
+	         });
+		   
+	   }
 	    
 	    function initApp() {
 	       
 	        // [START authstatelistener]
 	        firebase.auth().onAuthStateChanged(function(user) {
 	        	
-	        	//alert(JSON.stringify(user));
-	          
+	        	alert("ì¸ì¦ì¸ì¦"+user.emailVerified);
+	        	
 	          if (user) {
 	            // User is signed in.
+	            alert("í–ˆìŒ!");	
 	            var displayName = user.displayName;
 	            var email = user.email;
 	            var emailVerified = user.emailVerified;
@@ -357,19 +405,23 @@
 	            var uid = user.uid;
 	            var providerData = user.providerData;
 	            
-	          }  
+	            if (emailVerified) {
+	                document.getElementById('quickstart-sign-up').disabled = true;
+	              }
+	            
+	          }else{
+	          	
+	        	  alert("ì•ˆí–ˆìŒ!");	
 	          
+	          }
 	        });
-	        //document.getElementById('quickstart-sign-up').addEventListener('click', openNew, false);
-	        //document.getElementById('quickstart-verify-email').addEventListener('click', sendEmailVerification, false);
-	        
 	      }
 	      window.onload = function() {
 	        initApp();
-	      }; */
-	    
-	 
-		 
+	      }; 
+	      
+	       */
+	     
 	</script>
     
 </head>
@@ -378,16 +430,18 @@
 
 	
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">È¸ ¿ø °¡ ÀÔ</h1>
+		<h1 class="bg-primary text-center">íšŒ ì› ê°€ ì…</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
+		 <input type="hidden" class="form-control" id="emailAuth" name="emailAuth" />
+		
 		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*¾Æ ÀÌ µğ</label>
+		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*ì•„ ì´ ë””</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="userId" name="userId"  >
 		       <span id="helpBlock" class="help-block">
@@ -398,45 +452,45 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">*ÀÌ¸§</label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">*ì´ë¦„</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="È¸¿øÀÌ¸§">
+		      <input type="text" class="form-control" id="userName" name="userName" placeholder="íšŒì›ì´ë¦„">
 		    </div>
 		  </div>	 
 		  		  
 		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">*ºñ¹Ğ¹øÈ£</label>
+		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">*ë¹„ë°€ë²ˆí˜¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="ºñ¹Ğ¹øÈ£">
+		      <input type="password" class="form-control" id="password" name="password" placeholder="ë¹„ë°€ë²ˆí˜¸">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">*ºñ¹Ğ¹øÈ£ È®ÀÎ</label>
+		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">*ë¹„ë°€ë²ˆí˜¸ í™•ì¸</label>
 		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ºñ¹Ğ¹øÈ£ È®ÀÎ">
+		      <input type="password" class="form-control" id="password2" name="password2" placeholder="ë¹„ë°€ë²ˆí˜¸ í™•ì¸">
 		      <!-- <span id="helpBlock" class="help-block" type="hidden">
-		      	<strong  id="text2" class="text-danger" >ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.</strong>
+		      	<strong  id="text2" class="text-danger" >ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.</strong>
 		      </span> -->
 		    </div>
 		  </div>		  
 		  
 		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">*ÀÌ¸ŞÀÏ</label>
+		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">*ì´ë©”ì¼</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="ÀÌ¸ŞÀÏ">
+		      <input type="text" class="form-control" id="email" name="email" placeholder="ì´ë©”ì¼">
 		     
-		      <button class="mdl-button mdl-js-button mdl-button--raised" id="quickstart-sign-up" name="signup">Sign Up</button>
+		      <button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer" name="signup"  data-toggle="modal" data-target="#inputEmailAuth">ì´ë©”ì¼ ì¸ì¦</button>
 		    </div>          
 		  </div>
 		  
 		  <!-- <div class="form-group">
-		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">»çÁø</label>
+		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">ì‚¬ì§„</label>
 		    <div class="col-sm-4">		      
-			    <label for="file">ÆÄÀÏ ¾÷·Îµå</label>
+			    <label for="file">íŒŒì¼ ì—…ë¡œë“œ</label>
 			    <input type="file" id="file" name="file">
 		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">¾÷·Îµå gogo</strong>
+		      	 <strong class="text-danger">ì—…ë¡œë“œ gogo</strong>
 		      </span>
 		    </div>
 		  </div>
@@ -444,15 +498,49 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		    <!-- disabled="disabled"  -->
-		      <button type="button" class="btn btn-primary"  >°¡ &nbsp;ÀÔ</button>
-			  <a class="btn btn-primary btn" href="#" role="button">Ãë&nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary"  >ê°€ &nbsp;ì…</button>
+			  <a class="btn btn-primary btn" href="#" role="button">ì·¨&nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
+	
+	
+	<!---------- Image Dialog ------------->
+	
+	<div>
+
+		<div class="modal fade" id="inputEmailAuth" role="dialog">
+			<div class="modal-dialog modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>ì¸ì¦ë²ˆí˜¸</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+
+					<div class="modal-body">
+						<form name="form" enctype="multipart/form-data">
+							<div class="form-group">
+								<input type="text" name="inputNum" placeholder="ì¸ì¦ë²ˆí˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”." />
+								<button name="authNum" type="button" id="goAuth">ì¸ì¦í•˜ê¸°</button>
+							</div>
+						</form>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- ---------------------------------------------------------------- -->
 	
 </body>
 

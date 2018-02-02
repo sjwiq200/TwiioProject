@@ -17,7 +17,7 @@ public interface CommonDao
 
   public List<Report> listReport(Search search) throws Exception;
 
-  public List<Reply> listReply(Search search, int divCode, int codeNo) throws Exception;
+  public List<Reply> listReply(Search search, String targetType, int codeNo) throws Exception;
 
   public List<Friend> listFriend(Search search, int userNo) throws Exception;
   
@@ -33,7 +33,7 @@ public interface CommonDao
   
   public int getTotalCountReport() throws Exception;
   
-  public int getTotalCountReply(int divCode, int codeNo) throws Exception;
+  public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
   public int getTotalCountFriend(int userNo) throws Exception;
   

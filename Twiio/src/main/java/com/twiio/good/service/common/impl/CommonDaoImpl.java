@@ -51,13 +51,15 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public List listReply(Search search, int divCode, int codeNo) throws Exception {
+	public List listReply(Search search, String targetType, int codeNo) throws Exception {
+		System.out.println("들어오니??");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("codeNo", codeNo);
-		map.put("divCode", divCode);
+		map.put("targetType", targetType);
+		System.out.println("여기까지??");
 		List<Reply> list = sqlSession.selectList("CommonMapper.listReply", map);
-
+		System.out.println("들어오니??22");
 		return list;
 	}
 
@@ -97,11 +99,12 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public int getTotalCountReply(int divCode, int codeNo) throws Exception {
-		Reply reply = null;
-		reply.setDivCode(divCode);
-		reply.setDivCode(codeNo);
-		return sqlSession.selectOne("CommonMapper.getTotalCountReply", reply);
+	public int getTotalCountReply(String targetType, int codeNo) throws Exception {
+		Map map = new HashMap();
+		map.put("codeNo", codeNo);
+		map.put("targetType",targetType);
+		
+		return sqlSession.selectOne("CommonMapper.getTotalCountReply", map);
 	}
 
 	@Override

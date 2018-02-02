@@ -43,6 +43,7 @@ import org.xml.sax.InputSource;
 
 import com.sun.jndi.toolkit.url.Uri;
 import com.twiio.good.service.domain.City;
+import com.twiio.good.service.domain.Continent;
 import com.twiio.good.service.domain.Country;
 import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.Flight;
@@ -155,9 +156,9 @@ public class InformationDaoImpl implements InformationDao {
 	}
 	
 	@Override
-	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception {
+	public  Map<String,List>  searchNowWeather(String cityName) throws Exception {
 		
-		URL url = new URL("http://api.openweathermap.org/data/2.5/weather?q="+cityName.trim()+"&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
+		URL url = new URL("http://api.openweathermap.org/data/2.5/forecast?q="+cityName.trim()+"&mode=json&APPID=e03e75ae10d25e9ba1f6bfcb21b91d4b");
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
 		con.setRequestMethod("GET");
 
@@ -184,24 +185,24 @@ public class InformationDaoImpl implements InformationDao {
         br.close();
 
         JSONObject jsonobj = (JSONObject)JSONValue.parse(reader);
-        System.out.println("jsonobj : " + jsonobj);
         ObjectMapper objectMapper = new ObjectMapper();
 
-        JSONObject jsonobjTemp = (JSONObject) jsonobj.get("main");
-        System.out.println("jsonobjTemp : " + jsonobjTemp);
-        WeatherMain weatherMain = objectMapper.readValue(jsonobjTemp.toString(), WeatherMain.class);
-
-       JSONArray array = (JSONArray) jsonobj.get("weather");
-       String weatherResult = array.get(0).toString();
-       System.out.println("weatherResult : " + weatherResult);
-       
-       //WeatherState weatherState = objectMapper.readValue(weatherResult.toString(), WeatherState.class);
-       String weather = weatherMain.toString();
-        System.out.println("1.weatherMain : " + weatherMain);
-		
-		
-        Map<String,Object> map = new HashMap<String,Object>();
-        map.put("weather", weather);
+        JSONArray jsonobjTemp = (JSONArray) jsonobj.get("list");
+        List<String> dateList = new ArrayList<>();
+        List<WeatherMain> mainList = new ArrayList<>();
+        
+        for(int i = 0 ; i<jsonobjTemp.size(); i++) {
+        	JSONObject data =(JSONObject)jsonobjTemp.get(i);
+        	String dt_txt = (String) data.get("dt_txt");
+        	JSONObject main = (JSONObject)data.get("main");
+        	WeatherMain weatherMain = objectMapper.readValue(main.toString(), WeatherMain.class);
+        	dateList.add(dt_txt);
+        	mainList.add(weatherMain);
+        }
+        
+        Map<String,List> map = new HashMap<String,List>();
+        map.put("dateList", dateList);
+        map.put("mainList", mainList);
 		
 		return map;
 	}
@@ -460,10 +461,8 @@ public class InformationDaoImpl implements InformationDao {
 					 
 			List<String> tabs = new ArrayList<String> (driver.getWindowHandles());
 			 driver.switchTo().window(tabs.get(1));
-			 driver.close();
 			 
 			urlReturn.add(driver.getCurrentUrl());
-			 driver.close();
 				 
 					}catch (Exception e) {
 						System.out.println(e);
@@ -919,8 +918,6 @@ public class InformationDaoImpl implements InformationDao {
 		
 		String str = country.trim();
 		
-		System.out.println("다오다오"+str);
-		
 		List<String> item = new ArrayList<String>();
 		
 		if(str.matches(	".*[a-zA-Z].*")) {
@@ -942,6 +939,34 @@ public class InformationDaoImpl implements InformationDao {
 			}
 		return item;
 	}
+	
+	@Override
+	public List<String> findContinent(String keyword) throws Exception {
+		
+		String str = keyword.trim();
+		
+		List<String> item = new ArrayList<String>();
+		
+		if(str.matches(	".*[a-zA-Z].*")) {
+			
+			List<Continent> list = sqlSession.selectList("InformationMapper.getEnContinent", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getContinentEnName());
+				}
+			
+			}else {
+				
+			List<Continent> list = sqlSession.selectList("InformationMapper.getKoContinent", str);
+			
+			for(int i = 0 ; i<list.size(); i++) {
+				item.add(list.get(i).getContinentKoName());
+				}
+			
+			}
+		return item;
+	}
+
 
 
 }

@@ -31,7 +31,7 @@
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Dropdown Hover JS -->
+    <!--  ///////////////////////// Ãß°¡ ////////////////////////// -->
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>

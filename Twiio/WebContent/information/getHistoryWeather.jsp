@@ -25,11 +25,11 @@
 
 <!-- Bootstrap Dropdown Hover CSS -->
 
-<link href="/css/animate.min.css" rel="stylesheet">
-<link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<link href="/resources/css/animate.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
 <!-- Bootstrap Dropdown Hover JS -->
-<script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 
 <!-- jQuery UI toolTip 사용 CSS-->
 
@@ -38,23 +38,32 @@
 
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/resources/chart/Chart.min.js"></script>
 
+
+<!--  ///////////////////////// 추가 ////////////////////////// -->
+   			
+   			<script src="/resources/assets/js/jquery.min.js"></script>
+			<script src="/resources/assets/js/skel.min.js"></script>
+			<script src="/resources/assets/js/util.js"></script>
+			<script src="/resources/assets/js/main.js"></script>
+			<link rel="stylesheet" href="/resources/assets/css/main.css" />
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <style>
-body {
-	padding-top: 50px;
-	font-color: gray;
-}
-
-.form-horizontal {
-	padding-left: 17%;
-}
-
-.pageButton-group {
-	aria-label: "Right Align";
-}
+	body {
+		padding-top: 50px;
+		font-color: gray;
+	}
+	
+	.form-horizontal {
+		padding-left: 17%;
+	}
+	
+	.pageButton-group {
+		aria-label: "Right Align";
+	}
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -85,29 +94,129 @@ body {
 											var min = JSONData.min;
 											var max = JSONData.max;
 											var rain = JSONData.rain;
-											
  
-											var listtr = null;
+											 var listtr = null;
 											
 											for(var i = 0 ; i<5; i++){
-												
 												listtr += '<tr id = "listtr"><td align="center" id="info">'+simple[i]+'</td>';
-												
 											}
-												
-											var month = null;
+											/* var month = null;
 											
 											for(var i = 0 ; i<12; i++){
 												
 												month += '<tr id="monthtr"><td align="center" id="month">'+monthin[i]+
 												'</td>'+'<td align="center" id="min">'+min[i]+'</td>'+'<td align="center" id="max">'+max[i]+
 												'</td>'+'<td align="center" id="rain">'+rain[i]+'</td></tr>';
-											}
+											} */
 															
 										$("#listTbody").html(listtr);
-										$("#dataTbody").html(month);
-														
-												
+										//$("#dataTbody").html(month);
+										
+											var weatherData = {
+													  labels: [
+														  "1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"
+													  ],
+													  datasets: [{
+														  	label: "min temperature",
+														    data: max,
+														    lineTension: 0,
+														    fill: false,
+														    borderColor: 'blue',
+														    backgroundColor: 'transparent',
+														    pointBorderColor: 'blue',
+														    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+														    borderDash: [5, 5],
+														    pointRadius: 5,
+														    pointHoverRadius: 10,
+														    pointHitRadius: 30,
+														    pointBorderWidth: 2,
+														    pointStyle: 'rectRounded'
+														  },{
+															label: "max temperature",
+														    data: min,
+														    lineTension: 0,
+														    fill: false,
+														    borderColor: 'red',
+														    backgroundColor: 'transparent',
+														    pointBorderColor: 'red',
+														    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+														    borderDash: [5, 5],
+														    pointRadius: 5,
+														    pointHoverRadius: 10,
+														    pointHitRadius: 30,
+														    pointBorderWidth: 2,
+														    pointStyle: 'rectRounded'
+														  }
+													  ]
+													};
+													
+													var rainData = {
+															  labels: [
+																  "1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"
+															  ],
+															  datasets: [{
+																    label: "rain",
+																    data: rain,
+																    lineTension: 0,
+																    fill: true,
+																    borderColor: 'green',
+																    backgroundColor: 'transparent',
+																    pointBorderColor: 'green',
+																    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+																    borderDash: [5, 5],
+																    pointRadius: 5,
+																    pointHoverRadius: 10,
+																    pointHitRadius: 30,
+																    pointBorderWidth: 2,
+																    pointStyle: 'rectRounded'
+																  }
+															  ]
+															};
+													
+													var chartOptions = {
+													  legend: {
+													    display: true,
+													    position: 'top',
+													    labels: {
+													      boxWidth: 80,
+													      fontColor: 'black'
+													    }
+													  },
+													  scales: {
+													    xAxes: [{
+													      gridLines: {
+													        display: false,
+													        color: "black"
+													      },
+													      scaleLabel: {
+													        display: true,
+													        fontColor: "red"
+													      }
+													    }],
+													    yAxes: [{
+													      gridLines: {
+													        color: "black",
+													        borderDash: [2, 5],
+													      },
+													      scaleLabel: {
+													        display: true,
+													        fontColor: "green"
+													      }
+													    }]
+													  }
+													};
+													
+													var lineChart = new Chart(weatherChart, {
+													  type: 'line',
+													  data: weatherData,
+													  options: chartOptions
+													});
+													
+													var lineChart2 = new Chart(rainChart, {
+														  type: 'line',
+														  data: rainData,
+														  options: chartOptions
+														});
 										}
 									});
 						});
@@ -116,37 +225,24 @@ body {
 		$( "#keyword" ).autocomplete({
 			
 		      source: function( request, response ) {
-		    	  //alert("제발요");
-		    	  //alert($("#searchCondition").val());
-		    	  //alert($("#searchKeyword").val());
 		    	  $.ajax(
 		    				{
-		    					url:"/information/json/autoComplete/",
+		    					url:"/information/json/cityAutoComplete/",
 		    					method:"POST",	    					
 		    					data:{	    						
 		    						keyword:$("#keyword").val()		    						
 		    						},
 		    					dataType:"json",
 		    					success:function(JSONData){
-		    						//alert("제발ajax");	    											
-		    						//alert("JSONData: \n"+JSONData);
-		    							    							    						
 		    						response($.map(JSONData, function (item) {
-		    				           
 		    							return item;
 		    				        }));
 		    					}
 		    				}
 		    			);
-		    	  
-		    	  //alert("제발요");
 		      },
 		      minLength:3
 		    });
-		
-		
-		
-		
 		
 	});
 </script>
@@ -201,7 +297,7 @@ body {
 		        </tbody>
 		      </table>
 							
-		<table class="table table-hover table-striped"  >
+	<%-- 	<table class="table table-hover table-striped"  >
       
         <thead>
           <tr>
@@ -214,18 +310,6 @@ body {
         </thead>
        
 		<tbody id="dataTbody">
-		 <%--  <c:forEach var="abc" items="${abc}">
-			<tr>
-			<c:forEach var="abc" items="${abc}">
-			 <td align="center">${abc}</td>
-			 </c:forEach>
-			
-			 <td align="center">${abc[status.index].min}</td>
-			 <td align="center">${abc[status.index].max}</td>
-			 <td align="center">${abc[status.index].rain}</td>
-			</tr>	
-		</c:forEach> --%>
-		
 		
 		
 		<c:forEach items="${month}" varStatus="status">
@@ -238,10 +322,133 @@ body {
 		</c:forEach>
         </tbody>
       
-      </table>
+      </table> --%>
+      
+      <canvas id="weatherChart" width="600" height="400"></canvas>
+      
+      <canvas id="rainChart" width="600" height="400"></canvas>
 
 
 		</div>
 	</div>
+	
+	<script>
+
+	var weatherChart = $("#weatherChart");
+	var rainChart = $("#rainChart");
+	//var resultDate = "${resultDate}";
+	var min = ${min};
+	var max = ${max};
+	var rain = ${rain}; 
+
+	Chart.defaults.global.defaultFontFamily = "Lato";
+	Chart.defaults.global.defaultFontSize = 10;
+	
+	var weatherData = {
+	  labels: [
+		  "1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"
+	  ],
+	  datasets: [{
+		  	label: "min temperature",
+		    data: max,
+		    lineTension: 0,
+		    fill: false,
+		    borderColor: 'blue',
+		    backgroundColor: 'transparent',
+		    pointBorderColor: 'blue',
+		    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+		    borderDash: [5, 5],
+		    pointRadius: 5,
+		    pointHoverRadius: 10,
+		    pointHitRadius: 30,
+		    pointBorderWidth: 2,
+		    pointStyle: 'rectRounded'
+		  },{
+			label: "max temperature",
+		    data: min,
+		    lineTension: 0,
+		    fill: false,
+		    borderColor: 'red',
+		    backgroundColor: 'transparent',
+		    pointBorderColor: 'red',
+		    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+		    borderDash: [5, 5],
+		    pointRadius: 5,
+		    pointHoverRadius: 10,
+		    pointHitRadius: 30,
+		    pointBorderWidth: 2,
+		    pointStyle: 'rectRounded'
+		  }
+	  ]
+	};
+	
+	var rainData = {
+			  labels: [
+				  "1월", "2월","3월","4월","5월","6월","7월","8월","9월","10월","11월","12월"
+			  ],
+			  datasets: [{
+				    label: "rain",
+				    data: rain,
+				    lineTension: 0,
+				    fill: true,
+				    borderColor: 'green',
+				    backgroundColor: 'transparent',
+				    pointBorderColor: 'green',
+				    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+				    borderDash: [5, 5],
+				    pointRadius: 5,
+				    pointHoverRadius: 10,
+				    pointHitRadius: 30,
+				    pointBorderWidth: 2,
+				    pointStyle: 'rectRounded'
+				  }
+			  ]
+			};
+	
+	var chartOptions = {
+	  legend: {
+	    display: true,
+	    position: 'top',
+	    labels: {
+	      boxWidth: 80,
+	      fontColor: 'black'
+	    }
+	  },
+	  scales: {
+	    xAxes: [{
+	      gridLines: {
+	        display: false,
+	        color: "black"
+	      },
+	      scaleLabel: {
+	        display: true,
+	        fontColor: "red"
+	      }
+	    }],
+	    yAxes: [{
+	      gridLines: {
+	        color: "black",
+	        borderDash: [2, 5],
+	      },
+	      scaleLabel: {
+	        display: true,
+	        fontColor: "green"
+	      }
+	    }]
+	  }
+	};
+	
+	var lineChart = new Chart(weatherChart, {
+	  type: 'line',
+	  data: weatherData,
+	  options: chartOptions
+	});
+	
+	var lineChart2 = new Chart(rainChart, {
+		  type: 'line',
+		  data: rainData,
+		  options: chartOptions
+		});
+</script>
 </body>
 </html>

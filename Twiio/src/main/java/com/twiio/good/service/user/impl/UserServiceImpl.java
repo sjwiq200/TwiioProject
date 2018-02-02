@@ -75,8 +75,8 @@ public class UserServiceImpl implements UserService{
 	String googleAPPSecretKey;
 	
 	////////사진 업로드////////
-	@Value("#{commonProperties['path']}")
-	String path;
+	@Value("#{commonProperties['userFaceFilePath']}")
+	String userFaceFilePath;
 
 	public UserServiceImpl() {
 		System.out.println(this.getClass());
@@ -329,13 +329,13 @@ public class UserServiceImpl implements UserService{
 
 		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
 		//String fileName = file.getOriginalFilename();
-		String fileName = user.getUserId()+user.getFile().getOriginalFilename();
+		String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
 		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
 		
 		PrintStream out = System.out;
 		// String filePath=file.getOriginalFilename();
 		// File file02=new File("C:\\Users\\bitcamp\\Desktop\\pic\\", fileName);
-		File file02 = new File(path, fileName);
+		File file02 = new File(userFaceFilePath, fileName);
 		user.getFile().transferTo(file02);
 		// ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 		ByteString imgBytes = ByteString.readFrom(new FileInputStream(file02));
@@ -456,4 +456,8 @@ public class UserServiceImpl implements UserService{
 		return transactionDao.getEval(map);
 	}
 
+	@Override
+	public void sendMail(String emai, String authNum) throws Exception {
+		 userDao.sendMail(emai, authNum);
+	}
 }

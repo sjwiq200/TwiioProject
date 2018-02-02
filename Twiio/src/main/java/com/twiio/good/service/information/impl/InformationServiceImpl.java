@@ -52,7 +52,12 @@ public class InformationServiceImpl implements InformationService {
 	}
 	
 	@Override
-	public  Map<String,Object>  searchNowWeather(String cityName) throws Exception {
+	public List<String> findContinent(String keyword) throws Exception {
+		return informationDao.findContinent(keyword);
+	}
+	
+	@Override
+	public  Map<String,List>  searchNowWeather(String cityName) throws Exception {
 		return informationDao.searchNowWeather(cityName);
 	}
 

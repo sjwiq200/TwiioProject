@@ -1,37 +1,44 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 
 <html lang="ko">
 <head>
 <meta charset="EUC-KR">
-<title>»óÇ°µî·Ï</title>
+<title>ìƒí’ˆë“±ë¡</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+		
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
 	
+	<!-- datePicker -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   	<link rel="stylesheet" href="/resources/demos/style.css">
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-  	
+  			
   	<!-- summernote -->
-  	<!-- <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>  -->
+  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+  	<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> -->
+  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 	 
   	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
   
-  	<link href="summernote.css" rel="stylesheet">
+  	<!-- <link href="summernote.css" rel="stylesheet">
   	<script src="summernote.min.js"></script>
-  	<!-- include summernote-ko-KR -->
-  	<script src="lang/summernote-ko-KR.js"></script>
-
-
+  	include summernote-ko-KR
+  	<script src="lang/summernote-ko-KR.js"></script> -->
+  	
+  	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script> -->
+       
 
 <style>
        body > div.container{
@@ -43,7 +50,7 @@
 <script type="text/javascript">
 
 function fncAddProduct(){
-	//Form À¯È¿¼º °ËÁõ
+	//Form ìœ íš¨ì„± ê²€ì¦
  	//var name = document.detailForm.prodName.value;
 	//var detail = document.detailForm.prodDetail.value;
 	//var manuDate = document.detailForm.manuDate.value;
@@ -55,19 +62,19 @@ function fncAddProduct(){
 	var price=$("input[name='productPrice']").val();
 
 	if(name == null || name.length<1){
-		alert("»óÇ°¸íÀº ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+		alert("ìƒí’ˆëª…ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(description == null || description.length<1){
-		alert("»óÇ°»ó¼¼Á¤º¸´Â ¹İµå½Ã ÀÔ·ÂÇÏ¿©¾ß ÇÕ´Ï´Ù.");
+		alert("ìƒí’ˆìƒì„¸ì •ë³´ëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì—¬ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(tripDate == null || tripDate.length<1){
-		alert("Á¦Á¶ÀÏÀÚ´Â ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		alert("ì œì¡°ì¼ìëŠ” ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 	if(price == null || price.length<1){
-		alert("°¡°İÀº ¹İµå½Ã ÀÔ·ÂÇÏ¼Å¾ß ÇÕ´Ï´Ù.");
+		alert("ê°€ê²©ì€ ë°˜ë“œì‹œ ì…ë ¥í•˜ì…”ì•¼ í•©ë‹ˆë‹¤.");
 		return;
 	}
 
@@ -77,105 +84,116 @@ function fncAddProduct(){
 }
 
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "button.btn.btn-primary" ).on("click" , function() {
 		//Debug..
-		//alert(  $( "td.ct_btn01:contains('µî·Ï')" ).html() );
+		//alert(  $( "td.ct_btn01:contains('ë“±ë¡')" ).html() );
 		fncAddProduct();
 	});
+	
 });
 
 //function resetData(){
 //	document.detailForm.reset();
 //}
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "#reset" ).on("click" , function() {
 			//Debug..
-			//alert(  $( "td.ct_btn01:contains('Ãë¼Ò')" ).html() );
+			//alert(  $( "td.ct_btn01:contains('ì·¨ì†Œ')" ).html() );
 			$("form")[0].reset();
 	});
 });
 
-var i = 0;
+var i = 1;
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "#addTripDate" ).on("click" , function() {
+		 if(i==1){
+			 $( "#removeTripDate" ).prop("disabled", false);
+		 }
 		 i++;
-		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" >' ) );
-		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({dateFormat: "yy-mm-dd"});		 
+		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" placeholder="íˆ¬ì–´ë‚ ì§œ'+i+'" >' ) );
+		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({minDate: 0, dateFormat: "yy-mm-dd"});		 
 	});
 });
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "#removeTripDate" ).on("click" , function() {
-		 $( '#datepicker'+i ).remove();
+		 if(i>1){
+			 $( '#datepicker'+i ).remove();
+			 i--;
+		 }else{
+			 $( "#removeTripDate" ).prop("disabled", true);
+		 }		 
 		 // $( "#datepicker[3]" ).remove();
-		 //$( "input[name=tripDate]" ).remove();
-		 i--;
+		 //$( "input[name=tripDate]" ).remove();		 
 	});
 });
 
 $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "img" ).on("click" , function() {
 			//Debug..
-			//alert(  $( "td.ct_btn01:contains('Ãë¼Ò')" ).html() );
+			//alert(  $( "td.ct_btn01:contains('ì·¨ì†Œ')" ).html() );
 			$("form")[0].reset();
 	});
 });
 
 /* $(function() {
-	//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 °ú 3 ¹æ¹ı Á¶ÇÕ : $("tagName.className:filterÇÔ¼ö") »ç¿ëÇÔ.	
+	//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+	//==> 1 ê³¼ 3 ë°©ë²• ì¡°í•© : $("tagName.className:filterí•¨ìˆ˜") ì‚¬ìš©í•¨.	
 	 $( "button.btn.btn-info" ).on("click" , function() {
 			//Debug..
-			//alert(  $( "td.ct_btn01:contains('Ãë¼Ò')" ).html() );
+			//alert(  $( "td.ct_btn01:contains('ì·¨ì†Œ')" ).html() );
 			//$( "button.btn.btn-info" )."show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"
 	});
 }); */
 
 $( function() {
 	$( "input[name=tripDate]" ).datepicker({
-		 dateFormat: "yy-mm-dd"
+		 minDate: 0,
+		 dateFormat: "yy-mm-dd"		 
 	});
   } );
   
   ///////////////////summernote///////////////////////////////////
    $(function() {
         $('#summernote').summernote({
-        	 toolbar: [
-        		    // [groupName, [list of button]]
-        		    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-        		    ['font', ['font family', 'strikethrough', 'superscript', 'subscript']],
-        		    ['fontsize', ['fontsize']],
-        		    ['color', ['color']],
-        		    ['para', ['ul', 'ol', 'paragraph']],
-        		    ['height', ['height']],
-        		    ['insert', ['table', 'picture', 'video', 'link']],
-        		    ['misc', ['undo', 'redo', 'codeview', 'help']]
-        		  ],
-        	        	
+        	
+        	toolbar: [
+     		   // [groupName, [list of button]]
+     		   ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+     		   ['font', ['font family', 'strikethrough', 'superscript', 'subscript']],
+     		   ['fontsize', ['fontsize']],
+     		   ['color', ['color']],
+     		   ['para', ['ul', 'ol', 'paragraph']],
+     		   ['height', ['height']],
+     		   ['insert', ['table', 'picture', 'video', 'link']],
+     		   ['misc', ['undo', 'redo', 'codeview', 'help']]
+     		 ],       	
         	lang: 'ko-KR', // default: 'en-US'
         	height: 300,                 // set editor height
         	minHeight: null,             // set minimum height of editor
         	maxHeight: null,             // set maximum height of editor
-        	focus: true,                  // set focus to editable area after initializing summernote
-        	placeholder: 'Åõ¾î ³»¿ëÀ» ÀÔ·ÂÇØ ÁÖ¼¼¿ä~'
+        	focus: false,                  // set focus to editable area after initializing summernote
+        	placeholder: 'íˆ¬ì–´ ë‚´ìš©ì„ ì…ë ¥í•´ ì£¼ì„¸ìš”~'
         });
         
-        /* $("button[name=save]").on("click",function(){
-        	$("textarea").val($("#summernote").summernote("code"));
-        	$("form").attr("method" , "POST").attr("action" , "/user/summernote").submit();
-        }); */
+       //  $("button[name=save]").on("click",function(){
+       // 	$("textarea").val($("#summernote").summernote("code"));
+       // 	$("form").attr("method" , "POST").attr("action" , "/user/summernote").submit();
+       // }); 
         
         
-    });
+    }); 
+  
+   
 
 </script>
 </head>
@@ -190,44 +208,44 @@ $( function() {
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">Åõ ¾î µî ·Ï</h1>
+		<h1 class="bg-primary text-center">íˆ¬ ì–´ ë“± ë¡</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm">
 		
 		  <div class="form-group">
-		    <label for="productName" class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î¸í</label>
+		    <label for="productName" class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ëª…</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productName" name="productName" placeholder="»óÇ°ÀÔ·Â gogo">
+		      <input type="text" class="form-control" id="productName" name="productName" placeholder="ìƒí’ˆì…ë ¥ gogo" >
 		       
 		    </div>
 		   </div> 
 		   
 		   <div class="form-group">
-		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label">±¹°¡</label>
+		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label">êµ­ê°€</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="country" name="country" placeholder="±¹°¡">
+		      <input type="text" class="form-control" id="country" name="country" placeholder="êµ­ê°€">
 		       
 		    </div>
 		   </div> 
 		   
 		   <div class="form-group">
-		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">µµ½Ã</label>
+		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">ë„ì‹œ</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="city" name="city" placeholder="µµ½Ã">
+		      <input type="text" class="form-control" id="city" name="city" placeholder="ë„ì‹œ">
 		       
 		    </div>
 		   </div> 	  
 		  
 		  <div class="form-group">
-		    <label for="tripDate" class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î³¯Â¥</label>
+		    <label for="tripDate" class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ë‚ ì§œ</label>
 		    <div class="col-sm-4" name="addDate">
 		      <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate">+</a>
 		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate">-</a>
-		      <input type="text" class="form-control" id="datepicker0" name="tripDate" readonly="readonly" >		      
+		      <input type="text" class="form-control" id="datepicker0" name="tripDate" readonly="readonly" placeholder="íˆ¬ì–´ë‚ ì§œ">		      
 		    </div>
 		    <!--<div class="col-sm-3">  -->
 		     <!-- <img src="../images/ct_icon_date.gif" width="15" height="15" 
@@ -236,50 +254,50 @@ $( function() {
 		  </div>
 		  
 		   <div class="form-group">
-		    <label for="productType" class="col-sm-offset-1 col-sm-3 control-label">Åõ¾îÀ¯Çü</label>
+		    <label for="productType" class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ìœ í˜•</label>
 		    <div class="col-sm-4">
 		      	<select name="productType">
-				  <option value="1" selected>¸í¼ÒÅõ¾î</option>
-				  <option value="2">À½½ÄÅõ¾î</option>
-				  <option value="3">Æ®·¹Å·</option>
-				  <option value="4">¾×Æ¼ºñÆ¼</option>
-				  <option value="5">nightÅõ¾î</option>
+				  <option value="1" selected>ëª…ì†Œíˆ¬ì–´</option>
+				  <option value="2">ìŒì‹íˆ¬ì–´</option>
+				  <option value="3">íŠ¸ë ˆí‚¹</option>
+				  <option value="4">ì•¡í‹°ë¹„í‹°</option>
+				  <option value="5">nightíˆ¬ì–´</option>
 				</select>
 		    </div>
 		   </div> 
 		  
 		  <div class="form-group">
-		    <label for="tourHeadCount" class="col-sm-offset-1 col-sm-3 control-label">1ÀÏ Åõ¾î ÀÎ¿ø</label>
+		    <label for="tourHeadCount" class="col-sm-offset-1 col-sm-3 control-label">1ì¼ íˆ¬ì–´ ì¸ì›</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="tourHeadCount" name="tourHeadCount" placeholder="1ÀÏ Åõ¾î ÀÎ¿ø">
+		      <input type="text" class="form-control" id="tourHeadCount" name="tourHeadCount" placeholder="1ì¼ íˆ¬ì–´ ì¸ì›">
 		    </div>
 		  </div>
 		  
 		  
 		  <div class="form-group">
-		    <label for="productPrice" class="col-sm-offset-1 col-sm-3 control-label">°¡°İ</label>
+		    <label for="productPrice" class="col-sm-offset-1 col-sm-3 control-label">ê°€ê²©</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="°¡°İ">
+		      <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="ê°€ê²©">
 		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">¿ø</strong>
+		      	 <strong class="text-danger">ì›</strong>
 		      </span>
 		    </div>
 		  </div>
 		  
 		   <div class="form-group">
-		    <label for="description" class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î »ó¼¼ ³»¿ë</label>
-		    <div class="col-sm-4">
+		    <label for="description" class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ ìƒì„¸ ë‚´ìš©</label>
+		    <div class="col-sm-4">		    	
 		      <textarea id="summernote" name="description"></textarea>
 		    </div>
 		  </div>
 		  		  		  
 		  <div class="form-group">
-		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">Åõ¾î ¼¶³×ÀÏ</label>
+		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">íˆ¬ì–´ ì„¬ë„¤ì¼</label>
 		    <div class="col-sm-4">		      
-			    <label for="files">ÆÄÀÏ ¾÷·Îµå</label>
+			    <label for="files">íŒŒì¼ ì—…ë¡œë“œ</label>
 			    <input type="file" id="file" name="file">			   
 		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">¾÷·Îµå gogo</strong>
+		      	 <strong class="text-danger">ì—…ë¡œë“œ gogo</strong>
 		      </span>
 		    </div>
 		  </div>
@@ -288,14 +306,14 @@ $( function() {
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary" >µî &nbsp;·Ï</button>
-			  <a class="btn btn-primary btn" href="#" role="button" id="reset">Ãë&nbsp;¼Ò</a>
+		      <button type="button" class="btn btn-primary" >ë“± &nbsp;ë¡</button>
+			  <a class="btn btn-primary btn" href="#" role="button" id="reset">ì·¨&nbsp;ì†Œ</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
 </body>
 </html>

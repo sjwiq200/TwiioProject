@@ -33,21 +33,32 @@
   	$(function() {
 		 
 		 $( "button.btn.btn-default:contains('방생성')" ).on("click" , function() {
-			 $("form").attr("method" , "GET").attr("action" , "/messenger/addRoom").submit();
+			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
 		});
 		 
-		 $("td:nth-child(3)").on("click",function(){
-			 //alert($("td:nth-child(3)").index(this));
-			 var index = $("td:nth-child(3)").index(this);
-			 //alert($($("td:nth-child(4)")[index]).html().split('value="')[1].split('"')[0]);
-			 var roomKey = $($("td:nth-child(4)")[index]).html().split('value="')[1].split('"')[0];
-			 console.log("http://localhost:6789/"+roomKey+"?username=${user.userId}");
-			 window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+		 $("a:contains('참가')").on("click",function(){
+			 
+			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 
+			 $.ajax({
+				 url : "/room/json/addRoomUser/"+roomKey,
+				 method : "POST",
+				 dataType : "json",
+				 headders : {
+					 "Accept" : "application/json",
+					"Content-Type" : "application/json"
+				 },
+				 success : function(JSONData, status){
+					 alert(JSONData);
+				 }
+			 })
+		
+			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			 window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
 		 })
 		 
 	 });
   </script>
-  
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -84,52 +95,20 @@
 		    
 		    <div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    
-				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" >
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>회원ID</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>회원명</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
-				  </div>
-				  
-				  <button type="button" class="btn btn-default">검색</button>
-				  
-				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				  
 				  <button type="button" class="btn btn-default">방생성</button>
 				</form>
-	    	</div>
+	    		</div>
 	    	
 		</div>
-		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		
+	
 		
-      <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-            <th align="center">No</th>
-            <th align="left" >방제목</th>
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-		  <c:set var="i" value="0" />
+		  <%-- <c:set var="i" value="0" />
 		  <c:forEach var="room" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${room.roomname}</td>
+			  <td align="left"  title="Click : 회원정보 확인">${room.roomName}</td>
 			  <td>
 			  	<!--  <a href="http://localhost:6789/${room.key}?username=${user.userId}">참가</a> -->
 			  	<a href="#">참가</a>
@@ -139,11 +118,34 @@
 			  </td>
 		  	</tr>
 			  
-          </c:forEach>
+          </c:forEach> --%>
+          
+          <c:set var="i" value="0" />
+		  <c:forEach var="room" items="${list}">
+			<!-- <div class="row"> -->
+		    <div class="col-sm-3 " >
+		      <div class="thumbnail" name="getPro" style="height:500px;">
+		    
+		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
+		          <div class="caption">
+		            <h3>${room.roomName} </h3>		            
+		            <p>Date : ${room.date}</p>
+		            <p>country : ${room.country}</p>
+		            <p>city : ${room.city}</p>
+		            <p>${room.headCount}명</p>
+		            <c:if test="${!empty user}">
+			            <a href="#">
+			            참가
+			            <input type="hidden" id="roomKey" value="${room.key}">
+			            </a>
+		            </c:if>
+		            
+		        </div>
+		      </div>
+		    </div>
+		    </c:forEach>
         
-        </tbody>
-      
-      </table>
+        
 	  <!--  table End /////////////////////////////////////-->
 	  
  	</div>

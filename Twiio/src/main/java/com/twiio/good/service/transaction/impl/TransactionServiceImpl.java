@@ -67,15 +67,16 @@ public class TransactionServiceImpl implements TransactionService {
 		java.sql.Date tripDate02 = java.sql.Date.valueOf(simpleDateFormat.format(tripDate01));
 		System.out.println("tripDate02 :: "+tripDate02);
 		transaction.setPayToHostDate(tripDate02);
-		String tripDateToString = simpleDateFormat.format(tripDate);
+		//String tripDateToString = simpleDateFormat.format(tripDate);
 		
 		////////////////////////////재고정리////////////////////////
 		int count = transaction.getCount();
 		String[] str = productDao.getProduct(transaction.getTranPro().getProductNo()).getTripDate().split(",");
 		String proTripDate="";
-		System.out.println("tripDateToString :: "+tripDateToString);		
+		//System.out.println("tripDateToString :: "+tripDateToString);		
 		for(int i=0; i<str.length; i++) {
-			if(str[i].substring(0, 10).equals(tripDateToString)) {
+			//if(str[i].substring(0, 10).equals(tripDateToString)) {
+			if(str[i].substring(0, 10).equals(tripDate.toString())) {
 				System.out.println("오세요");
 				System.out.println("str :: "+str[i]);
 				String num = str[i].substring(11);
@@ -104,13 +105,7 @@ public class TransactionServiceImpl implements TransactionService {
 		productDao.updateProduct(dbProduct);
 		
 		///////////////////////////////거래 추가///////////////////////////////////
-		transactionDao.addTransaction(transaction);
-		
-	}
-
-	@Override
-	public void payPal(Transaction transaction) throws Exception {
-		// TODO Auto-generated method stub
+		//transactionDao.addTransaction(transaction);
 		
 	}
 

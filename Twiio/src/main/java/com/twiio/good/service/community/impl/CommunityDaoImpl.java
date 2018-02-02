@@ -31,6 +31,7 @@ public class CommunityDaoImpl implements CommunityDao{
 	@Override
 	public void addCommunity(Community community) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("Daoimpl :: "+community);
 		sqlSession.insert("CommunityMapper.addCommunity",community);
 	}
 
@@ -76,9 +77,20 @@ public class CommunityDaoImpl implements CommunityDao{
 
 
 	@Override
-	public int getTotalCount(String communityType) throws Exception {
+	public void updateViewCommunity(Community community) throws Exception {
+		System.out.println("전 :: "+community.getViewCount());
+		community.setViewCount(community.getViewCount()+1);
+		System.out.println("후 :: "+community.getViewCount());
+		sqlSession.update("CommunityMapper.updateViewCommunity", community);
+	}
+
+	@Override
+	public int getTotalCount(Search search, String communityType) throws Exception {
 		System.out.println("totalcount 시작");
-		return sqlSession.selectOne("CommunityMapper.getTotalCount", communityType);
+		Map<String , Object>  map = new HashMap<String, Object>();
+		map.put("search", search);
+		map.put("communityType", communityType);
+		return sqlSession.selectOne("CommunityMapper.getTotalCount", map);
 	}
 	
 	@Override

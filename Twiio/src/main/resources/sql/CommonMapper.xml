@@ -32,6 +32,7 @@
 		<result property="replyRegDate" 	column="reply_reg_date" 	jdbcType="DATE" />
 		<result property="productNo" 		column="product_no" 		jdbcType="NUMERIC" />
 		<result property="communityNo" 		column="community_no" 		jdbcType="NUMERIC" />
+		<result property="userName" 		column="user_name" 			jdbcType="VARCHAR" />
 	</resultMap>
 	
 	
@@ -81,7 +82,8 @@
 		#{reply_content:VARCHAR},
 		SYSDATE,
 		#{productNo:NUMERIC},
-		#{communityNo:NUMERIC}
+		#{communityNo:NUMERIC},
+		#{userName:VARCHAR}
 		)	
 	</insert>
 	
@@ -92,15 +94,15 @@
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
 							   SELECT
-							   REPORT_NO=#{reportNO},
-							   USER_NO=#{userNo},
-							   REPORT_CONTENT=#{reportContent},
-							   REPORT_TITLE=#{reportTitle},
-							   REPORT_REG_DATE=#{reportRegDate},
-							   TARGET_USER_NO=#{targetUserNo},
-							   TAGET_ROOM_NO=#{targetRoomNo},
-							   TARGET_COMMUNITY_NO=#{targetCommunityNo},
-							   TARGET_REPLY_NO=#{targetReplyNo}
+							   REPORT_NO,
+							   USER_NO,
+							   REPORT_CONTENT,
+							   REPORT_TITLE,
+							   REPORT_REG_DATE,
+							   TARGET_USER_NO,
+							   TAGET_ROOM_NO,
+							   TARGET_COMMUNITY_NO,
+							   TARGET_REPLY_NO
 							   FROM 
   							   REPORT 
 							   ORDER BY REPORT_NO
@@ -115,9 +117,9 @@
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
 							   SELECT
-							   		USER_NO=#{userNo},
-							   		FRIEND_NO=#{friendNo},
-							   		NO=#{No}
+							   		USER_NO,
+							   		FRIEND_NO,
+							   		NO
 							   FROM 
   							   FRIEND 
   							   WHERE USER_NO=#{friend.userNo}
@@ -139,23 +141,24 @@
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
 							   SELECT
-							   		REPLY_NO=#{replyNo},
-							   		USER_NO=#{userNo},
-							   		REPLY_CONTENT=#{replyContent},
-							   		REPLY_REG_DATE=#{replyRegDate},
-							   		PRODUCT_NO=#{productNo},
-							   		COMMUNITY_NO=#{communityNo}
+							   		REPLY_NO,
+							   		USER_NO,
+							   		REPLY_CONTENT,
+							   		REPLY_REG_DATE,
+							   		PRODUCT_NO,
+							   		COMMUNITY_NO,
+							   		USER_NAME
 							   FROM 
   							   REPLY 
   							   <where>			
-									<if test="divCode == 0">										
-									    	productNo = #{reply.productNo}
+									<if test="targetType == 0">										
+									    	PRODUCT_NO = #{codeNo}
 									</if>
-									<if test="divCode == 1">
-									    	communityNo = #{reply.communityNo}
+									<if test="targetType == 1">
+									    	COMMUNITY_NO = #{codeNo}
 									</if>									
 							  </where>
-							   ORDER BY REPLY_NO
+							   ORDER BY REPLY_NO DESC
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
@@ -208,16 +211,16 @@
 				) countTable						
 	 </select>
 	 
-	 <select  id="getTotalCountReply"  parameterType="reply" resultType="int">
+	 <select  id="getTotalCountReply"  parameterType="map" resultType="int">
 	  	SELECT COUNT(*)
 	  		FROM(SELECT *
 	  				FROM REPLY 
   					<where>			
-						<if test="reply.divCode == 0">										
-						   	productNo = #{reply.productNo}
+						<if test="targetType == 0">										
+						   	product_No = #{codeNo}
 						</if>
-						<if test="reply.communityNo == 1">
-						   	communityNo = #{reply.communityNo}
+						<if test="targetType == 1">
+						   	community_No = #{codeNo}
 						</if>									
 					</where>
 				) countTable						

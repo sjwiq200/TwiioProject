@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
@@ -7,9 +7,9 @@
 <head>
 <title>Community</title>
 
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -19,18 +19,19 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    
 
 	
-	<!-- Bootstrap Dropdown Hover CSS 
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">-->
-    <!-- Bootstrap Dropdown Hover JS 
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>-->
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -41,69 +42,128 @@
     </style>
 
 <script type="text/javascript">
-
 	var page = 1;
+	var flag = 0;
+	var flag2 = 0;
+	var communityNo = ${resultPage.totalCount};
 	
-		$(window).scroll(function(){			
-			if(($(window).scrollTop()+30) >= $(document).height() - $(window).height()){
-				$.ajax( 
+	 if (self.name != 'reload') {
+         self.name = 'reload';
+         self.location.reload(true);
+     }
+     else self.name = ''; 
+	
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			
+			var scrollHeight=$(window).scrollTop() + $(window).height();
+			var documentHeight=$(document).height();
+			
+			console.log('$(window).scrollTop() :: '+($(window).scrollTop()));
+			console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
+			
+			if(($(window).scrollTop()) != $(document).height() - $(window).height()&flag2==1){
+				flag2 = 0;
+				console.log('flag :: '+flag2);
+			}
+		
+			if(($(window).scrollTop()+0.8) >= $(document).height() - $(window).height()&flag2==0){
+				flag2 = 1;
+				console.log('$(window).scrollTop() :: '+$(window).scrollTop());
+				console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
+				page = page + 1;
+				var sc=$('#searchKeword').val();
+				if($('#searchKeword').val()==null)
+					sc=null;
+				 
+				 $.ajax( 
 						{
-						url : "/community/json/listCommunity/"+page,
-						method : "GET" ,
+						url : "/community/json/listCommunity",
+						method : "POST" ,
 						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							"currentPage":page,
+							"targetType":"${communityType}",
+							"searchCondition":$('#searchCondition').val(),
+							"searchKeyword": sc
+						},
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
-							},
+						},
 							success : function(JSONData , status) {
-							var displayValue = '<div class="col">'+
+								if(flag==0){
+									communityNo=communityNo-JSONData.length;
+									flag=1;
+								}
+								
+							for(var i=0; i<JSONData.length;i++){								
+							var displayValue = 
 						    '<div class="col-md-3">'+
-						      '<div class="thumbnail">'+
+						      '<div class="thumbnail" style="height:400px">'+
+						      '<input type="hidden" name="communityNo" value="'+JSONData[i].communityNo+'"/>'+
+							  '<input type="hidden" name="userNo" value="'+JSONData[i].userNo+'"/>'+
 						        '<img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>'+
 						         ' <div class="caption">'+
-						          	'¾È³çÇÏ¼¼¿ä'+
-						          	'ÀúÈñ´Â twiio ÀÔ´Ï´Ù.'+ 
-						            '<h3>Á¦¸ñ°ú</h3>'+
-						            '<p>³»¿ëµµ ³ÖÀ» ¼ö ÀÖ´Ù.</p>'+
-						            '<p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>'+
+						          	'[ ê²ŒíŒë²ˆí˜¸ :'+communityNo+' ]'+
+						          	'<p>[ ì œ   ëª© :'+JSONData[i].communityTitle+' ]</p>'+ 
+						            '<p>[ ì‘ì„±ì :'+JSONData[i].userName+' ]</p>'+
+						            '<p>[ ë“±ë¡ì¼ :'+JSONData[i].regDate+' ]</p>'+
+						            '<p>[ ì¡°íšŒìˆ˜ :'+JSONData[i].viewCount+' ]</p>'+
+						            '<p>[ ì»¤ë®¤ë‹ˆí‹°ë²ˆí˜¸ :'+JSONData[i].communityNo+' ]</p>'+
+						            '<p><a class="btn btn-primary" id="getButton">ìƒì„¸ë³´ê¸°</a>'+ 
+						            '<a class="btn btn-default" id="reprtButton">ì‹ ê³ í•˜ê¸°</a></p>'+
 						        '</div>'+
 						      '</div>'+
-						    '</div>'+ 
 						 	'</div>';
-
-								alert(JSONData);
-								/* for(var i=0; i<JSONData.list.length();i++){
-									$(.row).append(displayValue);
-								} */
+						 
+								communityNo=communityNo-1;
+									$('.row2').append(displayValue);
+								}
 							}
-					});
+					}); 
 			}	
 		});
-
+	});
 	
 	
 
 	
-	/* $(function() {	
-		$("td:nth-child(2)").on("click" , function() {
-			//alert("¤±¤¤¤·¤«¤¤¤·¤«");
+	 $(function() {	
+		$("#write").on("click" , function() {
+			//alert("ã…ã„´ã…‡ã„»ã„´ã…‡ã„»");
 			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
-			self.location="/user/getUser?userId=${user.role}";
+			self.location="/community/addCommunity?communityType="+${communityType};
 			//}
 		});	
 	});
+	 
+	 
+
+	$(document).on('click' ,'#getButton', function() {
+		self.location="/community/getCommunity?communityNo="+$($('input[name=communityNo]')[$('a[id=getButton]').index(this)]).val();
+	});	
+
+	
+	function fncGetCommunityList(currentPage) {
+		//document.getElementById("currentPage").value = currentPage;
+	   //	document.detailForm.submit();
+	   $("#currentPage").val(currentPage)
+	   $("form").attr("method" , "POST").attr("action" , "/community/listCommunity?communityType=${communityType}").submit();
+	}
 	
 	$(function() {	
-		$("td:nth-child(6):contains('¹°°ÇµµÂø')").on("click" , function() {
-			//alert("¤±¤¤¤·¤«¤¤¤·¤«");
-			//alert($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val());
-			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(3)').index(this)]).val() == '0'){
-			self.location="/purchase/updateTranCode?tranNo="+$($('input[name=tranbyNo]')[$('td:nth-child(6)').index(this)]).val()+"&TranCode=2";
-			//}
-		});	
+	$("#searchButton").on("click" , function() {
+			//Debug..
+			//alert(  $( "td.ct_btn01:contains('ê²€ìƒ‰')" ).html() );
+		fncGetCommunityList(1);
+	})
 	});
+
 	
+	/*
 	$(function() {
 		$("td:nth-child(1)").on("click" , function() {
 			//if($($('input[name=TranCode]')[$('.ct_list_pop td:nth-child(1)').index(this)]).val() == ''){
@@ -117,9 +177,6 @@
 </head>
 
 <body>
-
-
-
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -140,53 +197,65 @@
  	<div class="row">
    	<div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${resultPage.totalCount } °Ç¼ö, ÇöÀç ${resultPage.currentPage}  ÆäÀÌÁö
+		    		ì „ì²´  ${resultPage.totalCount } ê±´ìˆ˜
 		    	</p>
 	</div>
 	
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    
+			    	
+			      <button type="button" id="write" class="btn btn-default">ê¸€ ì“° ê¸°</button>
+				  
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>Á¦¸ñ</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ÀÛ¼ºÀÚ</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>ì œëª©</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ì‘ì„±ì</option>
 					</select>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+				    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
 				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default">°Ë»ö</button>
+				  <button type="button" class="btn btn-default" id="searchButton">ê²€ìƒ‰</button>
 				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
 				</form>
 	    </div>
 	</div>
 	
-	<c:set var="i" value="0" />
+	<div class="col-md-12">
+		<hr sytle="border-style:dotted">
+	</div>
+	
+	
+	<div class="row2">
+	<c:set var="i" value="${resultPage.totalCount }" />
 		<c:forEach var="community" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
- 	<div class="col">
+		
     <div class="col-md-3">
-      <div class="thumbnail">
+      <div class="thumbnail" style="height:400px">
+        <input type="hidden" name="communityNo" value="${community.communityNo}"/>
+		<input type="hidden" name="userNo" value="${community.userNo}"/>
         <img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>
           <div class="caption">
-          	¾È³çÇÏ¼¼¿ä
-          	ÀúÈñ´Â twiio ÀÔ´Ï´Ù. 
-            <h3>Á¦¸ñ°ú</h3>
-            <p>³»¿ëµµ ³ÖÀ» ¼ö ÀÖ´Ù.</p>
-            <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p>
-        </div>
+          <p>[ê²Œì‹œíŒë²ˆí˜¸  : ${i}]</p>
+    	  <p>[ì œ   ëª© : ${community.communityTitle }]</p>
+          <p>[ì‘ì„±ì : ${community.userName }]</p>
+          <p>[ë“±ë¡ì¼ : ${community.regDate }]</p>
+          <p>[ì¡°íšŒìˆ˜ : ${community.viewCount }]</p>
+          <p>[ì»¤ë®¤ë‹ˆí‹°ë²ˆí˜¸ : ${community.communityNo }]</p>     
+            <p><a class="btn btn-primary" id="getButton">ìƒì„¸ë³´ê¸°</a>
+               <a href="#" class="btn btn-default" id="reportButton">ì‹ ê³ í•˜ê¸°</a></p>
+          </div>
       </div>
-    </div> 
- 	</div>
+    </div>
+    <c:set var="i" value="${ i-1 }" /> 
  	</c:forEach>
- 
+ 	</div>
 </div>    
 </body>
 </html>

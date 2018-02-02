@@ -110,7 +110,7 @@
 				}); */
 				
 				
-		 $("button.btn.btn-primary").on("click" , function() {
+		 $("button").on("click" , function() {
 				
 				var standardCountry = $("#standardCountryValue").val();
 				var compareCountry = $("#compareCountryValue").val();
@@ -170,7 +170,7 @@
 	<form class="form-horizontal">
 	
 		<div class="form-group">
-			<div class="col-sm-3" id="standardCountry">
+			<div class="col-sm-4 col-sm-offset-4" id="standardCountry">
 				    <select class="form-control" id="standardCountryValue" >
 				    <!-- <option value="0">나라를 선택해주세요</option> -->
 						<c:set var="i" value="0" />
@@ -181,7 +181,9 @@
 		 				 </c:forEach>
 					</select>
 				</div>
-		    <div class="col-sm-4">
+				<div class="col-sm-4 col-sm-offset-4">
+		    	</div>
+		    <div class="col-sm-4 col-sm-offset-4">
 		      <input type="text" class="form-control" id="standard" name="standard"  >
 		    </div>
 		 </div>
@@ -193,7 +195,7 @@
 		  </div>
 		  
 		 <div class="form-group">
-		    <div class="col-sm-3" id="compareCountry">
+		    <div class="col-sm-4 col-sm-offset-4" id="compareCountry">
 				    <select class="form-control"  id="compareCountryValue" >
 				   <!-- <option value="0">나라를 선택해주세요</option> -->
 						<c:set var="i" value="0" />
@@ -204,14 +206,16 @@
 		 				 </c:forEach>
 					</select>
 				</div>
-		    <div class="col-sm-4">
+				<div class="col-sm-4 col-sm-offset-4">
+		    	</div>
+		    <div class="col-sm-4 col-sm-offset-4">
 		      <input type="text" class="form-control" id="compare" name="compare" readOnly="true">
 		    </div>
 		 </div>
 	
 	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >계 &nbsp;산</button>
+		      <button type="button"  >계 &nbsp;산</button>
 		    </div>
 	</div>
 	</form>

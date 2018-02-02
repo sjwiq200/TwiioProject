@@ -1,6 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 
 <!DOCTYPE html>
@@ -10,7 +10,7 @@
 <head>
 	<meta charset="EUC-KR">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -27,12 +27,12 @@
    <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip »ç¿ë CSS-->
+   <!-- jQuery UI toolTip ì‚¬ìš© CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- autocomplate -->
  <!--  <link rel="stylesheet" href="/resources/demos/style.css"> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <!-- jQuery UI toolTip »ç¿ë JS-->
+  <!-- jQuery UI toolTip ì‚¬ìš© JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -42,17 +42,21 @@
         }
     </style>
 <script type="text/javascript">
-function fncGetUserList(currentPage,condition) {
+function fncGetUserList(currentPage,priceCondition) {
 	//document.getElementById("currentPage").value = currentPage;
 	//document.getElementById("condition").value = condition;
     //document.detailForm.submit();		
    $("#currentPage").val(currentPage);
-   $("#condition").val(condition);
-   $("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${param.menu}").submit();
+   $("#priceCondition").val(priceCondition);
+   $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
 }
 
 $(function() {
-	$("button.btn.btn-default:contains('°Ë»ö')").bind("click", function(){
+	$("button.btn.btn-default:contains('íˆ¬ì–´ ë“±ë¡')").bind("click", function(){
+		self.location="/product/addProduct";
+	});
+	
+	$("button.btn.btn-default:contains('ê²€ìƒ‰')").bind("click", function(){
 		fncGetUserList(1);
 	});
 
@@ -62,15 +66,9 @@ $(function() {
 		}
 	});
 	
-	$( "font[name='get']" ).bind("click" , function() {
-		//alert($($("input[name='prodNo']")[$(".ct_list_pop td:nth-child(1)").text()]).val());
-		alert($(this).html().split("value=")[1].split("\"")[1]);
-		self.location="/product/getProduct?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&menu=${param.menu}";
-		
-	});
 	
 	//'<img src = "/images/uploadFiles/'+$(this).html().split("value=")[2].split("\"")[1].split(",")[0]+'"/>'
-	$( "td[name='img']" ).hover(
+	/* $( "td[name='img']" ).hover(
 					
 			function() {
 				var prodNo=$(this).html().split("value=")[1].split("\"")[1];
@@ -93,7 +91,7 @@ $(function() {
 									displayValue = displayValue.split(",")[0].trim();
 									$( "#"+prodNo ).append( $( "<p>"+'<img src = "/images/uploadFiles/'+displayValue+'" width="200" height="200"/>'+"</p>" ) );
 								}else{
-									$( "#"+prodNo ).append("<p>***»çÁø¾øÀ½</p>");
+									$( "#"+prodNo ).append("<p>***ì‚¬ì§„ì—†ìŒ</p>");
 								}
 								
 								
@@ -106,13 +104,13 @@ $(function() {
 				$( this ).find( "br" ).remove();
 				$( this ).find( "p" ).remove();				
 			}
-	);
+	); */
 	
 	
 	$( "#searchKeyword" ).autocomplete({
 		
 	      source: function( request, response ) {
-	    	  //alert("Á¦¹ß¿ä");
+	    	  //alert("ì œë°œìš”");
 	    	  //alert($("#searchCondition").val());
 	    	  //alert($("#searchKeyword").val());
 	    	  $.ajax(
@@ -125,7 +123,7 @@ $(function() {
 	    						},
 	    					dataType:"json",
 	    					success:function(JSONData){
-	    						//alert("Á¦¹ßajax");	    											
+	    						//alert("ì œë°œajax");	    											
 	    						//alert("JSONData: \n"+JSONData);
 	    							    							    						
 	    						response($.map(JSONData, function (item) {
@@ -136,7 +134,7 @@ $(function() {
 	    				}
 	    			);
 	    	  
-	    	  //alert("Á¦¹ß¿ä");
+	    	  //alert("ì œë°œìš”");
 	      }
 	    });
 	 
@@ -156,17 +154,9 @@ $(function() {
 		fncGetUserList('${resultPage.currentPage }','low');
 	});
 	
-	$( "td:nth-child(5):contains('¹è¼ÛÇÏ±â')" ).bind("click" , function() {
-		//Debug..
-		//alert( $(this).html().split("value=")[1].split("\"")[1]);
-		//"/purchase/updateTranCodeByProd?prodNo=${product.prodNo}&tranCode=2"
-				//alert("/purchase/updateTranCodeByProd?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&tranCode=2");
-		self.location ="/purchase/updateTranCodeByProd?prodNo="+$(this).html().split("value=")[1].split("\"")[1]+"&tranCode=2";
-	});
-	$( "td:nth-child(5):contains('¹è¼ÛÇÏ±â')" ).css("color" , "red");
-	$("h7").css("color" , "blue");
 	
-	$("div[name='getPro']").bind("click",function(){
+	
+	$("a[name='getPro']").bind("click",function(){
 		//function(){
 			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
 		//}
@@ -186,19 +176,22 @@ $(function() {
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>${param.menu=='manage' ? "»óÇ° °ü¸®" : "»óÇ° ¸ñ·ÏÁ¶È¸"}</h3>
+	      <%--  <h3>${param.menu=='manage' ? "ìƒí’ˆ ê´€ë¦¬" : "ìƒí’ˆ ëª©ë¡ì¡°íšŒ"}</h3> --%>
 	    </div>
 	    
-	    <!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+	    <!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 	    <div class="row">
 	    
 		    <div class="col-md-6 text-left">
+		    <c:if test="${user.userType==2}">
+		    	<button type="button" class="btn btn-default" >íˆ¬ì–´ ë“±ë¡</button>
+		    </c:if>
 		    	<p class="text-primary">
-		    		ÀüÃ¼  ${totalCount } °Ç¼ö
+		    		ì „ì²´  ${totalCount } ê±´ìˆ˜
 		    	</p>
 		    </div>
 		    
@@ -207,41 +200,46 @@ $(function() {
 			    
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>±¹°¡</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>µµ½Ã</option>
-						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>Åõ¾î¸í</option>
-						<option value="3"  ${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>È£½ºÆ®</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>êµ­ê°€</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>ë„ì‹œ</option>
+						<option value="2"  ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>íˆ¬ì–´ëª…</option>
+						<option value="3"  ${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>í˜¸ìŠ¤íŠ¸</option>
 						
 					</select>
 				  </div>
 				  
 				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">°Ë»ö¾î</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="°Ë»ö¾î"
+				    <label class="sr-only" for="searchKeyword">ê²€ìƒ‰ì–´</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="ê²€ìƒ‰ì–´"
 				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default">°Ë»ö</button>
+				  <button type="button" class="btn btn-default">ê²€ìƒ‰</button>
 				  
-				  <!-- PageNavigation ¼±ÅÃ ÆäÀÌÁö °ªÀ» º¸³»´Â ºÎºĞ -->
+				  <!-- PageNavigation ì„ íƒ í˜ì´ì§€ ê°’ì„ ë³´ë‚´ëŠ” ë¶€ë¶„ -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  <input type="hidden" id="condition" name="condition" value=""/>
-					<p><font color="blue" name="high">°¡°İ³ôÀº¼ø</font>
-						<font color="blue" name="low">°¡°İ³·Àº¼ø</font></p>
+				  <input type="hidden" id="priceCondition" name="priceCondition" value=""/>
+					<p><font color="blue" name="high">ê°€ê²©ë†’ì€ìˆœ</font>
+						<font color="blue" name="low">ê°€ê²©ë‚®ì€ìˆœ</font></p>
 				</form>
 					
 	    	</div>
 	    	
 		</div>
-		<!-- table À§ÂÊ °Ë»ö Start /////////////////////////////////////-->
+		<!-- table ìœ„ìª½ ê²€ìƒ‰ Start /////////////////////////////////////-->
 		
 		<c:set var="i" value="0" />
 		  <c:forEach var="product" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro">
+		      <a href="#" class="thumbnail" name="getPro" style="height:400px;">
 		      	<input type="hidden" name="productNo" value="${product.productNo }"/>
-		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
+		      	<c:if test="${! empty product.thumbnail}">
+		        <img src="/resources/images/productThumbnail/${product.thumbnail}" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		        </c:if>
+		        <c:if test="${empty product.thumbnail}">
+		        <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		        </c:if>
 		          <div class="caption">
 		            <h3>${product.productName} </h3>		            
 		            <p>${product.productType}</p>
@@ -251,14 +249,14 @@ $(function() {
 		            <c:forEach var="tdate" items="${date_array}" begin="0" step="2">
 		            ${tdate}
 		            </c:forEach>		                    
-		            <p>${product.productPrice}¿ø</p>
+		            <p>${product.productPrice}ì›</p>
 		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
 		        </div>
-		      </div>
+		      </a>
 		    </div>
 		    <!-- </div> -->
 		  </c:forEach>
-	    
+	    </div>
 	    
 	  
 

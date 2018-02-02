@@ -1,5 +1,7 @@
 package com.twiio.good.web.community;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +25,7 @@ import com.twiio.good.service.domain.Community;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.user.UserService;
 
 
 @Controller
@@ -35,6 +38,10 @@ public class CommunityController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService usersService;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -49,15 +56,18 @@ public class CommunityController {
 		System.out.println(getClass());
 	}
 	
-	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "addCommunity", method = RequestMethod.GET )
 	public String addCommunity(@RequestParam("communityType") String communityType,
-							   Model model) throws Exception {
-		System.out.println("/community/addCommunity : GET");
+							   Model model,
+							   HttpSession session) throws Exception {
+		System.out.println("/community/addCommunityView : GET");
+		User user = (User)session.getAttribute("user");
+		System.out.println(user);
 		model.addAttribute("communityType",communityType);
-		return "forward:/community/addCommunity.jsp";
+		return "forward:/community/addCommunityView.jsp";
 	}
 	
-	@RequestMapping(value = "/community/addCommunity", method = RequestMethod.POST )
+	@RequestMapping(value = "addCommunity", method = RequestMethod.POST )
 	public String addCommunity(@ModelAttribute Community community,
 							  @RequestParam("communityType") String communityType,
 							  Search search,
@@ -68,23 +78,26 @@ public class CommunityController {
 		
 		User user = (User)session.getAttribute("user");
 		community.setUserNo(user.getUserNo());
+		community.setUserName(user.getUserName());
 		community.setCommunityType(communityType);
 		communityService.addCommunity(community);
 		
+		System.out.println(community.getCommunityNo());
 		Community community2 = communityService.getCommunity(community.getCommunityNo());
 		
-		Map<String , Object> map = commonService.listReply(search, 1, community2.getCommunityNo());
+		Map<String , Object> map = commonService.listReply(search, "1", community2.getCommunityNo());
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+		System.out.println("왔니??");
 		model.addAttribute("community",community2);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		
-		
+		System.out.println("여기까지왔니??");
 		return "forward:/community/getCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/getCommunity")
+	@RequestMapping(value = "getCommunity",method = RequestMethod.GET)
 	public String getCommunity(@RequestParam("communityNo") int communityNo,
 							   Search search,
 							   Model model
@@ -92,17 +105,30 @@ public class CommunityController {
 		System.out.println("/community/getCommunity");
 		
 		Community community = communityService.getCommunity(communityNo);
+		User user = usersService.getUserInNo(community.getUserNo());
 		
-		Map<String , Object> map = commonService.listReply(search, 1, communityNo);
+		System.out.println("controller :: "+community.getViewCount());
+		if(search.getCurrentPage() == 0 ){
+			search.setCurrentPage(1);
+		}
+		
+		search.setPageSize(pageSize);
+		
+		Map<String , Object> map = commonService.listReply(search, "1", communityNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+
 		model.addAttribute("community",community);
 		model.addAttribute("list", map.get("list"));
+		model.addAttribute("totalCountReply", map.get("totalCountReply"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		return "forward:/common/getCommunity.jsp";
+		model.addAttribute("user",user);
+
+		
+		return "forward:/community/getCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/deleteCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "deleteCommunity", method = RequestMethod.GET )
 	public String deleteCommunity(@RequestParam("communityNo") int communityNo,
 							Model model,
 							HttpSession session
@@ -114,7 +140,7 @@ public class CommunityController {
 		return "forward:/common/listCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/updateCommunity", method = RequestMethod.POST )
+	@RequestMapping(value = "updateCommunity", method = RequestMethod.POST )
 	public String updateCommunity(@ModelAttribute("community") Community community ,
 							Model model
 							) throws Exception {
@@ -126,7 +152,7 @@ public class CommunityController {
 		return "forward:/community/getCommunity?communityNo="+community.getCommunityNo();
 	}
 	
-	@RequestMapping(value = "/community/updateCommunity", method = RequestMethod.GET )
+	@RequestMapping(value = "updateCommunity", method = RequestMethod.GET )
 	public String updateCommunity(@RequestParam("communityNo") int communityNo ,
 							Model model
 							) throws Exception {
@@ -138,7 +164,7 @@ public class CommunityController {
 		return "forward:/community/updateCommunity.jsp";
 	}
 	
-	@RequestMapping(value = "/community/listCommunity")
+	@RequestMapping(value = "listCommunity")
 	public String listCommunity(@ModelAttribute("search") Search search,
 								@RequestParam("communityType") String communityType,
 								Model model
@@ -172,7 +198,7 @@ public class CommunityController {
 	
 	
 	//////////////////////////////??///////////////////////////////////////////////////
-	@RequestMapping(value = "/community/getBestTripReview")
+	@RequestMapping(value = "getBestTripReview")
 	public String getBestTripReview(@ModelAttribute("report") Report report,
 							Model model
 							) throws Exception {
