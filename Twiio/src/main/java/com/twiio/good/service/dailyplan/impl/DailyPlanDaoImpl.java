@@ -1,6 +1,7 @@
 package com.twiio.good.service.dailyplan.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,32 +52,33 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 
 	@Override
 	public List<PlanContent> getPlanContentList(int dailyPlanNo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectList("PlanContentMapper.getPlanContentList",dailyPlanNo);
 	}
 
 	@Override
 	public PlanContent getPlanContent(int dailyPlanNo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("PlanContentMapper.getPlanContent",dailyPlanNo);
 	}
 
 	@Override
 	public int getPlanContentCount(int dailyPlanNo) {
-		// TODO Auto-generated method stub
 		return sqlSession.selectOne("PlanContentMapper.getPlanContentCount",dailyPlanNo);
 	}
 
 	@Override
 	public void addPlanContent(PlanContent planContent) {
-		// TODO Auto-generated method stub
 		sqlSession.insert("PlanContentMapper.addPlanContent", planContent);
 	}
 
 	@Override
 	public void deletePlanContent(int dailyPlanNo) {
 		sqlSession.delete("PlanContentMapper.deletePlanContent",dailyPlanNo);
-		
+	}
+	
+	//friend_recommendation///////////////////////////////////////////////////
+	@Override
+	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan) {
+		return sqlSession.selectList("DailyPlanMapper.listFriendRec", dailyPlan);
 	}
 	
 

@@ -72,6 +72,54 @@
 				});
 	});
 	
+	$(function() {
+	
+		$("#friendRecButton").bind("click",function() {
+			var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
+			var user;
+			var result ="";
+
+			 $.ajax({
+	    				url:"/dailyplan/json/listFriendRec?dailyPlanNo="+dailyPlanNo,
+	    				method:"GET",	    					
+	    				dataType:"json",
+	    				headers : {
+								"Accept" : "application/json",
+								"Content-Type" : "application/json"
+							},
+	    				success:function(JSONData){
+	    					user = JSONData.userList;
+		    					for(var i=0;i<user.length;i++){
+		    						result +='<p> USER NO : '+user[i].userNo+ '</p>'
+		    								+'<span>  아이디 : '+user[i].userId+'</span>'
+		    								+'<span>  이름 : '+user[i].userName+'</span>'
+		    								+'<span>  성별 : '+user[i].userGender+'</span>'
+		    								+'<span>  사진 : '+user[i].userImage+'</span>'
+		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">친구추가</button>';
+		    					}
+		    				 $('#friendListForRec').html(result);
+		    				 $('#friendRec').modal('show'); 
+	    					}
+			
+								
+			    });
+			 
+			 
+			 
+		});
+	 });
+	 
+	function addFriend(userNo) {
+	    
+	    $.ajax({
+            url:'/dailyplan/json/addFriend?userNo='+userNo,
+            type:'get'
+         });
+	    
+	    $("#addToMyFriendList").remove();
+	    
+	}
+	
 	</script>
 	
 
@@ -84,13 +132,22 @@
 	<form class="form-horizontal">
 
 		<div class="container">
+			
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<div align="center">
+			<input type="button" id="friendRecButton"  name="friendRecButton" class="btn btn-primary" value="같이 갈 친구가 필요한가요?"/>
+			 <!-- data-toggle="modal" data-target="#friendRec"  -->
+			</div>
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			
 			<div align="center">
 				<h1>DAY :<strong>${dailyPlan.day}</strong></h1>
 				<h4>DailyDate : ${dailyPlan.dailyDate}</h4>
-				<h4>DailyCity : ${dailyPlan.dailyCity}	</h4>
+				<h4>DailyCity : ${dailyPlan.dailyCity}	</h4> 
 			</div>
-
-
+			
 			<div class="PlanContentList" align="center">
 
 				<c:set var="i" value="0" />
@@ -283,7 +340,35 @@
 		</div>
 
 		<!-- ---------------------------------------------------------------- -->
+		
+		<!---------- FriendRec Dialog ------------->
+	
+	<div>
 
+		<div class="modal fade" id="friendRec" role="dialog">
+			<div class="modal-dialog modal-md">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">
+							<Strong>나와 같은 곳, 같은 날짜에 가는 여행자</Strong>
+						</h4>
+						<h7 class="modal-title">TWIIO</h7>
+					</div>
+
+					<div class="modal-body">
+						
+						<div id="friendListForRec" > </div>
+						
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
 
 
 </body>

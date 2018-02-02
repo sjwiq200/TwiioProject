@@ -194,7 +194,6 @@
 			        		    	phone = place.formatted_phone_number;
 			        		    	name = place.name;
 			        		    	website = place.website;
-			        		    	alert(results[0].geometry.location);
 			        		    	
 			        		    	$(".testmap").remove();
 			        		    	

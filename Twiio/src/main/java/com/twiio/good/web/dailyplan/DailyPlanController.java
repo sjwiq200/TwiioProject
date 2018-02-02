@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.MainPlan;
 import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.mainplan.MainPlanService;
 
@@ -49,10 +50,16 @@ public class DailyPlanController {
 		for (DailyPlan result : list) {
 			System.out.println("result : " + result);
 		}
-
+		
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		String city = mainPlan.getCity();
+		String[] cityList = city.split(",");
+		
 		System.out.println("Controller : listMainPlan <END>");
-
+		
+		model.addAttribute("cityList",cityList);
 		model.addAttribute("list", list);
+		
 		return "forward:/dailyplan/listDailyPlan.jsp";
 
 	}
