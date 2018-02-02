@@ -35,7 +35,9 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public void addReply(Reply reply) throws Exception {
+		System.out.println("들어오니 replyServiceImpl");
 		commonDao.addReply(reply);
+		System.out.println("나오니 replyServiceImpl");
 	}
 
 	public void addFriend(Friend friend) throws Exception {

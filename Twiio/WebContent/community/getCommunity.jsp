@@ -129,13 +129,13 @@ function resetData() {
 		document.detailForm.reset();
 }========================================	*/
 //==> 추가된부분 : "취소"  Event 처리 및  연결
-$(function() {
+/* $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 	 $("a[href='#']").on("click" , function() {
 		 history.go(-1);
 	});
-});
+}); */
 
 	$(function() {
     $('#summernote').summernote({
@@ -166,6 +166,55 @@ $(function() {
     });
 });
 
+var page = 1;
+
+	$(function() {
+		 $("#write").on("click" , function() {
+			 var replycontent = $('#replyContent').val();
+			 //alert(replycontent);
+			 //alert('${community.communityNo}');
+			 //alert('${community.userNo}');
+			 //alert('${community.userName}');
+			 alert(JSON.stringify({
+					"replyContent":replycontent,
+					"communityNo":"${community.communityNo}",
+					"userNo":"${community.userNo}",
+					"userName": "${community.userName}"
+				}));
+			  $.ajax( 
+						{
+						url : "/common/json/addReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"replyContent":replycontent,
+							"communityNo":"${community.communityNo}",
+							"userNo":"${community.userNo}",
+							"userName": "${community.userName}"
+						}),
+						
+						success : function(JSONData) {
+								alert(JSON.stringify(JSONData));
+							var displayValue = '<div class="col-md-10 col-md-offset-1">'+
+												JSONData.userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.replyContent+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div>';
+							$('.row').prepend(displayValue);
+							var resultpage = (page * 10)-1;
+							$($('.row2')[resultpage]).remove();
+						}
+			}); 
+		});
+	});
 </script>
 </head>
 
@@ -225,10 +274,10 @@ $(function() {
 		</div>
 		<div class="form-group">
 			<div class="col-md-8 col-md-offset-1">
-				<textarea  name="comment_content" row="6" col="50"></textarea>
+				<textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
 			</div>
 			<div class="col-md-1">
-				<button type="button" style="" id="write" class="btn btn-default">댓글입력</button>
+				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
 			</div>
 		</div>
 		<br>
@@ -248,6 +297,7 @@ $(function() {
 		</div>
 		<div class="row">
 		<c:forEach var="reply" items="${list}">
+		<div class= "row2">
 			<div class="col-md-10 col-md-offset-1">
     			${reply.userName}
     		</div>
@@ -260,13 +310,14 @@ $(function() {
     		<div class="col-xs-10 col-xs-offset-1">
 			<hr sytle="border-style:dotted">
 			</div>
+		</div>
  		</c:forEach>
  		</div>
  		
  		<div class="col-xs-2 col-xs-offset-5">
 			<div class="button-2">
     		<div class="eff-2"></div>
-    		<a href="#"> Touch me </a>
+    		<a href="#"> 댓글 더보기 </a>
   			</div>
 		</div>
 		
