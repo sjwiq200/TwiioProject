@@ -1,6 +1,8 @@
 package com.twiio.good.service.dailyplan;
 
+import java.sql.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.PlanContent;
@@ -28,4 +30,7 @@ public interface DailyPlanService {
 	
 	public void deletePlanContent(int dailyPlanNo) throws Exception;
 	
+	//friend_recommendation///////////////////////////////////////////////////
+	
+	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan) throws Exception;
 }

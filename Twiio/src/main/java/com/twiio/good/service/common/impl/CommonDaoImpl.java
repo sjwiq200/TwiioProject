@@ -36,7 +36,9 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public void addReply(Reply reply) throws Exception {
+		System.out.println("들어오니 replyDaoImpl");
 		sqlSession.insert("CommonMapper.addReply", reply);
+		System.out.println("나오니???");
 	}
 
 	@Override
@@ -123,6 +125,11 @@ public class CommonDaoImpl implements CommonDao {
 	public void listSearch() throws Exception {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public List<Friend> listFriendOnly(int userNo) throws Exception {
+		return sqlSession.selectList("CommonMapper.listFriendOnly",userNo);
 	}
 	
 

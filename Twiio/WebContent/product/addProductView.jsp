@@ -193,6 +193,56 @@ $( function() {
         
     }); 
   
+  	$(function(){
+  		 $( "#country" ).autocomplete({
+				
+		      source: function( request, response ) {
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/countryAutoComplete/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						keyword:$("#country").val()		    						
+		    						},
+		    					dataType:"json",
+		    					success:function(JSONData){
+		    							    							    						
+		    						response($.map(JSONData, function (item) {
+		    				           
+		    							return item;
+		    				        }));
+		    					}
+		    				}
+		    			);
+		     	 },
+		     
+		    });
+  		 
+  		 $( "#city" ).autocomplete({
+				
+		      source: function( request, response ) {
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/cityAutoComplete/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						keyword:$("#city").val()		    						
+		    						},
+		    					dataType:"json",
+		    					success:function(JSONData){
+		    							    							    						
+		    						response($.map(JSONData, function (item) {
+		    				           
+		    							return item;
+		    				        }));
+		    					}
+		    				}
+		    			);
+		     	 },
+		     
+		    });
+  	});
+  
    
 
 </script>

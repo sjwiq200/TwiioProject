@@ -1,6 +1,7 @@
 package com.twiio.good.service.dailyplan;
 
 import java.util.List;
+import java.util.Map;
 
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.PlanContent;
@@ -28,5 +29,9 @@ public interface DailyPlanDao {
 	public void addPlanContent(PlanContent planContent);
 	
 	public void deletePlanContent(int dailyPlanNo);
+	
+	//friend_recommendation///////////////////////////////////////////////////
+	
+	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan);
 	
 }

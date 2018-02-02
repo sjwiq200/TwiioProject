@@ -43,9 +43,7 @@
     </style>
 <script type="text/javascript">
 function fncGetUserList(currentPage,priceCondition) {
-	//document.getElementById("currentPage").value = currentPage;
-	//document.getElementById("condition").value = condition;
-    //document.detailForm.submit();		
+		
    $("#currentPage").val(currentPage);
    $("#priceCondition").val(priceCondition);
    $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
@@ -219,8 +217,9 @@ $(function() {
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <input type="hidden" id="priceCondition" name="priceCondition" value=""/>
-					<p><font color="blue" name="high">가격높은순</font>
-						<font color="blue" name="low">가격낮은순</font></p>
+					<!-- <p><font color="blue" name="high">가격높은순</font>
+						<font color="blue" name="low">가격낮은순</font></p> -->
+						<p></p>
 				</form>
 					
 	    	</div>
@@ -250,6 +249,7 @@ $(function() {
 		            ${tdate}
 		            </c:forEach>		                    
 		            <p>${product.productPrice}원</p>
+		            <p>조회수 :: ${product.viewCount}</p>
 		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
 		        </div>
 		      </a>
