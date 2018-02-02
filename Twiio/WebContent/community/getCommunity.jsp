@@ -166,21 +166,73 @@ function resetData() {
     });
 });
 
-var page = 1;
+	var page = 1;
+	var page2='';
+	 
+	
+	$(function() {
+		 $("#addReply").on("click" , function() {
+			 page=page+1;
+			 
+		  $.ajax( 
+						{
+						url : "/common/json/listCommunityReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"communityNo":"${community.communityNo}",
+							"userNo":"${community.userNo}",
+							"userName": "${community.userName}",
+							"currentPage" : page
+						}),
+						success : function(JSONData) {
+							var displayValue='';
+							//alert(JSONData.length);
+							for(var i=0; i<JSONData.list.length;i++){
+							
+							if(JSONData.list[i]!=1){
+							displayValue += '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.list[i].replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div></div>';
+							}
+							}
+							
+							if(JSONData.list[JSONData.list.length-1] == 1){
+								 $("#aReply").remove();
+							}
+							var totalcount=
+							'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
 
+							$('.row').html(displayValue);
+							$('#totalCount').html(totalcount); 
+						}
+			}); 
+		});
+		 $(document).ready(function(){ page2 = $('.row2').length});
+		 console.log('page2 : '+page2);
+	});
+	
+	
 	$(function() {
 		 $("#write").on("click" , function() {
 			 var replycontent = $('#replyContent').val();
-			 //alert(replycontent);
-			 //alert('${community.communityNo}');
-			 //alert('${community.userNo}');
-			 //alert('${community.userName}');
-			 alert(JSON.stringify({
-					"replyContent":replycontent,
-					"communityNo":"${community.communityNo}",
-					"userNo":"${community.userNo}",
-					"userName": "${community.userName}"
-				}));
+			 //page=page+1;
 			  $.ajax( 
 						{
 						url : "/common/json/addReply",
@@ -191,30 +243,53 @@ var page = 1;
 							"replyContent":replycontent,
 							"communityNo":"${community.communityNo}",
 							"userNo":"${community.userNo}",
-							"userName": "${community.userName}"
+							"userName": "${community.userName}",
+							"currentPage" : page
 						}),
 						
 						success : function(JSONData) {
-								alert(JSON.stringify(JSONData));
-							var displayValue = '<div class="col-md-10 col-md-offset-1">'+
-												JSONData.userName+
+							//alert(JSON.stringify(JSONData));
+							
+							var displayValue='';
+							
+							for(var i=0;i<JSONData.list.length;i++){
+							 displayValue += 
+											   '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
 				    						   '</div>'+
 				    						   '<div class="col-md-10 col-md-offset-1">'+
-				    						   JSONData.replyContent+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 				    						   '</div>'+
 				    						   '<div class="col-md-10 col-md-offset-1">'+
-				    						   JSONData.replyRegDate+
+				    						   JSONData.list[i].replyRegDate+
 				    						   '</div>'+
 				    						   '<div class="col-xs-10 col-xs-offset-1">'+
 											   '<hr sytle="border-style:dotted">'+
-							  				   '</div>';
-							$('.row').prepend(displayValue);
-							var resultpage = (page * 10)-1;
-							$($('.row2')[resultpage]).remove();
+							  				   '</div></div>';
+							}
+							var totalcount=
+								'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
+							
+							$('.row').html(displayValue); 				   
+							$('#totalCount').html(totalcount); 
 						}
 			}); 
 		});
 	});
+	
+	
+	
+	$(document).on('click' ,'.row2', function() {
+		alert($('.row2').index(this));
+	});	
+
+	
 </script>
 </head>
 
@@ -283,11 +358,11 @@ var page = 1;
 		<br>
 		<br>
 		<br>
-		<div class="form-group">
+		<div class="form-group" id = "totalCount">
 			<div class="col-md-2 col-md-offset-1">
 				<strong>댓 글 목 록</strong>		
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-2" >
 				댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
 					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
 			</div>
@@ -314,16 +389,17 @@ var page = 1;
  		</c:forEach>
  		</div>
  		
- 		<div class="col-xs-2 col-xs-offset-5">
+ 		<div class="col-xs-2 col-xs-offset-5" id="aReply">
 			<div class="button-2">
     		<div class="eff-2"></div>
-    		<a href="#"> 댓글 더보기 </a>
+    		<a href="#" id="addReply"> 댓글 더보기 </a>
   			</div>
+  			<div class="col-xs-10 col-xs-offset-1">
+			<hr sytle="border-style:dotted">
+			</div>
 		</div>
 		
-		<div class="col-xs-10 col-xs-offset-1">
-			<hr sytle="border-style:dotted">
-		</div>
+		
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 	</div>

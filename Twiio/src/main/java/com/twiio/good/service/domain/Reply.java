@@ -12,9 +12,37 @@ public class Reply {
 	private Date replyRegDate;
 	private int productNo;
 	private int communityNo;
+	private String targetType;
+	private int currentPage;
 	
 	public Reply() {
 	}
+	
+	
+
+	public int getCurrentPage() {
+		return currentPage;
+	}
+
+
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+	}
+
+
+
+	public String getTargetType() {
+		return targetType;
+	}
+
+
+
+	public void setTargetType(String targetType) {
+		this.targetType = targetType;
+	}
+
+
 
 	public String getUserName() {
 		return userName;

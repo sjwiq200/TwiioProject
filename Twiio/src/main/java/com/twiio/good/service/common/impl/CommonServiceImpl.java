@@ -70,6 +70,13 @@ public class CommonServiceImpl implements CommonService {
 		map.put("userNo", userNo);
 		return map;
 	}
+	
+	
+
+	@Override
+	public int getTotalCountReply(String targetType, int codeNo) throws Exception {
+		return commonDao.getTotalCountReply(targetType, codeNo);
+	}
 
 	public void deleteFriend(int no) throws Exception {
 		commonDao.deleteFriend(no);

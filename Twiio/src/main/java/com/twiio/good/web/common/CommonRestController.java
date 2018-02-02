@@ -5,22 +5,21 @@ import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Reply;
-import com.twiio.good.service.domain.Reply2;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -64,13 +63,23 @@ public class CommonRestController {
 
 
 	@RequestMapping(value = "json/addReply", method = RequestMethod.POST )
-	public Reply addReply(@RequestBody Reply reply
+	public Map<String,Object> addReply(@RequestBody Reply reply, Search search
 			) throws Exception {
 		System.out.println("/common/addReply : POST");
 		commonService.addReply(reply);
-		System.out.println("들어왔음");
-		System.out.println(reply);
-		return reply;
+		search.setPageSize((pageSize*reply.getCurrentPage()));
+		search.setCurrentPage(1);	
+		
+		System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String , Object> map=commonService.listReply(search, "1", reply.getCommunityNo());
+		Map<String , Object> map2 = new HashMap<String , Object>();
+		int totalCount = commonService.getTotalCountReply("1", reply.getCommunityNo());
+		map2.put("list", (List)map.get("list"));
+		map2.put("totalCount", totalCount);
+		
+		return map2;
+		
 	}
 
 	
@@ -92,34 +101,34 @@ public class CommonRestController {
 	}
 	
 	@RequestMapping(value = "json/listCommunityReply")
-	public List listCommunityReply(@RequestBody String pageInfo)
+	public Map<String,Object> listCommunityReply(@RequestBody Reply reply,
+			Search search)
 		 throws Exception {
-
-		/*@ModelAttribute("search") Search search,
-		@RequestParam("targetType") String targetType,
-		@RequestParam("communityNo") int codeNo,
-		Model model*/
-		System.out.println(pageInfo);
-		String[] info = pageInfo.split("&");
-		String[] resultpage = info[0].split("=");
-		String[] targetType = info[1].split("=");
-		String[] communityNo = info[2].split("=");
-		
-		Search search = new Search();
-		search.setCurrentPage(Integer.parseInt(resultpage[1]));
 		
 		System.out.println("/common/listReply");
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		Map<String , Object> map=commonService.listReply(search, targetType[1], Integer.parseInt(communityNo[1]));
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+		search.setPageSize((pageSize*reply.getCurrentPage()));
+		search.setCurrentPage(1);	
 		
-		/*model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);*/
-		return (List)map.get("list");
+		System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String , Object> map=commonService.listReply(search, "1", reply.getCommunityNo());
+		System.out.println("reply.getCurrentPage :: "+reply.getCurrentPage());
+		System.out.println("map.get(\"list\") :: "+map.get("list"));
+		int totalCount = commonService.getTotalCountReply("1", reply.getCommunityNo());
+		List list = (List) map.get("list");
+		
+		if(totalCount == list.size()) {
+			list.add("1");
+		}
+		
+		Map<String , Object> map2 = new HashMap<String , Object>();
+		
+		map2.put("list", (List)map.get("list"));
+		map2.put("totalCount", totalCount);
+		
+		
+		
+		return map2;
 	}
 	
 	@RequestMapping(value = "json/listProductReply")
