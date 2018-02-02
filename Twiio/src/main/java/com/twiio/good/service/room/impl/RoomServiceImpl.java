@@ -15,7 +15,7 @@ import com.twiio.good.service.room.RoomService;
 
 @Service("roomServiceImpl")
 public class RoomServiceImpl implements RoomService {
-	
+
 	@Autowired
 	@Qualifier("roomDaoImpl")
 	private RoomDao roomDao;
@@ -26,28 +26,27 @@ public class RoomServiceImpl implements RoomService {
 
 	public RoomServiceImpl() {
 		// TODO Auto-generated constructor stub
-		System.out.println(this.getClass());
 	}
 
 	@Override
 	public void addRoom(Room room) throws Exception {
 		// TODO Auto-generated method stub
 		roomDao.addRoom(room);
-		
+
 	}
 
 	@Override
 	public List<Room> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return roomDao.listRoom(search);
-		
+
 	}
 
 	@Override
 	public void addRoomUser(String roomKey, int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		roomDao.addRoomUser(roomKey,userNo);
-		
+
 	}
 
 	@Override
@@ -61,13 +60,21 @@ public class RoomServiceImpl implements RoomService {
 		// TODO Auto-generated method stub
 		return roomDao.getRoom(roomKey);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
+
+	@Override
+	public List<RoomUser> listRoomUser(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		return roomDao.listRoomUser(roomKey);
+	}
+
+
+
+
+
+
+
+
+
+
 
 }
