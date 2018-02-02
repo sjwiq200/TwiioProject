@@ -23,8 +23,8 @@
 		<result property="productCount" 		column="product_count" 			jdbcType="NUMERIC" />
 		<result property="productDelete" 		column="product_delete" 		jdbcType="CHAR" />
 		<result property="thumbnail" 			column="thumbnail" 				jdbcType="VARCHAR" />
-		<result property="hostName" 			column="user_name" 			jdbcType="VARCHAR" />
-		<result property="hostImage" 			column="profile_image" 		jdbcType="VARCHAR" />	
+		<result property="hostName" 			column="user_name" 				jdbcType="VARCHAR" />
+		<result property="hostImage" 			column="profile_image" 			jdbcType="VARCHAR" />	
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -80,6 +80,7 @@
 			country				= #{country} ,
 			city				= #{city} ,
 			product_content		= #{description:VARCHAR} ,
+			thumbnail			= #{thumbnail:VARCHAR} ,
 			head_count			= #{tourHeadCount}						
 	   	</set>
 	   	WHERE product_no = #{productNo}

@@ -114,10 +114,10 @@
 		      <a href="#" class="thumbnail" name="getPro" style="height:400px;">
 		      	<input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo }"/>
 		      	<c:if test="${! empty transaction.tranPro.hostImage}">
-		        <img src="/resources/images/productThumbnail/${transaction.tranPro.hostImage}" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		        <img src="/resources/images/userThumbnail/${transaction.tranPro.hostImage}" style="width:290px; height:175px;" alt="..." class="img-rounded">
 		        </c:if>
 		        <c:if test="${empty transaction.tranPro.hostImage}">
-		        <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">
+		        <img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width:290px; height:175px;" alt="..." class="img-rounded">
 		        </c:if>
 		          <div class="caption">
 		            <h3>${transaction.hostName} </h3>		            
