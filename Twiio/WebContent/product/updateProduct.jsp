@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <html lang="ko">
 <head>
@@ -50,12 +52,7 @@
 <script type="text/javascript">
 
 function fncAddProduct(){
-	//Form 유효성 검증
- 	//var name = document.detailForm.prodName.value;
-	//var detail = document.detailForm.prodDetail.value;
-	//var manuDate = document.detailForm.manuDate.value;
-	//var price = document.detailForm.price.value;
-	
+		
 	var name=$("input[name='productName']").val();
 	var description=$("textarea[name='description']").val();
 	var tripDate=$("input[name='tripDate']").val();
@@ -77,15 +74,12 @@ function fncAddProduct(){
 		alert("가격은 반드시 입력하셔야 합니다.");
 		return;
 	}
-
-	//document.detailForm.action='/product/addProduct';
-	//document.detailForm.submit();
-	$("form").attr("method" , "POST").attr("action" , "/product/addProduct").attr("enctype", "multipart/form-data").submit();
+	
+	$("form").attr("method" , "POST").attr("action" , "/product/updateProduct").attr("enctype", "multipart/form-data").submit();
 }
 
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		
 	 $( "button.btn.btn-primary" ).on("click" , function() {
 		//Debug..
 		//alert(  $( "td.ct_btn01:contains('등록')" ).html() );
@@ -98,8 +92,7 @@ $(function() {
 //	document.detailForm.reset();
 //}
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	
 	 $( "#reset" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
@@ -107,22 +100,22 @@ $(function() {
 	});
 });
 
-var i = 1;
+var i = ${dateNum};
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	//alert(i);
 	 $( "#addTripDate" ).on("click" , function() {
+		 i++
 		 if(i==1){
 			 $( "#removeTripDate" ).prop("disabled", false);
-		 }
-		 i++;
+		 }	
+		 //alert(i);
 		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" placeholder="투어날짜'+i+'" >' ) );
-		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({minDate: 0, dateFormat: "yy-mm-dd"});		 
+		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({minDate: 0, dateFormat: "yy-mm-dd"});
+		 
 	});
 });
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+		
 	 $( "#removeTripDate" ).on("click" , function() {
 		 if(i>1){
 			 $( '#datepicker'+i ).remove();
@@ -130,14 +123,12 @@ $(function() {
 		 }else{
 			 $( "#removeTripDate" ).prop("disabled", true);
 		 }		 
-		 // $( "#datepicker[3]" ).remove();
-		 //$( "input[name=tripDate]" ).remove();		 
+		 	 
 	});
 });
 
 $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
+	
 	 $( "img" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
@@ -145,15 +136,6 @@ $(function() {
 	});
 });
 
-/* $(function() {
-	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $( "button.btn.btn-info" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			//$( "button.btn.btn-info" )."show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"
-	});
-}); */
 
 $( function() {
 	$( "input[name=tripDate]" ).datepicker({
@@ -267,9 +249,11 @@ $( function() {
 		<form class="form-horizontal" name="detailForm">
 		
 		  <div class="form-group">
+		  <input type="hidden" name="productNo" value="${product.productNo }"></input>
+		  <input type="hidden" name="hostNo" value="${product.hostNo }"></input>
 		    <label for="productName" class="col-sm-offset-1 col-sm-3 control-label">투어명</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productName" name="productName" placeholder="상품입력 gogo" >
+		      <input type="text" class="form-control" id="productName" name="productName" value="${product.productName}" >
 		       
 		    </div>
 		   </div> 
@@ -277,7 +261,7 @@ $( function() {
 		   <div class="form-group">
 		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label">국가</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="country" name="country" placeholder="국가">
+		      <input type="text" class="form-control" id="country" name="country" value="${product.country}">
 		       
 		    </div>
 		   </div> 
@@ -285,7 +269,7 @@ $( function() {
 		   <div class="form-group">
 		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="city" name="city" placeholder="도시">
+		      <input type="text" class="form-control" id="city" name="city" value="${product.city}">
 		       
 		    </div>
 		   </div> 	  
@@ -295,7 +279,13 @@ $( function() {
 		    <div class="col-sm-4" name="addDate">
 		      <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate">+</a>
 		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate">-</a>
-		      <input type="text" class="form-control" id="datepicker0" name="tripDate" readonly="readonly" placeholder="투어날짜">		      
+		      <c:set var="date" value="${product.tripDate}"></c:set>
+				<c:set var="date_array" value="${fn:split(date,',')}"></c:set>
+				<c:set var="i" value="0"/>		
+					<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
+					<c:set var="i" value="${i+1}"/>						
+						<input type="text" class="form-control" id="datepicker${i}" name="tripDate" readonly="readonly" value="${fn:split(tdate,'=')[0]}">						
+					</c:forEach>	      	      
 		    </div>
 		    <!--<div class="col-sm-3">  -->
 		     <!-- <img src="../images/ct_icon_date.gif" width="15" height="15" 
@@ -307,11 +297,11 @@ $( function() {
 		    <label for="productType" class="col-sm-offset-1 col-sm-3 control-label">투어유형</label>
 		    <div class="col-sm-4">
 		      	<select name="productType">
-				  <option value="1" selected>명소투어</option>
-				  <option value="2">음식투어</option>
-				  <option value="3">트레킹</option>
-				  <option value="4">액티비티</option>
-				  <option value="5">night투어</option>
+				  <option value="1" ${ product.productType==1 ? "selected" : "" }>명소투어</option>
+				  <option value="2" ${ product.productType==2 ? "selected" : "" }>음식투어</option>
+				  <option value="3" ${ product.productType==3 ? "selected" : "" }>트레킹</option>
+				  <option value="4" ${ product.productType==4 ? "selected" : "" }>액티비티</option>
+				  <option value="5" ${ product.productType==5 ? "selected" : "" }>night투어</option>
 				</select>
 		    </div>
 		   </div> 
@@ -319,7 +309,7 @@ $( function() {
 		  <div class="form-group">
 		    <label for="tourHeadCount" class="col-sm-offset-1 col-sm-3 control-label">1일 투어 인원</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="tourHeadCount" name="tourHeadCount" placeholder="1일 투어 인원">
+		      <input type="text" class="form-control" id="tourHeadCount" name="tourHeadCount" value="${product.tourHeadCount}">
 		    </div>
 		  </div>
 		  
@@ -327,7 +317,7 @@ $( function() {
 		  <div class="form-group">
 		    <label for="productPrice" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productPrice" name="productPrice" placeholder="가격">
+		      <input type="text" class="form-control" id="productPrice" name="productPrice" value="${product.productPrice}">
 		      <span id="helpBlock" class="help-block">
 		      	 <strong class="text-danger">원</strong>
 		      </span>
@@ -337,7 +327,7 @@ $( function() {
 		   <div class="form-group">
 		    <label for="description" class="col-sm-offset-1 col-sm-3 control-label">투어 상세 내용</label>
 		    <div class="col-sm-4">		    	
-		      <textarea id="summernote" name="description"></textarea>
+		      <textarea id="summernote" name="description" >${product.description}</textarea>
 		    </div>
 		  </div>
 		  		  		  

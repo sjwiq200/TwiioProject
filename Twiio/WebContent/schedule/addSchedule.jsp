@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@
 <head>
 	<meta charset="EUC-KR">
 	
-	<!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
+	<!-- Ï∞∏Ï°∞ : http://getbootstrap.com/css/   Ï∞∏Ï°∞ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -31,14 +31,41 @@
 	
 		 $(function() {		
 			$( "button.btn.btn-primary" ).on("click" , function() {
-				$("form").attr("method" , "POST").attr("action" , "/schedule/addSchedule").submit();
+				
+				$.ajax(
+    					{
+    						url : "/schedule/json/addSchedule/",
+    						method : "POST",
+    						data : JSON.stringify({
+    							roomKey : $("#roomKey").val(),
+    							scheduleTitle : $("#scheduleTitle").val(),
+    							scheduleDate : $("#scheduleDate").val(),
+    							scheduleAddress : $("#scheduleAddress").val()
+    						}),
+    						dataType : "json",
+    						headers :{
+    							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+    						},
+    						success : function(JSONData, status){
+    							
+    							console.log(status);
+    							if(status == 'success'){
+    								window.close();
+    							}
+    						}
+    					}		
+    				)
+			
 			});
+			
+			
 		});	
 		
 		
-		//============= "√Îº“"  Event √≥∏Æ π◊  ø¨∞· =============
+		//============= "Ï∑®ÏÜå"  Event Ï≤òÎ¶¨ Î∞è  Ïó∞Í≤∞ =============
 		$(function() {
-			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("a[href='#' ]").on("click" , function() {
 				/* $("form")[0].reset(); */
 				window.close();
@@ -60,32 +87,33 @@
    	</div>
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">¿œ¡§ µÓ∑œ</h1>
+		<h1 class="bg-primary text-center">ÏùºÏ†ï Îì±Î°ù</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
 		<div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">¿œ¡§ ¡¶∏Ò </label>
+			<input type="hidden" id="roomKey" name="roomKey" value="${roomKey}">
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÏùºÏ†ï Ï†úÎ™© </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="title" name="title" value="">
+		      <input type="text" class="form-control" id="scheduleTitle" name="scheduleTitle" value="">
 		    </div>
 		  </div>
 		
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">¿œ¡§ ≥Ø¬• </label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÏùºÏ†ï ÎÇ†Ïßú </label>
 		    <div class="col-sm-4">
-		      <input type="date" class="form-control" id="date" name="date" value="">
+		      <input type="date" class="form-control" id="scheduleDate" name="scheduleDate" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">¿œ¡§ ¿ßƒ° </label>
+		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">ÏùºÏ†ï ÏúÑÏπò </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="region" name="region" value="">
+		      <input type="text" class="form-control" id="scheduleAddress" name="scheduleAddress" value="">
 		    </div>
 		  </div>
 		  
@@ -98,15 +126,15 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >»Æ &nbsp;¡§</button>
-			  <a class="btn btn-primary btn" href="#" role="button">√Î&nbsp;º“</a>
+		      <button type="button" class="btn btn-primary"  >Ìôï &nbsp;Ï†ï</button>
+			  <a class="btn btn-primary btn" href="#" role="button">Ï∑®&nbsp;ÏÜå</a>
 		    </div>
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
  	</div>
-	<!--  »≠∏È±∏º∫ div end /////////////////////////////////////-->
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div end /////////////////////////////////////-->
 	
 </body>
 

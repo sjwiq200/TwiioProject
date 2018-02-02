@@ -37,7 +37,10 @@
 			<link rel="stylesheet" href="/resources/assets/css/main.css" />
 			
 			
-			
+			<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -140,6 +143,51 @@
 				});
 			
 			}); 
+				
+				$( "#htmlToPDF" ).on("click" , function() {
+					
+					var doc = new jsPDF();
+
+					var specialElementHandlers = { 
+					
+					    "body": function (element, renderer) { 
+					
+					        return true; 
+					
+					    }
+					
+					}	
+					
+					html2canvas($("body"),{
+						
+					
+					    useCORS: true,
+					
+					    allowTaint: true,
+					
+					    onrendered:function(canvas){
+					    	
+					    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+						    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+						    var imgHeight = canvas.height * imgWidth / canvas.width;
+						    var heightLeft = imgHeight;
+					
+					        var imgData = canvas.toDataURL('image/jpeg');
+					
+					        var doc = new jsPDF("p","mm");
+					
+							console.log(imgData);
+					
+					        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+					        heightLeft -= pageHeight;
+					
+					        doc.save('test.pdf');
+					
+					    }
+					
+					});
+					
+				});
 				 
 		 
 		 
@@ -220,6 +268,9 @@
 	</div>
 	</form>
 	
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button type="button" id="htmlToPDF" >PDF저장</button>
+		</div>
 	
 	<table class="table table-hover table-striped" >
       

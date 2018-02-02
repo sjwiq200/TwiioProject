@@ -43,9 +43,7 @@
     </style>
 <script type="text/javascript">
 function fncGetUserList(currentPage,priceCondition) {
-	//document.getElementById("currentPage").value = currentPage;
-	//document.getElementById("condition").value = condition;
-    //document.detailForm.submit();		
+		
    $("#currentPage").val(currentPage);
    $("#priceCondition").val(priceCondition);
    $("form").attr("method" , "POST").attr("action" , "/product/listProduct").submit();
@@ -67,44 +65,93 @@ $(function() {
 	});
 	
 	
-	//'<img src = "/images/uploadFiles/'+$(this).html().split("value=")[2].split("\"")[1].split(",")[0]+'"/>'
-	/* $( "td[name='img']" ).hover(
-					
-			function() {
-				var prodNo=$(this).html().split("value=")[1].split("\"")[1];
-				//console.log($(this).html().split("value=")[1].split("\"")[1]);
-				//alert($(this).html().split("value=")[1].split("\"")[1]);
-				$.ajax( 
-						
+	var page = 1;
+	var flag = 0;
+	var flag2 = 0;
+	var productCount = ${resultPage.totalCount};
+	
+	 if (self.name != 'reload') {
+         self.name = 'reload';
+         self.location.reload(true);
+     }
+     else self.name = ''; 
+	
+	$(document).ready(function(){
+		$(window).scroll(function(){
+			
+			var scrollHeight=$(window).scrollTop() + $(window).height();
+			var documentHeight=$(document).height();
+			
+			console.log('$(window).scrollTop() :: '+($(window).scrollTop()));
+			console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
+			
+			if(($(window).scrollTop()) != $(document).height() - $(window).height()&flag2==1){
+				flag2 = 0;
+				console.log('flag :: '+flag2);
+			}
+		
+			if(($(window).scrollTop()+0.8) >= $(document).height() - $(window).height()&flag2==0){
+				flag2 = 1;
+				console.log('$(window).scrollTop() :: '+$(window).scrollTop());
+				console.log('$(document).height() - $(window).height() :: '+($(document).height() - $(window).height()));
+				page = page + 1;
+				var sc=$('#searchKeword').val();
+				if($('#searchKeword').val()==null)
+					sc=null;
+				 
+				 $.ajax( 
 						{
-							url : "/product/json/getProduct/"+prodNo ,
-							method : "GET" ,
-							dataType : "json" ,
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
+						url : "/product/json/listProduct",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							"currentPage":page,							
+							"searchCondition":$('#searchCondition').val(),
+							"searchKeyword": sc
+						},
+						headers : {
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
 							success : function(JSONData , status) {
-
-								displayValue = JSONData.fileName;
-								if(displayValue != null){
-									displayValue = displayValue.split(",")[0].trim();
-									$( "#"+prodNo ).append( $( "<p>"+'<img src = "/images/uploadFiles/'+displayValue+'" width="200" height="200"/>'+"</p>" ) );
-								}else{
-									$( "#"+prodNo ).append("<p>***사진없음</p>");
+								if(flag==0){
+									productCount=productCount-JSONData.length;
+									flag=1;
 								}
 								
-								
-							}							
-						})
-				
-				
-			},
-			function() {
-				$( this ).find( "br" ).remove();
-				$( this ).find( "p" ).remove();				
-			}
-	); */
+							for(var i=0; i<JSONData.length;i++){								
+							var displayValue = 
+								 '<div class="col-sm-3 " >'+
+						      '<a href="#" class="thumbnail" name="getPro" style="height:400px;">'+
+						      	'<input type="hidden" name="productNo" value="'+${product.productNo }+'"/>'+
+						      	'<c:if test="'${! empty product.thumbnail}'">'+
+						        '<img src="/resources/images/productThumbnail/'+${product.thumbnail}+'" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
+						        '</c:if>'+
+						        '<c:if test="'+${empty product.thumbnail}+'">'+
+						        '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
+						        '</c:if>'+
+						          '<div class="caption">'+
+						            '<h3>'+${product.productName}+'</h3>'+		            
+						            '<p>'+${product.productType}+'</p>'+
+						            '<p>'+${product.country}+' | '+${product.city}+'</p>'+
+						            '<c:set var="date" value="'+{product.tripDate}+'"></c:set>'+
+						            '<c:set var="date_array" value="${fn:split(date,\'[=,]\')}"></c:set>'+              
+						            '<c:forEach var="tdate" items="${date_array}" begin="0" step="2">'+
+						            '${tdate}'+
+						            '</c:forEach>'+		                    
+						            '<p>${product.productPrice}원</p>'+
+						            '<p>조회수 :: '+${product.viewCount}+'</p>'+						            
+						        '</div>';
+						 
+						 			productCount=productCount-1;
+									$('.row2').append(displayValue);
+								}
+							}
+					}); 
+			}	
+		});
+	});
 	
 	
 	$( "#searchKeyword" ).autocomplete({
@@ -219,15 +266,16 @@ $(function() {
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
 				  <input type="hidden" id="priceCondition" name="priceCondition" value=""/>
-					<p><font color="blue" name="high">가격높은순</font>
-						<font color="blue" name="low">가격낮은순</font></p>
+					<!-- <p><font color="blue" name="high">가격높은순</font>
+						<font color="blue" name="low">가격낮은순</font></p> -->
+						<p></p>
 				</form>
 					
 	    	</div>
 	    	
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-		
+		<div class="row2">
 		<c:set var="i" value="0" />
 		  <c:forEach var="product" items="${list}">
 			<!-- <div class="row"> -->
@@ -250,12 +298,14 @@ $(function() {
 		            ${tdate}
 		            </c:forEach>		                    
 		            <p>${product.productPrice}원</p>
+		            <p>조회수 :: ${product.viewCount}</p>
 		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
 		        </div>
 		      </a>
 		    </div>
 		    <!-- </div> -->
 		  </c:forEach>
+		  </div>
 	    </div>
 	    
 	  

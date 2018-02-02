@@ -69,6 +69,9 @@ public class InformationDaoImpl implements InformationDao {
 	@Value("#{apikeyProperties['regioncontact']}")
 	String contactKey;
 	
+	@Value("#{commonProperties['chromeDriver']}")
+	String chromeDriver;
+	
 	public void setSqlSession(SqlSession sqlSession) {
 		this.sqlSession = sqlSession;
 	}
@@ -210,7 +213,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public Map<Object, String[]> searchHistoryWeather( String cityName) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
 		String[] string = null; 
@@ -283,7 +286,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public Map<String, List<String>> getFlightList(Flight flight) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
 		String[] result =null;
@@ -361,7 +364,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public Map<String, List<String>> getFlightListRetrun(String url, String num) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
 		
@@ -435,7 +438,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public List<String> getFlightListUrl(Flight flight) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
 		
@@ -473,7 +476,7 @@ public class InformationDaoImpl implements InformationDao {
 
 	@Override
 	public Map<String, List<String>> getHotel(Hotel hotel) throws Exception {
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		
@@ -709,7 +712,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public Map<String, List<String>> listNightLife(String city) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		capabilities.setCapability("marionette", true);
@@ -811,7 +814,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public  Map<String, List<String>> getNightLifeDetail(NightLife nightLife) throws Exception {
 		
-		System.setProperty("webdriver.chrome.driver","C:\\Users\\장은애\\Desktop\\chromedriver\\chromedriver.exe");
+		System.setProperty("webdriver.chrome.driver",chromeDriver);
 		
 		DesiredCapabilities capabilities = DesiredCapabilities.chrome();
 		

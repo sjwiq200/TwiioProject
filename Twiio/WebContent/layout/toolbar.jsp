@@ -39,6 +39,7 @@
 	                     <c:if test="${!empty user}">
 	                     	<ul class="dropdown-menu">
 		                         <li><a href="#">My TwiiChat List</a></li>
+		                         <li><a href="#">My Schedule List</a></li>
 		                         <li class="divider"></li>
 		                         
 		                     </ul>
@@ -147,6 +148,10 @@
 		
 		$( "a:contains('My TwiiChat List')" ).on("click" , function() {
 			$(self.location).attr("href","/room/listMyRoom");
+		});
+		
+		$( "a:contains('My Schedule List')" ).on("click" , function() {
+			$(self.location).attr("href","/schedule/listSchedule");
 		});
 		
 		/* Community*/
