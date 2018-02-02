@@ -349,7 +349,13 @@
 				
 		<div class="row">
 	  		<div class="col-xs-4 col-md-2"><strong>투어일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.tripDate}</div>
+			<div class="col-xs-8 col-md-4">
+			<c:set var="date" value="${product.tripDate}"></c:set>
+			<c:set var="date_array" value="${fn:split(date,',')}"></c:set>			
+				<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
+					${fn:split(tdate,'=')[0]}
+				</c:forEach>
+			</div>
 		</div>
 		
 		<hr/>
