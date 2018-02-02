@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!DOCTYPE html>
 
@@ -65,7 +65,7 @@
 	<form name="form" enctype="multipart/form-data">
 
 		<div class="form-group">
-			<label for="uploadFile" class="col-sm-2 control-label">��ǰ�̹���
+			<label for="uploadFile" class="col-sm-2 control-label">상품이미지
 			</label>
 			<div class="col-sm-6">
 				<input type="file" name="uploadFile" class="ct_input_g"

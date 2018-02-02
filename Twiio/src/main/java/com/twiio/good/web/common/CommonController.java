@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping({ "/common/*" })
+@RequestMapping("/common/*")
 public class CommonController {
 
 	@Autowired

@@ -1,5 +1,6 @@
 package com.twiio.good.service.common;
 
+import java.util.List;
 import java.util.Map;
 
 import com.twiio.good.common.Search;
@@ -20,6 +21,8 @@ public interface CommonService
   public Map<String,Object> listReply(Search search, String targetType, int codeNo) throws Exception;
 
   public Map<String,Object> listFriend(Search search, int userNo) throws Exception;
+  
+  public List<Friend> listFriendOnly(int userNo) throws Exception;
 
   public void deleteFriend(int no) throws Exception;
 

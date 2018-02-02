@@ -1,6 +1,9 @@
 package com.twiio.good.service.dailyplan.impl;
 
+import java.sql.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -64,6 +67,13 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 	@Override
 	public void deletePlanContent(int dailyPlanNo) throws Exception {
 		dailyPlanDao.deletePlanContent(dailyPlanNo);
+	}
+	
+	//friend_recommendation///////////////////////////////////////////////////
+	
+	@Override
+	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan) throws Exception {
+		return dailyPlanDao.listFriendRec(dailyPlan);
 	}
 
 }

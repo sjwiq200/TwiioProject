@@ -33,14 +33,6 @@
    
    
    <!--  ///////////////////////// Ãß°¡ ////////////////////////// -->
-   			
-   			<script src="/resources/assets/js/jquery.min.js"></script>
-			<script src="/resources/assets/js/skel.min.js"></script>
-			<script src="/resources/assets/js/util.js"></script>
-			<script src="/resources/assets/js/main.js"></script>
-			<link rel="stylesheet" href="/resources/assets/css/main.css" />
-   
-	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 50px;

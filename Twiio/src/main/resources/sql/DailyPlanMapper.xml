@@ -38,8 +38,8 @@
 	   	<set>
 	   		day 	= #{day:NUMERIC} ,
 			daily_date	= #{dailyDate:DATE},
-			daily_city 				= #{dailyCity:VARCHAR} ,
-			daily_country				=	#{dailyCountry:VARCHAR}
+			daily_city 	= #{dailyCity:VARCHAR} ,
+			daily_country =	#{dailyCountry:VARCHAR}
 	   	</set>
 	   	WHERE daily_plan_no = #{dailyPlanNo} 
 	 </update>
@@ -50,6 +50,14 @@
 		  		AND day != 0
 		  	ORDER BY day ASC 
 	  </select>
+	  
+	  <select  id="listFriendRec"  parameterType="dailyPlan" resultMap="dailyPlanSelectMap" >
+		  SELECT * FROM daily_plan
+		  	WHERE daily_date = #{dailyDate} AND daily_city = #{dailyCity} 
+		  			AND user_no != #{user.userNo}
+	  </select>
+	  
+	  
 	
 	 <delete  id="deleteDailyPlan"  parameterType="int"	>
 	 DELETE FROM daily_plan WHERE main_plan_no = #{mainPlanNo}

@@ -12,7 +12,6 @@ public class Reply {
 	private Date replyRegDate;
 	private int productNo;
 	private int communityNo;
-	private String targetType;
 	
 	public Reply() {
 	}
@@ -25,36 +24,6 @@ public class Reply {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-
-
-
-
-
-
-
-
-
-	public String getTargetType() {
-		return targetType;
-	}
-
-
-
-
-
-
-
-
-	public void setTargetType(String targetType) {
-		this.targetType = targetType;
-	}
-
-
-
-
-
-
-
 
 	public int getReplyNo() {
 		return replyNo;

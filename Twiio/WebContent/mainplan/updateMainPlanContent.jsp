@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -8,7 +8,7 @@
 
 
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -28,8 +28,8 @@
 		}
 		
 		$(function() {
-			$("button:contains('¿Ï·á')").on("click", function() {
-				alert("¾È³ç");
+			$("button:contains('ì™„ë£Œ')").on("click", function() {
+				alert("ì•ˆë…•");
 				fncUpdateMainPlanList();
 			});
 		});
@@ -44,10 +44,10 @@
 <form>
 		<div class="container">
 				<h5>&nbsp;</h5>
-				   <h1 class=" text-info">¼öÁ¤   </h1>
+				   <h1 class=" text-info">ìˆ˜ì •   </h1>
 					
 					
-						<label for="mainPlanNo" class="col-sm-2 control-label">ÇÃ·£¹øÈ£ </label>
+						<label for="mainPlanNo" class="col-sm-2 control-label">í”Œëœë²ˆí˜¸ </label>
 						<div class="col-sm-12">
 							<input type="text" name="mainPlanNo"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -56,7 +56,7 @@
 		
 					
 					 <div class="form-group">
-						<label for="planTitle" class="col-sm-2 control-label">ÇÃ·£Á¦¸ñ </label>
+						<label for="planTitle" class="col-sm-2 control-label">í”Œëœì œëª© </label>
 					<div class="col-sm-12">
 							<input type="text" name="planTitle"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -65,7 +65,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="departureDate" class="col-sm-2 control-label">Ãâ¹ßÀÏ </label>
+						<label for="departureDate" class="col-sm-2 control-label">ì¶œë°œì¼ </label>
 					<div class="col-sm-12">
 							<input type="text" name="departureDate"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -74,7 +74,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="arrivalDate" class="col-sm-2 control-label">µµÂøÀÏ </label>
+						<label for="arrivalDate" class="col-sm-2 control-label">ë„ì°©ì¼ </label>
 					<div class="col-sm-12">
 							<input type="text" name="arrivalDate"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -87,7 +87,7 @@
 			  			<c:forEach var="cityList" items="${cityList}">
 					  		<c:set var="i" value="${ i+1 }" />
 							<div class="form-group">
-								<label for="cityList" class="col-sm-2 control-label">µµ½Ã¸í </label>
+								<label for="cityList" class="col-sm-2 control-label">ë„ì‹œëª… </label>
 									<div class="col-sm-12">
 											<input type="text" name="cityList" class="ct_input_g" style="width: 500px; height: 30px"
 														maxLength="20" value="${cityList}">
@@ -96,7 +96,7 @@
 						 </c:forEach>
 					
 					<div class="form-group">
-						<label for="country" class="col-sm-2 control-label">±¹°¡¸í </label>
+						<label for="country" class="col-sm-2 control-label">êµ­ê°€ëª… </label>
 						<div class="col-sm-12">
 							<input type="text" name="country"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -105,7 +105,7 @@
 					</div>
 					
 					<div class="form-group">
-						<label for="mainThumbnail" class="col-sm-2 control-label">¸ŞÀÎ¼¶³×ÀÏ </label>
+						<label for="mainThumbnail" class="col-sm-2 control-label">ë©”ì¸ì„¬ë„¤ì¼ </label>
 						<div class="col-sm-12">
 							<input type="text" name="mainThumbnail"
 										class="ct_input_g" style="width: 500px; height: 30px"
@@ -117,7 +117,7 @@
 					<div class="pageButton-group" align="center">
 						<button type="button" class="btn btn-default"
 							aria-label="Right Align">
-							<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>¿Ï·á
+							<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>ì™„ë£Œ
 						</button>
 					</div>
 					

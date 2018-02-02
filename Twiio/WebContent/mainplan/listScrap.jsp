@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR"%>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8"%>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
@@ -9,9 +9,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 
-<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -38,8 +38,8 @@ body {
 	
 
 	 $(function() {
-			$("button:contains('»èÁ¦')").bind("click",function() {
-				var index = $("button:contains('»èÁ¦')").index(this);
+			$("button:contains('ì‚­ì œ')").bind("click",function() {
+				var index = $("button:contains('ì‚­ì œ')").index(this);
 				var scrapNo = $($("input[name='scrapNo']")[index]).val();
 				alert(scrapNo);
 				/* $("form").attr("method", "GET").attr("action","/mainPlan/deleteScrap?scrapNo="+scrapNo).submit(); */
@@ -49,8 +49,8 @@ body {
 	 })
 	 
 	 	 $(function() {
-			$("button:contains('¼±ÅÃ')").bind("click",function() {
-				var index = $("button:contains('¼±ÅÃ')").index(this);
+			$("button:contains('ì„ íƒ')").bind("click",function() {
+				var index = $("button:contains('ì„ íƒ')").index(this);
 				var scrapNo = $($("input[name='scrapNo']")[index]).val();
 				var url = "/mainplan/getScrap?scrapNo="+scrapNo;
 				$(location).attr('href', url);
@@ -85,21 +85,21 @@ body {
 				  			 <input type="hidden" name="scrapNo" value="${scrap.scrapNo}" />
 				  			<ul>
 								<li>[${ i }]</li>
-								<li>½ºÅ©·¦¹øÈ£ : ${scrap.scrapNo}</li>
-								<li>À¯Àú¹øÈ£ : ${scrap.user.userNo}</li>
-								<li>¸ŞÀÎÇÃ·£¹øÈ£ : ${scrap.mainPlan.mainPlanNo }</li>
-								<li>Ä¿¹Â´ÏÆ¼¹øÈ£ : ${scrap.community.communityNo}</li>
-								<li>½ºÅ©·¦Á¦¸ñ : ${scrap.scrapTitle}</li>
-								<li>½ºÅ©·¦³»¿ë : ${scrap.scrapContent}</li>
-								<li>½ºÅ©·¦À¯Çü : ${scrap.scrapType}</li>
+								<li>ìŠ¤í¬ë©ë²ˆí˜¸ : ${scrap.scrapNo}</li>
+								<li>ìœ ì €ë²ˆí˜¸ : ${scrap.user.userNo}</li>
+								<li>ë©”ì¸í”Œëœë²ˆí˜¸ : ${scrap.mainPlan.mainPlanNo }</li>
+								<li>ì»¤ë®¤ë‹ˆí‹°ë²ˆí˜¸ : ${scrap.community.communityNo}</li>
+								<li>ìŠ¤í¬ë©ì œëª© : ${scrap.scrapTitle}</li>
+								<li>ìŠ¤í¬ë©ë‚´ìš© : ${scrap.scrapContent}</li>
+								<li>ìŠ¤í¬ë©ìœ í˜• : ${scrap.scrapType}</li>
 								<li> </li>
 								
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>»èÁ¦
+									<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>ì‚­ì œ
 								</button>
 								 
 								<button type="button" class="btn btn-default" aria-label="Right Align">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>¼±ÅÃ
+									<span class="glyphicon glyphicon-ok" aria-hidden="true"	id="submit"></span>ì„ íƒ
 								</button>
 	
 						
