@@ -96,28 +96,24 @@
 		    								+'<span>  [성별] : '+user[i].userGender+'</span>'
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">친구추가</button><p>&nbsp;</p>';
+		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
-			
-								
 			    });
-			 
-			 
-			 
 		});
 	 });
 	 
-	function addFriend(userNo) {
-	    
-	    $.ajax({
+	function addFriend(userNo,i) {
+
+		$.ajax({
             url:'/dailyplan/json/addFriend?userNo='+userNo,
             type:'get'
          });
 	    
-	    $("#addToMyFriendList").remove();
+	   var a = "#addToMyFriendList" + i;
+	    $("#addToMyFriendList"+i).remove(); 
 	    
 	}
 	

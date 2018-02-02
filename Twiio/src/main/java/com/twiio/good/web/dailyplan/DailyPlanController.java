@@ -71,17 +71,14 @@ public class DailyPlanController {
 		System.out.println("Controller : getDailyPlan <START>");
 
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-
 		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
 			List<PlanContent> list = dailyPlanService.getPlanContentList(dailyPlanNo);
 			model.addAttribute("list", list);
 		}
-
 		model.addAttribute("dailyPlan", dailyPlan);
 		System.out.println("Controller : getDailyPlan <END>");
-
+		
 		return "forward:/dailyplan/getDailyPlan.jsp";
-
 	}
 
 	/////////////////////////////////////// PlanContent/////////////////////////////////////////////////////////////

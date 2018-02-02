@@ -78,8 +78,6 @@
 		$(document).ready(function(){
 		    $("#addMap").on('shown.bs.modal', function () {
 		        google.maps.event.trigger(map, 'resize');
-
-		    	
 			});
 		});
 
