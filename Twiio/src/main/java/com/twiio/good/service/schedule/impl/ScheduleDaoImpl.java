@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.Schedule;
+import com.twiio.good.service.domain.User;
 import com.twiio.good.service.schedule.ScheduleDao;
 
 @Repository("scheduleDaoImpl")
@@ -60,6 +63,45 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		System.out.println("listSchedule Result = >"+mongoTemplate.find(query, Schedule.class,"schedules"));
 		return mongoTemplate.find(query, Schedule.class,"schedules");
 	}
+
+	@Override
+	public void updateSchedule(Schedule schedule) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".updateSchedule()");
+		
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(schedule.getRoomKey());
+
+		Query query = new Query(criteria);
+		
+		Update update = new Update();
+		update.set("scheduleTitle", schedule.getScheduleTitle());
+		update.set("scheduleDate", schedule.getScheduleDate());
+		update.set("scheduleAddress", schedule.getScheduleAddress());
+
+		mongoTemplate.updateFirst(query, update ,Schedule.class, "schedules");
+			
+		
+	}
+
+	@Override
+	public Schedule getSchedule(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+"getSchedule()");
+		
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(roomKey);
+
+		Query query = new Query(criteria);
+		
+		System.out.println(mongoTemplate.findOne(query, Schedule.class, "schedules"));;
+		return mongoTemplate.findOne(query, Schedule.class, "schedules");
+	}
+	
+	
+	
+	
+	
 	
 	
 	

@@ -17,7 +17,6 @@ public class Room {
 
 	public Room() {
 		// TODO Auto-generated constructor stub
-		System.out.println(this.getClass().getName());
 	}
 
 	public String get_id() {

@@ -23,5 +23,6 @@ public interface RoomService {
 	public void updateRoom(Room room) throws Exception;
 	
 	public void deleteRoom(Room room) throws Exception;
+	
 
 }

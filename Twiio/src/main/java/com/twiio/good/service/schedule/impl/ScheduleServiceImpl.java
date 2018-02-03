@@ -24,17 +24,26 @@ public class ScheduleServiceImpl implements ScheduleService {
 	@Override
 	public void addSchedule(Schedule schedule) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(this.getClass()+"addSchedule()");
 		scheduleDao.addSchedule(schedule);
 		
 	}
 	
 	public List<Schedule> listSchedule(int userNo) throws Exception{
-		System.out.println(this.getClass()+"listSchedule()");
-		
 		return scheduleDao.listSchedule(userNo);
 	}
-	
+
+	@Override
+	public void updateSchedule(Schedule schedule) throws Exception {
+		// TODO Auto-generated method stub
+		scheduleDao.updateSchedule(schedule);
+		
+	}
+
+	@Override
+	public Schedule getSchedule(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		return scheduleDao.getSchedule(roomKey);
+	}
 	
 
 }
