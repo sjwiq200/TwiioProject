@@ -49,10 +49,32 @@ public class ScheduleController {
 	public String listSchedule(HttpSession session,HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/listSchedule : ");
 		User user = (User)session.getAttribute("user");
-		List<Schedule> list = scheduleService.listSchedule(user.getUserNo());
-		request.setAttribute("list", list);
+		List<Schedule> scheduleList = scheduleService.listSchedule(user.getUserNo());
+		List<Room> roomList = new Vector<>();
+		for (Schedule schedule : scheduleList) {
+			roomList.add(roomService.getRoom(schedule.getRoomKey()));
+		}
+		request.setAttribute("schedule", scheduleList);
+		request.setAttribute("room", roomList);
 
 		return "forward:/schedule/listSchedule.jsp";
+	}
+	
+	@RequestMapping(value = "/updateSchedule/{roomKey}", method=RequestMethod.GET)
+	public String updateSchedule(@PathVariable String roomKey, HttpServletRequest request) throws Exception{
+		System.out.println("/schedule/updateSchedule : GET");
+		Schedule schedule = scheduleService.getSchedule(roomKey);
+		
+		request.setAttribute("schedule", schedule);
+		
+		return "forward:/schedule/updateSchedule.jsp";
+	}
+	
+	@RequestMapping(value="/updateSchedule", method=RequestMethod.POST)
+	public String updateSchedule(@ModelAttribute("schedule") Schedule schedule) throws Exception{
+		System.out.println("/schedule/updateSchedule : POST");
+		scheduleService.updateSchedule(schedule);
+		return "redirect:/schedule/listSchedule";
 	}
 	
 	

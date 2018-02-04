@@ -18,7 +18,6 @@ public class Schedule {
 
 	public Schedule() {
 		// TODO Auto-generated constructor stub
-		System.out.println(this.getClass().getName());
 	}
 
 

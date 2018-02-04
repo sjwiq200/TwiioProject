@@ -6,7 +6,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -31,6 +31,12 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   	$(function() {
+  		
+  		$("a:contains('방 수정')").on("click",function(){
+			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 alert(roomKey);
+			 self.location = "/schedule/updateSchedule/"+roomKey;
+		 });
 		 
 		 
 	 });
@@ -67,16 +73,12 @@
 		    	</p>
 		    </div>
 		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-				  <button type="button" class="btn btn-default">방생성</button>
-				</form>
-	    		</div>
+		    
 	    	
 		</div>
    	
    	<c:set var="i" value="0" />
-		  <c:forEach var="schedule" items="${list}">
+		  <c:forEach var="schedule" items="${schedule}" varStatus="status">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
 		      <div class="thumbnail" name="getPro" style="height:500px;">
@@ -87,6 +89,15 @@
 		            <p>Date : ${schedule.scheduleDate}</p>
 		            <p>Address : ${schedule.scheduleAddress}</p>
 		            <p>User : ${schedule.userNo }</p>
+		            <p>roomKey : ${schedule.roomKey }</p>
+		            <p>roomTitle : ${room[status.index].roomName }</p>
+		            <p>roomKey : ${room[status.index].roomKey}</p>
+		            
+		            <p>
+		            <c:if test="${user.userNo == room[status.index].userNo }">
+		            		<a href="#">방 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
+		            </c:if>
+		            </p>
 		            
 		            
 		        </div>
