@@ -228,8 +228,7 @@ public class ProductController {
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
 		System.out.println("resultPage:: "+resultPage);
-		
-		//List<Product> list = (List<Product>)map.get("list");
+				
 		System.out.println("map :: "+map);
 		map.put("list", (List<Product>)productMap.get("list"));
 		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
