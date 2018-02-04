@@ -228,39 +228,127 @@
 		 });
 	});
 	
+	
+	
+	/////////////////////////////////////////reply////////////////////////////
+	var page = 1;
+	var page2='';
+	 
+	
 	$(function() {
-		
-		 $( "#write" ).on("click" , function() {
-			alert("dkfjlksfjlksd");
-			 $.ajax(
-		 				{
-		 					url:"/common/json/addReply/",
-		 					method:"POST",	    					
-		 					data:{	    						
-		 						targetType : "0",
-		 						replyContent : $("textarea").val(),
-		 						userNo : $("input[name='userNo']").val(),
-		 						userName : $("input[name='userName']").val(),
-		 						productNo : $("input[name='productNo']").val(),
-		 						replyNo : "",
-		 						replyRegDate : "",
-		 						communityNo : ""
-		 						},
-							headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},			
-		 					dataType:"json",
-		 					success:function(JSONData){
-		 						con.log("댓글등록");							
-		 					}
-		 				}
-		 			);
+		 $("#addReply").on("click" , function() {
+			 page=page+1;
+			 
+		  $.ajax( 
+						{
+						url : "/common/json/listProductReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"productNo":"${product.productNo}",
+							"userNo":"${user.userNo}",
+							"userName": "${user.userName}",
+							"currentPage" : page
+						}),
+						success : function(JSONData) {
+							var displayValue='';
+							//alert(JSONData.length);
+							for(var i=0; i<JSONData.list.length;i++){
+							
+							if(JSONData.list[i]!=1){
+							displayValue += '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.list[i].replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div></div>';
+							}
+							}
+							
+							if(JSONData.list[JSONData.list.length-1] == 1){
+								 $("#aReply").remove();
+							}
+							var totalcount=
+							'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
+
+							$('.row').html(displayValue);
+							$('#totalCount').html(totalcount); 
+						}
+			}); 
 		});
+		 $(document).ready(function(){ page2 = $('.row2').length});
+		 console.log('page2 : '+page2);
 	});
 	
 	
-	
+	$(function() {
+		 $("#write").on("click" , function() {
+			 var replycontent = $('#replyContent').val();
+			 //page=page+1;
+			  $.ajax( 
+						{
+						url : "/common/json/addReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"replyContent":replycontent,
+							"productNo":"${product.productNo}",
+							"userNo":"${user.userNo}",
+							"userName": "${user.userName}",
+							"currentPage" : page
+						}),
+						
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));
+							
+							var displayValue='';
+							
+							for(var i=0;i<JSONData.list.length;i++){
+							 displayValue += 
+											   '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.list[i].replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div></div>';
+							}
+							var totalcount=
+								'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
+							
+							$('.row').html(displayValue); 				   
+							$('#totalCount').html(totalcount); 
+						}
+			}); 
+		});
+	});
+		
+	///////////////////////////////////////////top//////////////////
 	  $( function() {
 		  
 	    $( window ).scroll( function() {
@@ -277,6 +365,7 @@
 	    } );
 	    
 	  } );
+	////////////////////////////////////////////////
 	
 	  $(function() {
 			
@@ -517,46 +606,36 @@
 	<!-- PageNavigation End... -->	
 	</div>
 	<hr/>
-	<div class="form-group">
-		<div class="col-md-8 col-md-offset-1">
-			<textarea name="comment_content" row="6" col="50"></textarea>
-		</div>
-		<div class="col-md-1">
-			<button type="button" style="" id="write" class="btn btn-default">댓글입력</button>
-		</div>
-	</div>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	<br/>
-	
-	<div class="form-group">
-		<div >
-			<strong>댓 글 목 록</strong>
-		</div>
-	</div>
-	
+	<!-- Reply -->
 	<div class="col-xs-10 col-xs-offset-1">
 		<hr sytle="border-style:dotted">
+	</div>
+	<div class="form-group">
+		<div class="col-md-8 col-md-offset-1">
+			<textarea id="replyContent" name="comment_content" row="6" col="50"
+				value=""></textarea>
 		</div>
-		<div class="form-group">
-			<div class="col-md-8 col-md-offset-1">
-				<textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
-			</div>
-			<div class="col-md-1">
-				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
-			</div>
+		<div class="col-md-1">
+			<button type="button" id="write" class="btn btn-default">댓글입력</button>
 		</div>
-		<br>
-		<br>
-		<br>
-		<div class="form-group">
+	</div>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<br>
+	<div class="form-group" id = "totalCount">
 			<div class="col-md-2 col-md-offset-1">
 				<strong>댓 글 목 록</strong>		
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-2" >
 				댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
 					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
 			</div>
@@ -565,7 +644,7 @@
 		<hr sytle="border-style:dotted">
 		</div>
 		<div class="row">
-		<c:forEach var="reply" items="${list}">
+		<c:forEach var="reply" items="${replyList}">
 		<div class= "row2">
 			<div class="col-md-10 col-md-offset-1">
     			${reply.userName}
@@ -583,15 +662,14 @@
  		</c:forEach>
  		</div>
  		
- 		<div class="col-xs-2 col-xs-offset-5">
+ 		<div class="col-xs-2 col-xs-offset-5" id="aReply">
 			<div class="button-2">
     		<div class="eff-2"></div>
-    		<a href="#"> 댓글 더보기 </a>
+    		<a href="#" id="addReply"> 댓글 더보기 </a>
   			</div>
-		</div>
-		
-		<div class="col-xs-10 col-xs-offset-1">
+  			<div class="col-xs-10 col-xs-offset-1">
 			<hr sytle="border-style:dotted">
+			</div>
 		</div>
 
 </body>

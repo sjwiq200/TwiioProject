@@ -65,10 +65,10 @@ $(function() {
 	});
 	
 	
-	var page = 1;
+/* 	var page = 1;
 	var flag = 0;
 	var flag2 = 0;
-	var productCount = ${resultPage.totalCount};
+	//var productCount = ${resultPage.totalCount};
 	
 	 if (self.name != 'reload') {
          self.name = 'reload';
@@ -105,11 +105,11 @@ $(function() {
 						method : "POST" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
-						data : {
+						data : JSON.stringify({
 							"currentPage":page,							
 							"searchCondition":$('#searchCondition').val(),
 							"searchKeyword": sc
-						},
+						}),
 						headers : {
 							"Accept" : "application/json",
 							"Content-Type" : "application/json"
@@ -124,34 +124,34 @@ $(function() {
 							var displayValue = 
 								 '<div class="col-sm-3 " >'+
 						      '<a href="#" class="thumbnail" name="getPro" style="height:400px;">'+
-						      	'<input type="hidden" name="productNo" value="'+${product.productNo }+'"/>'+
-						      	'<c:if test="'${! empty product.thumbnail}'">'+
-						        '<img src="/resources/images/productThumbnail/'+${product.thumbnail}+'" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
+						      	'<input type="hidden" name="productNo" value="'+${JSONData.productNo }+'"/>'+
+						      	'<c:if test="'${! empty JSONData.thumbnail}'">'+
+						        '<img src="/resources/images/productThumbnail/'+${JSONData.thumbnail}+'" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
 						        '</c:if>'+
-						        '<c:if test="'+${empty product.thumbnail}+'">'+
+						        '<c:if test="'+${empty JSONData.thumbnail}+'">'+
 						        '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
 						        '</c:if>'+
 						          '<div class="caption">'+
-						            '<h3>'+${product.productName}+'</h3>'+		            
-						            '<p>'+${product.productType}+'</p>'+
-						            '<p>'+${product.country}+' | '+${product.city}+'</p>'+
-						            '<c:set var="date" value="'+{product.tripDate}+'"></c:set>'+
+						            '<h3>'+${JSONData.productName}+'</h3>'+		            
+						            '<p>'+${JSONData.productType}+'</p>'+
+						            '<p>'+${JSONData.country}+' | '+${JSONData.city}+'</p>'+
+						            '<c:set var="date" value="'+{JSONData.tripDate}+'"></c:set>'+
 						            '<c:set var="date_array" value="${fn:split(date,\'[=,]\')}"></c:set>'+              
 						            '<c:forEach var="tdate" items="${date_array}" begin="0" step="2">'+
 						            '${tdate}'+
 						            '</c:forEach>'+		                    
 						            '<p>${product.productPrice}원</p>'+
-						            '<p>조회수 :: '+${product.viewCount}+'</p>'+						            
+						            '<p>조회수 :: '+${JSONData.viewCount}+'</p>'+						            
 						        '</div>';
 						 
-						 			productCount=productCount-1;
+						 			//productCount=productCount-1;
 									$('.row2').append(displayValue);
 								}
 							}
 					}); 
 			}	
 		});
-	});
+	}); */
 	
 	
 	$( "#searchKeyword" ).autocomplete({
@@ -207,7 +207,9 @@ $(function() {
 		//function(){
 			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
 		//}
+		alert("dfdfsdf");
 		var productNo = $(this).html().split("value=\"")[1].split("\"")[0];
+		alert(productNo);
 		self.location = "/product/getProduct?productNo="+productNo;
 	});
 			

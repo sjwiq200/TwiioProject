@@ -193,4 +193,28 @@ public class ProductRestController {
 		return list02;
 	}	
 	
+	@RequestMapping(value="/json/listProduct")///검색조건 추가
+	public List<Product> listProduct(@RequestBody Search search) throws Exception {
+		
+		System.out.println("/product/json/listProduct ");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);//12개씩 더보기로
+				
+		Map<String, Object> productMap = productService.listProduct(search);
+		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
+		//map.put("list", productMap.get("list"));
+		
+		//List<Product> list = (List<Product>)map.get("list");
+		System.out.println("map :: "+productMap);
+		//map.put("list", (List<Product>)productMap.get("list"));
+		//map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
+		//map.put("resultPage", resultPage);
+		//map.put("search", search);
+		
+		return (List<Product>)productMap.get("list");
+	}
+	
 }
