@@ -93,7 +93,7 @@
 	  					FROM		(	<include refid="listProductSql"/>
 									 ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum} 
+		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	 </select>
 	 
 	 <sql id="listProductSql">
@@ -142,8 +142,8 @@
 			
 		</if>
 		<choose>
-			<when test="search.priceCondition == 'low'">ORDER BY price</when>
-			<when test="search.priceCondition == 'high'">ORDER BY price DESC</when>
+			<when test="search.priceCondition == 'low'">ORDER BY product_price</when>
+			<when test="search.priceCondition == 'high'">ORDER BY product_price DESC</when>
 		<otherwise>ORDER BY reg_date DESC</otherwise>
 		</choose>
 	 </sql>

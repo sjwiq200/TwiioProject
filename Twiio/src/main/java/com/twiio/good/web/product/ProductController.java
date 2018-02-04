@@ -121,6 +121,7 @@ public class ProductController {
 		Product product = productService.getProduct(productNo);
 		Transaction transaction = productService.getEvalProduct(productNo);
 		
+		////////////////////////review////////////////////
 		//Search search = new Search();
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -133,14 +134,15 @@ public class ProductController {
 		Map<String, Object> replyMap = commonService.listReply(search, "0", productNo);
 		Page replyPage = new Page(search.getCurrentPage(), ((Integer)replyMap.get("totalCountReply")), pageUnit, pageSize);
 		
-		map.put("list", (List<Transaction>)starMap.get("list"));
+		map.put("reviewList", (List<Transaction>)starMap.get("list"));
 		map.put("totalCount", starMap.get("totalCount"));
 		map.put("resultPage", resultPage);
 		map.put("product", product);
 		map.put("transaction", transaction);
 		/////////////////////////reply////////////////////
-		map.put("totalCountReply", replyPage);
-		map.put("replyList", (List<Reply>)replyMap.get("list"));
+		map.put("replyPage", replyPage);
+		map.put("list", (List<Reply>)replyMap.get("list"));
+		map.put("totalCountReply", replyMap.get("totalCountReply"));
 		
 		return "forward:/product/getProduct.jsp";
 	}
@@ -223,14 +225,15 @@ public class ProductController {
 		search.setPageSize(12);//12개씩 더보기로
 				
 		Map<String, Object> productMap = productService.listProduct(search);
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
-		//map.put("list", productMap.get("list"));
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
 		
 		//List<Product> list = (List<Product>)map.get("list");
 		System.out.println("map :: "+map);
 		map.put("list", (List<Product>)productMap.get("list"));
 		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
-		//map.put("resultPage", resultPage);
+		map.put("resultPage", resultPage);
 		map.put("search", search);
 		
 		return "forward:/product/listProduct.jsp";

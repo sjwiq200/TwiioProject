@@ -420,8 +420,11 @@ public class UserServiceImpl implements UserService{
 		String evalType="host";
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
-		map.put("productNo", hostNo);
+		map.put("hostNo", hostNo);
 		map.put("evalType", evalType);
+		User user = new User();
+		user.setUserType("0");
+		map.put("user", user);
 		List<Transaction> list = transactionDao.listStarEval(map);
 		int totalCount = transactionDao.getTotalCount(map);
 		
