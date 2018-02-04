@@ -11,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twiio.good.common.Page;
+import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserService;
@@ -38,6 +42,10 @@ public class UserRestController {
 	public UserRestController(){
 		System.out.println(this.getClass());
 	}
+	
+	@Value("#{commonProperties['pageUnit']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageUnit;
 	
 	@RequestMapping( value="json/addUser", method=RequestMethod.POST )
 	public String addUser( @RequestBody User user) throws Exception {
@@ -98,26 +106,36 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/listStarEvalHost")
-	public User listStarEvalHost( @PathVariable String userId ) throws Exception{
+	public Map<String, Object> listStarEvalHost( @RequestBody String search ) throws Exception{
 		
 		System.out.println("/user/json/listStarEvalHost ");
-		
+		System.out.println(search);
+		Search search2 = new Search();
+		String[] str = search.split("[&=]");
+		if(Integer.parseInt(str[1])==0) {
+			search2.setCurrentPage(1);
+		}else {
+			search2.setCurrentPage(Integer.parseInt(str[1]));
+		}
+		search2.setPageSize(5);
+						
 		//Business Logic
-		return userService.getUser(userId);
+		Map<String, Object> starMap = userService.listStarEvalHost(search2, Integer.parseInt(str[3]));
+		Page resultPage = new Page( search2.getCurrentPage(), ((Integer)starMap.get("totalCount")).intValue(), pageUnit, search2.getPageSize());
+		starMap.put("resultPage", resultPage);
+		
+		return starMap;
 	}
 	
-	@RequestMapping( value="json/getEvalHost")
-	public void getEvalHost( ) throws Exception{
+	@RequestMapping( value="json/getEvalHost/{hostNo}")
+	public double getEvalHost(@PathVariable int hostNo ) throws Exception{
 		
 		System.out.println("/user/json/getEvalHost");
 		
-		//Business Logic
+		Transaction transaction = userService.getEvalHost(hostNo);
+		double hostEval = transaction.getEvalHost();
 		
-		User evalUser = new User();
-		evalUser.setUserId("user01");
-		
-		
-		//return userService.getEvalHost(evalUser.getUserId());
+		return hostEval;
 	}
 	
 	@RequestMapping( value="json/getEvalUser")

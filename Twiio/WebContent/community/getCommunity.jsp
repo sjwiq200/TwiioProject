@@ -218,7 +218,7 @@ function resetData() {
 							'<div class="col-md-2" >'+
 								'댓글수  : '+JSONData.totalCount+				
 							'</div>';
-
+	
 							$('.row').html(displayValue);
 							$('#totalCount').html(totalcount); 
 						}
@@ -231,8 +231,13 @@ function resetData() {
 	
 	$(function() {
 		 $("#write").on("click" , function() {
+			
+			if(${user.userId==null}){
+				 alert('로그인후 사용하여주세요');	 
+			 }
+			 else{
+				 alert('들어오니??');
 			 var replycontent = $('#replyContent').val();
-			 //page=page+1;
 			  $.ajax( 
 						{
 						url : "/common/json/addReply",
@@ -242,8 +247,8 @@ function resetData() {
 						data : JSON.stringify({
 							"replyContent":replycontent,
 							"communityNo":"${community.communityNo}",
-							"userNo":"${community.userNo}",
-							"userName": "${community.userName}",
+							"userNo":"${user.userNo}",
+							"userName": "${user.userName}",
 							"currentPage" : page
 						}),
 						
@@ -277,10 +282,13 @@ function resetData() {
 							'</div>';
 							
 							$('.row').html(displayValue); 				   
-							$('#totalCount').html(totalcount); 
+							$('#totalCount').html(totalcount);
+							
 						}
 			}); 
+			 } 
 		});
+		 
 	});
 	
 	
@@ -347,7 +355,8 @@ function resetData() {
 		<div class="col-xs-10 col-xs-offset-1">
 		<hr sytle="border-style:dotted">
 		</div>
-		<div class="form-group">
+		
+		<div class="form-group" id="replyinput">
 			<div class="col-md-8 col-md-offset-1">
 				<textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
 			</div>
@@ -355,6 +364,7 @@ function resetData() {
 				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
 			</div>
 		</div>
+		
 		<br>
 		<br>
 		<br>
