@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Product;
+import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.transaction.TransactionService;
+import com.twiio.good.service.user.UserService;
 
 @Controller
 @RequestMapping("/product/*")
@@ -32,6 +35,14 @@ public class ProductController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 	
 	@Value("#{commonProperties['productFilePath']}")
 	String productFilePath;
@@ -42,6 +53,10 @@ public class ProductController {
 	@Value("#{commonProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
+	
+	@Value("#{commonProperties['pageSize']}")
+	//@Value("#{commonProperties['pageUnit'] ?: 3}")
+	int pageSize;
 
 	public ProductController() {
 		System.out.println(this.getClass());
@@ -106,6 +121,7 @@ public class ProductController {
 		Product product = productService.getProduct(productNo);
 		Transaction transaction = productService.getEvalProduct(productNo);
 		
+		////////////////////////review////////////////////
 		//Search search = new Search();
 		if(search.getCurrentPage()==0) {
 			search.setCurrentPage(1);
@@ -114,11 +130,19 @@ public class ProductController {
 		Map<String, Object> starMap = productService.listStarEvalProduct(search, productNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)starMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());
 		
-		map.put("list", (List<Transaction>)starMap.get("list"));
+		///////////////////reply//////////////////////
+		Map<String, Object> replyMap = commonService.listReply(search, "0", productNo);
+		Page replyPage = new Page(search.getCurrentPage(), ((Integer)replyMap.get("totalCountReply")), pageUnit, pageSize);
+		
+		map.put("reviewList", (List<Transaction>)starMap.get("list"));
 		map.put("totalCount", starMap.get("totalCount"));
 		map.put("resultPage", resultPage);
 		map.put("product", product);
 		map.put("transaction", transaction);
+		/////////////////////////reply////////////////////
+		map.put("replyPage", replyPage);
+		map.put("list", (List<Reply>)replyMap.get("list"));
+		map.put("totalCountReply", replyMap.get("totalCountReply"));
 		
 		return "forward:/product/getProduct.jsp";
 	}
@@ -129,10 +153,13 @@ public class ProductController {
 		System.out.println("/product/updateProduct : GET");
 		
 		Product product = productService.getProduct(productNo);
+		int dateNum = product.getTripDate().split(",").length;
+		System.out.println("dateNum :: "+dateNum);
 		
 		map.put("product", product);
+		map.put("dateNum", dateNum);
 		
-		return "forward:/product/listProduct.jsp";
+		return "forward:/product/updateProduct.jsp";
 	}
 	
 	@RequestMapping(value="updateProduct", method=RequestMethod.POST)
@@ -140,9 +167,51 @@ public class ProductController {
 		
 		System.out.println("/product/updateProduct : POST");
 		
-		productService.updateProduct(product);
+		String[] str = product.getTripDate().split(",");
+		//System.out.println("length :: "+str.length);
+		product.setProductCount(product.getTourHeadCount()*str.length);
+		String tripDate="";
+		for(int i=0; i<str.length; i++) {
+//			String[] date = str[i].split("-");
+//			if(i != str.length-1) {
+//				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount()+",";
+//			}else {
+//				tripDate += date[0].substring(2)+"/"+date[1]+"/"+date[2]+"="+product.getTourHeadCount();
+//			}
+			if(i != str.length-1) {
+				tripDate += str[i]+"="+product.getTourHeadCount()+",";
+			}else {
+				tripDate += str[i]+"="+product.getTourHeadCount();
+			}	
+		}
+		product.setTripDate(tripDate);
 		
-		return "forward:/product/readProduct.jsp";
+		System.out.println("섬네일등록전");
+		//////////////////////////썸네일 등록/////////////////////////////
+		if(!product.getFile().isEmpty()) {			
+			String thumbnail = product.getHostNo()+"="+product.getFile().getOriginalFilename();
+			File file = new File(productFilePath, thumbnail);
+			product.getFile().transferTo(file);
+			
+			product.setThumbnail(thumbnail);
+			System.out.println(product);
+			productService.updateProduct(product);
+		}else {
+			System.out.println(product);
+			productService.updateProduct(product);
+		}		
+		
+		return "redirect:/product/listProduct.jsp";
+	}
+	
+	@RequestMapping(value="deleteProduct", method=RequestMethod.GET)
+	public String deleteProduct( @RequestParam("productNo") int productNo) throws Exception {
+		
+		System.out.println("/product/deleteProduct : GET");
+		
+		productService.deleteProduct(productNo);		
+		
+		return "redirect:/product/listProduct.jsp";
 	}
 	
 	@RequestMapping(value="listProduct")///검색조건 추가
@@ -153,17 +222,17 @@ public class ProductController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(20);//20개씩 더보기로
+		search.setPageSize(12);//12개씩 더보기로
 				
 		Map<String, Object> productMap = productService.listProduct(search);
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
-		//map.put("list", productMap.get("list"));
 		
-		//List<Product> list = (List<Product>)map.get("list");
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+				
 		System.out.println("map :: "+map);
 		map.put("list", (List<Product>)productMap.get("list"));
 		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
-		//map.put("resultPage", resultPage);
+		map.put("resultPage", resultPage);
 		map.put("search", search);
 		
 		return "forward:/product/listProduct.jsp";
@@ -213,6 +282,7 @@ public class ProductController {
 		//List<Transaction> list = productService.listBestProduct(search);				
 		
 		map.put("list", (List<Transaction>)productService.listBestProduct(search));
+		map.put("list02", (List<Transaction>)userService.listBestHost(search));
 		
 		return "forward:/product/best10.jsp";
 	}

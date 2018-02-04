@@ -5,7 +5,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -145,12 +145,12 @@
 		  
 		  <div class="form-group">
 		    <label for="type" class="col-sm-offset-1 col-sm-3 control-label"> 말머리 </label>
-		    <div class="col-sm-4" id="type">
-		      <select>
-		      	<option value="식사" select="selected">식사</option>
-		      	<option value="체험 ">체험</option>
-		      	<option value="관람 ">관람</option>
-		      	<option value="미정 ">미정</option>
+		    <div class="col-sm-4" >
+		      <select id="type" name="type">
+		      	<option value="식사" selected="selected">식사</option>
+		      	<option value="체험">체험</option>
+		      	<option value="관람">관람</option>
+		      	<option value="미정">미정</option>
 		      	
 		      </select>
 		    </div>
@@ -173,7 +173,7 @@
 		  <div class="form-group">
 		    <label for="date" class="col-sm-offset-1 col-sm-3 control-label"> 날짜 </label>
 		    <div class="col-sm-4">
-		      <input type="date" class="form-control" id="date" name="date" val="">
+		      <input type="date" class="form-control" id="date" name="date" value="">
 		    </div>
 		  </div>
 		  

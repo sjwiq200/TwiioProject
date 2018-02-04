@@ -25,7 +25,7 @@ public class RoomRestController {
 	}
 	
 	@RequestMapping("/json/addRoomUser/{roomKey}")
-	public String addRoomUser(HttpSession session, @PathVariable String roomKey) throws Exception{
+	public void addRoomUser(HttpSession session, @PathVariable String roomKey) throws Exception{
 		System.out.println("/room/json/addRoomUser/{roomKey}");
 		System.out.println(roomKey);
 		User user = (User)session.getAttribute("user");
@@ -33,7 +33,6 @@ public class RoomRestController {
 		
 		roomService.addRoomUser(roomKey, user.getUserNo());
 		
-		return "success";
 	}
 	
 	

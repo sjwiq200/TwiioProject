@@ -26,7 +26,7 @@ public class User {
 	private String userEmail;
 	private String userAccount;
 	private String userType;
-	private int userEval;
+	private double userEval;
 	private String userImage;
 	private Date regDate;
 	private String profilePublic;
@@ -35,7 +35,7 @@ public class User {
 	private String userBank;
 	private int attendanceRate;
 	private int profileCredibility;
-	private int starEvalHost;
+	private double starEvalHost;
 	private String reviewHost;
 	private String emailVer;
 	@JsonIgnore
@@ -162,11 +162,11 @@ public class User {
 		this.userType = userType;
 	}
 
-	public int getUserEval() {
+	public double getUserEval() {
 		return userEval;
 	}
 
-	public void setUserEval(int userEval) {
+	public void setUserEval(double userEval) {
 		this.userEval = userEval;
 	}
 
@@ -234,11 +234,11 @@ public class User {
 		this.profileCredibility = profileCredibility;
 	}
 	
-	public int getStarEvalHost() {
+	public double getStarEvalHost() {
 		return starEvalHost;
 	}
 
-	public void setStarEvalHost(int starEvalHost) {
+	public void setStarEvalHost(double starEvalHost) {
 		this.starEvalHost = starEvalHost;
 	}
 

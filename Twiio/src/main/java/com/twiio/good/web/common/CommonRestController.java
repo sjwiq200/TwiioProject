@@ -10,15 +10,16 @@ import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
 
 import java.io.PrintStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,8 +27,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
-@Controller
+@RestController
 @RequestMapping("/common/*")
 public class CommonRestController {
 
@@ -60,15 +62,43 @@ public class CommonRestController {
 	}
 
 
-	@RequestMapping(value = "json/addReply" )
-	public Reply addReply(@RequestBody Reply reply,
-			Model model
+	@RequestMapping(value = "json/addReply", method = RequestMethod.POST )
+	public Map<String,Object> addReply(@RequestBody Reply reply, Search search
 			) throws Exception {
-		System.out.println("/common/addReply : POST");
+		
+		System.out.println("/common/json/addReply : POST");
 		commonService.addReply(reply);
-		return reply;
-	}
+		search.setPageSize((pageSize * reply.getCurrentPage()));
+		search.setCurrentPage(1);
 
+		int targetNo = 0;
+		if (reply.getCommunityNo() == 0) {
+			reply.setTargetType("0");
+			targetNo = reply.getProductNo();
+		} else if (reply.getProductNo() == 0) {
+			reply.setTargetType("1");
+			targetNo = reply.getCommunityNo();
+		}
+
+		// System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		// System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String, Object> map = commonService.listReply(search, reply.getTargetType(), targetNo);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		int totalCount = commonService.getTotalCountReply(reply.getTargetType(), targetNo);
+		map2.put("list", (List) map.get("list"));
+		map2.put("totalCount", totalCount);
+
+		return map2;
+		
+	}
+	
+	@RequestMapping(value = "json/addReport")
+	public Report addReport(@RequestBody Report report
+			) throws Exception {
+		System.out.println("/common/addReport : POST");
+		commonService.addReport(report);
+		return report;
+	}
 	
 	@RequestMapping(value = "json/deleteReply", method = RequestMethod.GET )
 	public void deleteReply(@PathVariable("replyNo") int replyNo
@@ -88,53 +118,67 @@ public class CommonRestController {
 	}
 	
 	@RequestMapping(value = "json/listCommunityReply")
-	public List listCommunityReply(@RequestBody String pageInfo)
+	public Map<String,Object> listCommunityReply(@RequestBody Reply reply,
+			Search search)
 		 throws Exception {
-
-		/*@ModelAttribute("search") Search search,
-		@RequestParam("targetType") String targetType,
-		@RequestParam("communityNo") int codeNo,
-		Model model*/
-		System.out.println(pageInfo);
-		String[] info = pageInfo.split("&");
-		String[] resultpage = info[0].split("=");
-		String[] targetType = info[1].split("=");
-		String[] communityNo = info[2].split("=");
-		
-		Search search = new Search();
-		search.setCurrentPage(Integer.parseInt(resultpage[1]));
 		
 		System.out.println("/common/listReply");
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
-		}
-		search.setPageSize(pageSize);
-		Map<String , Object> map=commonService.listReply(search, targetType[1], Integer.parseInt(communityNo[1]));
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
+		search.setPageSize((pageSize*reply.getCurrentPage()));
+		search.setCurrentPage(1);	
 		
-		/*model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);*/
-		return (List)map.get("list");
+		System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String , Object> map=commonService.listReply(search, "1", reply.getCommunityNo());
+		System.out.println("reply.getCurrentPage :: "+reply.getCurrentPage());
+		System.out.println("map.get(\"list\") :: "+map.get("list"));
+		int totalCount = commonService.getTotalCountReply("1", reply.getCommunityNo());
+		List list = (List) map.get("list");
+		
+		if(totalCount == list.size()) {
+			list.add("1");
+		}
+		
+		Map<String , Object> map2 = new HashMap<String , Object>();
+		
+		map2.put("list", (List)map.get("list"));
+		map2.put("totalCount", totalCount);
+		
+		
+		
+		return map2;
 	}
 	
 	@RequestMapping(value = "json/listProductReply")
-	public List listProductReply(@ModelAttribute("search") Search search,
-			@RequestParam("targetType") String targetType,
-			@RequestParam("productNo") int codeNo,
-			Model model
-			) throws Exception {
-		System.out.println("/common/listReply");
-		if(search.getCurrentPage() ==0 ){
-			search.setCurrentPage(1);
+	public Map<String, Object> listProductReply(@RequestBody Reply reply, Search search) throws Exception {
+		System.out.println("/common/json/listProductReply");
+		search.setPageSize((pageSize * reply.getCurrentPage()));
+		search.setCurrentPage(1);
+
+		System.out.println("(pageSize*reply.getCurrentPage())" + search.getPageSize());
+		System.out.println("search.setCurrentPage(1)" + search.getCurrentPage());
+		Map<String, Object> map = commonService.listReply(search, "0", reply.getProductNo());
+		System.out.println("reply.getCurrentPage :: " + reply.getCurrentPage());
+		System.out.println("map.get(\"list\") :: " + map.get("list"));
+		int totalCount = commonService.getTotalCountReply("0", reply.getProductNo());
+		List list = (List) map.get("list");
+
+		if (totalCount == list.size()) {
+			list.add("1");
 		}
-		search.setPageSize(pageSize);
-		Map<String , Object> map=commonService.listReply(search, targetType, codeNo);
-		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReply")).intValue(), pageUnit, pageSize);
-		
-		model.addAttribute("list", map.get("list"));
-		model.addAttribute("resultPage", resultPage);
-		model.addAttribute("search", search);
-		return null;
+
+		Map<String, Object> map2 = new HashMap<String, Object>();
+
+		map2.put("list", (List) map.get("list"));
+		map2.put("totalCount", totalCount);
+
+		return map2;
+	}
+	
+	@RequestMapping(value = "json/addFriend")
+	public Friend addFriend(@RequestBody Friend friend
+			) throws Exception {
+		System.out.println("/common/addFriend : GET");
+		commonService.addFriend(friend);
+		return friend;
 	}
 }

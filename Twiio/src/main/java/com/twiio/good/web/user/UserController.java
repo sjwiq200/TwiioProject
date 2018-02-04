@@ -1,5 +1,6 @@
 package com.twiio.good.web.user;
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.user.UserService;
 
@@ -56,23 +58,25 @@ public class UserController {
 	public String addUser( @ModelAttribute("user") User user, Model model ) throws Exception {
 
 		System.out.println("/user/addUser : POST");
-		if(!user.getFile().isEmpty()) {
+		
+		System.out.println(user);
+		user.setUserRegisterType("T");
+		if(user.getFile()!=null) {
 			if(userService.detectFace(user)) {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
-				
 				model.addAttribute("user",user);
 				System.out.println(":: Twiio 자제 회원가입 완료/사진 업로드  ::");	
 			}else {
 				System.out.println(":: 회원가입 실패 =====> 얼굴을 명확히 인식할 수 있는 사진으로 다시 업로드 바람  ::");
 			}			
-					
 		}else {
 			//Business Logic
 			userService.addUser(user);
 			model.addAttribute("user",user);
 			System.out.println(":: Twiio 자제 회원가입 완료 ::");
 		}
+		
 		return "redirect:/user/loginView.jsp";
 	}
 
@@ -89,6 +93,33 @@ public class UserController {
 		return "forward:/user/getUser.jsp";
 	}
 	
+	@RequestMapping( value="getHost", method=RequestMethod.GET )
+	public String getHost(@ModelAttribute("search") Search search, @RequestParam("hostNo") int hostNo , Model model ) throws Exception {
+		
+		System.out.println("/user/getHost : GET");
+		//Business Logic
+		User host = userService.getUserInNo(hostNo);
+		
+		Transaction transaction = userService.getEvalHost(hostNo);
+		double evalHost = transaction.getEvalHost();
+		//////////////////////////review/////////////////////
+		if(search.getCurrentPage()==0) {
+			search.setCurrentPage(1);
+		}		
+		search.setPageSize(5);
+		
+		Map<String, Object> map = userService.listStarEvalHost(search, hostNo);
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
+				
+		// Model 과 View 연결
+		model.addAttribute("host", host);
+		model.addAttribute("evalHost", evalHost);
+		model.addAttribute("totalCount", map.get("totalCount"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("reviewList", (List<Transaction>)map.get("list"));
+		
+		return "forward:/product/getHost.jsp";
+	}
 
 	@RequestMapping( value="updateUser", method=RequestMethod.GET )
 	public String updateUser( @RequestParam("userNo") int userNo , Model model ) throws Exception{

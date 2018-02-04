@@ -72,19 +72,27 @@
 		#{friendNo:NUMERIC}
 		)
 	</insert>
-	
-	<insert id="addReply" parameterType="reply">
-		INSERT
-		INTO REPLY
-		VALUES (
-		seq_reply_reply_no.nextval,
-		#{user_no:NUMERIC},
-		#{reply_content:VARCHAR},
+	<!--SQL : INSERT  -->
+	<insert id="addReply" parameterType="reply" useGeneratedKeys="true" keyColumn="reply_no,reply_reg_date" keyProperty="replyNo,replyRegDate" >
+		INSERT 
+		INTO REPLY 
+		VALUES (seq_reply_reply_no.nextval,
+		#{userNo:NUMERIC},
+		#{replyContent:VARCHAR},
 		SYSDATE,
-		#{productNo:NUMERIC},
-		#{communityNo:NUMERIC},
-		#{userName:VARCHAR}
-		)	
+		<if test="productNo == 0">
+		NULL
+		</if>
+		<if test="productNo != 0">
+		#{productNo:NUMERIC}
+		</if>,
+		<if test="communityNo == 0">
+		NULL
+		</if>
+		<if test="communityNo != 0">
+		#{communityNo:NUMERIC}
+		</if>,
+		#{userName:VARCHAR})	
 	</insert>
 	
 	<!-- SQL : SELECT LIST -->

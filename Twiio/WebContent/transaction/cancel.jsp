@@ -56,7 +56,7 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
-				self.location="/main.jsp"
+				history.go(-1);
 			});
 		});	
 		
@@ -78,7 +78,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">결제를 성공적으로 완료하셨습니다</h1>
+		<h1 class="bg-primary text-center">결제가 취소되었습니다</h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		
@@ -93,7 +93,7 @@
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		    <!-- disabled="disabled"  -->
-		      <button type="button" class="btn btn-primary"  >홈으로...</button>
+		      <button type="button" class="btn btn-primary"  >확인</button>
 			  
 		    </div>
 		  </div>

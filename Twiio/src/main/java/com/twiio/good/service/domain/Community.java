@@ -2,6 +2,9 @@ package com.twiio.good.service.domain;
 
 import java.sql.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Community {
 	private int communityNo;
 	private String communityTitle;

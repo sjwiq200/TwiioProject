@@ -20,16 +20,6 @@
 	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 	  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	  
-	   <link rel="stylesheet" href="main.css">
-	  
-	  <!-- Import and configure the Firebase SDK -->
-	  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
-	  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
-	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-app.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-auth.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/4.6.2/firebase-messaging.js"></script>
-	<script src="https://cookie-189904.firebaseapp.com/__/firebase/init.js"></script>	 
-	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -37,9 +27,19 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
- 	<link rel="stylesheet" href="/resources/demos/style.css">
-  	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  	 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+	
+	
+	
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -47,6 +47,7 @@
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
+        
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -74,9 +75,10 @@
 						
 			var userName = $("#userName").val();
 			var userId = $("#userId").val();
-			var email = $("#email").val();
+			var email = $("#userEmail").val();
 			var password = $("#password").val();
 			var password2 = $("#password2").val();
+			
 			var flag = true;
 			if (userName == "" ) {
 				//$("button.btn.btn-primary").prop("disabled", true);
@@ -99,12 +101,21 @@
 				$("#userId").css("background-color", "#FFCECE");
 				flag = false;
 			}
+			if(!($('#emailVer').attr("disabled"))) {
+				alert("이메일 인증을 해주세요");
+				flag = false;
+			}
 			
 			
 			
 			if(flag){
-				//$("form").attr("method" , "POST").attr("action" , "/user/addUser").attr("enctype", "multipart/form-data").submit();
-				$("form").attr("method" , "POST").attr("action" , "/user/addUser").submit();
+				
+				$.post( '/user/addUser', $('#addUserForm').serialize())
+				  .done(function( data ) {
+					  $(location).attr('href', '/user/loginView.jsp');
+				  }).fail(function( data ) {
+					  alert("회원가입에 실패하셨습니다. 다시 시도 해주세요.");
+				  });
 			}
 			
 		}
@@ -123,57 +134,56 @@
 			 
 		});
 		////////////////////////////////////이메일 인증////////////////////////////////////////////////////////////
-		
- 		$(function() {
-			 
-			 $("button#emailVer").on("click" , function() {
-				 
-				 var email = $("#email").val();
-				 alert(email);
-				
-				 $.ajax(
-		    				{
-		    					url:"/user/json/getEmailVer",
-		    					method:"POST",
-		    					data:{
-		    						"userEmail" : email
-		    					},
-		    					dataType: "json",
-		    					contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
-		    					headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
 
-		    					success:function(JSONData){
-		    						
-		    						var authNum = $("#emailAuth").val(JSONData.authNum);
-		    						
-				    					}
-				    				}
-				    			);
-				 
-					     });
-					});
+		$(function() {
+						 $("#emailVer").on("click" , function() {
+							
+							 $("#addUserForm").submit(function(e) {
+
+								    var url = "/user/json/getEmailVer"; 
+
+								    $.ajax({
+								           type: "POST",
+								           url: url,
+								           data: $("#addUserForm").serialize(), 
+								           success: function(data)
+								           {
+								        	   $("#emailAuth").val(data[1]);
+					    						var authNum =  $("#emailAuth").val();
+					    						$("#inputEmailAuth").modal("show");
+					    						
+					    						
+								           }
+								         });
+
+								    e.preventDefault(); 
+								});
+							 
+							 
+							 
+								     });
+								});
 		
-		
+ 		
  		$(function() {
 			 
 			 $("button#goAuth").on("click" , function() {
 				 
 				 var inputNum = $("#inputNum").val();
 				 var authNum = $("#emailAuth").val();
-					
+				 var email = $("#userEmail").val();
+				 
 				 if(inputNum==authNum){
 					 
 					 alert("인증번호가 확인되었습니다.");
 					 
-					 $("button#emailVer").disabled = true;
+					 $("button#emailVer").replaceWith('<button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer" disabled="disabled" >이메일 인증</button>');
+					 $("input#email").replaceWith('<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일" value='+email+' readOnly="true" >');
+					 $("#inputEmailAuth").modal("hide");
 				 }else{
 					 
 					 alert("인증번호가 다름니다. 다시입력해주세요.");
 				 }
-				 
 				 
 				 
 					     });
@@ -293,7 +303,7 @@
 				$("#userName").css("background-color", "#FFCECE");				
 			} 
 			if(email == "") {
-				$("#email").css("background-color", "#FFCECE");
+				$("#userEmail").css("background-color", "#FFCECE");
 			}
 		}
 		
@@ -306,124 +316,6 @@
 		}); */
 	</script>		
 	
-	<script>
-	 /*  // Initialize Firebase
-	    var config = {
-		    apiKey: "AIzaSyCQcAhyYv-X3Vi25pftJWtPQooTCYPB9sw",
-		    authDomain: "cookie-189904.firebaseapp.com",
-		    databaseURL: "https://cookie-189904.firebaseio.com",
-		    projectId: "cookie-189904",
-		    storageBucket: "cookie-189904.appspot.com",
-		    messagingSenderId: "1060831931954"
-		  };
-		  firebase.initializeApp(config);
-	  
-	  var windowObj;
-	  
-	  $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("#quickstart-sign-up").on("click" , function() {
-				handleSignUp();
-			});
-		});
-	  
-	     function handleSignUp() {
-	    	
-	    	//alert("제발");
-	    	var email = $("#email").val();
-		      var password = $("#password").val();
-		      //alert(email);
-		      if (email.length < 4) {
-		        alert('Please enter an email address.');
-		        return;
-		      }
-		      if (password.length < 4) {
-		        alert('Please enter a password.');
-		        return;
-		      }
-		      // Sign in with email and pass.
-		      // [START createwithemail]
-		      firebase.auth().createUserWithEmailAndPassword(email, password).then(function() {
-		    	  sendEmailVerification();
-		      
-		      }).catch(function(error) {
-		          // Handle Errors here.
-		          var errorCode = error.code;
-		          var errorMessage = error.message;
-		          // [START_EXCLUDE]
-		          if (errorCode == 'auth/weak-password') {
-		            alert('The password is too weak.');
-		          } else {
-		            alert(errorMessage);
-		          }
-		          console.log(error);
-		          // [END_EXCLUDE]
-		        });
-		      // [END createwithemail]
-	    }
-	    
-	     function sendEmailVerification(){
-	    	alert("sendEmail");
-	    	// [START sendemailverification]
-		      firebase.auth().currentUser.sendEmailVerification().then(function() {
-		        // Email Verification sent!
-		        // [START_EXCLUDE]
-		        alert('Email Verification Sent!');
-		        
-		        checkEmail();
-		        // [END_EXCLUDE]
-		      });
-	    	
-		      // [END sendemailverification]
-	    } 
-	     
-	   function checkEmail(){   
-		   
-		   firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION).then(function(){
-		    	  alert("??????");
-	   		 }).catch(function(error) {
-	             console.error('인증 상태 설정 중 에러 발생' , error);
-	         });
-		   
-	   }
-	    
-	    function initApp() {
-	       
-	        // [START authstatelistener]
-	        firebase.auth().onAuthStateChanged(function(user) {
-	        	
-	        	alert("인증인증"+user.emailVerified);
-	        	
-	          if (user) {
-	            // User is signed in.
-	            alert("했음!");	
-	            var displayName = user.displayName;
-	            var email = user.email;
-	            var emailVerified = user.emailVerified;
-	            var photoURL = user.photoURL;
-	            var isAnonymous = user.isAnonymous;
-	            var uid = user.uid;
-	            var providerData = user.providerData;
-	            
-	            if (emailVerified) {
-	                document.getElementById('quickstart-sign-up').disabled = true;
-	              }
-	            
-	          }else{
-	          	
-	        	  alert("안했음!");	
-	          
-	          }
-	        });
-	      }
-	      window.onload = function() {
-	        initApp();
-	      }; 
-	      
-	       */
-	     
-	</script>
-    
 </head>
 
 <body>
@@ -435,10 +327,11 @@
 	
 		<h1 class="bg-primary text-center">회 원 가 입</h1>
 		
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+		<input type="hidden"  id="emailAuth" name="emailAuth" />
+		<input type="hidden"  id="tempNum" name="tempNum" />
 		
-		 <input type="hidden" class="form-control" id="emailAuth" name="emailAuth" />
+		<!-- form Start /////////////////////////////////////-->
+		<form class="form-horizontal" id="addUserForm">
 		
 		  <div class="form-group">
 		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label>
@@ -475,15 +368,15 @@
 		    </div>
 		  </div>		  
 		  
+		  
 		   <div class="form-group">
 		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">*이메일</label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="email" name="email" placeholder="이메일">
+		      <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일">
 		     
-		      <button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer" name="signup"  data-toggle="modal" data-target="#inputEmailAuth">이메일 인증</button>
+		      <button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer"  >이메일 인증</button>
 		    </div>          
 		  </div>
-		  
 		  <!-- <div class="form-group">
 		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">사진</label>
 		    <div class="col-sm-4">		      
@@ -502,8 +395,7 @@
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
+	 	</form> 
 		
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
@@ -511,7 +403,6 @@
 	
 	<!---------- Image Dialog ------------->
 	
-	<div>
 
 		<div class="modal fade" id="inputEmailAuth" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -528,7 +419,7 @@
 					<div class="modal-body">
 						<form name="form" enctype="multipart/form-data">
 							<div class="form-group">
-								<input type="text" name="inputNum" placeholder="인증번호를 입력해주세요." />
+								<input type="text" id="inputNum" placeholder="인증번호를 입력해주세요." />
 								<button name="authNum" type="button" id="goAuth">인증하기</button>
 							</div>
 						</form>

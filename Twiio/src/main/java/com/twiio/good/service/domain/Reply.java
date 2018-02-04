@@ -13,24 +13,22 @@ public class Reply {
 	private int productNo;
 	private int communityNo;
 	private String targetType;
+	private int currentPage;
 	
 	public Reply() {
 	}
+	
+	
 
-	public String getUserName() {
-		return userName;
+	public int getCurrentPage() {
+		return currentPage;
 	}
 
 
-	public void setUserName(String userName) {
-		this.userName = userName;
+
+	public void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
 	}
-
-
-
-
-
-
 
 
 
@@ -40,21 +38,20 @@ public class Reply {
 
 
 
-
-
-
-
-
 	public void setTargetType(String targetType) {
 		this.targetType = targetType;
 	}
 
 
 
+	public String getUserName() {
+		return userName;
+	}
 
 
-
-
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
 	public int getReplyNo() {
 		return replyNo;

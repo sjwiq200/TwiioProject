@@ -67,6 +67,50 @@
 	  height: 100px;
 	  resize: none;
 		}
+		
+		#container{
+ 		 width:715px;
+ 		 height:230px;
+		 margin:50px auto;
+		}
+		.button-2{
+  width:140px;
+  height:50px;
+  border:2px solid #34495e;
+  float:left;
+  text-align:center;
+  cursor:pointer;
+  position:relative;
+  box-sizing:border-box;
+  overflow:hidden;
+  margin:0 0 40px 50px;
+}
+.button-2 a{
+  font-family:arial;
+  font-size:16px;
+  color:#34495e;
+  text-decoration:none;
+  line-height:50px;
+  transition:all .5s ease;
+  z-index:2;
+  position:relative;
+}
+.eff-2{
+  width:140px;
+  height:50px;
+  top:-50px;
+  background:#34495e;
+  position:absolute;
+  transition:all .5s ease;
+  z-index:1;
+}
+.button-2:hover .eff-2{
+  top:0;
+}
+.button-2:hover a{
+  color:#fff;
+}
+
 	</style>
 
 <script type="text/javascript">
@@ -85,13 +129,13 @@ function resetData() {
 		document.detailForm.reset();
 }========================================	*/
 //==> 추가된부분 : "취소"  Event 처리 및  연결
-$(function() {
+/* $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
 	 $("a[href='#']").on("click" , function() {
 		 history.go(-1);
 	});
-});
+}); */
 
 	$(function() {
     $('#summernote').summernote({
@@ -122,6 +166,138 @@ $(function() {
     });
 });
 
+	var page = 1;
+	var page2='';
+	 
+	
+	$(function() {
+		 $("#addReply").on("click" , function() {
+			 page=page+1;
+			 
+		  $.ajax( 
+						{
+						url : "/common/json/listCommunityReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"communityNo":"${community.communityNo}",
+							"userNo":"${community.userNo}",
+							"userName": "${community.userName}",
+							"currentPage" : page
+						}),
+						success : function(JSONData) {
+							var displayValue='';
+							//alert(JSONData.length);
+							for(var i=0; i<JSONData.list.length;i++){
+							
+							if(JSONData.list[i]!=1){
+							displayValue += '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.list[i].replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div></div>';
+							}
+							}
+							
+							if(JSONData.list[JSONData.list.length-1] == 1){
+								 $("#aReply").remove();
+							}
+							var totalcount=
+							'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
+	
+							$('.row').html(displayValue);
+							$('#totalCount').html(totalcount); 
+						}
+			}); 
+		});
+		 $(document).ready(function(){ page2 = $('.row2').length});
+		 console.log('page2 : '+page2);
+	});
+	
+	
+	$(function() {
+		 $("#write").on("click" , function() {
+			
+			if(${user.userId==null}){
+				 alert('로그인후 사용하여주세요');	 
+			 }
+			 else{
+				 alert('들어오니??');
+			 var replycontent = $('#replyContent').val();
+			  $.ajax( 
+						{
+						url : "/common/json/addReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"replyContent":replycontent,
+							"communityNo":"${community.communityNo}",
+							"userNo":"${user.userNo}",
+							"userName": "${user.userName}",
+							"currentPage" : page
+						}),
+						
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));
+							
+							var displayValue='';
+							
+							for(var i=0;i<JSONData.list.length;i++){
+							 displayValue += 
+											   '<div class="row2">'+
+												'<div class="col-md-10 col-md-offset-1">'+
+												JSONData.list[i].userName+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   '</div>'+
+				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   JSONData.list[i].replyRegDate+
+				    						   '</div>'+
+				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+											   '<hr sytle="border-style:dotted">'+
+							  				   '</div></div>';
+							}
+							var totalcount=
+								'<div class="col-md-2 col-md-offset-1">'+
+								'<strong>댓 글 목 록</strong>'+		
+							'</div>'+
+							'<div class="col-md-2" >'+
+								'댓글수  : '+JSONData.totalCount+				
+							'</div>';
+							
+							$('.row').html(displayValue); 				   
+							$('#totalCount').html(totalcount);
+							
+						}
+			}); 
+			 } 
+		});
+		 
+	});
+	
+	
+	
+	$(document).on('click' ,'.row2', function() {
+		alert($('.row2').index(this));
+	});	
+
+	
 </script>
 </head>
 
@@ -179,22 +355,24 @@ $(function() {
 		<div class="col-xs-10 col-xs-offset-1">
 		<hr sytle="border-style:dotted">
 		</div>
-		<div class="form-group">
+		
+		<div class="form-group" id="replyinput">
 			<div class="col-md-8 col-md-offset-1">
-				<textarea  name="comment_content" row="6" col="50"></textarea>
+				<textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
 			</div>
 			<div class="col-md-1">
-				<button type="button" style="" id="write" class="btn btn-default">댓글입력</button>
+				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
 			</div>
 		</div>
+		
 		<br>
 		<br>
 		<br>
-		<div class="form-group">
+		<div class="form-group" id = "totalCount">
 			<div class="col-md-2 col-md-offset-1">
 				<strong>댓 글 목 록</strong>		
 			</div>
-			<div class="col-md-2">
+			<div class="col-md-2" >
 				댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
 					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
 			</div>
@@ -204,6 +382,7 @@ $(function() {
 		</div>
 		<div class="row">
 		<c:forEach var="reply" items="${list}">
+		<div class= "row2">
 			<div class="col-md-10 col-md-offset-1">
     			${reply.userName}
     		</div>
@@ -213,8 +392,23 @@ $(function() {
     		<div class="col-md-10 col-md-offset-1">
     			${reply.replyRegDate}
     		</div>
+    		<div class="col-xs-10 col-xs-offset-1">
+			<hr sytle="border-style:dotted">
+			</div>
+		</div>
  		</c:forEach>
  		</div>
+ 		
+ 		<div class="col-xs-2 col-xs-offset-5" id="aReply">
+			<div class="button-2">
+    		<div class="eff-2"></div>
+    		<a href="#" id="addReply"> 댓글 더보기 </a>
+  			</div>
+  			<div class="col-xs-10 col-xs-offset-1">
+			<hr sytle="border-style:dotted">
+			</div>
+		</div>
+		
 		
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
