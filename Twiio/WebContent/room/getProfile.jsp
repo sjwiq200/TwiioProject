@@ -46,7 +46,7 @@
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("ok");
 				/* $.ajax({
-					url : "",
+					url : "common/",
 					method:"POST",
 					data : {
 						
@@ -73,7 +73,7 @@
 		//============= Cancel  Event =============
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+				window.close();
 			});
 		});
 		
@@ -82,8 +82,6 @@
 </head>
 
 <body>
-
-	
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -102,6 +100,12 @@
 		    </div>
 		  </div>
 		  
+		  <div class="form-group">
+		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">아이디 </label>
+		    <div class="col-sm-4">
+		      <input type="text" class="form-control" id="roomName" name="roomName" value="${profile.userId }">
+		    </div>
+		  </div>
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
