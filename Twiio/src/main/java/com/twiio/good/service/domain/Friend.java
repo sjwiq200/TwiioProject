@@ -1,5 +1,8 @@
 package com.twiio.good.service.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Friend {
 	private int userNo;
 	private int friendNo;

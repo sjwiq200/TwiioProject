@@ -81,7 +81,14 @@ public class CommonRestController {
 		return map2;
 		
 	}
-
+	
+	@RequestMapping(value = "json/addReport")
+	public Report addReport(@RequestBody Report report
+			) throws Exception {
+		System.out.println("/common/addReport : POST");
+		commonService.addReport(report);
+		return report;
+	}
 	
 	@RequestMapping(value = "json/deleteReply", method = RequestMethod.GET )
 	public void deleteReply(@PathVariable("replyNo") int replyNo
@@ -149,5 +156,13 @@ public class CommonRestController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		return null;
+	}
+	
+	@RequestMapping(value = "json/addFriend")
+	public Friend addFriend(@RequestBody Friend friend
+			) throws Exception {
+		System.out.println("/common/addFriend : GET");
+		commonService.addFriend(friend);
+		return friend;
 	}
 }
