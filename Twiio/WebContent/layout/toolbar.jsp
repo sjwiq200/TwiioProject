@@ -6,7 +6,9 @@
 
 
 <!-- ToolBar Start /////////////////////////////////////-->
-<div class="navbar  navbar-inverse navbar-fixed-top">
+<div class="navbar-wrapper">
+    <div class="container-fluid">
+        <nav class="navbar navbar-fixed-top">
 	
 	<div class="container">
 	       
@@ -106,6 +108,7 @@
 	                  <li><a href="#">Login</a></li>
 	                </c:if>
 	                <c:if test="${sessionScope.user != null}">
+	                  <li><a href="#">MyPage</a></li>
 	                  <li><a href="#">Logout</a></li>
 	                </c:if>
 	            </ul>
@@ -113,6 +116,8 @@
 		<!-- dropdown hover END -->	       
 	    
 	</div>
+        </nav>
+    </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
  	
@@ -219,11 +224,40 @@
 			$(self.location).attr("href","/user/login");
 		});
 		
-		
-		
-		
-		
-		
-	 	
+		$( "a:contains('MyPage')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/myPageMain");
+		});
 		
 	</script>  
+	
+	<style>
+			.navbar, .dropdown-menu{
+			background:rgba(215, 58, 49, 0.8);
+			border: none;
+			}
+			
+			 .nav>li>a, .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover, .dropdown-menu>li>a, .dropdown-menu>li{
+			  border-bottom: 3px solid transparent;
+			} 
+			.nav>li>a:focus, .nav>li>a:hover,.nav .open>a, .nav .open>a:focus, .nav .open>a:hover, .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover{
+			  border-bottom: 3px solid transparent;
+			  background: none;
+			}
+			.navbar a, .dropdown-menu>li>a, .dropdown-menu>li>a:focus, .dropdown-menu>li>a:hover, .navbar-toggle{
+			 color: #fff;
+			}
+			.dropdown-menu{
+			      -webkit-box-shadow: none;
+			    box-shadow:none;
+			}
+			
+			.nav li:hover, .nav li.active{
+			  border-bottom: #fff 3px solid;
+			}
+			
+			.navbar-toggle .icon-bar{
+			    color: #fff;
+			    background: #fff;
+			}
+        
+    </style>

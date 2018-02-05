@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -11,9 +11,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ¬¸¡∂ : http://getbootstrap.com/css/   ¬¸¡∂ -->
+	<!-- Ï∞∏Ï°∞ : http://getbootstrap.com/css/   Ï∞∏Ï°∞ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	
@@ -35,21 +35,133 @@
 	<!-- Bootstrap Dropdown Hover JS -->
 	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 	
-	<!-- jQuery UI toolTip ªÁøÎ CSS-->
+	<!-- jQuery UI toolTip ÏÇ¨Ïö© CSS-->
 	
 	<link rel="stylesheet"
 		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
-	<!-- jQuery UI toolTip ªÁøÎ JS-->
+	<!-- jQuery UI toolTip ÏÇ¨Ïö© JS-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!--  ///////////////////////// √ﬂ∞° ////////////////////////// -->
    
-	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: #56B1BF;
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -67,7 +179,7 @@
 	        });
 
 		
-		 $("button.btn.btn-primary").on("click" , function() {
+		 $("button#search").on("click" , function() {
 			 
 			var flightType = $("#flightType").val();
 			var departure = $("#departure").val();
@@ -75,7 +187,7 @@
 			var departureDate = $("#departureDate").val();
 			var arrivalDate = $("#arrivalDate").val();
 			var headCount = $("#headCount").val();
-			
+			event.preventDefault();
 			    	  $.ajax(
 			    				{
 			    					url:"/information/json/getFlightList/",
@@ -93,7 +205,6 @@
 											"Content-Type" : "application/json"
 										},
 			    					dataType:"json",
-			    					async:false,
 			    					success:function(JSONData){
 			    						var info = JSONData.info;
 										var price = JSONData.price;
@@ -107,7 +218,7 @@
 											'<td align="center" id="info">'+info[i]+
 											'</td>'+'<td align="center" id="type">'+type[i]+
 											'</td>'+'<td align="center" id="price">'+price[i]+
-											'<td align="center" id="new"><button type="button" class="btn btn-success" id="newpick">º±&nbsp;≈√</button></td></tr>';
+											'<td align="center" id="new"><button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick">ÏÑ†&nbsp;ÌÉù</button></td></tr>';
 										}
 									$("#listTbody").html(list);
 			    							    							    						
@@ -154,7 +265,80 @@
 		    			); */
 			    });
 		 
+		 
+		 
+		 $( "#htmlToPDF" ).on("click" , function() {
+				
+				var doc = new jsPDF();
+
+				var specialElementHandlers = { 
+				
+				    "body": function (element, renderer) { 
+				
+				        return true; 
+				
+				    }
+				
+				}	
+				
+				html2canvas($("body"),{
+					
+				
+				    useCORS: true,
+				
+				    allowTaint: true,
+				
+				    onrendered:function(canvas){
+				    	
+				    	var imgWidth = 210; // Ïù¥ÎØ∏ÏßÄ Í∞ÄÎ°ú Í∏∏Ïù¥(mm) A4 Í∏∞Ï§Ä
+					    var pageHeight = imgWidth * 1.414;  // Ï∂úÎ†• ÌéòÏù¥ÏßÄ ÏÑ∏Î°ú Í∏∏Ïù¥ Í≥ÑÏÇ∞ A4 Í∏∞Ï§Ä
+					    var imgHeight = canvas.height * imgWidth / canvas.width;
+					    var heightLeft = imgHeight;
+				
+				        var imgData = canvas.toDataURL('image/jpeg');
+				
+				        var doc = new jsPDF("p","mm");
+				
+						console.log(imgData);
+				
+				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				
+				        doc.save('test.pdf');
+				
+				    }
+				
+				});
+				
+			});
+		 
+		 
+		 
 	
+	});
+	
+	
+	function wrapWindowByMask(){
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();  
+		
+		$('#mask').css({'width':maskWidth,'height':maskHeight});  
+		
+		$('#mask').fadeTo("slow",0.6);    
+	}
+
+	$(function() {
+		var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+		.appendTo(document.body).hide();
+			
+		$(window).ajaxStart(function(){
+			   loading.show();
+			   wrapWindowByMask();
+			})
+			.ajaxStop(function(){
+			   loading.hide();
+			   $('#mask').hide();
+			});
 	});
 	
 
@@ -167,17 +351,17 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
-	<!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
+	<div id="mask"></div>
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 	
 	<div class="page-header text-info">
-	       <h3>∫Ò«‡±‚ ¡§∫∏ ¡∂»∏</h3>
+	       <h3>ÎπÑÌñâÍ∏∞ Ï†ïÎ≥¥ Ï°∞Ìöå</h3>
 	</div>
 	
 	
-		<form class="form-horizontal">
+		<form role="form">
 		<input type="hidden" id="clickNum" name="clickNum" value=""/>
 		<input type="hidden" id="returnUrl" name="returnUrl" value=""/>
 		<input type="hidden" id="returnInfo" name="returnInfo" value=""/>
@@ -185,79 +369,105 @@
 		<input type="hidden" id="returnPrice" name="returnPrice" value=""/>
 		
 		
-		  <div class="form-group">
-		    <label for="flightType" class="col-sm-offset-1 col-sm-3 control-label">∫Ò«‡¿Ø«¸</label>
-		    <div class="col-sm-2">
-		      <select class="form-control" name="flightType" id="flightType">
-				  	<option value="return" selected="selected" >ø’∫π</option>
-					<option value="oneway" >∆Ìµµ</option>
-				</select>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="departure" class="col-sm-offset-1 col-sm-3 control-label">√‚πﬂ¡ˆ</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="departure" name="departure" placeholder="√‚πﬂ¡ˆ">
-		    </div>
-		    
-		    </div>
-		  
-		  <div class="form-group">
-		    
-		    <label for="arrival" class="col-sm-offset-1 col-sm-3 control-label">µµ¬¯¡ˆ</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="arrival" name="arrival" placeholder="µµ¬¯¡ˆ">
-		    </div>
-		    
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="departureDate" class="col-sm-offset-1 col-sm-3 control-label">∞°¥¬≥Ø</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="departureDate" name="departureDate">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="arrivalDate" class="col-sm-offset-1 col-sm-3 control-label">ø¿¥¬≥Ø</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="arrivalDate" name="arrivalDate">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label">¿Œø¯</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="headCount" id="headCount">
-				  	<option value="1" selected="selected" >1∏Ì</option>
-					<option value="2" >2∏Ì</option>
-					<option value="3" >3∏Ì</option>
-					<option value="4" >4∏Ì</option>
-					<option value="5" >5∏Ì</option>
-					<option value="6" >6∏Ì</option>
-				</select>
-		    </div>
-		  </div>
-		    
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >∞À &nbsp;ªˆ</button>
-		    </div>
-		  </div>
+	<div class="row centered-form">
+		 <div class="mainbox col-md-12">
+			<div class="panel panel-info">
+        		<div class="panel-heading" >
+			    		<h3 class="panel-title">Ï†ïÎ≥¥Î•º ÏûÖÎ†•Ìï¥Ï£ºÏÑ∏Ïöî!</h3>
+			 		</div>
+			 			<div class="panel-body">
+			    			<div class="row">
+			    				<div class="col-xs-2 col-sm-2 col-md-2">
+			    					<div class="form-group">
+			    					 <div class="input-group">
+				    					<span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
+				               			 <select class="form-control" name="flightType" id="flightType">
+										  	<option value="return" selected="selected" >ÏôïÎ≥µ</option>
+											<option value="oneway" >Ìé∏ÎèÑ</option>
+										</select>
+									</div>
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-5 col-sm-5 col-md-5">
+			    					<div class="form-group">
+			    						 <div class="input-group">
+				    						<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+				    						 <input type="text" class="form-control" id="departure" name="departure" placeholder="Ï∂úÎ∞úÏßÄ">
+				    					</div>
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-5 col-sm-5 col-md-5">
+			    					<div class="form-group">
+			    						 <div class="input-group">
+				    						<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+				    						<input type="text" class="form-control" id="arrival" name="arrival" placeholder="ÎèÑÏ∞©ÏßÄ">
+				    					</div>
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="row">
+			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    					<div class="form-group">
+			    						 <div class="input-group">
+				    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				    						<input type="text" class="form-control" id="departureDate" name="departureDate" placeholder="Í∞ÄÎäîÎÇ†">
+				    					</div>
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    					<div class="form-group">
+			    						 <div class="input-group">
+				    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+				    						<input type="text" class="form-control" id="arrivalDate" name="arrivalDate" placeholder="Ïò§ÎäîÎÇ†">
+				    					</div>
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    					<div class="form-group">
+			    						 <div class="input-group">
+				    						<span class="input-group-addon"><i class="glyphicon glyphicon-plus"></i></span>
+				    						<select class="form-control" name="headCount" id="headCount">
+											  	<option value="1" selected="selected" >1Î™Ö</option>
+												<option value="2" >2Î™Ö</option>
+												<option value="3" >3Î™Ö</option>
+												<option value="4" >4Î™Ö</option>
+												<option value="5" >5Î™Ö</option>
+												<option value="6" >6Î™Ö</option>
+											</select>
+										</div>
+			    					</div>
+			    				</div>
+			    			
+			    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
+			    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >Í≤Ä &nbsp;ÏÉâ</button>
+			    			</div>
+			    	</div>
+	    		</div>
+			</div>
+		</div>
+	</div>
+		
 		</form>
 		
-		    <h4>∞°¥¬ ∆Ì ∫Ò«‡±‚∏¶ º±≈√«ÿ ¡÷ººø‰.</h4>
+		<br/>
+		<br/>
+		
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDFÏ†ÄÏû•</button>
+		</div>
+		
+		    <h4>Í∞ÄÎäî Ìé∏ ÎπÑÌñâÍ∏∞Î•º ÏÑ†ÌÉùÌï¥ Ï£ºÏÑ∏Ïöî.</h4>
 		    
-		<table class="table table-hover table-striped" >
+		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;">
 	      
 	        <thead>
 	          <tr>
 	            <th align="center">No</th>
-	            <th align="left">¡§∫∏</th>
-	            <th align="left">≈∏¿‘</th>
-	            <th align="left">∞°∞›</th>
-	            <th align="left">º±≈√</th>
+	            <th align="left">Ï†ïÎ≥¥</th>
+	            <th align="left">ÌÉÄÏûÖ</th>
+	            <th align="left">Í∞ÄÍ≤©</th>
+	            <th align="left">ÏÑ†ÌÉù</th>
 	          </tr>
 	        </thead>
 	       
@@ -276,7 +486,7 @@
 	
 	    
  	</div>
-	<!--  »≠∏È±∏º∫ div Start /////////////////////////////////////-->
+	<!--  ÌôîÎ©¥Íµ¨ÏÑ± div Start /////////////////////////////////////-->
  	
 </body>
 
