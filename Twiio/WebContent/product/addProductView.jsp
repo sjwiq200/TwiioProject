@@ -30,7 +30,7 @@
 <style>
        body > div.container{
         	/* border: 3px solid #D6CDB7; */
-            /* margin-top: 10px; */
+             margin-top: 80px;
         }
         body{
         	background: rgba(208, 211, 197, 0.3);
@@ -44,10 +44,15 @@
         	/* background: rgba(215, 58, 49, 0.7); */
         }
         a.btn.btn-primary.btn{
-        	background: rgba(215, 58, 49, 0.7);        
+        	background:rgba(215, 58, 49, 0.8);
+        	border:none;       
         }
         button.btn.btn-primary.btn{
-        	background: rgba(215, 58, 49, 0.7);
+        	background:rgba(215, 58, 49, 0.8);
+        	border:none; 
+        }
+        strong{
+        	color:rgba(215, 58, 49, 0.8);
         }
        
         
@@ -259,23 +264,16 @@ $( function() {
 <body>
 
 <!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">TWIIO</a>
-   		</div>
-   	</div>
+	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+				
 		<h1 >DailyTour</h1>
 		<br/>
 		<br/>
-		<br/>
-		<br/>
-		<br/>
-		<br/>	
+							
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm">
@@ -316,18 +314,30 @@ $( function() {
 		   </div> 	  
 		  
 		  <div class="form-group">
-		    
-		    <!-- <div class="col-sm-8" name="addDate">  -->
-		     <div class="input-group" name="addDate">
-		    <span class="input-group-addon">투어날짜</span>		      
-		      <input type="text" class="form-control" id="datepicker1" name="tripDate" readonly="readonly" placeholder="투어날짜 Click">	
-		              
-		     </div>
-		     
-		     <div class="btn-group" role="group" aria-label="...">
-			    <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
-			    <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>	
-		    </div>
+			    
+			    <!-- <div class="col-sm-8" name="addDate">  -->
+			    <!-- <div class="col-sm-9"> -->
+			  
+			    
+			   
+			      <div class="input-group" name="addDate">
+			    <span class="input-group-addon">투어날짜</span>		      
+			      <input type="text" class="form-control" id="datepicker1" name="tripDate" readonly="readonly" placeholder="투어날짜 Click">	
+			           
+			     </div>
+			     
+			     <!-- </div> -->
+			     
+			    <!--  <div class="col-sm-3"> -->
+			  
+			     
+			     <div class="btn-group" role="group" aria-label="...">
+				    <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
+				    <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>	
+			    </div>
+			    
+		   
+		  <!--  </div> -->
 		   
 		    <!--  </div>     --> 
 		  </div>		  

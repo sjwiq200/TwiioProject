@@ -130,21 +130,20 @@
 				</if>
 				<if test="search.searchCondition == '3' and search.searchKeyword !='' ">
 	 				AND user_name LIKE '${search.searchKeyword}%'
-				</if>
-				<if test="search.searchCondition == '4' and search.searchKeyword !='' ">
-					<if test="str.length == 1">
-	 					AND product_price= #{search.searchKeyword}
-	 				</if>
-	 				<if test="str.length == 2">
-	 					AND product_price BETWEEN #{str[0]} AND #{str[1]}
-	 				</if>
-				</if>
+				</if>			
 			
 		</if>
 		<choose>
+			<when test="search.prodSearchType == '1'">AND product_type = '1'</when>
+			<when test="search.prodSearchType == '2'">AND product_type = '2'</when>
+			<when test="search.prodSearchType == '3'">AND product_type = '3'</when>
+			<when test="search.prodSearchType == '4'">AND product_type = '4'</when>
+			<when test="search.prodSearchType == '5'">AND product_type = '5'</when>			
+		</choose>
+		<choose>
 			<when test="search.priceCondition == 'low'">ORDER BY product_price</when>
 			<when test="search.priceCondition == 'high'">ORDER BY product_price DESC</when>
-		<otherwise>ORDER BY reg_date DESC</otherwise>
+			<otherwise>ORDER BY reg_date DESC</otherwise>
 		</choose>
 	 </sql>
 	 
