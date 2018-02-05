@@ -35,7 +35,121 @@
 	<style>
 		body {
             padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: #56B1BF;
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -52,7 +166,7 @@
 			    dateFormat: "yy.mm.dd"
 		      });
 		 
-		 $("button.btn.btn-primary").on("click" , function() {
+		 $("button#search").on("click" , function() {
 			// alert("뀨?")
 			//  $("form").attr("method" , "POST").attr("action" , "/information/json/getHotel").submit();
 			var city = $("#city").val();
@@ -60,7 +174,7 @@
 			var checkIn = $("#checkIn").val();
 			var headCount = $("#headCount").val();
 			
-			
+			event.preventDefault();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/getHotel/",
@@ -76,7 +190,6 @@
 									"Content-Type" : "application/json"
 								},
 	    					dataType:"json",
-	    					async:false,
 	    					success:function(JSONData){
 	    						var con = JSONData.con;
 								var price = JSONData.price;
@@ -93,18 +206,96 @@
 									'<td align="center" id="con">'+con[i]+'</td>'+
 									'<td align="center" id="loc">'+loc[i]+'</td>'+
 									'<td align="center" id="price">'+price[i]+'</td>'+
-									'<td align="center" id="choice"><button type="button" class="btn btn-success" id="pick"><a href="'+
+									'<td align="center" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="pick"><a href="'+
 									url[i]+'" target="_blank" >선&nbsp;택</a></button></td></tr>';
 								}
 							$("#listTbody").html(list);
 			    							    							    						
-			    					}
+			    					},
+			    					error:function(JSONData){
+			    					
+			    						alert("에러");
+					    							    							    						
+					    			}
+			    					
 			    				}
 			    			);
 				    });
+		 
+		 
+		 $( "#htmlToPDF" ).on("click" , function() {
+				
+				var doc = new jsPDF();
+
+				var specialElementHandlers = { 
+				
+				    "body": function (element, renderer) { 
+				
+				        return true; 
+				
+				    }
+				
+				}	
+				
+				html2canvas($("body"),{
+					
+				
+				    useCORS: true,
+				
+				    allowTaint: true,
+				
+				    onrendered:function(canvas){
+				    	
+				    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+					    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+					    var imgHeight = canvas.height * imgWidth / canvas.width;
+					    var heightLeft = imgHeight;
+				
+				        var imgData = canvas.toDataURL('image/jpeg');
+				
+				        var doc = new jsPDF("p","mm");
+				
+						console.log(imgData);
+				
+				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				
+				        doc.save('test.pdf');
+				
+				    }
+				
+				});
+				
+			});
 			 
 				 });
+	
+	
 		
+		function wrapWindowByMask(){
+			var maskHeight = $(document).height();  
+			var maskWidth = $(window).width();  
+			
+			$('#mask').css({'width':maskWidth,'height':maskHeight});  
+			
+			$('#mask').fadeTo("slow",0.6);    
+		}
+	
+		$(function() {
+			var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+			.appendTo(document.body).hide();
+				
+			$(window).ajaxStart(function(){
+				   loading.show();
+				   wrapWindowByMask();
+				})
+				.ajaxStop(function(){
+				   loading.hide();
+				   $('#mask').hide();
+				});
+		});
+			
+			
 			
 	</script>
 	
@@ -115,7 +306,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<div id="mask"></div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -123,67 +314,90 @@
 	<div class="page-header text-info">
 	       <h3>숙소 정보 조회</h3>
 	</div>
-	
-	<form class="form-horizontal">
+			
+		<form role="form">
+				
+				
+			<div class="row centered-form">
+				 <div class="mainbox col-md-12">
+					<div class="panel panel-info">
+		        		<div class="panel-heading" >
+					    		<h3 class="panel-title">정보를 입력해주세요!</h3>
+					 		</div>
+					 			<div class="panel-body">
+					    			<div class="row">
+					    				<div class="col-xs-3 col-sm-3 col-md-3">
+					    					<div class="form-group">
+					    						 <div class="input-group">
+						    						<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
+						    						 <input type="text" class="form-control" id="city" name="city" placeholder="숙소위치">
+						    					</div>
+					    					</div>
+					    				</div>
+					    				<div class="col-xs-3 col-sm-3 col-md-3">
+					    					<div class="form-group">
+					    						 <div class="input-group">
+						    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						    						<input type="text" class="form-control" id="checkIn" name="checkIn" placeholder="체크인">
+						    					</div>
+					    					</div>
+					    				</div>
+					    				<div class="col-xs-3 col-sm-3 col-md-3">
+					    					<div class="form-group">
+					    						 <div class="input-group">
+						    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						    						<input type="text" class="form-control" id="checkOut" name="checkOut" placeholder="체크아웃">
+						    					</div>
+					    					</div>
+					    				</div>
+					    				<div class="col-xs-3 col-sm-3 col-md-3">
+					    					<div class="form-group">
+					    						 <div class="input-group">
+						    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+						    						<select class="form-control" name="headCount" id="headCount">
+													  	<option value="1" selected="selected" >1명</option>
+														<option value="2" >2명</option>
+														<option value="3" >3명</option>
+														<option value="4" >4명</option>
+														<option value="5" >5명</option>
+														<option value="6" >6명</option>
+														<option value="7" >7명</option>
+														<option value="8" >8명</option>
+														<option value="9" >9명</option>
+														<option value="10" >10명</option>
+													</select>
+						    					</div>
+					    					</div>
+					    				</div>
+					    			</div>
 		
-		  
-		  <div class="form-group">
-		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">숙소위치</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="city" name="city" placeholder="숙소위치">
-		    </div>
-		    
-		    </div>
-		  
-		  <div class="form-group">
-		    <label for="checkIn" class="col-sm-offset-1 col-sm-3 control-label">체크인</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="checkIn" name="checkIn">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="checkOut" class="col-sm-offset-1 col-sm-3 control-label">체크아웃</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="checkOut" name="checkOut">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label">인원</label>
-		     <div class="col-sm-2">
-		      <select class="form-control" name="headCount" id="headCount">
-				  	<option value="1" selected="selected" >1명</option>
-					<option value="2" >2명</option>
-					<option value="3" >3명</option>
-					<option value="4" >4명</option>
-					<option value="5" >5명</option>
-					<option value="6" >6명</option>
-					<option value="7" >7명</option>
-					<option value="8" >8명</option>
-					<option value="9" >9명</option>
-					<option value="10" >10명</option>
-				</select>
-		    </div>
-		  </div>
-		    
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >검 &nbsp;색</button>
-		    </div>
-		  </div>
+					    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
+					    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+					    			</div>
+					    	</div>
+			    		</div>
+					</div>
+				</div>
+				
 		</form>
+	
 		
-		<table class="table table-hover table-striped" >
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+		</div>
+		<br/>
+		<br/>
+		
+		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;" >
 		
 	        <thead>
 	          <tr>
-	            <th align="center">No</th>
-	            <th align="left">사진</th>
-	            <th align="left">정보</th>
-	            <th align="left">위치</th>
-	            <th align="left">가격</th>
-	            <th align="left">선택</th>
+	            <th>No</th>
+	            <th>사진</th>
+	            <th>정보</th>
+	            <th>위치</th>
+	            <th>가격</th>
+	            <th>선택</th>
 	          </tr>
 	        </thead>
 	       
@@ -191,12 +405,12 @@
 			
 				<tbody id="listTbody">
 					<tr>
-					 <td align="center"></td>
-					 <td align="center" id="img"></td>
-					 <td align="center" id="con"></td>
-					 <td align="center" id="loc"></td>
-					 <td align="center" id="price"></td>
-					 <td align="center" id="choice"></td>
+					 <td></td>
+					 <td id="img"></td>
+					 <td id="con"></td>
+					 <td id="loc"></td>
+					 <td id="price"></td>
+					 <td id="choice"></td>
 					</tr>
 		        </tbody>
 	      

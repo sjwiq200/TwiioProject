@@ -8,7 +8,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -409,8 +409,11 @@
 	  $(function() {
 			
 			 $( "div[name='hostInfo']" ).on("click" , function() {
-				
-				 window.open("/user/getHost?hostNo="+${product.hostNo},'','');
+				 if(${user != null}){				
+				 	window.open("/user/getHost?hostNo="+${product.hostNo},'','');
+				 }else{
+					 alert("로그인을 해주세요");
+				 }
 			});
 		});
 	  
