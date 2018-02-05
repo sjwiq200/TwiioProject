@@ -14,7 +14,7 @@
 		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
 		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
 		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
-		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
+		<result property="targetRoomKey" 		column="target_room_key" 		jdbcType="VARCHAR"/>
 		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
 		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
 	</resultMap>
@@ -57,10 +57,10 @@
 		#{reportTitle:VARCHAR},
 		SYSDATE,
 		#{targetUserNo:NUMERIC},
-		<if test="targetRoomNo == 0">
+		<if test="targetRoomKey == null">
 		NULL
 		</if>
-		<if test="targetRoomNo != 0">
+		<if test="targetRoomKey != null">
 		#{targetRoomNo:NUMERIC}
 		</if>
 		,

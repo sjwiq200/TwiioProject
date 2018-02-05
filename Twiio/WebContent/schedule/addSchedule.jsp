@@ -57,7 +57,9 @@
     							
     							console.log(status);
     							if(status == 'success'){
+    								
     								window.close();
+    								opener.parent.afterAddSchedule();
     							}
     						}
     					}		

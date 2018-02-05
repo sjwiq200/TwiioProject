@@ -190,6 +190,30 @@ public class RoomController {
 		return "forward:/room/listRoomUser.jsp";
 	}
 	
+	@RequestMapping(value = "/addReport/{roomKey}")
+	public String addReport(@PathVariable String roomKey, HttpServletRequest request) throws Exception {
+		
+		System.out.println("/room/addReport/{roomKey} : GET");
+		request.setAttribute("roomKey", roomKey);
+		
+		List<RoomUser> list = roomService.listRoomUser(roomKey);
+		List<User> listUser = new Vector<>();
+		
+		System.out.println("roomUser ==>" +list);
+		for (RoomUser roomUser : list) {
+			System.out.println("for loof ==>" + roomUser.getUserNo());
+			listUser.add(userService.getUserInNo(roomUser.getUserNo()));
+		}
+		
+		System.out.println("User ==>" +listUser);
+		request.setAttribute("list", listUser);
+		
+		return "forward:/room/addReport.jsp";
+	}
+	
+	
+	
+	
 	
 
 }
