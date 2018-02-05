@@ -36,12 +36,12 @@
 			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
 		});
 		 
-		 $("a:contains('참가')").on("click",function(){
+		 $("a:contains('친구초대')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 
 			 $.ajax({
-				 url : "/room/json/addRoomUser/"+roomKey,
+				 url : "/room/json/addRoomFriend/",
 				 method : "POST",
 				 dataType : "json",
 				 headders : {
@@ -82,45 +82,25 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>메신저 방목록 조회 </h3>
+	       <h3>친구 목록</h3>
 	    </div>
 	    
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-	    <div class="row">
-	    
-		    <div class="col-md-6 text-left">
-		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
-		    </div>
-		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-				  <button type="button" class="btn btn-default">방생성</button>
-				</form>
-	    		</div>
-	    	
-		</div>
+	   
           
           <c:set var="i" value="0" />
-		  <c:forEach var="room" items="${list}">
+		  <c:forEach var="friend" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
 		      <div class="thumbnail" name="getPro" style="height:500px;">
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">
-		            <h3>${room.roomName} </h3>		            
-		            <p>Date : ${room.date}</p>
-		            <p>country : ${room.country}</p>
-		            <p>city : ${room.city}</p>
-		            <p>${room.headCount}명</p>
-		            <c:if test="${!empty user}">
-			            <a href="#">
-			            참가
-			            <input type="hidden" id="roomKey" value="${room.roomKey}">
-			            </a>
-		            </c:if>
+		            <h3>${friend.userNo} </h3>		            
+		            <p>Name : ${friend.userName}</p>
+		            <a href="#">
+		            친구초대
+		            <%-- <input type="hidden" id="roomKey" value="${}"> --%>
+		            </a>
 		            
 		        </div>
 		      </div>
