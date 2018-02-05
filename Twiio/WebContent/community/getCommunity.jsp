@@ -358,9 +358,9 @@ function resetData() {
 		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 button[name=addreport]').index(this)]).val();
 		 var reportbody = 
 			        '<h3>신고글 작성<h3>'+
-					'<input type="text" class="form-control" id="reportuser" row="7" col="50" value="'+reportuserno+'" readonly/>'+
-					'<input type="text" class="form-control" id="reporttitle" row="7" col="50" placeholder="신고 제목 작성" value=""/>'+
-					'<textarea id="reportcontent"  name="reportcontent" row="7" col="50" value="" placeholder="신고 내용"></textarea>';
+					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportuserno+'" readonly/>'+
+					'<input type="text" class="form-control" id="reporttitle" row="6" col="50" placeholder="신고 제목 작성" value=""/>'+
+					'<textarea id="reportcontent"  name="reportcontent" row="6" col="50" value="" placeholder="신고 내용"></textarea>';
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
@@ -436,9 +436,9 @@ function resetData() {
 		 var msguserno = $($('input[name=userNo]')[$('.row2 button[name=addmessage]').index(this)]).val();
 		 var msgusername = $($('input[name=userName]')[$('.row2 button[name=addmessage]').index(this)]).val();
 		 var inmsg =
-			 '<input type="text" class="form-control" id="msgtitle" row="7" col="50" placeholder="제목 작성" value=""/>'+
-			'<input type="text" class="form-control" id="msgno" row="7" col="50" placeholder="제목 작성" value="'+msguserno+'"/>'+
-			'<textarea id="msgcontent"  name="msgcontent" row="7" col="50" value="" placeholder="내용 작성"></textarea>';
+			 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+			'<input type="text" class="form-control" id="msgno" row="6" col="50" placeholder="제목 작성" value="'+msguserno+'"/>'+
+			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
@@ -521,7 +521,6 @@ function resetData() {
 		    	[기타]
 		    </c:if> 
 		       |   ${community.communityTitle}
-		    
 		   </strong></h4>
 		   </div>
 			<div class="col-md-4 col-md-offset-2"><h4><strong>조회수  :  ${community.viewCount} / 등록일  :  ${community.regDate}</strong></h4></div>
@@ -534,8 +533,10 @@ function resetData() {
 		    <c:if test="${empty user.userId}">
 		    </c:if>
 		    <c:if test="${!empty user.userId}">
-		    <div class="col-md-3">
+		    <div class="col-md-3 col-xs-offset-1">
+		    	<c:if test="${community.userNo != user.userNo}">
 				<button type="button"  id="addfriendcommunity" class="btn btn-default">친구추가</button>
+				</c:if>
 				<c:if test="${community.userNo == user.userNo}">
 				<button type="button"  id="updatecommunity" class="btn btn-default">수정하기</button>
 				</c:if>
@@ -587,7 +588,7 @@ function resetData() {
     		<c:if test="${empty user.userId}">
 		    </c:if>
 		    <c:if test="${!empty user.userId}">
-    		<div class="col-md-3 col-md-offset-1">
+    		<div class="col-md-4 col-md-offset-1">
 				<button type="button"  name="addreport" class="btn btn-default">신고하기</button>
 								
 				<button type="button"  name="addfriend" class="btn btn-default">친구추가</button>
@@ -595,7 +596,7 @@ function resetData() {
 				<button type="button"  name="addmessage" class="btn btn-default">쪽지보내기</button>
 			</div>
 			</c:if>
-    		<div class="col-md-10 col-md-offset-1">
+    		<div class="col-md-6 col-md-offset-1">
     			${reply.replyContent}
     		</div>
     		<div class="col-md-10 col-md-offset-1">

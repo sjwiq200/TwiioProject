@@ -106,6 +106,7 @@
 	                  <li><a href="#">Login</a></li>
 	                </c:if>
 	                <c:if test="${sessionScope.user != null}">
+	                  <li><a href="#">MyPage</a></li>
 	                  <li><a href="#">Logout</a></li>
 	                </c:if>
 	            </ul>
@@ -219,11 +220,8 @@
 			$(self.location).attr("href","/user/login");
 		});
 		
-		
-		
-		
-		
-		
-	 	
+		$( "a:contains('MyPage')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/myPageMain");
+		});
 		
 	</script>  
