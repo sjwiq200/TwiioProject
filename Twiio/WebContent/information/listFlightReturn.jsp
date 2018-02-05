@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -10,9 +10,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
-	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
+	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -31,13 +31,127 @@
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
 
-    <!--  ///////////////////////// Ãß°¡ ////////////////////////// -->
+    <!--  ///////////////////////// ì¶”ê°€ ////////////////////////// -->
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: #56B1BF;
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -58,10 +172,8 @@
 	        });
 
 		    $("td:nth-child(5)").on("click" , function() {
-		    	
-		    	
 		    	var clickNum = $("td:nth-child(5)").index(this);
-		    	
+		    	event.preventDefault();
 				    	  $.ajax(
 				    				{
 				    					url:"/information/json/getFlightListReturn/",
@@ -75,16 +187,76 @@
 												"Content-Type" : "application/json"
 											},
 				    					dataType:"json",
-				    					async:false,
 				    					success:function(JSONData){
 				    						 window.open(JSONData.list,'_blank');
 				    					}
 				    				}
 				    			);
 						 });
-		 
+		    
+ 		$( "#htmlToPDF" ).on("click" , function() {
+				
+				var doc = new jsPDF();
+				var specialElementHandlers = { 
+				    "body": function (element, renderer) { 
+				        return true; 
+				
+				    }
+				
+				}	
+				
+				html2canvas($("body"),{
+				
+				    useCORS: true,
+				    allowTaint: true,
+				    onrendered:function(canvas){
+				    	
+				    	var imgWidth = 210; // ì´ë¯¸ì§€ ê°€ë¡œ ê¸¸ì´(mm) A4 ê¸°ì¤€
+					    var pageHeight = imgWidth * 1.414;  // ì¶œë ¥ í˜ì´ì§€ ì„¸ë¡œ ê¸¸ì´ ê³„ì‚° A4 ê¸°ì¤€
+					    var imgHeight = canvas.height * imgWidth / canvas.width;
+					    var heightLeft = imgHeight;
+				        var imgData = canvas.toDataURL('image/jpeg');
+				        var doc = new jsPDF("p","mm");
+				
+						console.log(imgData);
+				
+				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				
+				        doc.save('test.pdf');
+				
+				    }
+				
+				});
+				
+			});
 	
-	});		
+	});	
+	 
+	 
+	 
+		function wrapWindowByMask(){
+			var maskHeight = $(document).height();  
+			var maskWidth = $(window).width();  
+			
+			$('#mask').css({'width':maskWidth,'height':maskHeight});  
+			
+			$('#mask').fadeTo("slow",0.6);    
+		}
+
+		$(function() {
+			var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+			.appendTo(document.body).hide();
+				
+			$(window).ajaxStart(function(){
+				   loading.show();
+				   wrapWindowByMask();
+				})
+				.ajaxStop(function(){
+				   loading.hide();
+				   $('#mask').hide();
+				});
+		});
 	</script>
 	
 </head>
@@ -95,73 +267,80 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
 	<div class="container">
 	
 	
 	<div class="page-header text-info">
-	       <h3>ºñÇà±â Á¤º¸ Á¶È¸</h3>
+	       <h3>ë¹„í–‰ê¸° ì •ë³´ ì¡°íšŒ</h3>
 	</div>
 	    
 	    
 	  <form>  
 		<div class="page-header text-center">
-			<h4 class=" text-info">¼±ÅÃÇÏ½Å ºñÇà±â ³»¿ª</h4>
+			<h4 class=" text-info">ì„ íƒí•˜ì‹  ë¹„í–‰ê¸° ë‚´ì—­</h4>
 	    </div>
 	
 		<div class="form-group">
-			 <label for="departure" class="col-sm-offset-1 col-sm-3 control-label">Ãâ¹ß µµ½Ã</label>
+			 <label for="departure" class="col-sm-offset-1 col-sm-3 control-label">ì¶œë°œ ë„ì‹œ</label>
 			   <div class="col-sm-4">${flight.departure}</div>
 		</div>
 		
 		<div class="form-group">
-			 <label for="arrival" class="col-sm-offset-1 col-sm-3 control-label">µµÂøµµ½Ã</label>
+			 <label for="arrival" class="col-sm-offset-1 col-sm-3 control-label">ë„ì°©ë„ì‹œ</label>
 			   <div class="col-sm-4">${flight.arrival}</div>
 		</div> 
 		
 		<div class="form-group">
-			 <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">Ãâ±¹ÀÏÀÚ</label>
+			 <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">ì¶œêµ­ì¼ì</label>
 			   <div class="col-sm-4">${flight.departureDate}</div>
 		</div>	
 				
 		<div class="form-group">
-			 <label for="arrivalDate" class="col-sm-offset-1 col-sm-3 control-label">ÀÔ±¹ÀÏÀÚ</label>
+			 <label for="arrivalDate" class="col-sm-offset-1 col-sm-3 control-label">ì…êµ­ì¼ì</label>
 			   <div class="col-sm-4">${flight.arrivalDate}</div>
 		</div>
 		
 		<div class="form-group">
-			 <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label">ÀÎ¿ø</label>
+			 <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label">ì¸ì›</label>
 			   <div class="col-sm-4">${flight.headCount}</div>
 		</div>
 		
 		<div class="form-group">
-			 <label for="returnInfo" class="col-sm-offset-1 col-sm-3 control-label">ºñÇàÁ¤º¸</label>
+			 <label for="returnInfo" class="col-sm-offset-1 col-sm-3 control-label">ë¹„í–‰ì •ë³´</label>
 			   <div class="col-sm-4">${flight.returnInfo}</div>
 		</div>	
 		
 		<div class="form-group">
-			 <label for="returnType" class="col-sm-offset-1 col-sm-3 control-label">ºñÇàÅ¸ÀÔ</label>
+			 <label for="returnType" class="col-sm-offset-1 col-sm-3 control-label">ë¹„í–‰íƒ€ì…</label>
 			   <div class="col-sm-4">${flight.returnType}</div>
 		</div>	
 		
 		<div class="form-group">
-			 <label for="returnPrice" class="col-sm-offset-1 col-sm-3 control-label">°¡°İ</label>
+			 <label for="returnPrice" class="col-sm-offset-1 col-sm-3 control-label">ê°€ê²©</label>
 			   <div class="col-sm-4">${flight.returnPrice}</div>
 		</div>
 		
 		</form> 
+		
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDFì €ì¥</button>
+		</div>
+		
+		<br/>
+		<br/>
 	
-	<h4>¿À´Â Æí ºñÇà±â¸¦ ¼±ÅÃÇØ ÁÖ¼¼¿ä.</h4>
+	<h4>ì˜¤ëŠ” í¸ ë¹„í–‰ê¸°ë¥¼ ì„ íƒí•´ ì£¼ì„¸ìš”.</h4>
 		    
-		<table class="table table-hover table-striped" >
+		<table class="type10" >
 	      
 	        <thead>
 	          <tr>
 	            <th align="center">No</th>
-	            <th align="left">Á¤º¸</th>
-	            <th align="left">Å¸ÀÔ</th>
-	            <th align="left">°¡°İ</th>
-	            <th align="left">¼±ÅÃ</th>
+	            <th align="left">ì •ë³´</th>
+	            <th align="left">íƒ€ì…</th>
+	            <th align="left">ê°€ê²©</th>
+	            <th align="left">ì„ íƒ</th>
 	          </tr>
 	        </thead>
 	        
@@ -175,7 +354,7 @@
 					 <td align="center" id="info">${info[status.index]}</td>
 					 <td align="center" id="type">${type[status.index]}</td>
 					 <td align="center" id="price">${price[status.index]}</td>
-					 <td align="center" id="choice"><button type="button" class="btn btn-success" id="newpick">¼±&nbsp;ÅÃ</button></td>
+					 <td align="center" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick">ì„ &nbsp;íƒ</button></td>
 					</tr>
 		   </c:forEach>
 	      </tbody> 
@@ -183,7 +362,7 @@
 	
 	    
  	</div>
-	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
  	
 </body>
 

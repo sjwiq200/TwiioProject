@@ -16,37 +16,120 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" > -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> 
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <!-- <link href="/resources/css/animate.min.css" rel="stylesheet"> -->
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-   
-   			<!--  ///////////////////////// 추가 ////////////////////////// -->
-   			
-   			<script src="/resources/assets/js/jquery.min.js"></script>
-			<script src="/resources/assets/js/skel.min.js"></script>
-			<script src="/resources/assets/js/util.js"></script>
-			<script src="/resources/assets/js/main.js"></script>
-			<link rel="stylesheet" href="/resources/assets/css/main.css" />
-			
 			
 			<!-- pdf Lib -->
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
    	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  	
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
+            padding-top : 50px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif ;
         }
+        
+        .btn-sm{
+				font-size:12px !important;
+				line-height:16px !important;
+				border: 2px solid !important;
+				padding:8px 15px !important;
+			}
+			
+			.btn {
+				letter-spacing: 1px !important;
+				text-decoration: none !important;
+				background: none !important;
+			    -moz-user-select: none !important;
+			    background-image: none !important;
+			    border: 1px solid transparent !important;
+			    border-radius: 0 !important;
+			    cursor: pointer !important;
+			    display: inline-block !important;
+			    margin-bottom: 0 !important;
+			    vertical-align: middle !important;
+			    white-space: nowrap !important;
+				font-size:14px !important;
+				line-height:20px !important;
+				font-weight:700 !important;
+				text-transform:uppercase !important;
+				border: 3px solid !important;
+				padding:8px 20px !important;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4 !important;
+			    color: #08708A !important;
+				border-color: #08708A !important;
+			}
+
+			.btn-xs{
+				font-size:11px !important;
+				line-height:14px !important;
+				border: 1px solid !important;
+				padding:5px 10px !important;
+			}
+			
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: #56B1BF;
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
+						
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -113,11 +196,12 @@
 				}); */
 				
 				
-		 $("button").on("click" , function() {
+		 $("#search").on("click" , function() {
 				
 				var standardCountry = $("#standardCountryValue").val();
 				var compareCountry = $("#compareCountryValue").val();
 				var inputPrice = $("#standard").val();
+				event.preventDefault();
 				
 					$.ajax( 
 							{
@@ -139,6 +223,10 @@
 									//Debug...									
 									//alert(displayValue);
 									$( "#compare" ).val(JSONData);
+								},
+								error : function(JSONData , status) {
+	
+									alert("에러?"+status);
 								}
 				});
 			
@@ -237,8 +325,8 @@
 		 </div>
 		 
 		 <div class="form-group">
-		 	<div class="col-sm-4">
-		  <label for="standard" class="col-sm-offset-9 col-sm-5 control-label">=</label>
+		 	<div class="col-sm-offset-4  col-sm-4 text-center">
+		 	<img src="/resources/images/equal-sign.png"/>
 		 	</div>
 		  </div>
 		  
@@ -262,24 +350,25 @@
 		 </div>
 	
 	<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button"  >계 &nbsp;산</button>
-		    </div>
+		     <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button class="btn btn-outlined btn-theme btn-sm" id="search" >계 &nbsp;산</button>
+		  	</div>
 	</div>
 	</form>
 	
 		<div class="col-sm-offset-10  col-sm-2 text-center">
-		      <button type="button" id="htmlToPDF" >PDF저장</button>
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
 		</div>
 	
-	<table class="table table-hover table-striped" >
+		<br/>
+		
+	<table class="type10" >
       
         <thead>
           <tr>
-            <th align="center">No</th>
-            <th align="left">통화코드</th>
-            <th align="left">매매가격율(원)</th>
-            <th align="left">국가</th>
+          	<th align="left" scope="row">국가</th>
+            <th align="left" scope="row" >통화코드</th>
+            <th align="left" scope="row">매매가격율(원)</th>
           </tr>
         </thead>
        
@@ -287,13 +376,10 @@
 		
 		  <c:set var="i" value="0" />
 		  <c:forEach var="currency" items="${returnList}">
-			<c:set var="i" value="${ i+1 }" />
 			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left" >${currency.cur_unit}</td>
-			  <td align="left">${currency.deal_bas_r}</td>
-			  <td align="left">${currency.cur_nm}</td>
-			  
+			  <td align="left" scope="row">${currency.cur_nm}</td>
+			  <td align="left"  scope="row">${currency.cur_unit}</td>
+			  <td align="left" scope="row">${currency.deal_bas_r}</td>
 			</tr>
           </c:forEach>
         
