@@ -74,6 +74,7 @@ public class RoomController {
 	@RequestMapping( value="listRoom" )
 	public String listRoom( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
+		System.out.println("listRoom search ==>"+search);
 		
 		System.out.println("/room/listRoom : GET / POST");
 		
@@ -147,12 +148,12 @@ public class RoomController {
 		User user = (User)session.getAttribute("user");
 		
 		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+		
 		List<User> listFriend = new Vector<>();
 		for (Friend friend : list) {
-			listFriend.add(userService.getUserInNo(friend.getUserNo()));
+			listFriend.add(userService.getUserInNo(friend.getFriendNo() ));
 			
 		}
-		System.out.println("listUser==>> "+listFriend);
 		
 		request.setAttribute("list", listFriend);
 		

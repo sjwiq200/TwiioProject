@@ -84,28 +84,39 @@
 		<div class="page-header text-info">
 	       <h3>친구 목록</h3>
 	    </div>
-	    
-	   
-          
-          <c:set var="i" value="0" />
-		  <c:forEach var="friend" items="${list}">
-			<!-- <div class="row"> -->
-		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro" style="height:500px;">
 		    
-		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
-		          <div class="caption">
-		            <h3>${friend.userNo} </h3>		            
-		            <p>Name : ${friend.userName}</p>
-		            <a href="#">
+		    <!--  table Start /////////////////////////////////////-->
+      <table class="table table-hover table-striped" >
+      
+        <thead>
+          <tr>
+          	<th align="center">No</th>
+            <th align="left">Friend No</th>
+            <th align="left" >Friend Name</th>
+          </tr>
+        </thead>
+       
+		<tbody>
+		
+		  <c:set var="i" value="0" />
+		  <c:forEach var="friend" items="${list}">
+			<c:set var="i" value="${ i+1 }" />
+			<tr>
+			  <td align="center">${ i }</td>
+			  <td align="left"  title="Click : 회원정보 확인">${friend.userNo}</td>
+			  <td align="left">${friend.userName}</td>
+			  <td align="left">
+			  	<a href="#">
 		            친구초대
 		            <%-- <input type="hidden" id="roomKey" value="${}"> --%>
-		            </a>
-		            
-		        </div>
-		      </div>
-		    </div>
-		    </c:forEach>
+	            </a>
+			  </td>
+			</tr>
+          </c:forEach>
+        
+        </tbody>
+      
+      </table>
         
         
 	  <!--  table End /////////////////////////////////////-->

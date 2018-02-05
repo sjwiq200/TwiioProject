@@ -36,9 +36,9 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public void addReply(Reply reply) throws Exception {
-		System.out.println("µé¾î¿À´Ï replyServiceImpl");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ replyServiceImpl");
 		commonDao.addReply(reply);
-		System.out.println("³ª¿À´Ï replyServiceImpl");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ replyServiceImpl");
 	}
 
 	public void addFriend(Friend friend) throws Exception {
@@ -58,7 +58,7 @@ public class CommonServiceImpl implements CommonService {
 		map.put("totalCountReply", commonDao.getTotalCountReply(targetType, codeNo));
 		map.put("list", commonDao.listReply(search, targetType, codeNo));
 		map.put("codeNo", codeNo);
-		System.out.println("³ª¿Ô´Ï???");
+		System.out.println("ï¿½ï¿½ï¿½Ô´ï¿½???");
 		return map;
 	}
 
@@ -93,7 +93,7 @@ public class CommonServiceImpl implements CommonService {
 	public Report getReport(int reportNo) throws Exception {
 		return commonDao.getReport(reportNo);
 	}
-	
+
 	public void searchKeyword() throws Exception{
 		
 	}

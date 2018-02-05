@@ -177,8 +177,23 @@ public class CommonRestController {
 	@RequestMapping(value = "json/addFriend")
 	public Friend addFriend(@RequestBody Friend friend
 			) throws Exception {
+		boolean friendCheck = false;
 		System.out.println("/common/addFriend : GET");
-		commonService.addFriend(friend);
+		
+		System.out.println("listFriendOnly==>"+commonService.listFriendOnly(friend.getUserNo()));
+		List<Friend> list = commonService.listFriendOnly(friend.getUserNo());
+		for (Friend listFriend : list) {
+			if(friend.getFriendNo() == listFriend.getFriendNo()) {
+				friendCheck = true;
+				break;
+			}
+		}
+		if(friendCheck) {
+			
+		}else {
+			commonService.addFriend(friend);
+		}
+		
 		return friend;
 	}
 }
