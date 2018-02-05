@@ -6,21 +6,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.twiio.good.common.Page;
@@ -192,5 +184,29 @@ public class ProductRestController {
 		System.out.println(list02);				
 		return list02;
 	}	
+	
+	@RequestMapping(value="/json/listProduct")///검색조건 추가
+	public List<Product> listProduct(@RequestBody Search search) throws Exception {
+		
+		System.out.println("/product/json/listProduct ");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);//12개씩 더보기로
+				
+		Map<String, Object> productMap = productService.listProduct(search);
+		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
+		//map.put("list", productMap.get("list"));
+		
+		//List<Product> list = (List<Product>)map.get("list");
+		System.out.println("map :: "+productMap);
+		//map.put("list", (List<Product>)productMap.get("list"));
+		//map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
+		//map.put("resultPage", resultPage);
+		//map.put("search", search);
+		
+		return (List<Product>)productMap.get("list");
+	}
 	
 }

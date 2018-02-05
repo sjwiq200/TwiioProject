@@ -65,28 +65,30 @@ public class CommonRestController {
 	@RequestMapping(value = "json/addReply", method = RequestMethod.POST )
 	public Map<String,Object> addReply(@RequestBody Reply reply, Search search
 			) throws Exception {
-		System.out.println("/common/addReply : POST");
-		commonService.addReply(reply);
-		search.setPageSize((pageSize*reply.getCurrentPage()));
-		search.setCurrentPage(1);
 		
-		int targetNo=0;
-		if(reply.getCommunityNo() == 0) {
+		System.out.println("/common/json/addReply : POST");
+		commonService.addReply(reply);
+
+		search.setPageSize((pageSize * reply.getCurrentPage()));
+		search.setCurrentPage(1);
+
+		int targetNo = 0;
+		if (reply.getCommunityNo() == 0) {
 			reply.setTargetType("0");
 			targetNo = reply.getProductNo();
-		}else if(reply.getProductNo()==0) {
+		} else if (reply.getProductNo() == 0) {
 			reply.setTargetType("1");
 			targetNo = reply.getCommunityNo();
 		}
-		
-		//System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
-		//System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
-		Map<String , Object> map=commonService.listReply(search, reply.getTargetType(), targetNo);
-		Map<String , Object> map2 = new HashMap<String , Object>();
+
+		// System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		// System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String, Object> map = commonService.listReply(search, reply.getTargetType(), targetNo);
+		Map<String, Object> map2 = new HashMap<String, Object>();
 		int totalCount = commonService.getTotalCountReply(reply.getTargetType(), targetNo);
-		map2.put("list", (List)map.get("list"));
+		map2.put("list", (List) map.get("list"));
 		map2.put("totalCount", totalCount);
-		
+
 		return map2;
 	}
 	
@@ -163,30 +165,28 @@ public class CommonRestController {
 	}
 	
 	@RequestMapping(value = "json/listProductReply")
-	public Map<String,Object> listProductReply(@RequestBody Reply reply,
-			Search search
-			) throws Exception {
-		System.out.println("/common/listReply");
-		search.setPageSize((pageSize*reply.getCurrentPage()));
-		search.setCurrentPage(1);	
-		
-		System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
-		System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
-		Map<String , Object> map=commonService.listReply(search, "0", reply.getProductNo());
-		System.out.println("reply.getCurrentPage :: "+reply.getCurrentPage());
-		System.out.println("map.get(\"list\") :: "+map.get("list"));
+	public Map<String, Object> listProductReply(@RequestBody Reply reply, Search search) throws Exception {
+		System.out.println("/common/json/listProductReply");
+		search.setPageSize((pageSize * reply.getCurrentPage()));
+		search.setCurrentPage(1);
+
+		System.out.println("(pageSize*reply.getCurrentPage())" + search.getPageSize());
+		System.out.println("search.setCurrentPage(1)" + search.getCurrentPage());
+		Map<String, Object> map = commonService.listReply(search, "0", reply.getProductNo());
+		System.out.println("reply.getCurrentPage :: " + reply.getCurrentPage());
+		System.out.println("map.get(\"list\") :: " + map.get("list"));
 		int totalCount = commonService.getTotalCountReply("0", reply.getProductNo());
 		List list = (List) map.get("list");
-		
-		if(totalCount == list.size()) {
+
+		if (totalCount == list.size()) {
 			list.add("1");
 		}
-		
-		Map<String , Object> map2 = new HashMap<String , Object>();
-		
-		map2.put("list", (List)map.get("list"));
+
+		Map<String, Object> map2 = new HashMap<String, Object>();
+
+		map2.put("list", (List) map.get("list"));
 		map2.put("totalCount", totalCount);
-		
+
 		return map2;
 	}
 	

@@ -192,11 +192,13 @@
 											t.user_no as user_no , 
 											t.product_star_eval as product_star_eval , 
 											t.product_review as product_review ,
+											t.host_star_eval as host_star_eval , 
+											t.host_review as host_review ,
 	  									<if test="evalType == 'product'">	  										
 											u.user_name as user_name							 				
 							 			</if>
 							 			<if test="evalType == 'host'">
-							 				u.user_name as host_name
+							 				u.user_name as user_name
 							 			</if>
 										FROM transaction t, users u
 										WHERE t.user_no=u.user_no

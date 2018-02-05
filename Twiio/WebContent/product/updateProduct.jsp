@@ -93,10 +93,10 @@ $(function() {
 //}
 $(function() {
 	
-	 $( "#reset" ).on("click" , function() {
+	 $( "#cancel" ).on("click" , function() {
 			//Debug..
 			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			$("form")[0].reset();
+			history.go(-1);
 	});
 });
 
@@ -105,9 +105,12 @@ $(function() {
 	//alert(i);
 	 $( "#addTripDate" ).on("click" , function() {
 		 i++
-		 if(i==1){
+		 if(i==2){
 			 $( "#removeTripDate" ).prop("disabled", false);
-		 }	
+		 }
+		 if(i>4){
+			 $( "#addTripDate" ).prop("disabled", true);
+		 }
 		 //alert(i);
 		 $( "div[name=addDate]" ).append( $( '<input type="text" class="form-control" id="datepicker'+i+'" name="tripDate" readonly="readonly" placeholder="투어날짜'+i+'" >' ) );
 		 $(document).find("input[name=tripDate]").removeClass('hasDatepicker').datepicker({minDate: 0, dateFormat: "yy-mm-dd"});
@@ -117,22 +120,16 @@ $(function() {
 $(function() {
 		
 	 $( "#removeTripDate" ).on("click" , function() {
-		 if(i>1){
+		 if(i>2){
+			 $( "#addTripDate" ).prop("disabled", false);
 			 $( '#datepicker'+i ).remove();
 			 i--;
-		 }else{
+		 }else if(i==2){
 			 $( "#removeTripDate" ).prop("disabled", true);
+			 $( '#datepicker'+i ).remove();
+			 i--;
 		 }		 
 		 	 
-	});
-});
-
-$(function() {
-	
-	 $( "img" ).on("click" , function() {
-			//Debug..
-			//alert(  $( "td.ct_btn01:contains('취소')" ).html() );
-			$("form")[0].reset();
 	});
 });
 
@@ -224,6 +221,23 @@ $( function() {
 		     
 		    });
   	});
+  	
+  	$(function() {
+		$("#file").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#blah').attr('src', e.target.result).attr('width', '300px');
+			}
+			reader.readAsDataURL(input.files[0]);
+			alert(e.target.result);
+		}
+	}
   
    
 
@@ -278,7 +292,7 @@ $( function() {
 		    <label for="tripDate" class="col-sm-offset-1 col-sm-3 control-label">투어날짜</label>
 		    <div class="col-sm-4" name="addDate">
 		      <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate">+</a>
-		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate">-</a>
+		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true">-</a>
 		      <c:set var="date" value="${product.tripDate}"></c:set>
 				<c:set var="date_array" value="${fn:split(date,',')}"></c:set>
 				<c:set var="i" value="0"/>		
@@ -335,7 +349,8 @@ $( function() {
 		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">투어 섬네일</label>
 		    <div class="col-sm-4">		      
 			    <label for="files">파일 업로드</label>
-			    <input type="file" id="file" name="file">			   
+			    <input type="file" id="file" name="file" >
+			    <img id="blah" />			   
 		      <span id="helpBlock" class="help-block">
 		      	 <strong class="text-danger">업로드 gogo</strong>
 		      </span>
@@ -347,7 +362,7 @@ $( function() {
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary" >등 &nbsp;록</button>
-			  <a class="btn btn-primary btn" href="#" role="button" id="reset">취&nbsp;소</a>
+			  <a class="btn btn-primary btn" href="#" role="button" id="cancel">취&nbsp;소</a>
 		    </div>
 		  </div>
 		</form>

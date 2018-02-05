@@ -140,15 +140,30 @@ public class RoomController {
 		return "forward:/room/getProfile.jsp";
 	}
 	
-	@RequestMapping(value = "/listFriend/{userNo}")
-	public String listFriend(@PathVariable int userNo, HttpServletRequest request) throws Exception{
+	@RequestMapping(value = "/listFriend/")
+	public String listFriend(HttpServletRequest request,HttpSession session) throws Exception{
 		System.out.println("/room/listFriend : ");
 		
-		List<Friend> list = commonService.listFriendOnly(userNo);
+		User user = (User)session.getAttribute("user");
 		
-		request.setAttribute("list", list);
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			listFriend.add(userService.getUserInNo(friend.getUserNo()));
+			
+		}
+		System.out.println("listUser==>> "+listFriend);
+		
+		request.setAttribute("list", listFriend);
 		
 		return "forward:/room/listFriend.jsp";
+	}
+	
+	@RequestMapping(value = "/listRoomUser")
+	public String listRoomUser(String roomKey) throws Exception {
+		
+		
+		return "/forward:/room/listRoomUser.jsp";
 	}
 	
 	
