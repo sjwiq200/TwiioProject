@@ -43,9 +43,7 @@
 	<!-- jQuery UI toolTip 사용 JS-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-    <!--  ///////////////////////// 추가 ////////////////////////// -->
    
-	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 50px;
@@ -334,12 +332,10 @@
 		.appendTo(document.body).hide();
 			
 		$(window).ajaxStart(function(){
-				alert("시작");
 			   loading.show();
 			   wrapWindowByMask();
 			})
 			.ajaxStop(function(){
-				alert("끝");
 			   loading.hide();
 			   $('#mask').hide();
 			});
@@ -463,7 +459,7 @@
 		
 		    <h4>가는 편 비행기를 선택해 주세요.</h4>
 		    
-		<table class="type10" >
+		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;">
 	      
 	        <thead>
 	          <tr>
