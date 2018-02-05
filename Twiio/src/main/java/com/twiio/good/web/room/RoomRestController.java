@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.room.RoomService;
 
@@ -32,6 +33,18 @@ public class RoomRestController {
 		System.out.println("user==>"+user);
 		
 		roomService.addRoomUser(roomKey, user.getUserNo());
+		
+	}
+	
+	@RequestMapping("/json/addRoomFriend/")
+	public boolean addRoomFriend(String roomKey, int userNo) throws Exception {
+		System.out.println("room/json/addRoomFriend/");
+		
+		 roomService.addRoomUser(roomKey, userNo);
+		
+		return true;
+		
+		
 		
 	}
 	

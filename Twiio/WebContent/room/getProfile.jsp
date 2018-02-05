@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 
+<!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 
@@ -18,6 +20,16 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/chart/Chart.min.js"></script>
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
@@ -29,72 +41,75 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		 $(function() {		
+		//============= Update  Event =============
+		 $(function() {
 			$( "button.btn.btn-primary" ).on("click" , function() {
-				alert("hello");
-				$("form").attr("method","POST").attr("action", "/schedule/updateSchedule").submit();
+				alert("ok");
+				/* $.ajax({
+					url : "common/",
+					method:"POST",
+					data : {
+						
+					},
+					dataType : "json",
+					headers :{
+						"Accept" : "application/json",
+						"Content-Type" : "application/json"
+					},
+					success : function(JSONData, status){
+						
+						console.log(status);
+						if(status == 'success'){
+							window.close();
+						}
+					}
+					
+				}); */
+				
 			});
-			
 		});	
 		
 		
-		//============= "취소"  Event 처리 및  연결 =============
+		//============= Cancel  Event =============
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
-				 $("form")[0].reset();
+				window.close();
 			});
-		});	
-	
-
+		});
+		
 	</script>		
     
 </head>
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">일정 등록</h1>
+		<h1 class="bg-primary text-center">프로필 보기 </h1>
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
-		<div class="form-group">
-			<input type="hidden" id="roomKey" name="roomKey" value="${schedule.roomKey}">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 제목 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="scheduleTitle" name="scheduleTitle" value="${schedule.scheduleTitle }">
-		    </div>
-		  </div>
+			<input type="hidden" name="roomKey" value="${profile.userNo }">
 		
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 날짜 </label>
+		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">이름 </label>
 		    <div class="col-sm-4">
-		      <input type="date" class="form-control" id="scheduleDate" name="scheduleDate" value="${schedule.scheduleDate }">
+		      <input type="text" class="form-control" id="roomName" name="roomName" value="${profile.userName }">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
+		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">아이디 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="scheduleAddress" name="scheduleAddress" value="${schedule.scheduleAddress }">
+		      <input type="text" class="form-control" id="roomName" name="roomName" value="${profile.userId }">
 		    </div>
 		  </div>
-		  
-		  
-		  
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >수 &nbsp;정</button>
+		      <button type="button" class="btn btn-primary"  >친구추가</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>

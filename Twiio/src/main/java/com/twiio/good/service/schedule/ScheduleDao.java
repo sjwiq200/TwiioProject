@@ -10,5 +10,9 @@ public interface ScheduleDao {
 	
 	public List<Schedule> listSchedule(int userNo) throws Exception;
 	
+	public void updateSchedule(Schedule schedule) throws Exception;
+	
+	public Schedule getSchedule(String roomKey) throws Exception;
+	
 
 }

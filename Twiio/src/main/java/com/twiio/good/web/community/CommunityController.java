@@ -105,7 +105,6 @@ public class CommunityController {
 		System.out.println("/community/getCommunity");
 		
 		Community community = communityService.getCommunity(communityNo);
-		User user = usersService.getUserInNo(community.getUserNo());
 		
 		System.out.println("controller :: "+community.getViewCount());
 		if(search.getCurrentPage() == 0 ){
@@ -122,7 +121,7 @@ public class CommunityController {
 		model.addAttribute("totalCountReply", map.get("totalCountReply"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		model.addAttribute("user",user);
+	
 
 		
 		return "forward:/community/getCommunity.jsp";

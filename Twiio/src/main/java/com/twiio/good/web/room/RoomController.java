@@ -17,11 +17,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.common.CommonService;
+import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Room;
 import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.room.RoomDao;
 import com.twiio.good.service.room.RoomService;
+import com.twiio.good.service.user.UserService;
 
 
 @Controller
@@ -31,6 +34,14 @@ public class RoomController {
 	@Autowired
 	@Qualifier("roomServiceImpl")
 	private RoomService roomService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 
 	public RoomController() {
 		// TODO Auto-generated constructor stub
@@ -117,6 +128,42 @@ public class RoomController {
 		System.out.println(room);
 		roomService.deleteRoom(room);
 		return "redirect:/room/listMyRoom";
+	}
+	
+	@RequestMapping(value = "/getProfile/{userNo}")
+	public String getProfile(@PathVariable int userNo, HttpServletRequest request) throws Exception{
+		System.out.println("/room/getProfile/ : ");
+		
+		User user = userService.getUserInNo(userNo);
+		request.setAttribute("profile", user);
+		
+		return "forward:/room/getProfile.jsp";
+	}
+	
+	@RequestMapping(value = "/listFriend/")
+	public String listFriend(HttpServletRequest request,HttpSession session) throws Exception{
+		System.out.println("/room/listFriend : ");
+		
+		User user = (User)session.getAttribute("user");
+		
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			listFriend.add(userService.getUserInNo(friend.getUserNo()));
+			
+		}
+		System.out.println("listUser==>> "+listFriend);
+		
+		request.setAttribute("list", listFriend);
+		
+		return "forward:/room/listFriend.jsp";
+	}
+	
+	@RequestMapping(value = "/listRoomUser")
+	public String listRoomUser(String roomKey) throws Exception {
+		
+		
+		return "/forward:/room/listRoomUser.jsp";
 	}
 	
 	
