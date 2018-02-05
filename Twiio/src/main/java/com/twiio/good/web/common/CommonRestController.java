@@ -68,6 +68,7 @@ public class CommonRestController {
 		
 		System.out.println("/common/json/addReply : POST");
 		commonService.addReply(reply);
+
 		search.setPageSize((pageSize * reply.getCurrentPage()));
 		search.setCurrentPage(1);
 
@@ -89,16 +90,26 @@ public class CommonRestController {
 		map2.put("totalCount", totalCount);
 
 		return map2;
-		
 	}
 	
-	@RequestMapping(value = "json/addReport")
+	@RequestMapping(value = "json/addReport",method = RequestMethod.POST)
 	public Report addReport(@RequestBody Report report
 			) throws Exception {
 		System.out.println("/common/addReport : POST");
-		commonService.addReport(report);
+		System.out.println("report :: "+report);
+		//commonService.addReport(report);
 		return report;
 	}
+	
+
+	
+	/*@RequestMapping(value = "json/confirmFriend",method = RequestMethod.POST)
+	public String confirmFriend(@RequestBody Friend friend)throws Exception{
+		System.out.println("/common/confirmfriend :POST");
+		commonService.
+		return null;
+	}*/
+	
 	
 	@RequestMapping(value = "json/deleteReply", method = RequestMethod.GET )
 	public void deleteReply(@PathVariable("replyNo") int replyNo
@@ -143,8 +154,6 @@ public class CommonRestController {
 		map2.put("list", (List)map.get("list"));
 		map2.put("totalCount", totalCount);
 		
-		
-		
 		return map2;
 	}
 	
@@ -174,6 +183,7 @@ public class CommonRestController {
 		return map2;
 	}
 	
+
 	@RequestMapping(value = "json/addFriend")
 	public Friend addFriend(@RequestBody Friend friend
 			) throws Exception {
@@ -196,4 +206,5 @@ public class CommonRestController {
 		
 		return friend;
 	}
+
 }

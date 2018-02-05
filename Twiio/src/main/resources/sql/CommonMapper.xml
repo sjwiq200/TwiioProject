@@ -47,7 +47,7 @@
 	</resultMap> -->
 	
 	<!--SQL : INSERT  -->
-	<insert id="addReport" parameterType="report">
+	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="reply_no" keyProperty="replyNo">
 		INSERT
 		INTO REPORT
 		VALUES (
@@ -57,15 +57,32 @@
 		#{reportTitle:VARCHAR},
 		SYSDATE,
 		#{targetUserNo:NUMERIC},
-		#{targetRoomNo:NUMERIC},
-		#{targetReplyNo:NUMERIC},
-		#{targetCommunityN:NUMERIC}
+		<if test="targetRoomNo == 0">
+		NULL
+		</if>
+		<if test="targetRoomNo != 0">
+		#{targetRoomNo:NUMERIC}
+		</if>
+		,
+		<if test="targetReplyNo == 0">
+		NULL
+		</if>
+		<if test="targetReplyNo != 0">
+		#{targetReplyNo:NUMERIC}
+		</if>
+		,
+		<if test="targetCommunityNo == 0">
+		NULL
+		</if>
+		<if test="targetCommunityNo != 0">
+		#{targetCommunityNo:NUMERIC}
+		</if>
 		)
 	</insert>
 	
-	<insert id="addFriend" parameterType="friend">
-		INSERT
-		INTO FRIEND
+	<insert id="addFriend" parameterType="friend" useGeneratedKeys="true" keyColumn="no" keyProperty="no"> 
+		INSERT 
+		INTO FRIEND 
 		VALUES (
 		seq_friend_user_no.nextval,
 		#{userNo:NUMERIC},

@@ -20,9 +20,7 @@
 		
 	<!--SQL : INSERT  -->
 	<insert id="addMessage" parameterType="message" useGeneratedKeys="true" keyColumn="message_no" keyProperty="messageNo">
-		INSERT
-		INTO REPORT
-		VALUES (
+		INSERT INTO MESSAGE VALUES(
 		seq_message_message_no.nextval,
 		#{toUserNo:NUMERIC},
 		#{fromUserNo:NUMERIC},
@@ -30,7 +28,12 @@
 		SYSDATE,
 		#{messageType:VARCHAR},
 		#{messageTitle:VARCHAR},
+		<if test="productNo == 0">
+		NULL
+		</if>
+		<if test="productNo != 0">
 		#{productNo:NUMERIC}
+		</if>
 		)
 	</insert>
 	
