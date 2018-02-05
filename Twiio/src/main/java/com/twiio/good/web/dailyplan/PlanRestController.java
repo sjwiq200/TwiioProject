@@ -6,7 +6,9 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +24,11 @@ import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.Friend;
+import com.twiio.good.service.domain.MainPlan;
 import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.information.InformationService;
+import com.twiio.good.service.mainplan.MainPlanService;
 import com.twiio.good.service.user.UserService;
 
 
@@ -32,7 +36,11 @@ import com.twiio.good.service.user.UserService;
 @RestController
 @RequestMapping({"/dailyplan/*"})
 public class PlanRestController {
-
+	
+	@Autowired
+	@Qualifier("mainPlanServiceImpl")
+	private MainPlanService mainPlanService;
+	
 	@Autowired
 	@Qualifier("dailyPlanServiceImpl")
 	private DailyPlanService dailyPlanService;
@@ -99,7 +107,7 @@ public class PlanRestController {
 			int userNo = dailyPlan.getUser().getUserNo(); 
 			for(Friend friendCheck : listFriend) {
 				if(friendCheck.getFriendNo()==userNo) {
-					System.out.println("debug : ï¿½Ì¹ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½");
+					System.out.println("debug ");
 					userNo=0;
 				}
 			}
@@ -114,6 +122,48 @@ public class PlanRestController {
 		Map<String, List> userInfo = new HashMap();
 		userInfo.put("userList", userList);
 		return userInfo;
+	}
+	
+	@RequestMapping(value = "json/listFriend")
+	public Map<String, List> listFriend(@RequestParam int mainPlanNo, HttpSession session) throws Exception{
+		System.out.println("RestController : listFriend <START>");
+		System.out.println("mainPlanNo : " + mainPlanNo);
+		
+		User user = (User)session.getAttribute("user");
+		List<Friend> listFriend = commonService.listFriendOnly(user.getUserNo());
+		List<User> friendInfo = new ArrayList<User>();
+		String mainPlanNoString = String.valueOf(mainPlanNo);
+		System.out.println("mainPlanNoString : " + mainPlanNoString);
+		
+		for(Friend friendCheck : listFriend) {
+			System.out.println("µé¾î¿È");
+			User friend = userService.getUserInNo(friendCheck.getFriendNo());
+			System.out.println("µé¾î¿È 1 " + friend);
+			if(friend.getMainPlanNoShared() != null){//°øÀ¯ÇÑ ÇÃ·£ÀÌ ÀÖ´Ù, °Ë»çÇØ¾ß ÇÑ´Ù.
+				System.out.println("µé¾î¿È 2 " + friend.getMainPlanNoShared());
+				String[] sharedPlanNo = friend.getMainPlanNoShared().split(",");
+				int i = 0;
+				for(String sharedPlanNoCheck : sharedPlanNo) {
+					System.out.println("µé¾î¿È 3 " + sharedPlanNoCheck);
+					if(sharedPlanNoCheck.equals(mainPlanNoString)) {
+						i=1;
+						break;
+					}
+				}
+				if(i == 0 ) {
+				friendInfo.add(friend);
+				}
+				
+			}else {
+				friendInfo.add(friend);
+			}
+		}
+		
+		Map<String, List> friendList = new HashMap();
+		friendList.put("friendInfo", friendInfo);
+		
+		return friendList;
+		
 	}
 	
 	@RequestMapping(value = "json/addFriend")
@@ -269,8 +319,25 @@ public class PlanRestController {
 		return map;
 	}
 	
-	
-	
+	@RequestMapping(value = "json/sharePlan")
+	public void sharePlan(@RequestParam int userNo, 
+							@RequestParam int mainPlanNo,
+								HttpSession session )throws Exception {
+		
+		System.out.println("RestController : sharePlan <START>");
+		
+		System.out.println("debug : Ä£±¸ ¹øÈ£ " +userNo +" : "+ mainPlanNo);
+		
+		User user = userService.getUserInNo(userNo);
+		String mainPlanNoBefore = user.getMainPlanNoShared();
+		if(mainPlanNoBefore == null) {
+			userService.updateSharedPlan(userNo,String.valueOf(mainPlanNo));
+			}else {
+			userService.updateSharedPlan(userNo,(mainPlanNoBefore+","+mainPlanNo));
+		}
+		System.out.println("RestController : sharePlan <END>");
+		
+	}
 	
 	
 }

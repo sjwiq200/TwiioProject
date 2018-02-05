@@ -152,19 +152,45 @@ public class MainPlanController {
 		return "forward:/mainplan/listMainPlan.jsp";
 	}
 	
-	
-//	@RequestMapping(value = "getMainPlan",method=RequestMethod.GET)
-//	public String getMainPlan(@RequestParam("mainPlanNo") int mainPlanNo,Model model, HttpSession session) throws Exception {
-//		
-//		System.out.println("Controller : getMainPlan <START>");
-//		
-//		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
-//		model.addAttribute("mainPlan", mainPlan);
-//		System.out.println("Controller : getMainPlan <END>");
-//		
-//		return null;
-//		//return "forward:/mainplan/listMainPlan.jsp";
-//	}
+	@RequestMapping(value = "listSharedPlan")
+	public String listSharedPlan(Model model, HttpSession session) throws Exception {
+		
+		System.out.println("Controller : listSharedPlan <START>");
+		
+		User user = (User)session.getAttribute("user");
+		List<MainPlan> list = new ArrayList<MainPlan>();
+		
+		if(user.getMainPlanNoShared()!=null) {
+			
+			if(user.getMainPlanNoShared().indexOf(",") != -1) {
+				String[] mainPlan = user.getMainPlanNoShared().split(",");
+				for(String mainPlanCheck : mainPlan) {
+					System.out.println("debug : "+ mainPlanCheck);
+					int mainPlanNo = Integer.valueOf(mainPlanCheck);
+						if(mainPlanService.getMainPlan(mainPlanNo) != null) {
+							MainPlan mainPlanResult = mainPlanService.getMainPlan(mainPlanNo);
+							mainPlanResult.setUser(user);
+							mainPlanResult.setEndClick(100);
+							list.add(mainPlanResult);
+						}
+				}
+			}else {
+				int mainPlanNo = Integer.valueOf(user.getMainPlanNoShared());//공유되어 있는 플랜이 하나밖에 없을 때 ','가 없으므로.
+				MainPlan mainPlanResult = mainPlanService.getMainPlan(mainPlanNo);
+				mainPlanResult.setUser(user);
+				mainPlanResult.setEndClick(100);
+				list.add(mainPlanResult);
+				}
+		}
+			
+		for(MainPlan result : list) {
+			System.out.println("result : " + result);
+		}
+			
+		model.addAttribute("list", list);
+		
+		return "forward:/mainplan/listSharedMainPlan.jsp";
+	}
 	
 	
 	@RequestMapping(value = "updateMainPlanView")
@@ -175,12 +201,10 @@ public class MainPlanController {
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
 		String[] cityList = (mainPlan.getCity()).split(",");
 		mainPlan.setCityList(cityList);
-		
-		System.out.println("Controller : updateMainPlanView <END>");
-		
-		
 		model.addAttribute("mainPlan", mainPlan);
 		model.addAttribute("cityList",cityList);
+		
+		System.out.println("Controller : updateMainPlanView <END>");
 		
 		return "forward:/mainplan/updateMainPlanContent.jsp";
 	

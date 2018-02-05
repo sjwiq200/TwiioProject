@@ -147,50 +147,7 @@
 	    $("#addToMyFriendList"+i).remove(); 
 	}
 	
-/////////////////////////친구와 공유하기 기능///////////////////////////
-	$(function() {
-	
-		$("#shareWithFriendList").bind("click",function() {
-			var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
-			var user;
-			var result ="";
 
-			 $.ajax({
-	    				url:"/dailyplan/json/listshareWithFriendList?dailyPlanNo="+dailyPlanNo,
-	    				method:"GET",	    					
-	    				dataType:"json",
-	    				headers : {
-								"Accept" : "application/json",
-								"Content-Type" : "application/json"
-							},
-	    				success:function(JSONData){
-	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++){
-		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
-		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
-		    								+'<span>  [이름] : '+user[i].userName+'</span>'
-		    								+'<span>  [성별] : '+user[i].userGender+'</span>'
-		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
-		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}
-		    				 $('#friendListForRec').html(result);
-		    				 $('#friendRec').modal('show'); 
-	    					}
-			    });
-		});
-	 });
-	 
-	function addFriend(userNo,i) {
-			$.ajax({
-	            url:'/dailyplan/json/addFriend?userNo='+userNo,
-	            type:'get'
-	         });
-	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).remove(); 
-	}
-	
-	
 	
 	
 	/////////////////////////수정 및 삭제를 위한 hover기능 구현///////////////////////////
@@ -279,13 +236,10 @@
 			<div class="top_fix_zone" id="topBar">
 
 				<div align="center">
-					<span><button type="button" class="btn" data-toggle="modal"
-							data-target="#addText">글씨쓰기</button></span> <span><button
-							type="button" class="btn" data-toggle="modal"
-							data-target="#addImage">사진추가</button> </span> <span><button
-							type="button" class="btn" data-toggle="modal"
-							data-target="#addMap">지도</button></span> <span><button
-							type="button" class="btn" id="addRouteButton">길찾기</button> </span>
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span> 
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
+					<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>
 					<p></p>
 					<img src="/resources/images/icon/plan/editbutton2.png"
 						id="fixedbtn" width="50px">
@@ -297,13 +251,9 @@
 						id="idDailyDate" /> <input type="hidden"
 						value="${dailyPlan.dailyCity}" id="idDailyCity" />
 					<p></p>
-					<input type="button" id="customizedPlanInfo"
-						name="customizedPlanInfo" class="btn btn-success"
-						value="나를 위한 맞춤정보" /> <input type="button" id="friendRecButton"
-						name="friendRecButton" class="btn btn-primary" value="같이 갈 친구 찾기" />
-					<input type="button" id="shareWithFriendButton"
-						name="shareWithFriendButton" class="btn btn-success"
-						value="친구와 공유하기" />
+					<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-success" value="나를 위한 맞춤정보" /> 
+					<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-primary" value="같이 갈 친구 찾기" />
+				<!-- 	<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-success" value="친구와 공유하기" /> -->
 
 				</div>
 			</div>
@@ -555,33 +505,6 @@
 		
 		<!---------- FriendRec Dialog <END>------------->
 		
-		<!---------- ShareWithFriend Dialog <START>------------->
-
-		<div class="modal fade" id="shareWithFriend" role="dialog">
-			<div class="modal-dialog modal-md">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>나의 플랜 북을 친구들과 공유할까요?</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-
-					<div class="modal-body" align="center">
-						
-						<div id="shareWithFriendList" > </div>
-						
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					</div>
-				</div>
-			</div>
-		</div>
-		
-		<!---------- ShareWithFriend Dialog <END>------------->
 
 		
 </body>

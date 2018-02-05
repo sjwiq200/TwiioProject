@@ -91,51 +91,6 @@ body {
 		 })
 	 })
 
-	 /////////////////////////친구와 공유하기 기능///////////////////////////
-	$(function() {
-	
-		$("input[name='shareWithFriendButton']").bind("click",function() {
-			var index = $("input[name='shareWithFriendButton']").index(this);
-			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-			
-			var friend;
-			var result ="";
-
-			 $.ajax({
-	    				url:"/dailyplan/json/listFriend?mainPlanNo="+mainPlanNo,
-	    				method:"GET",	    					
-	    				dataType:"json",
-	    				headers : {
-								"Accept" : "application/json", 
-								"Content-Type" : "application/json"
-							},
-	    				success:function(JSONData){
-	    					friend = JSONData.friendInfo;
-		    					for(var i=0;i<friend.length;i++){
-		    						result +='<p> [USER NO] : '+friend[i].userNo+ '</p>'
-		    								+'<span>  [아이디] : '+friend[i].userId+'</span>'
-		    								+'<span>  [이름] : '+friend[i].userName+'</span>'
-		    								+'<span>  [성별] : '+friend[i].userGender+'</span>'
-		    								+'<span>  [사진] : '+friend[i].userImage+'</span>'
-		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="sharePlan'+i+'" class="btn btn-success btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
-		    					}
-		    				 $('#shareWithFriendList').html(result);
-		    				 $('#shareWithFriend').modal('show');  
-	    					}
-			    });
-		});
-	 });
-	 
-	function sharePlan(userNo,i,mainPlanNo) {
-			$.ajax({
-	            url:'/dailyplan/json/sharePlan?userNo='+userNo+"&mainPlanNo="+mainPlanNo,
-	            type:'get'
-	         });
-	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).remove(); 
-	}
-	
 	
 	 
 </script>
@@ -151,9 +106,7 @@ body {
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<div align="center">
-			<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button> 
-			<button type="button" class="btn" id="addMainPlan" ><Strong>ADD</Strong></button>
-			<button type="button" class="btn" id="listSharedPlan" ><Strong>친구와 공유하고 있는 플랜 보기</Strong></button>
+			<h2> 공유된 플랜 보기</h2>
 			</div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
@@ -165,10 +118,10 @@ body {
 				  		<c:set var="i" value="${ i+1 }" />
 
 				<div class="col">
+				
 					<div class="col-md-6">
 						<div class="thumbnail">
 						
-							<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-success" value="친구와 공유하기" />
 							<img
 								src="/resources/images/thumbnail_plan/main_thumbnail4.jpg"
 								style="width: 300px; " />

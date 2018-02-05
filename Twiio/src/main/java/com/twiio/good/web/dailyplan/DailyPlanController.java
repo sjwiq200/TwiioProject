@@ -23,6 +23,7 @@ import com.twiio.good.service.domain.Currency;
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.MainPlan;
 import com.twiio.good.service.domain.PlanContent;
+import com.twiio.good.service.domain.User;
 import com.twiio.good.service.information.InformationService;
 import com.twiio.good.service.mainplan.MainPlanService;
 
@@ -70,6 +71,34 @@ public class DailyPlanController {
 		return "forward:/dailyplan/listDailyPlan.jsp";
 
 	}
+	
+//	@RequestMapping(value = "listSharedPlan")
+//	public String listSharedPlan(Model model, HttpSession session)
+//			throws Exception {
+//
+//		System.out.println("Controller : listDailyPlan <START>");
+//		User user = (User) session.getAttribute("user");
+//		if(user.getMainPlanNoShared()!=null) {
+//			List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
+//		}
+//		List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
+//		for (DailyPlan result : list) {
+//			System.out.println("result : " + result);
+//		}
+//		
+//		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+//		String city = mainPlan.getCity();
+//		String[] cityList = city.split(",");
+//		
+//		System.out.println("Controller : listMainPlan <END>");
+//		
+//		model.addAttribute("cityList",cityList);
+//		model.addAttribute("list", list);
+//		
+//		return "forward:/dailyplan/listDailyPlan.jsp";
+//
+//	}
+	
 
 	@RequestMapping(value = "getDailyPlan")
 	public String getDailyPlan(@RequestParam("dailyPlanNo") int dailyPlanNo, Model model, HttpSession session)

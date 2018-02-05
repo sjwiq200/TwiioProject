@@ -1,6 +1,7 @@
 package com.twiio.good.service.user;
 
 import java.util.List;
+import java.util.Map;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.User;
@@ -47,7 +48,8 @@ public interface UserDao {
 	
 	public String  getEvalHost(String userId) throws Exception;
 	
-	
+	public void  updateSharedPlan(Map<String, Object> map) throws Exception;
+
 	// 게시판 Page 처리를 위한 전체Row(totalCount)  return
 	public int getTotalCount(Search search) throws Exception ;
 	

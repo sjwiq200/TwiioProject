@@ -30,6 +30,9 @@ public interface UserService {
 	// 회원정보수정
 	public void updateUser(User user) throws Exception;
 	
+	// 플랜정보수정
+	public void updateSharedPlan(int userNo,String mainPlanNo) throws Exception;
+	
 	// 회원탈퇴처리
 	public void deleteUser(User user) throws Exception;
 		
