@@ -2,6 +2,9 @@ package com.twiio.good.service.domain;
 
 import java.util.Date;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown=true)
 public class Message {
 	private int messageNo;
 	private int toUserNo;
