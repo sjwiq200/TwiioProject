@@ -148,11 +148,11 @@ public class InformationDaoImpl implements InformationDao {
 		 }
 		Double result = (Double.parseDouble(stand )*price)/(Double.parseDouble( com));
 		
-		if(standard[1].contains("일본")) {
+		if(standard[1].contains("일본")||standard[1].contains("스페인")||standard[1].contains("인도네시아")||standard[1].contains("이태리")) {
 			result = result/100;
 		}
 		
-		if(compare[1].contains("일본")) {
+		if(compare[1].contains("일본")||standard[1].contains("스페인")||standard[1].contains("인도네시아")||standard[1].contains("이태리")) {
 			result = result*100;
 		}
 		return Double.parseDouble(String.format("%.4f", result));
@@ -300,10 +300,10 @@ public class InformationDaoImpl implements InformationDao {
 			Thread.sleep(1000);
 			WebElement searchField = (new WebDriverWait(driver, 100))
 					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//label[@class='text icon-before autocomplete-arrow gcw-flights-from']")));
-			driver.findElement(By.cssSelector("#flight-origin-flp")).sendKeys(flight.getDeparture());//출발지 입력
+			driver.findElement(By.cssSelector("#flight-origin-flp")).sendKeys(" "+flight.getDeparture());//출발지 입력
 			 searchField = (new WebDriverWait(driver, 100))
 						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#flight-destination-flp")));
-			driver.findElement(By.cssSelector("#flight-destination-flp")).sendKeys(flight.getArrival());//도착지 입력
+			driver.findElement(By.cssSelector("#flight-destination-flp")).sendKeys(" "+flight.getArrival());//도착지 입력
 			driver.findElement(By.cssSelector("#flight-departing-flp")).sendKeys(flight.getDepartureDate());//출발일 입력
 			driver.findElement(By.cssSelector("#flight-returning-flp")).clear();
 			driver.findElement(By.cssSelector("#flight-returning-flp")).sendKeys(flight.getArrivalDate());//도착일 입력
@@ -496,7 +496,7 @@ public class InformationDaoImpl implements InformationDao {
 		WebElement searchField = (new WebDriverWait(driver, 50))
 				.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#hotel-destination-hlp")));
 
-		driver.findElement(By.cssSelector("#hotel-destination-hlp")).sendKeys(hotel.getCity());//목적지 입력
+		driver.findElement(By.cssSelector("#hotel-destination-hlp")).sendKeys(" "+hotel.getCity());//목적지 입력
 		
 		driver.findElement(By.cssSelector("#hotel-checkin-hlp")).clear();
 		
