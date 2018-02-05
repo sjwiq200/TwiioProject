@@ -15,25 +15,31 @@
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  	<link rel="stylesheet" href="/resources/demos/style.css">
-  	
-  	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/resources/css/animate.min.css" rel="stylesheet">
-   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-    <!--  ///////////////////////// 추가 ////////////////////////// -->
-   
-	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
+	<link href="/resources/css/animate.min.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<style>
 		body {
             padding-top : 50px;
@@ -149,9 +155,19 @@
 			    background: #56B1BF;
 			}
 			table {
-		    margin-left: auto;
-		    margin-right: auto;
-		  }
+			    margin-left: auto;
+			    margin-right: auto;
+			  }
+			  
+			.get-in-touch {
+				position: relative;
+				margin: 0 auto;
+				padding: 30px;
+				border-radius: 2px;
+				background: rgb(255, 255, 255) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAGCAYAAACFIR03AAAAV0lEQVR42tXOMRWAQAwE0RWFDRTg5d47Jeg4Q9gI06RbqlwKil/P6LpXbDCf85AxEBtMGjKG/jyPUHUerfP4nEeoOo/Wedj5pOo8Wudh55Oq82idh51PLxpvled7kLAXAAAAAElFTkSuQmCC) repeat-x;
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+				}
+		  
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -266,7 +282,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<div id="mask"></div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -275,53 +291,76 @@
 	       <h3>비행기 정보 조회</h3>
 	</div>
 	    
-	    
+	
+<div class="get-in-touch col-md-12  col-md-offset-2">
+	<div class="mainbox">    
 	  <form>  
 		<div class="page-header text-center">
-			<h4 class=" text-info">선택하신 비행기 내역</h4>
+			<h4 class=" text-info"><strong>선택하신 비행기 내역</strong></h4>
 	    </div>
-	
-		<div class="form-group">
-			 <label for="departure" class="col-sm-offset-1 col-sm-3 control-label">출발 도시</label>
-			   <div class="col-sm-4">${flight.departure}</div>
+	    
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<div class="form-group">
+				 <label for="departure">출발 도시</label>&nbsp;&nbsp; ${flight.departure}
+			</div>
 		</div>
-		
-		<div class="form-group">
-			 <label for="arrival" class="col-sm-offset-1 col-sm-3 control-label">도착도시</label>
-			   <div class="col-sm-4">${flight.arrival}</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				 <label for="arrival">도착도시</label>&nbsp;&nbsp;${flight.arrival}
+			</div>
 		</div> 
+	</div>
 		
-		<div class="form-group">
-			 <label for="receiverName" class="col-sm-offset-1 col-sm-3 control-label">출국일자</label>
-			   <div class="col-sm-4">${flight.departureDate}</div>
-		</div>	
-				
-		<div class="form-group">
-			 <label for="arrivalDate" class="col-sm-offset-1 col-sm-3 control-label">입국일자</label>
-			   <div class="col-sm-4">${flight.arrivalDate}</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<div class="form-group">
+				 <label for="receiverName" >출국일자</label>&nbsp;&nbsp;${flight.departureDate}
+			</div>	
 		</div>
-		
-		<div class="form-group">
-			 <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label">인원</label>
-			   <div class="col-sm-4">${flight.headCount}</div>
+		<div class="col-md-6">		
+			<div class="form-group">
+				 <label for="arrivalDate" >입국일자</label>&nbsp;&nbsp;${flight.arrivalDate}
+			</div>
 		</div>
+	</div>
 		
-		<div class="form-group">
-			 <label for="returnInfo" class="col-sm-offset-1 col-sm-3 control-label">비행정보</label>
-			   <div class="col-sm-4">${flight.returnInfo}</div>
-		</div>	
 		
-		<div class="form-group">
-			 <label for="returnType" class="col-sm-offset-1 col-sm-3 control-label">비행타입</label>
-			   <div class="col-sm-4">${flight.returnType}</div>
-		</div>	
-		
-		<div class="form-group">
-			 <label for="returnPrice" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
-			   <div class="col-sm-4">${flight.returnPrice}</div>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<div class="form-group">
+				 <label for="headCount" >인원</label>&nbsp;&nbsp;${flight.headCount}
+			</div>
 		</div>
+		<div class="col-md-6">
+			<div class="form-group">
+				 <label for="returnInfo" >비행정보</label>&nbsp;&nbsp;${flight.returnInfo}
+			</div>
+		</div>
+	</div>
+	
+	<div class="row">
+		<div class="col-md-4 col-md-offset-2">
+			<div class="form-group">
+				 <label for="returnType">비행타입</label>&nbsp;&nbsp;${flight.returnType}
+			</div>	
+		</div>
+		<div class="col-md-6">	
+			<div class="form-group">
+				 <label for="returnPrice">가격</label>&nbsp;&nbsp;${flight.returnPrice}
+			</div>
+		</div>
+	</div>
 		
-		</form> 
+		</form>
+	</div> 
+</div>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
+		<br/><br/>
 		
 		<div class="col-sm-offset-10  col-sm-2 text-center">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
@@ -330,9 +369,9 @@
 		<br/>
 		<br/>
 	
-	<h4>오는 편 비행기를 선택해 주세요.</h4>
-		    
-		<table class="type10" >
+	<div class="col-md-12">
+		<h4>오는 편 비행기를 선택해 주세요.</h4>
+		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;">
 	      
 	        <thead>
 	          <tr>
@@ -359,7 +398,7 @@
 		   </c:forEach>
 	      </tbody> 
 	    </table>
-	
+	</div>	
 	    
  	</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->

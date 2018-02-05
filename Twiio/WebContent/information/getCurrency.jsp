@@ -362,13 +362,13 @@
 	
 		<br/>
 		
-	<table class="type10" >
+	<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;" >
       
         <thead>
           <tr>
-          	<th align="left" scope="row">국가</th>
-            <th align="left" scope="row" >통화코드</th>
-            <th align="left" scope="row">매매가격율(원)</th>
+          	<th scope="row">국가</th>
+            <th scope="row" >통화코드</th>
+            <th scope="row">매매가격율(원)</th>
           </tr>
         </thead>
        
@@ -377,9 +377,9 @@
 		  <c:set var="i" value="0" />
 		  <c:forEach var="currency" items="${returnList}">
 			<tr>
-			  <td align="left" scope="row">${currency.cur_nm}</td>
-			  <td align="left"  scope="row">${currency.cur_unit}</td>
-			  <td align="left" scope="row">${currency.deal_bas_r}</td>
+			  <td scope="row"><strong>${currency.cur_nm}</strong></td>
+			  <td scope="row">${currency.cur_unit}</td>
+			  <td scope="row">${currency.deal_bas_r}</td>
 			</tr>
           </c:forEach>
         
