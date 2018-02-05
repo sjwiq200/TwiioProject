@@ -119,19 +119,19 @@
 		AND p.product_delete='0'		
 		<if test="search.searchCondition != null">
 			
-				<if test="search.searchCondition == 0 and search.searchKeyword !='' ">
+				<if test="search.searchCondition == '0' and search.searchKeyword !='' ">
 	 				AND country= #{search.searchKeyword}
 				</if>
-				<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
+				<if test="search.searchCondition == '1' and search.searchKeyword !='' ">
 	 				AND city = #{search.searchKeyword}
 				</if>
-				<if test="search.searchCondition == 2 and search.searchKeyword !='' ">
+				<if test="search.searchCondition == '2' and search.searchKeyword !='' ">
 	 				AND product_title LIKE '%${search.searchKeyword}%'
 				</if>
-				<if test="search.searchCondition == 3 and search.searchKeyword !='' ">
+				<if test="search.searchCondition == '3' and search.searchKeyword !='' ">
 	 				AND user_name LIKE '${search.searchKeyword}%'
 				</if>
-				<if test="search.searchCondition == 4 and search.searchKeyword !='' ">
+				<if test="search.searchCondition == '4' and search.searchKeyword !='' ">
 					<if test="str.length == 1">
 	 					AND product_price= #{search.searchKeyword}
 	 				</if>

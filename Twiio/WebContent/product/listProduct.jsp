@@ -83,7 +83,7 @@ var productCount = ${totalCount};
 $(function(){
 	$(window).scroll(function(){
 		//alert("????");
-		var scrollHeight=$(window).scrollTop() + $(window).height();
+		//var scrollHeight=$(window).scrollTop() + $(window).height();
 		var documentHeight=$(document).height();
 		
 		console.log('$(window).scrollTop() :: '+($(window).scrollTop()));
@@ -119,6 +119,8 @@ $(function(){
 						"Content-Type" : "application/json"
 					},
 					success : function(JSONData , status) {
+						//alert(status);
+						//alert(JSON.stringify(JSONData));
 							if(flag==0){
 								productCount=productCount-JSONData.length;
 								flag=1;
@@ -136,34 +138,26 @@ $(function(){
 					      	}else{
 					      		displayValue += '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">';
 						        
-					      	}
-					      	
-					      	/* '<c:if test="'${! empty JSONData.thumbnail}'">'+
-					        '<img src="/resources/images/productThumbnail/'+${JSONData.thumbnail}+'" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
-					        '</c:if>'+
-					        '<c:if test="'+${empty JSONData.thumbnail}+'">'+
-					        '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">'+
-					        '</c:if>'+ */
+					      	}					     
 					        
 					        displayValue += '<div class="caption">'+
 				            '<h3>'+JSONData[i].productName+'</h3>'+		            
 				            '<p>'+JSONData[i].productType+'</p>'+
 				            '<p>'+JSONData[i].country+' | '+JSONData[i].city+'</p>'+
 				            '투어날짜 :: <br/>';
-					        /* 
-					          '<div class="caption">'+
-					            '<h3>'+${JSONData.productName}+'</h3>'+		            
-					            '<p>'+${JSONData.productType}+'</p>'+
-					            '<p>'+${JSONData.country}+' | '+${JSONData.city}+'</p>'+ */
-					        for(var j=0; i<JSONData[i].tripDate.split("[=,]").length; (2*j)++){
-					        	displayValue += JSONData[i].tripDate.split("[=,]")[j];
+					       // alert("???");
+					        var tripdate = JSONData[i].tripDate.split(",");
+					        //alert(tripdate);
+					        //alert(tripdate.length);
+					        for(var j=0; j<tripdate.length; j++){
+					        	//alert('???dkjflsjg');
+					        	//alert( tripdate[j].split("=")[0]);
+					        	//alert(displayValue);
+					        	displayValue += tripdate[j].split("=")[0];
+					        	//alert(displayValue);
 					        }
-					            
-					           /*  '<c:set var="date" value="'+{JSONData.tripDate}+'"></c:set>'+
-					            '<c:set var="date_array" value="${fn:split(date,\'[=,]\')}"></c:set>'+              
-					            '<c:forEach var="tdate" items="${date_array}" begin="0" step="2">'+
-					            '${tdate}'+
-					            '</c:forEach>' +*/
+					        //alert("???22222");    
+					           
 					            displayValue += '<p>가격 :: '+JSONData[i].productPrice원+'</p>'+
 					            '<p>조회수 :: '+JSONData[i].viewCount+'</p>'+						            
 					        	'</div>';
