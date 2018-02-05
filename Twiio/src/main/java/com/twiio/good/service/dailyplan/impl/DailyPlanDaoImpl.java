@@ -75,11 +75,16 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 		sqlSession.delete("PlanContentMapper.deletePlanContent",dailyPlanNo);
 	}
 	
+	@Override
+	public void deletePlanContentEach(int contentNo) {
+		sqlSession.delete("PlanContentMapper.deletePlanContentEach",contentNo);
+	}
+	
 	//friend_recommendation///////////////////////////////////////////////////
 	@Override
 	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan) {
 		return sqlSession.selectList("DailyPlanMapper.listFriendRec", dailyPlan);
 	}
-	
+
 
 }

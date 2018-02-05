@@ -30,6 +30,8 @@ public interface DailyPlanService {
 	
 	public void deletePlanContent(int dailyPlanNo) throws Exception;
 	
+	public void deletePlanContentEach(int contentNo) throws Exception;
+	
 	//friend_recommendation///////////////////////////////////////////////////
 	
 	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan) throws Exception;

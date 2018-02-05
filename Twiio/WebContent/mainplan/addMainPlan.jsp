@@ -35,7 +35,38 @@
 
 
 <script>
-
+	//AutoComplete///////////////////
+	
+	
+	$(function() {
+		
+		$( "#city1" ).autocomplete({
+			
+		      source: function( request, response ) {
+		    	  $.ajax(
+		    				{
+		    					url:"/information/json/cityAutoComplete/",
+		    					method:"POST",	    					
+		    					data:{	    						
+		    						keyword:$("#city1").val()		    						
+		    						},
+		    					dataType:"json",
+		    					success:function(JSONData){
+		    							    							    						
+		    						response($.map(JSONData, function (item) {
+		    				           
+		    							return item;
+		    				        }));
+		    					}
+		    				}
+		    			);
+		    	  
+		      },
+		      minLength:3
+		    });
+	});
+	
+	/////////////////////////////////
 	function fncAddMainPlan() {
 		$("form").attr("method" , "POST").attr("action" , "/mainplan/addMainPlan").submit();
 	}
@@ -73,20 +104,14 @@
 <form>
 
 		<div class="form-group">
-				<label for="city1" class="col-sm-2 control-label">city</label>
-					<div class="col-sm-12">
-						<input type="text" id="city1" name="cityList" >
-					</div>
-				
-				<label for="city2" class="col-sm-2 control-label">city</label>
-					<div class="col-sm-12">
-						<input type="text" id="city2" name="cityList" >
-					</div>
-					
-				<label for="city3" class="col-sm-2 control-label">city</label>
-					<div class="col-sm-12">
-						<input type="text" id="city3" name="cityList" >
-					</div>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		<p>&nbsp;</p>
+		
+		<!-- AutoComplete -->
+			<input type="text" class="form-control city" id="city1" name="cityList"   >
+		<!-- ------------ -->
+		
 		</div>
 		
 		<div class="form-group">

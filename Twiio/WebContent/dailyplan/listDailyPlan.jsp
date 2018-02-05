@@ -119,12 +119,6 @@
 						</li>
 				  	 </c:forEach>
 				</ul>
-			
-					<button type="button" class="btn btn-default" aria-label="Right Align">
-						<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>추가
-					</button>
-	
-	
 			</div>
 		</div>
 	</form>
