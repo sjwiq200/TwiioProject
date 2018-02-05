@@ -41,8 +41,14 @@ public class ScheduleController {
 	@RequestMapping( value="/addSchedule/{roomKey}", method=RequestMethod.GET )
 	public String addSchedule(@PathVariable String roomKey, HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/addSchedule : GET");
-		request.setAttribute("roomKey", roomKey);
-		return "forward:/schedule/addSchedule.jsp";
+		if(scheduleService.getSchedule(roomKey) == null) {
+			request.setAttribute("roomKey", roomKey);
+			return "forward:/schedule/addSchedule.jsp";
+		}else {
+			return "forward:/schedule/updateSchedule/"+roomKey;
+		}
+		
+		
 	}
 	
 	@RequestMapping(value = "/listSchedule")

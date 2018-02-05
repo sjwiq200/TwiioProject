@@ -32,6 +32,8 @@ public interface CommonService
 
   public Report getReport(int reportNo) throws Exception;
   
+  public Friend getFriend(Friend friend) throws Exception;
+  
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
   ///////////////////////�߸𸣰ڽ��ϴ�.///////////////////////////

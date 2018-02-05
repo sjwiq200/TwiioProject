@@ -132,17 +132,34 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value = "/getProfile/{userNo}")
-	public String getProfile(@PathVariable int userNo, HttpServletRequest request) throws Exception{
+	public String getProfile(@PathVariable int userNo, HttpServletRequest request, HttpSession session) throws Exception{
 		System.out.println("/room/getProfile/ : ");
 		
-		User user = userService.getUserInNo(userNo);
-		request.setAttribute("profile", user);
+		User user = (User)session.getAttribute("user");
+		Friend friend = new Friend();
+		friend.setUserNo(user.getUserNo());
+		friend.setFriendNo(userNo);
+		
+		Friend friendCheck = commonService.getFriend(friend);
+		System.out.println("friend Check ==>" + friendCheck);
+		
+		if(friendCheck != null) {
+			request.setAttribute("flag", true); //이미 친구
+		}else {
+			request.setAttribute("flag", false);
+		}
+		
+		
+		User profile = userService.getUserInNo(userNo);
+		
+		request.setAttribute("profile", profile);
+		
 		
 		return "forward:/room/getProfile.jsp";
 	}
 	
-	@RequestMapping(value = "/listFriend/")
-	public String listFriend(HttpServletRequest request,HttpSession session) throws Exception{
+	@RequestMapping(value = "/listFriend/{roomKey}")
+	public String listFriend(HttpServletRequest request,HttpSession session,@PathVariable String roomKey) throws Exception{
 		System.out.println("/room/listFriend : ");
 		
 		User user = (User)session.getAttribute("user");
@@ -152,19 +169,25 @@ public class RoomController {
 		List<User> listFriend = new Vector<>();
 		for (Friend friend : list) {
 			listFriend.add(userService.getUserInNo(friend.getFriendNo() ));
-			
 		}
 		
 		request.setAttribute("list", listFriend);
+		request.setAttribute("roomKey", roomKey);
 		
 		return "forward:/room/listFriend.jsp";
 	}
 	
-	@RequestMapping(value = "/listRoomUser")
-	public String listRoomUser(String roomKey) throws Exception {
+	@RequestMapping(value = "/listRoomUser/{roomKey}")
+	public String listRoomUser(@PathVariable String roomKey, HttpServletRequest request) throws Exception {
 		
+		List<RoomUser> list = roomService.listRoomUser(roomKey);
+		List<User> listUser = new Vector<>();
+		for (RoomUser roomUser : list) {
+			listUser.add(userService.getUserInNo(roomUser.getUserNo()));
+		}
+		request.setAttribute("list", listUser);
 		
-		return "/forward:/room/listRoomUser.jsp";
+		return "forward:/room/listRoomUser.jsp";
 	}
 	
 	

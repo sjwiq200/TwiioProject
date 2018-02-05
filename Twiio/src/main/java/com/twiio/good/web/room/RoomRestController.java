@@ -2,12 +2,15 @@ package com.twiio.good.web.room;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mongodb.util.JSON;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.room.RoomService;
@@ -37,10 +40,15 @@ public class RoomRestController {
 	}
 	
 	@RequestMapping("/json/addRoomFriend/")
-	public boolean addRoomFriend(String roomKey, int userNo) throws Exception {
+	public boolean addRoomFriend(@RequestBody String data, HttpSession session) throws Exception {
 		System.out.println("room/json/addRoomFriend/");
 		
-		 roomService.addRoomUser(roomKey, userNo);
+		String[] json = data.split("&");
+		String userNo =  json[0].split("=")[1];
+		String roomKey = json[1].split("=")[1];
+		
+		
+		roomService.addRoomUser(roomKey, Integer.parseInt(userNo));
 		
 		return true;
 		

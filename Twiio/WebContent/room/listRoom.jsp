@@ -39,6 +39,7 @@
 		 $("a:contains('참가')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
 			 
 			 $.ajax({
 				 url : "/room/json/addRoomUser/"+roomKey,
@@ -52,10 +53,12 @@
 					 alert(JSONData);
 				 }
 			 })
+			 
+			 
 		
-			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			   window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
+			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			   window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
 		 })
 		 
 		 $("button.btn.btn-default:contains('검색')").on("click",function(){
@@ -139,6 +142,7 @@
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">
+		          	
 		            <h3>${room.roomName} </h3>		            
 		            <p>Date : ${room.date}</p>
 		            <p>country : ${room.country}</p>
@@ -148,6 +152,7 @@
 			            <a href="#">
 			            참가
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
+			            <input type="hidden" id="master" value="${room.userNo }">
 			            </a>
 		            </c:if>
 		            

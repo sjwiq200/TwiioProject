@@ -179,6 +179,10 @@
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
 	</select>
 	
+	<select id="getFriend" parameterType="friend" resultMap="friendSelectMap">
+		SELECT * FROM friend WHERE user_no=#{userNo} AND friend_no = ${friendNo}
+	</select>
+	
 	<!-- SQL : UPDATE -->
 	
 	<update id="updateReply" parameterType="reply">

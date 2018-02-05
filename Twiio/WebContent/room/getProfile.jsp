@@ -111,7 +111,9 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    	<c:if test="${!flag }">
 		      <button type="button" class="btn btn-primary"  >친구추가</button>
+	      	</c:if>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>

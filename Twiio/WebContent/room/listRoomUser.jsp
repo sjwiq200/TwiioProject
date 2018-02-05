@@ -31,38 +31,7 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   	$(function() {
-  		
-  		
-		 
-		 $( "button.btn.btn-default:contains('방생성')" ).on("click" , function() {
-			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
-		});
-		 
-		 $("a:contains('친구초대')").on("click",function(){
-			 
-			 var userNo = $(this).html().split('value="')[1].split('"')[0];
-			 var roomKey = $("#roomKey").val(); 
-			 
-			 $.ajax({
-				 url : "/room/json/addRoomFriend/",
-				 method : "POST",
-				 data : {
-					 userNo : userNo,
-					 roomKey : roomKey
-				 },
-				 dataType : "json",
-				 headders : {
-					 "Accept" : "application/json",
-					"Content-Type" : "application/json"
-				 },
-				 success : function(JSONData, status){
-					if(JSONData == true){
-						alert("success");
-					}
-					 
-				 }
-			 })
-		 })
+	 
 	 });
   </script>
 	
@@ -87,34 +56,33 @@
 	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>친구 목록</h3>
+	       <h3>메신저 참여 회원 목록 조회 </h3>
 	    </div>
-		    
-		    <!--  table Start /////////////////////////////////////-->
+          
+        <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover table-striped" >
       
         <thead>
           <tr>
           	<th align="center">No</th>
-            <th align="left">Friend No</th>
-            <th align="left" >Friend Name</th>
+            <th align="left">User No</th>
+            <th align="left" >User Name</th>
           </tr>
         </thead>
        
 		<tbody>
 		
 		  <c:set var="i" value="0" />
-		  <input id="roomKey" type="hidden" value="${roomKey }">
-		  <c:forEach var="friend" items="${list}">
+		  <c:forEach var="roomUser" items="${list}">
 			<c:set var="i" value="${ i+1 }" />
 			<tr>
 			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${friend.userNo}</td>
-			  <td align="left">${friend.userName}</td>
+			  <td align="left"  title="Click : 회원정보 확인">${roomUser.userNo}</td>
+			  <td align="left">${roomUser.userName}</td>
 			  <td align="left">
 			  	<a href="#">
-		            친구초대
-		            <input type="hidden" id="userNo" value="${friend.userNo}">
+		            <!-- 친구초대 -->
+		            <%-- <input type="hidden" id="roomKey" value="${}"> --%>
 	            </a>
 			  </td>
 			</tr>

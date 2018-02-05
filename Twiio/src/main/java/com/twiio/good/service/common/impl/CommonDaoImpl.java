@@ -95,6 +95,12 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
+	public Friend getFriend(Friend friend) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CommonMapper.getFriend",friend);
+	}
+
+	@Override
 	public int getTotalCountReport() throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("CommonMapper.getTotalCountReport");

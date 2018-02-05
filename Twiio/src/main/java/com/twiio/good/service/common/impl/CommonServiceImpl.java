@@ -71,8 +71,6 @@ public class CommonServiceImpl implements CommonService {
 		return map;
 	}
 	
-	
-
 	@Override
 	public int getTotalCountReply(String targetType, int codeNo) throws Exception {
 		return commonDao.getTotalCountReply(targetType, codeNo);
@@ -92,6 +90,14 @@ public class CommonServiceImpl implements CommonService {
 
 	public Report getReport(int reportNo) throws Exception {
 		return commonDao.getReport(reportNo);
+	}
+	
+	
+
+	@Override
+	public Friend getFriend(Friend friend) throws Exception {
+		// TODO Auto-generated method stub
+		return commonDao.getFriend(friend);
 	}
 
 	public void searchKeyword() throws Exception{
