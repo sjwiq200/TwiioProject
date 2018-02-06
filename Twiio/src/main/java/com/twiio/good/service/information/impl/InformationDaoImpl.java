@@ -760,6 +760,7 @@ public class InformationDaoImpl implements InformationDao {
 					iters.remove();
 				}
 			}
+			   Thread.sleep(500);
 			
 		 List<WebElement> images  = driver.findElements(By.tagName("img"));
         List<String> image = new ArrayList();
@@ -849,13 +850,9 @@ public class InformationDaoImpl implements InformationDao {
 				}
 			}
 			
-		String hours  = driver.findElement(By.xpath("//div[@class='section hours']")).getText();
-		String address  = driver.findElement(By.xpath("//div[@class='detail_section address']")).getText();
-		String phone  = driver.findElement(By.xpath("//div[@class='detail_section phone']")).getText();
+			String detail  = driver.findElement(By.xpath("//div[@id='taplc_attraction_detail_listing_0']")).getText();
+			infom.add(detail);
 		
-		infom.add(hours);
-		infom.add(address);
-		infom.add(phone);
 		
 		List<WebElement> list = driver.findElements(By.xpath("//span[@class='imgWrap '] /img"));
 		

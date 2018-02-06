@@ -35,7 +35,10 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/chart/Chart.min.js"></script>
 
-
+<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
@@ -105,14 +108,14 @@
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
 			    color: #FFF;
-			    background: #56B1BF;
-			    border-color: #56B1BF;
+			    background: #D73A31;
+			    border-color: #D73A31;
 			}
 			
 			.btn-outlined.btn-light {
 			    background: #f4f4f4;
-			    color: #56B1BF;
-				border-color: #56B1BF;
+			    color: #D73A31;
+				border-color: #D73A31;
 			}
 			
 			.btn-xs{
@@ -225,9 +228,7 @@
 		$( "#search"  ).on("click" , function() {
 			
 			var cityName = $("#keyword").val();
-			
 			$.ajax( 
-					
 					{
 						url : "/information/json/searchNowWeather?cityName="
 								+ cityName,
@@ -245,19 +246,19 @@
 							
 							var weatherData = {
 									  labels: [
-										   resultDate[0], resultDate[1], resultDate[2], resultDate[3], resultDate[4], resultDate[5], 
-										  resultDate[6], resultDate[7], resultDate[8], resultDate[9], resultDate[10], resultDate[11],
-										  resultDate[12], resultDate[13], resultDate[14], resultDate[15], resultDate[16], resultDate[17]
+										   resultDate[0]+" 최저기온", resultDate[1]+" 최고기온", resultDate[2]+" 최저기온", resultDate[3]+" 최고기온", resultDate[4]+" 최저기온", resultDate[5]+" 최고기온", 
+										  resultDate[6]+" 최저기온", resultDate[7]+" 최고기온", resultDate[8]+" 최저기온", resultDate[9]+" 최고기온"
 									  ],
 									  datasets: [{
 									    label: "temperature",
 									    data: resultTemp,
 									    lineTension: 0,
-									    fill: false,
-									    borderColor: 'orange',
+									    fill: true,
+									    fillColor: 'rgba(215, 58, 49, 0.8)' ,
+									    borderColor: '#D73A31',
 									    backgroundColor: 'transparent',
-									    pointBorderColor: 'orange',
-									    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+									    pointBorderColor: '#D73A31',
+									    pointBackgroundColor: 'rgba(215, 58, 49, 0.8)',
 									    borderDash: [5, 5],
 									    pointRadius: 5,
 									    pointHoverRadius: 10,
@@ -289,7 +290,7 @@
 									    }],
 									    yAxes: [{
 									      gridLines: {
-									        color: "black",
+									        color: "rgba(0, 0, 0, 0.31)",
 									        borderDash: [2, 5],
 									      },
 									      scaleLabel: {
@@ -318,7 +319,50 @@
 		});
 		
 		
-		
+		$( "#htmlToPDF" ).on("click" , function() {
+			
+			var doc = new jsPDF();
+
+			var specialElementHandlers = { 
+			
+			    "body": function (element, renderer) { 
+			
+			        return true; 
+			
+			    }
+			
+			}	
+			
+			html2canvas($("body"),{
+				
+			
+			    useCORS: true,
+			
+			    allowTaint: true,
+			
+			    onrendered:function(canvas){
+			    	
+			    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+				    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+				    var imgHeight = canvas.height * imgWidth / canvas.width;
+				    var heightLeft = imgHeight;
+			
+			        var imgData = canvas.toDataURL('image/jpeg');
+			
+			        var doc = new jsPDF("p","mm");
+			
+					console.log(imgData);
+			
+			        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+			        heightLeft -= pageHeight;
+			
+			        doc.save('test.pdf');
+			
+			    }
+			
+			});
+			
+		});
 		
 		
 			});
@@ -347,18 +391,21 @@
 			<h3 class=" text-info">세계 날씨 확인하기</h3>
 		</div>
 		
-	<div class="col-md-12 col-md-offset-3">
-		<div class="row">
-			<div class="form-group">
-				<label class="col-sm-1 control-label">도시명 </label>
-					<div class="col-sm-4">
-		 				<input type="text" class="form-control" id="keyword" name="keyword" value="Seoul"  >
-					</div>
-			      <button class="btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
-			  </div>
-		</div>
-	</div>		
-			
+	
+	<form class="form-horizontal">
+		  <div class="form-group">
+		    <div class="col-sm-4 col-sm-offset-3 text-center">
+		      <input type="text" class="form-control" id="keyword" name="keyword" value="Seoul">
+		    </div>
+		  </div>
+		    
+		  <div class="form-group">
+		    <div class="col-sm-offset-3  col-sm-4 text-center">
+		      <button type="button" class="btn btn-outlined btn-theme btn-sm" id="search"  >검 &nbsp;색</button>
+		    </div>
+		  </div>
+	</form>	
+
 			
 	<div class="chart-container" style="position: relative; width:70vw">		
 		<canvas id="popChart"></canvas>
@@ -394,12 +441,16 @@
 			</tr>
         </tbody>
       </table>	 --%>
+      
+      <div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+		</div>
 			
 			
-		<div class="col-sm-8 col-md-offset-5">	
+		<div class="col-xs-8 col-xs-offset-5">	
 			
-			<button type="button" class="btn btn-default"aria-label="Left Align">
-				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>이전 날씨 검색 하러가기
+			<button type="button" class="btn btn-outlined btn-light btn-sm" aria-label="Left Align">
+				이전 날씨 검색 하러가기
 			</button>
 		
 		</div>
@@ -420,20 +471,18 @@
 	
 	var weatherData = {
 	  labels: [
-		  "${resultDate[0]}", "${resultDate[1]}", "${resultDate[2]}", "${resultDate[3]}", "${resultDate[4]}", "${resultDate[5]}", 
-		  "${resultDate[6]}", "${resultDate[7]}", "${resultDate[8]}", "${resultDate[9]}", "${resultDate[10]}", "${resultDate[11]}",
-		  "${resultDate[12]}", "${resultDate[13]}", "${resultDate[14]}", "${resultDate[15]}", "${resultDate[16]}", "${resultDate[17]}"
-		  
+		  "${resultDate[0]} 최고기온", "${resultDate[1]} 최저기온", "${resultDate[2]} 최고기온", "${resultDate[3]} 최저기온", "${resultDate[4]} 최고기온", "${resultDate[5]} 최저기온", 
+		  "${resultDate[6]} 최고기온", "${resultDate[7]} 최저기온", "${resultDate[8]} 최고기온", "${resultDate[9]} 최저기온"
 	  ],
 	  datasets: [{
 	    label: "temperature",
 	    data: resultTemp,
 	    lineTension: 0,
-	    fill: false,
-	    borderColor: 'orange',
+	    fillColor: 'rgba(215, 58, 49, 0.8)' ,
+	    borderColor: '#D73A31',
 	    backgroundColor: 'transparent',
-	    pointBorderColor: 'orange',
-	    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+	    pointBorderColor: '#D73A31',
+	    pointBackgroundColor: 'rgba(215, 58, 49, 0.8)',
 	    borderDash: [5, 5],
 	    pointRadius: 5,
 	    pointHoverRadius: 10,
@@ -465,7 +514,7 @@
 	    }],
 	    yAxes: [{
 	      gridLines: {
-	        color: "black",
+	        color: "rgba(0, 0, 0, 0.31)",
 	        borderDash: [2, 5],
 	      },
 	      scaleLabel: {

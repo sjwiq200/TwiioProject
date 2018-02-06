@@ -39,6 +39,11 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+										<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -158,6 +163,7 @@
 			table {
 		    margin-left: auto;
 		    margin-right: auto;
+		    text-align: center;
 		  }
     </style>
     
@@ -198,11 +204,13 @@
 									'"  style="width: 200px; height: 150px;"/></td>'+
 									'<td align="center" id="con"><a href="'+url[i]+
 									'" target="_blank" >'+no[i]+'<br>'+name[i]+'<br>'+type[i]+'</td></a></tr>'; */
-									
+								if(image[i]==undefined){	
+									image[i]= '/resources/images/no_img.png';
+								}	
 									list += '<tr><td align="center" id="img"><img src="'+image[i]+
-									'"  style="width: 200px; height: 150px;"/></td>'+
-									'<td align="center" id="con"><input type="hidden" id="info" value="'+url[i]+
-									'" />'+no[i]+'<br>'+name[i]+'<br>'+type[i]+'</td></tr>'; 
+									'"  style="width: 250px; height: 200px;"/></td>'+
+									'<td align="center" id="con"><a href="#"><input type="hidden" id="info" value="'+url[i]+
+									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									
 								}
 							$("#listTbody").html(list);
@@ -243,7 +251,7 @@
 				
 				    useCORS: true,
 				
-				    allowTaint: true,
+				    allowTaint: false,
 				
 				    onrendered:function(canvas){
 				    	
@@ -305,7 +313,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<div id="mask"></div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -327,32 +335,44 @@
 		      <button type="button" class="btn btn-primary"  >검 &nbsp;색</button>
 		    </div>
 		  </div> -->
-		  <div  class="col-md-8 col-md-offset-2">
-             <form>
-             <input type="hidden" id="detailUrl" name="detailUrl" value=""/>
-              <div class="input-group">
-                 <input class="form-control" name="city" id="city" type="text" placeholder="도시명을 입력해 주세요." >
-                 <button class="btn btn-outlined btn-theme btn-sm" type="submit" id="search">검 &nbsp;색</button>
-              </div>
-             </form>
-    	 </div>
-		  
+    	 
+    	 <form class="form-horizontal">
+    	 <input type="hidden" id="detailUrl" name="detailUrl" value=""/>
+    	 
+    	 
+		  <div class="form-group">
+		    <div class="col-sm-4 col-sm-offset-4 text-center">
+		      <input class="form-control" name="city" id="city" type="text" placeholder="도시명을 입력해 주세요." >
+		    </div>
+		  </div>
+		    
+		  <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-outlined btn-theme btn-sm" id="search"  >검 &nbsp;색</button>
+		    </div>
+		  </div>
+		</form>
+			
+		<br/>
+		<br/> 
 		
-		<table class="table table-hover table-striped" style="margin-left: auto; margin-right: auto; text-align: center;">
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+		</div> 
+		
+		<table class="type10 col-sm-12" >
 		
 	        <thead>
 	          <tr>
-	            <th align="left">사진</th>
-	            <th align="left">정보</th>
+	            <th class="col-sm-4">사진</th>
+	            <th class="col-sm-8">정보</th>
 	          </tr>
 	        </thead>
 	       
-			
-			
 				<tbody id="listTbody">
 					<tr>
-					 <td align="center" id="img"></td>
-					 <td align="center" id="con"></td>
+					 <td id="img"></td>
+					 <td id="con"></td>
 					</tr>
 		        </tbody>
 	      

@@ -39,6 +39,11 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
+<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -139,7 +144,6 @@
 	</div>
 	
 	<form class="form-horizontal">
-		
 		  <div class="form-group" align="center">
 		    <div class="col-xs-4 col-xs-offset-4">
 		      <input type="text" class="form-control" id="city" name="city" placeholder="도시명을 입력해 주세요.">
@@ -152,7 +156,7 @@
 		      <button type="button" class="btn btn-primary"  >검 &nbsp;색</button>
 		    </div>
 		  </div>
-		</form>
+	</form>
 		
 	<div class="image" id="image">	
 		<div class="col-xs-12" align="center">

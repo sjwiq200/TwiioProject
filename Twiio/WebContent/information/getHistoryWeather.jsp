@@ -40,30 +40,131 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script src="/resources/chart/Chart.min.js"></script>
 
-
-<!--  ///////////////////////// 추가 ////////////////////////// -->
-   			
-   			<script src="/resources/assets/js/jquery.min.js"></script>
-			<script src="/resources/assets/js/skel.min.js"></script>
-			<script src="/resources/assets/js/util.js"></script>
-			<script src="/resources/assets/js/main.js"></script>
-			<link rel="stylesheet" href="/resources/assets/css/main.css" />
+<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <style>
 	body {
-		padding-top: 50px;
-		font-color: gray;
-	}
-	
-	.form-horizontal {
-		padding-left: 17%;
-	}
-	
-	.pageButton-group {
-		aria-label: "Right Align";
-	}
+            padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+        }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #FFF;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: rgba(8, 112, 138, 0.6);
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+			    margin-left: auto;
+			    margin-right: auto;
+			  }
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -75,11 +176,11 @@
 	}
 
 	$(function() {
-		$("#submit").on("click",
+		$("#search").on("click",
 						function() {
 							var cityName = $("#keyword").val();
-							alert(cityName);
-							
+							event.preventDefault();
+								
  						$.ajax( {
 										url : "/information/json/searchHistoryWeather?cityName="+ cityName,
 										method : "GET",
@@ -89,7 +190,8 @@
 										},
 
 										success : function(JSONData, status) {
-											var simple = JSONData.list;
+											var list = JSONData.list;
+											var data = JSONData.data;
 											var monthin = JSONData.month;
 											var min = JSONData.min;
 											var max = JSONData.max;
@@ -98,19 +200,11 @@
 											 var listtr = null;
 											
 											for(var i = 0 ; i<5; i++){
-												listtr += '<tr id = "listtr"><td align="center" id="info">'+simple[i]+'</td>';
+												listtr += '<tr id = "listtr"><td id="info">'+list[i]+'</td>'+
+														'<td id="data"><strong>'+data[i]+'</strong></td></tr>';
 											}
-											/* var month = null;
-											
-											for(var i = 0 ; i<12; i++){
-												
-												month += '<tr id="monthtr"><td align="center" id="month">'+monthin[i]+
-												'</td>'+'<td align="center" id="min">'+min[i]+'</td>'+'<td align="center" id="max">'+max[i]+
-												'</td>'+'<td align="center" id="rain">'+rain[i]+'</td></tr>';
-											} */
 															
 										$("#listTbody").html(listtr);
-										//$("#dataTbody").html(month);
 										
 											var weatherData = {
 													  labels: [
@@ -124,7 +218,7 @@
 														    borderColor: 'blue',
 														    backgroundColor: 'transparent',
 														    pointBorderColor: 'blue',
-														    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+														    pointBackgroundColor: 'rgba(41, 94, 209, 0.4)',
 														    borderDash: [5, 5],
 														    pointRadius: 5,
 														    pointHoverRadius: 10,
@@ -139,7 +233,7 @@
 														    borderColor: 'red',
 														    backgroundColor: 'transparent',
 														    pointBorderColor: 'red',
-														    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+														    pointBackgroundColor: 'rgba(239, 11, 11, 0.4)',
 														    borderDash: [5, 5],
 														    pointRadius: 5,
 														    pointHoverRadius: 10,
@@ -157,18 +251,8 @@
 															  datasets: [{
 																    label: "rain",
 																    data: rain,
-																    lineTension: 0,
-																    fill: true,
-																    borderColor: 'green',
-																    backgroundColor: 'transparent',
-																    pointBorderColor: 'green',
-																    pointBackgroundColor: 'rgba(255,150,0,0.5)',
-																    borderDash: [5, 5],
-																    pointRadius: 5,
-																    pointHoverRadius: 10,
-																    pointHitRadius: 30,
-																    pointBorderWidth: 2,
-																    pointStyle: 'rectRounded'
+																    backgroundColor: "rgba(150,200,250,0.5)",
+																    borderColor: "rgba(150,200,250,0.8)"
 																  }
 															  ]
 															};
@@ -195,7 +279,7 @@
 													    }],
 													    yAxes: [{
 													      gridLines: {
-													        color: "black",
+													        color: "rgba(0, 0, 0, 0.31)",
 													        borderDash: [2, 5],
 													      },
 													      scaleLabel: {
@@ -212,11 +296,13 @@
 													  options: chartOptions
 													});
 													
-													var lineChart2 = new Chart(rainChart, {
-														  type: 'line',
-														  data: rainData,
-														  options: chartOptions
-														});
+													var options = {	animation: false };
+													
+													var myBarChart  = new Chart(rainChart, {
+												        type: 'bar',
+												        data: rainData,
+												        options: options
+													 });
 										}
 									});
 						});
@@ -244,6 +330,79 @@
 		      minLength:3
 		    });
 		
+		$( "#htmlToPDF" ).on("click" , function() {
+			
+			var doc = new jsPDF();
+
+			var specialElementHandlers = { 
+			
+			    "body": function (element, renderer) { 
+			
+			        return true; 
+			
+			    }
+			
+			}	
+			
+			html2canvas($("body"),{
+				
+			
+			    useCORS: true,
+			
+			    allowTaint: true,
+			
+			    onrendered:function(canvas){
+			    	
+			    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+				    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+				    var imgHeight = canvas.height * imgWidth / canvas.width;
+				    var heightLeft = imgHeight;
+			
+			        var imgData = canvas.toDataURL('image/jpeg');
+			
+			        var doc = new jsPDF("p","mm");
+			
+					console.log(imgData);
+			
+			        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+			        heightLeft -= pageHeight;
+			
+			        doc.save('test.pdf');
+			
+			    }
+			
+			});
+			
+		});
+		
+		
+		
+		
+	});
+	
+	
+	
+	function wrapWindowByMask(){
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();  
+		
+		$('#mask').css({'width':maskWidth,'height':maskHeight});  
+		
+		$('#mask').fadeTo("slow",0.6);    
+	}
+
+	$(function() {
+		var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+		.appendTo(document.body).hide();
+			
+		$(window).ajaxStart(function(){
+			   loading.show();
+			   wrapWindowByMask();
+			})
+			.ajaxStop(function(){
+			   loading.hide();
+			   $('#mask').hide();
+			});
 	});
 </script>
 </head>
@@ -253,45 +412,45 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
+	<div id="mask"></div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 	<div class="container">
 		<h5>&nbsp;</h5>
 
 		<div class="page-header">
-			<h3 class=" text-info"> 내가 여행하고 싶은 도시의 과거 날씨를 확인해보세요 :D ♡</h3>
-			<h5 class="text-muted">원하는 도시명을 선택해주시기 바랍니다.</h5>
+			<h3 class=" text-info">세계 과거 날씨 확인하기</h3>
 		</div>
 
 
-		<div class="form-group">
-			<label for="paymentOption" class="col-sm-2 control-label">
-				도시명 </label>
-			<div class="col-sm-6">
-				<input type="text" class="form-control" id="keyword" name="keyword"  >
-			</div>
-		</div>
-		<div class="pageButton-group" align="center">
-
-			<button type="button" class="btn btn-default" id="search"
-				aria-label="Right Align">
-				<span class="glyphicon glyphicon-pencil" aria-hidden="true"
-					id="submit">검색</span> 
-			</button>
+		<form class="form-horizontal">
+		  <div class="form-group">
+		    <div class="col-sm-4 col-sm-offset-4 text-center">
+		      <input type="text" class="form-control" id="keyword" name="keyword" value="Seoul">
+		    </div>
+		  </div>
+		    
+		  <div class="form-group">
+		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		      <button type="button" class="btn btn-outlined btn-theme btn-sm" id="search"  >검 &nbsp;색</button>
+		    </div>
+		  </div>
+		</form>	
 			
 			
-			<table class="table table-hover table-striped" >
+			<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;">
 			 	<thead>
 		          <tr>
-		            <th align="center">Quick Climate Info</th>
+		            <th colspan="2">Quick Climate Info</th>
 		          </tr>
 		        </thead>
 		       
 				<tbody id="listTbody">
 				  <c:set var="i" value="0" />
-				  <c:forEach var="list" items="${list}">
+				  <c:forEach  items="${list}" varStatus="status">
 					<tr id = "listtr">
-					  <td align="center" id="info">${list}</td>
+					  <td id="info">${list[status.index]}</td>
+					  <td id="data"><strong>${data[status.index]}</strong></td>
 					</tr>
 		          </c:forEach>
 		        </tbody>
@@ -323,14 +482,16 @@
         </tbody>
       
       </table> --%>
+      <div class="chart-container" style="position: relative; width:70vw">	
+     	 <canvas id="weatherChart" width="600" height="400"></canvas>
+      </div>
       
-      <canvas id="weatherChart" width="600" height="400"></canvas>
-      
-      <canvas id="rainChart" width="600" height="400"></canvas>
+      <div class="chart-container" style="position: relative; width:70vw">	
+     	 <canvas id="rainChart" width="600" height="400"></canvas>
+     </div>
 
 
 		</div>
-	</div>
 	
 	<script>
 
@@ -356,7 +517,7 @@
 		    borderColor: 'blue',
 		    backgroundColor: 'transparent',
 		    pointBorderColor: 'blue',
-		    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+		    pointBackgroundColor: 'rgba(41, 94, 209, 0.4)',
 		    borderDash: [5, 5],
 		    pointRadius: 5,
 		    pointHoverRadius: 10,
@@ -371,7 +532,7 @@
 		    borderColor: 'red',
 		    backgroundColor: 'transparent',
 		    pointBorderColor: 'red',
-		    pointBackgroundColor: 'rgba(255,150,0,0.5)',
+		    pointBackgroundColor: 'rgba(239, 11, 11, 0.4)',
 		    borderDash: [5, 5],
 		    pointRadius: 5,
 		    pointHoverRadius: 10,
@@ -389,18 +550,8 @@
 			  datasets: [{
 				    label: "rain",
 				    data: rain,
-				    lineTension: 0,
-				    fill: true,
-				    borderColor: 'green',
-				    backgroundColor: 'transparent',
-				    pointBorderColor: 'green',
-				    pointBackgroundColor: 'rgba(255,150,0,0.5)',
-				    borderDash: [5, 5],
-				    pointRadius: 5,
-				    pointHoverRadius: 10,
-				    pointHitRadius: 30,
-				    pointBorderWidth: 2,
-				    pointStyle: 'rectRounded'
+				    backgroundColor: "rgba(150,200,250,0.5)",
+				    borderColor: "rgba(150,200,250,0.8)"
 				  }
 			  ]
 			};
@@ -427,7 +578,7 @@
 	    }],
 	    yAxes: [{
 	      gridLines: {
-	        color: "black",
+	        color: "rgba(0, 0, 0, 0.31)",
 	        borderDash: [2, 5],
 	      },
 	      scaleLabel: {
@@ -444,11 +595,13 @@
 	  options: chartOptions
 	});
 	
-	var lineChart2 = new Chart(rainChart, {
-		  type: 'line',
-		  data: rainData,
-		  options: chartOptions
-		});
+	var options = {	animation: false };
+	
+	var myBarChart  = new Chart(rainChart, {
+        type: 'bar',
+        data: rainData,
+        options: options
+	 });
 </script>
 </body>
 </html>

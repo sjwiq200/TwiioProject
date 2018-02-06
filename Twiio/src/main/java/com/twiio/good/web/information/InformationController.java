@@ -70,8 +70,11 @@ public class InformationController {
 		List<Long> resultTemp = new ArrayList<>();
 
 		for(int i =0; i<dateList.size()-1; i++) {
-			resultDate.add(dateList.get(i));
-			i = i+1;
+			
+			String[] str = dateList.get(i).split(" ");
+			
+			resultDate.add(str[0]);
+			i = i+3;
 		}
 		System.out.println(resultDate.size());
 		
@@ -80,7 +83,7 @@ public class InformationController {
 			System.out.println("tmp"+tmp);
 			System.out.println("Math.round(tmp-273)"+Math.round(tmp-273));
 			resultTemp.add(Math.round(tmp-273));
-			i = i+1;
+			i = i+3;
 		}
 		System.out.println(resultTemp.size());
 		
@@ -97,10 +100,14 @@ public class InformationController {
 		Map<Object,String[]> map = informationService.searchHistoryWeather(cityName);
 		
 		List<String> list = new ArrayList<String>();
+		List<String> data = new ArrayList<String>();
 		
 		String[] simple = map.get("quickInfo");
 		for(int i = 0; i<simple.length; i++) {
-			list.add(simple[i]);
+			String[] str = simple[i].split(" ");
+			
+			list.add(str[0]+" "+str[1]);
+			data.add(str[2]+" "+str[3]+" "+str[4]+" "+str[5]);
 		}
 		
 		String[] past = map.get("historyWeather");
@@ -125,7 +132,7 @@ public class InformationController {
 			rain.add(past[i]);
 			i = i+3;
 		}
-			model.addAttribute("list",list ).addAttribute("month",month).addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain);
+			model.addAttribute("list",list ).addAttribute("data",data ).addAttribute("month",month).addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain);
 	        return "forward:/information/getHistoryWeather.jsp";
 	}
 	
