@@ -40,15 +40,29 @@ public class RoomDaoImpl implements RoomDao {
 	public List<Room> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+".listRoom()");
-
-		List<Room> list = mongoTemplate.findAll(Room.class,"rooms");
-		for (Room messenger : list) {
-			System.out.println(messenger);
+		List<Room> list;
+		Query query = new Query();
+		
+		if(search.getSearchCondition() == null) {
+			System.out.println("hello");
+			
+		}else if(search.getSearchCondition().equals("0")) {
+			System.out.println("SearchCondition 0");
+			query.addCriteria(Criteria.where("roomName").regex(search.getSearchKeyword(),"i"));
+			
+		}else if(search.getSearchCondition().equals("1")) {
+			System.out.println("SearchCondition 1");
+			query.addCriteria(Criteria.where("country").regex(search.getSearchKeyword(),"i"));
+			
+		}else if(search.getSearchCondition().equals("2")) {
+			System.out.println("SearchCondition 2");
+			query.addCriteria(Criteria.where("city").regex(search.getSearchKeyword(),"i"));
+			
 		}
+		
+		list = mongoTemplate.find(query, Room.class, "rooms");
 
-		System.out.println(list);
-
-		return mongoTemplate.findAll(Room.class,"rooms");
+		return list;
 
 	}
 
@@ -164,7 +178,7 @@ public class RoomDaoImpl implements RoomDao {
 	@Override
 	public void updateRoom(Room room) throws Exception {
 		// TODO Auto-generated method stub
-		System.out.println(this.getClass()+"updateRoom()");
+		System.out.println(this.getClass()+".updateRoom()");
 		
 		Criteria criteria = new Criteria("roomKey");
 		criteria.is(room.getRoomKey());
@@ -179,8 +193,6 @@ public class RoomDaoImpl implements RoomDao {
 		update.set("date", room.getDate());
 
 		mongoTemplate.updateFirst(query, update ,RoomUser.class, "rooms");
-		
-		
 		
 	}
 

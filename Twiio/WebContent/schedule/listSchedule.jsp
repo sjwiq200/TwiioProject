@@ -95,7 +95,7 @@
 		            
 		            <p>
 		            <c:if test="${user.userNo == room[status.index].userNo }">
-		            		<a href="#">방 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
+		            		<a href="#">일정 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
 		            </c:if>
 		            </p>
 		            

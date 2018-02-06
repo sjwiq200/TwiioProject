@@ -20,7 +20,12 @@
 	<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
     <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     
-
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+    <script src="/resources/lang/summernote-ko-KR.js"></script>
+	
+	<link href="/resources/css/summernote.css" rel="stylesheet">
+    <script src="/resources/javascript/summernote.min.js"></script> 
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/resources/css/animate.min.css" rel="stylesheet">
@@ -35,10 +40,19 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
+		<!-- 다이얼로그  -->
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+		
 	<style>
 	  body {
             padding-top : 50px;
         }
+        
+        textarea {
+	  width: 100%;
+	  height: 100px;
+	  resize: none;
+		}
     </style>
 
 <script type="text/javascript">
@@ -113,11 +127,11 @@
 						            '<p>[ 조회수 :'+JSONData[i].viewCount+' ]</p>'+
 						            '<p>[ 커뮤니티번호 :'+JSONData[i].communityNo+' ]</p>'+
 						            '<p><a class="btn btn-primary" id="getButton">상세보기</a>'+ 
-						            '<a class="btn btn-default" id="reprtButton">신고하기</a></p>'+
+						            '<c:if test="'+${user.userNo != JSONData[i].userNo}+'">'+
+									'<a class="btn btn-default" id="reportButton">신고하기</a> </c:if></p>'+
 						        '</div>'+
 						      '</div>'+
-						 	'</div>';
-						 
+						 	'</div>';			           
 								communityNo=communityNo-1;
 									$('.row2').append(displayValue);
 								}
@@ -145,8 +159,55 @@
 	$(document).on('click' ,'#getButton', function() {
 		self.location="/community/getCommunity?communityNo="+$($('input[name=communityNo]')[$('a[id=getButton]').index(this)]).val();
 	});	
-
 	
+	$(document).on('click' ,'#reportButton', function() {
+		var reportcommunityno=$($('input[name=communityNo]')[$('a[id=reportButton]').index(this)]).val();
+		var reportcommunityuserno=$($('input[name=communityNouserNo]')[$('a[id=reportButton]').index(this)]).val();
+		var reportbody = 
+	        '<h3>신고글 작성<h3>'+
+			'<input type="text" class="form-control" id="reportuser" row="7" col="50" value="'+reportcommunityuserno+'" readonly/>'+
+			'<input type="text" class="form-control" id="reporttitle" row="7" col="50" placeholder="신고 제목 작성" value=""/>'+
+			'<textarea id="reportcontent"  name="reportcontent" row="7" col="50" value="" placeholder="신고 내용"></textarea>';
+ 
+ 		if(${empty user.userId}){
+	 		alert('로그인후 사용하여주세요');	 
+ 		}else if(${user.userNo}==reportcommunityuserno){
+	 		alert('자기자신은 신고 못합니다.');
+	 	}else{
+		$('#reportbody').html(reportbody);
+		$('#modalreport').modal('show');
+		}
+ 		
+ 		$(document).on('click','#addreportcommunity',function(){
+		 	var reportcontent = $('#reportcontent').val();
+		 	var reporttitle = $('#reporttitle').val();
+		 	if(reportcontent==''| reporttitle==''){
+				 alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+		 	 $.ajax( 
+					{
+					url : "/common/json/addReport",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"reportContent":reportcontent,
+						"reportTitle":reporttitle,
+						"targetUserNo":reportcommunityuserno,
+						"targetCommunityNo":${community.communityNo}reportcommunityno
+					}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#modalreport').modal('toggle');	
+					}
+				});
+		 	 }
+		});
+	});	
+	
+
 	function fncGetCommunityList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
 	   //	document.detailForm.submit();
@@ -239,7 +300,7 @@
     <div class="col-md-3">
       <div class="thumbnail" style="height:400px">
         <input type="hidden" name="communityNo" value="${community.communityNo}"/>
-		<input type="hidden" name="userNo" value="${community.userNo}"/>
+		<input type="hidden" name="communityNouserNo" value="${community.userNo}"/>
         <img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>
           <div class="caption">
           <p>[게시판번호  : ${i}]</p>
@@ -249,13 +310,40 @@
           <p>[조회수 : ${community.viewCount }]</p>
           <p>[커뮤니티번호 : ${community.communityNo }]</p>     
             <p><a class="btn btn-primary" id="getButton">상세보기</a>
-               <a href="#" class="btn btn-default" id="reportButton">신고하기</a></p>
+            <c:if test="${user.userNo != community.userNo}">
+               <a class="btn btn-default" id="reportButton">신고하기</a>
+            </c:if>
+            </p>
           </div>
       </div>
     </div>
     <c:set var="i" value="${ i-1 }" /> 
  	</c:forEach>
  	</div>
+ 	
+ 	<div class="modal fade" id="modalreport"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<Strong>REPORT</Strong>
+				</h4>
+				<h7 class="modal-title">TWIIO</h7>
+			</div>
+			<div class="modal-body">
+			
+				<div id="reportbody"></div>
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
+			</div>
+		</div>
+		</div>
+		</div>
 </div>    
 </body>
 </html>

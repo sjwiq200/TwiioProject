@@ -31,14 +31,15 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public void addReport(Report report) throws Exception {
+		System.out.println("daoImpl ==>" +report);
 		sqlSession.insert("CommonMapper.addReport", report);
 	}
 
 	@Override
 	public void addReply(Reply reply) throws Exception {
-		System.out.println("µé¾î¿À´Ï replyDaoImpl");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ replyDaoImpl");
 		sqlSession.insert("CommonMapper.addReply", reply);
-		System.out.println("³ª¿À´Ï???");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½???");
 	}
 
 	@Override
@@ -54,14 +55,14 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public List listReply(Search search, String targetType, int codeNo) throws Exception {
-		System.out.println("µé¾î¿À´Ï??");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½??");
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("search", search);
 		map.put("codeNo", codeNo);
 		map.put("targetType", targetType);
-		System.out.println("¿©±â±îÁö??");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½??");
 		List<Reply> list = sqlSession.selectList("CommonMapper.listReply", map);
-		System.out.println("µé¾î¿À´Ï??22");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½??22");
 		return list;
 	}
 
@@ -92,6 +93,12 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public Report getReport(int reportNo) throws Exception {
 		return sqlSession.selectOne("CommonMapper.getReport",reportNo);
+	}
+
+	@Override
+	public Friend getFriend(Friend friend) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CommonMapper.getFriend",friend);
 	}
 
 	@Override

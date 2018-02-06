@@ -39,19 +39,126 @@
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-<!--  ///////////////////////// 추가 ////////////////////////// -->
-   			
-   			<script src="/resources/assets/js/jquery.min.js"></script>
-			<script src="/resources/assets/js/skel.min.js"></script>
-			<script src="/resources/assets/js/util.js"></script>
-			<script src="/resources/assets/js/main.js"></script>
-			<link rel="stylesheet" href="/resources/assets/css/main.css" />
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
             padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			table.type10 {
+			    border-collapse: collapse;
+			    text-align: left;
+			    line-height: 1.5;
+			    border-top: 1px solid #D0D3C5 !important;
+			    border-bottom: 1px solid #D0D3C5 !important;
+			    margin: 20px 10px;
+			}
+			table.type10 thead th {
+			    width: 150px;
+			    padding: 10px;
+			    font-weight: bold;
+			    vertical-align: top;
+			    color: #fff;
+			    background: #56B1BF;
+			    margin: 20px 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 tbody th {
+			    width: 150px;
+			    padding: 10px;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 td {
+			    width: 350px;
+			    padding: 10px;
+			    vertical-align: top;
+			    border: 1px solid #60b6c3;
+			}
+			table.type10 .even {
+			    background: #56B1BF;
+			}
+			table {
+		    margin-left: auto;
+		    margin-right: auto;
+		  }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -59,9 +166,9 @@
 	
 	$(function() {
 			
-		 $("button.btn.btn-primary").on("click" , function() {
+		 $("button#search").on("click" , function() {
 			var city = $("#city").val();
-			
+			event.preventDefault();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/listNightLife",
@@ -115,8 +222,78 @@
 				$("form").attr("method" , "POST").attr("action" , "/information/getNightLifeDetail/").submit();
 				   
 		 			});
+		 
+		 
+		 $( "#htmlToPDF" ).on("click" , function() {
+				
+				var doc = new jsPDF();
+
+				var specialElementHandlers = { 
+				
+				    "body": function (element, renderer) { 
+				
+				        return true; 
+				
+				    }
+				
+				}	
+				
+				html2canvas($("body"),{
+					
+				
+				    useCORS: true,
+				
+				    allowTaint: true,
+				
+				    onrendered:function(canvas){
+				    	
+				    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+					    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+					    var imgHeight = canvas.height * imgWidth / canvas.width;
+					    var heightLeft = imgHeight;
+				
+				        var imgData = canvas.toDataURL('image/jpeg');
+				
+				        var doc = new jsPDF("p","mm");
+				
+						console.log(imgData);
+				
+				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				
+				        doc.save('test.pdf');
+				
+				    }
+				
+				});
+				
+			});
 			 
 				 });
+	
+	function wrapWindowByMask(){
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();  
+		
+		$('#mask').css({'width':maskWidth,'height':maskHeight});  
+		
+		$('#mask').fadeTo("slow",0.6);    
+	}
+
+	$(function() {
+		var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+		.appendTo(document.body).hide();
+			
+		$(window).ajaxStart(function(){
+			   loading.show();
+			   wrapWindowByMask();
+			})
+			.ajaxStop(function(){
+			   loading.hide();
+			   $('#mask').hide();
+			});
+	});
+		
 		
 			
 	</script>
@@ -134,14 +311,10 @@
 	
 	
 	<div class="page-header text-info">
-	       <h3>숙소 정보 조회</h3>
+	       <h3>NIGHTLIFE 정보 조회</h3>
 	</div>
-	
-		<form class="form-horizontal">
 		
-		<input type="hidden" id="detailUrl" name="detailUrl" value=""/>
-		
-		  <div class="form-group">
+		  <!-- <div class="form-group">
 		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시명</label>
 		    <div class="col-sm-4">
 		      <input type="text" class="form-control" id="city" name="city" placeholder="도시명을 입력해 주세요.">
@@ -153,10 +326,19 @@
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" class="btn btn-primary"  >검 &nbsp;색</button>
 		    </div>
-		  </div>
-		</form>
+		  </div> -->
+		  <div  class="col-md-8 col-md-offset-2">
+             <form>
+             <input type="hidden" id="detailUrl" name="detailUrl" value=""/>
+              <div class="input-group">
+                 <input class="form-control" name="city" id="city" type="text" placeholder="도시명을 입력해 주세요." >
+                 <button class="btn btn-outlined btn-theme btn-sm" type="submit" id="search">검 &nbsp;색</button>
+              </div>
+             </form>
+    	 </div>
+		  
 		
-		<table class="table table-hover table-striped" >
+		<table class="table table-hover table-striped" style="margin-left: auto; margin-right: auto; text-align: center;">
 		
 	        <thead>
 	          <tr>

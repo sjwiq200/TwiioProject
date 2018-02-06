@@ -40,24 +40,102 @@
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
 <style>
-body {
-	padding-top: 50px;
-	font-color: gray;
-}
-
-.form-horizontal {
-	padding-left: 17%;
-}
-
-.pageButton-group {
-	aria-label: "Right Align";
-}
+		body {
+            padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+        }
+        
+         #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+		
+			.form-horizontal {
+				padding-left: 17%;
+			}
+			
+			.pageButton-group {
+				aria-label: "Right Align";
+			}
 </style>
 
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
 
 <script type="text/javascript">
+
 	function fncSearchNowWeather() {
 		$("form").attr("method", "GET").attr("action",
 				"/imformation/json/searchNowWeather").submit();
@@ -144,11 +222,9 @@ body {
 		}); */
 		
 
-		$( "#keyword"  ).on("change" , function() {
+		$( "#search"  ).on("click" , function() {
 			
 			var cityName = $("#keyword").val();
-			
-			alert(cityName);
 			
 			$.ajax( 
 					
@@ -220,7 +296,8 @@ body {
 									        display: true,
 									        fontColor: "green"
 									      }
-									    }]
+									    }],
+									    scales: { yAxes: [{ ticks: { beginAtZero:true } }] }
 									  }
 									};
 							var lineChart = new Chart(popChart, {
@@ -267,49 +344,25 @@ body {
 		<h5>&nbsp;</h5>
 
 		<div class="page-header">
-			<h3 class=" text-info">세계 현재 날씨 확인하기</h3>
-			<h5 class="text-muted">원하는 도시명을 선택해주시기 바랍니다.</h5>
-		
+			<h3 class=" text-info">세계 날씨 확인하기</h3>
 		</div>
 		
-
-		<div class="form-group">
-			<label for="paymentOption" class="col-sm-2 control-label">
-				도시명 </label>
-			<div class="col-sm-6">
-				<!-- <select name="cityName" class="ct_input_g" id="cityName"
-					style="width: 100px; height: 19px" maxLength="20">
-					<option id="Paris" value="Paris" selected="selected">Paris</option>
-					<option id="Seoul" value="Seoul">Seoul</option>
-					<option id="Jeju" value="Jeju">Jeju</option>
-					<option id="London" value="London">London</option>
-					<option id="Tokyo" value="Tokyo">Tokyo</option>
-					<option id="NewYork" value="NewYork">NewYork</option>
-					<option id="Sydney" value="Sydney">Sydney</option>
-
-
-
-				</select>
- -->
- 
- 			<input type="text" class="form-control" id="keyword" name="keyword" value="Seoul"  >
- 
-			</div>
-
+	<div class="col-md-12 col-md-offset-3">
+		<div class="row">
+			<div class="form-group">
+				<label class="col-sm-1 control-label">도시명 </label>
+					<div class="col-sm-4">
+		 				<input type="text" class="form-control" id="keyword" name="keyword" value="Seoul"  >
+					</div>
+			      <button class="btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+			  </div>
 		</div>
-
-		<div class="pageButton-group" align="center">
-
-			<button type="button" class="btn btn-default"
-				aria-label="Right Align">
-				<span class="glyphicon glyphicon-pencil" aria-hidden="true"
-					id="submit"></span> 검색
-			</button>
+	</div>		
 			
 			
-			
-			
-		<canvas id="popChart" width="600" height="400"></canvas>
+	<div class="chart-container" style="position: relative; width:70vw">		
+		<canvas id="popChart"></canvas>
+	</div>
 
 	<%-- <table class="table table-hover table-striped" >
       <thead>
@@ -340,11 +393,10 @@ body {
 			  <td align="center" id="temp_max">${result.temp_max}</td>
 			</tr>
         </tbody>
-      
-      </table>	
-			 --%>
+      </table>	 --%>
 			
-		<div class="col-sm-10">	
+			
+		<div class="col-sm-8 col-md-offset-5">	
 			
 			<button type="button" class="btn btn-default"aria-label="Left Align">
 				<span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>이전 날씨 검색 하러가기
@@ -352,7 +404,6 @@ body {
 		
 		</div>
 
-		</div>
 		
 		
 	</div>
@@ -421,7 +472,8 @@ body {
 	        display: true,
 	        fontColor: "green"
 	      }
-	    }]
+	    }],
+	    scales: { yAxes: [{ ticks: { beginAtZero:true } }] }
 	  }
 	};
 	

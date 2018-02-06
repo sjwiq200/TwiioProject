@@ -14,7 +14,7 @@
 		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
 		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
 		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
-		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
+		<result property="targetRoomKey" 		column="target_room_key" 		jdbcType="VARCHAR"/>
 		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
 		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
 	</resultMap>
@@ -47,25 +47,40 @@
 	</resultMap> -->
 	
 	<!--SQL : INSERT  -->
-	<insert id="addReport" parameterType="report">
-		INSERT
-		INTO REPORT
+	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="report_no" keyProperty="report_no">
+		INSERT 
+		INTO REPORT 
 		VALUES (
 		seq_report_report_no.nextval,
 		#{userNo:NUMERIC},
 		#{reportContent:VARCHAR},
 		#{reportTitle:VARCHAR},
 		SYSDATE,
-		#{targetUserNo:NUMERIC},
-		#{targetRoomNo:NUMERIC},
-		#{targetReplyNo:NUMERIC},
-		#{targetCommunityN:NUMERIC}
+		<if test="targetUserNo == 0">
+		NULL
+		</if>
+		<if test="targetUserNo != 0">
+		#{targetUserNo:NUMERIC}
+		</if>,
+		#{targetRoomKey:VARCHAR},
+		<if test="targetReplyNo == 0">
+		NULL
+		</if>
+		<if test="targetReplyNo != 0">
+		#{targetReplyNo:NUMERIC}
+		</if>,
+		<if test="targetCommunityNo == 0">
+		NULL
+		</if>
+		<if test="targetCommunityNo != 0">
+		#{targetCommunityNo:NUMERIC}
+		</if>
 		)
 	</insert>
 	
-	<insert id="addFriend" parameterType="friend">
-		INSERT
-		INTO FRIEND
+	<insert id="addFriend" parameterType="friend" useGeneratedKeys="true" keyColumn="no" keyProperty="no"> 
+		INSERT 
+		INTO FRIEND 
 		VALUES (
 		seq_friend_user_no.nextval,
 		#{userNo:NUMERIC},
@@ -177,6 +192,10 @@
 	
 	<select id="getReport" parameterType="int" resultType="report">
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
+	</select>
+	
+	<select id="getFriend" parameterType="friend" resultMap="friendSelectMap">
+		SELECT * FROM friend WHERE user_no=#{userNo} AND friend_no = ${friendNo}
 	</select>
 	
 	<!-- SQL : UPDATE -->

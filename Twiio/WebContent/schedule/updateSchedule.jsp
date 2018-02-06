@@ -32,7 +32,11 @@
 		 $(function() {		
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				alert("hello");
-				$("form").attr("method","POST").attr("action", "/schedule/updateSchedule").submit();
+				if($("#node").val() == 'node'){
+					$("form").attr("method","POST").attr("action", "/schedule/updateScheduleNode").submit();
+				}else{
+					$("form").attr("method","POST").attr("action", "/schedule/updateSchedule").submit();	
+				}
 			});
 			
 		});	
@@ -68,6 +72,7 @@
 		<form class="form-horizontal">
 		
 		<div class="form-group">
+			<input type="hidden" id="node" name="node" value="${node }">
 			<input type="hidden" id="roomKey" name="roomKey" value="${schedule.roomKey}">
 		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 제목 </label>
 		    <div class="col-sm-4">

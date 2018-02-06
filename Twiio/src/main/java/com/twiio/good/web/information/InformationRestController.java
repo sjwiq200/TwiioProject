@@ -355,6 +355,8 @@ public class InformationRestController {
 				
 		}
 		
+		System.out.println("¹¹ÇÏ´Ï");
+		
 		Map<String, List> end = new HashMap();
 		
 		end.put("con", con);

@@ -13,7 +13,7 @@ public class Report
   private String reportTitle;
   private Date reportRegDate;
   private int targetUserNo;
-  private int targetRoomNo;
+  private String targetRoomKey;
   private int targetReplyNo;
   private int targetCommunityNo;
   
@@ -113,23 +113,14 @@ public int getTargetUserNo() {
 }
 
 
-
-
-
-public int getTargetRoomNo() {
-	return targetRoomNo;
+public String getTargetRoomKey() {
+	return targetRoomKey;
 }
 
 
-
-
-
-public void setTargetRoomNo(int targetRoomNo) {
-	this.targetRoomNo = targetRoomNo;
+public void setTargetRoomKey(String targetRoomKey) {
+	this.targetRoomKey = targetRoomKey;
 }
-
-
-
 
 
 public int getTargetReplyNo() {
@@ -161,16 +152,18 @@ public void setTargetCommunityNo(int targetCommunityNo) {
 }
 
 
-
-
-
 @Override
 public String toString() {
-	// TODO Auto-generated method stub
 	return "Report [reportNo=" + reportNo + ", userNo=" + userNo + ", reportContent=" + reportContent + ", reportTitle="
-			+ reportTitle + ", reportRegDate=" + reportRegDate + ", targetUserNo=" + targetUserNo + ", targetRoomNo=" + targetRoomNo
-			+ ", targetReplyNo=" + targetReplyNo + ", targetCommunityNo="+targetCommunityNo+" ]";
+			+ reportTitle + ", reportRegDate=" + reportRegDate + ", targetUserNo=" + targetUserNo + ", targetRoomKey="
+			+ targetRoomKey + ", targetReplyNo=" + targetReplyNo + ", targetCommunityNo=" + targetCommunityNo + "]";
 }
+
+
+
+
+
+
 
   
 }

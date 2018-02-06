@@ -15,6 +15,8 @@ public class Search {
 	private int startRowNum;
 	//////product price//////////////
 	private String priceCondition;
+	//////product button///////
+	private String prodSearchType;
 	////////starProduct/////////////
 	private int productNo;
 
@@ -77,6 +79,16 @@ public class Search {
 		this.priceCondition = priceCondition;
 	}
 
+	public String getProdSearchType() {
+		return prodSearchType;
+	}
+
+
+	public void setProdSearchType(String prodSearchType) {
+		this.prodSearchType = prodSearchType;
+	}
+
+
 	public int getProductNo() {
 		return productNo;
 	}
@@ -87,9 +99,9 @@ public class Search {
 
 	@Override
 	public String toString() {
-		return "Search [currentPage=" + currentPage + ", searchCondition="
-				+ searchCondition + ", searchKeyword=" + searchKeyword
-				+ ", pageSize=" + pageSize + ", endRowNum=" + endRowNum
-				+ ", startRowNum=" + startRowNum + "]";
+		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
+				+ searchKeyword + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
+				+ ", priceCondition=" + priceCondition + ", prodSearchType=" + prodSearchType + ", productNo="
+				+ productNo + "]";
 	}
 }

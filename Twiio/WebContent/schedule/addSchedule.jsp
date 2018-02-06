@@ -46,7 +46,7 @@
     							roomKey : $("#roomKey").val(),
     							scheduleTitle : $("#scheduleTitle").val(),
     							scheduleDate : $("#scheduleDate").val(),
-    							scheduleAddress : $("#scheduleAddress").val()
+    							scheduleAddress : $("#autocomplete").val()
     						}),
     						dataType : "json",
     						headers :{
@@ -186,7 +186,7 @@
 		  <div id="locationField" class="form-group">
 		  	  <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
 		  	  </div class="col-sm-4">
-		  	  	<input id="autocomplete" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+		  	  	<input id="autocomplete" name="scheduleAddress" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
 		  	  </div>
 	      </div>
 		  

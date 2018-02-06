@@ -41,8 +41,14 @@ public class ScheduleController {
 	@RequestMapping( value="/addSchedule/{roomKey}", method=RequestMethod.GET )
 	public String addSchedule(@PathVariable String roomKey, HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/addSchedule : GET");
-		request.setAttribute("roomKey", roomKey);
-		return "forward:/schedule/addSchedule.jsp";
+		if(scheduleService.getSchedule(roomKey) == null) {
+			request.setAttribute("roomKey", roomKey);
+			return "forward:/schedule/addSchedule.jsp";
+		}else {
+			request.setAttribute("node", "node");
+			return "forward:/schedule/updateSchedule/"+roomKey;
+		}
+		
 	}
 	
 	@RequestMapping(value = "/listSchedule")
@@ -71,10 +77,23 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value="/updateSchedule", method=RequestMethod.POST)
-	public String updateSchedule(@ModelAttribute("schedule") Schedule schedule) throws Exception{
+	public String updateSchedule(@ModelAttribute("schedule") Schedule schedule, HttpServletRequest request) throws Exception{
 		System.out.println("/schedule/updateSchedule : POST");
 		scheduleService.updateSchedule(schedule);
+		
 		return "redirect:/schedule/listSchedule";
+		
+		
+	}
+	
+	@RequestMapping(value="/updateScheduleNode", method=RequestMethod.POST)
+	public String updateScheduleNode(@ModelAttribute("schedule") Schedule schedule, HttpServletRequest request) throws Exception{
+		System.out.println("/schedule/updateSchedule : POST");
+		scheduleService.updateSchedule(schedule);
+		
+		return "redirect:/schedule/updateScheduleNode.jsp";
+		
+		
 	}
 	
 	

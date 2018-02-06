@@ -44,27 +44,34 @@
 		//============= Update  Event =============
 		 $(function() {
 			$( "button.btn.btn-primary" ).on("click" , function() {
-				alert("ok");
-				/* $.ajax({
-					url : "common/",
-					method:"POST",
-					data : {
-						
-					},
-					dataType : "json",
-					headers :{
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status){
-						
-						console.log(status);
-						if(status == 'success'){
-							window.close();
+				if(${user.userNo}== $("#userNo").val()){
+					alert('자기 자신 입니다.')
+				}else{
+					alert("ok");
+					$.ajax({
+						url : "/common/json/addFriend",
+						method:"POST",
+						data : JSON.stringify({
+							userNo : ${user.userNo},
+							friendNo : $("#userNo").val()
+						}),
+						dataType : "json",
+						headers :{
+							"Accept" : "application/json",
+							"Content-Type" : "application/json"
+						},
+						success : function(JSONData, status){
+							
+							console.log(status);
+							if(status == 'success'){
+								window.close();
+							}
 						}
-					}
-					
-				}); */
+						
+					});	
+				}
+				
+				
 				
 			});
 		});	
@@ -73,6 +80,7 @@
 		//============= Cancel  Event =============
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
+				console.log("cancel button");
 				window.close();
 			});
 		});
@@ -91,25 +99,27 @@
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal">
 		
-			<input type="hidden" name="roomKey" value="${profile.userNo }">
+			<input type="hidden" id="userNo" name="userNo" value="${profile.userNo }">
 		
 		  <div class="form-group">
 		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">이름 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="roomName" name="roomName" value="${profile.userName }">
+		      <input type="text" class="form-control" id="userName" name="userName" value="${profile.userName }">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">아이디 </label>
 		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="roomName" name="roomName" value="${profile.userId }">
+		      <input type="text" class="form-control" id="userId" name="userId" value="${profile.userId }">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
+		    	<c:if test="${!flag }">
 		      <button type="button" class="btn btn-primary"  >친구추가</button>
+	      	</c:if>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 		  </div>
