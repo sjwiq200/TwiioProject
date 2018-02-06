@@ -31,6 +31,7 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public void addReport(Report report) throws Exception {
+		System.out.println("daoImpl ==>" +report);
 		sqlSession.insert("CommonMapper.addReport", report);
 	}
 

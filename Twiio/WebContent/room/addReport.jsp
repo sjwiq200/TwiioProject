@@ -43,20 +43,31 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			$( "button.btn.btn-primary" ).on("click" , function() {
+				
 				$.ajax({
-					url : "/room/json/addReport",
+					url : "/room/json/addReport/",
 					method : "POST",
+					data : JSON.stringify({
+						targetUserNo : $("#targetUserNo option:selected").val(),
+						targetRoomKey : $("#roomKey").val(),
+						reportTitle : $("#reportTitle").val(),
+						reportContent : $("#reportContent").val()
+					}),
 					dataType : "json",
-					 headders : {
-						 "Accept" : "application/json",
+					headers : {
+						"Accept" : "application/json",
 						"Content-Type" : "application/json"
-					 },
-					 success : function(JSONData, status){
-						 alert(JSONData);
-					 }
+					},
+					success : function(JSONData, status){
+						alert("??"+status);
+						alert(JSONData);
+						if(status == 'success'){
+							
+							window.close();
+						}
+					}
 					
 				});
-				$("form").attr("method" , "POST").attr("action" , "/room/addRoom").submit();
 			});
 		});	
 		
@@ -64,7 +75,7 @@
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			$("a[href='#' ]").on("click" , function() {
-				$("form")[0].reset();
+				window.close();
 			});
 		});	
 		
@@ -94,7 +105,7 @@
 			<div class="form-group">
 				<label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">신고 유형</label>
 				<div class="col-sm-4">
-					<select id="reportType">
+					<select id="targetUserNo">
 						<option value="0" selected="selected">채팅방 신고</option>
 						<c:forEach var="user" items="${list}">
 							<option value="${user.userNo }">${user.userName }</option>
