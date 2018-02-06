@@ -94,31 +94,32 @@ public class PlanRestController {
 		System.out.println("RestController : listFriendRec <START>");
 		System.out.println("dailyPlanNo : " + dailyPlanNo);
 		
-		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);
+		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);//dailyPlanNo를 통해 dailyPlan전부 가져온다.
+		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);//해당 dailyPlan을 통해 자신의 dailyPlan과 같은 list를 가져온다.
 		List<User> userListUndone = new ArrayList<User>();
 		
 		User myUserInfo = (User)session.getAttribute("user");
 		int myUserNo = myUserInfo.getUserNo();
 		
 		
-		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); 
-		for(DailyPlan dailyPlan:list) {
-			int userNo = dailyPlan.getUser().getUserNo(); 
-			for(Friend friendCheck : listFriend) {
+		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); //  본인 친구 목록 가져옴
+		for(DailyPlan dailyPlan:list) {//다른 유저 데일리플랜 for문 돌린다.
+			int userNo = dailyPlan.getUser().getUserNo(); // 자신의 일정과 맞는 유저 NO
+			for(Friend friendCheck : listFriend) {//친구 리스트 만큼 For문 돌린다.
 				if(friendCheck.getFriendNo()==userNo) {
-					System.out.println("debug ");
+					System.out.println("debug : 이미 친구임");
 					userNo=0;
 				}
 			}
 			if(userNo!=0) {
-			User user = userService.getUserInNo(userNo);
+			User user = userService.getUserInNo(userNo);//친구 정보
+			
 			userListUndone.add(user);
 			}
 		}
 	
 		System.out.println(userListUndone);
-		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); 
+		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); //리스트에서 중복된 거 제외시키기
 		Map<String, List> userInfo = new HashMap();
 		userInfo.put("userList", userList);
 		return userInfo;

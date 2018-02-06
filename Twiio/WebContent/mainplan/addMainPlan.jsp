@@ -29,7 +29,7 @@
 
 <style>
 	body {
-	    padding-top : 50px;
+    background: linear-gradient(#D0D3C5, #08708A); /* Standard syntax */
 	}
 </style>
 

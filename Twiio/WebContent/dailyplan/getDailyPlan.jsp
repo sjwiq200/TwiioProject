@@ -41,6 +41,11 @@
 <title>MainPlanList</title>
 
 <style type="text/css">
+
+.top_con_zone{
+	background-color:#ffffff;
+}
+
 #mainBody {
 	padding-top: 50px;
 }
@@ -90,7 +95,8 @@
 					}
 				});
 			})
-		</script>
+			
+</script>
 
 
 
@@ -205,17 +211,68 @@
 			 self.location = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity+"&dailyDate="+dailyDate;
 		});
 	});
-/////////////////////////친구와 공유하기 기능 구현///////////////////////////
-	/* $(function() {
-		$("#shareWithFriendButton").on("click",function() {
-			var dailyPlanNo = $("#idDailyPlanNo").val();
-			 self.location = "/dailyplan/shareWithFriend?dailyPlanNo="+dailyPlanNo;
+	
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script>
+/////////////////////////PDF 기능 구현///////////////////////////
+$(function() {
+	
+	$("#saveAsPDF").on("click" , function() {
+			alert("안녕");
+			
+		 	 var doc = new jsPDF();
+			 var specialElementHandlers = { 
+			    ".top_con_zone": function (element, renderer) { 
+			        return true; 
+			    }
+			} 	
+	
+			html2canvas($(".top_con_zone"),{
+				background :'#FFFFFF',
+			    useCORS: true,
+			    allowTaint: true,
+			    page: this,
+			    onclone: function(doc){
+			    	
+                },
+			    onrendered:function(canvas){
+			    	
+			        var imgData = canvas.toDataURL('image/jpeg');
+			        var doc = new jsPDF('p', 'mm');
+			        /*  doc.text(20, 20, 'Hello world!'); 
+			    	doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+			    	doc.addPage();  */
+					//console.log(imgData);
+			    	doc.addImage(imgData, 'JPEG',8, 8, 90, 95);
+					 //doc.addImage(imgData, 'JPEG', 8, 8, 90, 95);
+			        doc.save('test.pdf');
+			    }
+			}); 
+		
+			
+		
+			/*  var pdf = new jsPDF();
+		        pdf.text(30, 30, 'Hello world!');
+		        pdf.save('hello_world.pdf');
+		        
+		         */
 		});
+			
 	});
-	 */
-	
-	</script>
-	
+
+</script>
+
+
+
 </head>
 <body id="mainBody">
 
@@ -231,7 +288,6 @@
 		<form class="form-horizontal">
 
 			<!-- -------------TOP<START>--------------- -->
-
 
 			<div class="top_fix_zone" id="topBar">
 
@@ -253,6 +309,7 @@
 					<p></p>
 					<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-success" value="나를 위한 맞춤정보" /> 
 					<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-primary" value="같이 갈 친구 찾기" />
+					<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-primary" value="PDF로 저장하기" />
 				<!-- 	<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-success" value="친구와 공유하기" /> -->
 
 				</div>
@@ -281,7 +338,7 @@
 						<input type="hidden" name="planContentNo" id="contentsNo${i}"
 							value="${planContent.contentNo}" />
 
-						<div id="contentsBoxNo${i}">
+						<div id="contentsBoxNo${i}" class="realContents">
 
 							<h7 class="contents"> ㅡ </h7>
 							<p class="contents">콘텐츠 번호 : ${planContent.contentNo}</p>

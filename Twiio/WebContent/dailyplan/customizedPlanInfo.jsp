@@ -525,8 +525,8 @@ $(function() {
 			
 			<div class="chart-container" style="position: relative; width:50vw">
 
-			<canvas id="weatherChart" ></canvas>
-			<canvas id="rainChart" ></canvas>
+				<canvas id="weatherChart" ></canvas>
+				<canvas id="rainChart" ></canvas>
 			
 			</div>
 			﻿

@@ -24,6 +24,12 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+
+
+<!-- ///////////////////////////////////////////////////////////////////////// -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.min.css">
+
+
 <title>MainPlanList</title>
 
 
@@ -148,6 +154,7 @@ body {
 		
 		<div class="container">
 			
+			
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			<div align="center">
@@ -157,6 +164,10 @@ body {
 			</div>
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
+			
+			<button class="bttn-bordered bttn-md">
+  			<i class="icon-menu"></i>
+			</button>
 			
 			
 
@@ -240,6 +251,66 @@ body {
 		</div>
 		
 		<!---------- ShareWithFriend Dialog <END>------------->
+    
+    
+    
+    
+    
+    
+    
+    
+      <div class="box-animate animated fadeInUp" style={{ 'animation-delay': 0.4 + i * 0.07 + 's'}}>
+                <div class="box"key={size} style={{color: color,background: background}}>
+                    <div class="title-wrapper">
+                        <div class="title">{bttn.displayName}</div>
+                        <a href={"https://raw.githubusercontent.com/ganapativs/bttn.css/master/dist/standalone/" + bttn.name + ".css"}
+                           download={bttn.name + ".css"}>
+                            <div class="download-standalone hidden-xs hint--bottom-left hint--rounded hint--bounce"
+                                 aria-label={"Download standalone " + bttn.name + ".css"}>
+                                <i class="icon-cloud-download"/>
+                            </div>
+                        </a>
+                    </div>
+                    <hr/>
+                    <div class="button-wrapper animated fadeIn">
+                        <button class={{
+                            ["bttn-" + bttn.name]: true,
+                            ["bttn-" + size]: true,
+                            ["bttn-" + activeColor]: true,
+                            "bttn-block": block,
+                            "bttn-no-outline": !outline
+                        }} dangerouslySetInnerHTML={{__html: bttn.texts[activeSize]}}>
+                        </button>
+                    </div>
+                    <div class="classname"
+                         style={{
+                             color: color,
+                             background: codeBackground
+                         }}>
+                        .bttn-{bttn.name}.bttn-{size}
+                    </div>
+                   
+                    <div class={"code-copy code-copy" + i}>{textCopied ? 'Copied' : 'Copy code'}</div>
+                </div>
+            </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     
     
     
