@@ -91,7 +91,7 @@
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #f4f4f4;
+			    background: #FFF;
 			    color: #08708A;
 				border-color: #08708A;
 			}
@@ -128,23 +128,23 @@
 			    font-weight: bold;
 			    vertical-align: top;
 			    color: #fff;
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.6);
 			    margin: 20px 10px;
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 tbody th {
 			    width: 150px;
 			    padding: 10px;
-			    border: 1px solid #60b6c3;
+			    border: 1px solid #9fc7d1;
 			}
 			table.type10 td {
 			    width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
-			    border: 1px solid #60b6c3;
+			    border: 1px solid #9fc7d1;
 			}
 			table.type10 .even {
-			    background: #56B1BF;
+			    background: #9fc7d1;
 			}
 			table {
 		    margin-left: auto;
@@ -242,7 +242,7 @@
 				
 				    useCORS: true,
 				
-				    allowTaint: true,
+				    allowTaint: false,
 				
 				    onrendered:function(canvas){
 				    	
@@ -320,9 +320,9 @@
 				
 			<div class="row centered-form">
 				 <div class="mainbox col-md-12">
-					<div class="panel panel-info">
+					<div class="panel">
 		        		<div class="panel-heading" >
-					    		<h3 class="panel-title">정보를 입력해주세요!</h3>
+					    		<h3 class="panel-title"></h3>
 					 		</div>
 					 			<div class="panel-body">
 					    			<div class="row">

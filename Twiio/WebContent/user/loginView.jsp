@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!DOCTYPE html>
+
 <html>
 <head>
 <title>Insert title here</title>
@@ -25,11 +27,66 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-    	 body >  div.container{ 
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
+    	body {
+            padding-top : 250px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
-	    </style>
+         .btn-sm{
+				font-size:13px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+				width: 125px;
+				text-align: center;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #f4f4f4;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #f4f4f4;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+	</style>
 	
 	<script type="text/javascript">
 	
@@ -206,24 +263,72 @@
 
 </head>
 <body>
-
+	
+	
+	<jsp:include page="/layout/toolbar.jsp" />
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
-		<div class="row">
-		
-			<div class="col-md-3">
-					
-			</div>
-	   	 	
-	 	 	<div class="col-md-6">
-	 	 	
-		 	 	<br/><br/>
 				
 				<div class="jumbotron">	 	 	
-		 	 		<h3 class="text-center">Twiio 로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h3>
+		 	 		<h2 class="text-center">Twiio 로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h2>
 
-			        <form class="form-horizontal">
+			        
+			        
+			        <div class="panel-body">
+						  
+								  <div class="row">
+								  
+								<div class="col-md-5 col-md-offset-1" >
+									<a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="/resources/images/kakaosm.png" /></a><br/><br/>
+									<a id="google-login-btn"  data-onsuccess="onSignIn" href=""><img src="/resources/images/googlesm.png"/></a><br/><br/>
+									<!-- <a id="facebook-login-btn" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large"  
+									data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false">
+									<img src="/resources/images/facebooksm.png" /></a> -->
+									 <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
+									 data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> 
+								</div>
+								
+								    <div class="col-md-6" style="border-left:1px solid #ccc;height:160px">
+										<form class="form-horizontal">
+										
+										<div class="col-md-9 col-md-offset-3">
+										
+										 <input type="hidden" value="" name="userfaceId"/>
+										 <input type="hidden" value="" name="userName"/>
+										 <input type="hidden" value="" name="multi"/>
+											<fieldset>
+											
+											  <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
+											  <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
+											  <div class="spacing"><a href="#"><small> Forgot Id / Password?</small></a><br/></div>
+											 
+											 <div class="col-md-offset-1">
+												 <button type="button" class="col-xs-12 btn btn-outlined btn-theme btn-sm"  >로 &nbsp;그 &nbsp;인</button>
+												 <div class="col-xs-1"></div>
+												  <a class="col-xs-12 btn btn-outlined btn-light btn-sm" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
+											</div>
+											
+											
+											</fieldset>
+											
+										</div>	
+										</form>
+									</div>
+								</div>
+						</div>
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        
+			        <!-- <form class="form-horizontal">
+			        
 			        
 			         <div class="form-group">
 					    <label for="kakaoLogin" class="col-sm-2 control-label"></label>
@@ -238,15 +343,13 @@
 					    <label for="googleLogin" class="col-sm-2 control-label"></label>
 					    <div class="col-sm-6">
 					    	<p><div id="google-login-btn" class="g-signin2" data-onsuccess="onSignIn"></div></p>
-					       <!-- <img src="/images/APIfolder/googleLogin.png" id="google-login-btn" width="220px"/> -->
+					       <img src="/images/APIfolder/googleLogin.png" id="google-login-btn" width="220px"/>
 					    </div>
 					  </div>
 
 						<div class="form-group">
 							<label for="facabookLogin" class="col-sm-2 control-label"></label>
-							<div class="col-sm-6">
-								<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
-							</div>
+							<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
 						</div>
 
 						<div class="form-group">
@@ -267,20 +370,20 @@
 					    <div class="col-sm-offset-4 col-sm-4 text-center">
 					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
 					      
-					      <!-- <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p> -->
+					      <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
 					      
 					    </div>
-					    <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"> -->
+					    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">
 					  </div>
 					  
 					  <div class="form-group">
 					    <div class="col-sm-offset-4 col-sm-4 text-center">
 					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 					      
-					      <!-- <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p> -->
+					      <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
 					      
 					    </div>
-					    <!-- <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark"> -->
+					    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">
 					  </div>
 					  
 					  <input type="hidden" value="" name="userfaceId"/>
@@ -288,15 +391,13 @@
 					  <input type="hidden" value="" name="multi"/>
 					  
 			
-					</form>
+					</form> -->
 			   	 </div>
 			
 			</div>
 			
-  	 	</div>
   	 	<!--  row Start /////////////////////////////////////-->
   	 	
- 	</div>
 
 </body>
 </html>
