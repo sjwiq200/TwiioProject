@@ -20,14 +20,24 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-   
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    <!-- scroll -->
    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
+   
+   <!-- 다이얼로그  -->   
+	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+	<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+	<script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+	
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+
+
    
    <style>
       a.top {
@@ -48,13 +58,67 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-			padding-top: 50px;
+			padding-top: 55px;
+			background:  #f4f4f4;
 		}
 		
 		textarea {
 			width: 100%;
 			height: 100px;
 			resize: none;
+		}
+		
+		hr {
+			//color: #08708A;
+			display: block;
+		    height: 1px;
+		    border: 0;
+		    border-top: 1px solid #08708A;
+		    margin: 1em 0;
+		    padding: 0;
+		}
+		
+		.btn {	
+			letter-spacing: 1px;
+			text-decoration: none;
+			background: none;
+			-moz-user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 0;
+			cursor: pointer;
+			display: inline-block;
+			margin-bottom: 0;
+			vertical-align: middle;
+			white-space: nowrap;
+			font-size: 14px;
+			line-height: 20px;
+			font-weight: 700;
+			text-transform: uppercase;
+			border: 2px solid;
+			padding: 8px 20px;	
+		}
+		.btn.btn-default:hover, .btn.btn-default:active{
+			color: #FFF;
+			background: #08708A;
+			border-color: #08708A;
+		}
+		
+		.btn.btn-default{
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
+		.btn.btn-primary:hover, .btn.btn-primary:active {	
+			color: #FFF;
+			background: #08708A;
+			border-color: #08708A;
+		}
+		
+		.btn.btn-primary {			
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
 		}
 	</style>
 	<script type="text/javascript">
@@ -258,16 +322,16 @@
 							
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
-												'<div class="col-md-10 col-md-offset-1">'+
+												'<div class="col-md-12 ">'+
 												JSONData.list[i].userName+
 				    						   '</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   '<div class="col-md-12">'+
 				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 				    						   '</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   '<div class="col-md-12">'+
 				    						   JSONData.list[i].replyRegDate+
 				    						   '</div>'+
-				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+				    						   '<div class="col-md-12">'+
 											   '<hr sytle="border-style:dotted">'+
 							  				   '</div></div>';
 							}
@@ -277,7 +341,7 @@
 								 $("#aReply").remove();
 							}
 							var totalcount=
-							'<div class="col-md-2 col-md-offset-1">'+
+							'<div class="col-md-2">'+
 								'<strong>댓 글 목 록</strong>'+		
 							'</div>'+
 							'<div class="col-md-2" >'+
@@ -301,7 +365,7 @@
 				 alert('로그인후 사용하여주세요');	 
 			 }
 			 else{
-				 alert('들어오니??');
+				 //alert('들어오니??');
 			 var replycontent = $('#replyContent').val();
 			  $.ajax( 
 						{
@@ -325,21 +389,21 @@
 							for(var i=0;i<JSONData.list.length;i++){
 							 displayValue += 
 											   '<div class="row2">'+
-												'<div class="col-md-10 col-md-offset-1">'+
+												'<div class="col-md-12">'+
 												JSONData.list[i].userName+
 				    						   '</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   '<div class="col-md-12">'+
 				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 				    						   '</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
+				    						   '<div class="col-md-12">'+
 				    						   JSONData.list[i].replyRegDate+
 				    						   '</div>'+
-				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+				    						   '<div class="col-md-12">'+
 											   '<hr sytle="border-style:dotted">'+
 							  				   '</div></div>';
 							}
 							var totalcount=
-								'<div class="col-md-2 col-md-offset-1">'+
+								'<div class="col-md-2">'+
 								'<strong>댓 글 목 록</strong>'+		
 							'</div>'+
 							'<div class="col-md-2" >'+
@@ -380,13 +444,63 @@
 	    } );
 	    
 	  } );
-	////////////////////////////////////////////////
+	///////////////////////////////sendQuestion///////////////////
+	
+	$(document).on('click','button[name=sendQuestion]', function() {
+		 var msguserno = ${product.hostNo};
+		 var msgusername = '${product.hostName}';
+		 var inmsg =
+			 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+			'<input type="text" class="form-control" id="msgno" row="6" col="50" placeholder="제목 작성" value="'+msguserno+'"/>'+
+			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
+		 
+		 if(${empty user.userId}){
+			 alert('로그인후 사용하여주세요');	 
+		 }else if(${user.userNo== msguserno}){
+			 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
+		 }else{ 
+			$('#msg').html(inmsg);
+		 	$('#modalmessage').modal('show');
+		 }
+		 $(document).on('click','#upmessage',function(){
+			var msgcontent = $('#msgcontent').val();
+			var msgtitle = $('#msgtitle').val();
+			//modalmessage
+
+				if(msgcontent==''| msgtitle==''){
+				 alert('내용과 제목을 입력하세요.');			 
+				 }
+				 else{
+				  $.ajax( 
+						{
+						url : "/mypage/json/addMessage",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"toUserNo":"${user.userNo}",
+							"fromUserNo":msguserno,
+							"messageContent":msgcontent,
+							"messageType":"1",
+							"messageTitle":msgtitle							
+						}),
+						success : function(JSONData) {
+							alert(JSON.stringify(JSONData));
+							$('#modalmessage').modal('toggle');
+							
+						}
+				});
+			 	}
+			});	
+		});
+	
+	///////////////////////////////////
 	
 	  $(function() {
 			
 			 $( "#showPro" ).on("click" , function() {
 				
-				 self.location("/product/listProduct");
+				 self.location = "/product/listProduct";
 			});
 		});
 	  
@@ -394,7 +508,7 @@
 			
 			 $( "button:contains('수정')" ).on("click" , function() {
 				 
-				 self.location("/product/updateProduct?productNo="+${product.productNo});
+				 self.location="/product/updateProduct?productNo="+${product.productNo};
 			});
 		});
 	  
@@ -402,7 +516,7 @@
 			
 			 $( "button:contains('삭제')" ).on("click" , function() {
 				
-				 self.location("/product/deleteProduct?productNo="+${product.productNo});
+				 self.location="/product/deleteProduct?productNo="+${product.productNo};
 			});
 		});
 	  
@@ -410,7 +524,7 @@
 			
 			 $( "div[name='hostInfo']" ).on("click" , function() {
 				 if(${user != null}){				
-				 	window.open("/user/getHost?hostNo="+${product.hostNo},'','');
+				 	window.open("/user/getHost?hostNo="+${product.hostNo},'HostInfo','location=no,menubar=no,resizable=no,status=no,right=0,width=500,height=500');
 				 }else{
 					 alert("로그인을 해주세요");
 				 }
@@ -436,90 +550,146 @@
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
+	<div class="row">
 	<div class="container">
 		<input type="hidden" name="userNo" value="${user.userNo }"/>
 		<input type="hidden" name="userName" value="${user.userName }"/>
-		<div class="page-header">
-	       <h3 class=" text-info">${product.productName }
-	       <button type="button" id="showPro" class="btn btn-default">목록보기</button>
+		
+		<button type="button" id="showPro" class="btn btn-default">목록보기</button>
 	       <c:if test="${user.userNo == product.hostNo }">
 	       <button type="button" class="btn btn-default">수정</button>
 	       <button type="button" class="btn btn-default">삭제</button>
 	       </c:if>
-	       </h3>     
+	       
+		<div class="row"> 
+	      <div class="col-sm-12" >
+			<div class="text-info">
+				<h3>
+				${product.productName}
+				</h3>
+			<b class="pull-right">조회수 ${product.viewCount }</b>
+			</div>
+			</div>
 	       <!-- <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5> -->
-	    </div>
-	
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>상품번호</strong></div>
-			<div class="col-xs-8 col-md-4">${product.productNo }</div>			
-		</div>
-		
+	       </div>
+	       </div>
+	   </div>    
+	      
+	    <div class="container">
 		<hr/>
-		
-		<%-- <div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품명</strong></div>
-			<div class="col-xs-8 col-md-4">${product.productName }</div>
-		</div>
-		
-		<hr/> --%>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품분류</strong></div>
-			<div class="col-xs-8 col-md-4">${product.productType }</div>
-		</div>
-				
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>국가</strong></div>
-			<div class="col-xs-8 col-md-4">${product.country }</div>
-		</div>
-				
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>도시</strong></div>
-			<div class="col-xs-8 col-md-4">${product.city }</div>
-		</div>
-				
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>조회수</strong></div>
-			<div class="col-xs-8 col-md-4">${product.viewCount }</div>
-		</div>
-				
-		<hr/>
+		<div class="col-sm-12">		
+		<div class="col-sm-4 col-sm-offset-2">
 				
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2"><strong>투어일자</strong></div>
-			<div class="col-xs-8 col-md-4">
+	  		<div class="col-xs-4 "><strong>상품유형</strong></div>
+			<div class="col-xs-8">${product.productType }</div>
+		</div>
+				
+		<!-- <hr/> -->
+		<br/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 "><strong>국가</strong></div>
+			<div class="col-xs-8">${product.country }</div>
+		</div>
+				
+		<!-- <hr/> -->
+		<br/>
+		
+		<div class="row">
+	  		<div class="col-xs-4"><strong>도시</strong></div>
+			<div class="col-xs-8">${product.city }</div>
+		</div>
+				
+		<!-- <hr/> -->
+		<br/>
+		
+		<div class="row">
+	  		<div class="col-xs-4"><strong>1일 투어 인원</strong></div>
+			<div class="col-xs-8 ">${product.tourHeadCount}</div>
+		</div>
+		
+		<!-- <hr/> -->
+		<br/>
+		
+		<div class="row">
+	  		<div class="col-xs-4  "><strong>가격</strong></div>
+			<div class="col-xs-8 ">${product.productPrice}</div>
+		</div>
+		
+		<!-- <hr/>  -->		
+ 		<br/>
+ 		
+		<div class="row">
+	  		<div class="col-xs-4"><strong>투어일자</strong></div>
+			<div class="col-xs-8 ">
 			<c:set var="date" value="${product.tripDate}"></c:set>
 			<c:set var="date_array" value="${fn:split(date,',')}"></c:set>			
 				<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
-					${fn:split(tdate,'=')[0]}
+					${fn:split(tdate,'=')[0]}<br/>
 				</c:forEach>
 			</div>
 		</div>
-		
-		<hr/>
-		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>가격</strong></div>
-			<div class="col-xs-8 col-md-4">${product.productPrice}</div>
+		<br/>		
 		</div>
-		
-		<hr/>
-		
+	
+		  <div class="col-sm-6">
+		  
+		  <div class="row col-xs-12">
+		   <div class="col-xs-6">
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>등록일자</strong></div>
-			<div class="col-xs-8 col-md-4">${product.regDate}</div>
-		</div>
 		
-		<hr/>
+	  		<div class="col-xs-5 text-center"><strong>호스트</strong></div>
+	  		<div name="hostInfo" class="col-xs-7">	  		
+			<c:if test="${empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="rounded-circle"></c:if>
+			<c:if test="${!empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${product.hostImage}" class="rounded-circle"></c:if>
+			</div>	
+			
+		</div>		
+		<div class="row">
+	  		<div class="col-xs-5 "></div>
+			<div name="hostInfo" class="col-xs-7 ">${product.hostName}	</div>
+			</div>
+		</div>
+		<br/>
+		
+			<div class="col-xs-3 text-center">
+			<br/>
+			<button type="button" class="btn btn-primary btn-responsive" name="sendQuestion">1:1 문의</button>
+			</div>
+			<br/>
+			</div>
+			<!-- Modal -->
+			<div class="modal fade" id="modalmessage"  role="dialog">
+			<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>쪽지</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div id="msg">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="upmessage">보내기</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+			</div>
+			</div>
+			</div>
+			<!--Modal  -->			
+		
+		<br/><br/>
+		
+		
 		<form>
-			<div class="row">
+		<div class="col-xs-12">
+		<br/>
+			<div class="row col-xs-6">
 				<input type="hidden" name="productNo" value="${product.productNo }"/>
 				<select class="form-control" name="tripDate" id="tripDate">
 					<option value="0" >날짜선택</option>
@@ -530,6 +700,7 @@
 						
 					</c:forEach>
 				</select> 
+				<br/>
 				<select class="form-control" name="count" id="count">
 					<%-- <c:set var="i" value="1"></c:set> --%>
 					<option value="0" >갯수선택</option>
@@ -544,59 +715,50 @@
 					<%-- </c:if> --%>
 				</select>
 			</div>
-
-			<div class="row">
-	  		<div class="col-md-12 text-center ">
-	  			<%-- <c:if test="${param.menu=='search'}"> --%>
-	  				<button type="button" class="btn btn-primary">구매</button>
-	  				<button type="button" class="btn btn-primary">이전</button>
-	  				
-	  			<%-- </c:if>
-				<c:if test="${param.menu!='search'}">
-					<button type="button" class="btn btn-primary">확인</button>
-				</c:if> --%>
-	  		</div>
-		</div>
-		</form>
-		<hr/>
-		
-		<div class="row" name="hostInfo">
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>호스트</strong></div>
-	  		<div class="col-xs-8 col-md-4">	  		
-			<c:if test="${empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="rounded-circle"></c:if>
-			<c:if test="${!empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${product.hostImage}" class="rounded-circle"></c:if>
+			<br/>
+			<div class="row col-xs-1"></div>
+			<div class="row col-xs-5">
+	  			<button type="button" class="btn btn-primary">구매</button>
+	  			<button type="button" class="btn btn-primary">이전</button>	  							  			
 			</div>
-			<button name="sendQuestion">1:1 문의</button>		
-		</div>		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "></div>
-			<div class="col-xs-8 col-md-4">${product.hostName}	</div>
+			</div>
+		</form>
+		
+		
+		</div>
+		</div>
 		</div>
 		</div>
 		
+		<!-- <div class="row">
 		<hr/>
+		</div> -->
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>상품상세정보</strong></div>
-			<div class="col-xs-8 col-md-4">${product.description}</div>
+		<div class="container">
+		<div class="col-sm-12">
+		<hr/>
+		<div class="row">
+	  		<div class="col-sm-4 col-sm-offset-2"><strong>상품상세정보</strong></div>
+			<div class="col-sm-4">${product.description}</div>
 			<a href="#" type="button" class="top">Top</a>
-		</div>
 		
+		</div>
+		</div>
 		<hr/>			
 		
 		<div class="row">
-	  		<div class="col-xs-4 col-md-2 "><strong>평점</strong></div>
+	  		<div class="col-xs-4 col-md-2 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>평점</strong></div>
 			<div class="col-xs-8 col-md-4" name="eval">${transaction.evalProduct}</div>
 		</div>
 		
 		<hr/>		
-	  
+	  </div>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<div class="container">
- 		<div><strong>리뷰/별점</strong></div>
+ 		<div class="col-xs-4 col-md-2 "><strong>리뷰/별점</strong></div>
  		<p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
@@ -630,18 +792,21 @@
       </div>
 	  <!--  table End /////////////////////////////////////-->
  	
+ 	
  	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_review.jsp"/> 
+	<center><jsp:include page="../common/pageNavigator_review.jsp"/> </center>
 	<!-- PageNavigation End... -->
+	
 	<hr/>	
 	</div>
 	
 	<!-- Reply -->
+	<div class="container">
 	<div class="form-group" id="replyinput">
-         <div class="col-md-8 col-md-offset-1">
+         <div class="col-md-10">
             <textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
          </div>
-         <div class="col-md-1">
+         <div class="col-md-2">
             <button type="button"  id="write" class="btn btn-default">댓글입력</button>
          </div>
       </div>
@@ -653,7 +818,7 @@
       <br>
       <br>
       <div class="form-group" id = "totalCount">
-         <div class="col-md-2 col-md-offset-1">
+         <div class="col-md-2 ">
             <strong>댓 글 목 록</strong>      
          </div>
          <div class="col-md-2" >
@@ -661,22 +826,23 @@
                   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>            
          </div>
       </div>
-      <div class="col-xs-10 col-xs-offset-1">
+      
+      <div class="col-xs-12 ">
       <hr sytle="border-style:dotted">
       </div>
       <div class="row" name="row">
       <c:forEach var="reply" items="${list}">
       <div class= "row2">
-         <div class="col-md-10 col-md-offset-1">
+         <div class="col-xs-12 ">
              ${reply.userName}
           </div>
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-xs-12 ">
              ${reply.replyContent}
           </div>
-          <div class="col-md-10 col-md-offset-1">
+          <div class="col-xs-12 ">
              ${reply.replyRegDate}
           </div>
-          <div class="col-xs-10 col-xs-offset-1">
+          <div class="col-xs-12 ">
          <hr sytle="border-style:dotted">
          </div>
       </div>
@@ -689,8 +855,9 @@
           <a href="#" id="addReply"> 댓글 더보기 </a>
            </div>
            <div class="col-xs-10 col-xs-offset-1">
-         <hr sytle="border-style:dotted">
+         <br/>
          </div>
+      </div>
       </div>
 
 </body>

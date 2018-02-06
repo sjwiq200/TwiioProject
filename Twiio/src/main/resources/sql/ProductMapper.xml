@@ -119,27 +119,23 @@
 		AND p.product_delete='0'		
 		<if test="search.searchCondition != null">
 			
-				<if test="search.searchCondition == '0' and search.searchKeyword !='' ">
+				<if test="(search.searchCondition eq '0'.toString()) and search.searchKeyword !='' ">
 	 				AND country= #{search.searchKeyword}
 				</if>
-				<if test="search.searchCondition == '1' and search.searchKeyword !='' ">
+				<if test="(search.searchCondition eq '1'.toString()) and search.searchKeyword !='' ">
 	 				AND city = #{search.searchKeyword}
 				</if>
-				<if test="search.searchCondition == '2' and search.searchKeyword !='' ">
+				<if test="(search.searchCondition eq '2'.toString()) and search.searchKeyword !='' ">
 	 				AND product_title LIKE '%${search.searchKeyword}%'
 				</if>
-				<if test="search.searchCondition == '3' and search.searchKeyword !='' ">
+				<if test="(search.searchCondition eq '3'.toString()) and search.searchKeyword !='' ">
 	 				AND user_name LIKE '${search.searchKeyword}%'
 				</if>			
-			
+			 
 		</if>
-		<choose>
-			<when test="search.prodSearchType == '1'">AND product_type = '1'</when>
-			<when test="search.prodSearchType == '2'">AND product_type = '2'</when>
-			<when test="search.prodSearchType == '3'">AND product_type = '3'</when>
-			<when test="search.prodSearchType == '4'">AND product_type = '4'</when>
-			<when test="search.prodSearchType == '5'">AND product_type = '5'</when>			
-		</choose>
+		<if test="search.prodSearchType != null and search.prodSearchType != '' ">
+			AND product_type = #{search.prodSearchType}
+		</if>		
 		<choose>
 			<when test="search.priceCondition == 'low'">ORDER BY product_price</when>
 			<when test="search.priceCondition == 'high'">ORDER BY product_price DESC</when>

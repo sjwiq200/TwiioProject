@@ -29,7 +29,6 @@
    <!-- scroll -->
    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
    
-   
    <style>
       a.top {
         position: fixed;
@@ -50,7 +49,7 @@
 	<style>
 		body {
 			padding-top: 50px;
-			background:  #f4f4f4;
+			background: rgba(208, 211, 197, 0.3);
 		}
 		
 		textarea {
@@ -58,110 +57,6 @@
 			height: 100px;
 			resize: none;
 		}
-		
-		/* Profile container */
-.profile {
-  margin: 20px 0;
-}
-
-.profile-userpic img {
-  float: none;
-  margin: 0 auto;
-  width: 50%;
-  height: 50%;
-  -webkit-border-radius: 50% !important;
-  -moz-border-radius: 50% !important;
-  border-radius: 50% !important;
-}
-
-.profile-usertitle {
-  text-align: center;
-  margin-top: 20px;
-}
-
-.profile-usertitle-name {
-  color: #5a7391;
-  font-size: 16px;
-  font-weight: 600;
-  margin-bottom: 7px;
-}
-
-.profile-usertitle-job {
-  text-transform: uppercase;
-  color: #5b9bd1;
-  font-size: 12px;
-  font-weight: 600;
-  margin-bottom: 15px;
-}
-
-.profile-userbuttons {
-  text-align: center;
-  margin-top: 10px;
-}
-
-.profile-userbuttons .btn {
-  text-transform: uppercase;
-  font-size: 11px;
-  font-weight: 600;
-  padding: 6px 15px;
-  margin-right: 5px;
-}
-
-.profile-userbuttons .btn:last-child {
-  margin-right: 0px;
-}
-    
-.profile-usermenu {
-  margin-top: 30px;
-}
-
-.profile-usermenu ul li {
-  border-bottom: 1px solid #f0f4f7;
-  color: #5b9bd1;
-  font-size: 20px;
-  font-weight: 400;
-  margin-right: 8px;    
-  margin-left: -2px;
-  
-}
-
-.profile-usermenu ul li:last-child {
-  border-bottom: none;
-}
-
-/* .profile-usermenu ul li a {
-  color: #93a3b5;
-  font-size: 14px;
-  font-weight: 400;
-} */
-
-/* .profile-usermenu ul li a i {
-  margin-right: 8px;
-  font-size: 14px;
-} */
-
-/* .profile-usermenu ul li a:hover {
-  background-color: #fafcfd;
-  color: #5b9bd1;
-} */
-
-.profile-usermenu ul li.active {
-  border-bottom: none;
-}
-
-.profile-usermenu ul li.active a {
-  color: #5b9bd1;
-  background-color: #f6f9fb;
-  border-left: 2px solid #5b9bd1;
-  margin-left: -2px;
-}
-
-/* Profile Content */
-.profile-content {
-  padding: 20px;
-  background: #fff;
-  min-height: 460px;
-}
 	</style>
 	<script type="text/javascript">
 	
@@ -290,65 +185,62 @@
 	
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-    <div class="row profile">
-		<div class="col-md-12">
-			<!-- <div class="profile-sidebar"> -->
-			<input type="hidden" name="hostNo" value="${host.userNo }"/>
-				<!-- SIDEBAR USERPIC -->
-				<div class="profile-userpic">
-					<c:if test="${empty host.userImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-					<c:if test="${!empty host.userImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${host.userImage}" class="img-responsive"></c:if>
-					<!-- <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> -->
-				</div>
-				<!-- END SIDEBAR USERPIC -->
-				<!-- SIDEBAR USER TITLE -->
-				<div class="profile-usertitle">
-					<div class="profile-usertitle-name">
-						${host.userName }
-					</div>
-					<div class="profile-usertitle-job">
-						${host.userGender }
-					</div>
-				</div>
-				<!-- END SIDEBAR USER TITLE -->
-				<!-- SIDEBAR BUTTONS 
-				<div class="profile-userbuttons">
-					<button type="button" class="btn btn-success btn-sm">Follow</button>
-					<button type="button" class="btn btn-danger btn-sm">Message</button>
-				</div>
-				 END SIDEBAR BUTTONS -->
-				<!-- SIDEBAR MENU -->
-				<div class="profile-usermenu">
-					<ul class="nav">
-						<li class="active">
-							<div >
-							<i class="glyphicon glyphicon-earphone"></i>
-							&nbsp;&nbsp;${host.userPhone }</div>
-						</li>
-						<li>
-							<div>
-							<i class="glyphicon glyphicon-envelope"></i>
-							&nbsp;&nbsp;${host.userEmail }</div>
-						</li>
-						<li>
-							<div>
-							<i class="glyphicon glyphicon-flag"></i>
-							&nbsp;&nbsp;${host.userBirthday } </div>
-						</li>
-						<li>
-							<div>
-							<i class="glyphicon glyphicon-star"></i>
-							&nbsp;&nbsp;${evalHost} </div>
-						</li>
-					</ul>
-				</div>
-				<!-- END MENU -->
-			<!-- </div> -->
+	<div class="container text-center">
+		<input type="hidden" name="hostNo" value="${host.userNo }"/>
+		<%-- <input type="hidden" name="userName" value="${user.userName }"/> --%>
+		<div class="page-header ">	     
+		<div class="row " >
+	  		<!-- <div class="col-xs-4 col-md-2 "><strong>호스트</strong></div> -->
+	  		<div class="col-xs-8 col-md-4">
+			<c:if test="${empty host.userImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="rounded-circle"></c:if>
+			<c:if test="${!empty host.userImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${host.userImage}" class="rounded-circle"></c:if>
+			</div>			
+		</div>		   	      
+	    </div>
+	
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2"><strong>이름</strong></div>
+			<div class="col-xs-8 col-md-4">${host.userName }</div>			
 		</div>
 		
-	</div>
-</div>
+		<hr/>		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>성별</strong></div>
+			<div class="col-xs-8 col-md-4">${host.userGender }</div>
+		</div>
+				
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>핸드폰</strong></div>
+			<div class="col-xs-8 col-md-4">${host.userPhone }</div>
+		</div>
+				
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>E-mail</strong></div>
+			<div class="col-xs-8 col-md-4">${host.userEmail }</div>
+		</div>
+				
+		<hr/>
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>생년월일</strong></div>
+			<div class="col-xs-8 col-md-4">${host.userBirthday }</div>
+		</div>
+				
+		<hr/>		
+		
+		<div class="row">
+	  		<div class="col-xs-4 col-md-2 "><strong>평점</strong></div>
+			<div class="col-xs-8 col-md-4" name="eval">${evalHost}</div>
+		</div>
+		
+		<hr/>		
+	  
+ 	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<div class="container">
@@ -387,7 +279,7 @@
 	  <!--  table End /////////////////////////////////////-->
  	
  	<!-- PageNavigation Start... -->
-	<center><jsp:include page="../common/pageNavigator_review.jsp"/> </center>
+	<jsp:include page="../common/pageNavigator_review.jsp"/> 
 	<!-- PageNavigation End... -->
 	<hr/>	
 	</div>
