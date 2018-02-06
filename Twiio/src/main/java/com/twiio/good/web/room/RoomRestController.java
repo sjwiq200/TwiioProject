@@ -31,6 +31,10 @@ public class RoomRestController {
 	@Autowired
 	@Qualifier("mypageServiceImpl")
 	private MyPageService mypageService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 
 	public RoomRestController() {
 		// TODO Auto-generated constructor stub
@@ -73,8 +77,16 @@ public class RoomRestController {
 	}
 	
 	@RequestMapping("/json/addReport/")
-	public boolean addReport(@ModelAttribute("report") Report report) throws Exception{
-		
+	public boolean addReport(@RequestBody Report report, HttpSession session) throws Exception{
+		System.out.println("/room/json/addReport : ");
+		User user = (User)session.getAttribute("user");
+		report.setUserNo(user.getUserNo());
+		if(report.getTargetUserNo() == 0) {
+		}else {
+			report.setTargetRoomKey(null);
+		}
+		System.out.println("report ==>"+report);
+		commonService.addReport(report);
 		return true;
 	}
 	
