@@ -28,13 +28,12 @@
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
+  
+  <!-- ---------Floating Button------------ -->
+  <link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   <script>
   	$(function() {
-		 
-		 $( "button.btn.btn-default:contains('방생성')" ).on("click" , function() {
-			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
-		});
 		 
 		 $("a:contains('참가')").on("click",function(){
 			 
@@ -53,8 +52,6 @@
 					 alert(JSONData);
 				 }
 			 })
-			 
-			 
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
 			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
@@ -71,6 +68,14 @@
 	        };
 		 
 	 });
+  	
+  	
+  	$(function(){
+  		$("[data-toggle='tooltip']").tooltip();
+  		$("#floating-button").on("click",function(){
+  			$("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
+  		})
+  	})
   </script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -125,7 +130,6 @@
 				  </div>
 				  
 				  <button type="button" class="btn btn-default">검색</button>
-				  <button type="button" class="btn btn-default">방생성</button>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
@@ -163,6 +167,14 @@
         
         
 	  <!--  table End /////////////////////////////////////-->
+	  
+	  <!--  Floating Button <START> -->
+		<div id="container-floating">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create" title="방 생성">
+				<p class="letter" id="addMainPlan">+</p>
+			</div>
+		</div>
+	  <!--  Floating Button <END> -->
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
