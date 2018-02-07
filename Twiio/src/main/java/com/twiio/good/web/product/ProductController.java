@@ -198,6 +198,8 @@ public class ProductController {
 			productService.updateProduct(product);
 		}else {
 			System.out.println(product);
+			Product dbProd = productService.getProduct(product.getProductNo());
+			product.setThumbnail(dbProd.getThumbnail());
 			productService.updateProduct(product);
 		}		
 		
@@ -282,7 +284,7 @@ public class ProductController {
 		//List<Transaction> list = productService.listBestProduct(search);				
 		
 		map.put("list", (List<Transaction>)productService.listBestProduct(search));
-		map.put("list02", (List<Transaction>)userService.listBestHost(search));
+		//map.put("list02", (List<Transaction>)userService.listBestHost(search));
 		
 		return "forward:/product/best10.jsp";
 	}

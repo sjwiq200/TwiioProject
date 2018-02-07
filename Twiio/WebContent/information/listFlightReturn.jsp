@@ -111,7 +111,7 @@
 			}
 			
 			.btn-outlined.btn-light {
-			    background: #f4f4f4;
+			    background: #FFF;
 			    color: #D73A31;
 				border-color: #D73A31;
 			}
@@ -136,7 +136,7 @@
 			    font-weight: bold;
 			    vertical-align: top;
 			    color: #fff;
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.6);
 			    margin: 20px 10px;
 			    border: 1px solid #60b6c3;
 			}

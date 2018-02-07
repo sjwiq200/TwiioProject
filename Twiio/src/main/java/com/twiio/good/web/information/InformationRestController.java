@@ -122,8 +122,9 @@ public class InformationRestController {
 		List<Long> resultTemp = new ArrayList<>();
 
 		for(int i =0; i<dateList.size()-1; i++) {
-			resultDate.add(dateList.get(i));
-			i = i+1;
+			String[] str = dateList.get(i).split(" ");
+			resultDate.add(str[0]);
+			i = i+3;
 		}
 		System.out.println(resultDate.size());
 		
@@ -131,7 +132,7 @@ public class InformationRestController {
 			Double tmp = Double.parseDouble(mainList.get(i).getTemp());
 			System.out.println("tmp"+tmp);
 			resultTemp.add(Math.round(tmp-273));
-			i = i+1;
+			i = i+3;
 		}
 		System.out.println(resultTemp.size());
 		
@@ -174,10 +175,14 @@ public class InformationRestController {
 		Map<Object,String[]> map = informationService.searchHistoryWeather(cityName);
 		
 		List<String> list = new ArrayList<String>();
+		List<String> data = new ArrayList<String>();
 		
 		String[] simple = map.get("quickInfo");
 		for(int i = 0; i<simple.length; i++) {
-			list.add(simple[i]);
+			String[] str = simple[i].split(" ");
+			
+			list.add(str[0]+" "+str[1]);
+			data.add(str[2]+" "+str[3]+" "+str[4]+" "+str[5]);
 		}
 		
 		String[] past = map.get("historyWeather");
@@ -206,6 +211,7 @@ public class InformationRestController {
 		Map<String,List> last = new HashMap();
 		
 			last.put("list", list);
+			last.put("data", data);
 			last.put("month", month);
 			last.put("min", min);
 			last.put("max", max);

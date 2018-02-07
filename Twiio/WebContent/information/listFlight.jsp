@@ -42,6 +42,11 @@
 	
 	<!-- jQuery UI toolTip 사용 JS-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
    
 	<style>
@@ -103,7 +108,7 @@
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #f4f4f4;
+			    background: #FFF;
 			    color: #08708A;
 				border-color: #08708A;
 			}
@@ -140,7 +145,7 @@
 			    font-weight: bold;
 			    vertical-align: top;
 			    color: #fff;
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.7);
 			    margin: 20px 10px;
 			    border: 1px solid #60b6c3;
 			}
@@ -156,12 +161,13 @@
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 .even {
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.4);
 			}
 			table {
 		    margin-left: auto;
 		    margin-right: auto;
 		  }
+		  
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -371,9 +377,9 @@
 		
 	<div class="row centered-form">
 		 <div class="mainbox col-md-12">
-			<div class="panel panel-info">
+			<div class="panel">
         		<div class="panel-heading" >
-			    		<h3 class="panel-title">정보를 입력해주세요!</h3>
+			    		<h3 class="panel-title"></h3>
 			 		</div>
 			 			<div class="panel-body">
 			    			<div class="row">

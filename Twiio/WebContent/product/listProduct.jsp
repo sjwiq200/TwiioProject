@@ -8,7 +8,7 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="EUC-KR">
+	<meta charset="UTF-8">
 	
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -21,16 +21,16 @@
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery UI toolTip 사용 CSS-->
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- autocomplate -->
- <!--  <link rel="stylesheet" href="/resources/demos/style.css"> -->
+  <!--  <link rel="stylesheet" href="/resources/demos/style.css"> -->
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
@@ -39,7 +39,8 @@
 <style>
 body {
 	padding-top: 52px;
-	background: rgba(208, 211, 197, 0.3);
+	/* background: rgba(208, 211, 197, 0.3); */
+	background:  #f4f4f4;
 	/* color: #08708A; */
 }
 
@@ -160,10 +161,11 @@ a.thumbnail{
 </style>
 <script type="text/javascript">
 	function fncGetUserList(currentPage, priceCondition, prodSearchType) {
-
+		//alert(prodSearchType);
 		$("#currentPage").val(currentPage);
 		$("#priceCondition").val(priceCondition);
-		$("#prodSearchType").val(prodSearchType);		
+		$("#prodSearchType").val(prodSearchType);	
+		//alert($("#prodSearchType").val());
 		$("form").attr("method", "POST").attr("action", "/product/listProduct").submit();
 	}
 
@@ -240,11 +242,9 @@ a.thumbnail{
 										contentType : "application/json;charset=UTF-8",
 										data : JSON.stringify({
 											"currentPage" : page,
-											"searchCondition" : $(
-													'#searchCondition')
-													.val(),
-											"searchKeyword" : $(
-													'#searchKeword').val()
+											"searchCondition" : $('#searchCondition').val(),
+											"searchKeyword" : $('#searchKeword').val(),
+											"prodSearchType" :  $('#prodSearchType').val()
 										}),
 										headers : {
 											"Accept" : "application/json",
@@ -379,6 +379,15 @@ a.thumbnail{
 	});
 	
 	$(function() {
+		
+		$("#best10").bind("click", function() {
+			$(self.location).attr("href","/product/listBestProduct");
+		});
+		
+		$("#host10").bind("click", function() {
+			
+		});
+		
 		$("#attraction").bind("click", function() {
 			fncGetUserList('${resultPage.currentPage }','${search.priceCondition}' ,'1');
 		});
@@ -453,19 +462,18 @@ a.thumbnail{
 
 	<!--  ButtonGroup Start /////////////////////////////////////-->
 	<div class="container">
-		<!-- <div class="page-header text-info"></div>	 -->
-		<input type="hidden" id="prodSearchType" name="prodSearchType" value="" />
-		<div class="col-sm-offset-2 col-sm-10 text-center">
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="best10">best10</button>
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="host10">host10</button>
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="attraction">명소투어</button>
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="food">푸드투어</button>
+		<!-- <div class="page-header text-info"></div>	 -->		
+		<div class="row col-sm-offset-2 col-sm-10 text-center">
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="best10">best10</button>
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="host10">host10</button>
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="attraction">명소투어</button>
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="food">푸드투어</button>
 		</div>
 
-		<div class="col-sm-offset-3 col-sm-9 text-center">
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="tracking">트래킹</button>
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="activity">액티비티</button>
-			<button class="col-xs-2 btn btn-outlined btn-theme btn-xs" id="night">night투어</button>
+		<div class="row col-sm-offset-3 col-sm-9 text-center">
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="tracking">트래킹</button>
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="activity">액티비티</button>
+			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="night">night투어</button>
 		</div>
 	</div>
 	<!--  ButtonGroup End /////////////////////////////////////-->
@@ -486,8 +494,7 @@ a.thumbnail{
 			</div>
 
 			<div class="col-md-6 text-right">
-				<form class="form-inline" name="detailForm">
-
+				<form class="form-inline" name="detailForm">				
 					<div class="form-group">
 						<select class="form-control" name="searchCondition"
 							id="searchCondition">
@@ -514,8 +521,8 @@ a.thumbnail{
 
 					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					<input type="hidden" id="currentPage" name="currentPage" value="" />
-					<input type="hidden" id="priceCondition" name="priceCondition"
-						value="" />
+					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
+					<input type="hidden" id="prodSearchType" name="prodSearchType" value="" />
 					<p>
 						<font color="blue" name="high">가격높은순</font>
 						<font color="blue" name="low">가격낮은순</font>
