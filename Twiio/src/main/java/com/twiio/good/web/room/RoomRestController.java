@@ -90,6 +90,13 @@ public class RoomRestController {
 		return true;
 	}
 	
+	@RequestMapping("/json/updateOpen")
+	public boolean updateOpen() throws Exception{
+		System.out.println(this.getClass()+".updateOpen");
+		
+		return true;
+	}
+	
 	
 
 }
