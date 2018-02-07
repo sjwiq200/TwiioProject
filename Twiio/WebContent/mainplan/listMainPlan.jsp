@@ -88,28 +88,38 @@ html, body {
 
 .textArea {
 	 margin-top: 20px;
-	 border-bottom: solid 1px #D73A31; 
+	 border-bottom: solid 1px #000000; 
 
+}
+
+.thumbnailClass{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: right;
+	
+}
+
+#buttonBox {
+	margin-top: 20px;
+	margin-bottom: 20px;
 }
 </style>
 
 
 <script>
 
-	function fncAddMainPlanList() {
-		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
-	}
 
 	$(function() {
 		$("#addMainPlan").bind("click", function() {
-			fncAddMainPlanList();
+			$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
 		});
 	});
 	
 	
 	 $(function() {
-			$("button:contains('수정')").bind("click",function() {
-				var index = $("button:contains('수정')").index(this);
+			$("#update").bind("click",function() {
+				alert("안녕");
+				var index = $("#update").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/updateMainPlanView?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -117,8 +127,8 @@ html, body {
 	 });
 	 
 	 $(function() {
-			$("button:contains('삭제')").bind("click",function() {
-				var index = $("button:contains('삭제')").index(this);
+			$("#delete").bind("click",function() {
+				var index = $("#delete").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -126,8 +136,8 @@ html, body {
 	 })
 	 
 	 	 $(function() {
-			$("button:contains('선택')").bind("click",function() {
-				var index = $("button:contains('선택')").index(this);
+			$("#select").bind("click",function() {
+				var index = $("#select").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -151,8 +161,8 @@ html, body {
 	 /////////////////////////친구와 공유하기 기능///////////////////////////
 	$(function() {
 	
-		$("input[name='shareWithFriendButton']").bind("click",function() {
-			var index = $("input[name='shareWithFriendButton']").index(this);
+		$("#shareWithFriendButton").bind("click",function() {
+			var index = $("#shareWithFriendButton").index(this);
 			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 			
 			var friend;
@@ -231,34 +241,27 @@ html, body {
 										<div class="caption" >
 										
 										 <div class="row">
-										   <div class="col-md-3">
-									<%-- 	   ${mainPlan.mainThumbnail} --%>
-											<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 150px; height:250px" /> 
-											<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
-										   </div>
-											<div class="col-md-7 textArea">
-												<h3>제목 : ${mainPlan.planTitle}</h3>
-												<p>출발하는 날짜 : ${mainPlan.departureDate }</p>
-												<p>도착하는 날짜 : ${mainPlan.arrivalDate}</p>
-												<p>국가 : ${mainPlan.country}</p>
-												<p>도시 : ${mainPlan.city}</p>
-											</div>
-												<div class="col-md-2">
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="update"></span>수정
-													</button>
-		
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>삭제
-													</button>
-		
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>선택
-													</button>
-													
-													<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-default" value="친구와 공유하기" />
+											   <div class="col-md-3 thumbnailClass">
+										<%-- 	   ${mainPlan.mainThumbnail} --%>
+												<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 150px; height:176px" /> 
+											   </div>
+											   
+												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
+												<div class="col-md-7 textArea">
+													<h3>제목 : ${mainPlan.planTitle}</h3>
+													<p>출발하는 날짜 : ${mainPlan.departureDate }</p>
+													<p>도착하는 날짜 : ${mainPlan.arrivalDate}</p>
+													<p>국가 : ${mainPlan.country}</p>
+													<p>도시 : ${mainPlan.city}</p>
 												</div>
-											</div>
+											
+												<div class="col-md-2" id="buttonBox" align="right">
+													수정 <img src="/resources/images/dailyPlanContent/149307.png" id="update" width="25px"></p>
+													삭제 <img src="/resources/images/dailyPlanContent/149147.png" id="delete" width="25px"></p>
+													선택 <img src="/resources/images/dailyPlanContent/149148.png" id="select" width="25px"></p>
+													공유 <img src="/resources/images/dailyPlanContent/149180.png" id="shareWithFriendButton" name="shareWithFriendButton" width="25px">
+												</div>
+											</div> <!--  row 끝 -->
 											
 										</div>
 									</div>
@@ -284,19 +287,31 @@ html, body {
 			</div>
 			<!-- 메인 섬네일을 감싸는 row 시작부분 -->
 		</div>
+		
+		<!--  Floating Button <START> -->
+		<div id="container-floating">
+			<div id="floating-button1" data-toggle="tooltip" data-placement="center" data-original-title="Create">
+				<p class="letter" id="listSharedPlan">공유플랜</p>
+			</div>
+		</div>
+		<!--  Floating Button <END> -->
+		
+		
+		<!--  Floating Button <START> -->
+		<div id="container-floating">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create">
+				<p class="letter1" id="addMainPlan">+</p>
+			</div>
+		</div>
+		<!--  Floating Button <END> -->
+
+
 	</form>
-	
+
+
 
 </body>
 
-<!--  Floating Button <START> -->
-<div id="container-floating">
-	<div id="floating-button" data-toggle="tooltip" data-placement="center"
-		data-original-title="Create" onclick="newmail()">
-		<p class="letter" id="addMainPlan">+</p>
-	</div>
-</div>
-<!--  Floating Button <END> -->
 <!---------- ShareWithFriend Dialog <START>------------->
 
 		<div class="modal fade" id="shareWithFriend" role="dialog">
