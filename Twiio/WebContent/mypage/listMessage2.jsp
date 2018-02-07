@@ -94,7 +94,7 @@ function resetData() {
 	});
 }); */
 
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$("#mytable #checkall").click(function () {
 	        if ($("#mytable #checkall").is(':checked')) {
 	            $("#mytable input[type=checkbox]").each(function () {
@@ -109,7 +109,7 @@ $(document).ready(function(){
 	    });
 	    
 	    $("[data-toggle=tooltip]").tooltip();
-	});
+	}); */
 	
 </script>
 </head>

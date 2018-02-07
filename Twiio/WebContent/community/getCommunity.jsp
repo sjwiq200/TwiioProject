@@ -39,7 +39,7 @@
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
@@ -48,16 +48,19 @@
    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
    <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+   <!-- jQuery UI toolTip 사용 JS-->
+   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
  	
  	<!-- 다이얼로그  -->
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://getbootstrap.com/dist/js/bootstrap.min.js"></script>
 
-
-
-
+	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
  	
 	
 	<style>
@@ -73,13 +76,8 @@
 	  height: 100px;
 	  resize: none;
 		}
-		
-		#container{
- 		 width:715px;
- 		 height:230px;
-		 margin:50px auto;
-		}
-		.button-2{
+
+ 		.button-2{
   width:140px;
   height:50px;
   border:2px solid #34495e;
@@ -115,7 +113,8 @@
 }
 .button-2:hover a{
   color:#fff;
-}
+} 
+
 
 	</style>
 
@@ -127,7 +126,8 @@ $(function() {
 	 $("button.btn.btn-primary").bind("click" , function() {
 		 $("form").attr("method" , "POST").attr("action" , "/community/listCommunity").submit();
 	});
-});	
+});
+
 
 
 /*============= jQuery 변경 주석처리 =============
@@ -143,39 +143,12 @@ function resetData() {
 	});
 }); */
 
-	$(function() {
-    $('#summernote').summernote({
-    	 toolbar: [
-    		    // [groupName, [list of button]]
-    		    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-    		    ['font', ['font family', 'strikethrough', 'superscript', 'subscript']],
-    		    ['fontsize', ['fontsize']],
-    		    ['color', ['color']],
-    		    ['para', ['ul', 'ol', 'paragraph']],
-    		    ['height', ['height']],
-    		    ['insert', ['table', 'picture', 'video', 'link']],
-    		    ['misc', ['undo', 'redo', 'codeview', 'help']]
-    		  ],
-    	        	
-    	lang: 'ko-KR', // default: 'en-US'
-    	height: 300,                 // set editor height
-    	minHeight: null,             // set minimum height of editor
-    	maxHeight: null,             // set maximum height of editor
-    	focus: true,                  // set focus to editable area after initializing summernote
-    	placeholder: 'write here...',
-    	/* callback: {
-    		onImageUpload: function(files) {
-        		sendFile(files[0]);
-        	}
-    	} */
-    	
-    });
-});
+	
 
 	var page = 1;
 	var page2='';
 	 
-	
+	//////////////////////////////////////////////////////addreply////////////////////////////////////////////////////
 	$(function() {
 		 $("#addReply").on("click" , function() {
 			 page=page+1;
@@ -200,25 +173,36 @@ function resetData() {
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
 												'<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
-												 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].communityNo+'"/>'+
+												 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 												 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
-												'<div class="col-md-6 col-md-offset-1">'+
+												'<div class="col-md-2 col-md-offset-1">'+
 												JSONData.list[i].userName+
 						   						'</div>'+
-						  						 '<div class="col-md-3 col-md-offset-1">'+
-												'<button type="button"  name="addreport" class="btn btn-default">신고하기</button>'+
-												'<button type="button"  name="addfriend" class="btn btn-default">친구추가</button>'+
-												'<button type="button"  name="addmessage" class="btn btn-default">쪽지보내기</button>'+
-						   						'</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
-				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
-				    						   '</div>'+
-				    						   '<div class="col-md-10 col-md-offset-1">'+
-				    						   JSONData.list[i].replyRegDate+
-				    						   '</div>'+
-				    						   '<div class="col-xs-10 col-xs-offset-1">'+
-											   '<hr sytle="border-style:dotted">'+
-							  				   '</div></div>';
+						   						'<c:if test="${empty user.userId}">'+
+					    						   '</c:if>'+
+					    						   '<c:if test="${!empty user.userId}">'+
+					    						   '<div class="btn-group pull-right">'+
+													'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+													' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+													'</button>'+
+													'<ul class="dropdown-menu slidedown">'+
+													'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+													'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+													'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+													' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+													' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+													'</ul>'+
+												   '</div>'+
+												   '</c:if>'+
+					    						   '<div class="col-md-10 col-md-offset-1">'+
+					    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+					    						   '</div>'+
+					    						   '<div class="col-md-10 col-md-offset-1">'+
+					    						   JSONData.list[i].replyRegDate+
+					    						   '</div>'+
+					    						   '<div class="col-xs-12">'+
+												   '<hr sytle="border-style:dotted">'+
+								  				   '</div></div>';
 							}
 							}
 							
@@ -242,10 +226,10 @@ function resetData() {
 		 console.log('page2 : '+page2);
 	});
 	
-	
+	/////////////////////////////////////////////////writereply//////////////////////////////////////////////
 	$(function() {
 		 $("#write").on("click" , function() {
-			
+			alert('들어오니??');
 			if(${empty user.userId}){
 				 alert('로그인후 사용하여주세요');	 
 			 }
@@ -275,23 +259,35 @@ function resetData() {
 							 displayValue += 
 											   '<div class="row2">'+
 											   '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
-											   '<input type="hidden" name="replyNo" value="'+JSONData.list[i].communityNo+'"/>'+
+											   '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 											   '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
-											   '<div class="col-md-6 col-md-offset-1">'+
+											   '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'/>'+
+											   '<div class="col-md-2 col-md-offset-1">'+
 												JSONData.list[i].userName+
 				    						   '</div>'+
-				    						   '<div class="col-md-3 col-md-offset-1">'+
-												'<button type="button"  name="addreport" class="btn btn-default">신고하기</button>'+
-												'<button type="button"  name="addfriend" class="btn btn-default">친구추가</button>'+
-												'<button type="button"  name="addmessage" class="btn btn-default">쪽지보내기</button>'+												
+				    						   '<c:if test="${empty user.userId}">'+
+				    						   '</c:if>'+
+				    						   '<c:if test="${!empty user.userId}">'+
+				    						   '<div class="btn-group pull-right">'+
+												'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+												' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+												'</button>'+
+												'<ul class="dropdown-menu slidedown">'+
+												'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+												'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+												'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+												' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+												' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+												'</ul>'+
 											   '</div>'+
+											   '</c:if>'+
 				    						   '<div class="col-md-10 col-md-offset-1">'+
 				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 				    						   '</div>'+
 				    						   '<div class="col-md-10 col-md-offset-1">'+
 				    						   JSONData.list[i].replyRegDate+
 				    						   '</div>'+
-				    						   '<div class="col-xs-10 col-xs-offset-1">'+
+				    						   '<div class="col-xs-12">'+
 											   '<hr sytle="border-style:dotted">'+
 							  				   '</div></div>';
 							}
@@ -314,7 +310,7 @@ function resetData() {
 	});
 	
 	
-	
+	///////////////////////////////////////////////////addfriendcommunity/////////////////////////////////////
 		 $(document).on("click", '#addfriendcommunity', function(){
 
 			 $('#modalfriend').modal('show');
@@ -342,7 +338,6 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalfriend').modal('toggle');
-							
 						}
 				}); 
 			 	}
@@ -352,10 +347,10 @@ function resetData() {
 	
 	
 	
-
-	$(document).on('click','.row2 button[name=addreport]', function() {
-		 var reportuserno = $($('input[name=userNo]')[$('.row2 button[name=addreport]').index(this)]).val();
-		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 button[name=addreport]').index(this)]).val();
+	///////////////////////////////////////////////////addreport////////////////////////////////////////
+	$(document).on('click','.row2 a[name=addreport]', function() {
+		 var reportuserno = $($('input[name=userNo]')[$('.row2 a[name=addreport]').index(this)]).val();
+		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportbody = 
 			        '<h3>신고글 작성<h3>'+
 					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportuserno+'" readonly/>'+
@@ -364,7 +359,7 @@ function resetData() {
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo}== reportuserno){
+		 }else if(${user.userNo} == reportuserno){
 			 alert('자기자신은 신고 못합니다.');
 	 	 }else{
 	 		$('#reportbody').html(reportbody);
@@ -402,13 +397,13 @@ function resetData() {
 			});
 	});
 	
-	
-	$(document).on('click','.row2 button[name=addfriend]', function() {
-		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 button[name=addfriend]').index(this)]).val();
+	///////////////////////////////////////////////addfriend///////////////////////////////////////////////////
+	$(document).on('click','.row2 a[name=addfriend]', function() {
+		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }
-		 else if(${user.userNo} ==addfrienduserno){
+		 else if(${user.userNo}== addfrienduserno){
 			 alert('자기 자신을 친구 추가할수 없습니다.');
 		 }else{
 		 	$('#modalfriend').modal('show');
@@ -432,17 +427,18 @@ function resetData() {
 			});
 		});
 	
-	$(document).on('click','.row2 button[name=addmessage]', function() {
-		 var msguserno = $($('input[name=userNo]')[$('.row2 button[name=addmessage]').index(this)]).val();
-		 var msgusername = $($('input[name=userName]')[$('.row2 button[name=addmessage]').index(this)]).val();
+	/////////////////////////////////////////////////addmessage////////////////////////////////////////////////////
+	$(document).on('click','.row2 a[name=addmessage]', function() {
+		 var msguserno = $($('input[name=userNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
+		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var inmsg =
 			 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
-			'<input type="text" class="form-control" id="msgno" row="6" col="50" placeholder="제목 작성" value="'+msguserno+'"/>'+
+			'<input type="text" class="form-control" id="msgno" row="6" col="50"  value="'+msguserno+'" readonly/>'+
 			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo}== msguserno){
+		 }else if(${user.userNo }== msguserno){
 			 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
 		 }else{ 
 			$('#msg').html(inmsg);
@@ -473,15 +469,82 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalmessage').modal('toggle');
-							
 						}
 				});
 			 	}
 			});	
 		});
-		
 	
-
+	///////////////////////////////////////////////deleteReply/////////////////////////////////////////////
+	$(document).on('click','.row2 a[name=deletereply]', function() {
+		 var deletereply = $($('input[name=replyNo]')[$('.row2 a[name=deletereply]').index(this)]).val();
+		 var deleteuserno = $($('input[name=userNo]')[$('.row2 a[name=deletereply]').index(this)]).val();
+		 
+		//alert(${user.userNo}+'==='+deleteuserno);
+		 
+		 if(${empty user.userId}){
+			 alert('로그인후 사용하여주세요');	 
+		 }else if(${user.userNo } == deleteuserno){
+			 
+			 $('#deletemodalreply').modal('show');
+		 }else{
+		 	alert('자신의 댓글을 선택하여 지우세요.');
+		 }
+		
+		$(document).on('click','#deletereplym',function(){
+			  $.ajax({
+						url : "/common/json/deleteReply",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"userNo":"${user.userNo}",
+							"replyNo":deletereply,
+						}),
+						success : function(JSONData) {
+							alert(JSON.stringify(JSONData));
+							$('#deletemodalreply').modal('toggle');		
+							window.location.reload();
+						}
+				}); 
+			});
+		});
+	
+	//////////////////////////////////////updatereply//////////////////////////////////////////
+	$(document).on('click','.row2 a[name=updatereply]', function() {
+		var updateuserno = $($('input[name=userNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
+		var updatereplyno = $($('input[name=replyNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
+		var updatecontent = $($('input[name=replyContent]')[$('.row2 a[name=updatereply]').index(this)]).val();
+		var uprel ='<textarea id="updatecontent"  name="updatecontent" row="5" col="40" value="" placeholder="내용 작성">'+updatecontent+'</textarea>';
+		
+		if(${empty user.userId}){
+			 alert('로그인후 사용하여주세요');	 
+		 }else if(${user.userNo } == updateuserno){
+			 $('#upreply').html(uprel);
+			 $('#updatemodalreply').modal('show');
+		 }else{
+		 	alert('자신의 댓글을 선택하여 지우세요.');
+		 }
+		
+		$(document).on('click','#updatereplym',function(){
+			 $.ajax({
+					url : "/common/json/updateReply",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"replyNo":updatereplyno,
+						"replyContent":$('#updatecontent').val()
+					}),
+						success : function(JSONData) {
+							alert(JSON.stringify(JSONData));
+							 $('#updatemodalreply').modal('toggle');		
+							window.location.reload();
+					}
+			}); 
+		});
+	});
+	
 	
 </script>
 </head>
@@ -496,7 +559,6 @@ function resetData() {
    	
 		<div class="col-xs-10 col-xs-offset-1 page-header text-info">
 		<h1>커 뮤 니 티 글 보 기</h1>
-		</div>
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType }"/>
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<div class="form-group">
@@ -525,7 +587,7 @@ function resetData() {
 		   </div>
 			<div class="col-md-4 col-md-offset-2"><h4><strong>조회수  :  ${community.viewCount} / 등록일  :  ${community.regDate}</strong></h4></div>
 		</div>
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="col-xs-12 ">
 		<hr sytle="border-style:dotted">
 		</div>
 		<div class="form-group">
@@ -548,7 +610,7 @@ function resetData() {
 			${community.communityContent}
 			</div>
 		</div>
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="col-xs-12">
 		<hr sytle="border-style:dotted">
 		</div>
 		
@@ -573,39 +635,52 @@ function resetData() {
 					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
 			</div>
 		</div>
-		<div class="col-xs-10 col-xs-offset-1">
+		<div class="col-xs-12">
 		<hr sytle="border-style:dotted">
 		</div>
 		<div class="row">
 		<c:forEach var="reply" items="${list}">
 		<div class= "row2">
-			<input type="hidden" name="userNo" value="${reply.userNo}"/>
-			<input type="hidden" name="userName" value="${reply.userName}"/>
-			<input type="hidden" name="replyNo" value="${reply.replyNo}"/>
-			<div class="col-md-6 col-md-offset-1">
+			<input type="hidden" name="userNo" 	  	 value="${reply.userNo}"/>
+			<input type="hidden" name="userName" 	 value="${reply.userName}"/>
+			<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
+			<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
+			<div class="col-md-2 col-md-offset-1">
     			${reply.userName}
     		</div>
     		<c:if test="${empty user.userId}">
 		    </c:if>
 		    <c:if test="${!empty user.userId}">
-    		<div class="col-md-4 col-md-offset-1">
-				<button type="button"  name="addreport" class="btn btn-default">신고하기</button>
-								
-				<button type="button"  name="addfriend" class="btn btn-default">친구추가</button>
-			
-				<button type="button"  name="addmessage" class="btn btn-default">쪽지보내기</button>
-			</div>
+    		
+    		<div class="btn-group pull-right">
+                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">
+                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+                            </button>
+                            <ul class="dropdown-menu slidedown">
+                            	<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>
+                                <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>
+                                <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+                                <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+                                <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+                            </ul>
+             </div>				
 			</c:if>
-    		<div class="col-md-6 col-md-offset-1">
+		</div>
+			<div class ="row" name="upcontent">
+    		<div class="col-md-11 col-md-offset-1">
     			${reply.replyContent}
     		</div>
-    		<div class="col-md-10 col-md-offset-1">
+    		</div>
+    		<div class ="row" name="upregdate">
+    		<div class="col-md-11 col-md-offset-1">
     			${reply.replyRegDate}
     		</div>
-    		<div class="col-xs-10 col-xs-offset-1">
+    		</div>
+    		<div class ="row">
+    		<div class="col-xs-12">
 			<hr sytle="border-style:dotted">
 			</div>
-		</div>
+			</div>
  		</c:forEach>
  		</div>
  		
@@ -614,7 +689,7 @@ function resetData() {
     		<div class="eff-2"></div>
     		<a href="#" id="addReply"> 댓글 더보기 </a>
   			</div>
-  			<div class="col-xs-10 col-xs-offset-1">
+  			<div class="col-xs-12">
 			<hr sytle="border-style:dotted">
 			</div>
 		</div>
@@ -687,9 +762,51 @@ function resetData() {
 		</div>
 		</div>
 		
+		<div class="modal fade" id="deletemodalreply"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>댓글삭제</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<h4><Strong>댓글을 삭제하시겠습니까??</Strong></h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="deletereplym">예</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
 		
+		<div class="modal fade" id="updatemodalreply"  role="dialog">
+			<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>댓글 수정</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div id="upreply">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="updatereplym">수  정</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
+		</div>
 	</div>
 </body>
 </html>

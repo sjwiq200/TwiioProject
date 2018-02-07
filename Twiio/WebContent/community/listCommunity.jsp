@@ -171,7 +171,7 @@
  
  		if(${empty user.userId}){
 	 		alert('로그인후 사용하여주세요');	 
- 		}else if(${user.userNo}==reportcommunityuserno){
+ 		}else if(${user.userNo == reportcommunityuserno}){
 	 		alert('자기자신은 신고 못합니다.');
 	 	}else{
 		$('#reportbody').html(reportbody);

@@ -14,7 +14,7 @@
 		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
 		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
 		<result property="targetUserNo" 		column="target_user_no" 		jdbcType="NUMERIC"/>
-		<result property="targetRoomKey" 		column="target_room_key" 		jdbcType="VARCHAR"/>
+		<result property="targetRoomNo" 		column="target_room_no" 		jdbcType="NUMERIC"/>
 		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
 		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
 	</resultMap>
@@ -47,28 +47,30 @@
 	</resultMap> -->
 	
 	<!--SQL : INSERT  -->
-	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="report_no" keyProperty="report_no">
-		INSERT 
-		INTO REPORT 
+	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="reply_no" keyProperty="replyNo">
+		INSERT
+		INTO REPORT
 		VALUES (
 		seq_report_report_no.nextval,
 		#{userNo:NUMERIC},
 		#{reportContent:VARCHAR},
 		#{reportTitle:VARCHAR},
 		SYSDATE,
-		<if test="targetUserNo == 0">
+		#{targetUserNo:NUMERIC},
+		<if test="targetRoomNo == 0">
 		NULL
 		</if>
-		<if test="targetUserNo != 0">
-		#{targetUserNo:NUMERIC}
-		</if>,
-		#{targetRoomKey:VARCHAR},
+		<if test="targetRoomNo != 0">
+		#{targetRoomNo:NUMERIC}
+		</if>
+		,
 		<if test="targetReplyNo == 0">
 		NULL
 		</if>
 		<if test="targetReplyNo != 0">
 		#{targetReplyNo:NUMERIC}
-		</if>,
+		</if>
+		,
 		<if test="targetCommunityNo == 0">
 		NULL
 		</if>
@@ -194,21 +196,13 @@
 		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
 	</select>
 	
-	<select id="getFriend" parameterType="friend" resultMap="friendSelectMap">
-		SELECT * FROM friend WHERE user_no=#{userNo} AND friend_no = ${friendNo}
-	</select>
-	
 	<!-- SQL : UPDATE -->
 	
 	<update id="updateReply" parameterType="reply">
 		UPDATE REPLY
 	   	<set>
-	   		REPLY_NO 		= #{replyNo} ,
-			USER_NO			= #{userNo},
-			REPLY_CONTENT 	= #{replyContent} ,
-			REPLY_REG_DATE	= #{replyRegdate},
-			PRODUCT_NO		= #{productNo},
-			COMMUNITY_NO	= #{communityNo}
+			REPLY_CONTENT 	= #{replyContent},
+			REPLY_REG_DATE	= SYSDATE
 	   	</set>
 	   	WHERE REPLY_NO = #{replyNo}
 	</update>

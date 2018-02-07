@@ -1,20 +1,8 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-
-
-	<!--  ///////////////////////// google sign-in ////////////////////////// -->
-	<meta name="google-signin-scope" content="profile email">
-	<meta name="google-signin-client_id" content="733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com.apps.googleusercontent.com">    
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
-    <!--  ///////////////////////// kakao login ////////////////////////// -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/> 
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
 
 <!-- ToolBar Start /////////////////////////////////////-->
@@ -41,11 +29,11 @@
 		<div 	class="collapse navbar-collapse" id="target" 
 	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
 	         
-	         	<!-- Tool Bar Î•º Îã§ÏñëÌïòÍ≤å ÏÇ¨Ïö©ÌïòÎ©¥.... -->
+	         	<!-- Tool Bar ∏¶ ¥ŸæÁ«œ∞‘ ªÁøÎ«œ∏È.... -->
 	             <ul class="nav navbar-nav">
 	             
 	              
-	              <li class="dropdown">
+	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
@@ -117,10 +105,22 @@
 	             
 	             <ul class="nav navbar-nav navbar-right">
 	             	<c:if test="${sessionScope.user == null}">
-	                  <li><a href="" data-toggle="modal" data-target="#logIn">Login</a></li>
+	                  <li><a href="#">Login</a></li>
 	                </c:if>
 	                <c:if test="${sessionScope.user != null}">
-	                  <li><a href="#">MyPage</a></li>
+	                  <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >MyPage</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#"></a></li>
+	                         
+	                         <li class="divider"></li>
+	                         
+	                     </ul>
+	                 </li>
 	                  <li><a href="#">Logout</a></li>
 	                </c:if>
 	            </ul>
@@ -132,30 +132,30 @@
     </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
-		
+ 	
    	
    	
    	<script type="text/javascript">
 	
-		//============= logout Event  Ï≤òÎ¶¨ =============	
+		//============= logout Event  √≥∏Æ =============	
 		 $(function() {
-			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
 		 });
 		
-		//============= ÌöåÏõêÏ†ïÎ≥¥Ï°∞Ìöå Event  Ï≤òÎ¶¨ =============	
+		//============= »∏ø¯¡§∫∏¡∂»∏ Event  √≥∏Æ =============	
 		 $(function() {
-			//==> DOM Object GET 3Í∞ÄÏßÄ Î∞©Î≤ï ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('ÌöåÏõêÏ†ïÎ≥¥Ï°∞Ìöå')").on("click" , function() {
+			//==> DOM Object GET 3∞°¡ˆ πÊπ˝ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('»∏ø¯¡§∫∏¡∂»∏')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
-		//=============  Í∞úÏù∏Ï†ïÎ≥¥Ï°∞ÌöåÌöå Event  Ï≤òÎ¶¨ =============	
+		//=============  ∞≥¿Œ¡§∫∏¡∂»∏»∏ Event  √≥∏Æ =============	
 			
 		/* Messenger*/
 			
@@ -236,10 +236,16 @@
 			$(self.location).attr("href","/user/login");
 		});
 		
+		
+		/* MyPage */
+		
 		$( "a:contains('MyPage')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/myPageMain");
 		});
 		
+		$( "a:contains('Message')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/message/listMessage");
+		});
 		
 		
 	</script>  
@@ -272,30 +278,6 @@
 			.navbar-toggle .icon-bar{
 			    color: #fff;
 			    background: #fff;
-			}
-			
-			/* Modal Content/Box */
-			.modal-content {
-			    background-color: #fefefe;
-			    margin: 15% auto; /* 15% from the top and centered */
-			    padding: 20px;
-			    border: 1px solid #888;
-			    width: 80%; /* Could be more or less, depending on screen size */
-			}
-			
-			/* The Close Button */
-			.close {
-			    color: #aaa;
-			    float: right;
-			    font-size: 28px;
-			    font-weight: bold;
-			}
-			
-			.close:hover,
-			.close:focus {
-			    color: black;
-			    text-decoration: none;
-			    cursor: pointer;
 			}
         
     </style>

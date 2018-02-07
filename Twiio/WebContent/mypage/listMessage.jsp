@@ -16,7 +16,6 @@
 
 <html lang="ko">
 <head>
-<title>Insert title here</title>
 <meta charset="UTF-8">
 
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
@@ -61,139 +60,7 @@ body {
 	color: #353535;
 	padding-top : 50px;
 }
-.content h1 {
-	text-align: center;
-}
-.content .content-footer p {
-	color: #6d6d6d;
-    font-size: 12px;
-    text-align: center;
-}
-.content .content-footer p a {
-	color: inherit;
-	font-weight: bold;
-}
 
-/*	--------------------------------------------------
-	:: Table Filter
-	-------------------------------------------------- */
-.panel {
-	border: 1px solid #ddd;
-	background-color: #fcfcfc;
-}
-.panel .btn-group {
-	margin: 15px 0 30px;
-}
-.panel .btn-group .btn {
-	transition: background-color .3s ease;
-}
-.table-filter {
-	background-color: #fff;
-	border-bottom: 1px solid #eee; 
-}
-.table-filter tbody tr:hover {
-	cursor: pointer;
-	background-color: #eee;
-}
-.table-filter tbody tr td {
-	padding: 10px;
-	vertical-align: middle;
-	border-top-color: #eee;
-}
-.table-filter tbody tr.selected td {
-	background-color: #eee;
-}
-.table-filter tr td:first-child {
-	width: 38px;
-}
-.table-filter tr td:nth-child(2) {
-	width: 35px;
-}
-.ckbox {
-	position: relative;
-}
-.ckbox input[type="checkbox"] {
-	opacity: 0;
-}
-.ckbox label {
-	-webkit-user-select: none;
-	-moz-user-select: none;
-	-ms-user-select: none;
-	user-select: none;
-}
-.ckbox label:before {
-	content: '';
-	top: 1px;
-	left: 0;
-	width: 18px;
-	height: 18px;
-	display: block;
-	position: absolute;
-	border-radius: 2px;
-	border: 1px solid #bbb;
-	background-color: #fff;
-}
-.ckbox input[type="checkbox"]:checked + label:before {
-	border-color: #2BBCDE;
-	background-color: #2BBCDE;
-}
-.ckbox input[type="checkbox"]:checked + label:after {
-	top: 3px;
-	left: 3.5px;
-	content: '\e013';
-	color: #fff;
-	font-size: 11px;
-	font-family: 'Glyphicons Halflings';
-	position: absolute;
-}
-.table-filter .star {
-	color: #ccc;
-	text-align: center;
-	display: block;
-}
-.table-filter .star.star-checked {
-	color: #F0AD4E;
-}
-.table-filter .star:hover {
-	color: #ccc;
-}
-.table-filter .star.star-checked:hover {
-	color: #F0AD4E;
-}
-.table-filter .media-photo {
-	width: 35px;
-}
-.table-filter .media-body {
-    display: block;
-    /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
-}
-.table-filter .media-meta {
-	font-size: 11px;
-	color: #999;
-}
-.table-filter .media .title {
-	color: #2BBCDE;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: normal;
-	margin: 0;
-}
-.table-filter .media .title span {
-	font-size: .8em;
-	margin-right: 20px;
-}
-.table-filter .media .title span.pagado {
-	color: #5cb85c;
-}
-.table-filter .media .title span.pendiente {
-	color: #f0ad4e;
-}
-.table-filter .media .title span.cancelado {
-	color: #d9534f;
-}
-.table-filter .media .summary {
-	font-size: 14px;
-}     
 </style>
 
 <script type="text/javascript">
@@ -233,9 +100,10 @@ $(document).ready(function(){
 	            });
 	        }
 	    });
-	    
-	    $("[data-toggle=tooltip]").tooltip();
-	});
+	 $("[data-toggle=tooltip]").tooltip();
+});
+
+$(document).on
 	
 </script>
 </head>
@@ -248,109 +116,46 @@ $(document).ready(function(){
    	<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
    	<div class="container">
 	<div class="row">
-		
-        
-        <div class="col-md-12">
-        <h4>Bootstrap Snipp for Datatable</h4>
+        <div class="col-xs-12">
+        <h2>Message</h4>
         <div class="table-responsive">
 
-                
+              
               <table id="mytable" class="table table-bordred table-striped">
-                   
-                   <thead>
-                   
-                   <th><input type="checkbox" id="checkall" /></th>
-                   <th>First Name</th>
-                    <th>Last Name</th>
-                     <th>Address</th>
-                     <th>Email</th>
-                     <th>Contact</th>
-                      <th>Edit</th>
-                      
-                       <th>Delete</th>
+              
+                   <thead>   
+                   <th align="center"><input type="checkbox" id="checkall" /></th>
+                   <th align="center">쪽지 번호</th>
+                   <th align="left">보낸 사람</th>
+                   <th align="left">쪽지 유형</th>
+                   <th align="left">작성 제목</th>
+                   <th align="left">작성 시간</th>
+                   <th align="left">작성 하기</th>
+                   <th align="left">지  우  기</th>
                    </thead>
-    <tbody>
-    
-    <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-    
- <tr>
-    <td><input type="checkbox" class="checkthis" /></td>
-    <td>Mohsin</td>
-    <td>Irshad</td>
-    <td>CB 106/107 Street # 11 Wah Cantt Islamabad Pakistan</td>
-    <td>isometric.mohsin@gmail.com</td>
-    <td>+923335586757</td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
-    <td><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
-    </tr>
-    
-   
-    
-   
-    
-    </tbody>
-        
-</table>
-
-<div class="clearfix"></div>
-<ul class="pagination pull-right">
-  <li class="disabled"><a href="#"><span class="glyphicon glyphicon-chevron-left"></span></a></li>
-  <li class="active"><a href="#">1</a></li>
-  <li><a href="#">2</a></li>
-  <li><a href="#">3</a></li>
-  <li><a href="#">4</a></li>
-  <li><a href="#">5</a></li>
-  <li><a href="#"><span class="glyphicon glyphicon-chevron-right"></span></a></li>
-</ul>
-                
+    		<tbody>
+    		 <c:set var="i" value="0" />
+		  	<c:forEach var="message" items="${list}">
+			<c:set var="i" value="${ i+1 }" />   
+    		<tr>
+    		<td><input type="checkbox" class="checkthis" /></td>
+    		<td align="left">${i}</td>
+    		<td align="left">${message.fromUserNo}</td>
+    		<td align="left">
+    		${message.messageType}
+    		<c:if test="${message.messageType=='1'}">상품</c:if>
+    		<c:if test="${message.messageType=='2'}">개인 </c:if>
+    		<c:if test="${message.messageType=='3'}">메신저</c:if>
+    		</td>
+    		<td align="left">${message.messageTitle}</td>
+    		<td align="left">${message.messageRegDate}</td>
+    		<td align="left"><p data-placement="top" data-toggle="tooltip" title="Edit"><button class="btn btn-primary btn-xs" data-title="Edit" data-toggle="modal" data-target="#edit" ><span class="glyphicon glyphicon-pencil"></span></button></p></td>
+    		<td align="left"><p data-placement="top" data-toggle="tooltip" title="Delete"><button class="btn btn-danger btn-xs" data-title="Delete" data-toggle="modal" data-target="#delete" ><span class="glyphicon glyphicon-trash"></span></button></p></td>
+    		</tr>
+    		</c:forEach>
+    		</tbody>        
+			</table> 
             </div>
-            
         </div>
 	</div>
 </div>
@@ -411,7 +216,5 @@ $(document).ready(function(){
     </div>
 </form>
 
-
-	
 </body>
 </html>
