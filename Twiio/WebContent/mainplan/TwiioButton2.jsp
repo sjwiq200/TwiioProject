@@ -22,10 +22,10 @@ body {
 /* GENERAL BUTTON STYLING */
 button,
 button::after {
-  -webkit-transition: all 0.3s;
-    -moz-transition: all 0.3s;
-  -o-transition: all 0.3s;
-    transition: all 0.3s;
+  -webkit-transition: all 0.5s;
+    -moz-transition: all 0.5s;
+  -o-transition: all 0.5s;
+    transition: all 0.5s;
 }
 
 button {
@@ -53,7 +53,7 @@ button {
   height: 100%;
 }
 
-/* button::before,
+button::before,
 button::after {
   background: #D73A31;
   content: '';
@@ -61,10 +61,7 @@ button::after {
   z-index: -1;
 }
 
-button:hover {
-  color: #fff;
-}
- */
+ 
 /* BUTTON 1 */
 
 

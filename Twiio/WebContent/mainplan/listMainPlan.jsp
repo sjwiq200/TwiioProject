@@ -13,21 +13,35 @@
 
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+<link rel="stylesheet" href="/resources/css/plan.css" />
 
+<!-- ///////////////////////////////////////////////////////////////////////// -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.min.css">
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    
+<!-- Bootstrap Dropdown Hover CSS -->
+<link href="/resources/css/animate.min.css" rel="stylesheet">
+<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+<!-- Bootstrap Dropdown Hover JS -->
+<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 
 <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<!-- jQuery UI toolTip 사용 CSS-->
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<!-- jQuery UI toolTip 사용 JS-->
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-
-<!-- ///////////////////////////////////////////////////////////////////////// -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.min.css">
 
 
 <title>MainPlanList</title>
@@ -35,16 +49,18 @@
 
 <style>
 
-body {
-    padding-top : 50px;
+ html, body {
+ 	width: 100%;
+ 	height: 100%;
+ 	background: #f4f4f4;
 }
+
 
 </style>
 
 
 <script>
 
-	
 	function fncAddMainPlanList() {
 		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
 	}
@@ -149,28 +165,34 @@ body {
 </head>
 <body>
 		<jsp:include page="/layout/toolbar.jsp" />
-
 	<form>
 		
 		<div class="container">
 			
-			
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			<div align="center">
-			<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button> 
-			<button type="button" class="btn" id="addMainPlan" ><Strong>ADD</Strong></button>
-			<button type="button" class="btn" id="listSharedPlan" ><Strong>친구와 공유하고 있는 플랜 보기</Strong></button>
+			<header id="header" class="alt">
+				<div class="inner center-block">
+					<h1>TWIIBOOK,</h1>
+				</div>
+				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
+			<div align="right" class="button">
+			<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
+				<button type="button" class="btn" id="addMainPlan" ><Strong>ADD</Strong></button>
+				<button type="button" class="btn" id="listSharedPlan" ><Strong>친구와 공유하고 있는 플랜 보기</Strong></button>
 			</div>
+				<img src="/resources/images/dailyPlanContent/lineline.png" class="img-responsive" alt="Responsive image" style="border-radius: 70%;">
+			</header>
+			
+			
+			
+			
+			<div>&nbsp;</div>
+			<div>&nbsp;</div>
+		
 			<div>&nbsp;</div>
 			<div>&nbsp;</div>
 			
-			<button class="bttn-bordered bttn-md">
-  			<i class="icon-menu"></i>
-			</button>
+			<div >
 			
-			
-
 			<c:set var="i" value="0" />
 				  	<c:forEach var="mainPlan" items="${list}">
 				  		<c:set var="i" value="${ i+1 }" />
@@ -178,28 +200,24 @@ body {
 				<div class="col">
 					<div class="col-md-6">
 						<div class="thumbnail">
-						
-							<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-success" value="친구와 공유하기" />
-							<img
-								src="/resources/images/thumbnail_plan/main_thumbnail4.jpg"
-								style="width: 300px; " />
-							
-							
+						<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-default" value="친구와 공유하기" />
 							<div class="caption">
-
+								
+								<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 200px; " />
+							
 								<input type="hidden" name="mainPlanNo"
 									value="${mainPlan.mainPlanNo}" />
-								
-								<div>[${ i }]</div>
-								<div>플랜번호 : ${mainPlan.mainPlanNo}</div>
-								<div>유저번호 : ${mainPlan.user.userNo}</div>
-								<div>출발일 : ${mainPlan.departureDate }</div>
-								<div>도착일 : ${mainPlan.arrivalDate}</div>
-								<div>국가명 : ${mainPlan.country}</div>
-								<div>도시명 : ${mainPlan.city}</div>
-								<div>플랜제목 : ${mainPlan.planTitle}</div>
-								<div>섬네일이미지 : ${mainPlan.mainThumbnail}</div>
-
+							
+								<br>[${ i }]</br>
+								<p>플랜번호 : ${mainPlan.mainPlanNo}</p>
+								<p>유저번호 : ${mainPlan.user.userNo}</p>
+								<p>출발일 : ${mainPlan.departureDate }</p>
+								<p>도착일 : ${mainPlan.arrivalDate}</p>
+								<p>국가명 : ${mainPlan.country}</p>
+								<p>도시명 : ${mainPlan.city}</p>
+								<p>플랜제목 : ${mainPlan.planTitle}</p>
+								<p>섬네일이미지 : ${mainPlan.mainThumbnail}</p>
+							
 
 								<button type="button" class="btn btn-default">
 									<span class="glyphicon glyphicon-ok" aria-hidden="true"
@@ -223,8 +241,14 @@ body {
 
 			</c:forEach>
 			
-			
-    		<!---------- ShareWithFriend Dialog <START>------------->
+		</div>
+	</form>
+	
+
+
+</body>
+
+<!---------- ShareWithFriend Dialog <START>------------->
 
 		<div class="modal fade" id="shareWithFriend" role="dialog">
 			<div class="modal-dialog modal-md">
@@ -251,72 +275,6 @@ body {
 		</div>
 		
 		<!---------- ShareWithFriend Dialog <END>------------->
-    
-    
-    
-    
-    
-    
-    
-    
-      <div class="box-animate animated fadeInUp" style={{ 'animation-delay': 0.4 + i * 0.07 + 's'}}>
-                <div class="box"key={size} style={{color: color,background: background}}>
-                    <div class="title-wrapper">
-                        <div class="title">{bttn.displayName}</div>
-                        <a href={"https://raw.githubusercontent.com/ganapativs/bttn.css/master/dist/standalone/" + bttn.name + ".css"}
-                           download={bttn.name + ".css"}>
-                            <div class="download-standalone hidden-xs hint--bottom-left hint--rounded hint--bounce"
-                                 aria-label={"Download standalone " + bttn.name + ".css"}>
-                                <i class="icon-cloud-download"/>
-                            </div>
-                        </a>
-                    </div>
-                    <hr/>
-                    <div class="button-wrapper animated fadeIn">
-                        <button class={{
-                            ["bttn-" + bttn.name]: true,
-                            ["bttn-" + size]: true,
-                            ["bttn-" + activeColor]: true,
-                            "bttn-block": block,
-                            "bttn-no-outline": !outline
-                        }} dangerouslySetInnerHTML={{__html: bttn.texts[activeSize]}}>
-                        </button>
-                    </div>
-                    <div class="classname"
-                         style={{
-                             color: color,
-                             background: codeBackground
-                         }}>
-                        .bttn-{bttn.name}.bttn-{size}
-                    </div>
-                   
-                    <div class={"code-copy code-copy" + i}>{textCopied ? 'Copied' : 'Copy code'}</div>
-                </div>
-            </div>
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-	
-			
-		</div>
-	</form>
-</body>
+		
+		
 </html>

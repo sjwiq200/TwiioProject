@@ -53,6 +53,7 @@ public class MainPlanController {
 		System.out.println("-----Controller : addMainPlan <START>");
 		
 		String cityResult = "";
+		String countryResult="";
 		
 		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
 			if(i==mainPlan.getCityList().length-1) {
@@ -62,11 +63,18 @@ public class MainPlanController {
 			}
 		}
 		
-		User user = (User) session.getAttribute("user");
+		for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
+			if(i==mainPlan.getCountryList().length-1) {
+				countryResult += mainPlan.getCountryList()[i];
+			}else {
+				countryResult += mainPlan.getCountryList()[i] + ",";
+			}
+		}
 		
+		User user = (User) session.getAttribute("user");
 		mainPlan.setCity(cityResult);
 		mainPlan.setUser(user);
-		mainPlan.setCountry("CountryTest");
+		mainPlan.setCountry(countryResult);
 		
 		mainPlanService.addMainPlan(mainPlan);
 
