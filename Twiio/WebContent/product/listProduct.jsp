@@ -34,6 +34,12 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+   <!-- ---------Floating Button------------ -->
+  <link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
+  
+  <!-- ---------font ------------ -->
+  	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -158,6 +164,12 @@ a.thumbnail{
 	color: #08708A;
 	border-color: #08708A;
 }
+font{
+	color: #08708A;
+}
+div.caption{
+	font-family:'NanumGothic';
+}
 </style>
 <script type="text/javascript">
 	function fncGetUserList(currentPage, priceCondition, prodSearchType) {
@@ -170,7 +182,8 @@ a.thumbnail{
 	}
 
 	$(function() {
-		$("button.btn.btn-default:contains('투어 등록')").bind("click", function() {
+		
+		$("#floating-button").bind("click", function() {
 			self.location = "/product/addProduct";
 		});
 
@@ -486,10 +499,7 @@ a.thumbnail{
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
 		<div class="row">
 
-			<div class="col-md-6 text-left">
-				<c:if test="${user.userType==2}">
-					<button type="button" class="btn btn-default">투어 등록</button>
-				</c:if>
+			<div class="col-md-6 text-left">				
 				<p class="text-primary">전체 ${totalCount } 건수</p>
 			</div>
 
@@ -524,8 +534,8 @@ a.thumbnail{
 					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
 					<input type="hidden" id="prodSearchType" name="prodSearchType" value="" />
 					<p>
-						<font color="blue" name="high">가격높은순</font>
-						<font color="blue" name="low">가격낮은순</font>
+						<font name="high">가격높은순</font>
+						<font name="low">가격낮은순</font>
 						<!-- <font color="blue" name="star">별점순</font>
 						<font color="blue" name="view">조회순</font> -->
 					</p>
@@ -557,8 +567,8 @@ a.thumbnail{
 								style="width: 290px; height: 175px;" alt="..."
 								class="img-rounded">
 						</c:if>
-						<div class="caption">
-							<h3>${product.productName}</h3>
+						<div class="caption"><!-- style="font-family:'YETHANGUL';" -->
+							<h3 style="font-family:'NanumGothic';">${product.productName}</h3>
 							<p>
 								<c:if test="${product.productType == 1}">명소투어</c:if>
 								<c:if test="${product.productType == 2}">음식투어</c:if>
@@ -584,7 +594,16 @@ a.thumbnail{
 		</div>
 		<!-- Thumbnail End /////////////////////////////////////-->
 	</div>
-
+	<!--  Floating Button <START> -->
+	<c:if test="${user.userType==2}">
+		<div id="container-floating">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="addProduct" title="addProduct">
+				<!-- <p class="letter" id="addProduct"><img src="/resources/images/productIcons/edit.png" style="width: 45x; height: 45px;"></p> -->
+				<p class="letter" id="addProduct">+</p>
+			</div>
+		</div>
+	</c:if>
+	  <!--  Floating Button <END> -->
 
 
 	<!-- PageNavigation End... -->

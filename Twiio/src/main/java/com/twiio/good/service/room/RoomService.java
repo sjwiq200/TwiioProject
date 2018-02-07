@@ -24,5 +24,6 @@ public interface RoomService {
 	
 	public void deleteRoom(Room room) throws Exception;
 	
+	public void deleteRoomUser(String roomKey) throws Exception;
 
 }

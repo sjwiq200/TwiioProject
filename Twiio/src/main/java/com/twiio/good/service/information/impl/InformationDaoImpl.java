@@ -838,6 +838,10 @@ public class InformationDaoImpl implements InformationDao {
 		 String[] strs = text.split("\n");
 			
 			for(int i = 0 ; i<strs.length; i++ ) {
+				
+					if(strs[i].contains("이 비지니스를 소유하고 계신가요?")) {
+						strs[i]=strs[i].replaceAll("이 비지니스를 소유하고 계신가요?", "").replaceAll("\\?", "");
+					}
 				context.add(strs[i]);
 			}
 			
@@ -851,6 +855,17 @@ public class InformationDaoImpl implements InformationDao {
 			}
 			
 			String detail  = driver.findElement(By.xpath("//div[@id='taplc_attraction_detail_listing_0']")).getText();
+			
+			if(detail.contains("위치")) {
+				detail = detail.replaceAll("위치", "위치 : ");
+			}
+			if(detail.contains("문의처")) {
+				detail = detail.replaceAll("문의처", " \n 문의처 : ").replaceAll("웹사이트", "");
+			}
+			if(detail.contains("이 리스팅 정보 개선하기")) {
+				detail = detail.replaceAll("이 리스팅 정보 개선하기", "");
+			}
+			
 			infom.add(detail);
 		
 		

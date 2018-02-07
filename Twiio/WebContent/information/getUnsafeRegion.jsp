@@ -127,10 +127,10 @@
 				border: 1px solid;
 				padding:5px 10px;
 			}
-			.jumbotron
+			/* .jumbotron
 			{
-				background-color: rgba(8, 112, 138, 0.5);
-			}
+				background-color: rgba(86, 177, 191, 0.5);
+			} */
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -164,13 +164,19 @@
 									
 									img = "/resources/images/no_info.png";
 									
-									$("#image").html('<div class="col-xs-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px;"/></div>');
-									
+									$("#image").html('<div class="col-sm-12 col-sm-offset-4" align="center"><img src="'+img+'" style="width: 500px; height: 400px;"/></div>');
+									$("#jumbotron").attr("style","width: 600px; height: 500px; align-content: center; background-color: #f4f4f4; ");
+									$("#jumbotron").attr("class","jumbotron col-sm-12 col-xs-offset-1");
+									$("#dangerIcon").hide();
 								}else{
-									$("#image").html('<div class="col-xs-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px;"/></div>');
+									$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px;"/></div>');
+									$("#dangerIcon").show();
+									$("#jumbotron").attr("style","width: 800px; height: 700px; align-content: center; background-color: rgba(86, 177, 191, 0.5);");
+									$("#jumbotron").attr("class","jumbotron col-sm-12 col-xs-offset-2");
+									
 								}
 								
-							$("#info").html(info);
+							$("#info").html(info+"<br/><br/><br/><br/>");
 	    						
 			    					}
 			    				}
@@ -320,15 +326,15 @@
 	</form>
 	
 	
-	<div class="jumbotron" style="width: 1140px; height: 500px; align-content: center">	
-		<br/> 		
+	<div class="jumbotron" id="jumbotron" style="width: 1140px; height: 500px; align-content: center; background-color: rgba(86, 177, 191, 0.5);" >	
 		<div class="image" id="image">	
-			<div class="col-xs-12" align="center">
+		<br/> 
+			<div class="col-sm-12" align="center">
 				<img src="http://www.0404.go.kr/images/main/img_map.png"  style="width: 700px; height: 300px;"/>
 			</div>
 	</div>
 			
-		<div class="col-xs-12" align="center">
+		<div class="col-sm-12" align="center" id="dangerIcon">
 			<br/> 
 			<img src="/resources/images/img_blue.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
 			<img src="/resources/images/img_yellow.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
@@ -350,9 +356,12 @@
 	<br/>
 	
 	
-	<div class="info" id="info"></div>
-	    
+	<div class="info col-sm-8 col-sm-offset-2" id="info"></div>
+		<br/><br/>
+		<br/><br/>
+		<br/>    
  		</div>
+ 		
 	<!--  화면구성 div Start /////////////////////////////////////-->
  	
 	</body>

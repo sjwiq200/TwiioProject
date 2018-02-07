@@ -218,12 +218,20 @@ public class RoomDaoImpl implements RoomDao {
 		WriteResult roomUserResult = mongoTemplate.remove(query, "roomUser");
 		System.out.println("delete roomUserResult"+roomUserResult.getN());
 		
+	}
+
+	@Override
+	public void deleteRoomUser(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".deleteRoomUser()");
+		
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(roomKey);
+		Query query = new Query(criteria);
+		
+		WriteResult roomUserResult = mongoTemplate.remove(query,"roomUser");
+		System.out.println("delete roomUserResult"+roomUserResult.getN());
 		
 	}
-	
-	
-	
-	
-
 
 }

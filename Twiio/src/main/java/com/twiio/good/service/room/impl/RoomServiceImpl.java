@@ -80,4 +80,14 @@ public class RoomServiceImpl implements RoomService {
 		roomDao.deleteRoom(room);
 	}
 
+	@Override
+	public void deleteRoomUser(String roomKey) throws Exception {
+		// TODO Auto-generated method stub
+		roomDao.deleteRoomUser(roomKey);
+	}
+	
+	
+
+	
+
 }
