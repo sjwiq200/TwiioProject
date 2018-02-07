@@ -203,6 +203,32 @@
           </div>
           
       </div>
+      
+      <div class="col-md-6 text-right">
+			    <form class="form-inline" name="detailForm">
+			    	
+			      <button type="button" id="write" class="btn btn-default">글 쓰 기</button>
+				  
+				  <div class="form-group">
+				    <select class="form-control" name="searchCondition" id="searchCondition">
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>작성자</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
+				  </div>
+				  
+				  <button type="button" class="btn btn-default" id="searchButton">검색</button>
+				  
+				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
+				</form>
+	    </div>
+	</div>
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
       
@@ -211,39 +237,33 @@
       
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">등록일자</th>
-            <th align="center" width="140">상품사진</th>
-            <th align="left" width="250">상품이름</th>
-            <th align="left" width="120">여행일자</th>
-            <th align="left" width="100">구매수량</th>
-            <th align="left" width="140">상품판매금액</th>
-            <th align="left" width="100">도시</th>
-      		<th aligh="legt" widht="100">국가</th>    
+            <th align="center" width="120" align="">작성자</th>
+            <th align="center" width="140">신고대상</th>
+            <th align="left" width="250">신고제목</th>
+            <th align="left" width="120">신고날짜</th>
+            <th align="left" width="100">신고유형</th>
+            <th align="left" width="140">신고처리유무</th>
           </tr>
         </thead>       
       <tbody>
       
         <c:set var="i" value="0" />
-        <c:forEach var="product" items="${list}">
+        <c:forEach var="report" items="${list}">
          <c:set var="i" value="${ i+1 }" />
          <tr class="ct_list_pop">
          	
-     	   <input type="hidden" name="productNo" value="${product.productNo}"/>
-           <td align="left">${product.regDate}</td>
+     	   <input type="hidden" name="reportNo" value="${report.reportNo}"/>
+           <td align="left">${report.userNo}</td>
            <td align="left">
-           <c:if test="${empty product.thumbnail}">
-                        <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="80" width="80" />
-                     </c:if> 
-                     <c:if test="${!empty product.thumbnail}">
-                        <img src="/resources/images/productThumbnail/${product.thumbnail}" height="80" width="80" />
-                     </c:if>
+           		${report.targetUserNo}
            </td>
-           <td align="left">${product.productName}</td>
-           <td align="left">${product.tripDate}</td>
-           <td align="left">${product.tourHeadCount}/${product.productCount}</td>
+           <td align="left">${report.reportTitle}</td>
+           <td align="left">${report.reportRegDate}</td>
+           <td align="left">${report.targetCommunityNo}
+           
+           </td>
            <td align="left">${product.productPrice}</td>
-           <td align="left">${product.city}</td>
-           <td align="left">${product.country}</td>
+
          </tr>
           </c:forEach>
         
@@ -261,6 +281,29 @@
     <div class="col-md-2 col-md-offset-1">
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
+    
+    <div class="modal fade" id="addReivew"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>REPORT</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div class="form-group">
+			
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">확인</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+			</div>
+		</div>
+		</div>
+		</div>
     
     <!--  화면구성 div End /////////////////////////////////////-->
     

@@ -63,8 +63,11 @@
         td { cursor: default;}
 
         span {color: gray; }
-        
-        .star-input>.input,
+        .red{
+    	color:red;
+   	   }
+   	 
+   	 .star-input>.input,
 .star-input>.input>label:hover,
 .star-input>.input>input:focus+label,
 .star-input>.input>input:checked+label{
@@ -162,6 +165,8 @@
     font:bold 18px Helvetica, Arial, sans-serif;
     vertical-align: middle;
 }
+        
+        
     	
     
         
@@ -219,6 +224,19 @@
   	        }
   	    });    
   	});
+      
+      $(function(){
+          $('td:nth-child(4)').on('click',function(){
+        	  var productno = $($('input[name=productNo]')[$('td:nth-child(4)').index(this)]).val();
+        	  self.location = "/product/getProduct?productNo="+productno;
+          });
+         });
+         $(function(){
+             $('td:nth-child(5)').on('click',function(){
+           	  var productno = $($('input[name=productNo]')[$('td:nth-child(5)').index(this)]).val();
+           	  self.location = "/product/getProduct?productNo="+productno;
+           });
+         });
 
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
@@ -259,7 +277,7 @@
       <!-- ToolBar End /////////////////////////////////////-->
    
    <!--  화면구성 div Start /////////////////////////////////////-->
-   <div class="container col-md-10 col-md-offset-1">
+   <div class="container col-md-8 col-md-offset-2">
    
       <div class="page-header text-info">
           <h3>
@@ -297,12 +315,12 @@
           <tr>         
             <th align="center" width="120" align="">구매일자</th>
             <th align="center" width="140">상품사진</th>
-            <th align="left" width="250">상품이름</th>
+            <th align="left" width="200">상품이름</th>
             <th align="left" width="120">여행일자</th>
             <th align="left" width="100">구매수량</th>
-            <th align="left" width="140">상품구매금액</th>
+            <th align="left" width="120">상품구매금액</th>
             <th align="left" width="100">평가</th>
-      		<th aligh="legt" widht="100">주문처리상태</th>    
+      		<th aligh="legt" widht="100">주문상태</th>    
           </tr>
         </thead>       
       <tbody>
@@ -312,7 +330,7 @@
          <c:set var="i" value="${ i+1 }" />
          <tr class="ct_list_pop">
      		<input type="hidden" name="tranNo" value="${transaction.tranNo}"/>
-         <%-- <input type="hidden" name="prodNoHidden" value="${product.prodNo}" /> --%>
+         <input type="hidden" name="productNo" value="${transaction.tranPro.productNo}"/>
            <td align="left">${transaction.regDate}</td>
            <td align="left">
            <c:if test="${empty transaction.tranPro.thumbnail}">
@@ -329,11 +347,7 @@
            <td align="left" id="eval"><a href="#">평가하기</a></td>
            <td align="left"><a href="#">환불하기</a></td>
          </tr>
-         
-    
-
-          </c:forEach>
-        
+          </c:forEach>  
         <tr>
          
         </tr>
@@ -341,9 +355,11 @@
       
       </table>
      <!--  table End /////////////////////////////////////-->
-     
-    </div>
     
+    </div>
+     <div class="col-md-2 col-md-offset-1">
+    <jsp:include page="../common/pageNavigator_new.jsp"/>
+    </div>
     
     	<div class="modal fade" id="addReivew"  role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -394,10 +410,10 @@
    			<input type="radio" name="star-input" id="p7" value="4"><label for="p7">4</label>
     		<input type="radio" name="star-input" id="p8" value="4.5"><label for="p8">4.5</label>
    			<input type="radio" name="star-input" id="p9" value="5"><label for="p9">5</label>
-  </span>
-  <output for="star-input"><b>0</b>점</output>
-</span>
-</br>
+  			</span>
+  			<output for="star-input"><b>0</b>점</output>
+			</span>
+			</br>
 				상품 리뷰
                 	<textarea class="form-control input-sm " type="textarea" id="message2" style="resize:none;" placeholder="Message2" maxlength="60" rows="1"></textarea>
                 	<span class="help-block"><p id="characterLeft2" class="help-block ">You have reached the limit</p></span>
@@ -412,12 +428,14 @@
 		</div>
     <!--  화면구성 div End /////////////////////////////////////-->
     
+    
+    
     <input type="hidden" id="currentPage" name="currentPage" value="" />
     <%-- <input type="hidden" id="menu" name="menu" value="${menu}" /> --%> 
     <%-- //<input type="hidden" id="priceList" name="priceList" value="${search.priceList}">  --%>
                    
     <!-- PageNavigation Start... -->
-   <jsp:include page="../common/pageNavigator_new.jsp"/>
+   
    <!-- PageNavigation End... -->
 </body>
 </html>
