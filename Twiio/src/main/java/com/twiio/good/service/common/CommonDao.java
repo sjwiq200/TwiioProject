@@ -37,6 +37,8 @@ public interface CommonDao
   
   public int getTotalCountFriend(int userNo) throws Exception;
   
+  public Friend getFriend(Friend friend) throws Exception;
+  
   public void searchKeyword() throws Exception;
   
   public void listSearch() throws Exception;

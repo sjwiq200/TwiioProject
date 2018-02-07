@@ -94,6 +94,15 @@ public class CommonServiceImpl implements CommonService {
 		return commonDao.getReport(reportNo);
 	}
 	
+
+
+	@Override
+	public Friend getFriend(Friend friend) throws Exception {
+		// TODO Auto-generated method stub
+		return commonDao.getFriend(friend);
+	}
+
+	
 	public void searchKeyword() throws Exception{
 		
 	}
