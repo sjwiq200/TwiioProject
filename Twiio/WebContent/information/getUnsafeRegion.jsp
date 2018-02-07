@@ -49,7 +49,88 @@
 	<style>
 		body {
             padding-top : 50px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        #mask {  
+			  position:absolute;  
+			  left:0;
+			  top:0;
+			  z-index:100;  
+			  background-color:#000;  
+			  display:none;  
+			}
+       #loadingImg {
+				  position:absolute;
+				  left:45%;
+				  top:50%;
+				  z-index:120;
+				}
+				
+		 .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #FFF;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #56B1BF;
+			    border-color: #56B1BF;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #56B1BF;
+				border-color: #56B1BF;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
+			.jumbotron
+			{
+				background-color: rgba(86, 177, 191, 0.5);
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -57,9 +138,9 @@
 	
 	$(function() {
 			
-		 $("button.btn.btn-primary").on("click" , function() {
+		 $("button#search").on("click" , function() {
 			var city = $("#city").val();
-			
+			event.preventDefault();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/getUnsafeRegion",
@@ -121,8 +202,88 @@
 		     	 },
 		     
 		    });
+		 
+		 
+		 
+		 
+		 $( "#htmlToPDF" ).on("click" , function() {
+				
+				var doc = new jsPDF();
+
+				var specialElementHandlers = { 
+				
+				    "body": function (element, renderer) { 
+				
+				        return true; 
+				
+				    }
+				
+				}	
+				
+				html2canvas($("body"),{
+					
+				
+				    useCORS: true,
+				
+				    allowTaint: true,
+				
+				    onrendered:function(canvas){
+				    	
+				    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
+					    var pageHeight = imgWidth * 1.414;  // 출력 페이지 세로 길이 계산 A4 기준
+					    var imgHeight = canvas.height * imgWidth / canvas.width;
+					    var heightLeft = imgHeight;
+				
+				        var imgData = canvas.toDataURL('image/jpeg');
+				
+				        var doc = new jsPDF("p","mm");
+				
+						console.log(imgData);
+				
+				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
+				        heightLeft -= pageHeight;
+				
+				        doc.save('test.pdf');
+				
+				    }
+				
+				});
+				
+			});
+		 
+		 
+		 
+		 
+		 
+		 
 			 
 				 });
+	
+	
+	
+	
+	function wrapWindowByMask(){
+		var maskHeight = $(document).height();  
+		var maskWidth = $(window).width();  
+		
+		$('#mask').css({'width':maskWidth,'height':maskHeight});  
+		
+		$('#mask').fadeTo("slow",0.6);    
+	}
+
+	$(function() {
+		var loading = $('<img alt="loading" id="loadingImg" src="/resources/images/lg.rotating-balls-spinner.gif">')
+		.appendTo(document.body).hide();
+			
+		$(window).ajaxStart(function(){
+			   loading.show();
+			   wrapWindowByMask();
+			})
+			.ajaxStop(function(){
+			   loading.hide();
+			   $('#mask').hide();
+			});
+	});
 		
 			
 	</script>
@@ -134,7 +295,7 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<div id="mask"></div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -146,37 +307,55 @@
 	<form class="form-horizontal">
 		  <div class="form-group" align="center">
 		    <div class="col-xs-4 col-xs-offset-4">
-		      <input type="text" class="form-control" id="city" name="city" placeholder="도시명을 입력해 주세요.">
+		      <input type="text" class="form-control" id="city" name="city" placeholder="나라명을 입력해 주세요.">
 		    </div>
 		  </div>
 		  
 		    
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >검 &nbsp;색</button>
+		      <button type="button" class="btn btn-outlined btn-theme btn-sm" id="search">검 &nbsp;색</button>
 		    </div>
 		  </div>
 	</form>
-		
-	<div class="image" id="image">	
+	
+	
+	<div class="jumbotron" style="width: 1140px; height: 500px; align-content: center">	
+		<br/> 		
+		<div class="image" id="image">	
+			<div class="col-xs-12" align="center">
+				<img src="http://www.0404.go.kr/images/main/img_map.png"  style="width: 700px; height: 300px;"/>
+			</div>
+	</div>
+			
 		<div class="col-xs-12" align="center">
-			<img src="http://www.0404.go.kr/images/main/img_map.png"  style="width: 700px; height: 300px;"/>
-		</div>
-		
-		<div class="col-xs-12" align="center">
-			<img src="/resources/images/img_blue.png"/>
-			<img src="/resources/images/img_yellow.png"/>
-			<img src="/resources/images/img_red.png"/>
-			<img src="/resources/images/img_black.png"/>
-			<img src="/resources/images/img_lock_red.png"/>
+			<br/> 
+			<img src="/resources/images/img_blue.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<img src="/resources/images/img_yellow.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<img src="/resources/images/img_red.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
+			<img src="/resources/images/img_black.png"/>&nbsp;&nbsp;
+			<img src="/resources/images/img_lock_red.png"/>&nbsp;&nbsp;
 			<img src="/resources/images/img_lock_black.png"/>
 		</div>
-	</div>		
+	</div>	
+	
+	
+	
+	<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+	</div>	
+	
+	<br/><br/>
+	<br/><br/>
+	<br/>
 	
 	
 	<div class="info" id="info"></div>
-	    
+		<br/><br/>
+		<br/><br/>
+		<br/>    
  		</div>
+ 		
 	<!--  화면구성 div Start /////////////////////////////////////-->
  	
 	</body>

@@ -436,6 +436,13 @@
 		    </div>
 		  </div>
 		</form>	
+		
+		<br/>
+		<br/>
+		
+		<div class="col-sm-offset-10  col-sm-2 text-center">
+		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF¿˙¿Â</button>
+		</div>
 			
 			
 			<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;">
