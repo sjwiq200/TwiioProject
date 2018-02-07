@@ -15,6 +15,7 @@ public class MainPlan {
 	private Date arrivalDate;
 	private String country;
 	private String[] cityList;
+	private String[] countryList;
 	private String city;
 	private String planTitle;
 	private String mainThumbnail;
@@ -95,6 +96,12 @@ public class MainPlan {
 				+ (cityList != null ? Arrays.asList(cityList).subList(0, Math.min(cityList.length, maxLen)) : null)
 				+ ", city=" + city + ", planTitle=" + planTitle + ", mainThumbnail=" + mainThumbnail + ", endClick="
 				+ endClick + ", user=" + user + "]";
+	}
+	public String[] getCountryList() {
+		return countryList;
+	}
+	public void setCountryList(String[] countryList) {
+		this.countryList = countryList;
 	}
 	
 	

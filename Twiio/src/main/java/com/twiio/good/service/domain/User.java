@@ -38,6 +38,7 @@ public class User {
 	private double starEvalHost;
 	private String reviewHost;
 	private String emailVer;
+	private String mainPlanNoShared;
 	@JsonIgnore
 	private MultipartFile file;
 	
@@ -396,6 +397,16 @@ public class User {
 				+ ", userLeave=" + userLeave + ", userBank=" + userBank 
 				+ ", attendanceRate=" + attendanceRate + ", profileCredibility="
 				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost + "]";
+	}
+
+
+	public String getMainPlanNoShared() {
+		return mainPlanNoShared;
+	}
+
+
+	public void setMainPlanNoShared(String mainPlanNoShared) {
+		this.mainPlanNoShared = mainPlanNoShared;
 	}
 
 

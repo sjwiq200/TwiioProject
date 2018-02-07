@@ -78,15 +78,13 @@
 		$(document).ready(function(){
 		    $("#addMap").on('shown.bs.modal', function () {
 		        google.maps.event.trigger(map, 'resize');
-
-		    	
 			});
 		});
 
 		function initialize(){
 		var latlng = new google.maps.LatLng(37.5240220, 126.9265940);
 		var myOptions = {
-				zoom: 10,
+				zoom: 13,
 				center:latlng,
 				mapTypeId: google.maps.MapTypeId.ROADMAP
 		};
@@ -285,7 +283,6 @@
 				var dailyPlanNo = <%=request.getParameter("data")%>;
 				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
 				
-				//$("form").attr("method", "POST").attr("action",	"/dailyplan/addMap").submit();
 			});
 		});
 

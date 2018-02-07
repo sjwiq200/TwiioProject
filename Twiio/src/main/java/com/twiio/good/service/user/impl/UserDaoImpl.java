@@ -77,7 +77,13 @@ import com.twiio.good.service.user.UserDao;
 		public void updateUser(User user) throws Exception {
 			sqlSession.update("UserMapper.updateUser", user);
 		}
-	
+		
+		@Override
+		public void updateSharedPlan(Map<String, Object> map) throws Exception {
+			sqlSession.update("UserMapper.updateSharedPlan", map);
+		}
+		
+		
 		@Override
 		public void deleteUser(User user) throws Exception {
 			sqlSession.update("UserMapper.deleteUser", user);
@@ -191,5 +197,6 @@ import com.twiio.good.service.user.UserDao;
  
 			
 		}
-		
+
+	
 	}

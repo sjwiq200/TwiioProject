@@ -30,6 +30,8 @@ public interface DailyPlanDao {
 	
 	public void deletePlanContent(int dailyPlanNo);
 	
+	public void deletePlanContentEach(int contentNo);
+	
 	//friend_recommendation///////////////////////////////////////////////////
 	
 	public List<DailyPlan> listFriendRec(DailyPlan dailyPlan);

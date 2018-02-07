@@ -1,65 +1,74 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
 
 <!DOCTYPE html>
 
-<html lang="ko">
-
-
+<html>
 <head>
 
-<% String dailyPlanNo = (String) request.getParameter("data");  %>
+<%
+	String dailyPlanNo = (String) request.getParameter("data");
+%>
+<meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+<meta charset="UTF-8">
+<title>addText</title>
+<link
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script
+	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link
+	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css"
+	rel="stylesheet">
+<script
+	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
 
-  <meta charset="UTF-8">
-  <title>addText</title>
-  <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-  <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-  <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
-  <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-  
-  <link href="summernote.css" rel="stylesheet">
-  <script src="summernote.min.js"></script>
-  
-  <script>
-  
-  	var content;
-    $(function() {
-    	
-        $('#summernote').summernote({
-        	 toolbar: [
-        		    ['style', [ 'bold', 'underline']],
-        		  ],
-        	lang: 'ko-KR', 
-        	height: 400,                
-        	width: 400,
-        	minHeight: null,             
-        	maxHeight: null,             
-        	focus: false,                 
-        	placeholder: '여행지에서 필요한 물품/비행기 번호/여권번호/숙소전화번호/맛집전화번호 등의 정보를 적어보세요!'
-        });
-        
-        $("input[type='submit']").on("click",function(){
-        	content= $("#summernote").val();
-        	$("form").attr("method" , "POST").attr("action" , "/dailyplan/addText").submit();
-        });
-    });
+<link href="summernote.css" rel="stylesheet">
+<script src="summernote.min.js"></script>
 
-  </script>
-  
+<script>
+	var content;
+	$(function() {
+
+		$('#summernote')
+				.summernote(
+						{
+							toolbar : [ [ 'style', [ 'bold', 'underline' ] ], ],
+							lang : 'ko-KR',
+							height : 400,
+							width : 400,
+							minHeight : null,
+							maxHeight : null,
+							focus : false,
+							placeholder : '여행지에서 필요한 물품/비행기 번호/여권번호/숙소전화번호/맛집전화번호 등의 정보를 적어보세요!'
+						});
+
+		$("input[type='submit']").on(
+				"click",
+				function() {
+					content = $("#summernote").val();
+					alert(content);
+					$("#textContents").val(content);
+					$("form").attr("method", "POST").attr("action",
+							"/dailyplan/addText").submit();
+				});
+	});
+</script>
+
 </head>
 
 <body>
 
-  	
-    <form name="form">
-	    <textarea id="summernote" name="contentText"></textarea>
-	    <!--  jsp include parameter를 통해 전달받은 값을 사용하기 위해 아래와 같이 선언했습니다. -->
-	    <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-	   <!--  <button name="save" type="button">ADD</button> -->
-	   <input type="submit" value="ADD"/>
-    </form>  
+
+	<form name="form">
+		<textarea id="summernote" name="contentText"></textarea>
+		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+		<input type="hidden" name="textContents" id="textContents" />
+		<input type="submit" value="ADD" />
+	</form>
 </body>
 
 

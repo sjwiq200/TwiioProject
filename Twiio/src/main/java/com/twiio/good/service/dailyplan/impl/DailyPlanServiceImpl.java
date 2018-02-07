@@ -68,6 +68,11 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 	public void deletePlanContent(int dailyPlanNo) throws Exception {
 		dailyPlanDao.deletePlanContent(dailyPlanNo);
 	}
+
+	@Override
+	public void deletePlanContentEach(int contentNo) throws Exception {
+		dailyPlanDao.deletePlanContentEach(contentNo);
+	}
 	
 	//friend_recommendation///////////////////////////////////////////////////
 	

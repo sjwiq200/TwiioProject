@@ -463,4 +463,13 @@ public class UserServiceImpl implements UserService{
 	public void sendMail(String emai, String authNum) throws Exception {
 		 userDao.sendMail(emai, authNum);
 	}
+
+	@Override
+	public void updateSharedPlan(int userNo,String mainPlanNo) throws Exception {
+		Map<String,Object> map = new HashMap<String,Object>();
+		map.put("userNo", userNo);
+		map.put("mainPlanNoShared", mainPlanNo);
+		userDao.updateSharedPlan(map);
+		
+	}
 }

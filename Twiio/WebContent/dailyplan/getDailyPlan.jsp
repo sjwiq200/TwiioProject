@@ -1,8 +1,10 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
+<!DOCTYPE html>
+
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
 <head>
@@ -29,7 +31,8 @@
 <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
-
+<!-- Hover Jquery -->
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 <!--  구글  -->
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -37,41 +40,77 @@
     
 <title>MainPlanList</title>
 
-<style>
+<style type="text/css">
+
+.top_con_zone{
+	background-color:#ffffff;
+}
 
 #mainBody {
-    padding-top : 100px;
+	padding-top: 50px;
 }
 
 
+.wrap div {
+	/* width: 100%;
+	text-align: center; */
+}
+
+.top_bar_fix {
+	position: fixed;
+	top: 50px;
+	left: 0;
+	width: 100%;
+	bottom: 100px;
+}
+
+
+.wrap .top_fix_zone {
+}
+
+.wrap .top_con_zone {
+	text-align: right;
+	padding-top: 10px;
+}
+
 </style>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+
+		<!-- 스크립트 -->
+		<script type="text/javascript">
+		
+			$(document).ready(function(){
+				var topBar = $("#topBar").offset();
+				$(window).scroll(function(){
+					var docScrollY = $(document).scrollTop()
+					var barThis = $("#topBar")
+					var fixNext = $("#fixNextTag")
+					if( docScrollY > 1 ) {
+						barThis.addClass("top_bar_fix");
+						fixNext.addClass("pd_top_50");
+					}else{
+						barThis.removeClass("top_bar_fix");
+						fixNext.removeClass("pd_top_50");
+					}
+				});
+			})
+			
+</script>
+
+
 
 <script type="text/javascript">
 
-	
-	$(function() {
-		$("#uploadFile").on('change', function() {
-			readURL(this);
-		});
-	});
-
-	function readURL(input) {
-		if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			reader.onload = function(e) {
-				$('#addImageContent"').attr('src', e.target.result).attr('width', '300px');
-			}
-			reader.readAsDataURL(input.files[0]);
-			alert(e.target.result);
-		}
-	}
+	/////////////////////////이미지 추가 버튼 클릭했을 때 작동///////////////////////////
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
 					$("form").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
-				});
+			});
 	});
 	
+	/////////////////////////친구 추천 받는 부분///////////////////////////
 	$(function() {
 	
 		$("#friendRecButton").bind("click",function() {
@@ -96,159 +135,314 @@
 		    								+'<span>  [성별] : '+user[i].userGender+'</span>'
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="addToMyFriendList" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+')">친구추가</button><p>&nbsp;</p>';
+		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
-			
-								
 			    });
-			 
-			 
-			 
 		});
 	 });
 	 
-	function addFriend(userNo) {
-	    
-	    $.ajax({
-            url:'/dailyplan/json/addFriend?userNo='+userNo,
-            type:'get'
-         });
-	    
-	    $("#addToMyFriendList").remove();
-	    
+	function addFriend(userNo,i) {
+			$.ajax({
+	            url:'/dailyplan/json/addFriend?userNo='+userNo,
+	            type:'get'
+	         });
+	   var a = "#addToMyFriendList" + i;
+	    $("#addToMyFriendList"+i).remove(); 
 	}
-	
-	</script>
 	
 
 	
+	
+	/////////////////////////수정 및 삭제를 위한 hover기능 구현///////////////////////////
+	
+	$(function() {
+		$("#fixedbtn").on("click",function() {
+			$("#deleteAllButton").append('<a class="btn btn-success" role="button" onclick="deleteAllButton()">전체삭제</a>');
+			var lastIndexNo = $("#lastIndex").val();
+			 for(var i=1;i<lastIndexNo+2;i++){
+				 var contentNo = $("#contentsNo"+i).val();
+				 var result = '<a class="btn btn-primary" role="button" id="deleteButton'+i+'" onclick="deleteContent('+contentNo+','+i+')"> delete </a>';
+ 			$("#here"+(i-1)).append(result); 
+ 			}  
+		});
+	 });
+	
+	 function deleteContent(contentNo,i) { // db에 콘텐츠 내용 삭제하고 버튼 및 내용 삭제 수정 
+		$.ajax({
+            url:'/dailyplan/json/deleteContent?contentNo='+contentNo,
+            type:'get'
+         });
+		 $("#here"+(i-1)).remove();  //삭제 버튼 삭제 
+		 $("#contentsBoxNo"+i).remove(); //내용전체삭제 
+	}
+	 
+	 
+	 function deleteAllButton(){
+		 
+		 var dailyPlanNo = $("#idDailyPlanNo").val();
+		 $.ajax({
+	            url:'/dailyplan/json/deleteAllContent?dailyPlanNo='+dailyPlanNo,
+	            type:'get'
+	         });
+		 $("#PlanContentList").remove();
+	 }
+	 
+	 </script>
+	 
+	<script>
+	$(function() {
+		$("#addRouteButton").on("click",function() {
+			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo};
+			$(location).attr('href', url);
+				});
+	});
+	</script>
+	<script type="text/javascript">
+	/////////////////////////맞춤 여행 정보 기능 구현///////////////////////////
+	$(function() {
+		$("#customizedPlanInfo").on("click",function() {
+			var dailyPlanNo = $("#idDailyPlanNo").val();
+			 var dailyCity=$("#idDailyCity").val();
+			 var dailyDate=$("#idDailyDate").val();
+			 dailyCity = encodeURI(encodeURIComponent(dailyCity));
+			 self.location = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity+"&dailyDate="+dailyDate;
+		});
+	});
+	
+</script>
+
+
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script>
+/////////////////////////PDF 기능 구현///////////////////////////
+$(function() {
+	
+	$("#saveAsPDF").on("click" , function() {
+			alert("안녕");
+			
+		 	 var doc = new jsPDF();
+			 var specialElementHandlers = { 
+			    ".top_con_zone": function (element, renderer) { 
+			        return true; 
+			    }
+			} 	
+	
+			html2canvas($(".top_con_zone"),{
+				background :'#FFFFFF',
+			    useCORS: true,
+			    allowTaint: true,
+			    page: this,
+			    onclone: function(doc){
+			    	
+                },
+			    onrendered:function(canvas){
+			    	
+			        var imgData = canvas.toDataURL('image/jpeg');
+			        var doc = new jsPDF('p', 'mm');
+			        /*  doc.text(20, 20, 'Hello world!'); 
+			    	doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
+			    	doc.addPage();  */
+					//console.log(imgData);
+			    	doc.addImage(imgData, 'JPEG',8, 8, 90, 95);
+					 //doc.addImage(imgData, 'JPEG', 8, 8, 90, 95);
+			        doc.save('test.pdf');
+			    }
+			}); 
+		
+			
+		
+			/*  var pdf = new jsPDF();
+		        pdf.text(30, 30, 'Hello world!');
+		        pdf.save('hello_world.pdf');
+		        
+		         */
+		});
+			
+	});
+
+</script>
+
+
+
 </head>
 <body id="mainBody">
 
 
-	<jsp:include page="/layout/toolbar.jsp" />
-	<form class="form-horizontal">
 
-		<div class="container">
-			
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<div align="center">
-			<input type="button" id="friendRecButton"  name="friendRecButton" class="btn btn-primary" value="같이 갈 친구가 필요한가요?"/>
-			 <!-- data-toggle="modal" data-target="#friendRec"  -->
+
+	<div class="wrap">
+
+		<div class="top_bn_zone">
+			<jsp:include page="/layout/toolbar.jsp" />
+		</div>
+
+		<form class="form-horizontal">
+
+			<!-- -------------TOP<START>--------------- -->
+
+			<div class="top_fix_zone" id="topBar">
+
+				<div align="center">
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span> 
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+					<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span>
+					<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>
+					<p></p>
+					<img src="/resources/images/icon/plan/editbutton2.png"
+						id="fixedbtn" width="50px">
+					<p></p>
+					<a>DAY :<strong>${dailyPlan.day}</strong></a> <a>DailyDate :
+						${dailyPlan.dailyDate}</a> <a>DailyCity : ${dailyPlan.dailyCity}</a> <input
+						type="hidden" value="${dailyPlan.dailyPlanNo}" id="idDailyPlanNo" />
+					<input type="hidden" value="${dailyPlan.dailyDate}"
+						id="idDailyDate" /> <input type="hidden"
+						value="${dailyPlan.dailyCity}" id="idDailyCity" />
+					<p></p>
+					<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-success" value="나를 위한 맞춤정보" /> 
+					<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-primary" value="같이 갈 친구 찾기" />
+					<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-primary" value="PDF로 저장하기" />
+				<!-- 	<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-success" value="친구와 공유하기" /> -->
+
+				</div>
 			</div>
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			
-			<div align="center">
-				<h1>DAY :<strong>${dailyPlan.day}</strong></h1>
-				<h4>DailyDate : ${dailyPlan.dailyDate}</h4>
-				<h4>DailyCity : ${dailyPlan.dailyCity}	</h4> 
+
+			<!-- -------------TOP<END>--------------- -->
+
+
+
+
+			<!-- ----------CONTENTS<START>----------- -->
+			<div class="top_con_zone" id="fixNextTag">
+				<div class="PlanContentList" id="PlanContentList" align="center">
+
+					<div id="deleteAllButton"></div>
+
+					<c:set var="i" value="0" />
+					<c:forEach var="planContent" items="${list}" varStatus="index">
+						<div id="here${i}"></div>
+						<c:if test="${index.last}">
+							<input type="hidden" id="lastIndex" value="${i}" />
+							<div id="here${i}"></div>
+						</c:if>
+						<c:set var="i" value="${ i+1 }" />
+
+						<input type="hidden" name="planContentNo" id="contentsNo${i}"
+							value="${planContent.contentNo}" />
+
+						<div id="contentsBoxNo${i}" class="realContents">
+
+							<h7 class="contents"> ㅡ </h7>
+							<p class="contents">콘텐츠 번호 : ${planContent.contentNo}</p>
+							<p class="contents">데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
+							<p class="contents">콘텐츠타입 : ${planContent.contentType}</p>
+
+							<c:if test="${!empty planContent.orderNo}">
+								<p class="contents">순서 : ${planContent.orderNo}</p>
+							</c:if>
+
+							<c:if test="${!empty scrap.scrapNo }">
+								<p class="contents">스크랩번호 : ${scrap.scrapNo }</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.route}">
+								<p class="contentsDelete">루트 : ${planContent.route}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.departureLocation}">
+								<p class="contents">출발지 : ${planContent.departureLocation}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.arrivalLocation}">
+								<p class="contents">도착지 : ${planContent.arrivalLocation}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.estimatedTime}">
+								<p class="contents">소요시간 : ${planContent.estimatedTime}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.routeType}">
+								<p class="contents">이동방법 : ${planContent.routeType}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.routeDescription}">
+								<p class="contents">길찾기결과 : ${planContent.routeDescription}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapImage}">
+								<p class="contents">
+									<Strong> Your Map Information</Strong>
+								</p>
+								<p class="contents">
+									<img src="${planContent.mapImage}" name="mapImg"
+										class="contentsDelete" width="350px"
+										onclick="javascript:location.href='${planContent.mapUrl}';" />
+							</c:if>
+
+							<c:if test="${!empty planContent.mapName}">
+								<p class="contents">${planContent.mapName}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapUrl}">
+								<p class="contents">지도 URL : ${planContent.mapUrl}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapAddress}">
+								<p class="contents">지도 주소 : ${planContent.mapAddress}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapPhone}">
+								<p class="contents">PHONE : ${planContent.mapPhone}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapWebsite}">
+								<p class="contents">웹사이트 : ${planContent.mapWebsite}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.mapType}">
+								<p class="contents">지도유형 : ${planContent.mapType}</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.contentText}">
+								<p>
+									<a class="contentsTxt">${planContent.contentText}</a>
+								</p>
+							</c:if>
+
+							<c:if test="${!empty planContent.contentImage}">
+								<p class="contentsThis">
+									<img
+										src="/resources/images/dailyPlanContent/${planContent.contentImage}"
+										class="contentsDelete" width="300px" />
+								</p>
+							</c:if>
+
+							<div id="buttonForDelete${i}"></div>
+							<div id="buttonForEdit${i}"></div>
+
+							<p class="contents">&nbsp;</p>
+							<p class="contents">&nbsp;</p>
+
+						</div>
+
+					</c:forEach>
+
+				</div>
+
 			</div>
-			
-			<div class="PlanContentList" align="center">
 
-				<c:set var="i" value="0" />
-				<c:forEach var="planContent" items="${list}">
-					<c:set var="i" value="${ i+1 }" />
-					<input type="hidden" name="planContentNo" value="${planContentNo}" />
-					<div>
-						<h7> ㅡ </h7>
-						<div>콘텐츠 번호 : ${planContent.contentNo}</div>
-						<div>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</div>
-						<div>콘텐츠타입 : ${planContent.contentType}</div>
-						
-						<c:if test="${!empty planContent.orderNo}">
-							<div>순서 : ${planContent.orderNo}</div>
-						</c:if>
-						
-						<c:if test="${!empty scrap.scrapNo }">
-							<div>스크랩번호 : ${scrap.scrapNo }</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.route}">
-							<div>루트 : ${planContent.route}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.departureLocation}">
-							<div>출발지 : ${planContent.departureLocation}</div>
-						</c:if>
+			<!-- ----------CONTENTS<END>----------- -->
+	</div>
 
-						<c:if test="${!empty planContent.arrivalLocation}">
-							<div>도착지 : ${planContent.arrivalLocation}</div>
-						</c:if>
-
-						<c:if test="${!empty planContent.estimatedTime}">
-							<div>소요시간 : ${planContent.estimatedTime}</div>
-						</c:if>
-
-						<c:if test="${!empty planContent.routeType}">
-							<div>이동방법 : ${planContent.routeType}</div>
-						</c:if>
-
-						<c:if test="${!empty planContent.routeDescription}">
-							<div>길찾기결과 : ${planContent.routeDescription}</div>
-						</c:if>
-						
-						
-						<c:if test="${!empty planContent.mapImage}">
-							<div><Strong> Your Map Information</Strong></div>
-							<div> <img src ="${planContent.mapImage}" width="350px" onclick="javascript:location.href='${planContent.mapUrl}';"/></div>
-						</c:if>
-						
-						
-						<c:if test="${!empty planContent.mapName}">
-							<div>${planContent.mapName} </div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapUrl}">
-							<div>지도 URL : ${planContent.mapUrl}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapAddress}">
-							<div>지도 주소 : ${planContent.mapAddress}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapPhone}">
-							<div>PHONE : ${planContent.mapPhone}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapWebsite}">
-							<div>웹사이트 : ${planContent.mapWebsite}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.mapType}">
-							<div>지도유형 : ${planContent.mapType}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.contentText}">
-							<div>텍스트 : ${planContent.contentText}</div>
-						</c:if>
-						
-						<c:if test="${!empty planContent.contentImage}">
-							<div>이미지 : </div>
-							<div><img src="/resources/images/dailyPlanContent/${planContent.contentImage}" width="300px" /></div>
-						</c:if>
-
-						<div>&nbsp;</div>
-						<div>&nbsp;</div>
-					</div>
-
-				</c:forEach>
-
-				<img src="/resources/images/icon/plan/daily-plan-content-plus-icon.jpeg" height="40" width="40" id="plus" />
-	</form>
-
-	<div>
-
-		
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button></span>
-		 <span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap" name="addMapIcon">지도</button></span>
-		<span><button type="button" class="btn" data-toggle="modal" data-target="#addRoute">길찾기</button> </span>
+	<!-- 	</form> -->
 
 		<!---------- Map Dialog ------------->
 		<div class="modal fade" id="addMap"  role="dialog">
@@ -273,7 +467,6 @@
 				</div>
 			</div>
 		</div>
-	</div>
 	<!---------- Text Dialog ------------->
 		<div class="modal fade" id="addText" role="dialog">
 			<div class="modal-dialog">
@@ -297,11 +490,11 @@
 				</div>
 			</div>
 		</div>
-	</div>
+
+	
 
 	<!---------- Image Dialog ------------->
 	
-	<div>
 
 		<div class="modal fade" id="addImage" role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -340,11 +533,8 @@
 			</div>
 		</div>
 
-		<!-- ---------------------------------------------------------------- -->
 		
-		<!---------- FriendRec Dialog ------------->
-	
-	<div>
+		<!---------- FriendRec Dialog <START>------------->
 
 		<div class="modal fade" id="friendRec" role="dialog">
 			<div class="modal-dialog modal-md">
@@ -353,7 +543,7 @@
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title">
-							<Strong>나와 같은 곳, 같은 날짜에 가는 여행자</Strong>
+							<Strong>나와 같은 장소, 날짜에 여행가는 친구들을 찾아볼까요?</Strong>
 						</h4>
 						<h7 class="modal-title">TWIIO</h7>
 					</div>
@@ -370,8 +560,10 @@
 			</div>
 		</div>
 		
+		<!---------- FriendRec Dialog <END>------------->
+		
 
-
+		
 </body>
 
 
