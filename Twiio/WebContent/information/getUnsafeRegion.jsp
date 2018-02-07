@@ -129,7 +129,7 @@
 			}
 			.jumbotron
 			{
-				background-color: rgba(8, 112, 138, 0.5);
+				background-color: rgba(86, 177, 191, 0.5);
 			}
     </style>
     
@@ -351,8 +351,11 @@
 	
 	
 	<div class="info" id="info"></div>
-	    
+		<br/><br/>
+		<br/><br/>
+		<br/>    
  		</div>
+ 		
 	<!--  화면구성 div Start /////////////////////////////////////-->
  	
 	</body>
