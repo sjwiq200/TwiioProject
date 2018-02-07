@@ -255,7 +255,7 @@
 		//============= 회원원가입화면이동 =============
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click", function() {
+			$("#addUser").on("click", function() {
 				self.location = "/user/addUser"
 			});
 		});
@@ -306,7 +306,7 @@
 											 <div class="col-md-offset-1">
 												 <button type="button" class="col-xs-12 btn btn-outlined btn-theme btn-sm"  >로 &nbsp;그 &nbsp;인</button>
 												 <div class="col-xs-1"></div>
-												  <a class="col-xs-12 btn btn-outlined btn-light btn-sm" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
+												  <a class="col-xs-12 btn btn-outlined btn-light btn-sm" href="#" role="button" id="addUser">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
 											</div>
 											
 											
