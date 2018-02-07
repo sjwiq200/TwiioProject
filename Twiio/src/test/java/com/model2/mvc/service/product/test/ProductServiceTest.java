@@ -127,19 +127,24 @@ public class ProductServiceTest {
 	 }
 
 	 //==>  주석을 풀고 실행하면....
-	//@Test
+	@Test
 	 public void testListProduct() throws Exception{
 		 
 	 	Search search = new Search();
 	 	search.setCurrentPage(1);
 	 	search.setPageSize(3);
+	 	search.setSearchCondition("0");
+	 	search.setSearchKeyword("THAILAND");
+	 	search.setPriceCondition("");
+	 	search.setProdSearchType("");
 	 	Map<String,Object> map = productService.listProduct(search);
 	 	
 	 	List<Object> list = (List<Object>)map.get("list");
-	 	System.out.println(list);
-	 	
+	 	System.out.println("list :: "+list);
+	 	//Search [currentPage=1, searchCondition=0, searchKeyword=THAILAND, 
+	 	//pageSize=12, endRowNum=0, startRowNum=0, priceCondition=, prodSearchType=, productNo=0]}
 	 	int totalCount = (Integer)map.get("totalCount");
-	 	System.out.println(totalCount);
+	 	System.out.println("totalCount :: "+totalCount);
 //	 	Assert.assertEquals(3, list.size());
 //	 	
 //		//==> console 확인
@@ -197,7 +202,7 @@ public class ProductServiceTest {
 
 	}
 	 
-	@Test
+	//@Test
 	public void testlistBestProduct() throws Exception {
 		
 		Search search = new Search();

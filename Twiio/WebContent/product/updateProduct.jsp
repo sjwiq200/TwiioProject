@@ -5,7 +5,7 @@
 
 <html lang="ko">
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>상품등록</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -13,12 +13,18 @@
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> -->
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script> 
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+    <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	<!-- datePicker -->
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  	<link rel="stylesheet" href="/resources/demos/style.css">
+  	<!-- <link rel="stylesheet" href="/resources/demos/style.css"> -->
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   			
@@ -28,24 +34,34 @@
   	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 	 
   	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-  
-  	<!-- <link href="summernote.css" rel="stylesheet">
-  	<script src="summernote.min.js"></script>
-  	include summernote-ko-KR
-  	<script src="lang/summernote-ko-KR.js"></script> -->
-  	
-  	 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css"> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.11.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/js/bootstrap.min.js"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.css" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-bs4.js"></script> -->
-       
+         
 
 <style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
+        body > div.container{
+        	/* border: 3px solid #D6CDB7; */
+             margin-top: 80px;
+        }
+        body{
+        	background: rgba(208, 211, 197, 0.3);
+        }
+        h1{
+        	color: rgba(215, 58, 49, 0.7);
+        }
+         span.input-group-addon{
+        	/* background: #08708A; #56B1BF; 
+        	color: #D0D3C5; */
+        	/* background: rgba(215, 58, 49, 0.7); */
+        }
+        a.btn.btn-primary.btn{
+        	background:rgba(215, 58, 49, 0.8);
+        	border:none;       
+        }
+        button.btn.btn-primary.btn{
+        	background:rgba(215, 58, 49, 0.8);
+        	border:none; 
+        }
+        strong{
+        	color:rgba(215, 58, 49, 0.8);
         }
 </style>
 
@@ -245,69 +261,97 @@ $( function() {
 <body>
 
 <!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">TWIIO</a>
-   		</div>
-   	</div>
+	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-		<h1 class="bg-primary text-center">투 어 등 록</h1>
+				
+		<h1 >DailyTour</h1>
+		<br/>
+		<br/>
+							
 		
 		<!-- form Start /////////////////////////////////////-->
 		<form class="form-horizontal" name="detailForm">
 		
-		  <div class="form-group">
-		  <input type="hidden" name="productNo" value="${product.productNo }"></input>
+		<div class="row">
+  <div class="col-sm-12">
+  
+   <div class="row">
+      <div class="col-sm-5">
+		 
+		  <div class="form-group">		    
+		   <!--  <div class="col-sm-5"> -->
+		   <input type="hidden" name="productNo" value="${product.productNo }"></input>
 		  <input type="hidden" name="hostNo" value="${product.hostNo }"></input>
-		    <label for="productName" class="col-sm-offset-1 col-sm-3 control-label">투어명</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productName" name="productName" value="${product.productName}" >
-		       
-		    </div>
+		    <div class="input-group">
+		    <span class="input-group-addon">투어명</span>
+		      <input type="text" class="form-control" id="productName" name="productName" value="${product.productName}" >	
+		      </div>	       
+		    <!-- </div> -->
 		   </div> 
 		   
 		   <div class="form-group">
-		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label">국가</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="country" name="country" value="${product.country}">
-		       
-		    </div>
+		    
+		    <!-- <div class="col-sm-5"> -->
+		     <div class="input-group">
+		    <span class="input-group-addon">국가</span>
+		      <input type="text" class="form-control" id="country" name="country"  value="${product.country}">
+		       </div>
+		   <!--  </div> -->
 		   </div> 
 		   
 		   <div class="form-group">
-		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시</label>
-		    <div class="col-sm-4">
+		    
+		    <!-- <div class="col-sm-5"> -->
+		    <div class="input-group">
+		    <span class="input-group-addon">도시</span>
 		      <input type="text" class="form-control" id="city" name="city" value="${product.city}">
-		       
-		    </div>
+		       </div>
+		   <!--  </div> -->
 		   </div> 	  
 		  
 		  <div class="form-group">
-		    <label for="tripDate" class="col-sm-offset-1 col-sm-3 control-label">투어날짜</label>
-		    <div class="col-sm-4" name="addDate">
-		      <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate">+</a>
-		      <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true">-</a>
-		      <c:set var="date" value="${product.tripDate}"></c:set>
+			    
+			    <!-- <div class="col-sm-8" name="addDate">  -->
+			    <!-- <div class="col-sm-9"> -->
+			  
+			    
+			   
+			      <div class="input-group" name="addDate">
+			    <span class="input-group-addon">투어날짜</span>		      
+			       <c:set var="date" value="${product.tripDate}"></c:set>
 				<c:set var="date_array" value="${fn:split(date,',')}"></c:set>
 				<c:set var="i" value="0"/>		
 					<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
 					<c:set var="i" value="${i+1}"/>						
 						<input type="text" class="form-control" id="datepicker${i}" name="tripDate" readonly="readonly" value="${fn:split(tdate,'=')[0]}">						
-					</c:forEach>	      	      
-		    </div>
-		    <!--<div class="col-sm-3">  -->
-		     <!-- <img src="../images/ct_icon_date.gif" width="15" height="15" 
-				onclick="show_calendar('document.detailForm.manuDate', document.detailForm.manuDate.value)"/>-->
-		    <!--</div>  -->
-		  </div>
+					</c:forEach>	      	      	
+			           
+			     </div>
+			     
+			     <!-- </div> -->
+			     
+			    <!--  <div class="col-sm-3"> -->
+			  
+			     
+			     <div class="btn-group" role="group" aria-label="...">
+				    <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
+				    <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>	
+			    </div>
+			    
+		   
+		  <!--  </div> -->
+		   
+		    <!--  </div>     --> 
+		  </div>		  
 		  
 		   <div class="form-group">
-		    <label for="productType" class="col-sm-offset-1 col-sm-3 control-label">투어유형</label>
-		    <div class="col-sm-4">
+		    
+		   <!--  <div class="col-sm-5"> -->
+		    <div class="input-group">
+		    <span class="input-group-addon">투어유형</span>
 		      	<select name="productType">
 				  <option value="1" ${ product.productType==1 ? "selected" : "" }>명소투어</option>
 				  <option value="2" ${ product.productType==2 ? "selected" : "" }>음식투어</option>
@@ -315,46 +359,77 @@ $( function() {
 				  <option value="4" ${ product.productType==4 ? "selected" : "" }>액티비티</option>
 				  <option value="5" ${ product.productType==5 ? "selected" : "" }>night투어</option>
 				</select>
-		    </div>
+				</div>
+		   <!--  </div> -->
 		   </div> 
 		  
 		  <div class="form-group">
-		    <label for="tourHeadCount" class="col-sm-offset-1 col-sm-3 control-label">1일 투어 인원</label>
-		    <div class="col-sm-4">
+		    
+		   <!--  <div class="col-sm-5"> -->
+		    <div class="input-group">
+		    <span class="input-group-addon">1일 투어 인원</span>
 		      <input type="text" class="form-control" id="tourHeadCount" name="tourHeadCount" value="${product.tourHeadCount}">
-		    </div>
+		      </div>
+		    <!-- </div> -->
 		  </div>
 		  
 		  
 		  <div class="form-group">
-		    <label for="productPrice" class="col-sm-offset-1 col-sm-3 control-label">가격</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="productPrice" name="productPrice" value="${product.productPrice}">
-		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">원</strong>
-		      </span>
-		    </div>
-		  </div>
-		  
-		   <div class="form-group">
-		    <label for="description" class="col-sm-offset-1 col-sm-3 control-label">투어 상세 내용</label>
-		    <div class="col-sm-4">		    	
-		      <textarea id="summernote" name="description" >${product.description}</textarea>
-		    </div>
-		  </div>
+		    
+		    <!-- <div class="col-sm-5"> -->		        
+			  <div class="input-group">		
+			  <span class="input-group-addon">가격</span>    
+			    <input type="text" class="form-control" id="productPrice" name="productPrice" value="${product.productPrice}" aria-describedby="inputGroupSuccess4Status">
+			    <span class="input-group-addon">&#8361;</span>
+			  </div>
+			  <!-- <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span> -->
+			  <!-- <span id="inputGroupSuccess4Status" class="sr-only">(success)</span> -->
+			   <!-- <span id="helpBlock" class="help-block">
+			      	 <strong class="text-danger">원</strong>
+			      </span>	 -->	
+		    <!-- </div> -->
+		  </div>		   
 		  		  		  
 		  <div class="form-group">
-		    <label for="files" class="col-sm-offset-1 col-sm-3 control-label">투어 섬네일</label>
-		    <div class="col-sm-4">		      
-			    <label for="files">파일 업로드</label>
-			    <input type="file" id="file" name="file" >
-			    <img id="blah" />			   
+		    <!-- <label for="files" class="col-sm-offset-1 col-sm-3 control-label">투어 썸네일</label> -->
+		    <!-- <div class="col-sm-5"> -->		 
+		     <div class="input-group">		
+			  <span class="input-group-addon">투어 썸네일</span>	    	     
+			    <!-- <label for="files">파일 업로드</label>	 -->		    			    
+			    <input type="file" id="file" name="file">
+			    <img id="blah" />
+			    </div>			   
 		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">업로드 gogo</strong>
+		      	 <strong class="text-danger">썸네일을 등록해 주세요</strong>
 		      </span>
-		    </div>
+		    <!-- </div> -->
 		  </div>
 		  
+		  
+		  </div>
+		  <div class="col-sm-1">
+		  </div>
+		  <div class="col-sm-5">
+		  
+		  
+		  
+		  
+		  <div class="form-group">
+		   <!--  <label for="description" class="col-sm-offset-1 col-sm-3 control-label">투어 상세 내용</label> -->
+		    <!-- <div class="col-sm-5">	 -->
+		   	    	
+		      <textarea id="summernote" name="description">${product.description}</textarea>
+		      
+		   <!--  </div> -->
+		  </div>
+		  
+		  
+		  
+		  </div>
+		  
+		  </div>
+		  </div>
+		  </div>
 		  
 		  
 		  <div class="form-group">
