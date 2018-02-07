@@ -6,13 +6,12 @@
 
 <html>
 <head>
-
+<title>addText</title>
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
 %>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
-<title>addText</title>
 <link
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
 	rel="stylesheet">
