@@ -339,7 +339,7 @@ function resetData() {
 							alert(JSON.stringify(JSONData));
 							$('#modalfriend').modal('toggle');
 						}
-				}); 
+					}); 
 			 	}
 			 }
 			 });

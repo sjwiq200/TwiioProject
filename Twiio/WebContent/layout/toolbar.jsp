@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=EUC-KR" %>
-<%@ page pageEncoding="EUC-KR"%>
+<%@ page contentType="text/html; charset=UTF-8" %>
+<%@ page pageEncoding="UTF-8"%>
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,7 +29,7 @@
 		<div 	class="collapse navbar-collapse" id="target" 
 	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
 	         
-	         	<!-- Tool Bar ¸¦ ´Ù¾çÇÏ°Ô »ç¿ëÇÏ¸é.... -->
+	         	<!-- Tool Bar ï¿½ï¿½ ï¿½Ù¾ï¿½ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½.... -->
 	             <ul class="nav navbar-nav">
 	             
 	              
@@ -115,6 +115,8 @@
 	                     </a>
 	                     <ul class="dropdown-menu">
 	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#">êµ¬ë§¤ëª©ë¡ì¡°íšŒ</a></li>
+	                         <li><a href="#">íŒë§¤ëª©ë¡ì¡°íšŒ</a></li>
 	                         <li><a href="#"></a></li>
 	                         
 	                         <li class="divider"></li>
@@ -137,25 +139,25 @@
    	
    	<script type="text/javascript">
 	
-		//============= logout Event  Ã³¸® =============	
+		//============= logout Event  Ã³ï¿½ï¿½ =============	
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
 		 });
 		
-		//============= È¸¿øÁ¤º¸Á¶È¸ Event  Ã³¸® =============	
+		//============= È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸ Event  Ã³ï¿½ï¿½ =============	
 		 $(function() {
-			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('È¸¿øÁ¤º¸Á¶È¸')").on("click" , function() {
+			//==> DOM Object GET 3ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
-		//=============  °³ÀÎÁ¤º¸Á¶È¸È¸ Event  Ã³¸® =============	
+		//=============  ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È¸È¸ Event  Ã³ï¿½ï¿½ =============	
 			
 		/* Messenger*/
 			
@@ -247,7 +249,13 @@
 			$(self.location).attr("href","/mypage/message/listMessage");
 		});
 		
+		$( "a:contains('êµ¬ë§¤ëª©ë¡ì¡°íšŒ')" ).on("click" , function() {
+			$(self.location).attr("href","/transaction/listTransaction");
+		});
 		
+		$( "a:contains('íŒë§¤ëª©ë¡ì¡°íšŒ')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listHostProduct");
+		});
 	</script>  
 	
 	<style>

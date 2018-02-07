@@ -4,16 +4,6 @@
 
 <!DOCTYPE html>
 
-<%-- 
-<%@ page import="com.model2.mvc.service.domain.*" %>
-
-<%
-	Product vo = (Product)request.getAttribute("product2");
-	User vo2 = (User)request.getAttribute("userVO");
-	String name = request.getParameter("menu");
-%>	
---%>
-
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
