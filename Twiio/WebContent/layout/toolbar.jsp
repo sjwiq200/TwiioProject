@@ -6,17 +6,6 @@
 
 
 
-	<!--  ///////////////////////// google sign-in ////////////////////////// -->
-	<meta name="google-signin-scope" content="profile email">
-	<meta name="google-signin-client_id" content="733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com.apps.googleusercontent.com">    
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
-    <!--  ///////////////////////// kakao login ////////////////////////// -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/> 
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar-wrapper">
     <div class="container-fluid">
