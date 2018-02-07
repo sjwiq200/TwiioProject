@@ -100,11 +100,7 @@
 		    	</p>
 		    </div>
 		    
-		    <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-				  <button type="button" class="btn btn-default">방생성</button>
-				</form>
-	    		</div>
+		    
 	    	
 		</div>
           
@@ -112,7 +108,7 @@
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro">
+		      <div class="thumbnail" name="getPro" style="height:500px;">
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">

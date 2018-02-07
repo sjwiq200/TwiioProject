@@ -208,6 +208,14 @@ public class RoomController {
 		return "forward:/room/addReport.jsp";
 	}
 	
+	@RequestMapping(value = "/deleteRoomUser/{roomKey}")
+	public String deleteRoomUser(@PathVariable String roomKey) throws Exception {
+		System.out.println("/room/deleteRoomUser : ");
+		
+		roomService.deleteRoomUser(roomKey);
+		return "";
+	}
+	
 	
 	
 	

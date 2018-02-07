@@ -25,5 +25,7 @@ public interface RoomDao {
 	public void updateRoom(Room room) throws Exception;
 	
 	public void deleteRoom(Room room) throws Exception;
+	
+	public void deleteRoomUser(String roomKey) throws Exception;
 
 }

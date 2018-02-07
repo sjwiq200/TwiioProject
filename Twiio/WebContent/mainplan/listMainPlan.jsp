@@ -9,8 +9,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-<meta charset="UTF-8">
+<title>listMainPlan</title>
 
+<meta charset="UTF-8">
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -42,20 +43,54 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
-
+<!-- ---------Floating Button------------ -->
+ <link href="/resources/css/floatingButton.css" rel="stylesheet" type="text/css" />
 
 <title>MainPlanList</title>
 
 
 <style>
-
- html, body {
- 	width: 100%;
- 	height: 100%;
- 	background: #f4f4f4;
+html, body {
+	width: 100%;
+	height: 100%;
+	background: #f4f4f4;
 }
 
+#header .inner {
 
+	margin-top: 150px;
+	margin-bottom: 70px;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+/* 	background-image: url('/resources/images/dailyPlanContent/ITALY-TRENDS.jpg'); */
+	
+}
+
+.col {
+	background: #08708A;
+}
+
+#thumbnailMainBox {
+	background: linear-gradient(-45deg, #56B1BF, transparent),
+		linear-gradient(45deg, #D73A31, transparent);
+	border-radius: 8px;
+	display: inline-block;
+	padding: 1px;
+	text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+	background: #fff;
+	display: inline-block;
+	border-radius: 6px;
+}
+
+.textArea {
+	 margin-top: 20px;
+	 border-bottom: solid 1px #D73A31; 
+
+}
 </style>
 
 
@@ -170,84 +205,98 @@
 		<div class="container">
 			
 			<header id="header" class="alt">
-				<div class="inner center-block">
-					<h1>TWIIBOOK,</h1>
-				</div>
-				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
-			<div align="right" class="button">
-			<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
-				<button type="button" class="btn" id="addMainPlan" ><Strong>ADD</Strong></button>
-				<button type="button" class="btn" id="listSharedPlan" ><Strong>친구와 공유하고 있는 플랜 보기</Strong></button>
-			</div>
-				<img src="/resources/images/dailyPlanContent/lineline.png" class="img-responsive" alt="Responsive image" style="border-radius: 70%;">
-			</header>
-			
-			
-			
-			
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-		
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			
-			<div >
-			
-			<c:set var="i" value="0" />
-				  	<c:forEach var="mainPlan" items="${list}">
-				  		<c:set var="i" value="${ i+1 }" />
-
-				<div class="col">
-					<div class="col-md-6">
-						<div class="thumbnail">
-						<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-default" value="친구와 공유하기" />
-							<div class="caption">
-								
-								<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 200px; " />
-							
-								<input type="hidden" name="mainPlanNo"
-									value="${mainPlan.mainPlanNo}" />
-							
-								<br>[${ i }]</br>
-								<p>플랜번호 : ${mainPlan.mainPlanNo}</p>
-								<p>유저번호 : ${mainPlan.user.userNo}</p>
-								<p>출발일 : ${mainPlan.departureDate }</p>
-								<p>도착일 : ${mainPlan.arrivalDate}</p>
-								<p>국가명 : ${mainPlan.country}</p>
-								<p>도시명 : ${mainPlan.city}</p>
-								<p>플랜제목 : ${mainPlan.planTitle}</p>
-								<p>섬네일이미지 : ${mainPlan.mainThumbnail}</p>
-							
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="update"></span>수정
-								</button>
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="delete"></span>삭제
-								</button>
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="submit"></span>선택
-								</button>
-
-							</div>
-						</div>
+				<div class="row">
+					<div class="col-xs-10 inner">
+						<h1>TWIIBOOK,</h1>
 					</div>
 				</div>
-
-			</c:forEach>
+			</header>
 			
+				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
+
+			<div class="row">
+				<div  class="col-xs-1"></div>
+				<div  class="col-xs-10 inner" id="thumbnailMainBox">
+				  <div align="center" class="col-xs-1">&nbsp;</div> <!-- 그라디언트 보이게 해주려고 한 부분 -->
+					<div class="col-xs-12 inner" id="thumbnailMainThumbBox">
+						<!-- <img src="/resources/images/dailyPlanContent/lineline.png" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"> -->
+
+						<c:set var="i" value="0" />
+						<c:forEach var="mainPlan" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+
+							<div class="col" id="check" >
+								<div class="col-md-12">
+									<div id="thumbnail">
+										<div class="caption" >
+										
+										 <div class="row">
+										   <div class="col-md-3">
+									<%-- 	   ${mainPlan.mainThumbnail} --%>
+											<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 150px; height:250px" /> 
+											<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
+										   </div>
+											<div class="col-md-7 textArea">
+												<h3>제목 : ${mainPlan.planTitle}</h3>
+												<p>출발하는 날짜 : ${mainPlan.departureDate }</p>
+												<p>도착하는 날짜 : ${mainPlan.arrivalDate}</p>
+												<p>국가 : ${mainPlan.country}</p>
+												<p>도시 : ${mainPlan.city}</p>
+											</div>
+												<div class="col-md-2">
+													<button type="button" class="btn btn-default">
+														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="update"></span>수정
+													</button>
+		
+													<button type="button" class="btn btn-default">
+														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>삭제
+													</button>
+		
+													<button type="button" class="btn btn-default">
+														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>선택
+													</button>
+													
+													<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-default" value="친구와 공유하기" />
+												</div>
+											</div>
+											
+										</div>
+									</div>
+								</div>
+							</div>
+
+						</c:forEach>
+					</div>
+					<div align="right" class="col-xs-1">&nbsp;</div>
+				</div>
+				<!-- 섬네일 전체 박스 부분 -->
+				<div align="right" class="col-xs-1">&nbsp;</div>
+
+				
+					<div class="row">
+							<div  class="col-xs-12 inner">
+								<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
+								<button type="button" class="btn" id="listSharedPlan">
+									<Strong>친구와 공유하고 있는 플랜 보기</Strong>
+								</button>
+							</div>
+						</div>
+			</div>
+			<!-- 메인 섬네일을 감싸는 row 시작부분 -->
 		</div>
 	</form>
 	
 
-
 </body>
 
+<!--  Floating Button <START> -->
+<div id="container-floating">
+	<div id="floating-button" data-toggle="tooltip" data-placement="center"
+		data-original-title="Create" onclick="newmail()">
+		<p class="letter" id="addMainPlan">+</p>
+	</div>
+</div>
+<!--  Floating Button <END> -->
 <!---------- ShareWithFriend Dialog <START>------------->
 
 		<div class="modal fade" id="shareWithFriend" role="dialog">
