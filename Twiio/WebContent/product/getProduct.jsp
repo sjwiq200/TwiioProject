@@ -36,10 +36,13 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	
+	 <!-- ---------Floating Button------------ -->
+  	<link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
 
 
    
-   <style>
+   <!-- <style>
       a.top {
         position: fixed;
         left: 92%;
@@ -53,7 +56,7 @@
 		border-radius: 5px;
         display: none;
       }
-    </style>
+    </style> -->
     	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -430,15 +433,15 @@
 	///////////////////////////////////////////top//////////////////
 	  $( function() {
 		  
-	    $( window ).scroll( function() {
+	    /* $( window ).scroll( function() {
 	      if ( $( this ).scrollTop() > 100 ) {
 	        $( '.top' ).fadeIn();
 	      } else {
 	        $( '.top' ).fadeOut();
 	      }
-	    } );
+	    } ); */
 	    
-	    $( '.top' ).click( function() {
+	    $( '#floating-button' ).click( function() {
 	      $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
 	      return false;
 	    } );
@@ -498,7 +501,7 @@
 	
 	  $(function() {
 			
-			 $( "#showPro" ).on("click" , function() {
+			 $( "div.nd1" ).on("click" , function() {
 				
 				 self.location = "/product/listProduct";
 			});
@@ -506,7 +509,7 @@
 	  
 	  $(function() {
 			
-			 $( "button:contains('수정')" ).on("click" , function() {
+			 $( "div.nd3" ).on("click" , function() {
 				 
 				 self.location="/product/updateProduct?productNo="+${product.productNo};
 			});
@@ -514,7 +517,7 @@
 	  
 	  $(function() {
 			
-			 $( "button:contains('삭제')" ).on("click" , function() {
+			 $( "div.nd4" ).on("click" , function() {
 				
 				 self.location="/product/deleteProduct?productNo="+${product.productNo};
 			});
@@ -555,11 +558,11 @@
 		<input type="hidden" name="userNo" value="${user.userNo }"/>
 		<input type="hidden" name="userName" value="${user.userName }"/>
 		
-		<button type="button" id="showPro" class="btn btn-default">목록보기</button>
+		<%-- <button type="button" id="showPro" class="btn btn-default">목록보기</button>
 	       <c:if test="${user.userNo == product.hostNo }">
 	       <button type="button" class="btn btn-default">수정</button>
 	       <button type="button" class="btn btn-default">삭제</button>
-	       </c:if>
+	       </c:if> --%>
 	       
 		<div class="row"> 
 	      <div class="col-sm-12" >
@@ -741,7 +744,7 @@
 		<div class="row">
 	  		<div class="col-sm-4 col-sm-offset-2"><strong>상품상세정보</strong></div>
 			<div class="col-sm-4">${product.description}</div>
-			<a href="#" type="button" class="top">Top</a>
+			<!-- <a href="#" type="button" class="top">Top</a> -->
 		
 		</div>
 		</div>
@@ -756,6 +759,26 @@
 	  </div>
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
+ 	
+ 	<div id="container-floating">
+		
+		<div class="nd4 nds" data-toggle="tooltip" data-placement="left"
+			data-original-title="deleteProduct">
+			<img class="reminder" src="/resources/images/productIcons/delete.png" style="width: 35px; height: 35px;">
+		</div>
+		<div class="nd3 nds" data-toggle="tooltip" data-placement="left"
+			data-original-title="updateProduct">
+			<img class="reminder" src="/resources/images/productIcons/edit.png" style="width: 35px; height: 35px;">
+		</div>
+		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
+			data-original-title="listProduct">
+			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
+		</div>
+
+		<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="top" title="top">				
+				<p class="letter" id="addProduct">TOP</p>
+			</div>
+		</div>
  	
  	<div class="container">
  		<div class="col-xs-4 col-md-2 "><strong>리뷰/별점</strong></div>
