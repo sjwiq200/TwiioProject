@@ -6,6 +6,7 @@ import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
+import com.twiio.good.service.domain.User;
 
 import java.io.PrintStream;
 import java.util.Map;
@@ -42,27 +43,33 @@ public class CommonController {
 		System.out.println(getClass());
 	}
 
-	@RequestMapping(value = "/common/addReport", method = RequestMethod.POST )
+	@RequestMapping(value = "addReport")
 	public String addReport(@ModelAttribute("report") Report report,
+							HttpSession session,
 							Model model
 			) throws Exception {
 		System.out.println("/common/addReport : POST");
+		System.out.println("되고있니?1");
+		User user = (User)session.getAttribute("user");
+		System.out.println("user : "+user);
+		System.out.println("되고있니?2");
+		report.setUserName(user.getUserName());
 		commonService.addReport(report);
 		model.addAttribute("report",report);
 		return "forward:/common/addReport.jsp";
 	}
 
-	@RequestMapping(value = "/common/addFriend", method = RequestMethod.POST )
+	@RequestMapping(value = "addFriend", method = RequestMethod.POST )
 	public String addFriend(@ModelAttribute("friend") Friend friend,
 			Model model
 			) throws Exception {
-		System.out.println("/common/addFriend : GET");
+		System.out.println("addFriend : GET");
 		commonService.addFriend(friend);
 		model.addAttribute("friend",friend);
 		return "forward:/common/addFriend.jsp";
 	}
 
-	@RequestMapping(value = "/common/addReply", method = RequestMethod.POST )
+	@RequestMapping(value = "addReply", method = RequestMethod.POST )
 	public String addReply(@ModelAttribute("reply") Reply reply,
 			Model model
 			) throws Exception {
@@ -76,9 +83,9 @@ public class CommonController {
 	@RequestMapping(value = "listReport")
 	public String listReport(@ModelAttribute("search") Search search,
 			Model model
-			
 			) throws Exception {
 		System.out.println("/common/listReport");
+		System.out.println("search :: "+search);
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
 		}
@@ -86,18 +93,19 @@ public class CommonController {
 		Map<String , Object> map=commonService.listReport(search);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountReport")).intValue(), pageUnit, pageSize);
 		
+		System.out.println("pagesize : "+resultPage);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
-		return "forward:/common/listReport.jsp";
+		return "forward:/mypage/listReport.jsp";
 	}
 
-	@RequestMapping(value = "/common/listFriend")
+	@RequestMapping(value = "listFriend")
 	public String listFriend(@ModelAttribute("search") Search search,
 			@RequestParam("userNo") int userNo,
 			Model model
 			) throws Exception {
-		System.out.println("/common/listFriend");
+		System.out.println("listFriend");
 		
 		if(search.getCurrentPage() ==0 ){
 			search.setCurrentPage(1);
@@ -112,7 +120,7 @@ public class CommonController {
 		return "forward:/common/listFriend.jsp";
 	}
 
-	@RequestMapping(value = "/common/listProductReply")
+	@RequestMapping(value = "listProductReply")
 	public String listProductReply(@ModelAttribute("search") Search search,
 			@RequestParam("targetType") String targetType,
 			@RequestParam("productNo") int codeNo,
@@ -132,7 +140,7 @@ public class CommonController {
 		return "forward:/common/listReply.jsp";
 	}
 	
-	@RequestMapping(value = "/common/listCommunityReply")
+	@RequestMapping(value = "listCommunityReply")
 	public String listCommunityReply(@ModelAttribute("search") Search search,
 			@RequestParam("targetType") String targetType,
 			@RequestParam("communityNo") int codeNo,
@@ -153,7 +161,7 @@ public class CommonController {
 	}
 
 	/////////////////////////////////////////////////////
-	@RequestMapping(value = "/common/getReport", method = RequestMethod.GET )
+	@RequestMapping(value = "getReport", method = RequestMethod.GET )
 	public String getReport(@RequestParam("reportNo") int reportNo , Model model) throws Exception {
 		System.out.println("/common/getReport : GET");
 		Report report = commonService.getReport(reportNo);
@@ -162,7 +170,7 @@ public class CommonController {
 	}
 	/////////////////////////////////보류///////////////////////////////////////////
 	/////////////////////////////////////////////////////
-	@RequestMapping(value = "/common/deleteFriend", method = RequestMethod.GET )
+	@RequestMapping(value = "deleteFriend", method = RequestMethod.GET )
 	public String deleteFriend(@RequestParam("no") int no ,
 								HttpSession session,
 								Model model) throws Exception {
@@ -173,7 +181,7 @@ public class CommonController {
 		return "forward:/common/deleteFriend.jsp";
 	}
 
-	@RequestMapping(value = "/common/deleteReply", method = RequestMethod.GET )
+	@RequestMapping(value = "deleteReply", method = RequestMethod.GET )
 	public String deleteReply(@RequestParam("replyNo") int replyNo,
 			Model model
 			) throws Exception {
@@ -183,7 +191,7 @@ public class CommonController {
 	}
 
 	/////////////////////////////////////////////////////
-	@RequestMapping(value = "/common/updateReply", method = RequestMethod.POST )
+	@RequestMapping(value = "updateReply", method = RequestMethod.POST )
 	public String updateReply(
 			@ModelAttribute("reply") Reply reply,
 			Model model
@@ -194,7 +202,7 @@ public class CommonController {
 	}
 	////////////////////////////////////////////////////////////////////////////////
 	
-	@RequestMapping(value = "/common/listSearch", method = RequestMethod.POST )
+	@RequestMapping(value = "listSearch", method = RequestMethod.POST )
 	public String listSearch() {
 			return null;
 	}

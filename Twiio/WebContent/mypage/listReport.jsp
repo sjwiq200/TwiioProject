@@ -15,6 +15,8 @@
 	<!-- ///////////////////////summnernote/////////////////////////// -->
 	<link href="/resources/css/summernote.css" rel="stylesheet">
     <script src="/resources/javascript/summernote.min.js"></script> 
+    <script  src="http://code.jquery.com/jquery-latest.min.js"></script>
+
  
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
@@ -77,72 +79,72 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
    <script type="text/javascript">
    
-   ////////////////////////별점주기////////////////////////////////
+   
  
      
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
-      function fncGetList(currentPage) {
+      function fncGetUserList(currentPage) {
          $("#currentPage").val(currentPage)
-         $("form").attr("method" , "POST").attr("action" , "/product/listHostProduct").submit();
+         $("form").attr("method" , "POST").attr("action" , "/common/listReport").submit();
       }
-     
-      
-      $(document).ready(function(){ 
-    	    $('#characterLeft').text('60 characters left');
-    	    $('#message').keyup(function () {
-    	        var max = 60;
-    	        var len = $(this).val().length;
-    	        if (len >= max) {
-    	            $('#characterLeft').text('You have reached the limit');
-    	            $('#characterLeft').addClass('red');
-    	            $('#btnSubmit').addClass('disabled');            
-    	        } 
-    	        else {
-    	            var ch = max - len;
-    	            $('#characterLeft').text(ch + ' characters left');
-    	            $('#btnSubmit').removeClass('disabled');
-    	            $('#characterLeft').removeClass('red');            
-    	        }
-    	    });    
-    	});
-      
-      $(document).ready(function(){ 
-  	    $('#characterLeft2').text('60 characters left');
-  	    $('#message2').keyup(function () {
-  	        var max = 60;
-  	        var len = $(this).val().length;
-  	        if (len >= max) {
-  	            $('#characterLeft2').text('You have reached the limit');
-  	            $('#characterLeft2').addClass('red');
-  	            $('#btnSubmit').addClass('disabled');            
-  	        } 
-  	        else {
-  	            var ch = max - len;
-  	            $('#characterLeft2').text(ch + ' characters left');
-  	            $('#btnSubmit').removeClass('disabled');
-  	            $('#characterLeft2').removeClass('red');            
-  	        }
-  	    });    
+   
+      $(function() {
+  		$(  "button.btn.btn-default" ).on("click" , function() {
+  			//Debug..
+  			//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
+  			fncGetUserList(1);
+  		});
   	});
-      
+     
      $(function(){
-      $('td:nth-child(3)').on('click',function(){
-    	  var productno = $($('input[name=productNo]')[$('td:nth-child(3)').index(this)]).val();
-    	  self.location = "/product/getProduct?productNo="+productno;
-      });
+      $('td:nth-child(5)').on('click',function(){
+    		
+    	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(5)').index(this)]).val();
+    				$.ajax({
+    	  			url : "/common/json/getReport",
+    	  			method : "POST" ,
+    	  			dataType : "json" ,
+    	  			contentType:"application/json;charset=UTF-8",
+    	  			data : JSON.stringify({
+    	  				"reportNo":reportinfo
+    	  			}),
+    	  			success : function(JSONData) {
+    	  					
+    	  					alert(JSON.stringify(JSONData));
+    	  					
+    	  					
+    	  					var info =
+    	  					
+    	  	    			'<div class="row">'+
+    	  	    				'<div col-md-2>'+
+    	  	    					'<input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/>'+
+    	  	    				'<div/>'+
+    	  	    			'<div col-md-2>'+
+    	  	    				'<input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
+    	  	    			'<div/>'+
+    	  	    			'<div/>'+
+    	  	    			'<div class="row">'
+    	  	    				'<div>'+
+    	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
+    	  	    				'<div/>'+
+    	  	    			'<div/>'+
+    	  	    			'<div calss="row">'+
+    	  	    			JSONData.reportContent+	
+    	  	    			'</div>';
+    	  	    			
+    	  	    			$('#reportview').html(info);
+    	  	    			$('#viewReport').modal('show');	
+    	  			}
+    	  		});
+
+      	   });
      });
-     $(function(){
-         $('td:nth-child(4)').on('click',function(){
-       	  var productno = $($('input[name=productNo]')[$('td:nth-child(4)').index(this)]).val();
-       	  self.location = "/product/getProduct?productNo="+productno;
-       });
-     });
+     
 
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		alert()
-  		$('#addReivew').modal('show');
+  		
   		 
   		
   		/* $(document).on('click','#updatereplym',function(){
@@ -181,7 +183,7 @@
       <div class="page-header text-info">
           <h3>
           <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	판매목록조회
+          	신고목록조회
          </h3>
        </div>
        
@@ -192,27 +194,13 @@
                 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
              </p>
           </div>
-          
-          <div class="col-md-6 text-right">
-             <form class="form-inline" name="detailForm">
-                          
-              <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-              <input type="hidden" id="currentPage" name="currentPage" value=""/>
-  
-            </form>
-          </div>
-          
-      </div>
-      
-      <div class="col-md-6 text-right">
-			    <form class="form-inline" name="detailForm">
-			    	
-			      <button type="button" id="write" class="btn btn-default">글 쓰 기</button>
-				  
+                  
+           <div class="pull-right">
+			    <form class="form-inline" name="detailForm"> 
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
-						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>작성자</option>
+						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>신고제목</option>
 					</select>
 				  </div>
 				  
@@ -227,8 +215,11 @@
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
 				</form>
-	    </div>
-	</div>
+	    	</div>
+      </div>
+      
+     
+	
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
       
@@ -253,16 +244,25 @@
          <tr class="ct_list_pop">
          	
      	   <input type="hidden" name="reportNo" value="${report.reportNo}"/>
-           <td align="left">${report.userNo}</td>
+     	   <input type="hidden" name="reportlist" value="${report}"/>
+           <td align="left">${report.userName}</td>
            <td align="left">
-           		${report.targetUserNo}
+           		${report.targetUserName}
            </td>
            <td align="left">${report.reportTitle}</td>
            <td align="left">${report.reportRegDate}</td>
-           <td align="left">${report.targetCommunityNo}
-           
+           <td align="left">
+           <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0}">	
+           	 커뮤니티
+           </c:if>
+           <c:if test="${!empty report.targetRoomKey}">
+           	 채팅방
+           </c:if>
+           <c:if test="${report.targetReplyNo != 0 && !empty report.targetCommunityNo}">  
+           	 댓글
+           </c:if>
            </td>
-           <td align="left">${product.productPrice}</td>
+           <td align="left"></td>
 
          </tr>
           </c:forEach>
@@ -282,7 +282,7 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="addReivew"  role="dialog">
+    <div class="modal fade" id="viewReport"  role="dialog" labelledby="mySmallModalLabel">
 		<div class="modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -294,11 +294,14 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-			
+					
+				<div id="reportview">
+				</div>
+					
 				</div>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">확인</button>
+				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 			</div>
 		</div>

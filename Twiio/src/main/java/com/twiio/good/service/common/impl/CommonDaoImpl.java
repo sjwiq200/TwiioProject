@@ -48,6 +48,8 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public List listReport(Search search) throws Exception {
+		System.out.println("들어오니?");
+		System.out.println("daoimpl :: "+search);
 		List<Report> list = sqlSession.selectList("CommonMapper.listReport", search);
 		return list;
 	}
@@ -91,6 +93,7 @@ public class CommonDaoImpl implements CommonDao {
 
 	@Override
 	public Report getReport(int reportNo) throws Exception {
+		System.out.println(reportNo);
 		return sqlSession.selectOne("CommonMapper.getReport",reportNo);
 	}
 	
@@ -101,9 +104,9 @@ public class CommonDaoImpl implements CommonDao {
 	}
 
 	@Override
-	public int getTotalCountReport() throws Exception {
+	public int getTotalCountReport(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlSession.selectOne("CommonMapper.getTotalCountReport");
+		return sqlSession.selectOne("CommonMapper.getTotalCountReport",search);
 	}
 
 	@Override

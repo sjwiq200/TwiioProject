@@ -46,7 +46,7 @@ public class CommonServiceImpl implements CommonService {
 	}
 
 	public Map<String, Object> listReport(Search search) throws Exception {
-		int totalCountReport = commonDao.getTotalCountReport();
+		int totalCountReport = commonDao.getTotalCountReport(search);
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("totalCountReport", totalCountReport);
 		map.put("list", commonDao.listReport(search));

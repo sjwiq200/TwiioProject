@@ -502,7 +502,8 @@ function resetData() {
 							"replyNo":deletereply,
 						}),
 						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
+							//alert(JSON.stringify(JSONData));
+							alert('success');
 							$('#deletemodalreply').modal('toggle');		
 							window.location.reload();
 						}

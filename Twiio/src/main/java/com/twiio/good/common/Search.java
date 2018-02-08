@@ -28,11 +28,12 @@ public class Search {
 	
 	///Method
 	
+	
+	
 	public int getPageSize() {
 		return pageSize;
 	}
 	
-
 	public void setPageSize(int paseSize) {
 		this.pageSize = paseSize;
 	}
