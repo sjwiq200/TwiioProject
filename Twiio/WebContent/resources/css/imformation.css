@@ -1,0 +1,55 @@
+@import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
+@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
+@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
+@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
+
+
+
+h1{
+		font-size: 2em;
+		border-bottom: solid 0px #ffffff;
+		font-family: "Pacifico", cursive;
+		padding-top : 20px;
+		padding-bottom : 20px;
+	}
+
+h2 {
+		font-size: 1.75em;
+		font-family: "Pacifico", cursive;
+		padding-top : 20px;
+		padding-bottom : 20px;
+		text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+		color : #08708A;
+	}
+
+h3 {
+		font-size: 1.25em;
+		font-family: 'Hanna', serif;
+	}
+
+h4 {
+		font-size: 1em;
+		font-family: "Pacifico", cursive;
+	}
+
+h5 {
+		font-size: 0.9em;
+		font-family: "Pacifico", cursive;
+	}
+
+h6 {
+		font-size: 0.7em;
+		font-family: "Pacifico", cursive;
+	}
+
+#info1 h2 {
+		font-size: 4em;
+		font-family: 'Hanna', serif;
+		text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+	}
+
