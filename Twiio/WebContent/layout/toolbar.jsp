@@ -42,8 +42,7 @@
 	                     	<ul class="dropdown-menu">
 		                         <li><a href="#">My TwiiChat List</a></li>
 		                         <li><a href="#">My Schedule List</a></li>
-		                         <li class="divider"></li>
-		                         
+		                         <li class="divider"></li>		                         
 		                     </ul>
 	                     </c:if>
 	                 </li>
@@ -82,21 +81,21 @@
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >DailyTour</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
-	                     <ul class="dropdown-menu">
+	                     <!-- <ul class="dropdown-menu">
 	                         <li><a href="#">Trip Product</a></li>
-	                         <li><a href="#">BEST10</a></li>
+	                         
 	                         
 	                         <li class="divider"></li>
 	                         
-	                     </ul>
+	                     </ul> -->
 	                 </li>
 	                 
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >MyTripBook</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
 	                     
 	                 </li>
@@ -219,13 +218,10 @@
 		
 		/* Product */
 		
-		$( "a:contains('Trip Product')" ).on("click" , function() {
+		$( "a:contains('DailyTour')" ).on("click" , function() {
 			$(self.location).attr("href","/product/listProduct");
-		});
+		});		
 		
-		$( "a:contains('BEST10')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listBestProduct");
-		});
 		
 		/* Planer */
 		
