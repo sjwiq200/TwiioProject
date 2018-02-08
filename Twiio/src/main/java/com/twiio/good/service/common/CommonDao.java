@@ -31,7 +31,7 @@ public interface CommonDao
 
   public Report getReport(int reportNo) throws Exception;
   
-  public int getTotalCountReport() throws Exception;
+  public int getTotalCountReport(Search search) throws Exception;
   
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   

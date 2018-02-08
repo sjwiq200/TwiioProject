@@ -10,6 +10,7 @@
 	<resultMap id="reportSelectMap" type="report">
 		<result property="reportNo" 			column="report_no" 				jdbcType="NUMERIC"/>
 		<result property="userNo"				column="user_no" 				jdbcType="NUMERIC"/>
+		<result property="userName"				column="user_name" 				jdbcType="VARCHAR"/>
 		<result property="reportContent" 		column="report_content" 		jdbcType="VARCHAR"/>
 		<result property="reportTitle" 			column="report_title" 			jdbcType="VARCHAR"/>
 		<result property="reportRegDate" 		column="report_reg_date" 		jdbcType="DATE" />
@@ -17,6 +18,8 @@
 		<result property="targetRoomKey" 		column="target_room_key" 		jdbcType="VARCHAR"/>
 		<result property="targetReplyNo" 		column="target_reply_no" 		jdbcType="NUMERIC"/>
 		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
+		<result property="targetUserName" 		column="target_user_name" 		jdbcType="VARCHAR"/>
+		<result property="targetUserId" 		column="target_user_id" 		jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="friendSelectMap" type="friend">
@@ -74,7 +77,8 @@
 		</if>
 		<if test="targetCommunityNo != 0">
 		#{targetCommunityNo:NUMERIC}
-		</if>
+		</if>,
+		#{userName:VARCHAR}
 		)
 	</insert>
 	
@@ -116,23 +120,24 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT
-							   REPORT_NO,
-							   USER_NO,
-							   REPORT_CONTENT,
-							   REPORT_TITLE,
-							   REPORT_REG_DATE,
-							   TARGET_USER_NO,
-							   TAGET_ROOM_NO,
-							   TARGET_COMMUNITY_NO,
-							   TARGET_REPLY_NO
-							   FROM 
-  							   REPORT 
-							   ORDER BY REPORT_NO
-							   ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
-  		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
-  		AND #{search.currentPage}*#{search.pageSize}
+							   SELECT r.*, 
+							   u.USER_NAME as target_user_name, 
+							   u.USER_ID as target_user_id 
+							   FROM report r, users u 
+							   WHERE r.TARGET_USER_NO = u.USER_NO 
+							   <if test="searchCondition != null">
+										<if test="searchCondition == 0 and searchKeyword !='' ">
+										 	 AND r.user_name LIKE '%${searchKeyword}%'
+										</if>
+										<if test="searchCondition == 1 and searchKeyword !='' ">
+											 AND r.report_title LIKE '%${searchKeyword}%'
+										</if>
+								</if>
+							   ORDER BY R.REPORT_NO DESC
+  						 ) inner_table
+  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+  		AND #{currentPage}*#{pageSize}
 	</select>
 	
 	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
@@ -146,6 +151,7 @@
 							   FROM 
   							   FRIEND 
   							   WHERE USER_NO=#{friend.userNo}
+  							   
 							   ORDER BY USER_NO
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
@@ -190,8 +196,13 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getReport" parameterType="int" resultType="report">
-		SELECT * FROM PRODUCT WHERE REPORT_NO = #{reportNo}
+	<select id="getReport" parameterType="int" resultMap="reportSelectMap">
+	   SELECT r.*, 
+	   u.USER_NAME as target_user_name, 
+	   u.USER_ID as target_user_id 
+	   FROM report r, users u 
+	   WHERE r.TARGET_USER_NO = u.USER_NO
+	   AND R.REPORT_NO = #{reportNo}
 	</select>
 	
 	<select id="getFriend" parameterType="friend" resultMap="friendSelectMap">
@@ -219,10 +230,22 @@
 		DELETE FROM REPLY WHERE REPLY_NO=#{replyNo}
 	</delete> 
 	
-	<select  id="getTotalCountReport"  resultType="int">
+	<select  id="getTotalCountReport" parameterType="search"  resultType="int">
 	  	SELECT COUNT(*)
-	  		FROM(SELECT *
-	  			 FROM REPORT
+	  		FROM(SELECT r.*, 
+							   u.USER_NAME as target_user_name, 
+							   u.USER_ID as target_user_id 
+							   FROM report r, users u 
+							   WHERE r.TARGET_USER_NO = u.USER_NO 
+							   <if test="searchCondition != null">
+										<if test="searchCondition == 0 and searchKeyword !='' ">
+										 	 AND r.user_name LIKE '%${searchKeyword}%'
+										</if>
+										<if test="searchCondition == 1 and searchKeyword !='' ">
+											 AND r.report_title LIKE '%${searchKeyword}%'
+										</if>
+								</if>
+							   ORDER BY R.REPORT_NO DESC
 				) countTable						
 	 </select>
 	 
