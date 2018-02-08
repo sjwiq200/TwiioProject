@@ -260,7 +260,7 @@ public class InformationRestController {
 			List<String> type = new ArrayList<>();
 		
 		for(int i = 0; i<list.size()-6; i++) {
-			info.add((list.get(i))+(list.get(i+1))+(list.get(i+2))+(list.get(i+3)));
+			info.add((list.get(i))+"\n"+(list.get(i+1))+"\n"+(list.get(i+2))+"\n"+(list.get(i+3)));
 			
 			if(list.get(i+4).matches(	".*[a-zA-Z].*")) {
 				
