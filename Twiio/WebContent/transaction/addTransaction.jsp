@@ -104,6 +104,10 @@
             padding-bottom : 20px;
             margin-bottom: 10px;
          } 
+    a img:hover{
+    	opacity:0.75;
+		transition-duration: 0.1s;
+    }
 	
 </style>
 <script type="text/javascript">
@@ -293,7 +297,7 @@ $(function() {
 			  <br/>
 			  <div class="form-group text-center">
 			   <div class="pay col-sm-offset-1  col-sm-5 text-center">	
-			  <a id="kakaoPay-btn" href="#" role="button"><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/>
+			  <a id="kakaoPay-btn" role="button"><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/>
 			</a>
 			</div>
 			

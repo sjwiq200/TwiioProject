@@ -119,7 +119,7 @@
 		WHERE p.user_no=u.user_no
 		AND p.product_delete='0'		
 		<if test="search.searchCondition != null">
-			
+			<if test="search.searchKeyword != null">
 				<if test="(search.searchCondition eq '0'.toString()) and search.searchKeyword !='' ">
 	 				AND country= #{search.searchKeyword}
 				</if>
@@ -132,7 +132,7 @@
 				<if test="(search.searchCondition eq '3'.toString()) and search.searchKeyword !='' ">
 	 				AND user_name LIKE '${search.searchKeyword}%'
 				</if>			
-			 
+			 </if>
 		</if>
 		<if test="search.prodSearchType != null and search.prodSearchType != '' ">
 			AND product_type = #{search.prodSearchType}

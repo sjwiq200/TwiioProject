@@ -761,7 +761,7 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<div id="container-floating">
-		
+		<c:if test="${user.userNo == product.hostNo }">
 		<div class="nd4 nds" data-toggle="tooltip" data-placement="left"
 			data-original-title="deleteProduct">
 			<img class="reminder" src="/resources/images/productIcons/delete.png" style="width: 35px; height: 35px;">
@@ -770,6 +770,7 @@
 			data-original-title="updateProduct">
 			<img class="reminder" src="/resources/images/productIcons/edit.png" style="width: 35px; height: 35px;">
 		</div>
+		</c:if>
 		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
 			data-original-title="listProduct">
 			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">

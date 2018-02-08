@@ -131,11 +131,11 @@ public class ProductServiceTest {
 	 public void testListProduct() throws Exception{
 		 
 	 	Search search = new Search();
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
+	 	search.setCurrentPage(2);
+	 	search.setPageSize(12);
 	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("THAILAND");
-	 	search.setPriceCondition("");
+	 	search.setSearchKeyword(null);
+	 	search.setPriceCondition(null);
 	 	search.setProdSearchType("");
 	 	Map<String,Object> map = productService.listProduct(search);
 	 	

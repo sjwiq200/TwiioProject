@@ -38,6 +38,14 @@
   <!-- listProduct -->
 	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/responsive.css">
+	
+	 <!--listHost  -->
+	<!-- Fonts -->
+<!--   <link href="/resources/listHost/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="/resources/listHost/css/animate.css" rel="stylesheet" />
+  Squad theme CSS
+  <link href="/resources/listHost/css/style.css" rel="stylesheet">
+  <link href="/resources/listHost/color/default.css" rel="stylesheet">  -->
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -48,17 +56,18 @@
     </style>
 	<script type="text/javascript">
 	$(function () {
-		$("li").bind("click",function(){
+		$("li").bind("click",function(){			
 			
-			//function(){
-				//alert($(this).html().split("value=\"")[1].split("\"")[0]);
-				
-			//}
-			var productNo = $(this).html().split("value=\"")[1].split("\"")[0];
-			self.location = "/product/getProduct?productNo="+productNo;
+			var hostNo = $(this).html().split("value=\"")[1].split("\"")[0];
+			//self.location = "/product/getProduct?hostNo="+hostNo;
+			
+			if(${user != null}){				
+			 	window.open("/user/getHost?hostNo="+hostNo,'HostInfo','location=no,menubar=no,resizable=no,status=no,right=0,width=500,height=500');
+			 }else{
+				 alert("로그인을 해주세요");
+			 }
 		});
-	});
-		
+	});	
 	
 	
 	</script>
@@ -74,8 +83,7 @@
 	<div class="container">
 
 		<div class="page-header text-info"></div>
-		
-		<!--  start listing section  -->
+	<!--  start listing section  -->
 	<section class="listings">
 		<div class="wrapper">
 			<ul class="properties_list">
@@ -84,29 +92,21 @@
 				<c:set var="i" value="${i+1}" />
 				<li>				
 					<a href="#">
-						<input type="hidden" name="productNo" value="${transaction.tranPro.productNo }" />						
-						<c:if test="${! empty transaction.tranPro.thumbnail}">
-							<img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" alt="" title="" class="property_img"/>							
+						<input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo }"/>						
+						<c:if test="${! empty transaction.tranPro.hostImage}">
+							<img src="/resources/images/userThumbnail/${transaction.tranPro.hostImage}" alt="" title="" class="property_img"/>							
 						</c:if> 
-						<c:if test="${empty transaction.tranPro.thumbnail}">
-							<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" alt="" title="" class="property_img"/>							
+						<c:if test="${ empty transaction.tranPro.hostImage}">
+							<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" alt="" title="" class="property_img"/>							
 						</c:if>
 					</a>
 					<span class="price">${i}위</span>
 					<div class="property_details">
 						<h1>
-							<a href="#">${transaction.tranPro.productName}</a>
-						</h1>
-						<h2><p>
-								<c:if test="${transaction.tranPro.productType == 1}">명소투어</c:if>
-								<c:if test="${transaction.tranPro.productType == 2}">음식투어</c:if>
-								<c:if test="${transaction.tranPro.productType == 3}">트래킹</c:if>
-								<c:if test="${transaction.tranPro.productType == 4}">액티비티</c:if>
-								<c:if test="${transaction.tranPro.productType == 5}">night투어</c:if>
-							</p>
-							<p>${transaction.tranPro.country} :: ${transaction.tranPro.city}</p>
+							<a href="#">${transaction.hostName}</a>
+						</h1>						
 							평점 :: <!-- <br /> -->
-							${transaction.evalProduct}
+							${transaction.evalHost}
 		           			<%-- <p class="price">&#8361;${transaction.tranPro.productPrice}</p>		           			
 		           			<span class="property_size"><p>조회수 :: ${transaction.tranPro.viewCount}</p></span></h2> --%>
 					</div>
@@ -117,8 +117,52 @@
 		</div>
 	</section>	
 	<!--  end listing section  -->
+	
+	
+	<%-- <div class="container">
+
+      <!-- <div class="row">
+        <div class="col-lg-2 col-lg-offset-5">
+          <hr class="marginbot-50">
+        </div>
+      </div> -->
+         <section class="listings">
+      <div class="row">
+      
+      <c:set var="i" value="0" />
+				<c:forEach var="transaction" items="${list}">
+				<c:set var="i" value="${i+1}" />
+        <div class="col-md-3">
+          <div class="wow bounceInUp" data-wow-delay="0.2s">
+            <div class="team boxed-grey">
+            <span class="price">${i}위</span>
+              <div class="inner">
+                <h5>${transaction.hostName}</h5>
+                <p class="subtitle">평점 :: ${transaction.evalHost}</p>
+                <div class="avatar">
+                	<input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo }"/>						
+						<c:if test="${! empty transaction.tranPro.hostImage}">
+							<img src="/resources/images/userThumbnail/${transaction.tranPro.hostImage}" style="width: 290px; height: 175px;" alt="" class="img-responsive img-circle" />												
+						</c:if> 
+						<c:if test="${ empty transaction.tranPro.hostImage}">
+							<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 290px; height: 175px;" alt="" class="img-responsive img-circle"/>							
+						</c:if>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        </c:forEach>
+        
+      </div>
+      </section>
+    </div> --%>
+	
+
 
 	</div>
+	
+	  
 
 
 

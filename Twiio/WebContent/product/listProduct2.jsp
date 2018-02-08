@@ -40,11 +40,6 @@
   
   <!-- ---------font ------------ -->
   	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />
-  			
-	<!-- listProduct -->
-	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/responsive.css">
-	
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
@@ -278,58 +273,55 @@ div.caption{
 											}
 
 											for (var i = 0; i < JSONData.length; i++) {
-												var displayValue = '<li>'				
-														+'<a href="#">'
-														+'<input type="hidden" name="productNo" value="'+JSONData[i].productNo+'"/>';
-														
+												var displayValue = '<div class="col-sm-3 " >'
+														+ '<a href="#" class="thumbnail" name="getPro" style="height:400px;">'
+														+ '<input type="hidden" name="productNo" value="'+JSONData[i].productNo+'"/>';
+
 												if (JSONData[i].thumbnail != null) {
-													displayValue += '<img src="/resources/images/productThumbnail/'+JSONData[i].thumbnail+'" alt="" title="" class="property_img"/>';
-												}else{
-													displayValue += '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" alt="" title="" class="property_img"/>';
+													displayValue += '<img src="/resources/images/productThumbnail/'+JSONData[i].thumbnail+'" style="width:290px; height:175px;" alt="..." class="img-rounded">';
+
+												} else {
+													displayValue += '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:290px; height:175px;" alt="..." class="img-rounded">';
+
 												}
-												
-												displayValue += '</a>'
-													+'<span class="price">&#8361;'+JSONData[i].productPrice+'</span>'
-													+'<div class="property_details">'
-													+'<h1>'
-													+'<a href="#">'+JSONData[i].productName+'</a>'
-													+'</h1>'
-													+'<h2><p>';
-													 
-												if(JSONData[i].productType == '1'){
-													displayValue += '명소투어';
-												}else if(JSONData[i].productType == '2'){
-													displayValue += '음식투어';
-												}else if(JSONData[i].productType == '3'){
-													displayValue += '트래킹';
-												}else if(JSONData[i].productType == '4'){
-													displayValue += '액티비티';
-												}else{
-													displayValue += 'night투어';
-												}
-												
-												displayValue += '</p>'
-														+'<p>'+JSONData[i].country+' :: '+JSONData[i].city+'</p>'
-														+'투어날짜 :: ';
-												
-												
-												 //alert("???");
-												var tripdate = JSONData[i].tripDate.split(",");
-													//alert(tripdate);
-													//alert(tripdate.length);
+
+												displayValue += '<div class="caption">'
+														+ '<h3>'
+														+ JSONData[i].productName
+														+ '</h3>'
+														+ '<p>'
+														+ JSONData[i].productType
+														+ '</p>'
+														+ '<p>'
+														+ JSONData[i].country
+														+ ' | '
+														+ JSONData[i].city
+														+ '</p>'
+														+ '투어날짜 :: <br/>';
+												// alert("???");
+												var tripdate = JSONData[i].tripDate
+														.split(",");
+												//alert(tripdate);
+												//alert(tripdate.length);
 												for (var j = 0; j < tripdate.length; j++) {
 													//alert('???dkjflsjg');
 													//alert( tripdate[j].split("=")[0]);
 													//alert(displayValue);
-													displayValue += tripdate[j].split("=")[0];
+													displayValue += tripdate[j]
+															.split("=")[0];
 													//alert(displayValue);
 												}
-												
-												displayValue += '<span class="property_size"><p>조회수 :: '+JSONData[i].viewCount+'</p></span></h2>'
-														+'</div>'
-														+'</li>';
-												
-												$('ul.properties_list').append(
+												//alert("???22222");    
+
+												displayValue += '<p>가격 :: '
+														+ JSONData[i].productPrice원
+														+ '</p>'
+														+ '<p>조회수 :: '
+														+ JSONData[i].viewCount
+														+ '</p>' + '</div>';
+
+												//productCount=productCount-1;
+												$('.row2').append(
 														displayValue);
 											}
 										}
@@ -387,7 +379,7 @@ div.caption{
 			fncGetUserList('${resultPage.currentPage }', 'low','${search.prodSearchType}');
 		});
 
-		$("li").bind("click", function() {
+		$("a[name='getPro']").bind("click", function() {
 			//function(){
 			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
 			//}
@@ -406,7 +398,7 @@ div.caption{
 		});
 		
 		$("#host10").bind("click", function() {
-			$(self.location).attr("href","/product/listBestHost");
+			
 		});
 		
 		$("#attraction").bind("click", function() {
@@ -435,7 +427,7 @@ div.caption{
 <body>
 
 <!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/toolbar.jsp" /> 
+	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  Carousel Start /////////////////////////////////////-->
@@ -540,7 +532,7 @@ div.caption{
 					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					<input type="hidden" id="currentPage" name="currentPage" value="" />
 					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
-					<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
+					<input type="hidden" id="prodSearchType" name="prodSearchType" value="" />
 					<p>
 						<font name="high">가격높은순</font>
 						<font name="low">가격낮은순</font>
@@ -554,29 +546,30 @@ div.caption{
 
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
-		
-	<!--  start listing section  -->
-	<section class="listings">
-		<div class="wrapper">
-			<ul class="properties_list">
+
+		<!-- Thumbnail Start /////////////////////////////////////-->
+		<div class="row2">
 			<c:set var="i" value="0" />
-				<c:forEach var="product" items="${list}">
-				<li>				
-					<a href="#">
-						<input type="hidden" name="productNo" value="${product.productNo }" />						
+			<c:forEach var="product" items="${list}">
+				<!-- <div class="row"> -->
+				<div class="col-sm-3 ">
+					<a href="#" class="thumbnail" name="getPro" style="height: 420px;">
+						<input type="hidden" name="productNo" value="${product.productNo }" /> 
 						<c:if test="${! empty product.thumbnail}">
-							<img src="/resources/images/productThumbnail/${product.thumbnail}" alt="" title="" class="property_img"/>							
+							<img
+								src="/resources/images/productThumbnail/${product.thumbnail}"
+								style="width: 290px; height: 175px;" alt="..."
+								class="img-rounded">
 						</c:if> 
 						<c:if test="${empty product.thumbnail}">
-							<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" alt="" title="" class="property_img"/>							
+							<img
+								src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg"
+								style="width: 290px; height: 175px;" alt="..."
+								class="img-rounded">
 						</c:if>
-					</a>
-					<span class="price">&#8361;${product.productPrice}</span>
-					<div class="property_details">
-						<h1>
-							<a href="#">${product.productName}</a>
-						</h1>
-						<h2><p>
+						<div class="caption"><!-- style="font-family:'YETHANGUL';" -->
+							<h3 style="font-family:'NanumGothic';">${product.productName}</h3>
+							<p>
 								<c:if test="${product.productType == 1}">명소투어</c:if>
 								<c:if test="${product.productType == 2}">음식투어</c:if>
 								<c:if test="${product.productType == 3}">트래킹</c:if>
@@ -584,24 +577,23 @@ div.caption{
 								<c:if test="${product.productType == 5}">night투어</c:if>
 							</p>
 							<p>${product.country} :: ${product.city}</p>
-							투어날짜 :: <!-- <br /> -->
+							투어날짜 :: <br />
 							<c:set var="date" value="${product.tripDate}"></c:set>
 							<c:set var="date_array" value="${fn:split(date,'[=,]')}"></c:set>
 							<c:forEach var="tdate" items="${date_array}" begin="0" step="2">
 		            		${tdate}
-		           			</c:forEach>		           			
-		           			<span class="property_size"><p>조회수 :: ${product.viewCount}</p></span></h2>
-					</div>
-				</li>
-				</c:forEach>
-			</ul>
-			
+		            </c:forEach>
+							<p>가격 :: ${product.productPrice}원</p>
+							<p>조회수 :: ${product.viewCount}</p>
+							<!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
+						</div>
+					</a>
+				</div>
+				<!-- </div> -->
+			</c:forEach>
 		</div>
-	</section>	
-	<!--  end listing section  -->
+		<!-- Thumbnail End /////////////////////////////////////-->
 	</div>
-	
-	
 	<!--  Floating Button <START> -->
 	<c:if test="${user.userType==2}">
 		<div id="container-floating">
