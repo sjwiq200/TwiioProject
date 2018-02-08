@@ -30,11 +30,90 @@
 	<script src="/resources/chart/Chart.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<link rel="stylesheet" href="/resources/css/imformation.css" />
+	
 	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
+       body {
+            padding-top : 100px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			background-image: url("/resources/images/main_img.jpg");
+    		background-size: cover;
         }
+        
+        .jumbotron
+			{
+				background-color: rgba(255, 255, 255, 0.7);
+				padding-left : 30px;
+				padding-right : 30px;
+				padding-top : 20px !important;
+			}
+		h2{
+				color : #FFF; 
+				font-family: 'Jeju Gothic', serif !important; 
+				font-size: 3em !important; 
+				text-shadow: 0 5px 5px rgba(0, 0, 0, .1) !important;
+				padding-top : 20px !important; 
+				padding-bottom : 10px !important; 
+		
+		} 
+		#titleRoom{
+		
+			background-color: rgba(215, 58, 49, 0.8);
+		}
+		 .btn-sm{
+				font-size:13px;
+				line-height:16px;
+				border: 2px solid;
+				width: 100px;
+				text-align: center;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: rgba(255, 255, 255, 0.5);
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #f4f4f4;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: rgba(255, 255, 255, 0.5);
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -42,7 +121,7 @@
 	
 		//============= "가입"  Event 연결 =============
 		 $(function() {
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "button#go" ).on("click" , function() {
 				
 				$.ajax({
 					url : "/room/json/addReport/",
@@ -74,7 +153,7 @@
 		
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
-			$("a[href='#' ]").on("click" , function() {
+			$("#cancel").on("click" , function() {
 				window.close();
 			});
 		});	
@@ -86,59 +165,64 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">채팅방 신고하기 </h1>
+	<div class="jumbotron" id="mainJum" style="font-family: 'Noto Sans KR', sans-serif !important; color :#000000; ">	
 		
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+				
+					<h2 class="text-center" id="titleRoom">채팅방 신고하기 </h2>
+					
+					<!-- form Start /////////////////////////////////////-->
+					<form class="form-horizontal"  style="padding-top: 20px;">
+					
+					<div class="col-xs-18">	
+						<div class="form-group" >
+							<label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">신고 유형</label>
+							<div class="col-xs-4">
+								<select  class="form-control" id="targetUserNo">
+									<option value="0" selected="selected">채팅방 신고</option>
+									<c:forEach var="user" items="${list}">
+										<option value="${user.userNo }">${user.userName }</option>
+									</c:forEach>
+								</select>
+							</div>
+						</div>
+						
+					  <input type="hidden" id="roomKey" name="roomKey" value="${roomKey }">
+					  
+					  <div class="form-group">
+					    <label for="reportTitle" class="col-xs-offset-1 col-xs-3 control-label">신고 제목</label>
+					    <div class="col-xs-4">
+					      <input type="text" class="form-control" id="reportTitle" name="reportTitle" placeholder="채팅방 이름 ">
+					    </div>
+					  </div>
+					  
+					  <div class="form-group">
+					    <label for="reportContent" class="col-xs-offset-1 col-xs-3 control-label"> 신고 내용</label>
+					    <div class="col-xs-4">
+					      <!-- <input type="" class="form-control" id="country" name="country" value=""> -->
+					      <textarea class="form-control" id="reportContent" name="reportContent" rows="3"></textarea>
+					    </div>
+					  </div>
+					 
+					 <br/>
+					  <div class="form-group">
+					    <div class="col-xs-offset-4  col-xs-4 text-center">
+					      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go">보&nbsp;내&nbsp;기</button>
+						   <button type="button" class="btn btn-outlined btn-theme btn-sm" id="cancel">취&nbsp;소</button>
+					    </div>
+					  </div>
+					  
+					  
+					  </div>
+					</form>
+					<!-- form Start /////////////////////////////////////-->
 			
-			<div class="form-group">
-				<label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">신고 유형</label>
-				<div class="col-sm-4">
-					<select id="targetUserNo">
-						<option value="0" selected="selected">채팅방 신고</option>
-						<c:forEach var="user" items="${list}">
-							<option value="${user.userNo }">${user.userName }</option>
-						</c:forEach>
-					</select>
-				</div>
-			</div>
 			
-		  <input type="hidden" id="roomKey" name="roomKey" value="${roomKey }">
-		  
-		  <div class="form-group">
-		    <label for="reportTitle" class="col-sm-offset-1 col-sm-3 control-label">신고 제목</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="reportTitle" name="reportTitle" placeholder="채팅방 이름 ">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="reportContent" class="col-sm-offset-1 col-sm-3 control-label"> 신고 내용</label>
-		    <div class="col-sm-4">
-		      <!-- <input type="" class="form-control" id="country" name="country" value=""> -->
-		      <textarea class="form-control" id="reportContent" name="reportContent" rows="3"></textarea>
-		    </div>
-		  </div>
-		 
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >생 &nbsp;성</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
+			
+		</div>	
 		
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->

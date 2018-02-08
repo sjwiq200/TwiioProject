@@ -417,7 +417,7 @@
 						<div class="form-group">
 					  		<label for="userBirthday"class="col-sm-2 col-sm-offset-4 control-label">생년월일</label>
 					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
+									<input type="date" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
 									<span id="birthHelpBlock" class="help-block" type="hidden">
 											 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
 									</span>
