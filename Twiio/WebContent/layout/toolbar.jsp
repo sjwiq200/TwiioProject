@@ -50,7 +50,7 @@
 	     
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >Blabla~</span>
+		                         <span >Blabla</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -242,9 +242,9 @@
 		
 		/* MyPage */
 		
-		$( "a:contains('MyPage')" ).on("click" , function() {
+		/* $( "a:contains('MyPage')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/myPageMain");
-		});
+		}); */
 		
 		$( "a:contains('Message')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/message/listMessage");
