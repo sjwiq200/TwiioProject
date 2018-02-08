@@ -4,8 +4,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar-wrapper">
     <div class="container-fluid">
@@ -32,22 +30,21 @@
 	         
 	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
 	             <ul class="nav navbar-nav">
-	             
-	              
+	              	              
 	              <li class="dropdown">
-	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                     <a  id="demo01" href="#animatedModal" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
 	                     <c:if test="${!empty user}">
-	                     	<ul class="dropdown-menu">
+	                     	<!-- <ul class="dropdown-menu">
 		                         <li><a href="#">My TwiiChat List</a></li>
 		                         <li><a href="#">My Schedule List</a></li>
 		                         <li class="divider"></li>
 		                         
-		                     </ul>
+		                     </ul> -->
 	                     </c:if>
-	                 </li>
+	                 </li> 
 	     
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -121,10 +118,10 @@
     </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
-		
    	
-   	
+	
    	<script type="text/javascript">
+   	
 	
 		//============= logout Event  처리 =============	
 		 $(function() {
@@ -149,7 +146,9 @@
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/listRoom"); */
+			$(self.location).attr("href","/room/mainRoom.jsp");
+			
 		});
 		
 		$( "a:contains('My TwiiChat List')" ).on("click" , function() {
@@ -233,6 +232,7 @@
 		
 	</script>  
 	
+	
 	<style>
 			.navbar, .dropdown-menu{
 			background:rgba(215, 58, 49, 0.8);
@@ -286,5 +286,7 @@
 			    text-decoration: none;
 			    cursor: pointer;
 			}
+			
+			
         
     </style>

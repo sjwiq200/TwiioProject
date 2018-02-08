@@ -21,16 +21,11 @@
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQvxf8JDd5GFYSU4d9ejEHQ7y3QiQyizk&libraries=places&callback=initAutocomplete"
         async defer></script>
-        
-        
-	
+    
+	<!--  ///////////////////////// add,updateRoom.css ////////////////////////// -->
+	<link href="/resources/css/add,updateRoom.css" rel="stylesheet" type="text/css"/>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
-    </style>
+	
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -152,61 +147,52 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
-
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
+		<div class="jumbotron">
+			<h2 align="center"><ins><strong>Schedule FIX</strong></ins></h2>
 	
-		<h1 class="bg-primary text-center">일정 등록</h1>
-		
-		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
-		
-		<div class="form-group">
-			<input type="hidden" id="roomKey" name="roomKey" value="${roomKey}">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 제목 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="scheduleTitle" name="scheduleTitle" value="">
-		    </div>
-		  </div>
-		
-		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 날짜 </label>
-		    <div class="col-sm-4">
-		      <input type="date" class="form-control" id="scheduleDate" name="scheduleDate" value="">
-		    </div>
-		  </div>
-		  
-		  <div id="locationField" class="form-group">
-		  	  <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
-		  	  </div class="col-sm-4">
-		  	  	<input id="autocomplete" name="scheduleAddress" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
-		  	  </div>
-	      </div>
-		  
-		  <!-- <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="scheduleAddress" name="scheduleAddress" value="">
-		    </div>
-		  </div> -->
-		  
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >확 &nbsp;정</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-		  </div>
-		</form>
-		<!-- form Start /////////////////////////////////////-->
-		
- 	</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-12">
+						<div class="col-sm-10 col-sm-offset-1">
+							<!-- form Start /////////////////////////////////////-->
+							<form class="form-horizontal">
+							
+							<div class="form-group">
+								<input type="hidden" id="roomKey" name="roomKey" value="${roomKey}">
+							    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 제목 </label>
+							    <div class="col-sm-4">
+							      <input type="text" class="form-control" id="scheduleTitle" name="scheduleTitle" value="">
+							    </div>
+							  </div>
+							
+							  <div class="form-group">
+							    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 날짜 </label>
+							    <div class="col-sm-4">
+							      <input type="date" class="form-control" id="scheduleDate" name="scheduleDate" value="">
+							    </div>
+							  </div>
+							  
+							  <div id="locationField" class="form-group">
+							  	  <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
+							  	  </div class="col-sm-4">
+							  	  	<input id="autocomplete" name="scheduleAddress" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+							  	  </div>
+						      </div>
+							  
+							  <div class="form-group">
+							    <div class="col-sm-offset-4  col-sm-4 text-center">
+							      <button type="button" class="btn btn-outlined btn-light btn-sm"  >확 &nbsp;정</button>
+								  <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button">취&nbsp;소</a>
+							    </div>
+							  </div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+ 		</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 </body>

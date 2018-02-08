@@ -1,12 +1,15 @@
 package com.twiio.good.service.room.impl;
 
 import java.security.MessageDigest;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -37,9 +40,10 @@ public class RoomDaoImpl implements RoomDao {
 	}
 
 	@Override
-	public List<Room> listRoom(Search search) throws Exception {
+	public Map<String, Object> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+".listRoom()");
+		Map<String, Object> map = new HashMap<>();
 		List<Room> list;
 		Query query = new Query();
 		
@@ -60,9 +64,16 @@ public class RoomDaoImpl implements RoomDao {
 			
 		}
 		
+		query.with(new Sort(Sort.Direction.DESC,"_id"));
+		
+		query.skip(search.getStartRowNum()); //start Num
+		query.limit(search.getEndRowNum()); //end Num
 		list = mongoTemplate.find(query, Room.class, "rooms");
+		map.put("list", list);
+		int totalCount = (int)mongoTemplate.count(query, Room.class,"rooms");
+		map.put("totalCount", totalCount);
 
-		return list;
+		return map;
 
 	}
 
@@ -233,5 +244,23 @@ public class RoomDaoImpl implements RoomDao {
 		System.out.println("delete roomUserResult"+roomUserResult.getN());
 		
 	}
+
+	@Override
+	public void updateRoomOpen(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		System.out.println(this.getClass()+".updateRoomOpen()");
+		
+		Criteria criteria = new Criteria("roomKey");
+		criteria.is(room.getRoomKey());
+		Query query = new Query(criteria);
+		
+		Update update = new Update();
+		update.set("open", room.isOpen());
+
+		mongoTemplate.updateFirst(query, update ,RoomUser.class, "rooms");
+		
+	}
+	
+	
 
 }

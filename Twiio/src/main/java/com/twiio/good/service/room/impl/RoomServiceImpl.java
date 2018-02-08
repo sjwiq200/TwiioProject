@@ -1,6 +1,7 @@
 package com.twiio.good.service.room.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,7 +37,7 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public List<Room> listRoom(Search search) throws Exception {
+	public Map<String, Object> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		return roomDao.listRoom(search);
 
@@ -85,6 +86,14 @@ public class RoomServiceImpl implements RoomService {
 		// TODO Auto-generated method stub
 		roomDao.deleteRoomUser(roomKey);
 	}
+
+	@Override
+	public void updateRoomOpen(Room room) throws Exception {
+		// TODO Auto-generated method stub
+		roomDao.updateRoomOpen(room);
+	}
+	
+	
 	
 	
 
