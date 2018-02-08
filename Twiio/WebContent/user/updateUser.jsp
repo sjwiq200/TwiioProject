@@ -226,16 +226,19 @@
 		///////////////////호스트 등록////////////////////////////
 			$(function() {
 				
-				 var userImage = $("#file").val();	
-				 var userName = $("#userName").val();
-				 var userPhone = $("#userPhone").val();
-				 var userAccount = $("#userAccount").val();
-				 var userBirthday = $("#userBirthday").val();
-				 var userGender = $(".userGender").val();
-				 
-				 var flag = true;
-				
 				 $("#addHost").on("click" , function() {
+					 
+					 var userImage = $("#file").val();	
+					 var userName = $("#userName").val();
+					 var userPhone = $("#userPhone").val();
+					 var userAccount = $("#userAccount").val();
+					 var userBirthday = $("#userBirthday").val();
+					 var userGender = $(".userGender").val();
+					 alert(userImage);
+					 
+					 var flag = true;
+					 
+					 
 					 
 					 alert("호스트");
 					 
@@ -255,7 +258,7 @@
 						 flag = false;
 					 }
 					if(userAccount==""){
-						 $("#AccountHelpBlock").show();
+						 $("#accountHelpBlock").show();
 						 alert("계좌를 등록 해주세요");
 						 flag = false;
 					}
@@ -281,7 +284,7 @@
 				 
 				 $(document).ready(function() { 
 					 $("#imgHelpBlock").hide();
-					 $("#AccountHelpBlock").hide();
+					 $("#accountHelpBlock").hide();
 					 $("#birthHelpBlock").hide();
 					 $("#genderHelpBlock").hide();
 					 $("#phoneHelpBlock").hide();
@@ -292,7 +295,9 @@
 				 
 			 });
 		
-		
+		$('#updateUser').on('click',function(){
+			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+		});
 	</script>
 	
 </head>
@@ -516,7 +521,7 @@
 					</div>
 				</div>
 			</div>
-		<!-- ---------------------------------------------------------------- -->
+		<!-- --------------------------------------------------------------------------------------------------------------- -->
  	
 </body>
 

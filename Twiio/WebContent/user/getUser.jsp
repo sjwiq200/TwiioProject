@@ -135,9 +135,9 @@
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 $( "button" ).on("click" , function() {
-					self.location = "/user/updateUser?userId=${user.userId}"
-				});
+			 $( "#updateuser" ).on("click" , function() {
+					self.location = "/user/updateUser?userNo="+${user.userNo};
+			 });
 		});
 		
 	</script>
@@ -181,7 +181,7 @@
 				
 				<div class="row">
 			  		<div class="col-sm-3 col-sm-offset-4"><strong>휴대전화번호</strong></div>
-					<div class="col-sm-4">${ !empty user.phone ? user.phone : ''}	</div>
+					<div class="col-sm-4">${ !empty user.userPhone?user.userPhone :''}	</div>
 				</div>
 				
 				<hr/>
@@ -215,15 +215,25 @@
 				<div class="col-sm-12">
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>HOST등록여부</strong></div>
-					<div class="col-sm-4">${user.userType}</div>
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>유 형</strong></div>
+					<div class="col-sm-4">
+					<c:if test="${user.userType == 1}">
+						회원
+					</c:if>
+					<c:if test="${user.userType == 2}">
+						호스트
+					</c:if>
+					<c:if test="${user.userType == 3}">
+						관리자
+					</c:if>
+					</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>평 점</strong></div>
-					<div class="col-sm-4">${user.userEval}</div>
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>평 점<br/>(참석/프로필)</strong></div>
+					<div class="col-sm-4">${empty user.userEval?0:user.userEval} | ${empty user.userEvalCredit?0:user.userEvalCredit}</div>
 				</div>
 				
 				<hr/>
@@ -254,11 +264,10 @@
 				
 				<div class="row">
 			  		<div class="col-sm-12 text-center ">
-			  			<button type="button" class="btn btn-outlined btn-theme btn-sm">회원정보수정</button>
+			  			<button type="button" class="btn btn-outlined btn-theme btn-sm" id="updateuser">회원정보수정</button>
 			  		</div>
 				</div>
-				
-		
+
 		<br/> 
 		
 		</div>

@@ -139,17 +139,16 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/getEvalUser")
-	public  String  getEvalUser( ) throws Exception{
+	public  User  getEvalUser( ) throws Exception{
 		
 		System.out.println("/user/json/getEvalHost");
 		
 		//Business Logic
 		
 		User evalUser = new User();
-		evalUser.setUserId("user01");
+		evalUser.setUserNo(4);
 		
-		
-		return userService.getEvalUser(evalUser.getUserId());
+		return userService.getEvalUser(evalUser.getUserNo());
 	}
 
 //	@RequestMapping( value="json/addStarEvalHost")
