@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=EUC-KR" %>
 <%@ page pageEncoding="EUC-KR"%>
 
@@ -303,7 +304,7 @@
 	    
 	
 		<div class="col-sm-12">
-			<div class="jumbotron col-sm-8 col-sm-offset-2 " id="jumbotron" style="align-content: center; background-color: rgba(86, 177, 191, 0.3);" >		
+			<div class="jumbotron col-sm-8 col-sm-offset-2 " id="jumbotron" style="align-content: center; background-color: rgba(86, 177, 191, 0.3); padding-bottom: 20px;" >		
 				<form class="form-horizontal">
 				<div class="col-sm-12">
 					<div class="form-group">

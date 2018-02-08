@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -18,13 +19,14 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	
+		
 	<!-- Bootstrap Dropdown Hover CSS -->
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+      
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-   
+     
    <!-- scroll -->
    <script src="//code.jquery.com/jquery-1.12.4.min.js"></script>
    
@@ -39,25 +41,14 @@
 	
 	 <!-- ---------Floating Button------------ -->
   	<link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
+  	
+  	<!--reply  -->
+  	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+  	 	
 
 
-   
-   <!-- <style>
-      a.top {
-        position: fixed;
-        left: 92%;
-        bottom: 50px;
-        width: 40px;
-		height: 40px;
-		background: #D0D3C5;
-		color: #08708A;
-		text-align: center;
-		line-height: 40px;
-		border-radius: 5px;
-        display: none;
-      }
-    </style> -->
-    	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
@@ -495,8 +486,207 @@
 				});
 			 	}
 			});	
-		});
+		});	
+
+///////////////////////////////////////////////////addreport////////////////////////////////////////
+$(document).on('click','.row2 a[name=addreport]', function() {	
+	 var reportuserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
+	 alert(reportuserno);	
+	 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
+	 var reportbody = 
+		        '<h3>신고글 작성<h3>'+
+				'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportuserno+'" readonly/>'+
+				'<input type="text" class="form-control" id="reporttitle" row="6" col="50" placeholder="신고 제목 작성" value=""/>'+
+				'<textarea id="reportcontent"  name="reportcontent" row="6" col="50" value="" placeholder="신고 내용"></textarea>';
+		 alert(${user.userNo});
+	 if(${empty user.userId}){
+		 alert('로그인후 사용하여주세요');	 
+	 }else if(${user.userNo} == reportuserno){
+		 alert('자기자신은 신고 못합니다.');
+	 }else{
+		$('#reportbody').html(reportbody);
+		$('#modalreport').modal('show');
+	 }
 	
+	$(document).on('click','#addreportcommunity',function(){
+		 	var reportcontent = $('#reportcontent').val();
+		 	var reporttitle = $('#reporttitle').val();
+		 	if(reportcontent==''| reporttitle==''){
+				 alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+		 	 $.ajax( 
+					{
+					url : "/common/json/addReport",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"reportContent":reportcontent,
+						"reportTitle":reporttitle,
+						"targetUserNo":reportuserno,
+						"targetReplyNo":reportreplyno						
+					}),
+					
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#modalreport').modal('toggle');	
+					}
+				});
+		 	 }
+		});
+});
+
+///////////////////////////////////////////////addfriend///////////////////////////////////////////////////
+$(document).on('click','.row2 a[name=addfriend]', function() {
+	 var addfrienduserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
+	 if(${empty user.userId}){
+		 alert('로그인후 사용하여주세요');	 
+	 }
+	 else if(${user.userNo}== addfrienduserno){
+		 alert('자기 자신을 친구 추가할수 없습니다.');
+	 }else{
+	 	$('#modalfriend').modal('show');
+	 }
+	
+	$(document).on('click','#addmodalfriend',function(){
+		  $.ajax({
+					url : "/common/json/addFriend",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"friendNo":addfrienduserno,
+					}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#modalfriend').modal('toggle');					
+				}
+			}); 
+		});
+	});
+
+/////////////////////////////////////////////////addmessage////////////////////////////////////////////////////
+$(document).on('click','.row2 a[name=addmessage]', function() {
+	 var msguserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
+	 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
+	 var inmsg =
+		 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+		'<input type="text" class="form-control" id="msgno" row="6" col="50"  value="'+msguserno+'" readonly/>'+
+		'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
+	 
+	 if(${empty user.userId}){
+		 alert('로그인후 사용하여주세요');	 
+	 }else if(${user.userNo }== msguserno){
+		 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
+	 }else{ 
+		$('#msg').html(inmsg);
+	 	$('#modalmessage').modal('show');
+	 }
+	 $(document).on('click','#upmessage',function(){
+		var msgcontent = $('#msgcontent').val();
+		var msgtitle = $('#msgtitle').val();
+		//modalmessage
+
+			if(msgcontent==''| msgtitle==''){
+			 alert('내용과 제목을 입력하세요.');			 
+			 }
+			 else{
+			  $.ajax( 
+					{
+					url : "/mypage/json/addMessage",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"toUserNo":"${user.userNo}",
+						"fromUserNo":msguserno,
+						"messageContent":msgcontent,
+						"messageType":"2",
+						"messageTitle":msgtitle							
+					}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#modalmessage').modal('toggle');
+					}
+			});
+		 	}
+		});	
+	});
+
+///////////////////////////////////////////////deleteReply/////////////////////////////////////////////
+$(document).on('click','.row2 a[name=deletereply]', function() {
+	 var deletereply = $($('input[name=replyNo]')[$('.row2 a[name=deletereply]').index(this)]).val();
+	 var deleteuserno = $($('input[name=userReplyNo]')[$('.row2 a[name=deletereply]').index(this)]).val();
+	 
+	//alert(${user.userNo}+'==='+deleteuserno);
+	 
+	 if(${empty user.userId}){
+		 alert('로그인후 사용하여주세요');	 
+	 }else if(${user.userNo } == deleteuserno){
+		 
+		 $('#deletemodalreply').modal('show');
+	 }else{
+	 	alert('자신의 댓글을 선택하여 지우세요.');
+	 }
+	
+	$(document).on('click','#deletereplym',function(){
+		  $.ajax({
+					url : "/common/json/deleteReply",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"replyNo":deletereply,
+					}),
+					success : function(JSONData) {
+						//alert(JSON.stringify(JSONData));
+						alert('success');
+						$('#deletemodalreply').modal('toggle');		
+						window.location.reload();
+					}
+			}); 
+		});
+	});
+
+//////////////////////////////////////updatereply//////////////////////////////////////////
+$(document).on('click','.row2 a[name=updatereply]', function() {
+	var updateuserno = $($('input[name=userReplyNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
+	var updatereplyno = $($('input[name=replyNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
+	var updatecontent = $($('input[name=replyContent]')[$('.row2 a[name=updatereply]').index(this)]).val();
+	var uprel ='<textarea id="updatecontent"  name="updatecontent" row="5" col="40" value="" placeholder="내용 작성">'+updatecontent+'</textarea>';
+	
+	if(${empty user.userId}){
+		 alert('로그인후 사용하여주세요');	 
+	 }else if(${user.userNo } == updateuserno){
+		 $('#upreply').html(uprel);
+		 $('#updatemodalreply').modal('show');
+	 }else{
+	 	alert('자신의 댓글을 선택하여 지우세요.');
+	 }
+	
+	$(document).on('click','#updatereplym',function(){
+		 $.ajax({
+				url : "/common/json/updateReply",
+				method : "POST" ,
+				dataType : "json" ,
+				contentType:"application/json;charset=UTF-8",
+				data : JSON.stringify({
+					"replyNo":updatereplyno,
+					"replyContent":$('#updatecontent').val()
+				}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						 $('#updatemodalreply').modal('toggle');		
+						window.location.reload();
+				}
+		}); 
+	});
+});
+
 	///////////////////////////////////
 	
 	  $(function() {
@@ -731,7 +921,7 @@
 		</div>
 		</div>
 		</div>
-		</div>
+		
 		
 		<!-- <div class="row">
 		<hr/>
@@ -761,7 +951,7 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	<div id="container-floating">
-		
+		<c:if test="${user.userNo == product.hostNo }">
 		<div class="nd4 nds" data-toggle="tooltip" data-placement="left"
 			data-original-title="deleteProduct">
 			<img class="reminder" src="/resources/images/productIcons/delete.png" style="width: 35px; height: 35px;">
@@ -770,6 +960,7 @@
 			data-original-title="updateProduct">
 			<img class="reminder" src="/resources/images/productIcons/edit.png" style="width: 35px; height: 35px;">
 		</div>
+		</c:if>
 		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
 			data-original-title="listProduct">
 			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
@@ -850,27 +1041,70 @@
          </div>
       </div>
       
-      <div class="col-xs-12 ">
-      <hr sytle="border-style:dotted">
-      </div>
-      <div class="row" name="row">
-      <c:forEach var="reply" items="${list}">
-      <div class= "row2">
-         <div class="col-xs-12 ">
-             ${reply.userName}
-          </div>
-          <div class="col-xs-12 ">
-             ${reply.replyContent}
-          </div>
-          <div class="col-xs-12 ">
-             ${reply.replyRegDate}
-          </div>
-          <div class="col-xs-12 ">
-         <hr sytle="border-style:dotted">
-         </div>
-      </div>
-       </c:forEach>
-       </div>
+       <div class="row">
+	      <div class="col-xs-12 ">
+	      <hr sytle="border-style:dotted">
+	      </div>
+	   </div>  
+					      
+					   <div class="col-sm-12">   
+					      <div class="row" name="row">
+							<c:forEach var="reply" items="${list}">
+							<div class= "row2">
+								<input type="hidden" name="userReplyNo"	 value="${reply.userNo}"/>
+								<input type="hidden" name="userName" 	 value="${reply.userName}"/>
+								<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
+								<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
+								
+								
+								
+								<div class="col-sm-2 col-sm-offset-1"  style="padding-top: 10px;">
+					    			<strong>${reply.userName}</strong>
+					    		</div>
+					    		<c:if test="${empty user.userId}">
+							    </c:if>
+							    <c:if test="${!empty user.userId}">
+					    		
+					    		<div class="btn-group pull-right">
+					                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">
+					                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+					                            </button>
+					                            <ul class="dropdown-menu slidedown">
+					                           		<c:if test="${user.userNo != reply.userNo}">
+					                            	<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
+					                                <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
+					                                <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+					                                </c:if>
+					                                <c:if test="${user.userNo == reply.userNo}">
+					                                <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+					                                <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+					                                </c:if>
+					                            </ul>
+					             </div>				
+								</c:if>
+							</div>
+								<div class ="row" name="upcontent" style="padding-top: 10px;">
+					    		<div class="col-sm-3">
+					    			${reply.replyContent}
+					    		</div>
+					    		<div class="pull-right" style="padding-right: 100px;">
+					    			${reply.replyRegDate}
+					    		</div>
+					    		</div>
+					    		<%-- <div class ="row" name="upregdate">
+					    		<div class="col-sm-3 col-sm-offset-2">
+					    			${reply.replyRegDate}
+					    		</div>
+					    		</div> --%>
+					    		
+					    
+					    		<div class ="row">
+					    		<div class="col-xs-12">
+								<hr sytle="border-style:dotted">
+								</div>
+								</div>
+					 		</c:forEach>
+					 		</div>
        
        <div class="col-xs-2 col-xs-offset-5" id="aReply">
          <div class="button-2">
@@ -882,6 +1116,118 @@
          </div>
       </div>
       </div>
+      
+      <div class="modal fade" id="modalreport"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h4 class="modal-title">
+					<Strong>REPORT</Strong>
+				</h4>
+				<h7 class="modal-title">TWIIO</h7>
+			</div>
+			<div class="modal-body">
+			
+				<div id="reportbody"></div>
+			
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+		
+		<div class="modal fade" id="modalfriend"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>친구추가</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<h4><Strong>친구 추가를 하시겠습니까 ????</Strong></h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="addmodalfriend">예</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+		<div class="modal fade" id="modalmessage"  role="dialog">
+			<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>쪽지</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div id="msg">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="upmessage">보내기</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+		<div class="modal fade" id="deletemodalreply"  role="dialog">
+		<div class="modal-dialog modal-lg">
+		<!-- Modal content-->
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>댓글삭제</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<h4><Strong>댓글을 삭제하시겠습니까??</Strong></h4>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="deletereplym">예</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
+		
+		<div class="modal fade" id="updatemodalreply"  role="dialog">
+			<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">&times;</button>
+				<h3 class="modal-title">
+					<Strong>댓글 수정</Strong>
+				</h3>
+			</div>
+			<div class="modal-body">
+				<div id="upreply">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" id="updatereplym">수  정</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+			</div>
+		</div>
+		</div>
+		</div>
 
 </body>
+
 </html>
