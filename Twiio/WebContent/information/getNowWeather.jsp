@@ -7,40 +7,44 @@
 <html lang="ko">
 
 <head>
-<meta charset="EUC-KR">
-
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- Bootstrap Dropdown Hover CSS -->
-<link href="/resources/css/animate.min.css" rel="stylesheet">
-<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-
-<!-- jQuery UI toolTip 사용 CSS-->
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/resources/chart/Chart.min.js"></script>
-
-<!-- pdf Lib -->
-   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
-   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
-  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-
-<!--  ///////////////////////// CSS ////////////////////////// -->
+	<meta charset="EUC-KR">
+	<title>TWIIO Weather</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+	<link href="/resources/css/animate.min.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/chart/Chart.min.js"></script>
+	
+	<!-- pdf Lib -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	  	
+	  	<!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />      
+  	
+	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
 
 <style>
 		body {
@@ -55,7 +59,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -132,6 +136,9 @@
 			.pageButton-group {
 				aria-label: "Right Align";
 			}
+			.jumbotron {
+	        	border: 2px solid rgba(215, 58, 49, 0.8);
+	       }
 </style>
 
 
@@ -385,11 +392,8 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 
 	<div class="container">
-		<h5>&nbsp;</h5>
 
-		<div class="page-header">
-			<h3 class=" text-info">세계 날씨 확인하기</h3>
-		</div>
+		<h2 align="center"><strong><ins>ABOUT WEATHER</ins></strong></h2>
 		
 	
 	<form class="form-horizontal">
@@ -406,10 +410,11 @@
 		  </div>
 	</form>	
 
-			
-	<div class="chart-container" style="position: relative; width:70vw">		
-		<canvas id="popChart"></canvas>
-	</div>
+		<div class="jumbotron col-sm-12" id="jumbotron" style="align-content: center; background-color: rgba(247, 243, 243, 0.3);" >		
+			<div class="chart-container" style="position: relative; width:70vw; padding-right: 100px;">		
+				<canvas id="popChart"></canvas>
+			</div>
+		</div>
 
 	<%-- <table class="table table-hover table-striped" >
       <thead>
@@ -520,7 +525,7 @@
 	    }],
 	    yAxes: [{
 	      gridLines: {
-	        color: "rgba(0, 0, 0, 0.31)",
+	        color: "rgba(0, 0, 0, 0.8)",
 	        borderDash: [2, 5],
 	      },
 	      scaleLabel: {

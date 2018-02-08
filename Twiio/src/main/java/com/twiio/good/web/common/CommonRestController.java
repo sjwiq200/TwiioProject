@@ -6,6 +6,7 @@ import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
+import com.twiio.good.service.domain.User;
 import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
 
@@ -93,11 +94,16 @@ public class CommonRestController {
 	}
 	
 	@RequestMapping(value = "json/addReport",method = RequestMethod.POST)
-	public Report addReport(@RequestBody Report report
+	public Report addReport(@RequestBody Report report,HttpSession httpSession
 			) throws Exception {
 		System.out.println("/common/addReport : POST");
 		System.out.println("report :: "+report);
-		//commonService.addReport(report);
+		System.out.println("나왔어??1");
+		User user = (User)httpSession.getAttribute("user");
+		System.out.println("user : "+user);
+		report.setUserName(user.getUserName());
+		commonService.addReport(report);
+		System.out.println("나왔어??");
 		return report;
 	}
 	
@@ -111,11 +117,13 @@ public class CommonRestController {
 	}*/
 	
 	
-	@RequestMapping(value = "json/deleteReply", method = RequestMethod.GET )
-	public void deleteReply(@PathVariable("replyNo") int replyNo
+	@RequestMapping(value = "json/deleteReply" )
+	public String deleteReply(@RequestBody Reply reply
 			) throws Exception {
 		System.out.println("/common/deleteReply : GET");
-		commonService.deleteReply(replyNo);
+		System.out.println(reply.getReplyNo());
+		commonService.deleteReply(reply.getReplyNo());
+		return "1";
 	}
 
 
@@ -206,5 +214,12 @@ public class CommonRestController {
 		
 		return friend;
 	}
-
+	
+	@RequestMapping(value = "json/getReport" )
+	public Report getReport(@RequestBody Report report) throws Exception {
+		System.out.println("/common/getReport : GET");
+		Report report2 = commonService.getReport(report.getReportNo());
+		System.out.println("report2 : "+ report2);
+		return report2;
+	}
 }

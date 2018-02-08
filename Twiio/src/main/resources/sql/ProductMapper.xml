@@ -131,8 +131,11 @@
 				</if>
 				<if test="(search.searchCondition eq '3'.toString()) and search.searchKeyword !='' ">
 	 				AND user_name LIKE '${search.searchKeyword}%'
-				</if>			
-			 </if>
+				</if>				
+				<if test="(search.searchCondition eq '4'.toString())">
+	 				AND p.user_no = '${search.userNo}'
+				</if>
+			</if>
 		</if>
 		<if test="search.prodSearchType != null and search.prodSearchType != '' ">
 			AND product_type = #{search.prodSearchType}

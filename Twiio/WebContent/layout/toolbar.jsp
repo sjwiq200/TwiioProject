@@ -5,7 +5,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar-wrapper">
     <div class="container-fluid">
@@ -30,11 +29,11 @@
 		<div 	class="collapse navbar-collapse" id="target" 
 	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
 	         
-	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
+	         	<!-- Tool Bar �� �پ��ϰ� ����ϸ�.... -->
 	             <ul class="nav navbar-nav">
 	             
 	              
-	              <li class="dropdown">
+	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
@@ -106,10 +105,25 @@
 	             
 	             <ul class="nav navbar-nav navbar-right">
 	             	<c:if test="${sessionScope.user == null}">
-	                  <li><a href="" data-toggle="modal" data-target="#logIn">Login</a></li>
+	                  <li><a href="#">Login</a></li>
 	                </c:if>
 	                <c:if test="${sessionScope.user != null}">
-	                  <li><a href="#">MyPage</a></li>
+	                  <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >MyPage</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#">구매목록조회</a></li>
+	                         <li><a href="#">판매목록조회</a></li>
+	                         <li><a href="#">신고목록조회</a></li>
+	                         <li><a href="#"></a></li>
+	                         
+	                         <li class="divider"></li>
+	                         
+	                     </ul>
+	                 </li>
 	                  <li><a href="#">Logout</a></li>
 	                </c:if>
 	            </ul>
@@ -121,30 +135,30 @@
     </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
-		
+ 	
    	
    	
    	<script type="text/javascript">
 	
-		//============= logout Event  처리 =============	
+		//============= logout Event  ó�� =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
 		 });
 		
-		//============= 회원정보조회 Event  처리 =============	
+		//============= ȸ��������ȸ Event  ó�� =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('회원정보조회')").on("click" , function() {
+			//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('ȸ��������ȸ')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
-		//=============  개인정보조회회 Event  처리 =============	
+		//=============  ����������ȸȸ Event  ó�� =============	
 			
 		/* Messenger*/
 			
@@ -225,11 +239,28 @@
 			$(self.location).attr("href","/user/login");
 		});
 		
+		
+		/* MyPage */
+		
 		$( "a:contains('MyPage')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/myPageMain");
 		});
 		
+		$( "a:contains('Message')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/message/listMessage");
+		});
 		
+		$( "a:contains('구매목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/transaction/listTransaction");
+		});
+		
+		$( "a:contains('판매목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listHostProduct");
+		});
+		
+		$( "a:contains('신고목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/common/listReport");
+		});
 		
 	</script>  
 	
@@ -261,30 +292,6 @@
 			.navbar-toggle .icon-bar{
 			    color: #fff;
 			    background: #fff;
-			}
-			
-			/* Modal Content/Box */
-			.modal-content {
-			    background-color: #fefefe;
-			    margin: 15% auto; /* 15% from the top and centered */
-			    padding: 20px;
-			    border: 1px solid #888;
-			    width: 80%; /* Could be more or less, depending on screen size */
-			}
-			
-			/* The Close Button */
-			.close {
-			    color: #aaa;
-			    float: right;
-			    font-size: 28px;
-			    font-weight: bold;
-			}
-			
-			.close:hover,
-			.close:focus {
-			    color: black;
-			    text-decoration: none;
-			    cursor: pointer;
 			}
         
     </style>

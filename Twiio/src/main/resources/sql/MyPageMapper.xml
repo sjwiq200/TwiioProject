@@ -44,19 +44,19 @@
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
 							   SELECT
-							   MESSAGE_NO=#{messageNo},
-							   TO_USER_NO=#{toUserNo},
-							   FROM_USER_NO=#{fromUserNo},
-							   MESSAGE_CONTENT=#{messageContent},
-							   MESSAGE_REG_DATE=#{messageRegDate},
-							   MESSAGE_TYPE=#{messageType},
-							   MESSAGE_TITLE=#{messageTitle},
-							   PRODUCT_NO=#{productNo}
+							   MESSAGE_NO,
+							   TO_USER_NO,
+							   FROM_USER_NO,
+							   MESSAGE_CONTENT,
+							   to_char(message_reg_date,'yyyy-mm-dd hh24:mi:ss') MESSAGE_REG_DATE,
+							   MESSAGE_TYPE,
+							   MESSAGE_TITLE,
+							   PRODUCT_NO
 							   FROM 
   							   MESSAGE
   							   WHERE
-  							   FROM_USER_NO=#{userNo} 
-							   ORDER BY MESSAGE_NO
+  							   TO_USER_NO=#{userNo} 
+							   ORDER BY MESSAGE_NO DESC
 							   ) inner_table
   						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1

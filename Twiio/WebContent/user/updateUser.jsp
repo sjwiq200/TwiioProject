@@ -138,6 +138,9 @@
 				border: 1px solid;
 				padding:5px 10px;
 			}
+			#addHost{
+				cursor: pointer;
+			}
 
 	        
      </style>
@@ -160,11 +163,12 @@
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			 /* $( "#updateUser" ).on("click" , function() {
+			  /* $( "#updateUser" ).on("click" , function() {
+				  aler("수정");
 					//self.location = "/user/updateUser?userId=${user.userId}"
 				 $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();		
 					
-				}); */
+				});  */
 			
 			
 				
@@ -221,12 +225,73 @@
 		
 		///////////////////호스트 등록////////////////////////////
 			$(function() {
+				
+				 var userImage = $("#file").val();	
+				 var userName = $("#userName").val();
+				 var userPhone = $("#userPhone").val();
+				 var userAccount = $("#userAccount").val();
+				 var userBirthday = $("#userBirthday").val();
+				 var userGender = $(".userGender").val();
+				 
+				 var flag = true;
+				
 				 $("#addHost").on("click" , function() {
-					alert("호스트");
-			    	$("#addHostModal").modal("show");
 					 
+					 alert("호스트");
+					 
+					 if(userImage==""){
+						 $("#imgHelpBlock").show();
+						 alert("이미지를 등록 해주세요");
+						 flag = false;
+					 }
+					 if(userName==""){
+						 $("#nameHelpBlock").show();
+						 alert("이름을 등록 해주세요");
+						 flag = false;
+					 }
+					if(userPhone==""){
+						 $("#phoneHelpBlock").show();
+						 alert("휴대폰 번호를 등록 해주세요");
+						 flag = false;
+					 }
+					if(userAccount==""){
+						 $("#AccountHelpBlock").show();
+						 alert("계좌를 등록 해주세요");
+						 flag = false;
+					}
+					if(userBirthday==""){
+						 $("#birthHelpBlock").show();
+						 alert("생년월일을 등록 해주세요");
+						 flag = false;
+					}
+					if(userGender==""){
+						 $("#genderHelpBlock").show();
+						 alert("성별을 등록 해주세요");
+						 flag = false;
+					}
+					 
+					$("#userType").val("2"); 
+					
+						if(flag){
+							alert("고고");
+						 $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+						}
 				  });
+				 
+				 
+				 $(document).ready(function() { 
+					 $("#imgHelpBlock").hide();
+					 $("#AccountHelpBlock").hide();
+					 $("#birthHelpBlock").hide();
+					 $("#genderHelpBlock").hide();
+					 $("#phoneHelpBlock").hide();
+					 $("#nameHelpBlock").hide();
+					 
+				 });
+				 
+				 
 			 });
+		
 		
 	</script>
 	
@@ -241,22 +306,27 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<input type="hidden"  id="emailAuth" name="emailAuth" />
-		<input type="hidden"  id="tempNum" name="tempNum" />
-	
+		
 		<div class="page-header">
 	       <h3 class=" text-info">회원 정보 수정</h3>
 	    </div>
 	    
-	<form id="updateUserForm">		
+	<form id="updateUserForm">	
+	
+		
+		<input type="hidden"  id="userType" name="userType" />
+		
 		<div class="col-sm-12">
 			
 			<div class="profile-userpic ">
 						<c:if test="${empty user.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
 						<c:if test="${!empty user.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive"></c:if>
 				<label class="file_input">
-			        <input type="file" onchange="javascript:document.getElementById('file_route').value=this.value">
+			        <input type="file" id="file" class="file" onchange="javascript:document.getElementById('file_route').value=this.value">
 			    </label>
+			    <span id="imgHelpBlock" class="help-block" type="hidden">
+					 <strong  id="text2" class="text-danger col-sm-12 col-sm-offset-5" style="color: #f9d431;">이미지를 등록해 주세요.</strong>
+				</span>
 			</div>
 			
 			
@@ -270,6 +340,9 @@
 					  		<label for="userName" class="col-sm-2 col-sm-offset-4 control-label">이름</label>
 					  			<div class="col-sm-3">
 									<input type="text" class="form-control" id="userName" name="userName" value="${user.userName}">
+										<span id="nameHelpBlock" class="help-block" type="hidden">
+											 <strong  id="nameText" class="text-danger" style="color: #f9d431;">이름을 입력해 주세요.</strong>
+										</span>
 								</div>
 						</div>
 					</div>
@@ -281,6 +354,9 @@
 					  		<label for="userPhone" class="col-sm-2 col-sm-offset-4 control-label">휴대전화번호</label>
 					  			<div class="col-sm-3">
 									<input type="text" class="form-control" id="userPhone" name="userPhone" value="${user.userPhone}">
+									<span id="phoneHelpBlock" class="help-block" type="hidden">
+											 <strong  id="phoneText" class="text-danger" style="color: #f9d431;">휴대전화번호를 입력해 주세요.</strong>
+										</span>
 								</div>
 						</div>
 					</div>
@@ -328,23 +404,29 @@
 					  		<label for="userAccount"class="col-sm-2 col-sm-offset-4 control-label">계좌번호</label>
 					  			<div class="col-sm-3">
 									<input type="text" class="form-control" id="userAccount" name="userAccount" value="${user.userAccount}">
+									<span id="accountHelpBlock" class="help-block" type="hidden">
+											 <strong  id="accountText" class="text-danger" style="color: #f9d431;">계좌번호를 입력해주세요.</strong>
+										</span>
 								</div>
 						</div>
 					</div>
 					
 					<br/>
-						
+					
 					<div class="row">
 						<div class="form-group">
-					  		<label for="userType" class="col-sm-2 col-sm-offset-4 control-label">HOST등록여부</label>
+					  		<label for="userBirthday"class="col-sm-2 col-sm-offset-4 control-label">생년월일</label>
 					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userType" name="userType" value="${user.userType}" readonly="readonly">
-									<button class="btn btn-outlined btn-light btn-xs" id="addHost">HOST 등록</button>
+									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
+									<span id="birthHelpBlock" class="help-block" type="hidden">
+											 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
+									</span>
 								</div>
 						</div>
 					</div>
 					
-					<br/>	
+					<br/>
+					
 					
 					<div class="row">
 						<div class="form-group">
@@ -359,13 +441,28 @@
 									 <c:if test = "${user.userGender=='M'}">
 										<label for="female" class="chk_radio on"><input type="radio" name="userGender"   value="W" />여자</label>
 										<label for="male" class="chk_radio "><input type="radio" name="userGender"   value="M" checked="checked"/>남자</label>
-									</c:if> 
+									</c:if>
+									<span id="genderHelpBlock" class="help-block" type="hidden">
+											 <strong  id="genderText" class="text-danger" style="color: #f9d431;">성별을 선택 해주세요.</strong>
+									</span> 
 								</div>
 						</div>
 					</div>
 					
 					<br/>
 					
+					<div class="row">
+						<div class="form-group">
+					  		<label for="userType" class="col-sm-2 col-sm-offset-4 control-label">HOST등록여부</label>
+					  			<div class="col-sm-3">
+									<input type="text" class="form-control" id="userType" name="userType" value="${user.userType}" readonly="readonly">
+									<!-- <img src="/resources/images/addhost.png" id="addHost" style="width: 70px; height: 30px;"/> -->
+									<button class="btn btn-outlined btn-light btn-xs" type="button" id="addHost" >HOST등록</button>
+								</div>
+						</div>
+					</div>
+					
+					<br/>
 					
 				</div>
 			</div>
@@ -380,12 +477,11 @@
 					</div>
 					
 				 </div>
-				 <br/><br/>
-		<br/><br/>
-		<br/>  
 				 
 		</form>	
  		</div>
+ 		<br/><br/>
+		<br/><br/>
  	<!--  화면구성 div Start /////////////////////////////////////-->
  	
  	

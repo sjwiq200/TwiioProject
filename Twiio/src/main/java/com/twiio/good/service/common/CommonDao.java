@@ -31,13 +31,13 @@ public interface CommonDao
 
   public Report getReport(int reportNo) throws Exception;
   
-  public Friend getFriend(Friend friend) throws Exception;
-  
-  public int getTotalCountReport() throws Exception;
+  public int getTotalCountReport(Search search) throws Exception;
   
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
   public int getTotalCountFriend(int userNo) throws Exception;
+  
+  public Friend getFriend(Friend friend) throws Exception;
   
   public void searchKeyword() throws Exception;
   

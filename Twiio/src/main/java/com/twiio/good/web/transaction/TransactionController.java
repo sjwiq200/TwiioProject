@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Refund;
@@ -436,7 +437,9 @@ public class TransactionController {
 		
 	//@RequestMapping("/listPurchase.do")
 	@RequestMapping( value="listTransaction" )
-	public String listPurchase( @ModelAttribute("search") Search search , Map<String, Object> map, HttpSession session) throws Exception{
+	public String listPurchase( @ModelAttribute("search") Search search , 
+			Map<String, Object> map,
+			HttpSession session) throws Exception{
 		
 		System.out.println("/transaction/listTransaction : ");
 		System.out.println(search.getCurrentPage());
@@ -447,16 +450,16 @@ public class TransactionController {
 		
 		// Business logic 수행
 		User user = (User)session.getAttribute("user");
-		map=transactionService.listTransaction(search, user);
+		Map<String, Object> dbmap=transactionService.listTransaction(search, user);
 				
-		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)dbmap.get("totalCount")).intValue(), pageUnit, pageSize);
 		//System.out.println(resultPage);
 		
 		// Model 과 View 연결
-		//model.addAttribute("list", map.get("list"));
-		//model.addAttribute("resultPage", resultPage);
+		map.put("list", dbmap.get("list"));
+		map.put("resultPage", resultPage);
 				
-		return "forward:/purchase/listPurchase.jsp";
+		return "forward:/mypage/listTransaction.jsp";
 	}
 	
 	// @RequestMapping("/updatePurchase.do")
