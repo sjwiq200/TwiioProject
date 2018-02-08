@@ -39,6 +39,7 @@
 		 $("a:contains('참가')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
 			 console.log(roomKey);
 			 
 			 $.ajax({
@@ -56,8 +57,18 @@
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
 			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */  
-			  window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
+			  window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
 		 })
+		 
+		 $("button.btn.btn-default").on("click",function(){
+			 alert("hello")
+ 			fncGetRoomList(1);
+ 		});
+		 
+		 function fncGetRoomList(currentPage){
+	            $("#currentPage").val(currentPage);
+	            $("form").attr("method","POST").attr("action","/room/listRoom").submit();
+	        };
 		 
 		 $("a:contains('방 수정')").on("click",function(){
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
@@ -65,6 +76,96 @@
 		 });
 		 
 	 });
+  	
+  	var page = 1;
+	var flag = 0;
+	var flag2 = 0;
+	var roomCount = ${resultPage.totalCount};
+
+	if (self.name != 'reload') {
+		self.name = 'reload';
+		self.location.reload(true);
+	} else
+		self.name = '';
+
+	$(function() {
+		$(window).scroll(function() {
+							var documentHeight = $(document).height();
+							console.log('$(window).scrollTop() :: '+ ($(window).scrollTop()));
+							console.log('$(document).height() - $(window).height() :: '+ ($(document).height() - $(window).height()));
+							if (($(window).scrollTop()) != $(document).height()- $(window).height()& flag2 == 1) {
+								flag2 = 0;
+								console.log('flag :: ' + flag2);
+							}
+							if (($(window).scrollTop() + 0.8) >= $(document).height()- $(window).height()& flag2 == 0) {
+								flag2 = 1;
+								console.log('$(window).scrollTop() :: '+ $(window).scrollTop());
+								console.log('$(document).height() - $(window).height() :: '+ ($(document).height() - $(window).height()));
+								page = page + 1;
+								
+								$.ajax({
+										url : "/room/json/listMyRoom",
+										method : "POST",
+										dataType : "json",
+										contentType : "application/json;charset=UTF-8",
+										data : JSON.stringify({
+											"currentPage" : page,
+											"searchCondition" : $('#searchCondition').val(),
+											"searchKeyword" : $('#searchKeword').val(),
+											"prodSearchType" :  $('#prodSearchType').val()
+										}),
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										success : function(JSONData, status) {
+											if (flag == 0) {
+												roomCount = roomCount- JSONData.length;
+												flag = 1;
+											}
+
+											for (var i = 0; i < JSONData.length; i++) {
+												var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
+														+ '<div class="thumbnail" name="getPro" style="height:500px;">'
+														+ '<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">'
+														+ '<div class="caption">'
+														+ '<h3>'
+														+ JSONData[i].roomName
+														+ '</h3>'
+														+ '<p> Date : '
+														+ JSONData[i].date
+														+ '</p>'
+														+ '<p> country : '
+														+ JSONData[i].country
+														+ '</p>'
+														+ '<p> city : '
+														+ JSONData[i].city
+														+ '</p>'
+														+ '<p>'
+														+ JSONData[i].headCount
+														+ '명 </p>'
+														+ '<a href="#" class=" btn btn-default" role="button">참가'
+														+ '<input type="hidden" id="roomKey" value="'
+														+ JSONData[i].roomKey
+														+ '">'
+														+ '<input type="hidden" id="master" value="'
+														+ JSONData[i].userNo
+														+ '">'
+														
+														<c:if test="${user.userNo == JSONData[i].userNo }">
+									            			+'<a href="#">방 수정<input type="hidden" id="roomKey" value="'
+									            			+ JSONData[i].roomKey
+									            			+'"></a>'
+									            			</c:if>
+									            			+ '</div>'
+
+												$('.row2').append(displayValue);
+											}
+										}
+									});
+							}
+						});
+	});
   </script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -96,18 +197,43 @@
 	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    		전체  ${resultPage.totalCount } 건수
 		    	</p>
 		    </div>
 		    
-		    
-	    	
+		    <div class="col-md-10 text-right">
+			    <form class="form-inline" name="detailForm">
+		        
+			    
+				<div class="form-group">
+				    <select class="form-control" id="searchCondition" name="searchCondition" >
+                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
+                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
+                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
+					</select>
+				  </div>
+				  
+				  <div class="form-group">
+				    <label class="sr-only" for="searchKeyword">검색어</label>
+				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+		    			 
+				  </div>
+				  
+				  <button type="button" class="btn btn-default"><span class=" glyphicon glyphicon-search"></span></button>
+				  
+				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
+				  
+				</form>
+	    		</div>
 		</div>
+		
+		<div class="row2">
           
           <c:set var="i" value="0" />
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
-		    <div class="col-sm-3 " >
+		    <div class="col-sm-3 " style="padding-top : 2%">
 		      <div class="thumbnail" name="getPro" style="height:500px;">
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
@@ -119,7 +245,11 @@
 		            <p>${room.headCount}명</p>
 		            <p>
 		            <c:if test="${!empty user}">
-			            <a href="#">참가<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
+			            <a href="#">
+			            참가
+			            <input type="hidden" id="roomKey" value="${room.roomKey}">
+			            <input type="hidden" id="master" value="${room.userNo }">
+			            </a>
 		            </c:if>
 		            <p>
 		            <p>
@@ -132,6 +262,7 @@
 		      </div>
 		    </div>
 		    </c:forEach>
+		    </div>
         
         
 	  <!--  table End /////////////////////////////////////-->

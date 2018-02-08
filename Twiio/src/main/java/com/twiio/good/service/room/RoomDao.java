@@ -17,7 +17,7 @@ public interface RoomDao {
 
 	public void addRoomUser(String roomKey, int userNo) throws Exception;
 
-	public List<RoomUser> listMyRoom(int userNo) throws Exception;
+	public Map<String, Object> listMyRoom(Search search, int userNo) throws Exception;
 
 	public Room getRoom(String roomKey) throws Exception;
 

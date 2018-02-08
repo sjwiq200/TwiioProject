@@ -205,7 +205,7 @@
 		
 			 <div class="col-md-2 text-left">
 			    	<p class="text-primary">
-			    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+			    		전체  ${resultPage.totalCount } 건수
 			    	</p>
 		    </div> 
 		    
@@ -215,7 +215,7 @@
 		        
 			    
 				<div class="form-group">
-				    <select class="form-control" name="searchCondition" >
+				    <select class="form-control" id="searchCondition" name="searchCondition" >
                         <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
                         <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
                         <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>

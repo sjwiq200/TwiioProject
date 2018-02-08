@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -97,20 +98,28 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value="listMyRoom")
-	public String listMyRoom(HttpServletRequest request, HttpSession session) throws Exception{
+	public String listMyRoom(@ModelAttribute("search") Search search, HttpServletRequest request, HttpSession session) throws Exception{
 		
 		System.out.println("/room/listMyRoom : ");
 		User user = (User)session.getAttribute("user");
 		
-		List<RoomUser> list  = roomService.listMyRoom(user.getUserNo());
-		List<Room> listRoom = new Vector<Room>();
-		
-		for (RoomUser roomUser : list) {
-			listRoom.add(roomService.getRoom(roomUser.getRoomKey()));
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
 		}
+		search.setPageSize(12);
 		
-		request.setAttribute("list", listRoom);
+//		List<RoomUser> list  = roomService.listMyRoom(user.getUserNo());
+		Map<String, Object> map = roomService.listMyRoom(search, user.getUserNo());
 		
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+		
+		
+		
+		request.setAttribute("list", map.get("list"));
+		request.setAttribute("totalCount",map.get("totalCount"));
+		request.setAttribute("resultPage", resultPage);
 		return "forward:/room/listMyRoom.jsp";
 	}
 	

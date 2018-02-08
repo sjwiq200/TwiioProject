@@ -115,6 +115,20 @@ public class RoomRestController {
 		return list;
 	}
 	
+	@RequestMapping("/json/listMyRoom")
+	public List<Room> listMyRoom(@RequestBody Search search, HttpSession session) throws Exception{
+		System.out.println("/room/json/listRoom : ");
+		User user = (User)session.getAttribute("user");
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		
+		List<Room> list = (List<Room>)roomService.listMyRoom(search,user.getUserNo()).get("list");
+		System.out.println("roomrestController "+ list);
+		return list;
+	}
+	
 	
 
 }

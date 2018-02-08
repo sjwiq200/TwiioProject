@@ -51,9 +51,9 @@ public class RoomServiceImpl implements RoomService {
 	}
 
 	@Override
-	public List<RoomUser> listMyRoom(int userNo) throws Exception {
+	public Map<String, Object> listMyRoom(Search search, int userNo) throws Exception {
 		// TODO Auto-generated method stub
-		return roomDao.listMyRoom(userNo);
+		return roomDao.listMyRoom(search, userNo);
 	}
 
 	@Override

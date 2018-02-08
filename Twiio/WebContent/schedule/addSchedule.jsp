@@ -31,8 +31,8 @@
 	<script type="text/javascript">
 	
 		 $(function() {		
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				
+			$( "button#go" ).on("click" , function() {
+				alert("hello");
 				$.ajax(
     					{
     						url : "/schedule/json/addSchedule/",
@@ -183,8 +183,8 @@
 							  
 							  <div class="form-group">
 							    <div class="col-sm-offset-4  col-sm-4 text-center">
-							      <button type="button" class="btn btn-outlined btn-light btn-sm"  >확 &nbsp;정</button>
-								  <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button">취&nbsp;소</a>
+							      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go" >확 &nbsp;정</button>
+								  <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" id="cancel">취&nbsp;소</a>
 							    </div>
 							  </div>
 							</form>

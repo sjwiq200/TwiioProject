@@ -48,8 +48,7 @@ public class RoomDaoImpl implements RoomDao {
 		Query query = new Query();
 		
 		if(search.getSearchCondition() == null) {
-			System.out.println("hello");
-			
+			System.out.println("this is null");
 		}else if(search.getSearchCondition().equals("0")) {
 			System.out.println("SearchCondition 0");
 			query.addCriteria(Criteria.where("roomName").regex(search.getSearchKeyword(),"i"));
@@ -66,9 +65,10 @@ public class RoomDaoImpl implements RoomDao {
 		
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
-		query.skip(search.getStartRowNum()); //start Num
+		query.skip(search.getStartRowNum()-1); //start Num
 		query.limit(search.getEndRowNum()); //end Num
 		list = mongoTemplate.find(query, Room.class, "rooms");
+		System.out.println("daoImpl ==>" + list);
 		map.put("list", list);
 		int totalCount = (int)mongoTemplate.count(query, Room.class,"rooms");
 		map.put("totalCount", totalCount);
@@ -147,16 +147,76 @@ public class RoomDaoImpl implements RoomDao {
 	}
 
 	@Override
-	public List<RoomUser> listMyRoom(int userNo) throws Exception {
+	public Map<String, Object> listMyRoom(Search search, int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"listMyRoom()");
+		
+		Map<String, Object> map = new HashMap<>();
 
 		Criteria criteria = new Criteria("userNo");
 		criteria.is(userNo);
 
 		Query query = new Query(criteria);
-		System.out.println(mongoTemplate.find(query, RoomUser.class, "roomUser"));
-		return mongoTemplate.find(query, RoomUser.class, "roomUser");
+		
+		
+		query.with(new Sort(Sort.Direction.DESC,"_id"));
+		
+		query.skip(search.getStartRowNum()-1); //start Num
+		query.limit(search.getEndRowNum()); //end Num
+		
+		System.out.println("mongotemplate list ==>"+mongoTemplate.find(query, RoomUser.class, "roomUser"));
+		List<RoomUser> list =mongoTemplate.find(query, RoomUser.class, "roomUser"); 
+		
+		//map.put("list", list);
+		
+//////////////////////////////////
+//		List<RoomUser> list = (List<RoomUser>)map.get("list");
+		List<Room> listRoom = new Vector<Room>();
+		
+		int totalCount = 0;
+		
+		for (RoomUser roomUser : list) {
+			Criteria innerCriteria = new Criteria("roomKey");
+			innerCriteria.is(roomUser.getRoomKey());
+
+			Query innerQuery = new Query(innerCriteria);
+
+			listRoom.add(mongoTemplate.findOne(innerQuery, Room.class, "rooms"));
+		}
+		
+		List<Room> searchRoom = new Vector<>();
+		for (Room room : listRoom) {
+			if(search.getSearchCondition() == null) {
+				searchRoom.add(room);
+			}else if(search.getSearchCondition().equals("0")) {
+				System.out.println("SearchCondition 0 roomName");
+				if(room.getRoomName().toLowerCase().contains(search.getSearchKeyword().toLowerCase())) {
+					searchRoom.add(room);
+				}
+				
+			}else if(search.getSearchCondition().equals("1")) {
+				System.out.println("SearchCondition 1 country");
+				if(room.getCountry().toLowerCase().contains(search.getSearchKeyword().toLowerCase())) {
+					searchRoom.add(room);
+				}
+				
+			}else if(search.getSearchCondition().equals("2")) {
+				if(room.getCity().toLowerCase().contains(search.getSearchKeyword().toLowerCase())) {
+					searchRoom.add(room);
+				}
+			}
+		}
+		if(search.getSearchCondition() == null) {
+			totalCount = (int)mongoTemplate.count(query, RoomUser.class,"roomUser");
+		}else {
+			totalCount = searchRoom.size();
+		}
+		
+////////////////////////////////
+		map.put("list", searchRoom);
+		map.put("totalCount", totalCount);
+		
+		return map;
 	}
 
 	@Override
