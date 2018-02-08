@@ -1,25 +1,15 @@
 @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
 @font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
 
+
 #floating-button{
 width: 70px;
 height: 70px;
 border-radius: 50%;
-background: #db4437;
+background: #000000;
 position: fixed;
 bottom: 30px;
 right: 7%;
-cursor: pointer;
-}
-
-#floating-button1{
-width: 70px;
-height: 70px;
-border-radius: 50%;
-background: #56B1BF;
-position: fixed;
-bottom: 30px;
-right: 2%;
 cursor: pointer;
 }
 
@@ -191,19 +181,6 @@ text-align: center;
 line-height: 40px;
 }
 
-.letter1{
-font-size: 10px;
- font-family:'NANUMSQUAREROUNDB';
-color: white;
-position: absolute;
-left: 0;
-right: 0;
-margin: 0;
-top: 11px;
-bottom: 0;
-text-align: center;
-line-height: 40px;
-}
 
 
 .reminder{
