@@ -203,12 +203,8 @@
 	<update id="updateReply" parameterType="reply">
 		UPDATE REPLY
 	   	<set>
-	   		REPLY_NO 		= #{replyNo} ,
-			USER_NO			= #{userNo},
-			REPLY_CONTENT 	= #{replyContent} ,
-			REPLY_REG_DATE	= #{replyRegdate},
-			PRODUCT_NO		= #{productNo},
-			COMMUNITY_NO	= #{communityNo}
+			REPLY_CONTENT 	= #{replyContent},
+			REPLY_REG_DATE	= SYSDATE
 	   	</set>
 	   	WHERE REPLY_NO = #{replyNo}
 	</update>
