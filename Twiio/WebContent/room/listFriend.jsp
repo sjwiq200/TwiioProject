@@ -19,10 +19,10 @@
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources//css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="/resources//javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery UI toolTip 사용 CSS-->
@@ -69,8 +69,62 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
-            padding-top : 50px;
+            padding-top : 150px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif ;
         }
+        .content h1 {
+			text-align: center;
+		}
+		
+		/*	--------------------------------------------------
+			:: Table Filter
+			-------------------------------------------------- */
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
+		.table-filter {
+			background-color: #fff;
+			border-bottom: 1px solid #eee;
+			font-size: 15px;
+		}
+		.table-filter tbody tr:hover {
+			cursor: pointer;
+			background-color: #eee;
+		}
+		.table-filter tbody tr td {
+			padding: 10px;
+			vertical-align: middle;
+			border-top-color: #eee;
+		}
+		.table-filter tbody tr.selected td {
+			background-color: #eee;
+		}
+		.table-filter tr td:first-child {
+			width: 60px;
+		}
+		img{
+		  float: none;
+		  margin: 0 auto;
+		  -webkit-border-radius: 50% !important;
+		  -moz-border-radius: 50% !important;
+		  border-radius: 50% !important;
+		  border: 3px solid;
+		}
+		.btn-outlined.btn-light:hover,
+		.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: rgba(215, 58, 49, 0.8);
+			    border-color: rgba(215, 58, 49, 0.8);
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #FFF;
+			    color: rgba(215, 58, 49, 0.8);
+				border-color: rgba(215, 58, 49, 0.8);
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -86,6 +140,71 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
+	
+	
+		<div class="row">
+
+		<section class="content">
+			<h1>친구 목록</h1>
+			<div class="col-md-8 col-md-offset-2">
+				<div class="panel panel-default">
+					<div class="panel-body">
+						<div class="table-container">
+							<table class="table table-filter" style="align-content: center;">
+							
+							<thead>
+					          <tr data-status="pagado">
+					          	<th align="center">No</th>
+					            <th align="center" style="padding-left: 40px;">Friend</th>
+					            <th align="center"></th>
+					          </tr>
+					        </thead>
+												
+								<tbody>
+									
+									<c:set var="i" value="0" />
+									  <input id="roomKey" type="hidden" value="${roomKey}">
+									  <c:forEach var="friend" items="${list}">
+										<c:set var="i" value="${ i+1 }" />
+										<tr data-status="pagado">
+										<div class="media-body">
+										  <td align="center">${ i }</td>
+										  <td align="left" vailgn="middle">
+										  
+										  
+										<div class="col-sm-12">  
+										  <div class="row" >
+										 	 <div class="col-sm-3 col-sm-offset-1" ><img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" 
+										 	 style="width: 32px; height: 32px;" class="media-photo"></div>
+										  
+										 	 <div class="col-sm-5 "  style="padding-top: 8px;" >${friend.userName}</div>
+										  </div>
+										 </div> 
+										  
+										  </td>
+											  <td align="right" style="padding-left: 40px;">
+											  <button type="button" class="btn btn-outlined btn-light btn-sm" >친구초대 +<input type="hidden" id="userNo" value="${friend.userNo}"/></button>
+											  	<%-- <a href="#">친구초대<input type="hidden" id="userNo" value="${friend.userNo}"></a> --%>
+											  </td>
+										  </div>
+										</tr>
+							          </c:forEach>
+									
+								</tbody>
+								
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+		
+	</div>
+	
+	
+	
+	
+	<%-- 
 		<div class="page-header text-info">
 	       <h3>친구 목록</h3>
 	    </div>
@@ -122,7 +241,7 @@
         
         </tbody>
       
-      </table>
+      </table> --%>
         
         
 	  <!--  table End /////////////////////////////////////-->
