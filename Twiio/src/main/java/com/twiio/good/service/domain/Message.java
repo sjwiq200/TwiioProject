@@ -10,7 +10,7 @@ public class Message {
 	private int toUserNo;
 	private int fromUserNo;
 	private String messageContent;
-	private Date messageRegDate;
+	private String messageRegDate;
 	private char messageType;
 	private String messageTitle;
 	private int productNo;
@@ -38,10 +38,10 @@ public class Message {
 	public void setMessageContent(String messageContent) {
 		this.messageContent = messageContent;
 	}
-	public Date getMessageRegDate() {
+	public String getMessageRegDate() {
 		return messageRegDate;
 	}
-	public void setMessageRegDate(Date messageRegDate) {
+	public void setMessageRegDate(String messageRegDate) {
 		this.messageRegDate = messageRegDate;
 	}
 	public char getMessageType() {

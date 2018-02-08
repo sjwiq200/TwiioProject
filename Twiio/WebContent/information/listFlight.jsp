@@ -12,11 +12,10 @@
 	
 <head>
 	<meta charset="UTF-8">
-	
+	<title>TWIIO Flights</title>
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-	
 	<link rel="stylesheet"
 		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
@@ -49,6 +48,9 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
    
+   <!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />      
+  	
 	<style>
 		body {
             padding-top : 50px;
@@ -62,7 +64,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -167,6 +169,14 @@
 		    margin-left: auto;
 		    margin-right: auto;
 		  }
+		  h4 {
+				font-size: 1em;
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+			}
+		 h2 {
+			text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+			color : #08708A;
+			}
 		  
     </style>
     
@@ -220,11 +230,11 @@
 										
 										for(var i = 0 ; i<info.length; i++){
 											
-											list += '<tr><td align="center">'+(i+1)+'</td>'+
+											list += '<tr><td align="center" valign="middle">'+(i+1)+'</td>'+
 											'<td align="center" id="info">'+info[i]+
-											'</td>'+'<td align="center" id="type">'+type[i]+
-											'</td>'+'<td align="center" id="price">'+price[i]+
-											'<td align="center" id="new"><button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick">선&nbsp;택</button></td></tr>';
+											'</td>'+'<td align="center" valign="middle" id="type">'+type[i]+
+											'</td>'+'<td align="center" valign="middle" id="price">'+price[i]+
+											'<td align="center"  valign="middle" id="new"><button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick">선&nbsp;택</button></td></tr>';
 										}
 									$("#listTbody").html(list);
 			    							    							    						
@@ -292,7 +302,7 @@
 				
 				    useCORS: true,
 				
-				    allowTaint: true,
+				    allowTaint: false,
 				
 				    onrendered:function(canvas){
 				    	
@@ -361,10 +371,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-	
-	<div class="page-header text-info">
-	       <h3>비행기 정보 조회</h3>
-	</div>
+	 <h2 align="center"><strong><ins>ABOUT FLIGHTS</ins></strong></h2>
 	
 	
 		<form role="form">
@@ -378,9 +385,6 @@
 	<div class="row centered-form">
 		 <div class="mainbox col-md-12">
 			<div class="panel">
-        		<div class="panel-heading" >
-			    		<h3 class="panel-title"></h3>
-			 		</div>
 			 			<div class="panel-body">
 			    			<div class="row">
 			    				<div class="col-xs-2 col-sm-2 col-md-2">

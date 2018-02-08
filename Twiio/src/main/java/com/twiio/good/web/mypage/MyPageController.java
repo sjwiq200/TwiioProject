@@ -28,7 +28,7 @@ import com.twiio.good.service.mypage.MyPageService;
 
 
 @Controller
-@RequestMapping({"/mypage/*"})
+@RequestMapping("/mypage/*")
 public class MyPageController {
 	@Autowired
 	@Qualifier("mypageServiceImpl")
@@ -120,7 +120,7 @@ public class MyPageController {
 		model.addAttribute("search", search);
 
 		
-		return "forward:/message/listMessage.jsp";
+		return "forward:/mypage/listMessage.jsp";
 	}
 	
 }

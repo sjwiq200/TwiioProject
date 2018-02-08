@@ -198,6 +198,12 @@
 					<div class="col-sm-4">${user.userAccount}</div>
 				</div>
 				<hr/>
+				
+				<div class="row">
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
+					<div class="col-sm-4">${user.userBirthday}</div>
+				</div>
+				
 				<br/>
 				
 				</div>

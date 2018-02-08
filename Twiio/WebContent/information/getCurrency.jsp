@@ -11,7 +11,7 @@
 	
 <head>
 	<meta charset="EUC-KR">
-	
+	<title>TWIIO Currency</title>
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -35,6 +35,9 @@
    	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
   	
+  	
+  	<!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />   
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -296,71 +299,73 @@
 	<div class="container">
 	
 	
-	<div class="page-header text-info">
-	       <h3>환율</h3>
-	</div>
+	 <h2 align="center"><strong><ins>ABOUT CURRENCY</ins></strong></h2>
 	    
 	
-	
-	
-	<form class="form-horizontal">
-	
-		<div class="form-group">
-			<div class="col-sm-4 col-sm-offset-4" id="standardCountry">
-				    <select class="form-control" id="standardCountryValue" >
-				    <!-- <option value="0">나라를 선택해주세요</option> -->
-						<c:set var="i" value="0" />
-		 				 <c:forEach var="currency" items="${returnList}">
-		 				 <option value="${currency.cur_nm}" >
-		 				 ${currency.cur_nm}
-		 				  </option>
-		 				 </c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-4 col-sm-offset-4">
-		    	</div>
-		    <div class="col-sm-4 col-sm-offset-4">
-		      <input type="text" class="form-control" id="standard" name="standard"  >
-		    </div>
-		 </div>
-		 
-		 <div class="form-group">
-		 	<div class="col-sm-offset-4  col-sm-4 text-center">
-		 	<img src="/resources/images/equal-sign.png"/>
-		 	</div>
-		  </div>
-		  
-		 <div class="form-group">
-		    <div class="col-sm-4 col-sm-offset-4" id="compareCountry">
-				    <select class="form-control"  id="compareCountryValue" >
-				   <!-- <option value="0">나라를 선택해주세요</option> -->
-						<c:set var="i" value="0" />
-		 				 <c:forEach var="currency" items="${returnList}">
-		 				 <option value="${currency.cur_nm}">
-		 				 ${currency.cur_nm}
-		 				  </option>
-		 				 </c:forEach>
-					</select>
-				</div>
-				<div class="col-sm-4 col-sm-offset-4">
-		    	</div>
-		    <div class="col-sm-4 col-sm-offset-4">
-		      <input type="text" class="form-control" id="compare" name="compare" readOnly="true">
-		    </div>
-		 </div>
-	
-	<div class="form-group">
-		     <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button class="btn btn-outlined btn-theme btn-sm" id="search" >계 &nbsp;산</button>
-		  	</div>
-	</div>
-	</form>
-	
+		<div class="col-sm-12">
+			<div class="jumbotron col-sm-8 col-sm-offset-2 " id="jumbotron" style="align-content: center; background-color: rgba(86, 177, 191, 0.3);" >		
+				<form class="form-horizontal">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-offset-2" id="standardCountry">
+							    <select class="form-control" id="standardCountryValue" >
+							    <!-- <option value="0">나라를 선택해주세요</option> -->
+									<c:set var="i" value="0" />
+					 				 <c:forEach var="currency" items="${returnList}">
+					 				 <option value="${currency.cur_nm}" >
+					 				 ${currency.cur_nm}
+					 				  </option>
+					 				 </c:forEach>
+								</select>
+							</div>
+							<div class="col-sm-4 col-sm-offset-4">
+					    	</div>
+					    <div class="col-sm-8 col-sm-offset-2">
+					      <input type="text" class="form-control" id="standard" name="standard"  >
+					    </div>
+					 </div>
+					 
+					 <div class="form-group">
+					 	<div class="col-sm-offset-4  col-sm-4 text-center">
+					 	<img src="/resources/images/equal-sign.png"/>
+					 	</div>
+					  </div>
+					  
+					 <div class="form-group">
+					    <div class="col-sm-8 col-sm-offset-2" id="compareCountry">
+							    <select class="form-control"  id="compareCountryValue" >
+							   <!-- <option value="0">나라를 선택해주세요</option> -->
+									<c:set var="i" value="0" />
+					 				 <c:forEach var="currency" items="${returnList}">
+					 				 <option value="${currency.cur_nm}">
+					 				 ${currency.cur_nm}
+					 				  </option>
+					 				 </c:forEach>
+								</select>
+							</div>
+							<div class="col-sm-4 col-sm-offset-4">
+					    	</div>
+					    <div class="col-sm-8 col-sm-offset-2">
+					      <input type="text" class="form-control" id="compare" name="compare" readOnly="true">
+					    </div>
+					 </div>
+					
+						<div class="form-group">
+							     <div class="col-sm-offset-4  col-sm-4 text-center">
+							      <button class="btn btn-outlined btn-theme btn-sm" id="search" >계 &nbsp;산</button>
+							  	</div>
+						</div>
+					</div>
+				</form>
+				
+			</div>
+		</div>		
 		<div class="col-sm-offset-10  col-sm-2 text-center">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
-		</div>
-	
+			<br/>
 		<br/>
+		<br/>
+		</div>
 		
 	<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;" >
       

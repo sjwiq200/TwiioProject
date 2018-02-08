@@ -18,7 +18,7 @@ public class Search {
 	//////product button///////
 	private String prodSearchType;
 	////////starProduct/////////////
-	private int productNo;
+	private int userNo;
 
 	
 	///Constructor
@@ -30,13 +30,10 @@ public class Search {
 	
 	
 	
-	
-	
 	public int getPageSize() {
 		return pageSize;
 	}
 	
-
 	public void setPageSize(int paseSize) {
 		this.pageSize = paseSize;
 	}
@@ -88,20 +85,22 @@ public class Search {
 		this.prodSearchType = prodSearchType;
 	}
 
-
-	public int getProductNo() {
-		return productNo;
+	
+	public int getUserNo() {
+		return userNo;
 	}
 
-	public void setProductNo(int productNo) {
-		this.productNo = productNo;
+
+	public void setUserNo(int userNo) {
+		this.userNo = userNo;
 	}
+
 
 	@Override
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
 				+ searchKeyword + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
 				+ ", priceCondition=" + priceCondition + ", prodSearchType=" + prodSearchType + ", productNo="
-				+ productNo + "]";
+				+ userNo + "]";
 	}
 }

@@ -7,43 +7,46 @@
 
 
 <head>
-<meta charset="EUC-KR">
-
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- Bootstrap Dropdown Hover CSS -->
-
-<link href="/resources/css/animate.min.css" rel="stylesheet">
-<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-
-<!-- jQuery UI toolTip 사용 CSS-->
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/resources/chart/Chart.min.js"></script>
-
-<!-- pdf Lib -->
+	<meta charset="EUC-KR">
+	<title>TWIIO Weather</title>
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+	
+	<link href="/resources/css/animate.min.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<script src="/resources/chart/Chart.min.js"></script>
+	
+	<!-- pdf Lib -->
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
    	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+  	
+  	  	<!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />   
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 
@@ -60,7 +63,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -106,7 +109,7 @@
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #FFF;
+			    background: #f4f4f4;
 			    color: #08708A;
 				border-color: #08708A;
 			}
@@ -416,12 +419,7 @@
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 	<div class="container">
-		<h5>&nbsp;</h5>
-
-		<div class="page-header">
-			<h3 class=" text-info">세계 과거 날씨 확인하기</h3>
-		</div>
-
+		<h2 align="center"><strong><ins>ABOUT WEATHER</ins></strong></h2>
 
 		<form class="form-horizontal">
 		  <div class="form-group">
@@ -436,9 +434,6 @@
 		    </div>
 		  </div>
 		</form>	
-		
-		<br/>
-		<br/>
 		
 		<div class="col-sm-offset-10  col-sm-2 text-center">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
@@ -489,16 +484,23 @@
         </tbody>
       
       </table> --%>
-      <div class="chart-container" style="position: relative; width:70vw">	
-     	 <canvas id="weatherChart" width="600" height="400"></canvas>
-      </div>
       
-      <div class="chart-container" style="position: relative; width:70vw">	
-     	 <canvas id="rainChart" width="600" height="400"></canvas>
-     </div>
-
+      <div class="jumbotron col-sm-12" id="jumbotron" style="align-content: center; background-color: rgba(255, 255, 255, 0.4);" >
+		      <div class="chart-container" style="position: relative; width:70vw;  padding-right: 100px;">	
+		     	 <canvas id="weatherChart" width="600" height="400"></canvas>
+		      </div>
+		      
+		      <div class="chart-container" style="position: relative; width:70vw;  padding-right: 100px;">	
+		     	 <canvas id="rainChart" width="600" height="400"></canvas>
+		     </div>
+		</div>
+     
+    <br/>
+	<br/>
 
 		</div>
+		<br/>
+		<br/>
 	
 	<script>
 

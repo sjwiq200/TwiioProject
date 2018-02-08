@@ -7,43 +7,45 @@
 
 
 <head>
-<meta charset="EUC-KR">
-
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- Bootstrap Dropdown Hover CSS -->
-
-<link href="/resources/css/animate.min.css" rel="stylesheet">
-<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-
-<!-- jQuery UI toolTip 사용 CSS-->
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-<!-- pdf Lib -->
+	<meta charset="EUC-KR">
+	<title>TWIIO UnsafeRegion</title>
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+	
+	<link href="/resources/css/animate.min.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- pdf Lib -->
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
    	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
+   <!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />   
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -58,7 +60,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -104,7 +106,7 @@
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #FFF;
+			    background: #f4f4f4;
 			    color: #08708A;
 				border-color: #08708A;
 			}
@@ -127,10 +129,16 @@
 				border: 1px solid;
 				padding:5px 10px;
 			}
-			/* .jumbotron
+			 #info
 			{
-				background-color: rgba(86, 177, 191, 0.5);
-			} */
+				  border: 3px solid #FFF;
+				  background: rgba(255, 255, 255, 0.5);
+			} 
+			
+			 h3 {
+				font-size: 1em;
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -162,9 +170,9 @@
 								
 								if(img=='none'){
 									
-									img = "/resources/images/no_info.png";
+									img = "/resources/images/no_info2.png";
 									
-									$("#image").html('<div class="col-sm-12 col-sm-offset-4" align="center"><img src="'+img+'" style="width: 500px; height: 400px;"/></div>');
+									$("#image").html('<div class="col-sm-12 col-sm-offset-1" align="center"><img src="'+img+'" style="width: 700px; height: 400px;"/></div>');
 									$("#jumbotron").attr("style","width: 600px; height: 500px; align-content: center; background-color: #f4f4f4; ");
 									$("#jumbotron").attr("class","jumbotron col-sm-12 col-xs-offset-1");
 									$("#dangerIcon").hide();
@@ -231,7 +239,7 @@
 				
 				    useCORS: true,
 				
-				    allowTaint: true,
+				    allowTaint: false,
 				
 				    onrendered:function(canvas){
 				    	
@@ -306,9 +314,7 @@
 	<div class="container">
 	
 	
-	<div class="page-header text-info">
-	       <h3>안전 지역 정보 조회</h3>
-	</div>
+	<h2 align="center"><strong><ins>ABOUT UNSAFEREGION</ins></strong></h2>
 	
 	<form class="form-horizontal">
 		  <div class="form-group" align="center">
@@ -356,14 +362,14 @@
 	<br/>
 	
 	
-	<div class="info col-sm-8 col-sm-offset-2" id="info"></div>
-		<br/><br/>
-		<br/><br/>
+	<div class="col-sm-12" id="info" style="padding-left : 130px; padding-top : 50px; "></div>
 		<br/>    
  		</div>
  		
 	<!--  화면구성 div Start /////////////////////////////////////-->
- 	
+ 		<br/><br/>
+		<br/><br/>
+		<br/> 
 	</body>
 
 </html>

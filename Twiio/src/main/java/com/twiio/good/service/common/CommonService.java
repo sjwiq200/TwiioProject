@@ -36,7 +36,7 @@ public interface CommonService
   
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
-  ///////////////////////�߸𸣰ڽ��ϴ�.///////////////////////////
+  ///////////////////////�߸𸣰ڽ��ϴ�.///////////////////////////
   public void searchKeyword() throws Exception;
   
   public void listSearch() throws Exception;

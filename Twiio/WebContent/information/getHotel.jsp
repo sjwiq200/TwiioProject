@@ -11,7 +11,7 @@
 	
 <head>
 	<meta charset="EUC-KR">
-	
+	<title>TWIIO Hotels</title>
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -30,7 +30,14 @@
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
+   <!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	
    
+   <!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" /> 
    <!--  ///////////////////////// 추가 ////////////////////////// -->
 	<style>
 		body {
@@ -45,7 +52,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -98,14 +105,14 @@
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
 			    color: #FFF;
-			    background: #56B1BF;
-			    border-color: #56B1BF;
+			    background: #D73A31;
+			    border-color: #D73A31;
 			}
 			
 			.btn-outlined.btn-light {
 			    background: #f4f4f4;
-			    color: #56B1BF;
-				border-color: #56B1BF;
+			    color: #D73A31;
+				border-color: #D73A31;
 			}
 			
 			.btn-xs{
@@ -201,12 +208,12 @@
 								
 								for(var i = 0 ; i<con.length; i++){
 									
-									list += '<tr><td align="center">'+(i+1)+'</td>'+
+									list += '<tr><td align="center" valign="middle">'+(i+1)+'</td>'+
 									'<td align="center" id="img"><img src="'+img[i]+'"  style="width: 200px; height: 150px;"/></td>'+
-									'<td align="center" id="con">'+con[i]+'</td>'+
-									'<td align="center" id="loc">'+loc[i]+'</td>'+
-									'<td align="center" id="price">'+price[i]+'</td>'+
-									'<td align="center" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="pick"><a href="'+
+									'<td align="center" valign="middle" id="con">'+con[i]+'</td>'+
+									'<td align="center" valign="middle" id="loc">'+loc[i]+'</td>'+
+									'<td align="center" valign="middle" id="price">'+price[i]+'</td>'+
+									'<td align="center" valign="middle"  id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="pick"><a href="'+
 									url[i]+'" target="_blank" >선&nbsp;택</a></button></td></tr>';
 								}
 							$("#listTbody").html(list);
@@ -311,9 +318,7 @@
 	<div class="container">
 	
 	
-	<div class="page-header text-info">
-	       <h3>숙소 정보 조회</h3>
-	</div>
+	<h2 align="center"><strong><ins>ABOUT HOTELS</ins></strong></h2>
 			
 		<form role="form">
 				
@@ -388,7 +393,7 @@
 		<br/>
 		<br/>
 		
-		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;" >
+		<table class="type10" style="margin-left: auto; margin-right: auto; text-align: center;  valign: middle;" >
 		
 	        <thead>
 	          <tr>
@@ -405,12 +410,12 @@
 			
 				<tbody id="listTbody">
 					<tr>
-					 <td></td>
+					 <td valign="middle"></td>
 					 <td id="img"></td>
-					 <td id="con"></td>
-					 <td id="loc"></td>
-					 <td id="price"></td>
-					 <td id="choice"></td>
+					 <td valign="middle" id="con"></td>
+					 <td valign="middle" id="loc"></td>
+					 <td valign="middle" id="price"></td>
+					 <td valign="middle" id="choice"></td>
 					</tr>
 		        </tbody>
 	      
