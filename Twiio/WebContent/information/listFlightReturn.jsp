@@ -11,7 +11,7 @@
 	
 <head>
 	<meta charset="UTF-8">
-	
+	<title>TWIIO Flights</title>
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -40,6 +40,15 @@
 	
 	<!-- jQuery UI toolTip 사용 JS-->
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+	<!-- pdf Lib -->
+   	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
+   	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
+  	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+	
+	 <!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" /> 
+	
 	<style>
 		body {
             padding-top : 50px;
@@ -53,7 +62,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -111,7 +120,7 @@
 			}
 			
 			.btn-outlined.btn-light {
-			    background: #FFF;
+			    background: #f4f4f4;
 			    color: #D73A31;
 				border-color: #D73A31;
 			}
@@ -165,7 +174,20 @@
 				padding: 30px;
 				border-radius: 2px;
 				background: rgb(255, 255, 255) url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADAAAAAGCAYAAACFIR03AAAAV0lEQVR42tXOMRWAQAwE0RWFDRTg5d47Jeg4Q9gI06RbqlwKil/P6LpXbDCf85AxEBtMGjKG/jyPUHUerfP4nEeoOo/Wedj5pOo8Wudh55Oq82idh51PLxpvled7kLAXAAAAAElFTkSuQmCC) repeat-x;
-				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+				box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+				}
+			h1 {
+				font-family: 'Hanna', serif !important;
+				padding-top : 0px !important;
+				padding-bottom : 0px !important;
+				}
+			 h2 {
+				text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+				color : #08708A;
+				}
+			h4 {
+				font-size: 1em;
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 				}
 		  
     </style>
@@ -204,7 +226,7 @@
 											},
 				    					dataType:"json",
 				    					success:function(JSONData){
-				    						 window.open(JSONData.list,'_blank');
+				    						 window.open(JSONData.list,'','_blank');
 				    					}
 				    				}
 				    			);
@@ -224,7 +246,7 @@
 				html2canvas($("body"),{
 				
 				    useCORS: true,
-				    allowTaint: true,
+				    allowTaint: false,
 				    onrendered:function(canvas){
 				    	
 				    	var imgWidth = 210; // 이미지 가로 길이(mm) A4 기준
@@ -272,7 +294,11 @@
 				   loading.hide();
 				   $('#mask').hide();
 				});
+		
+		
 		});
+		
+
 	</script>
 	
 </head>
@@ -286,28 +312,24 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-	
-	<div class="page-header text-info">
-	       <h3>비행기 정보 조회</h3>
-	</div>
+	<h2 align="center"><strong><ins>ABOUT FLIGHTS</ins></strong></h2>
 	    
-	
-<div class="get-in-touch col-md-12  col-md-offset-2">
-	<div class="mainbox">    
-	  <form>  
-		<div class="page-header text-center">
-			<h4 class=" text-info"><strong>선택하신 비행기 내역</strong></h4>
-	    </div>
+	<div class="get-in-touch col-md-12  col-md-offset-2" style="font-family: 'Hanna', serif;">
+		<div class="mainbox">    
+		  <form>  
+			<div class="page-header text-center">
+				<h1 style="font-size: 2.5em !important; color : rgba(215, 58, 49, 0.8); height: 30px;"><strong>선&nbsp;택&nbsp;하&nbsp;신&nbsp;&nbsp; 비&nbsp;행&nbsp;기&nbsp;&nbsp; 내&nbsp;역</strong></h1>
+		    </div>
 	    
 	<div class="row">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
-				 <label for="departure">출발 도시</label>&nbsp;&nbsp; ${flight.departure}
+				 <label for="departure"><ins>출발 도시 :  </ins></label>&nbsp;&nbsp; ${flight.departure}
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group">
-				 <label for="arrival">도착도시</label>&nbsp;&nbsp;${flight.arrival}
+				 <label for="arrival"><ins>도착도시 :  </ins></label>&nbsp;&nbsp;${flight.arrival}
 			</div>
 		</div> 
 	</div>
@@ -315,12 +337,12 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
-				 <label for="receiverName" >출국일자</label>&nbsp;&nbsp;${flight.departureDate}
+				 <label for="receiverName" ><ins>출국일자 :  </ins></label>&nbsp;&nbsp;${flight.departureDate}
 			</div>	
 		</div>
 		<div class="col-md-6">		
 			<div class="form-group">
-				 <label for="arrivalDate" >입국일자</label>&nbsp;&nbsp;${flight.arrivalDate}
+				 <label for="arrivalDate" ><ins>입국일자 :  </ins></label>&nbsp;&nbsp;${flight.arrivalDate}
 			</div>
 		</div>
 	</div>
@@ -329,12 +351,12 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
-				 <label for="headCount" >인원</label>&nbsp;&nbsp;${flight.headCount}
+				 <label for="headCount" ><ins>인원 :  </ins></label>&nbsp;&nbsp;${flight.headCount}
 			</div>
 		</div>
 		<div class="col-md-6">
 			<div class="form-group">
-				 <label for="returnInfo" >비행정보</label>&nbsp;&nbsp;${flight.returnInfo}
+				 <label for="returnInfo" ><ins>비행정보 :  </ins></label>&nbsp;&nbsp;${flight.returnInfo}
 			</div>
 		</div>
 	</div>
@@ -342,12 +364,12 @@
 	<div class="row">
 		<div class="col-md-4 col-md-offset-2">
 			<div class="form-group">
-				 <label for="returnType">비행타입</label>&nbsp;&nbsp;${flight.returnType}
+				 <label for="returnType"><ins>비행타입 :  </ins></label>&nbsp;&nbsp;${flight.returnType}
 			</div>	
 		</div>
 		<div class="col-md-6">	
 			<div class="form-group">
-				 <label for="returnPrice">가격</label>&nbsp;&nbsp;${flight.returnPrice}
+				 <label for="returnPrice"><ins>가격 :  </ins></label>&nbsp;&nbsp;${flight.returnPrice}
 			</div>
 		</div>
 	</div>
@@ -389,11 +411,11 @@
 		  <c:forEach  items="${info}" varStatus="status">
 		  	<c:set var="i" value="${ i+1 }" />
 					<tr>
-					 <td align="center">${i}</td>
-					 <td align="center" id="info">${info[status.index]}</td>
-					 <td align="center" id="type">${type[status.index]}</td>
-					 <td align="center" id="price">${price[status.index]}</td>
-					 <td align="center" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick">선&nbsp;택</button></td>
+					 <td align="center" valign="middle">${i}</td>
+					 <td align="center"  valign="middle" id="info">${info[status.index]}</td>
+					 <td align="center" valign="middle" id="type">${type[status.index]}</td>
+					 <td align="center" valign="middle" id="price">${price[status.index]}</td>
+					 <td align="center" valign="middle" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick">선&nbsp;택</button></td>
 					</tr>
 		   </c:forEach>
 	      </tbody> 

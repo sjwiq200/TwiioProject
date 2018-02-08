@@ -2,6 +2,7 @@ package com.twiio.good.service.schedule.impl;
 
 import java.util.List;
 
+import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -19,12 +20,20 @@ import com.twiio.good.service.schedule.ScheduleDao;
 public class ScheduleDaoImpl implements ScheduleDao {
 	
 	@Autowired
+	@Qualifier("sqlSessionTemplate")
+	private SqlSession sqlSession;	
+	public void setSqlSession(SqlSession sqlSession) {
+		this.sqlSession = sqlSession;
+	}
+	
+	@Autowired
 	@Qualifier("mongoTemplate")
 	private MongoTemplate mongoTemplate;
-	
 	public void setMongoTemplate(MongoTemplate mongoTemplate) {
 		this.mongoTemplate = mongoTemplate;
 	}
+	
+	
 
 	public ScheduleDaoImpl() {
 		// TODO Auto-generated constructor stub
@@ -47,6 +56,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		System.out.println("1234==>"+existSchedule);
 		if(existSchedule == null) {
 			mongoTemplate.insert(schedule,"schedules");
+			sqlSession.insert("ScheduleMapper.addSchedule",schedule);
 		}
 		
 	}
@@ -80,6 +90,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		update.set("scheduleAddress", schedule.getScheduleAddress());
 
 		mongoTemplate.updateFirst(query, update ,Schedule.class, "schedules");
+		sqlSession.update("ScheduleMapper.updateSchedule", schedule);
 			
 		
 	}

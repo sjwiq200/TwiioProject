@@ -4,19 +4,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
-
-	<!--  ///////////////////////// google sign-in ////////////////////////// -->
-	<meta name="google-signin-scope" content="profile email">
-	<meta name="google-signin-client_id" content="733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com.apps.googleusercontent.com">    
-    <script src="https://apis.google.com/js/platform.js" async defer></script>
-    
-    <!--  ///////////////////////// kakao login ////////////////////////// -->
-	<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/> 
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar-wrapper">
     <div class="container-fluid">
@@ -41,28 +28,23 @@
 		<div 	class="collapse navbar-collapse" id="target" 
 	       			data-hover="dropdown" data-animations="fadeInDownNew fadeInRightNew fadeInUpNew fadeInLeftNew">
 	         
-	         	<!-- Tool Bar 를 다양하게 사용하면.... -->
+	         	<!-- Tool Bar �� �پ��ϰ� ����ϸ�.... -->
 	             <ul class="nav navbar-nav">
+
 	             
 	              
-	              <li class="dropdown">
+	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
-	                     <c:if test="${!empty user}">
-	                     	<ul class="dropdown-menu">
-		                         <li><a href="#">My TwiiChat List</a></li>
-		                         <li><a href="#">My Schedule List</a></li>
-		                         <li class="divider"></li>
-		                         
-		                     </ul>
-	                     </c:if>
-	                 </li>
+
+	                 </li> 
 	     
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >Blabla~</span>
+		                         <span >Blabla</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -94,21 +76,21 @@
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >DailyTour</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
-	                     <ul class="dropdown-menu">
+	                     <!-- <ul class="dropdown-menu">
 	                         <li><a href="#">Trip Product</a></li>
-	                         <li><a href="#">BEST10</a></li>
+	                         
 	                         
 	                         <li class="divider"></li>
 	                         
-	                     </ul>
+	                     </ul> -->
 	                 </li>
 	                 
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >MyTripBook</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
 	                     
 	                 </li>
@@ -117,10 +99,25 @@
 	             
 	             <ul class="nav navbar-nav navbar-right">
 	             	<c:if test="${sessionScope.user == null}">
-	                  <li><a href="" data-toggle="modal" data-target="#logIn">Login</a></li>
+	                  <li><a href="#">Login</a></li>
 	                </c:if>
 	                <c:if test="${sessionScope.user != null}">
-	                  <li><a href="#">MyPage</a></li>
+	                  <li class="dropdown">
+	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+	                         <span >MyPage</span>
+	                         <span class="caret"></span>
+	                     </a>
+	                     <ul class="dropdown-menu">
+	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#">구매목록조회</a></li>
+	                         <li><a href="#">판매목록조회</a></li>
+	                         <li><a href="#">신고목록조회</a></li>
+	                         <li><a href="#"></a></li>
+	                         
+	                         <li class="divider"></li>
+	                         
+	                     </ul>
+	                 </li>
 	                  <li><a href="#">Logout</a></li>
 	                </c:if>
 	            </ul>
@@ -132,35 +129,38 @@
     </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
-		
+
    	
-   	
-   	<script type="text/javascript">
 	
-		//============= logout Event  처리 =============	
+   	<script type="text/javascript">
+   	
+	
+		//============= logout Event  ó�� =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 		 	$("a:contains('Logout')").on("click" , function() {
 				$(self.location).attr("href","/user/logout");
 				//self.location = "/user/logout"
 			}); 
 		 });
 		
-		//============= 회원정보조회 Event  처리 =============	
+		//============= ȸ��������ȸ Event  ó�� =============	
 		 $(function() {
-			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		 	$("a:contains('회원정보조회')").on("click" , function() {
+			//==> DOM Object GET 3���� ��� ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+		 	$("a:contains('ȸ��������ȸ')").on("click" , function() {
 				//$(self.location).attr("href","/user/logout");
 				self.location = "/user/listUser"
 			}); 
 		 });
 		
-		//=============  개인정보조회회 Event  처리 =============	
+		//=============  ����������ȸȸ Event  ó�� =============	
 			
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/listRoom"); */
+			$(self.location).attr("href","/room/mainRoom.jsp");
+			
 		});
 		
 		$( "a:contains('My TwiiChat List')" ).on("click" , function() {
@@ -216,13 +216,10 @@
 		
 		/* Product */
 		
-		$( "a:contains('Trip Product')" ).on("click" , function() {
+		$( "a:contains('DailyTour')" ).on("click" , function() {
 			$(self.location).attr("href","/product/listProduct");
-		});
+		});		
 		
-		$( "a:contains('BEST10')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listBestProduct");
-		});
 		
 		/* Planer */
 		
@@ -236,13 +233,31 @@
 			$(self.location).attr("href","/user/login");
 		});
 		
-		$( "a:contains('MyPage')" ).on("click" , function() {
+		
+		/* MyPage */
+		
+		/* $( "a:contains('MyPage')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/myPageMain");
+		}); */
+		
+		$( "a:contains('Message')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/message/listMessage");
 		});
 		
+		$( "a:contains('구매목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/transaction/listTransaction");
+		});
 		
+		$( "a:contains('판매목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/product/listHostProduct");
+		});
+		
+		$( "a:contains('신고목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/common/listReport");
+		});
 		
 	</script>  
+	
 	
 	<style>
 			.navbar, .dropdown-menu{
@@ -273,6 +288,7 @@
 			    color: #fff;
 			    background: #fff;
 			}
+
 			
 			/* Modal Content/Box */
 			.modal-content {
@@ -297,5 +313,7 @@
 			    text-decoration: none;
 			    cursor: pointer;
 			}
+			
+
         
     </style>

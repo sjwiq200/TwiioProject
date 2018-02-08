@@ -240,6 +240,35 @@ public class ProductController {
 		return "forward:/product/listProduct.jsp";
 	}
 	
+	@RequestMapping(value="listHostProduct")///검색조건 추가
+	public String listHostProduct( @ModelAttribute("search") Search search, HttpSession session, Map<String, Object> map) throws Exception {
+		
+		System.out.println("/product/listHostProduct ");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		User user = (User)session.getAttribute("user");
+		System.out.println("userNo::"+user.getUserNo());
+		search.setUserNo(user.getUserNo());
+		search.setSearchCondition("4");
+		search.setPageSize(12);//12개씩 더보기로
+		
+				
+		Map<String, Object> productMap = productService.listProduct(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+				
+		System.out.println("map :: "+map);
+		map.put("list", (List<Product>)productMap.get("list"));
+		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
+		map.put("resultPage", resultPage);
+		map.put("search", search);
+		
+		return "forward:/mypage/listHostProduct.jsp";
+	}
+	
 	@RequestMapping(value="addStarEvalProduct", method=RequestMethod.POST)
 	public String addStarEvalProduct( @ModelAttribute("transaction") Transaction transaction, Map<String, Object> map) throws Exception {
 		
@@ -287,6 +316,22 @@ public class ProductController {
 		//map.put("list02", (List<Transaction>)userService.listBestHost(search));
 		
 		return "forward:/product/best10.jsp";
+	}
+	
+	@RequestMapping(value="listBestHost")//사진 이름 평점 보여주기
+	public String listBestHost( @ModelAttribute("search") Search search, Map<String, Object> map) throws Exception {
+		
+		System.out.println("/product/listBestHost ");
+		
+		search.setCurrentPage(1);
+		search.setPageSize(10);//10등까지
+		
+		//List<Transaction> list = productService.listBestProduct(search);				
+		
+		//map.put("list", (List<Transaction>)productService.listBestProduct(search));
+		map.put("list", (List<Transaction>)userService.listBestHost(search));
+		
+		return "forward:/product/host10.jsp";
 	}
 
 }

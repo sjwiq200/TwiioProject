@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -72,6 +73,7 @@
   -webkit-border-radius: 50% !important;
   -moz-border-radius: 50% !important;
   border-radius: 50% !important;
+  border: 2px solid;
 }
 
 .profile-usertitle {
@@ -135,10 +137,10 @@
   font-weight: 400;
 } */
 
-/* .profile-usermenu ul li a i {
+.profile-usermenu ul li a i {
   margin-right: 8px;
   font-size: 14px;
-} */
+}
 
 /* .profile-usermenu ul li a:hover {
   background-color: #fafcfd;
@@ -297,8 +299,8 @@
 			<input type="hidden" name="hostNo" value="${host.userNo }"/>
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
-					<c:if test="${empty host.userImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-					<c:if test="${!empty host.userImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${host.userImage}" class="img-responsive"></c:if>
+					<c:if test="${empty host.userImage}"><img style="width:100px; height:100px;" alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
+					<c:if test="${!empty host.userImage}"><img style="width:100px; height:100px;" alt="" src="/resources/images/userThumbnail/${host.userImage}" class="img-responsive"></c:if>
 					<!-- <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> -->
 				</div>
 				<!-- END SIDEBAR USERPIC -->
@@ -333,7 +335,7 @@
 						</li>
 						<li>
 							<div>
-							<i class="glyphicon glyphicon-flag"></i>
+							<i class="birthday"><img style="width:22px; height:20px;" alt="" src="/resources/images/productIcons/cake.png"></i>
 							&nbsp;&nbsp;${host.userBirthday } </div>
 						</li>
 						<li>

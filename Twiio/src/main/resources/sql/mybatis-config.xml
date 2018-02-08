@@ -36,6 +36,7 @@
 		<typeAlias alias="like" 			type="com.twiio.good.service.domain.Like" />
 		<typeAlias alias="message" 			type="com.twiio.good.service.domain.Message" />
 		<typeAlias alias="continent" 		type="com.twiio.good.service.domain.Continent" />
+		<typeAlias alias="schedule" 		type="com.twiio.good.service.domain.Schedule" />
 	</typeAliases>
 	
 	 <!-- SQL Definition :: file include -->
@@ -51,6 +52,7 @@
 		<mapper resource="sql/ProductMapper.xml"/>
 		<mapper resource="sql/TransactionMapper.xml"/>
 		<mapper resource="sql/MyPageMapper.xml"/>
+		<mapper resource="sql/ScheduleMapper.xml"/>
 	</mappers>
 
 </configuration>

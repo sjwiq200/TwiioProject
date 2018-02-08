@@ -7,44 +7,46 @@
 
 
 <head>
-<meta charset="EUC-KR">
-
-<!-- 참조 : http://getbootstrap.com/css/   참조 -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
-
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-<!-- Bootstrap Dropdown Hover CSS -->
-
-<link href="/resources/css/animate.min.css" rel="stylesheet">
-<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-
-<!-- Bootstrap Dropdown Hover JS -->
-<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-
-<!-- jQuery UI toolTip 사용 CSS-->
-
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-
-<!-- jQuery UI toolTip 사용 JS-->
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	<meta charset="EUC-KR">
+	<title>TWIIO NightLife</title>
+	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	
+	<link rel="stylesheet"
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+	
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	
+	<!-- Bootstrap Dropdown Hover CSS -->
+	
+	<link href="/resources/css/animate.min.css" rel="stylesheet">
+	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+	
+	<!-- Bootstrap Dropdown Hover JS -->
+	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+	
+	<!-- jQuery UI toolTip 사용 CSS-->
+	
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	
+	<!-- jQuery UI toolTip 사용 JS-->
+	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 										<!-- pdf Lib -->
    	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
    	<script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
-   
+    <!-- ---------font ------------ -->
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" /> 
+  	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
@@ -59,7 +61,7 @@
 			  left:0;
 			  top:0;
 			  z-index:100;  
-			  background-color:#000;  
+			  background-color:#FFF;  
 			  display:none;  
 			}
        #loadingImg {
@@ -165,6 +167,10 @@
 		    margin-right: auto;
 		    text-align: center;
 		  }
+		   h3 {
+				font-size: 1em;
+				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -207,9 +213,9 @@
 								if(image[i]==undefined){	
 									image[i]= '/resources/images/no_img.png';
 								}	
-									list += '<tr><td align="center" id="img"><img src="'+image[i]+
+									list += '<tr><td align="center" valign="middle" id="img"><img src="'+image[i]+
 									'"  style="width: 250px; height: 200px;"/></td>'+
-									'<td align="center" id="con"><a href="#"><input type="hidden" id="info" value="'+url[i]+
+									'<td align="center" valign="middle" id="con"><a href="#"><input type="hidden" id="info" value="'+url[i]+
 									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									
 								}
@@ -318,9 +324,7 @@
 	<div class="container">
 	
 	
-	<div class="page-header text-info">
-	       <h3>NIGHTLIFE 정보 조회</h3>
-	</div>
+		<h2 align="center"><strong><ins>ABOUT NIGHTLIFE</ins></strong></h2>
 		
 		  <!-- <div class="form-group">
 		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시명</label>

@@ -94,7 +94,7 @@ function resetData() {
 	});
 }); */
 
-$(document).ready(function(){
+/* $(document).ready(function(){
 	$("#mytable #checkall").click(function () {
 	        if ($("#mytable #checkall").is(':checked')) {
 	            $("#mytable input[type=checkbox]").each(function () {
@@ -109,7 +109,7 @@ $(document).ready(function(){
 	    });
 	    
 	    $("[data-toggle=tooltip]").tooltip();
-	});
+	}); */
 	
 </script>
 </head>
@@ -120,71 +120,77 @@ $(document).ready(function(){
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
-   	<div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <span class="glyphicon glyphicon-list"></span>Sortable Lists
-                    <div class="pull-right action-buttons">
-                        <div class="btn-group pull-right">
-                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown">
-                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
-                            </button>
-                            <ul class="dropdown-menu slidedown">
-                                <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span>Edit</a></li>
-                                <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-trash"></span>Delete</a></li>
-                                <li><a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-flag"></span>Flag</a></li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="panel-body">
-                <ul class="list-group">
-                <li class="list-group-item">
-           
-                <div class="col-md-12">
-                <input type="checkbox" id="checkall" style="margin-left:01px;"/>
-               	  제목
-                </div>
-                	
-               
-                
-                		
-                	
-               
-                 </li>
-                </ul>
-                </div>
-                <div class="panel-body">
-                    <ul class="list-group">
-                        <li class="list-group-item">
-                            <div class="checkbox">
-                                <input type="checkbox" id="checkbox" style="margin-left:0px;"/>
-                                <label for="checkbox">
-                                    List group item heading
-                                </label>
-                            </div>
-                            <div class="pull-right action-buttons">
-                                <a href="http://www.jquery2dotnet.com"><span class="glyphicon glyphicon-pencil"></span></a>
-                                <a href="http://www.jquery2dotnet.com" class="trash"><span class="glyphicon glyphicon-trash"></span></a>
-                                <a href="http://www.jquery2dotnet.com" class="flag"><span class="glyphicon glyphicon-flag"></span></a>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-                <div class="panel-footer">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <h6>
-                                Total Count <span class="label label-info">25</span></h6>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+   	<table border="1" summary="">
+<caption>주문 상품 정보</caption>
+        <thead><tr>
+<th scope="col" class="number">주문일자<br>[주문번호]</th>
+                <th scope="col" class="thumb">이미지</th>
+                <th scope="col" class="product">상품정보</th>
+                <th scope="col" class="quantity">수량</th>
+                <th scope="col" class="price">상품구매금액</th>
+                <th scope="col" class="state">주문처리상태</th>
+              
+            </tr></thead>
+<tbody class="">
+<tr class="xans-record-">
+<td class="number ">
+                    2018-01-01                    <p><a href="detail.html?order_id=20180101-0000801&amp;page=1&amp;history_start_date=2017-11-09&amp;history_end_date=2018-02-07" class="line">[20180101-0000801]</a></p>
+
+
+                   
+                </td>
+                <td class="thumb"><a href="/product/detail.html?product_no=3412&amp;cate_no=226"><img src="//boxsensei.com/web/product/medium/201611/3412_shop1_646363.jpg" onerror="this.src='http://img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
+                <td class="product">
+                    <a href="/product/detail.html?product_no=3412&amp;cate_no=226"><strong>셀비지 커팅진</strong></a>
+                    <div class="option ">[옵션: M]</div>
+                    <p class="free displaynone">무이자할부 상품</p>
+                </td>
+                <td class="quantity">1</td>
+                <td class="price">
+<strong>38,000원</strong><div class="displaynone"></div>
+</td>
+                <td class="state">
+                    <p>배송완료</p>
+                    <p class=""><a href="/common/delivery_trace.php?is12RFront=T&amp;order_id=20180101-0000801&amp;invoice_no=342034408036&amp;product_no=3412&amp;opt_id=000B&amp;is_second_delivery=F" target="_blank">CJ대한통운</a></p>
+                    <p class=""><a href="#none" class="line" onclick="window.open('/common/delivery_trace.php?is12RFront=T&amp;order_id=20180101-0000801&amp;invoice_no=342034408036&amp;product_no=3412&amp;opt_id=000B&amp;is_second_delivery=F', '', 'scrollbars=yes, resizeable=0, status=0, directories=0, toolbar=0'); return false;">[342034408036]</a></p>
+                    <a href="/board/product/write.html?board_no=4&amp;product_no=3412&amp;order_id=20180101-0000801" class=""><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_order_comment.gif" alt="구매후기"></a>
+
+                 
+                </td>
+              
+            </tr>
+<tr class="xans-record-">
+<td class="number ">
+                    2017-12-20                    <p><a href="detail.html?order_id=20171220-0000544&amp;page=1&amp;history_start_date=2017-11-09&amp;history_end_date=2018-02-07" class="line">[20171220-0000544]</a></p>
+
+
+                 
+                </td>
+                <td class="thumb"><a href="/product/detail.html?product_no=5468&amp;cate_no=226"><img src="//boxsensei.com/web/product/medium/201712/5468_shop1_437432.jpg" onerror="this.src='http://img.echosting.cafe24.com/thumb/img_product_small.gif';" alt=""></a></td>
+                <td class="product">
+                    <a href="/product/detail.html?product_no=5468&amp;cate_no=226"><strong>5152 인디고진</strong></a>
+                    <div class="option ">[옵션: L]</div>
+                    <p class="free displaynone">무이자할부 상품</p>
+                </td>
+                <td class="quantity">1</td>
+                <td class="price">
+<strong>53,000원</strong><div class="displaynone"></div>
+</td>
+                <td class="state">
+                    <p>배송완료</p>
+                    <p class=""><a href="/common/delivery_trace.php?is12RFront=T&amp;order_id=20171220-0000544&amp;invoice_no=342032009895&amp;product_no=5468&amp;opt_id=000D&amp;is_second_delivery=F" target="_blank">CJ대한통운</a></p>
+                    <p class=""><a href="#none" class="line" onclick="window.open('/common/delivery_trace.php?is12RFront=T&amp;order_id=20171220-0000544&amp;invoice_no=342032009895&amp;product_no=5468&amp;opt_id=000D&amp;is_second_delivery=F', '', 'scrollbars=yes, resizeable=0, status=0, directories=0, toolbar=0'); return false;">[342032009895]</a></p>
+                    <a href="/board/product/write.html?board_no=4&amp;product_no=5468&amp;order_id=20171220-0000544" class=""><img src="http://img.echosting.cafe24.com/skin/base_ko_KR/myshop/btn_order_comment.gif" alt="구매후기"></a>
+
+                  
+                </td>
+              
+            </tr>
+</tbody>
+<tbody class="displaynone"><tr>
+<td colspan="7" class="empty">주문 내역이 없습니다</td>
+            </tr></tbody>
+</table>
 
 </form>
 

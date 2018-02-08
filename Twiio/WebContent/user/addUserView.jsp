@@ -42,11 +42,115 @@
 	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
+	<link rel="stylesheet" href="/resources/css/plan.css" />
 	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
+       body {
+            padding-top : 80px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			background-image: url("/resources/images/camp.jpg");
+    		background-size: cover;
         }
+         .btn-sm{
+				font-size:13px;
+				line-height:16px;
+				border: 2px solid;
+				width: 100px;
+				text-align: center;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #dedede;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #dedede;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #dedede;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #dedede;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			.jumbotron
+			{	
+				padding-top : 30px;
+				padding-bottom : 30px;
+				background-color: rgba(0, 0, 0, 0.6);
+				padding-left : 30px;
+				padding-right : 30px;
+			} 
+			h2 {
+				color : #dedede;
+			   font-size: 3.5em;
+			   padding: 0 0.5em 0.25em 0.5em;
+			   font-weight: 500;
+			   font-family: "Pacifico", cursive;
+			   text-transform: none;
+			   letter-spacing: 10;
+			   font-style: Pacifico;
+			   text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+			   
+			}
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 3px solid;
+				padding:5px 10px;
+			}
+			.file_input{
+			    cursor:pointer;
+			    display:inline-block;
+			    vertical-align:middle;
+			    overflow:hidden;
+			    width:64px;
+			    height:64px;
+			    background-image:url('/resources/images/picture.png');
+			    text-align:center;
+			    line-height:30px;
+			    left : 525px;
+			    top: 120px;
+			}
+			.file_input input {
+			    position:absolute;
+			    width:0;
+			    height:0;
+			    overflow:hidden;
+			}
+			
         
     </style>
     
@@ -56,7 +160,7 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$( "button.btn.btn-primary" ).on("click" , function() {
+			$( "button#addUser" ).on("click" , function() {
 				fncAddUser();
 			});
 		});	
@@ -65,7 +169,7 @@
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("a[href='#' ]").on("click" , function() {
+			$("#cancel").on("click" , function() {
 				$("form")[0].reset();
 			});
 		});
@@ -178,7 +282,7 @@
 					 alert("인증번호가 확인되었습니다.");
 					 
 					 $("button#emailVer").replaceWith('<button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer" disabled="disabled" >이메일 인증</button>');
-					 $("input#email").replaceWith('<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일" value='+email+' readOnly="true" >');
+					 $("input#userEmail").replaceWith('<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일" value='+email+' readOnly="true" >');
 					 $("#inputEmailAuth").modal("hide");
 				 }else{
 					 
@@ -280,6 +384,7 @@
 				$("#password2").css("background-color", "#FFCECE");
 			} else if (inputed == reinputed) {
 				$("#password2").css("background-color", "#B0F6AC");
+				$("#helpBlock").hide();
 				//pwdCheck = 1;
 				//if (idCheck == 1 && pwdCheck == 1) {
 					//$("button.btn.btn-primary").prop("disabled", false);
@@ -321,116 +426,144 @@
 <body>
 
 	
-
+	<jsp:include page="/layout/toolbar.jsp" />
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">회 원 가 입</h1>
-		
+	<div class="jumbotron">	
+	
 		<input type="hidden"  id="emailAuth" name="emailAuth" />
 		<input type="hidden"  id="tempNum" name="tempNum" />
 		
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" id="addUserForm">
 		
-		  <div class="form-group">
-		    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label">*아 이 디</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userId" name="userId"  >
-		       <span id="helpBlock" class="help-block">
-		      	<strong  id="text" class="text-danger"></strong>
-		      </span>
-		    </div>
-		    
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">*이름</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
-		    </div>
-		  </div>	 
-		  		  
-		  <div class="form-group">
-		    <label for="password" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label">*비밀번호 확인</label>
-		    <div class="col-sm-4">
-		      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-		      <!-- <span id="helpBlock" class="help-block" type="hidden">
-		      	<strong  id="text2" class="text-danger" >비밀번호가 일치하지 않습니다.</strong>
-		      </span> -->
-		    </div>
-		  </div>		  
-		  
-		  
-		   <div class="form-group">
-		    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label">*이메일</label>
-		    <div class="col-sm-4">
-		      <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일">
-		     
-		      <button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer"  >이메일 인증</button>
-		    </div>          
-		  </div>
-		  <!-- <div class="form-group">
-		    <label for="file" class="col-sm-offset-1 col-sm-3 control-label">사진</label>
-		    <div class="col-sm-4">		      
-			    <label for="file">파일 업로드</label>
-			    <input type="file" id="file" name="file">
-		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">업로드 gogo</strong>
-		      </span>
-		    </div>
-		  </div>
-		   -->
-		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		    <!-- disabled="disabled"  -->
-		      <button type="button" class="btn btn-primary"  >가 &nbsp;입</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
-		    </div>
-		  </div>
-	 	</form> 
+		<h2 align="center"><ins><strong>TWIIO SIGNUP</strong></ins></h2>
+		
+			        <div class="panel-body">
+						  
+						<div class="row">
+									  
+							<div class="col-md-12">
+								<div class="col-sm-10 col-sm-offset-1">
+									
+									
+										<form class="form-horizontal" id="addUserForm">
+		
+										  <div class="form-group">
+										    <label for="userId" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">*아 이 디</label>
+										    <div class="col-sm-4">
+										      <input type="text" class="form-control" id="userId" name="userId"  placeholder="아이디">
+										       <span id="helpBlock" class="help-block">
+										      	<strong  id="text" class="text-danger" style="color: #f9d431;"></strong>
+										      </span>
+										    </div>
+										    
+										  </div>
+										  
+										  <div class="form-group">
+										    <label for="userName" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">*이름</label>
+										    <div class="col-sm-4">
+										      <input type="text" class="form-control" id="userName" name="userName" placeholder="회원이름">
+										    </div>
+										  </div>	 
+										  		  
+										  <div class="form-group">
+										    <label for="password" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">*비밀번호</label>
+										    <div class="col-sm-4">
+										      <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+										    </div>
+										  </div>
+										  
+										  <div class="form-group">
+										    <label for="password2" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">*비밀번호 확인</label>
+										    <div class="col-sm-4">
+										      <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+										      <span id="helpBlock" class="help-block" type="hidden">
+										      	<strong  id="text2" class="text-danger" style="color: #f9d431;">비밀번호가 일치하지 않습니다.</strong>
+										      </span>
+										    </div>
+										  </div>		  
+										  
+										  
+										   <div class="form-group">
+										    <label for="ssn" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">*이메일</label>
+										    <div class="col-sm-4">
+										      <input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일">
+										      <button class="btn btn-outlined btn-light btn-xs" id="emailVer" >이메일 인증</button>
+										    </div>          
+										  </div>
+										  <div class="form-group">
+										    <label for="file" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">사진</label>
+										    <div class="col-sm-4">
+										    		<label class="file_input">
+												        <input type="file" id="file" name="file" onchange="javascript:document.getElementById('file_route').value=this.value">
+												    </label>     
+										    </div>
+										  </div>
+										  
+										  <br/>
+										  <br/>
+										  
+										  <div class="form-group">
+										    <div class="col-sm-offset-2 col-sm-8 text-center">
+										      <button type="button" class="btn btn-outlined btn-light btn-sm"  id="addUser">가 &nbsp;입</button> &nbsp; &nbsp;
+											  <button class="btn btn-outlined btn-theme btn-sm" type="button" id="cancel">취&nbsp;소</button>
+										    </div>
+										  </div>
+									 	</form>
+																
+																
+								
+								
+								</div>
+							</div>
+			       		 </div>
+			        </div>
+		
+		
+		
+		
+		
+		
+		
+		
 		
  	</div>
+ 	
+ </div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
 	
-	<!---------- Image Dialog ------------->
+		<!---------- Image Dialog ------------->
+
+		
+			<div class="modal fade" id="inputEmailAuth" role="dialog">
+				<div class="modal-dialog modal-lg">
+					<!-- Modal content-->
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title">
+								<Strong>이메일 인증</Strong>
+							</h4>
+							<h7 class="modal-title">작성하신 이메일로 전달된 인증번호를 잘 입력해주세요:D</h7>
+						</div>
 	
-
-		<div class="modal fade" id="inputEmailAuth" role="dialog">
-			<div class="modal-dialog modal-lg">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title">
-							<Strong>인증번호</Strong>
-						</h4>
-						<h7 class="modal-title">TWIIO</h7>
-					</div>
-
-					<div class="modal-body">
-						<form name="form" enctype="multipart/form-data">
-							<div class="form-group">
-								<input type="text" id="inputNum" placeholder="인증번호를 입력해주세요." />
-								<button name="authNum" type="button" id="goAuth">인증하기</button>
+						<div class="modal-body col-sm-12">
+							<div class="col-sm-4 col-sm-offset-3">				
+								<form name="form" enctype="multipart/form-data" >
+											<input type="text" class="form-control"id="inputNum" placeholder="인증번호를 입력해주세요." />
+								</form>
 							</div>
-						</form>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							<div class="col-sm-5">
+								<button name="authNum" type="button" id="goAuth" class="btn btn-outlined btn-light btn-sm" >인증하기</button>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-outlined btn-theme btn-xs" data-dismiss="modal">닫기</button>
+						</div>
 					</div>
 				</div>
 			</div>
-		</div>
-
 		<!-- ---------------------------------------------------------------- -->
 	
 </body>

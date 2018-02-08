@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+		PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ScheduleMapper">
+<resultMap id="scheduleSelectMap" type="schedule">
+	<result property="roomKey" column="roomkey" jdbcType="VARCHAR"/>
+	<result property="scheduleTitle" column="schedule_title" jdbcType="VARCHAR"/>
+	<result property="scheduleDate" column="schedule_date" jdbcType="VARCHAR"/>
+	<result property="scheduleAddress" column="schedule_address" jdbcType="VARCHAR"/>
+	<result property="country" column="country" jdbcType="VARCHAR"/>
+	<result property="city" column="city" jdbcType="VARCHAR"/>
+</resultMap>
+
+	
+	<!-- SQL : INSERT -->
+	<insert 	id="addSchedule"		parameterType="schedule" >
+	 	INSERT
+		INTO schedule(schedule_no, roomkey, schedule_title, schedule_date, schedule_address, country, city) 
+		VALUES	 ( seq_schedule_schedule_no.nextval , 
+					#{roomKey:VARCHAR} , 
+					#{scheduleTitle:VARCHAR} , 
+					#{scheduleDate:VARCHAR} , 
+					#{scheduleAddress:VARCHAR} , 
+					#{country:VARCHAR} , 
+					#{city:VARCHAR}
+				)
+	 </insert>
+	
+	 
+	 <!-- SQL : UPDATE -->
+	 <update	id="updateSchedule"	parameterType="schedule" >
+	   	UPDATE schedule
+	   	<set>
+	   		schedule_title = #{scheduleTitle:VARCHAR} , 
+			schedule_date =	#{scheduleDate:VARCHAR} , 
+			schedule_address = #{scheduleAddress:VARCHAR}  
+	   	</set>
+	   	WHERE roomkey = #{roomKey}
+	 </update>
+	 
+	 
+	 
+</mapper>

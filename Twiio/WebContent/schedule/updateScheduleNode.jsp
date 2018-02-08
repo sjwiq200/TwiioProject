@@ -18,13 +18,6 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
-    </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
@@ -33,17 +26,10 @@
 			window.close();
 			opener.parent.afterAddSchedule();
 		});	
-		
-		
-	
 
 	</script>		
-    
 </head>
-
 <body>
-
-	
 </body>
 
 </html>

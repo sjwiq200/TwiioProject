@@ -1,6 +1,7 @@
 package com.twiio.good.web.room;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -9,6 +10,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
@@ -72,33 +75,51 @@ public class RoomController {
 	}
 	
 	@RequestMapping( value="listRoom" )
-	public String listRoom( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
-		
-		System.out.println("listRoom search ==>"+search);
+	public String listRoom( @ModelAttribute("search") Search search , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/room/listRoom : GET / POST");
 		
-		List<Room> list = roomService.listRoom(search);
-		request.setAttribute("list", list);
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		
+		Map<String, Object> map = roomService.listRoom(search);
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+		
+		
+		request.setAttribute("list", map.get("list"));
+		request.setAttribute("totalCount", map.get("totalCount"));
+		request.setAttribute("resultPage", resultPage);
 		
 		return "forward:/room/listRoom.jsp";
 	}
 	
 	@RequestMapping(value="listMyRoom")
-	public String listMyRoom(HttpServletRequest request, HttpSession session) throws Exception{
+	public String listMyRoom(@ModelAttribute("search") Search search, HttpServletRequest request, HttpSession session) throws Exception{
 		
 		System.out.println("/room/listMyRoom : ");
 		User user = (User)session.getAttribute("user");
 		
-		List<RoomUser> list  = roomService.listMyRoom(user.getUserNo());
-		List<Room> listRoom = new Vector<Room>();
-		
-		for (RoomUser roomUser : list) {
-			listRoom.add(roomService.getRoom(roomUser.getRoomKey()));
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
 		}
+		search.setPageSize(12);
 		
-		request.setAttribute("list", listRoom);
+//		List<RoomUser> list  = roomService.listMyRoom(user.getUserNo());
+		Map<String, Object> map = roomService.listMyRoom(search, user.getUserNo());
 		
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+		
+		
+		
+		request.setAttribute("list", map.get("list"));
+		request.setAttribute("totalCount",map.get("totalCount"));
+		request.setAttribute("resultPage", resultPage);
 		return "forward:/room/listMyRoom.jsp";
 	}
 	
@@ -216,6 +237,12 @@ public class RoomController {
 		return "";
 	}
 	
+	@RequestMapping(value = "/updateRoomOpen/{roomKey}", method=RequestMethod.GET)
+	public String updateRoomOpen(@PathVariable String roomKey, HttpServletRequest request ) throws Exception{
+		System.out.println("/room/updateRoomOpen/{roomKey}");
+		request.setAttribute("roomKey", roomKey);
+		return "forward:/room/updateRoomOpen.jsp";
+	}
 	
 	
 	

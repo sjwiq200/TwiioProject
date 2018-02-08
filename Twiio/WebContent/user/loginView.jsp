@@ -5,7 +5,7 @@
 
 <html>
 <head>
-<title>Insert title here</title>
+<title>TWIIO LOGIN</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
@@ -25,20 +25,24 @@
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/> 
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
+	<link rel="stylesheet" href="/resources/css/plan.css" />
 	<style>
     	body {
-            padding-top : 250px;
+            padding-top : 200px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			background-image: url("/resources/images/holiday.jpg");
+    		background-size: cover;
         }
          .btn-sm{
 				font-size:13px;
 				line-height:16px;
 				border: 2px solid;
-				padding:8px 15px;
-				width: 125px;
+				width: 100px;
 				text-align: center;
 			}
 			
@@ -70,7 +74,7 @@
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #f4f4f4;
+			    background: rgba(255, 255, 255, 0.5);
 			    color: #08708A;
 				border-color: #08708A;
 			}
@@ -82,9 +86,26 @@
 			}
 			
 			.btn-outlined.btn-light {
-			    background: #f4f4f4;
+			    background: rgba(255, 255, 255, 0.5);
 			    color: #D73A31;
 				border-color: #D73A31;
+			}
+			.jumbotron
+			{
+				background-color: rgba(255, 255, 255, 0.8);
+				padding-left : 30px;
+				padding-right : 30px;
+			} 
+			h2 {
+				color :#474747;
+			   font-size: 3.5em;
+			   padding: 0 0.5em 0.25em 0.5em;
+			   font-weight: 500;
+			   font-family: "Pacifico", cursive;
+			   text-transform: none;
+			   letter-spacing: 10;
+			   font-style: Pacifico;
+			   
 			}
 	</style>
 	
@@ -138,15 +159,14 @@
 			}
 		};
 		////////////////////////////googleLogin///////////////////////////////
-		$(function() {
-			 
-			$("#google-login-btn").on("click",function(){
-				self.location="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://127.0.0.1:8080/user/googleLogin&response_type=code&"
-						+"client_id=733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com"
-						+"&scope=email profile" 
-						+"&approval_prompt=force&access_type=offline";
-			});
-		});
+		function googleLogInStart() {
+			
+			self.location="https://accounts.google.com/o/oauth2/auth?redirect_uri=http://127.0.0.1:8080/user/googleLogin&response_type=code&"
+				+"client_id=733503970005-o1b49h0gsl2ajne6adkbph2ti7a5en3e.apps.googleusercontent.com"
+				+"&scope=email profile" 
+				+"&approval_prompt=force&access_type=offline";
+		  }
+		
 		/////////////////////////facebookLogin////////////////////////
 		function checkLoginState() {
 			    FB.getLoginStatus(function(response) {
@@ -229,7 +249,7 @@
 			//$("#userId").focus();
 	
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			$("button").on(
+			$("#userLogin").on(
 					"click",
 					function() {
 						var id = $("input:text").val();
@@ -270,18 +290,20 @@
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 				
-				<div class="jumbotron">	 	 	
-		 	 		<h2 class="text-center">Twiio 로 &nbsp;&nbsp;그 &nbsp;&nbsp;인</h2>
-
-			        
-			        
+		 	 	<div class="jumbotron">	
+		 	 		
+		 	 		<h2 align="center"><ins><strong>TWIIO LOGIN</strong></ins></h2>
+		 	 		
 			        <div class="panel-body">
 						  
 								  <div class="row">
 								  
-								<div class="col-md-5 col-md-offset-1" >
-									<a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="/resources/images/kakaosm.png" /></a><br/><br/>
-									<a id="google-login-btn"  data-onsuccess="onSignIn" href=""><img src="/resources/images/googlesm.png"/></a><br/><br/>
+						<div class="col-md-12">
+							<div class="col-sm-10 col-sm-offset-1">
+								<div class="col-sm-5 col-sm-offset-1" >
+									<a id="custom-login-btn" href="javascript:loginWithKakao()"><img src="/resources/images/kakaos.png"  style="width: 252px; height: 40px"/></a><br/><br/>
+									<a id="google-login-btn" data-onsuccess="onSignIn" href="javascript:googleLogInStart()"><img src="/resources/images/googles.png" style="width: 252px; height: 40px"/></a><br/><br/>
+									
 									<!-- <a id="facebook-login-btn" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large"  
 									data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false">
 									<img src="/resources/images/facebooksm.png" /></a> -->
@@ -289,109 +311,33 @@
 									 data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> 
 								</div>
 								
-								    <div class="col-md-6" style="border-left:1px solid #ccc;height:160px">
+								    <div class="col-sm-6" style="border-left:1px solid #ccc;height:160px">
 										<form class="form-horizontal">
 										
-										<div class="col-md-9 col-md-offset-3">
+										<div class="col-sm-9 col-sm-offset-2">
 										
 										 <input type="hidden" value="" name="userfaceId"/>
 										 <input type="hidden" value="" name="userName"/>
 										 <input type="hidden" value="" name="multi"/>
 											<fieldset>
-											
-											  <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
-											  <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-											  <div class="spacing"><a href="#"><small> Forgot Id / Password?</small></a><br/></div>
-											 
-											 <div class="col-md-offset-1">
-												 <button type="button" class="col-xs-12 btn btn-outlined btn-theme btn-sm"  >로 &nbsp;그 &nbsp;인</button>
-												 <div class="col-xs-1"></div>
-												  <a class="col-xs-12 btn btn-outlined btn-light btn-sm" href="#" role="button" id="addUser">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-											</div>
-											
-											
+											  		<input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
+												  <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
+												  <div class="spacing"><a href="#"><small> Forgot Id / Password?</small></a><br/></div>
+												 
+												 <div class="col-sm-offset-1">
+													 <button type="button" class="btn btn-outlined btn-theme btn-sm" id="userLogin" >로그인</button>
+													 <button type="button" class="btn btn-outlined btn-light btn-sm" id="addUser">회원가입</button>
+												 </div>
 											</fieldset>
-											
-										</div>	
+											</div>	
 										</form>
 									</div>
 								</div>
-						</div>
+								
+							</div>
+			       		 </div>
+			        </div>
 			        
-			        
-			        
-			        
-			        
-			        
-			        
-			        
-			        
-			        
-			        <!-- <form class="form-horizontal">
-			        
-			        
-			         <div class="form-group">
-					    <label for="kakaoLogin" class="col-sm-2 control-label"></label>
-					    <div class="col-sm-6">
-					      <a id="custom-login-btn" href="javascript:loginWithKakao()">
-							<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
-						  </a>
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="googleLogin" class="col-sm-2 control-label"></label>
-					    <div class="col-sm-6">
-					    	<p><div id="google-login-btn" class="g-signin2" data-onsuccess="onSignIn"></div></p>
-					       <img src="/images/APIfolder/googleLogin.png" id="google-login-btn" width="220px"/>
-					    </div>
-					  </div>
-
-						<div class="form-group">
-							<label for="facabookLogin" class="col-sm-2 control-label"></label>
-							<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div>
-						</div>
-
-						<div class="form-group">
-					    <label for="userId" class="col-sm-3 control-label"></label>
-					    <div class="col-sm-6">
-					      <input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <label for="password" class="col-sm-3 control-label"></label>
-					    <div class="col-sm-6">
-					      <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-					    </div>
-					  </div>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-4 text-center">
-					      <button type="button" class="btn btn-primary"  >로 &nbsp;그 &nbsp;인</button>
-					      
-					      <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
-					      
-					    </div>
-					    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">
-					  </div>
-					  
-					  <div class="form-group">
-					    <div class="col-sm-offset-4 col-sm-4 text-center">
-					      <a class="btn btn-primary btn" href="#" role="button">회 &nbsp;원 &nbsp;가 &nbsp;입</a>
-					      
-					      <p><div class="g-signin2" data-onsuccess="onSignIn"></div></p>
-					      
-					    </div>
-					    <div class="g-signin2" data-onsuccess="onSignIn" data-theme="dark">
-					  </div>
-					  
-					  <input type="hidden" value="" name="userfaceId"/>
-					  <input type="hidden" value="" name="userName"/>
-					  <input type="hidden" value="" name="multi"/>
-					  
-			
-					</form> -->
 			   	 </div>
 			
 			</div>

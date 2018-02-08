@@ -1,3 +1,4 @@
+
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -21,10 +22,10 @@
 	
 	
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/css/animate.min.css" rel="stylesheet">
-   <link href="/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   <link href="/resources/css/animate.min.css" rel="stylesheet">
+   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
    <!-- jQuery UI toolTip 사용 CSS-->
@@ -34,16 +35,21 @@
   <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <!-- listProduct -->
+	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/reset.css">
+	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/responsive.css">
 		
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
             padding-top : 50px;
+            background:  #f4f4f4;
         }
     </style>
 	<script type="text/javascript">
 	$(function () {
-		$("a[name='getPro']").bind("click",function(){
+		$("li").bind("click",function(){
 			
 			//function(){
 				//alert($(this).html().split("value=\"")[1].split("\"")[0]);
@@ -69,64 +75,49 @@
 	<div class="container">
 
 		<div class="page-header text-info"></div>
-
-		<c:set var="i" value="0" />
-		<c:forEach var="transaction" items="${list}">
-			<div class="row">
-				<!-- best10product -->
+		
+		<!--  start listing section  -->
+	<section class="listings">
+		<div class="wrapper">
+			<ul class="properties_list">
+			<c:set var="i" value="0" />
+				<c:forEach var="transaction" items="${list}">
 				<c:set var="i" value="${i+1}" />
-				<strong>${ i }위</strong>
-				<div class="col-sm-3 ">
-					<a href="#" class="thumbnail" name="getPro" style="height: 400px;">
-						<input type="hidden" name="productNo"
-						value="${transaction.tranPro.productNo }" /> <c:if
-							test="${! empty transaction.tranPro.thumbnail}">
-							<img
-								src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}"
-								style="width: 290px; height: 175px;" alt="..."
-								class="img-rounded">
-						</c:if> <c:if test="${empty transaction.tranPro.thumbnail}">
-							<img
-								src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg"
-								style="width: 290px; height: 175px;" alt="..."
-								class="img-rounded">
+				<li>				
+					<a href="#">
+						<input type="hidden" name="productNo" value="${transaction.tranPro.productNo }" />						
+						<c:if test="${! empty transaction.tranPro.thumbnail}">
+							<img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" alt="" title="" class="property_img"/>							
+						</c:if> 
+						<c:if test="${empty transaction.tranPro.thumbnail}">
+							<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" alt="" title="" class="property_img"/>							
 						</c:if>
-						<div class="caption">
-							<h3>${transaction.tranPro.productName}</h3>
-							<h5>${transaction.evalProduct}</h5>
-							<p>${transaction.tranPro.country}|
-								${transaction.tranPro.city}</p>
-
-							<!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
-						</div>
 					</a>
-				</div>
-			</div>
-		</c:forEach>
-
-
-		<!-- best10host -->
-		 <c:set var="j" value="0" />
-		  <c:forEach var="transaction" items="${list02}">				
-			<c:set var="j" value="${j+1}" />
-		   <strong>${ j }위</strong>
-		    <div class="col-sm-3 " >
-		      <a href="#" class="thumbnail" name="getPro" style="height:400px;">
-		      	<input type="hidden" name="hostNo" value="${transaction.tranPro.hostNo }"/>
-		      	<c:if test="${! empty transaction.tranPro.hostImage}">
-		        <img src="/resources/images/userThumbnail/${transaction.tranPro.hostImage}" style="width:290px; height:175px;" alt="..." class="img-rounded">
-		        </c:if>
-		        <c:if test="${empty transaction.tranPro.hostImage}">
-		        <img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width:290px; height:175px;" alt="..." class="img-rounded">
-		        </c:if>
-		          <div class="caption">
-		            <h3>${transaction.hostName} </h3>		            
-		            <h5>${transaction.evalHost} </h5>		            
-		            <!-- <p><a href="#" class="btn btn-primary" role="button">Button</a> <a href="#" class="btn btn-default" role="button">Button</a></p> -->
-		        </div>
-		      </a>
-		    </div>
-		    </c:forEach>
+					<span class="price">${i}위</span>
+					<div class="property_details">
+						<h1>
+							<a href="#">${transaction.tranPro.productName}</a>
+						</h1>
+						<h2><p>
+								<c:if test="${transaction.tranPro.productType == 1}">명소투어</c:if>
+								<c:if test="${transaction.tranPro.productType == 2}">음식투어</c:if>
+								<c:if test="${transaction.tranPro.productType == 3}">트래킹</c:if>
+								<c:if test="${transaction.tranPro.productType == 4}">액티비티</c:if>
+								<c:if test="${transaction.tranPro.productType == 5}">night투어</c:if>
+							</p>
+							<p>${transaction.tranPro.country} :: ${transaction.tranPro.city}</p>
+							평점 :: <!-- <br /> -->
+							${transaction.evalProduct}
+		           			<%-- <p class="price">&#8361;${transaction.tranPro.productPrice}</p>		           			
+		           			<span class="property_size"><p>조회수 :: ${transaction.tranPro.viewCount}</p></span></h2> --%>
+					</div>
+				</li>
+				</c:forEach>
+			</ul>
+			
+		</div>
+	</section>	
+	<!--  end listing section  -->
 
 	</div>
 
@@ -134,3 +125,4 @@
 
 </body>
 </html>
+

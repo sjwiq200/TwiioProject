@@ -10,28 +10,111 @@
 	<!-- 참조 : http://getbootstrap.com/css/   참조 -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
+	  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
-	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+  	<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	
 	
-	<!-- jQuery UI toolTip 사용 CSS-->
-
-	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 	
+	<!-- Material Design Theming -->
+	  <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.orange-indigo.min.css">
+	  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	  <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 	
-	<!-- jQuery UI toolTip 사용 JS-->
-	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<script src="/resources/chart/Chart.min.js"></script>
+	<!--  ///////////////////////// add,updateRoom.css ////////////////////////// -->
+	<link href="/resources/css/add,updateRoom.css" rel="stylesheet" type="text/css"/>
 	
-	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<link rel="stylesheet" href="/resources/css/imformation.css" />
+	
 	<style>
-       body > div.container{
-        	border: 3px solid #D6CDB7;
-            margin-top: 10px;
+        body {
+            padding-top : 100px;
+            background-color: #f4f4f4;
+			color: #666666;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+			background-image: url("/resources/images/main_img.jpg");
+    		background-size: cover;
         }
+        
+        .jumbotron
+			{
+				background-color: rgba(255, 255, 255, 0.7);
+				padding-left : 30px;
+				padding-right : 30px;
+				padding-top : 20px !important;
+			}
+		h2{
+				color : #FFF; 
+				font-family: 'Jeju Gothic', serif !important; 
+				font-size: 3em !important; 
+				text-shadow: 0 5px 5px rgba(0, 0, 0, .1) !important;
+				padding-top : 20px !important; 
+				padding-bottom : 10px !important; 
+		
+		} 
+		#titleRoom{
+		
+			background-color: rgba(215, 58, 49, 0.8);
+		}
+		 .btn-sm{
+				font-size:13px;
+				line-height:16px;
+				border: 2px solid;
+				width: 100px;
+				text-align: center;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: rgba(255, 255, 255, 0.5);
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #f4f4f4;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: rgba(255, 255, 255, 0.5);
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -39,7 +122,8 @@
 	
 		//============= "가입"  Event 연결 =============
 		 $(function() {
-			$( "button.btn.btn-primary" ).on("click" , function() {
+
+			$( "button#go"  ).on("click" , function() {
 				$("form").attr("method" , "POST").attr("action" , "/room/addRoom").submit();
 			});
 		});	
@@ -47,7 +131,7 @@
 		
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
-			$("a[href='#' ]").on("click" , function() {
+			$("#cancel").on("click" , function() {
 				$("form")[0].reset();
 			});
 		});	
@@ -106,47 +190,51 @@
 
 <body>
 
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<div class="navbar  navbar-default">
-        <div class="container">
-        	<a class="navbar-brand" href="/main.jsp">Model2 MVC Shop</a>
-   		</div>
-   	</div>
-   	<!-- ToolBar End /////////////////////////////////////-->
+	<jsp:include page="/layout/toolbar.jsp" />
+
+
+
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<h1 class="bg-primary text-center">채팅방 생성 </h1>
+
+	<div class="jumbotron" id="mainJum" style="font-family: 'Noto Sans KR', sans-serif !important; color :#000000; ">
+	
+		<h2 class="text-center" id="titleRoom">채팅방 만들기 </h2>
 		
+
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal">
+
+		<form class="form-horizontal" style="padding-top: 20px;">
+		
+		<div class="col-xs-18">	
 		
 		  <div class="form-group">
-		    <label for="roomname" class="col-sm-offset-1 col-sm-3 control-label">채팅방 이름 </label>
-		    <div class="col-sm-4">
+		    <label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">채팅방 이름 </label>
+		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="roomName" name="roomName" placeholder="채팅방 이름 ">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="country" class="col-sm-offset-1 col-sm-3 control-label"> 국가명</label>
-		    <div class="col-sm-4">
+		    <label for="country" class="col-xs-offset-1 col-xs-3 control-label"> 국가명</label>
+		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="country" name="country" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label"> 도시명 </label>
-		    <div class="col-sm-4">
+		    <label for="city" class="col-xs-offset-1 col-xs-3 control-label"> 도시명 </label>
+		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="city" name="city" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="type" class="col-sm-offset-1 col-sm-3 control-label"> 말머리 </label>
-		    <div class="col-sm-4" >
-		      <select id="type" name="type">
+		    <label for="type" class="col-xs-offset-1 col-xs-3 control-label"> 말머리 </label>
+		    <div class="col-xs-4" >
+		      <select class="form-control" id="type" name="type">
 		      	<option value="식사" selected="selected">식사</option>
 		      	<option value="체험">체험</option>
 		      	<option value="관람">관람</option>
@@ -157,37 +245,43 @@
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="region" class="col-sm-offset-1 col-sm-3 control-label"> 지역 </label>
-		    <div class="col-sm-4">
+		    <label for="region" class="col-xs-offset-1 col-xs-3 control-label"> 지역 </label>
+		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="region" name="region" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="headCount" class="col-sm-offset-1 col-sm-3 control-label"> 인원 </label>
-		    <div class="col-sm-4">
+		    <label for="headCount" class="col-xs-offset-1 col-xs-3 control-label"> 인원 </label>
+		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="headCount" name="headCount" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="date" class="col-sm-offset-1 col-sm-3 control-label"> 날짜 </label>
-		    <div class="col-sm-4">
+		    <label for="date" class="col-xs-offset-1 col-xs-3 control-label"> 날짜 </label>
+		    <div class="col-xs-4">
 		      <input type="date" class="form-control" id="date" name="date" value="">
 		    </div>
 		  </div>
 		  
-		  
+		  <br/>
 		  
 		  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" class="btn btn-primary"  >생 &nbsp;성</button>
-			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
+		    <div class="col-xs-offset-4  col-xs-4 text-center">
+		      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go">생 &nbsp;성</button>
+			   <button type="button" class="btn btn-outlined btn-theme btn-sm" id="cancel">취&nbsp;소</button>
 		    </div>
+		  </div>
+		  
+		  
 		  </div>
 		</form>
 		<!-- form Start /////////////////////////////////////-->
 		
+		
+		</div>
+
  	</div>
 	<!--  화면구성 div end /////////////////////////////////////-->
 	
