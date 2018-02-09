@@ -24,6 +24,7 @@
 	 font-family:'JEJUGOTHIC';
 }
 	#map {
+		
         height: 400px;
         width: 500px;
       }
