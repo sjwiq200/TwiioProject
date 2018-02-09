@@ -271,13 +271,7 @@
 	  <c:if test="${ !empty user }">
 	  <!--  Floating Button <START> -->
 		<div id="container-floating">
-			<div class="nd3 nds" data-toggle="tooltip" data-original-title="listSchedule" title="내 일정 ">
-	         <img class="reminder" src="/resources/images/productIcons/edit.png" style="width: 35px; height: 35px;">
-	        </div>
-			<div class="nd1 nds" data-toggle="tooltip" placemenmt="left" data-original-title="listMyRoom" title="참여 채팅방">
-	         	<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
-	        </div>
-			<button id="floating-button" type="submit" data-toggle="tooltip" data-original-title="Create">
+			<button id="floating-button" type="submit" data-toggle="tooltip" data-original-title="Create" title="방 생성">
 				<p class="letter" id="addRoom">+</p>
 			<button>
 		</div>

@@ -38,8 +38,8 @@
 			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
 		});
 		 
-		 $("a:contains('친구초대')").on("click",function(){
-			 
+		 $("button#invite").on("click",function(){
+			 alert("친구초대완료!");
 			 var userNo = $(this).html().split('value="')[1].split('"')[0];
 			 var roomKey = $("#roomKey").val(); 
 			 
@@ -57,7 +57,8 @@
 				 },
 				 success : function(JSONData, status){
 					if(JSONData == true){
-						alert("success");
+
+						window.close();
 					}
 					 
 				 }
@@ -183,7 +184,7 @@
 										  
 										  </td>
 											  <td align="right" style="padding-left: 40px;">
-											  <button type="button" class="btn btn-outlined btn-light btn-sm" >친구초대 +<input type="hidden" id="userNo" value="${friend.userNo}"/></button>
+											  <button type="button" class="btn btn-outlined btn-light btn-sm" id="invite" >친구초대 +<input type="hidden" id="userNo" value="${friend.userNo}"/></button>
 											  	<%-- <a href="#">친구초대<input type="hidden" id="userNo" value="${friend.userNo}"></a> --%>
 											  </td>
 										  </div>

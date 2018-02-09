@@ -271,9 +271,6 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
-	
+ 	
 </body>
 </html>

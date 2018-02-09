@@ -17,7 +17,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMEXsdx-RuPFYaZ-ygp2Z_rlq75XG-w1s&libraries=places"></script>
+	<!-- <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAMEXsdx-RuPFYaZ-ygp2Z_rlq75XG-w1s&libraries=places"></script> -->
 	
 	<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQvxf8JDd5GFYSU4d9ejEHQ7y3QiQyizk&libraries=places&callback=initAutocomplete"
         async defer></script>
@@ -32,7 +32,6 @@
 	
 		 $(function() {		
 			$( "button#go" ).on("click" , function() {
-				alert("hello");
 				$.ajax(
     					{
     						url : "/schedule/json/addSchedule/",
@@ -177,7 +176,7 @@
 							  <div id="locationField" class="form-group">
 							  	  <label for="userName" class="col-sm-offset-1 col-sm-3 control-label">일정 위치 </label>
 							  	  </div class="col-sm-4">
-							  	  	<input id="autocomplete" name="scheduleAddress" placeholder="Enter your address" onFocus="geolocate()" type="text"></input>
+							  	  	<input id="autocomplete" name="scheduleAddress" placeholder="Enter your address" onFocus="geolocate()" type="text" value=""></input>
 							  	  </div>
 						      </div>
 							  

@@ -1,6 +1,8 @@
 package com.twiio.good.web.schedule;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
@@ -55,15 +57,27 @@ public class ScheduleController {
 	public String listSchedule(HttpSession session,HttpServletRequest request) throws Exception {
 		System.out.println("/schedule/listSchedule : ");
 		User user = (User)session.getAttribute("user");
-		List<Schedule> scheduleList = scheduleService.listSchedule(user.getUserNo());
+		Map<String, Object> map = new HashMap<>();
+		
+		map = scheduleService.listSchedule(user.getUserNo());
+		List<Schedule> scheduleList = (List<Schedule>)map.get("list");
 		List<Room> roomList = new Vector<>();
 		for (Schedule schedule : scheduleList) {
 			roomList.add(roomService.getRoom(schedule.getRoomKey()));
 		}
 		request.setAttribute("schedule", scheduleList);
 		request.setAttribute("room", roomList);
+		request.setAttribute("totalCount", map.get("totalCount"));
 
 		return "forward:/schedule/listSchedule.jsp";
+	}
+	
+	@RequestMapping(value = "/listScheduleAll")
+	public String listScheduleAll() throws Exception {
+		Map<String, Object> map = scheduleService.listScheduleAll();
+		System.out.println("Schedule FIX ==>"+map.get("list"));
+		System.out.println("Schedule totalCount ==>"+map.get("totalCount"));
+		return "redirect:/main.jsp";
 	}
 	
 	@RequestMapping(value = "/updateSchedule/{roomKey}", method=RequestMethod.GET)

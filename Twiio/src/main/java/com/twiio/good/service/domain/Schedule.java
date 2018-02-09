@@ -14,6 +14,7 @@ public class Schedule {
 	private String country;
 	private String city;
 	private List<Integer> userNo;
+	private String userNoString;
 	
 
 	public Schedule() {
@@ -89,17 +90,25 @@ public class Schedule {
 	public void setUserNo(List<Integer> userNo) {
 		this.userNo = userNo;
 	}
+	
+
+	public String getUserNoString() {
+		return userNoString;
+	}
+
+
+	public void setUserNoString(String userNoString) {
+		this.userNoString = userNoString;
+	}
 
 
 	@Override
 	public String toString() {
 		return "Schedule [roomKey=" + roomKey + ", scheduleTitle=" + scheduleTitle + ", scheduleDate=" + scheduleDate
 				+ ", scheduleAddress=" + scheduleAddress + ", country=" + country + ", city=" + city + ", userNo="
-				+ userNo + "]";
+				+ userNo + ", userNoString=" + userNoString + "]";
 	}
-	
-	
-	
+
 	
 	
 	

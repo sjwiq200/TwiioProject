@@ -32,9 +32,8 @@
   <script>
   	$(function() {
   		
-  		$("a:contains('방 수정')").on("click",function(){
+  		$("a:contains('일정 수정')").on("click",function(){
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
-			 alert(roomKey);
 			 self.location = "/schedule/updateSchedule/"+roomKey;
 		 });
 		 
@@ -69,7 +68,7 @@
 	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    		전체  ${totalCount } 건수
 		    	</p>
 		    </div>
 		    
@@ -80,8 +79,8 @@
    	<c:set var="i" value="0" />
 		  <c:forEach var="schedule" items="${schedule}" varStatus="status">
 			<!-- <div class="row"> -->
-		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro" style="height:500px;">
+		    <div class="col-sm-3 " style="padding-top : 2%">
+		      <div class="thumbnail" name="getPro" style="height:600px;">
 		    
 		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
 		          <div class="caption">
@@ -108,10 +107,6 @@
 		    </div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
 
 </body>
 </html>

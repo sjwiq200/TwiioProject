@@ -38,21 +38,31 @@ public class ScheduleRestController {
 		System.out.println("/schedule/json/addSchedule : POST");
 		
 		String roomKey = schedule.getRoomKey();
+		String userNoString = "";
 		
 		//RoomUser Information
 		List<RoomUser> list = roomService.listRoomUser(roomKey);
 		
 		List<Integer> listUserNo = new Vector<>();
 		for (RoomUser roomUser : list) {
+			
 			listUserNo.add(roomUser.getUserNo());
 		}
-		
 		//Room Information
 		Room room = (Room)roomService.getRoom(roomKey);
+		
+		for (int i = 0; i < listUserNo.size(); i++) {
+			if(listUserNo.size()-1 == i) {
+				userNoString += listUserNo.get(i)+"";
+			}else {
+				userNoString += listUserNo.get(i)+",";
+			}
+		}
 		
 		schedule.setUserNo(listUserNo);
 		schedule.setCity(room.getCity());
 		schedule.setCountry(room.getCountry());
+		schedule.setUserNoString(userNoString);
 		scheduleService.addSchedule(schedule);
 		
 		return true;
