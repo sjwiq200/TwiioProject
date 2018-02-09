@@ -132,7 +132,7 @@ public class CommunityController {
 							Model model,
 							HttpSession session
 							) throws Exception {
-		System.out.println("/community/deleteCommunity : GET");
+		System.out.println("/community/deleteCommunityView : GET");
 		communityService.deleteCommunity(communityNo);
 		User user = (User)session.getAttribute("user");
 		model.addAttribute("user",user);
@@ -148,19 +148,19 @@ public class CommunityController {
 		community = communityService.getCommunity(community.getCommunityNo());
 		model.addAttribute("community",community);
 		  
-		return "forward:/community/getCommunity?communityNo="+community.getCommunityNo();
+		return "redirect:/community/getCommunity?communityNo="+community.getCommunityNo();
 	}
 	
 	@RequestMapping(value = "updateCommunity", method = RequestMethod.GET )
 	public String updateCommunity(@RequestParam("communityNo") int communityNo ,
 							Model model
 							) throws Exception {
-		System.out.println("/community/updateCommunity : GET");
+		System.out.println("/community/updateCommunityView : GET");
 
 		Community community = communityService.getCommunity(communityNo);
 		model.addAttribute("community",community);
 		  
-		return "forward:/community/updateCommunity.jsp";
+		return "forward:/community/updateCommunityView.jsp";
 	}
 	
 	@RequestMapping(value = "listCommunity")

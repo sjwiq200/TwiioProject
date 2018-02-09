@@ -164,7 +164,7 @@ public class UserController {
 	}	
 
 	
-	@RequestMapping( value="listUser" )
+	@RequestMapping( value="listUser")
 	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
 		
 		System.out.println("/user/listUser : GET / POST");
@@ -185,7 +185,7 @@ public class UserController {
 		model.addAttribute("resultPage", resultPage);
 		//model.addAttribute("search", search);
 		
-		return "forward:/user/listUser.jsp";
+		return "forward:/mypage/listUser.jsp";
 	}
 	
 	@RequestMapping( value="deleteUser")
