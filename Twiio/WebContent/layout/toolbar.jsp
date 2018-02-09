@@ -108,14 +108,14 @@
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
+	                     	 <li><a href="#">개인정보조회</a></li>
+	                     	 <li><a href="#">회원리스트조회</a></li>
 	                         <li><a href="#">Message</a></li>
 	                         <li><a href="#">구매목록조회</a></li>
 	                         <li><a href="#">판매목록조회</a></li>
 	                         <li><a href="#">신고목록조회</a></li>
 	                         <li><a href="#"></a></li>
-	                         
 	                         <li class="divider"></li>
-	                         
 	                     </ul>
 	                 </li>
 	                  <li><a href="#">Logout</a></li>
@@ -254,6 +254,14 @@
 		
 		$( "a:contains('신고목록조회')" ).on("click" , function() {
 			$(self.location).attr("href","/common/listReport");
+		});
+		
+		$( "a:contains('개인정보조회')" ).on("click" , function() {
+			$(self.location).attr("href","/user/getUser?userNo=${sessionScope.user.userNo}");
+		});
+		
+		$( "a:contains('회원리스트조회')" ).on("click" , function() {
+			$(self.location).attr("href","/user/listUser");
 		});
 		
 	</script>  

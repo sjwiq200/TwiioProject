@@ -446,8 +446,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public String getEvalUser(String userId) throws Exception {
-		return userDao.getEvalUser(userId);
+	public User getEvalUser(int userNo) throws Exception {
+		return userDao.getEvalUser(userNo);
 	}
 
 	@Override

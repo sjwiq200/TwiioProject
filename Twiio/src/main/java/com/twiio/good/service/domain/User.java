@@ -1,6 +1,8 @@
 package com.twiio.good.service.domain;
 
-import java.util.Date;
+
+
+import java.sql.Date;
 
 import org.codehaus.jackson.annotate.JsonAutoDetect;
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -27,6 +29,7 @@ public class User {
 	private String userAccount;
 	private String userType;
 	private double userEval;
+	private double userEvalCredit;
 	private String userImage;
 	private Date regDate;
 	private String profilePublic;
@@ -385,7 +388,16 @@ public class User {
 
 	public void setPicture(String picture) {
 		this.picture = picture;
-	}	
+	}
+	
+	public double getUserEvalCredit() {
+		return userEvalCredit;
+	}
+
+
+	public void setUserEvalCredit(double userEvalCredit) {
+		this.userEvalCredit = userEvalCredit;
+	}
 
 
 	public String toString() {

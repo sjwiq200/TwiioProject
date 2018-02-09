@@ -82,7 +82,7 @@
      
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
-      function fncGetList(currentPage) {
+      function fncGetUserList(currentPage) {
          $("#currentPage").val(currentPage)
          $("form").attr("method" , "POST").attr("action" , "/product/listHostProduct").submit();
       }
@@ -215,7 +215,7 @@
             <th align="center" width="140">상품사진</th>
             <th align="left" width="250">상품이름</th>
             <th align="left" width="120">여행일자</th>
-            <th align="left" width="100">구매수량</th>
+            <th align="left" width="100">총판매량</th>
             <th align="left" width="140">상품판매금액</th>
             <th align="left" width="100">도시</th>
       		<th aligh="legt" widht="100">국가</th>    
@@ -240,7 +240,7 @@
            </td>
            <td align="left">${product.productName}</td>
            <td align="left">${product.tripDate}</td>
-           <td align="left">${product.tourHeadCount}/${product.productCount}</td>
+           <td align="left">${product.productCount}</td>
            <td align="left">${product.productPrice}</td>
            <td align="left">${product.city}</td>
            <td align="left">${product.country}</td>

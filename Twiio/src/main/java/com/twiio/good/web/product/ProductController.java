@@ -250,8 +250,9 @@ public class ProductController {
 		}
 		User user = (User)session.getAttribute("user");
 		System.out.println("userNo::"+user.getUserNo());
-		search.setUserNo(user.getUserNo());
+		search.setProductUserNo(user.getUserNo());
 		search.setSearchCondition("4");
+		search.setSearchKeyword("1");
 		search.setPageSize(12);//12개씩 더보기로
 		
 				

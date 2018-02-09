@@ -8,23 +8,25 @@
  	
  	
 	<resultMap id="userSelectMap" type="user">
-		<result property="userId" 			column="user_id" 			jdbcType="VARCHAR"/>
-		<result property="userName"			column="user_name" 			jdbcType="VARCHAR" />
-		<result property="userEmail" 		column="email" 				jdbcType="VARCHAR" />
-		<result property="userGender" 		column="gender" 			jdbcType="CHAR" />
-		<result property="password" 		column="password" 			jdbcType="VARCHAR" />
-		<result property="userBirthday" 	column="birth" 				jdbcType="DATE" />
-		<result property="userPhone" 		column="phone" 				jdbcType="VARCHAR"  />
-		<result property="userAccount" 		column="host_account" 		jdbcType="VARCHAR" />
-		<result property="userType" 		column="user_type" 			jdbcType="CHAR"  />
-		<result property="userRegisterType" column="sign_up_type" 		jdbcType="CHAR"  />
-		<result property="userImage" 		column="profile_image" 		jdbcType="VARCHAR"  />
-		<result property="userBank" 		column="bank" 				jdbcType="VARCHAR"  />
-		<result property="regDate" 			column="reg_date" 			jdbcType="DATE" />
-		<result property="profilePublic" 	column="public_state" 		jdbcType="CHAR" />
-		<result property="userLeave" 		column="resign" 			jdbcType="CHAR" />
-		<result property="userNo" 			column="user_no" 			jdbcType="NUMERIC" />
+		<result property="userId" 			column="user_id" 			 jdbcType="VARCHAR"/>
+		<result property="userName"			column="user_name" 			 jdbcType="VARCHAR" />
+		<result property="userEmail" 		column="email" 				 jdbcType="VARCHAR" />
+		<result property="userGender" 		column="gender" 			 jdbcType="CHAR" />
+		<result property="password" 		column="password" 			 jdbcType="VARCHAR" />
+		<result property="userBirthday" 	column="birth" 				 jdbcType="DATE" />
+		<result property="userPhone" 		column="phone" 				 jdbcType="VARCHAR"  />
+		<result property="userAccount" 		column="host_account" 		 jdbcType="VARCHAR" />
+		<result property="userType" 		column="user_type" 			 jdbcType="CHAR"  />
+		<result property="userRegisterType" column="sign_up_type" 		 jdbcType="CHAR"  />
+		<result property="userImage" 		column="profile_image" 		 jdbcType="VARCHAR"  />
+		<result property="userBank" 		column="bank" 				 jdbcType="VARCHAR"  />
+		<result property="regDate" 			column="reg_date" 			 jdbcType="DATE" />
+		<result property="profilePublic" 	column="public_state" 		 jdbcType="CHAR" />
+		<result property="userLeave" 		column="resign" 			 jdbcType="CHAR" />
+		<result property="userNo" 			column="user_no" 			 jdbcType="NUMERIC" />
 		<result property="mainPlanNoShared" column="main_plan_no_shared" jdbcType="VARCHAR" />
+		<result property="userEvalCredit"   column="user_eval_credit" 	 jdbcType="NUMERIC" />
+		<result property="userEval"   		column="user_eval" 	 		 jdbcType="NUMERIC" />
 		
 	</resultMap>
 	
@@ -65,7 +67,22 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUserInNo"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank, main_plan_no_shared	
+		user_no , 
+		user_id , 
+		user_name , 
+		password , 
+		user_type , 
+		profile_image, 
+		phone, gender, 
+		email , 
+		reg_date, 
+		birth, 
+		sign_up_type, 
+		public_state, 
+		resign, 
+		host_account, 
+		bank, 
+		main_plan_no_shared	
 		FROM users 
 		WHERE user_no = #{value}
 	 </select>
@@ -127,7 +144,7 @@
 	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
+	  					FROM		(	SELECT user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
 	  											public_state, resign, host_account, bank, main_plan_no_shared
 											FROM users
 											<if test="searchCondition != null">
@@ -181,9 +198,9 @@
 		#{evalUser.userId})
 	</insert>
 	
-	<select 	id="getEvalUser"	parameterType="string"	resultMap="userEvalSelectMap">
+	<select 	id="getEvalUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT
-		ROUND(AVG(profile_credit),2)*100, ROUND(AVG(attendance),2)*100	
+		ROUND(AVG(profile_credit),2)*100 as user_eval_credit, ROUND(AVG(attendance),2)*100 as user_eval
 		FROM usereval 
 		WHERE target_no = #{value}
 	</select>

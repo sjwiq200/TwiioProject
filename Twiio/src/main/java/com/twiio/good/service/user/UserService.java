@@ -62,7 +62,7 @@ public interface UserService {
 	
 	//public void addStarEvalHost(Transaction transaction) throws Exception;
 	
-	public String  getEvalUser(String userId) throws Exception;
+	public User getEvalUser(int userNo) throws Exception;
 	
 	public Transaction getEvalHost(int hostNo) throws Exception;
 	
