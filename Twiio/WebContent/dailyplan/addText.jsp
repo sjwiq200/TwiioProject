@@ -49,7 +49,6 @@
 				"click",
 				function() {
 					content = $("#summernote").val();
-					alert(content);
 					$("#textContents").val(content);
 					$("form").attr("method", "POST").attr("action",
 							"/dailyplan/addText").submit();

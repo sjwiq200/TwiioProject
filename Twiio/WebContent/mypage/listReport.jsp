@@ -109,35 +109,36 @@
     	  			data : JSON.stringify({
     	  				"reportNo":reportinfo
     	  			}),
-    	  			success : function(JSONData) {
-    	  					
+    	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
-    	  					
-    	  					
     	  					var info =
-    	  					
+    	  					'<div class="row">'+
     	  	    			'<div class="row">'+
-    	  	    				'<div col-md-2>'+
-    	  	    					'<input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/>'+
-    	  	    				'<div/>'+
-    	  	    			'<div col-md-2>'+
-    	  	    				'<input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
-    	  	    			'<div/>'+
-    	  	    			'<div/>'+
-    	  	    			'<div class="row">'
-    	  	    				'<div>'+
+    	  	    				'<div class="col-md-6">'+
+    	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
+    	  	    				'<br/><div class="col-md-6">'+
+    	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
+    	  	    				'</div>'+
+    	  	    			'</div>'+
+    	  	    			'<div class="row">'+
+    	  	    				'<br/><div class="col-md-6">'+
+								'제  목'+    	  	    				
+    	  	    				'</div>'+
+    	  	    				'<div class="col-md-6">'+
     	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
-    	  	    				'<div/>'+
-    	  	    			'<div/>'+
+    	  	    				'</div>'+
+    	  	    			'</div>'+
     	  	    			'<div calss="row">'+
-    	  	    			JSONData.reportContent+	
+    	  	    				'<br/><div class="pull-left">'+
+								'내  용'+    	  	    				
+	  	    					'</div>'+					
+    	  	    				'<input type="text" class="form-control" id="reportcontent" value="'+JSONData.reportContent+'" readonly/>'+	
+    	  	    			'</div>'+
     	  	    			'</div>';
-    	  	    			
     	  	    			$('#reportview').html(info);
     	  	    			$('#viewReport').modal('show');	
-    	  			}
+    	  			 }
     	  		});
-
       	   });
      });
      
@@ -282,8 +283,8 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="viewReport"  role="dialog" labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-lg">
+    <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">

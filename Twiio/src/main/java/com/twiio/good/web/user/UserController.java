@@ -87,7 +87,22 @@ public class UserController {
 		System.out.println("/user/getUser : GET");
 		//Business Logic
 		User user = userService.getUserInNo(userNo);
+		User userEval = userService.getEvalUser(userNo);
+		System.out.println("userEval : "+userEval);
+		if(userEval != null) {
+			double per = userEval.getUserEval();
+			user.setUserEval(Double.parseDouble(String.format("%.2f",(per/20))));
+			double per2 = userEval.getUserEvalCredit();
+			user.setUserEvalCredit(Double.parseDouble(String.format("%.2f",(per2/20))));
+		}
+		
+		
+	
+		System.out.println("regDate : "+user.getRegDate());
 		// Model °ú View ¿¬°á
+		//System.out.println("per : "+per);
+		//System.out.println("per2 : "+per2);
+		System.out.println("user :: "+user);
 		model.addAttribute("user", user);
 		
 		return "forward:/user/getUser.jsp";
@@ -138,14 +153,14 @@ public class UserController {
 
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
-		userService.updateUser(user);
+		//userService.updateUser(user);
 		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
 		if(sessionId.equals(user.getUserId())){
 			session.setAttribute("user", user);
 		}
 		
-		return "redirect:/user/getUser?userId="+user.getUserId();
+		return "redirect:/user/getUser?userNo="+user.getUserNo();
 	}	
 
 	

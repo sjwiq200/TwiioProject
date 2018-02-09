@@ -20,6 +20,9 @@
 
 <style type="text/css">
 
+.container{
+	 font-family:'JEJUGOTHIC';
+}
 	#map {
         height: 400px;
         width: 500px;
@@ -288,6 +291,7 @@
 
 </script>
 <body>
+	<div class="container">
 		<div>
 			<input type="text" id="addr1" name="address" value="" />
 			<span> &nbsp; </span>
@@ -308,6 +312,6 @@
 		</div>
 		<div> &nbsp; </div>
 		<button type="button" class="btn btn-default" data-dismiss="modal" name="addMapToPlan">내 플랜에 추가하기</button>
-
+	</div>
 </body>
 </html>
