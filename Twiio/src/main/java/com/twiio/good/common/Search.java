@@ -18,7 +18,7 @@ public class Search {
 	//////product button///////
 	private String prodSearchType;
 	////////starProduct/////////////
-	private int userNo;
+	private int productUserNo;
 
 	
 	///Constructor
@@ -85,14 +85,13 @@ public class Search {
 		this.prodSearchType = prodSearchType;
 	}
 
-	
-	public int getUserNo() {
-		return userNo;
+	public int getProductUserNo() {
+		return productUserNo;
 	}
 
 
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setProductUserNo(int productUserNo) {
+		this.productUserNo = productUserNo;
 	}
 
 
@@ -100,7 +99,7 @@ public class Search {
 	public String toString() {
 		return "Search [currentPage=" + currentPage + ", searchCondition=" + searchCondition + ", searchKeyword="
 				+ searchKeyword + ", pageSize=" + pageSize + ", endRowNum=" + endRowNum + ", startRowNum=" + startRowNum
-				+ ", priceCondition=" + priceCondition + ", prodSearchType=" + prodSearchType + ", productNo="
-				+ userNo + "]";
+				+ ", priceCondition=" + priceCondition + ", prodSearchType=" + prodSearchType + ", userNo="
+				+ productUserNo + "]";
 	}
 }

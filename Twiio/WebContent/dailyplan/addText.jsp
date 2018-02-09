@@ -49,7 +49,6 @@
 				"click",
 				function() {
 					content = $("#summernote").val();
-					alert(content);
 					$("#textContents").val(content);
 					$("form").attr("method", "POST").attr("action",
 							"/dailyplan/addText").submit();
@@ -66,7 +65,9 @@
 		<textarea id="summernote" name="contentText"></textarea>
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
 		<input type="hidden" name="textContents" id="textContents" />
-		<input type="submit" value="ADD" />
+		<div align="center" >
+		<input type="submit" class="btn btn-primary btn-sm" value="ADD" />
+		</div>
 	</form>
 </body>
 

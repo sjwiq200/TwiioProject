@@ -83,7 +83,7 @@ public class InformationDaoImpl implements InformationDao {
 	@Override
 	public List<Currency> addCurrency() throws Exception {
 		//String key = "4RKuUFR6wEpqdppFDxmGS1RkUztGUN9W";
-		String req = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+currencyKey+"&data=AP01&searchdate=20180119";
+		String req = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+currencyKey+"&data=AP01";
 		
 		URL url = new URL(req);
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -307,6 +307,15 @@ public class InformationDaoImpl implements InformationDao {
 			driver.findElement(By.cssSelector("#flight-departing-flp")).sendKeys(flight.getDepartureDate());//출발일 입력
 			driver.findElement(By.cssSelector("#flight-returning-flp")).clear();
 			driver.findElement(By.cssSelector("#flight-returning-flp")).sendKeys(flight.getArrivalDate());//도착일 입력
+			
+			
+			if(Integer.parseInt(flight.getHeadCount()) >1) {
+					
+					JavascriptExecutor js = (JavascriptExecutor) driver;
+					searchField = (new WebDriverWait(driver, 50))
+							.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//select[@id='flight-adults-flp']")));
+					js.executeScript("$('#flight-adults-flp').val("+flight.getHeadCount()+")"); //인원 입력
+			}
 			driver.findElement(By.xpath("//button[@class='btn-primary btn-action gcw-submit']")).click();//검색 누르기
 			
 	///////////////////////////나라입력시 주석 제거////////////////////////		
@@ -332,7 +341,6 @@ public class InformationDaoImpl implements InformationDao {
 		for(int i = 0 ; i<result.length; i++ ) {
 			list.add(result[i]);
 		}
-		System.out.println("줄이기전"+list.size());
 		
 		Iterator<String> iter = list.iterator();
 		while (iter.hasNext()) {
@@ -344,8 +352,6 @@ public class InformationDaoImpl implements InformationDao {
 				iter.remove();
 			}
 		}
-		
-		System.out.println("줄인후"+list.size());
 		
 		List<String > url = new ArrayList();
 		url.add(driver.getCurrentUrl());
@@ -378,9 +384,12 @@ public class InformationDaoImpl implements InformationDao {
 			
 			driver.get(decoding);
 			
+			WebElement searchField = (new WebDriverWait(driver, 150))
+					 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")));
+			
 			 driver.findElement(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")).click();//첫번째 가는편 선택
 			
-			 WebElement searchField = (new WebDriverWait(driver, 150))
+			 searchField = (new WebDriverWait(driver, 150))
 					 .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#outboundflightModule")));
 			
 			  searchField = (new WebDriverWait(driver, 150))

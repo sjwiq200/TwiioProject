@@ -109,35 +109,30 @@
     	  			data : JSON.stringify({
     	  				"reportNo":reportinfo
     	  			}),
-    	  			success : function(JSONData) {
-    	  					
+    	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
-    	  					
-    	  					
     	  					var info =
-    	  					
-    	  	    			'<div class="row">'+
-    	  	    				'<div col-md-2>'+
-    	  	    					'<input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/>'+
-    	  	    				'<div/>'+
-    	  	    			'<div col-md-2>'+
-    	  	    				'<input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
-    	  	    			'<div/>'+
-    	  	    			'<div/>'+
-    	  	    			'<div class="row">'
-    	  	    				'<div>'+
+    	  	    				'<div class="row">'+
+    	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
+    	  	    				'<br/><div class="row">'+
+    	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
+    	  	    				'</div>'+
+    	  	    				'<br/><div class="row">'+
+								'제  목'+    	  	    				
+    	  	    				'</div>'+
+    	  	    				'<div class="row">'+
     	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
-    	  	    				'<div/>'+
-    	  	    			'<div/>'+
-    	  	    			'<div calss="row">'+
-    	  	    			JSONData.reportContent+	
-    	  	    			'</div>';
-    	  	    			
+    	  	    				'</div>'+
+    	  	    				'<br/><div class="row">'+
+								'내  용'+    	  	    				
+	  	    					'</div>'+
+	  	    					'<div calss="row">'+
+    	  	    				'<input type="text" class="form-control" id="reportcontent" value="'+JSONData.reportContent+'" readonly/>'+	
+    	  	    				'</div>';
     	  	    			$('#reportview').html(info);
     	  	    			$('#viewReport').modal('show');	
-    	  			}
+    	  			 }
     	  		});
-
       	   });
      });
      
@@ -282,8 +277,8 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="viewReport"  role="dialog" labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-lg">
+    <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
+		<div class="modal-dialog modal-sm">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -293,12 +288,10 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-					
+			
 				<div id="reportview">
 				</div>
-					
-				</div>
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>

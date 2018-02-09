@@ -44,7 +44,7 @@ public interface UserDao {
 	
 	public void addStarEvalHost(User user) throws Exception;
 	
-	public String  getEvalUser(String userId) throws Exception;
+	public User getEvalUser(int userNo) throws Exception;
 	
 	public String  getEvalHost(String userId) throws Exception;
 	

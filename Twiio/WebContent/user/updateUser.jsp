@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -226,16 +227,19 @@
 		///////////////////호스트 등록////////////////////////////
 			$(function() {
 				
-				 var userImage = $("#file").val();	
-				 var userName = $("#userName").val();
-				 var userPhone = $("#userPhone").val();
-				 var userAccount = $("#userAccount").val();
-				 var userBirthday = $("#userBirthday").val();
-				 var userGender = $(".userGender").val();
-				 
-				 var flag = true;
-				
 				 $("#addHost").on("click" , function() {
+					 
+					 var userImage = $("#file").val();	
+					 var userName = $("#userName").val();
+					 var userPhone = $("#userPhone").val();
+					 var userAccount = $("#userAccount").val();
+					 var userBirthday = $("#userBirthday").val();
+					 var userGender = $(".userGender").val();
+					 alert(userImage);
+					 
+					 var flag = true;
+					 
+					 
 					 
 					 alert("호스트");
 					 
@@ -255,7 +259,7 @@
 						 flag = false;
 					 }
 					if(userAccount==""){
-						 $("#AccountHelpBlock").show();
+						 $("#accountHelpBlock").show();
 						 alert("계좌를 등록 해주세요");
 						 flag = false;
 					}
@@ -281,7 +285,7 @@
 				 
 				 $(document).ready(function() { 
 					 $("#imgHelpBlock").hide();
-					 $("#AccountHelpBlock").hide();
+					 $("#accountHelpBlock").hide();
 					 $("#birthHelpBlock").hide();
 					 $("#genderHelpBlock").hide();
 					 $("#phoneHelpBlock").hide();
@@ -292,7 +296,9 @@
 				 
 			 });
 		
-		
+		$('#updateUser').on('click',function(){
+			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+		});
 	</script>
 	
 </head>
@@ -417,7 +423,7 @@
 						<div class="form-group">
 					  		<label for="userBirthday"class="col-sm-2 col-sm-offset-4 control-label">생년월일</label>
 					  			<div class="col-sm-3">
-									<input type="date" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
+									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
 									<span id="birthHelpBlock" class="help-block" type="hidden">
 											 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
 									</span>
@@ -516,7 +522,7 @@
 					</div>
 				</div>
 			</div>
-		<!-- ---------------------------------------------------------------- -->
+		<!-- --------------------------------------------------------------------------------------------------------------- -->
  	
 </body>
 
