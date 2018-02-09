@@ -39,6 +39,10 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- 내 CSS -->
+<link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
+
+<!--  ///////////////////////// CSS ////////////////////////// -->
+		<link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
@@ -72,6 +76,43 @@
 	background: #fff;
 	display: inline-block;
 	border-radius: 6px;
+}
+
+/* //////////////////eunae_modal////////////////////////// */
+		.content h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
+		.table-filter {
+			background-color: #fff;
+			font-size: 15px;
+		}
+		.table-filter tbody tr:hover {
+			cursor: pointer;
+			background-color: #eee;
+		}
+		.table-filter tbody tr td {
+			padding: 10px;
+			vertical-align: middle;
+			border-top-color: #FFF;
+		}
+		.table-filter tbody tr.selected td {
+			background-color: #eee;
+		}
+		.table-filter tr td:first-child {
+			width: 60px;
+		}
+		.media-photo{
+		  float: none;
+		  margin: 0 auto;
+		  -webkit-border-radius: 50% !important;
+		  -moz-border-radius: 50% !important;
+		  border-radius: 50% !important;
+		  border: 3px solid;
+		}
 }
 .btn {
 	font-family:'JEJUGOTHIC';
@@ -180,7 +221,7 @@
 							},
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++){
+		    					for(var i=0;i<user.length;i++) /* {
 		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
 		    								+'<span>  [이름] : '+user[i].userName+'</span>'
@@ -188,7 +229,15 @@
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}
+		    					}  */
+		    					{
+		    						
+		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+user[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
+									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'+
+									'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-primary btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
+									
+		    						
+		    					} 
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
@@ -202,7 +251,7 @@
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).remove(); 
+	    $("#addToMyFriendList"+i).attr("disabled","true");  
 	}
 	
 
@@ -725,7 +774,7 @@ $(function() {
 						</div>
 						<input type="hidden" name="dailyPlanNo"
 							value="${dailyPlan.dailyPlanNo}" />
-						<button name="add" type="button">ADD</button>
+						<button name="add" class="btn btn-primary btn-sm" type="button">ADD</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -738,29 +787,40 @@ $(function() {
 
 	<!---------- FriendRec Dialog <START>------------->
 
-	<div class="modal fade" id="friendRec" role="dialog">
+	<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
 		<div class="modal-dialog modal-md">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
-						<Strong>나와 같은 장소, 날짜에 여행가는 친구들을 찾아볼까요?</Strong>
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"align="center" >
+						<Strong>나와 같은 장소, <p>날짜에 여행가는 친구들을 찾아볼까요?</Strong>
 					</h4>
-					<h7 class="modal-title">TWIIO</h7>
 				</div>
-
-				<div class="modal-body" align="center">
-
-					<div id="friendListForRec"></div>
-
-				</div>
+				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
+							<table class="table table-filter" style="align-content: center;">
+								<tbody>
+										<tr data-status="pagado">
+										<div class="media-body">
+										  <td align="left" vailgn="middle">
+											  <div class="row" >
+											  	<div id="friendListForRec"></div>
+											  </div>
+										 	 </td>
+										  </div>
+										</tr>
+								</tbody>
+							</table>
+						
+					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
 
 	<!---------- FriendRec Dialog <END>------------->
 </body>

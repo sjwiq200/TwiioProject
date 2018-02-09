@@ -485,7 +485,6 @@
       
       </table> --%>
       
-      <div class="jumbotron col-sm-12" id="jumbotron" style="align-content: center; background-color: rgba(255, 255, 255, 0.4);" >
 		      <div class="chart-container" style="position: relative; width:70vw;  padding-right: 100px;">	
 		     	 <canvas id="weatherChart" width="600" height="400"></canvas>
 		      </div>
@@ -493,7 +492,6 @@
 		      <div class="chart-container" style="position: relative; width:70vw;  padding-right: 100px;">	
 		     	 <canvas id="rainChart" width="600" height="400"></canvas>
 		     </div>
-		</div>
      
     <br/>
 	<br/>
