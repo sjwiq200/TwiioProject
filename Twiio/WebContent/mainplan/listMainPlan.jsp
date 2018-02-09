@@ -143,7 +143,8 @@ html, body {
 			$("button:contains('선택')").bind("click",function() {
 				var index = $("button:contains('선택')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				var url = "/dailyplan/getDailyPlanFromMain?mainPlanNo="+mainPlanNo;
+				/* var url = "/dailyplan/getDailyPlan?mainPlanNo="+mainPlanNo+"&dailyPlanNo="+dailyPlanNo; */
 				$(location).attr('href', url);
 			});
 	 })

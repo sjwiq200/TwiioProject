@@ -47,7 +47,7 @@
 <style type="text/css">
 
 #mainBody {
-	padding-top: 50px;
+	padding-top: 140px;
 	font-family:'JEJUGOTHIC';
 }
 
@@ -78,52 +78,7 @@
 }
 
 
-/* 사이드바 <START> */
 
-.sidenav {
-	margin-top: 53px;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #C2C2C2;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-#main {
-    transition: margin-left .5s;
-    padding: 16px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
 
 
 
@@ -339,77 +294,7 @@ $(function() {
 
 </head>
 <body id="mainBody">
-	
-	
-	
-	<!-- ----------------------------------- -->
 
-
-	<div id="mySidenav" class="sidenav">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<c:set var="i" value="0" />
-							<c:forEach var="dailyPlan" items="${listDailyPlan}">
-								<c:set var="i" value="${ i+1 }" />
-								<input type="hidden"name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
-							    <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-							    <div class="col-xs-12 contentsBox" id="contentsBox">
-							    	<div class="col-xs-12 contents" name="contents" align="left">
-								    <h5>DAY${ i }</h5>
-								   <span>
-										<h4>${dailyPlan.dailyDate}</h4>
-										<h6>${dailyPlan.dailyCity}</h6> 
-									</span>
-									</div>
-									<!--<div class="col-xs-1"><p>국가 </p>
-									<div class="col-xs-12" align="left"></div><p>도시 </p> </div> -->
-									<%-- <p>${dailyPlan.dailyCountry}</p> --%>
-									<%-- <p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
-									<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p> 
-									<p>유저번호 : ${dailyPlan.user.userNo }</p>--%>
-									 <%--<div class="col-xs-2" id="contents">
-										 <c:if test="${empty dailyPlan.dailyCity}">
-											<c:set var="num" value="0" />
-											<c:forEach var="cityList" items="${cityList}">
-												<c:set var="num" value="${ num+1 }" />
-												<div class="btn-group" role="group" id="cityButtonGroup">
-													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
-												</div>
-												<button class="button" id="${i}">${cityList}</button>
-											</c:forEach>
-										</c:if> 
-										<p></p>
-									</div>--%>
-								</div>
-								  <!-- <div class="col-xs-2"></div><div class="col-xs-8" id="line"></div> <div class="col-xs-2"></div> -->
-							</c:forEach>
-	</div>
-
-	<div id="main">
-		<h2>&nbsp;</h2>
-		<p>&nbsp;</p>
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
-			open</span>
-	</div>
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
-			document.body.style.backgroundColor = "white";
-		}
-	</script>
-
-
-
-
-
-	<!-- ----------------------------------- -->
 
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
 
