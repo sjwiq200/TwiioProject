@@ -112,6 +112,48 @@ body {
 
 
 <script>
+	function fncAddMainPlan(){
+		var planTitle =  $("#planTitle").val();
+		var country1 = $("#country1").val();
+		var city1 = $("#city1").val();
+		var datepicker1 = $("#datepicker1").val();
+		var datepicker2 = $("#datepicker2").val();
+		
+		var flag = true;
+		
+		if (planTitle == "" ) {			
+			flag = false;
+		} 
+		if (country1 == "" ) {			
+			flag = false;
+		} 
+		if (city1 == "" ) {			
+			flag = false;
+		} 
+		if (datepicker1 == "" ) {			
+			flag = false;
+		} 
+		if (datepicker2 == "" ) {			
+			flag = false;
+		}
+		
+		if(flag){
+			
+			$("div[name='planer']").remove();		
+						
+			var addPlan = '<input type="hidden" name="planTitle" value="'+planTitle+'">'
+					+ '<input type="hidden" name="countryList" value="'+country1+'">'
+					+ '<input type="hidden" name="cityList" value="'+city1+'">'
+					+ '<input type="hidden" name="departureDate" value="'+datepicker1+'">'
+					+ '<input type="hidden" name="arrivalDate" value="'+datepicker2+'">';
+			
+			$(".form-group.center-block.contentsList").append(addPlan);
+			
+			$(".btn-1").attr('value', '여행을 시작해 볼까요?');
+			
+		}
+	}
+
 	//AutoComplete///////////////////
 
 	$(function() {
@@ -126,7 +168,7 @@ body {
 					dataType : "json",
 					success : function(JSONData) {
 						response($.map(JSONData, function(item) {
-						return item;
+							return item;
 						}));
 					}
 				});
@@ -135,43 +177,106 @@ body {
 		});
 	});
 
+	$(document).ready(function() {
+		$("input[name='countryList']").autocomplete({
+			
+			source : function(request, response) {
+				//alert($("input[name='countryList']").index(this));
+				
+				$.ajax({
+					url : "/information/json/countryAutoComplete/",
+					method : "POST",
+					data : {
+						keyword : $("#country1").val()
+					},
+					dataType : "json",
+					success : function(JSONData) {
+
+						response($.map(JSONData, function(item) {
+
+							return item;
+						}));
+					}
+				});
+			},
+
+		});		
+		
+	});
+
 	/////////////////////////////////
 
 	$(function() {
-		$(".btn-1").on("click", function() {
-			$("form").attr("method", "POST").attr("action", "/mainplan/addMainPlan").submit();
-		});
+		$("#submit").on(
+				"click",
+				function() {
+					$("form").attr("method", "POST").attr("action",
+							"/mainplan/addMainPlan").submit();
+				});
 	});
 
 	$(function() {
 		$("#datepicker1").flatpickr({
-		    altInput: true,
-		    altFormat: "F j, Y",
-		    dateFormat: "Y-m-d",
+			altInput : true,
+			altFormat : "F j, Y",
+			dateFormat : "Y-m-d",
 		});
 	});
 
 	$(function() {
 		$("#datepicker2").flatpickr({
-		    altInput: true,
-		    altFormat: "F j, Y",
-		    dateFormat: "Y-m-d",
+			altInput : true,
+			altFormat : "F j, Y",
+			dateFormat : "Y-m-d",
 		});
 
 	});
-	
+
 	$(function() {
-		$("#datepicker2").change( function() {
+		$("#planTitle").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#countryList").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#cityList").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#datepicker1").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#datepicker2").change(function() {
 			var start = $("#datepicker1").val();
 			var end = $("#datepicker2").val();
-			if(start>end){
+			if (start > end) {
 				swal("도착일이 출발일보다 빠를 수 없습니다. \n재입력 부탁드립니다.");
-			}else{
-				$(".btn-1").attr('value','여행을 시작해 볼까요?');
+			} else {
+				fncAddMainPlan();
 			}
 		});
 	});
-
+	
+	////////////////////////////////////////////addcountry////
+	var i = 1;
+$(function() {
+	
+	 $( "#addCountry" ).on("click" , function() {
+		 i++;
+		 /* if(i==2){
+			 $( "#removeCountry" ).attr("disabled", false);
+		 }
+		 if(i>4){
+			 $( "#addCountry" ).attr("disabled", true);
+		 } */
+		 
+		 $( "div[name=addCountry]" ).append( $( '<input  type="text" id="country'+i+'" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="form-control input-md contents" >' ) );
+		 		 
+	});
+});
 </script>
 
 </head>
@@ -194,13 +299,17 @@ body {
 			<form>
 
 				<div class="form-group center-block contentsList">
-							
+						<div name="planer">	
 						<label for="planTitle" class="col-md-12 control-label">당신의 플랜북 이름을 정해주세요</label>
 							<input type="text" class="form-control contents"  style="position: absoloute" id="planTitle" name="planTitle" placeholder="Your book title" ><p>&nbsp;</p>
-						
+						<div name="addCountry">
 						<label class="control-label" for="textinput">여행하고 싶은 국가를 입력해주세요</label>
-							<input  type="text" id="countryList" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="form-control input-md contents" ><p>&nbsp;</p>
-							
+							<input  type="text" id="country1" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="form-control input-md contents" ><p>&nbsp;</p>
+							<!-- <div class="btn-group"></div>
+							<a class="btn btn-primary btn" href="#" role="button" id="addCountry" name="addCountry"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
+				    		<a class="btn btn-primary btn" href="#" role="button" id="removeCountry" name="removeCountry" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
+				    		</div> -->
+						</div>	
 						<label class="control-label" for="textinput">여행하고 싶은 도시를 입력해주세요</label>
 							<input  type="text" id="city1" name="cityList" placeholder="아직 정하지 못했어요."class="form-control input-md contents" ><p>&nbsp;</p>
 							
@@ -208,10 +317,10 @@ body {
 							<input type="text" class="form-control contents" id="datepicker1" name="departureDate"placeholder="Your departure date"><p>&nbsp;</p>
 							
 						<label for="arrivalDate" class="col-sm-12 control-label">도착일을 입력해주세요</label>
-							<input type="text" class="form-control contents"  id="datepicker2" name="arrivalDate" placeholder="Your arrival date"><p>&nbsp;</p>
-							
+							<input type="text" class="form-control contents"  id="datepicker2" name="arrivalDate" placeholder="Your arrival date"><p>&nbsp;</p>							
+						</div>
 						<input type="submit" class="btn-1"  style="background-color:transparent;  border:0px transparent solid; aria-label="Right Align" id="submit" value="" >
-				</div>
+				</div>				
 			</form>
 
 	</div>
