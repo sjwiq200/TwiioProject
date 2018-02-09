@@ -57,9 +57,9 @@
 	<update id="updateCommunity" parameterType="community">
 		UPDATE COMMUNITY
 	   	<set>
-	   		COMMUNITY_TITLE		= #{communityTitle} ,
-	   		COMMUNITY_SUB_TITLE = #{communitySubTitle},
-			COMMUNITY_CONTENT	= #{communityContent}
+	   		COMMUNITY_TITLE		= #{communityTitle:VARCHAR} ,
+	   		COMMUNITY_SUB_TITLE = #{communitySubTitle:VARCHAR},
+			COMMUNITY_CONTENT	= #{communityContent:VARCHAR}
 	   	</set>
 	   	WHERE COMMUNITY_NO = #{communityNo}
 	</update>

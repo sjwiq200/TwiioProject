@@ -260,7 +260,7 @@
 			$(self.location).attr("href","/user/getUser?userNo=${sessionScope.user.userNo}");
 		});
 		
-		$( "a:contains('회원목록조회')" ).on("click" , function() {
+		$( "a:contains('회원리스트조회')" ).on("click" , function() {
 			$(self.location).attr("href","/user/listUser");
 		});
 		

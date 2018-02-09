@@ -133,7 +133,7 @@
 	 				AND user_name LIKE '${search.searchKeyword}%'
 				</if>				
 				<if test="(search.searchCondition eq '4'.toString())">
-	 				AND p.user_no = '${search.userNo}'
+	 				AND p.user_no = '${search.productUserNo}'
 				</if>
 			</if>
 		</if>

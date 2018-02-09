@@ -112,29 +112,23 @@
     	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
     	  					var info =
-    	  					'<div class="row">'+
-    	  	    			'<div class="row">'+
-    	  	    				'<div class="col-md-6">'+
+    	  	    				'<div class="row">'+
     	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
-    	  	    				'<br/><div class="col-md-6">'+
+    	  	    				'<br/><div class="row">'+
     	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
     	  	    				'</div>'+
-    	  	    			'</div>'+
-    	  	    			'<div class="row">'+
-    	  	    				'<br/><div class="col-md-6">'+
+    	  	    				'<br/><div class="row">'+
 								'제  목'+    	  	    				
     	  	    				'</div>'+
-    	  	    				'<div class="col-md-6">'+
+    	  	    				'<div class="row">'+
     	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
     	  	    				'</div>'+
-    	  	    			'</div>'+
-    	  	    			'<div calss="row">'+
-    	  	    				'<br/><div class="pull-left">'+
+    	  	    				'<br/><div class="row">'+
 								'내  용'+    	  	    				
-	  	    					'</div>'+					
+	  	    					'</div>'+
+	  	    					'<div calss="row">'+
     	  	    				'<input type="text" class="form-control" id="reportcontent" value="'+JSONData.reportContent+'" readonly/>'+	
-    	  	    			'</div>'+
-    	  	    			'</div>';
+    	  	    				'</div>';
     	  	    			$('#reportview').html(info);
     	  	    			$('#viewReport').modal('show');	
     	  			 }
@@ -294,12 +288,10 @@
 				</h3>
 			</div>
 			<div class="modal-body">
-				<div class="form-group">
-					
+			
 				<div id="reportview">
 				</div>
-					
-				</div>
+
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>

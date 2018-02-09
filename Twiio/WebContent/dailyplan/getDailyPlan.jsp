@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
@@ -25,39 +24,35 @@
 
 <!-- 다이얼로그  -->
 
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
 <!-- Hover Jquery -->
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 <!--  구글  -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- 내 CSS -->
 <link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="/resources/css/font.css" />
+<link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
-<title>MainPlanList</title>
+<title>getDailyPlan</title>
 
 <style type="text/css">
 
 #mainBody {
 	padding-top: 140px;
+	font-family:'JEJUGOTHIC';
 }
 
 #innerMain {
@@ -118,6 +113,16 @@
 		  border-radius: 50% !important;
 		  border: 3px solid;
 		}
+}
+.btn {
+	font-family:'JEJUGOTHIC';
+}
+
+
+
+
+
+
 </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -267,6 +272,27 @@
 		});
 	});
 	
+	
+	
+</script>
+
+<script type="text/javascript">
+	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
+/* 	$(function() {
+		$(".contentsTxt").hover(function() {
+			var index = $(".contentsTxt").index(this);
+			alert(index);
+			$("#txtSize").append('<input type="button" value="크게">');
+		});
+	}); */
+	
+	/*  $(function() {
+			$("button:contains('선택')").bind("click",function() {
+				var index = $("button:contains('선택')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			}); */
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
@@ -330,78 +356,13 @@ $(function() {
 
 					<div class="row" align="center">
 					
-					
-						<!-- -------------TOP<START>--------------- -->
-
-<!-- 
-			<script>
-				$(function() {
-					$('a[title]').tooltip();
-				});
-			</script>
-
-			<section style="background: #efefe9;">
-				<div class="container">
-					<div class="row">
-						<div class="board">
-							<h2>Welcome to IGHALO!<sup>™</sup></h2>
-							<div class="board-inner">
-								<ul class="nav nav-tabs" id="myTab">
-									<div class="liner"></div>
-									<li class="active"><a href="#home" data-toggle="tab"
-										title="welcome"> <span class="round-tabs one"> <i
-												class="glyphicon glyphicon-home"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#profile" data-toggle="tab" title="profile">
-											<span class="round-tabs two"> <i
-												class="glyphicon glyphicon-user"></i>
-										</span>
-									</a></li>
-									<li><a href="#messages" data-toggle="tab"
-										title="bootsnipp goodies"> <span class="round-tabs three">
-												<i class="glyphicon glyphicon-gift"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#settings" data-toggle="tab"
-										title="blah blah"> <span class="round-tabs four"> <i
-												class="glyphicon glyphicon-comment"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#doner" data-toggle="tab" title="completed">
-											<span class="round-tabs five"> <iclass ="glyphiconglyphicon-ok">
-												</i></span>
-									</a></li>
-
-								</ul>
-							</div>
-
-
-						</div>
-					</div>
-				</div>
-			</section>
- -->
-
-
-
-
-
-			<!-- -------------TOP<END>---------------- -->
-					
-					
+								
+					<!-- -------------TOP<START>--------------- -->
 					
 					
 						<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-default" value="나를 위한 맞춤정보" /> 
 						<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-default" value="같이 갈 친구 찾기" />
 						<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p>
-						<button type="button" class="btn" data-toggle="modal"data-target="#addText">글씨쓰기</button>
-						<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
-						<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
-						<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>
 						<p></p>
 						<img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px">
 						<p></p>
@@ -432,6 +393,7 @@ $(function() {
 
 						<c:set var="i" value="0" />
 						<c:forEach var="planContent" items="${list}" varStatus="index">
+							<!-- <img src="/resources/images/dailyPlanContent/line.png" width="200px" style="opacity: 0.6" height="30px" > -->
 							<div id="here${i}"></div>
 							<c:if test="${index.last}">
 								<input type="hidden" id="lastIndex" value="${i}" />
@@ -444,7 +406,6 @@ $(function() {
 
 							<div id="contentsBoxNo${i}" class="realContents">
 
-								<h7 class="contents"> ㅡ </h7>
 								<%-- <p class="contents">콘텐츠 번호 : ${planContent.contentNo}</p>
 								<p class="contents">데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
 								<p class="contents">콘텐츠타입 : ${planContent.contentType}</p> --%>
@@ -480,43 +441,56 @@ $(function() {
 								<c:if test="${!empty planContent.routeDescription}">
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;"><!-- 길찾기결과 :  -->${planContent.routeDescription}</p>
 								</c:if>
+								
+								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
+									<div class="col-xs-12"  style="margin-top: 30px" align="center">
 									<p class="contents">
-										<Strong> Your Map Information</Strong>
+										<Strong> YOUR MAP </Strong>
 									</p>
+									</div>
+									<div class="col-xs-6" align="right">
 									<p class="contents">
-										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px"
-											onclick="javascript:location.href='${planContent.mapUrl}';" />
+										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px" style="border-radius: 99%;"
+											onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
+									</div>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapName}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">${planContent.mapName}</p>
+									<div class="col-xs-6"  style="margin-top:100px ;" align="left">
+									<img src="/resources/images/dailyPlanContent/map.png" width="40px"><p>&nbsp;</p>
+									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">[${planContent.mapName}]</p>
 								</c:if>
 
-								<c:if test="${!empty planContent.mapUrl}">
+								<%-- <c:if test="${!empty planContent.mapUrl}">
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 URL : ${planContent.mapUrl}</p>
-								</c:if>
+								</c:if> --%>
 
 								<c:if test="${!empty planContent.mapAddress}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 주소 : ${planContent.mapAddress}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">ADDRESS : ${planContent.mapAddress}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapPhone}">
-									<p class="contents">PHONE : ${planContent.mapPhone}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;" >PHONE : ${planContent.mapPhone}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapWebsite}">
-									<p class="contents">웹사이트 : ${planContent.mapWebsite}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">WEBSITE: ${planContent.mapWebsite}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapType}">
-									<p class="contents">지도유형 : ${planContent.mapType}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">TYPE : ${planContent.mapType}</p>
+									</div>
 								</c:if>
+								<!-- ---------------------지도정보 <END>-------------------- -->
 
 								<c:if test="${!empty planContent.contentText}">
 									<p>
-										<div class="contentsTxt" style="margin-left:60px; margin-right:60px; font-size:1.1em !important; font-color: #C2C2C2 !important;">${planContent.contentText}</div>
+										<div class="col-xs-12" style="margin-top:50px;  margin-right:60px; font-size:1.1em !important;font-color: #C2C2C2 !important;">
+											${planContent.contentText}
+											<div id="col-xs-12 txtSize" class="txtSize"></div>
+										</div>
 									</p>
 								</c:if>
 
@@ -524,7 +498,7 @@ $(function() {
 									<p class="contentsThis">
 										<img
 											src="/resources/images/dailyPlanContent/${planContent.contentImage}"
-											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 98%;"/>
+											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 5%;"/>
 									</p>
 								</c:if>
 
@@ -543,6 +517,41 @@ $(function() {
 				<div align="right" class="col-xs-1">&nbsp;</div>
 			</div>
 			<!-- 섬네일 전체 박스 부분 -->
+			
+			
+			
+			<!-- -------Floating Button<START>----------- -->
+
+	<div id="container-floating" style="font-family:'JEJUGOTHIC';">
+	
+	  <div class="nd5 nds" class="btn" id="addRouteButton" data-placement="left" >
+	  <p class="letter">ROUTE</p>
+	  </div>
+	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap" data-placement="left" >
+	    <p class="letter">MAP</p>
+	  </div>
+	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" data-placement="left" >
+	   <p class="letter">PICS</p>
+	  </div>
+	  <div class="nd1 nds" data-toggle="modal" data-target="#addText" data-placement="left" >
+	    <p class="letter">TEXT</p>
+	  </div>
+	
+	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
+	    <p class="plus">+</p>
+	  </div>
+	
+	</div>
+
+	<!-- <button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button>
+	<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+	<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
+	<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>-->
+
+	<!-- -------Floating Button<END>----------- -->
+	
+	
+	
 		</div>
 
 
@@ -568,7 +577,9 @@ $(function() {
 	<!-- ----------CONTENTS<END>----------- -->
 
 	<!-- 	</form> -->
-
+	
+	
+	
 	<!---------- Map Dialog ------------->
 	<div class="modal fade" id="addMap" role="dialog">
 		<div class="modal-dialog modal-lg">

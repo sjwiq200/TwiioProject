@@ -144,7 +144,7 @@
 	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
-	  					FROM		(	SELECT user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
+	  					FROM		(	SELECT user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
 	  											public_state, resign, host_account, bank, main_plan_no_shared
 											FROM users
 											<if test="searchCondition != null">
