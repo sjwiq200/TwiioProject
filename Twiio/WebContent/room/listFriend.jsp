@@ -29,6 +29,11 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
+	<link rel="stylesheet" href="/resources/css/font.css" />
   <script>
   	$(function() {
   		
@@ -145,7 +150,8 @@
 		<div class="row">
 
 		<section class="content">
-			<h1>친구 목록</h1>
+			<h1 style="font-family: 'Jeju Gothic', serif; ">친구 목록</h1>
+			<hr/>
 			<div class="col-md-8 col-md-offset-2">
 				<div class="panel panel-default">
 					<div class="panel-body">

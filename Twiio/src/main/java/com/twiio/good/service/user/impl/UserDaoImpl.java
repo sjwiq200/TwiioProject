@@ -131,9 +131,9 @@ import com.twiio.good.service.user.UserDao;
 		}
 	
 		@Override
-		public String getEvalUser(String userId) throws Exception {
+		public User getEvalUser(int userNo) throws Exception {
 			// TODO Auto-generated method stub
-			return null;
+			return sqlSession.selectOne("UserMapper.getEvalUser", userNo);
 		}
 	
 		@Override

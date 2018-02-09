@@ -16,7 +16,7 @@
 
 <html lang="ko">
 <head>
-<title>Insert title here</title>
+<title>updateCommunity</title>
 <meta charset="UTF-8">
 
 	
@@ -119,10 +119,8 @@ $(function() {
     
     $("button.btn.btn-primary").on("click",function(){
     	$("textarea").val($("#summernote").summernote("code"));
-    	$("form").attr("method" , "POST").attr("action" , "/community/addCommunity").submit();
+    	$("form").attr("method" , "POST").attr("action" , "/community/updateCommunity").submit();
     });
-    
-    
 });
 
 </script>
@@ -136,16 +134,16 @@ $(function() {
    	
    	 <div class="container">
 		<div class="page-header text-info">
-		<h1 >커 뮤 니 티 글 작 성</h1>
+		<h1 >커 뮤 니 티 글 수 정</h1>
 		</div>
 		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
-		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
-		
+		<input type="hidden" name = "communityType" id = "communityType" value="${community.communityType}"/>
+		<input type="hidden" name = "communityNo" id = "communityType" value="${community.communityNo}"/>
 		<div class="form-group">
-		<c:if test="${communityType==1}">
+		<c:if test="${community.communityType == 1}">
 		    <div class="col-xs-6 col-sm-4">
-		      <select class="form-control" name="communitySubTitle" id="communitySubTitle">
+		      <select class="form-control" name="communitySubTitle" id="communitySubTitle" value="${community.communitySubTitle}">
 		      		<option value="">말머리를 선택해 주세요</option>
 				  	<option value="0">도시</option>
 					<option value="1">루트</option>
@@ -157,17 +155,17 @@ $(function() {
 		    </div>
 		</c:if>
 		    <div class="col-xs-8">
-		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
+		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" value="${community.communityTitle}">
 		    </div>
 		</div>
 		
 		<div class="form-group">
-			<textarea id="summernote" name="communityContent"></textarea>
+			<textarea id="summernote" name="communityContent" value="">${community.communityContent}</textarea>
 		</div>
 
 	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="save" class="btn btn-primary">작 성</button>
+		      <button type="button" name="save" class="btn btn-primary">수 정</button>
 			  <a class="btn btn-primary btn" href="#" role="button">취&nbsp;소</a>
 		    </div>
 	</div>

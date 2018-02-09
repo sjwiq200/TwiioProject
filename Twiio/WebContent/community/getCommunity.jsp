@@ -546,6 +546,11 @@ function resetData() {
 		});
 	});
 	
+	//////////////////////////////////////////////updateCommunity//////////////////////////////////////////////////
+	
+	$(document).on('click','#updatecommunity', function(){
+		$(self.location).attr("href","/community/updateCommunity?communityNo=${community.communityNo}");
+	});
 	
 </script>
 </head>
@@ -560,10 +565,10 @@ function resetData() {
    	
 		<div class="col-xs-10 col-xs-offset-1 page-header text-info">
 		<h1>커 뮤 니 티 글 보 기</h1>
-		<input type="hidden" name = "communityType" id = "communityType" value="${communityType }"/>
+		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<div class="form-group">
-		   
+		   <c:if test="${communityType == 1}">
 		    <div class="col-md-5 col-md-offset-1">
 		    <h4><strong><c:if test="${community.communitySubTitle == 0}">
 		    	[도시]
@@ -586,6 +591,7 @@ function resetData() {
 		       |   ${community.communityTitle}
 		   </strong></h4>
 		   </div>
+		   </c:if>
 			<div class="col-md-4 col-md-offset-2"><h4><strong>조회수  :  ${community.viewCount} / 등록일  :  ${community.regDate}</strong></h4></div>
 		</div>
 		<div class="col-xs-12 ">
@@ -598,10 +604,10 @@ function resetData() {
 		    <c:if test="${!empty user.userId}">
 		    <div class="col-md-3 col-xs-offset-1">
 		    	<c:if test="${community.userNo != user.userNo}">
-				<button type="button"  id="addfriendcommunity" class="btn btn-default">친구추가</button>
+					<button type="button"  id="addfriendcommunity" class="btn btn-default">친구추가</button>
 				</c:if>
 				<c:if test="${community.userNo == user.userNo}">
-				<button type="button"  id="updatecommunity" class="btn btn-default">수정하기</button>
+					<button type="button"  id="updatecommunity" class="btn btn-default">수정하기</button>
 				</c:if>
 			</div>
 		    </c:if>
