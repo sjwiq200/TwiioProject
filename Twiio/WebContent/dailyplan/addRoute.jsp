@@ -18,6 +18,12 @@
 
 <style type="text/css">
 
+body {
+}
+#mainBody {
+	padding-top: 140px;
+}
+
 #resultMap4Detail{
 	font-size : 0.8em;
 }
@@ -47,12 +53,42 @@
 	padding: 5px;
 	border: 1px solid #999;
 }
+
+#map-canvas {
+	border-radius: 5%;
+
+}
+
+#title {
+ 	font-size: 5.5em;
+	padding: 0 0.5em 0.25em 0.5em;
+	font-family: "Pacifico", cursive;
+	margin-bottom: 30px;
+	text-transform: none;
+	letter-spacing: 10;
+}
+#routeQuery {
+	font-family:'JEJUGOTHIC';
+	font-size: 1.2em;
+}
 </style>
 
 
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC3XuExiWoSEQ7kAr0GPntmjPwgUPYq5o8&sensor=false&libraries=places"></script>
 
+<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
+<link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
+	rel="stylesheet">
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Hover Jquery -->
+<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
+
+	
 
 <script>
 	var directionsDisplay;
@@ -112,7 +148,7 @@
 
 									if (response.routes[0].legs[0].steps[i].transit != null) {
 										detailedDisplay += ' //대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-												+ ' //출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name;
+												+ ' //출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
 												+ ' //도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
 												+ ' //차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
 												+ ' //차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name;
@@ -142,7 +178,7 @@
 												mainResultEnd = JSONData.mainResultEnd;
 												detailResultFinal = JSONData.detailResultFinal;
 												
-												$("#resultMap").append("<img src='/resources/images/dailyPlanContent/routeIcon.png' width='100px'>");
+												$("#resultMap").append("<div class='col-xs-12 innerMain'align='center'><img src='/resources/images/dailyPlanContent/route.png' width='100px'></div>");
 												
 												for(var i=0;i<mainResultEnd.length;i++){
 													$("#resultMap")
@@ -184,34 +220,46 @@
 	});
 
 </script>
-</head>
+<body id="mainBody">
 
-<body>
 
+	<div><jsp:include page="/layout/toolbar.jsp" /></div>
+	
 	<div align="center">
-		<b>출발지 : </b> <input type="text" id="start" value="카타루냐 광장" /> <b>도착지
-			: </b> <input type="text" id="end" value="마드리드 왕궁" />
-		<div>
+		<div class="col-xs-12" id="title">
+		<h1>Save your route</h1>
+		</div>
+		
+		<div class="row" id="routeQuery">
+		<div class="col-xs-12" >
+		<b>출발지 : </b> <input type="text" id="start" value="카타루냐 광장" /> </div>
+		<div class="col-xs-12" >
+		<b>도착지: </b> <input type="text" id="end" value="마드리드 왕궁" /></div>
+		
+		<div class="col-xs-12" >
 			<strong>이동방법</strong> <select id="mode">
 				<option value="DRIVING">자동차</option>
 				<option value="WALKING">도보</option>
 				<option value="BICYCLING">자전거</option>
 				<option value="TRANSIT" selected>대중교통</option>
-			</select> <input type="button" value="길찾기" onclick="Javascript:calcRoute();" />
-		</div>
-
+			</select>
+		<div> <button type="button" class="btn btn-default"  onclick="Javascript:calcRoute();" /> 길찾기</button></div>
 		
+		</div>
+		</div>
+		
+		<div class="col-xs-12">&nbsp;</div>
 		<div id="map-canvas"></div>
-		<button type="button" class="btn btn-success" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button>
+		<button type="button" class="btn btn-default" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button>
 		<div id="resultMap"></div>
 		
 		<div id="resultMap4Detail"></div>
 
 			<form>
 				<input type="hidden" name="dailyPlanNo" value="${dailyPlanNo}" />
-				<input type="hidden" name="totalDisplay" id="totalDisplay"  /> 
-				<input type="hidden" name="detailedDisplay" id="detailedDisplay"  />
-				<input type="hidden" name="type" id="type" />
+				<input type="hidden" name="totalDisplay" id="totalDisplay"/> 
+				<input type="hidden" name="detailedDisplay" id="detailedDisplay"/>
+				<input type="hidden" name="type" id="type"/>
 			</form>
 		
 		<div>&nbsp;</div>

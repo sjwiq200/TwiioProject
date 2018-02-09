@@ -175,7 +175,6 @@ html, body {
 	$(function() {
 	
 		$("button:contains('공유')").bind("click",function() {
-			alert("Hi");
 			var index = $("button:contains('공유')").index(this);
 			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 			
@@ -263,7 +262,7 @@ html, body {
 										 <div class="row">
 											   <div class="col-md-5 thumbnailClass">
 										<%-- 	   ${mainPlan.mainThumbnail} --%>
-												<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+												<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="margin-left:80px;width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
 											   </div>
 											   
 												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
@@ -274,7 +273,7 @@ html, body {
 													<p><Strong>국가</Strong> ${mainPlan.country}</p>
 													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
 													</div>
-													<div class="col-md-4" align="right" style="margin-top: 35px;">
+													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
 														<button type="button" class="btn btn-default">공유</button>
 														<button type="button" class="btn btn-default">수정</button>
 														<button type="button" class="btn btn-default">삭제</button>
