@@ -411,10 +411,10 @@
 		  <c:forEach  items="${info}" varStatus="status">
 		  	<c:set var="i" value="${ i+1 }" />
 					<tr>
-					 <td align="center" valign="middle">${i}</td>
-					 <td align="center"  valign="middle" id="info">${info[status.index]}</td>
-					 <td align="center" valign="middle" id="type">${type[status.index]}</td>
-					 <td align="center" valign="middle" id="price">${price[status.index]}</td>
+					 <td align="center" valign="middle" style="padding-top : 20px;">${i}</td>
+					 <td align="center"  valign="middle" id="info" style="padding-top : 10px;">${info[status.index]}</td>
+					 <td align="center" valign="middle" id="type" style="padding-top : 20px;">${type[status.index]}</td>
+					 <td align="center" valign="middle" id="price" style="padding-top : 20px;">${price[status.index]}</td>
 					 <td align="center" valign="middle" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick">선&nbsp;택</button></td>
 					</tr>
 		   </c:forEach>

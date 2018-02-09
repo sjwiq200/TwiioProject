@@ -230,10 +230,10 @@
 										
 										for(var i = 0 ; i<info.length; i++){
 											
-											list += '<tr><td align="center" valign="middle">'+(i+1)+'</td>'+
-											'<td align="center" id="info">'+info[i]+
-											'</td>'+'<td align="center" valign="middle" id="type">'+type[i]+
-											'</td>'+'<td align="center" valign="middle" id="price">'+price[i]+
+											list += '<tr><td align="center" valign="middle" style="padding-top : 30px;">'+(i+1)+'</td>'+
+											'<td align="center" id="info" style="padding-top : 20px;">'+info[i]+
+											'</td>'+'<td align="center" valign="middle" id="type" style="padding-top : 30px;">'+type[i]+
+											'</td>'+'<td align="center" valign="middle" id="price" style="padding-top : 25px;">'+price[i]+
 											'<td align="center"  valign="middle" id="new"><button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick">선&nbsp;택</button></td></tr>';
 										}
 									$("#listTbody").html(list);
