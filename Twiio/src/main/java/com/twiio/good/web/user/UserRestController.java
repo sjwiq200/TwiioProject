@@ -243,7 +243,4 @@ public class UserRestController {
 		}
 		return buffer.toString();
 	}
-	
-
-	
 }

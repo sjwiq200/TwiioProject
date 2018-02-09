@@ -1,8 +1,11 @@
+@import url(font-awesome.min.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
 @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
 @font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
 @font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
 @font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
 @font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOL'; src: url('images/TYPO_JEONGJOL.TTF');} 
 
 
 /* body, input, select, textarea {
@@ -16,7 +19,6 @@
 #header .inner {
 	font-size: 3.5em;
 	padding: 0 0.5em 0.25em 0.5em;
-	font-weight: 500;
 	font-family: "Pacifico", cursive;
 	text-transform: none;
 	letter-spacing: 10;
@@ -29,9 +31,8 @@
 }
 
 @font-face {
-    font-family:'NANUMSQUAREROUNDB';
-    src: url('images/NANUMSQUAREROUNDB.TTF') format('truetype');
-    font-weight: normal;
+    font-family:'TYPO_JEONGJOL';
+    src: url('images/TYPO_JEONGJOL.TTF') format('truetype');
     font-style: normal;
 }
 
@@ -80,7 +81,6 @@
     -webkit-transition: -webkit-transform .175s cubic-bazier(.175,.67,.83,.67);
     transition:         transform .175s cubic-bazier(.175,.67,.83,.67);
 }
-
 
 
 

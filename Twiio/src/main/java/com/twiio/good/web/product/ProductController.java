@@ -317,5 +317,21 @@ public class ProductController {
 		
 		return "forward:/product/best10.jsp";
 	}
+	
+	@RequestMapping(value="listBestHost")//사진 이름 평점 보여주기
+	public String listBestHost( @ModelAttribute("search") Search search, Map<String, Object> map) throws Exception {
+		
+		System.out.println("/product/listBestHost ");
+		
+		search.setCurrentPage(1);
+		search.setPageSize(10);//10등까지
+		
+		//List<Transaction> list = productService.listBestProduct(search);				
+		
+		//map.put("list", (List<Transaction>)productService.listBestProduct(search));
+		map.put("list", (List<Transaction>)userService.listBestHost(search));
+		
+		return "forward:/product/host10.jsp";
+	}
 
 }

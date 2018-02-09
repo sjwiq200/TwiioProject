@@ -1,5 +1,7 @@
 package com.twiio.good.web.room;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.json.JSONObject;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.util.JSON;
+import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Message;
 import com.twiio.good.service.domain.Report;
@@ -90,11 +93,40 @@ public class RoomRestController {
 		return true;
 	}
 	
-	@RequestMapping("/json/updateOpen")
-	public boolean updateOpen() throws Exception{
-		System.out.println(this.getClass()+".updateOpen");
+	@RequestMapping("/json/updateRoomOpen")
+	public boolean updateRoomOpen(@RequestBody Room room) throws Exception{
+		System.out.println("room/json/updateRoomOpen : ");
+		System.out.println("updateRoomOpen rest ==>" + room);
+		roomService.updateRoomOpen(room);
 		
 		return true;
+	}
+	
+	@RequestMapping("/json/listRoom")
+	public List<Room> listRoom(@RequestBody Search search) throws Exception{
+		System.out.println("/room/json/listRoom : ");
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		
+		List<Room> list = (List<Room>)roomService.listRoom(search).get("list");
+		System.out.println("roomrestController "+ list);
+		return list;
+	}
+	
+	@RequestMapping("/json/listMyRoom")
+	public List<Room> listMyRoom(@RequestBody Search search, HttpSession session) throws Exception{
+		System.out.println("/room/json/listRoom : ");
+		User user = (User)session.getAttribute("user");
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		
+		List<Room> list = (List<Room>)roomService.listMyRoom(search,user.getUserNo()).get("list");
+		System.out.println("roomrestController "+ list);
+		return list;
 	}
 	
 	

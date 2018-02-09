@@ -99,13 +99,12 @@ body {
 	font-size: 16px;
 	border-bottom: 1px dotted #fff;
 	border-radius: 0;
-	box-shadow: none !important;
 	height: auto;
 }
 
 .contentsList{
-	font-family: 'NANUMSQUAREROUNDB';
 	width: 300px;
+	font-family:'TYPO_JEONGJOL';
 }
 
 </style>

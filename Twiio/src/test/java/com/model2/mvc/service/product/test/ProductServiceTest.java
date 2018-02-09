@@ -1,3 +1,4 @@
+
 package com.model2.mvc.service.product.test;
 
 import java.sql.Date;
@@ -24,11 +25,11 @@ import com.twiio.good.service.user.UserService;
 
 /*
  *	FileName :  UserServiceTest.java
- * ¤· JUnit4 (Test Framework) °ú Spring Framework ÅëÇÕ Test( Unit Test)
- * ¤· Spring Àº JUnit 4¸¦ À§ÇÑ Áö¿ø Å¬·¡½º¸¦ ÅëÇØ ½ºÇÁ¸µ ±â¹Ý ÅëÇÕ Å×½ºÆ® ÄÚµå¸¦ ÀÛ¼º ÇÒ ¼ö ÀÖ´Ù.
- * ¤· @RunWith : Meta-data ¸¦ ÅëÇÑ wiring(»ý¼º,DI) ÇÒ °´Ã¼ ±¸ÇöÃ¼ ÁöÁ¤
- * ¤· @ContextConfiguration : Meta-data location ÁöÁ¤
- * ¤· @Test : Å×½ºÆ® ½ÇÇà ¼Ò½º ÁöÁ¤
+ * ï¿½ï¿½ JUnit4 (Test Framework) ï¿½ï¿½ Spring Framework ï¿½ï¿½ï¿½ï¿½ Test( Unit Test)
+ * ï¿½ï¿½ Spring ï¿½ï¿½ JUnit 4ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½×½ï¿½Æ® ï¿½Úµå¸¦ ï¿½Û¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½.
+ * ï¿½ï¿½ @RunWith : Meta-data ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ wiring(ï¿½ï¿½ï¿½ï¿½,DI) ï¿½ï¿½ ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½Ã¼ ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ @ContextConfiguration : Meta-data location ï¿½ï¿½ï¿½ï¿½
+ * ï¿½ï¿½ @Test : ï¿½×½ï¿½Æ® ï¿½ï¿½ï¿½ï¿½ ï¿½Ò½ï¿½ ï¿½ï¿½ï¿½ï¿½
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:config/context-common.xml" ,
@@ -37,7 +38,7 @@ import com.twiio.good.service.user.UserService;
 																		"classpath:config/context-transaction.xml" })
 public class ProductServiceTest {
 
-	//==>@RunWith,@ContextConfiguration ÀÌ¿ë Wiring, Test ÇÒ instance DI
+	//==>@RunWith,@ContextConfiguration ï¿½Ì¿ï¿½ Wiring, Test ï¿½ï¿½ instance DI
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
@@ -55,12 +56,12 @@ public class ProductServiceTest {
 		//Date date =new Date(2018-02-01);
 		
 		Product product = new Product();
-		product.setProductName("Ä§»çÃßÀÌ ¸ÀÁýÅõ¾î");
+		product.setProductName("Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		product.setProductPrice(50000);
 		product.setProductType("1");
 		product.setTripDate("18/03/01");
-		product.setCountry("È«Äá");
-		product.setCity("Ä§»çÃßÀÌ");
+		product.setCountry("È«ï¿½ï¿½");
+		product.setCity("Ä§ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
 		product.setHostNo(14);
 		product.setTourHeadCount(5);
 		product.setProductCount(5);
@@ -69,10 +70,10 @@ public class ProductServiceTest {
 		
 		//product = productService.getProduct(10067);
 		
-		//==> console È®ÀÎ
+		//==> console È®ï¿½ï¿½
 		//System.out.println(product);
 		
-		//==> API È®ÀÎ
+		//==> API È®ï¿½ï¿½
 		//Assert.assertEquals("testpro", product.getProdName());
 		
 	}
@@ -81,21 +82,21 @@ public class ProductServiceTest {
 	public void testGetProduct() throws Exception {
 		
 		Product product = productService.getProduct(21);
-		//==> ÇÊ¿äÇÏ´Ù¸é...
+		//==> ï¿½Ê¿ï¿½ï¿½Ï´Ù¸ï¿½...
 //		user.setUserId("testUserId");
 //		user.setUserName("testUserName");
 //		user.setPassword("testPasswd");
 //		user.setSsn("1111112222222");
 //		user.setPhone("111-2222-3333");
-//		user.setAddr("°æ±âµµ");
+//		user.setAddr("ï¿½ï¿½âµµ");
 //		user.setEmail("test@test.com");
 		
 		//product = productService.getProduct(10067);
 
-		//==> console È®ÀÎ
+		//==> console È®ï¿½ï¿½
 		System.out.println(product);
 		
-		//==> API È®ÀÎ
+		//==> API È®ï¿½ï¿½
 //		Assert.assertEquals("testpro", product.getProdName());
 //
 //		Assert.assertNotNull(productService.getProduct(10067));
@@ -118,24 +119,24 @@ public class ProductServiceTest {
 //		product = productService.getProduct(10067);
 //		Assert.assertNotNull(product);
 //		
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //		System.out.println(product);
 //			
-//		//==> API È®ÀÎ
+//		//==> API È®ï¿½ï¿½
 //		Assert.assertEquals("testchange", product.getProdName());
 		
 	 }
 
-	 //==>  ÁÖ¼®À» Ç®°í ½ÇÇàÇÏ¸é....
+	 //==>  ï¿½Ö¼ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½....
 	@Test
 	 public void testListProduct() throws Exception{
 		 
 	 	Search search = new Search();
-	 	search.setCurrentPage(1);
-	 	search.setPageSize(3);
+	 	search.setCurrentPage(2);
+	 	search.setPageSize(12);
 	 	search.setSearchCondition("0");
-	 	search.setSearchKeyword("THAILAND");
-	 	search.setPriceCondition("");
+	 	search.setSearchKeyword(null);
+	 	search.setPriceCondition(null);
 	 	search.setProdSearchType("");
 	 	Map<String,Object> map = productService.listProduct(search);
 	 	
@@ -147,7 +148,7 @@ public class ProductServiceTest {
 	 	System.out.println("totalCount :: "+totalCount);
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -168,7 +169,7 @@ public class ProductServiceTest {
 //	 	list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//	 	//==> console È®ÀÎ
+//	 	//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	totalCount = (Integer)map.get("totalCount");
@@ -222,7 +223,7 @@ public class ProductServiceTest {
 	 	search.setPageSize(3);
 	 	
 	 	//search.setSearchCondition("1");
-	 	//search.setSearchKeyword("ÀÇÀÚ");
+	 	//search.setSearchKeyword("ï¿½ï¿½ï¿½ï¿½");
 	 	Map<String, Object> map = productService.listStarEvalProduct(search, 23);
 	 	
 	 	
@@ -232,7 +233,7 @@ public class ProductServiceTest {
 //	 	List<Object> list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	Integer totalCount = (Integer)map.get("totalCount");
@@ -247,10 +248,11 @@ public class ProductServiceTest {
 //	 	list = (List<Object>)map.get("list");
 //	 	Assert.assertEquals(3, list.size());
 //	 	
-//		//==> console È®ÀÎ
+//		//==> console È®ï¿½ï¿½
 //	 	System.out.println(list);
 //	 	
 //	 	totalCount = (Integer)map.get("totalCount");
 //	 	System.out.println(totalCount);
 	 }	 
+
 }

@@ -4,7 +4,6 @@
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-
 <!-- ToolBar Start /////////////////////////////////////-->
 <div class="navbar-wrapper">
     <div class="container-fluid">
@@ -31,26 +30,21 @@
 	         
 	         	<!-- Tool Bar �� �پ��ϰ� ����ϸ�.... -->
 	             <ul class="nav navbar-nav">
+
 	             
 	              
 	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+
 	                         <span >TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
-	                     <c:if test="${!empty user}">
-	                     	<ul class="dropdown-menu">
-		                         <li><a href="#">My TwiiChat List</a></li>
-		                         <li><a href="#">My Schedule List</a></li>
-		                         <li class="divider"></li>
-		                         
-		                     </ul>
-	                     </c:if>
-	                 </li>
+
+	                 </li> 
 	     
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-		                         <span >Blabla~</span>
+		                         <span >Blabla</span>
 		                         <span class="caret"></span>
 		                     </a>
 		                     <ul class="dropdown-menu">
@@ -82,21 +76,21 @@
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >DailyTour</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
-	                     <ul class="dropdown-menu">
+	                     <!-- <ul class="dropdown-menu">
 	                         <li><a href="#">Trip Product</a></li>
-	                         <li><a href="#">BEST10</a></li>
+	                         
 	                         
 	                         <li class="divider"></li>
 	                         
-	                     </ul>
+	                     </ul> -->
 	                 </li>
 	                 
 	                 <li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 	                         <span >MyTripBook</span>
-	                         <span class="caret"></span>
+	                         <!-- <span class="caret"></span> -->
 	                     </a>
 	                     
 	                 </li>
@@ -135,10 +129,11 @@
     </div>
 </div>
 		<!-- ToolBar End /////////////////////////////////////-->
- 	
+
    	
-   	
+	
    	<script type="text/javascript">
+   	
 	
 		//============= logout Event  ó�� =============	
 		 $(function() {
@@ -163,7 +158,9 @@
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/listRoom"); */
+			$(self.location).attr("href","/room/mainRoom.jsp");
+			
 		});
 		
 		$( "a:contains('My TwiiChat List')" ).on("click" , function() {
@@ -219,13 +216,10 @@
 		
 		/* Product */
 		
-		$( "a:contains('Trip Product')" ).on("click" , function() {
+		$( "a:contains('DailyTour')" ).on("click" , function() {
 			$(self.location).attr("href","/product/listProduct");
-		});
+		});		
 		
-		$( "a:contains('BEST10')" ).on("click" , function() {
-			$(self.location).attr("href","/product/listBestProduct");
-		});
 		
 		/* Planer */
 		
@@ -242,9 +236,9 @@
 		
 		/* MyPage */
 		
-		$( "a:contains('MyPage')" ).on("click" , function() {
+		/* $( "a:contains('MyPage')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/myPageMain");
-		});
+		}); */
 		
 		$( "a:contains('Message')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/message/listMessage");
@@ -271,6 +265,7 @@
 		});
 		
 	</script>  
+	
 	
 	<style>
 			.navbar, .dropdown-menu{
@@ -301,5 +296,32 @@
 			    color: #fff;
 			    background: #fff;
 			}
+
+			
+			/* Modal Content/Box */
+			.modal-content {
+			    background-color: #fefefe;
+			    margin: 15% auto; /* 15% from the top and centered */
+			    padding: 20px;
+			    border: 1px solid #888;
+			    width: 80%; /* Could be more or less, depending on screen size */
+			}
+			
+			/* The Close Button */
+			.close {
+			    color: #aaa;
+			    float: right;
+			    font-size: 28px;
+			    font-weight: bold;
+			}
+			
+			.close:hover,
+			.close:focus {
+			    color: black;
+			    text-decoration: none;
+			    cursor: pointer;
+			}
+			
+
         
     </style>

@@ -15,7 +15,7 @@
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<link rel="stylesheet" href="/resources/css/plan.css" />
+<link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
 
 <!-- ///////////////////////////////////////////////////////////////////////// -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.min.css">
@@ -57,24 +57,23 @@ html, body {
 }
 
 #header .inner {
-
 	margin-top: 150px;
-	margin-bottom: 70px;
 	text-align: center;
 	width: 100%;
 	height: 100%;
-/* 	background-image: url('/resources/images/dailyPlanContent/ITALY-TRENDS.jpg'); */
-	
 }
 
-.col {
-	background: #08708A;
+#floating-button{
+	opacity: 0.8;
 }
+
 
 #thumbnailMainBox {
 	background: linear-gradient(-45deg, #56B1BF, transparent),
 		linear-gradient(45deg, #D73A31, transparent);
 	border-radius: 8px;
+	border-color:#000000;
+	border-width:10px;
 	display: inline-block;
 	padding: 1px;
 	text-decoration: none;
@@ -87,22 +86,36 @@ html, body {
 }
 
 .textArea {
-	 margin-top: 20px;
-	 border-bottom: solid 1px #D73A31; 
-
+	 margin-top: 80px;
+	 border-bottom: solid 1px #000000; 
 }
+
+.thumbnailClass{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: right;
+}
+
+#buttonBox {
+	margin-top: 40px;
+	margin-top: 40px;
+}
+
+.mainBackImage {
+	background-image: url("/resources/images/dailyPlanContent/daum_gallery_photo_20160913155706.jpg");
+	opacity: 0.3;
+}
+
+
 </style>
 
 
 <script>
 
-	function fncAddMainPlanList() {
-		$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
-	}
 
 	$(function() {
 		$("#addMainPlan").bind("click", function() {
-			fncAddMainPlanList();
+			$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
 		});
 	});
 	
@@ -116,6 +129,7 @@ html, body {
 			});
 	 });
 	 
+	 
 	 $(function() {
 			$("button:contains('삭제')").bind("click",function() {
 				var index = $("button:contains('삭제')").index(this);
@@ -128,6 +142,15 @@ html, body {
 	 	 $(function() {
 			$("button:contains('선택')").bind("click",function() {
 				var index = $("button:contains('선택')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+	 })
+	 
+	  $(function() {
+			$(".select").bind("click",function() {
+				var index = $(".select").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -151,8 +174,9 @@ html, body {
 	 /////////////////////////친구와 공유하기 기능///////////////////////////
 	$(function() {
 	
-		$("input[name='shareWithFriendButton']").bind("click",function() {
-			var index = $("input[name='shareWithFriendButton']").index(this);
+		$("button:contains('공유')").bind("click",function() {
+			alert("Hi");
+			var index = $("button:contains('공유')").index(this);
 			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 			
 			var friend;
@@ -193,8 +217,6 @@ html, body {
 	    $("#sharePlan"+i).remove(); 
 	}
 	
-	
-	 
 </script>
 
 </head>
@@ -207,16 +229,24 @@ html, body {
 			<header id="header" class="alt">
 				<div class="row">
 					<div class="col-xs-10 inner">
-						<h1>TWIIBOOK,</h1>
+						<p style="font-family:Pacifico;" align="center">TWIIBOOK,</p>
 					</div>
 				</div>
+					<p style="font-family:TYPO_JEONGJOL;font-size: 1.5em;	margin-bottom: 70px;" align="center">여행을 맞이하는, 설렘부터  </p>
 			</header>
 			
 				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
-
-			<div class="row">
-				<div  class="col-xs-1"></div>
-				<div  class="col-xs-10 inner" id="thumbnailMainBox">
+				<div class="row" style="font-family:'TYPO_JEONGJOL';">
+							<div  class="col-xs-offset-8 col-xs-4" align="left">
+								<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
+								<button type="button" class="btn" id="listSharedPlan">
+									<Strong>친구와 공유하고 있는 트위북보기</Strong>
+								</button>
+							</div>
+				</div>
+					
+			<div class="row" style="font-family:'TYPO_JEONGJOL';">
+				<div  class="col-xs-12 inner" id="thumbnailMainBox">
 				  <div align="center" class="col-xs-1">&nbsp;</div> <!-- 그라디언트 보이게 해주려고 한 부분 -->
 					<div class="col-xs-12 inner" id="thumbnailMainThumbBox">
 						<!-- <img src="/resources/images/dailyPlanContent/lineline.png" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"> -->
@@ -231,34 +261,30 @@ html, body {
 										<div class="caption" >
 										
 										 <div class="row">
-										   <div class="col-md-3">
-									<%-- 	   ${mainPlan.mainThumbnail} --%>
-											<img src="/resources/images/thumbnail_plan/main_thumbnail4.jpg" style="width: 150px; height:250px" /> 
-											<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
-										   </div>
-											<div class="col-md-7 textArea">
-												<h3>제목 : ${mainPlan.planTitle}</h3>
-												<p>출발하는 날짜 : ${mainPlan.departureDate }</p>
-												<p>도착하는 날짜 : ${mainPlan.arrivalDate}</p>
-												<p>국가 : ${mainPlan.country}</p>
-												<p>도시 : ${mainPlan.city}</p>
-											</div>
-												<div class="col-md-2">
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="update"></span>수정
-													</button>
-		
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="delete"></span>삭제
-													</button>
-		
-													<button type="button" class="btn btn-default">
-														<span class="glyphicon glyphicon-ok" aria-hidden="true" id="submit"></span>선택
-													</button>
-													
-													<input type="button" id="shareWithFriendButton" name="shareWithFriendButton" class="btn btn-default" value="친구와 공유하기" />
+											   <div class="col-md-5 thumbnailClass">
+										<%-- 	   ${mainPlan.mainThumbnail} --%>
+												<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+											   </div>
+											   
+												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
+												<div class="col-md-6 textArea">
+													<div class="col-md-8 select">
+													<h2> ${mainPlan.planTitle}</h2>
+													<p> ${mainPlan.departureDate } ~ ${mainPlan.arrivalDate}</p>
+													<p><Strong>국가</Strong> ${mainPlan.country}</p>
+													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
+													</div>
+													<div class="col-md-4" align="right" style="margin-top: 35px;">
+														<button type="button" class="btn btn-default">공유</button>
+														<button type="button" class="btn btn-default">수정</button>
+														<button type="button" class="btn btn-default">삭제</button>
+														<button type="button" class="btn btn-default">선택</button>
+													</div>
 												</div>
-											</div>
+											
+												<div class="col-md-1" id="buttonBox" align="right">
+												</div>
+											</div> <!--  row 끝 -->
 											
 										</div>
 									</div>
@@ -268,35 +294,25 @@ html, body {
 						</c:forEach>
 					</div>
 					<div align="right" class="col-xs-1">&nbsp;</div>
-				</div>
-				<!-- 섬네일 전체 박스 부분 -->
-				<div align="right" class="col-xs-1">&nbsp;</div>
-
-				
-					<div class="row">
-							<div  class="col-xs-12 inner">
-								<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
-								<button type="button" class="btn" id="listSharedPlan">
-									<Strong>친구와 공유하고 있는 플랜 보기</Strong>
-								</button>
-							</div>
-						</div>
-			</div>
-			<!-- 메인 섬네일을 감싸는 row 시작부분 -->
+				</div><!-- 섬네일 전체 박스 부분 -->
 		</div>
+
+		
+		<!--  Floating Button <START> -->
+		<div id="container-floating">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create">
+				<p class="letter" id="addMainPlan">+</p>
+			</div>
+		</div>
+		<!--  Floating Button <END> -->
+
+
 	</form>
-	
+
+
 
 </body>
 
-<!--  Floating Button <START> -->
-<div id="container-floating">
-	<div id="floating-button" data-toggle="tooltip" data-placement="center"
-		data-original-title="Create" onclick="newmail()">
-		<p class="letter" id="addMainPlan">+</p>
-	</div>
-</div>
-<!--  Floating Button <END> -->
 <!---------- ShareWithFriend Dialog <START>------------->
 
 		<div class="modal fade" id="shareWithFriend" role="dialog">
