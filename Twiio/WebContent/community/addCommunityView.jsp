@@ -143,6 +143,7 @@ $(function() {
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
 		
 		<div class="form-group">
+		<c:if test="${communityType==1}">
 		    <div class="col-xs-6 col-sm-4">
 		      <select class="form-control" name="communitySubTitle" id="communitySubTitle">
 		      		<option value="">말머리를 선택해 주세요</option>
@@ -154,7 +155,7 @@ $(function() {
 					<option value="5">기타</option>
 				</select>
 		    </div>
-		
+		</c:if>
 		    <div class="col-xs-8">
 		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
 		    </div>

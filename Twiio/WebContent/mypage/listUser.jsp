@@ -65,7 +65,8 @@
 		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
-				 self.location ="/user/getUser?userId="+$(this).text().trim();
+				var userNo = $($('input[name=userss]')[$('td:nth-child(2)').index(this)] ).val(); 
+				 self.location ="/user/getUser?userNo="+userNo;
 			});
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
@@ -113,11 +114,10 @@
 				//////////////////////////// 추가 , 변경된 부분 ///////////////////////////////////
 				//self.location ="/user/getUser?userId="+$(this).text().trim();
 				////////////////////////////////////////////////////////////////////////////////////////////
-				var userId = $($('input[name=userss]')[$('td:nth-child(5)').index(this)] ).val();
-				alert(userId);
+				var userNo = $($('input[name=userss]')[$('td:nth-child(5)').index(this)] ).val(); 
 				$.ajax( 
 						{
-							url : "/user/json/getUser/"+userId ,
+							url : "/user/json/getUser/"+userNo ,
 							method : "GET" ,
 							dataType : "json" ,
 							headers : {
@@ -129,14 +129,13 @@
 													+"아이디 : "+JSONData.userId+"<br/>"
 													+"이  름 : "+JSONData.userName+"<br/>"
 													+"이메일 : "+JSONData.email+"<br/>"
-													+"ROLE : "+JSONData.role+"<br/>"
 													+"등록일 : "+JSONData.regDate+"<br/>"
 													+"</h6>";
 								//Debug...									
 								//alert(displayValue);
 								$("h6").remove();
 								//$("#info").html(displayValue);
-								$("#"+userId+"").html(displayValue);
+								$("#"+userNo+"").html(displayValue);
 							}
 					});
 				
@@ -233,8 +232,8 @@
 			  <td align="left">${user.userName}</td>
 			  <td align="left">${user.email}</td>
 			  <td align="left">
-			  	<i class="glyphicon glyphicon-ok" id="${user.userId}"></i>
-			  	<input type="hidden" name="userss" value="${user.userId}">
+			  	<i class="glyphicon glyphicon-ok" id="${user.userNo}"></i>
+			  	<input type="hidden" name="userss" value="${user.userNo}">
 			  </td>
 			</tr>
           </c:forEach>
