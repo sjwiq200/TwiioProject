@@ -52,16 +52,16 @@ public class MainPlanController {
 		
 		System.out.println("-----Controller : addMainPlan <START>");
 		
-		String cityResult = "";
+		String cityResult = "no";
 		String countryResult="";
 		
-		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
-			if(i==mainPlan.getCityList().length-1) {
-				cityResult += mainPlan.getCityList()[i];
-			}else {
-				cityResult += mainPlan.getCityList()[i] + ",";
-			}
-		}
+//		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
+//			if(i==mainPlan.getCityList().length-1) {
+//				cityResult += mainPlan.getCityList()[i];
+//			}else {
+//				cityResult += mainPlan.getCityList()[i] + ",";
+//			}
+//		}
 		
 		for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
 			if(i==mainPlan.getCountryList().length-1) {
@@ -81,7 +81,7 @@ public class MainPlanController {
 		System.out.println("플랜제목 : " + mainPlan.getPlanTitle());
 		System.out.println("출발일 : "+ mainPlan.getDepartureDate());
 		System.out.println("도착일 : " + mainPlan.getArrivalDate());
-		System.out.println("여행지 : " + mainPlan.getCity());
+		//System.out.println("여행지 : " + mainPlan.getCity());
 		
 		DailyPlan dailyPlan = new DailyPlan();
 		dailyPlan.setMainPlan(mainPlan);
@@ -101,8 +101,8 @@ public class MainPlanController {
 	        
 	        for(int i = 0 ; i <diffDays+1 ; i++) {
 	        	
-	        	//dailyPlan.setDailyCity(cityResult);
-			    //dailyPlan.setDailyCountry(mainPlan.getCountry());
+	        	dailyPlan.setDailyCity(cityResult);
+			    dailyPlan.setDailyCountry(mainPlan.getCountry());
 			    dailyPlan.setDay(i+1);
 			    dailyPlan.setDailyDate(dailyDate);
 			    dailyPlan.setMainPlan(mainPlan);
@@ -122,8 +122,8 @@ public class MainPlanController {
 		        dailyDate=Date.valueOf(dailyDateFormat);
 	        }
 		} else {
-			//dailyPlan.setDailyCity(cityResult);
-	        //dailyPlan.setDailyCountry(mainPlan.getCountry());
+			dailyPlan.setDailyCity(cityResult);
+	        dailyPlan.setDailyCountry(mainPlan.getCountry());
 	        dailyPlan.setDay(1);
 	        dailyPlan.setDailyDate(mainPlan.getArrivalDate());
 	        dailyPlan.setMainPlan(mainPlan);
@@ -207,10 +207,14 @@ public class MainPlanController {
 		System.out.println("Controller : updateMainPlanView <START>" + "Param값 : " + mainPlanNo);
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
-		String[] cityList = (mainPlan.getCity()).split(",");
-		mainPlan.setCityList(cityList);
+		String[] country = (mainPlan.getCountry().split(","));
+		List<String> countryList = new ArrayList<String>();
+		for(int i =0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		
 		model.addAttribute("mainPlan", mainPlan);
-		model.addAttribute("cityList",cityList);
+		model.addAttribute("countryList",countryList);
 		
 		System.out.println("Controller : updateMainPlanView <END>");
 		
@@ -225,16 +229,16 @@ public class MainPlanController {
 		System.out.println("Controller : updateMainPlan <START>"+mainPlan);
 		
 		/////mainPlanUpdate////////////////////////////////////////////////////////////////
-			String cityResult = "";
-			for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
-				if(i==mainPlan.getCityList().length-1) {
-					cityResult += mainPlan.getCityList()[i];
+			String countryResult = "";
+			for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
+				if(i==mainPlan.getCountryList().length-1) {
+					countryResult += mainPlan.getCountryList()[i];
 				}else {
-					cityResult += mainPlan.getCityList()[i] + ",";
+					countryResult += mainPlan.getCountryList()[i] + ",";
 				}
 			}
-			mainPlan.setCity(cityResult);
-			mainPlan.setCountry("국가");
+			mainPlan.setCity("no");
+			mainPlan.setCountry(countryResult);
 		//////////////////////////////////////////////////////////////////////////////////
 		
 			
@@ -248,9 +252,9 @@ public class MainPlanController {
 		Date arrivalDateDB = mainPlanDB.getArrivalDate();
 		Boolean departureCompared = departureDate.equals(departureDateDB)&&arrivalDate.equals(arrivalDateDB);
 		
-		String city = cityResult;
-		String cityDB = mainPlanDB.getCity();
-		Boolean cityCompared = city.equals(cityDB);
+		String country = countryResult;
+		String countryDB = mainPlanDB.getCountry();
+		Boolean countryCompared = country.equals(countryDB);
 		long diffDaysDB = mainPlanService.getDayCount(mainPlanDB.getMainPlanNo());
 		
 		mainPlanService.updateMainPlan(mainPlan);
