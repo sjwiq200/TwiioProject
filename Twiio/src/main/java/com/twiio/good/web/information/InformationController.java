@@ -221,6 +221,9 @@ public class InformationController {
 		
 		System.out.println(nightLife);
 		
+		String[] center = {};
+		String[] address = {};
+		
 		Map<String, List<String>> map = informationService.getNightLifeDetail(nightLife);
 		
 		
@@ -231,9 +234,14 @@ public class InformationController {
 		
 		String location = google.get(0);
 		String[] str = location.split("&");
-		String[] center = str[7].split("=");
 		
-		String[] address = center[1].split(",");
+		System.out.println("À§Ä¡"+location);
+		
+		if(str.length>7) {
+			 center = str[7].split("=");
+			 address = center[1].split(",");
+		}
+		
 		
 		
 		model.addAttribute("lat",address[0] ).addAttribute("lng",address[1] ).addAttribute("image",image).addAttribute("context",context)

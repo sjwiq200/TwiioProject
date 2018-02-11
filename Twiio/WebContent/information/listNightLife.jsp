@@ -215,7 +215,7 @@
 								}	
 									list += '<tr><td align="center" valign="middle" id="img"><img src="'+image[i]+
 									'"  style="width: 250px; height: 200px;"/></td>'+
-									'<td align="center" valign="middle" id="con"><a href="#"><input type="hidden" id="info" value="'+url[i]+
+									'<td align="center" valign="middle" id="con" style="padding-top : 50px; font-family:\'JEJUGOTHIC\' !important; "><a href="#"><input type="hidden" id="info" value="'+url[i]+
 									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									
 								}
