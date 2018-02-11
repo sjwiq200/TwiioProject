@@ -53,6 +53,7 @@
 		});
 
 		function initialize(){
+		console.log("initialize()");
 		var latlng = new google.maps.LatLng(37.5240220, 126.9265940);
 		var myOptions = {
 				zoom: 13,
@@ -106,6 +107,7 @@
 		}
 		
 		function Setmarker(latLng) {
+			console.log("Setmarker()");
 			if (marker.length > 0)
 		    {
 				marker[0].setMap(null);
@@ -121,8 +123,10 @@
 		}
 		/////////////////////////////////////////////////////////////////////
 		function codeAddress(event) {
+			console.log("codeAddress()");
 				if (geocodemarker.length > 0)
 				{
+					console.log("codeAddress if else")
 						servicemarker.setMap(null);
 						if (marker.length > 0)
 					    {marker[0].setMap(null);}
@@ -152,11 +156,12 @@
 								service.getDetails({
 								    placeId:results[0].place_id
 								}, function(place, status) {
+									
 									servicemarker = new google.maps.Marker({
 								        map: map,
 								        position: results[0].geometry.location
 								      });
-									
+									console.log("123"+servicemarker);
 									address=place.formatted_address;
 			        		    	types=place.types;
 			        		    	url = place.url;
@@ -164,16 +169,11 @@
 			        		    	name = place.name;
 			        		    	website = place.website;
 			        		    			
-									
-									
-									
-									
-									
 									mapImage = results[0].geometry.location;
 									$("#mapImg").val(mapImage);
 								    google.maps.event.addListener(servicemarker, 'click', function() {
 								    	console.log(JSON.stringify(place));
-								        
+								    
 								        infowindow.open(map, this);
 								      });
 								});
