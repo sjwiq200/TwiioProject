@@ -38,16 +38,14 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-	
-	 <!-- ---------Floating Button------------ -->
-  	<link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
-  	
-  	<!--reply  -->
+
+	<!--reply  -->
   	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-  	 	
-
+	
+	 <!-- ---------Floating Button------------ -->  	
+  	<link href="/resources/css/floatingButtonPro.css" rel="stylesheet" type="text/css" />
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -710,6 +708,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 			 $( "div.nd4" ).on("click" , function() {
 				
 				 self.location="/product/deleteProduct?productNo="+${product.productNo};
+				 alert("상품이 삭제 되었습니다.");
 			});
 		});
 	  
@@ -953,16 +952,16 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
  	<div id="container-floating">
 		<c:if test="${user.userNo == product.hostNo }">
 		<div class="nd4 nds" data-toggle="tooltip" data-placement="left"
-			data-original-title="deleteProduct">
+			data-original-title="deleteProduct" title="삭제">
 			<img class="reminder" src="/resources/images/productIcons/delete.png" style="width: 35px; height: 35px;">
 		</div>
 		<div class="nd3 nds" data-toggle="tooltip" data-placement="left"
-			data-original-title="updateProduct">
+			data-original-title="updateProduct" title="수정">
 			<img class="reminder" src="/resources/images/productIcons/edit.png" style="width: 35px; height: 35px;">
 		</div>
 		</c:if>
 		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
-			data-original-title="listProduct">
+			data-original-title="listProduct" title="목록보기">
 			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
 		</div>
 

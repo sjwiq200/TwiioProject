@@ -116,6 +116,44 @@ public class DailyPlanController {
 		
 		return "forward:/dailyplan/getDailyPlan.jsp";
 	}
+	
+	/////////////////////////////////////getDailyPlan2/////////////////////////////////////////////////////////////
+	
+	@RequestMapping(value = "getDailyPlanFromMain")
+	public String getDailyPlanFromMain(@RequestParam("mainPlanNo") int mainPlanNo, Model model, HttpSession session)
+			throws Exception {
+
+		System.out.println("Controller : getDailyPlanFromMain <START>");
+		System.out.println("mainPlanNo : " + mainPlanNo);
+		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
+		DailyPlan dailyPlan = listMain.get(0);
+		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
+		int dailyPlanNo = dailyPlan.getDailyPlanNo();
+
+		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+			List<PlanContent> list = new ArrayList<PlanContent>();
+			for(PlanContent listPlanContent : listBefore) {
+				listPlanContent.setDailyPlan(dailyPlan);
+				list.add(listPlanContent);
+			}
+			model.addAttribute("list", list);
+			System.out.println("##debug : " + list);
+		}
+		model.addAttribute("dailyPlan", dailyPlan);
+		
+		/*추가*/
+		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
+		/*String city = mainPlan.getCity();
+		String[] cityList = city.split(",");
+		model.addAttribute("cityList",cityList);*/
+		model.addAttribute("listDailyPlan", listDailyPlan);
+		/*추가*/
+		System.out.println("###dailyPlanDebug : " + dailyPlan);
+		System.out.println("Controller : getDailyPlanFromMain <END>");
+		
+		return "forward:/dailyplan/getDailyPlan.jsp";
+	}
 
 	/////////////////////////////////////// PlanContent/////////////////////////////////////////////////////////////
 
@@ -192,7 +230,6 @@ public class DailyPlanController {
 		mapImage = mapImage.replaceAll("[(]", "");
 		mapImage =mapImage.replaceAll("[)]","");
 		mapImage =mapImage.replaceAll(" ","");
-		
 
 		String mapImageResult = "https://maps.googleapis.com/maps/api/staticmap";
 		mapImageResult += "?center=" + mapImage+ "&size=400x400&zoom=15&maptype=google.maps.MapTypeId.ROADMAP&markers=color:red|" + mapImage;

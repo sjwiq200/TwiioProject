@@ -31,7 +31,8 @@ CREATE TABLE schedule (
 	schedule_date VARCHAR2(15),
 	schedule_address VARCHAR2(100),
 	country VARCHAR2(100),
-	city VARCHAR2(100)
+	city VARCHAR2(100),
+	user_no_string VARCHAR2(200)
 );
 	
 

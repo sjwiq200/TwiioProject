@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
@@ -25,36 +24,35 @@
 
 <!-- 다이얼로그  -->
 
-<link rel="stylesheet"
-	href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
 <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
 
-<link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
-	rel="stylesheet">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
-<script
-	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
 
 <!-- Hover Jquery -->
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 
 <!--  구글  -->
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- 내 CSS -->
 <link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
 
+<!--  ///////////////////////// CSS ////////////////////////// -->
+		<link rel="stylesheet" href="/resources/css/font.css" />
+<link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
-<title>MainPlanList</title>
+
+<title>getDailyPlan</title>
 
 <style type="text/css">
 
 #mainBody {
-	padding-top: 140px;
+	padding-top: 50px;
+	font-family:'JEJUGOTHIC';
 }
 
 #innerMain {
@@ -79,6 +77,97 @@
 	display: inline-block;
 	border-radius: 6px;
 }
+
+/* //////////////////eunae_modal////////////////////////// */
+		.content h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
+		.table-filter {
+			background-color: #fff;
+			font-size: 15px;
+		}
+		.table-filter tbody tr:hover {
+			cursor: pointer;
+			background-color: #eee;
+		}
+		.table-filter tbody tr td {
+			padding: 10px;
+			vertical-align: middle;
+			border-top-color: #FFF;
+		}
+		.table-filter tbody tr.selected td {
+			background-color: #eee;
+		}
+		.table-filter tr td:first-child {
+			width: 60px;
+		}
+		.media-photo{
+		  float: none;
+		  margin: 0 auto;
+		  -webkit-border-radius: 50% !important;
+		  -moz-border-radius: 50% !important;
+		  border-radius: 50% !important;
+		  border: 3px solid;
+		}
+}
+.btn {
+	font-family:'JEJUGOTHIC';
+}
+
+
+/* 사이드바 <START> */
+
+.sidenav {
+	margin-top: 53px;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #C2C2C2;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 60px;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+
+
 </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -132,7 +221,7 @@
 							},
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++){
+		    					for(var i=0;i<user.length;i++) /* {
 		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
 		    								+'<span>  [이름] : '+user[i].userName+'</span>'
@@ -140,7 +229,15 @@
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}
+		    					}  */
+		    					{
+		    						
+		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+user[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
+									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'+
+									'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-primary btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
+									
+		    						
+		    					} 
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
@@ -154,7 +251,7 @@
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).remove(); 
+	    $("#addToMyFriendList"+i).attr("disabled","true");  
 	}
 	
 
@@ -220,6 +317,27 @@
 		});
 	});
 	
+	
+	
+</script>
+
+<script type="text/javascript">
+	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
+/* 	$(function() {
+		$(".contentsTxt").hover(function() {
+			var index = $(".contentsTxt").index(this);
+			alert(index);
+			$("#txtSize").append('<input type="button" value="크게">');
+		});
+	}); */
+	
+	/*  $(function() {
+			$("button:contains('선택')").bind("click",function() {
+				var index = $("button:contains('선택')").index(this);
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			}); */
 </script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
@@ -270,7 +388,77 @@ $(function() {
 
 </head>
 <body id="mainBody">
+	
+	
+	
+	<!-- ----------------------------------- -->
 
+
+	<div id="mySidenav" class="sidenav">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<c:set var="i" value="0" />
+							<c:forEach var="dailyPlan" items="${listDailyPlan}">
+								<c:set var="i" value="${ i+1 }" />
+								<input type="hidden"name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+							    <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
+							    <div class="col-xs-12 contentsBox" id="contentsBox">
+							    	<div class="col-xs-12 contents" name="contents" align="left">
+								    <h5>DAY${ i }</h5>
+								   <span>
+										<h4>${dailyPlan.dailyDate}</h4>
+										<h6>${dailyPlan.dailyCity}</h6> 
+									</span>
+									</div>
+									<!--<div class="col-xs-1"><p>국가 </p>
+									<div class="col-xs-12" align="left"></div><p>도시 </p> </div> -->
+									<%-- <p>${dailyPlan.dailyCountry}</p> --%>
+									<%-- <p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
+									<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p> 
+									<p>유저번호 : ${dailyPlan.user.userNo }</p>--%>
+									 <%--<div class="col-xs-2" id="contents">
+										 <c:if test="${empty dailyPlan.dailyCity}">
+											<c:set var="num" value="0" />
+											<c:forEach var="cityList" items="${cityList}">
+												<c:set var="num" value="${ num+1 }" />
+												<div class="btn-group" role="group" id="cityButtonGroup">
+													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
+												</div>
+												<button class="button" id="${i}">${cityList}</button>
+											</c:forEach>
+										</c:if> 
+										<p></p>
+									</div>--%>
+								</div>
+								  <!-- <div class="col-xs-2"></div><div class="col-xs-8" id="line"></div> <div class="col-xs-2"></div> -->
+							</c:forEach>
+	</div>
+
+	<div id="main">
+		<h2>&nbsp;</h2>
+		<p>&nbsp;</p>
+		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
+			open</span>
+	</div>
+
+	<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "250px";
+			document.getElementById("main").style.marginLeft = "250px";
+			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "white";
+		}
+	</script>
+
+
+
+
+
+	<!-- ----------------------------------- -->
 
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
 
@@ -283,78 +471,13 @@ $(function() {
 
 					<div class="row" align="center">
 					
-					
-						<!-- -------------TOP<START>--------------- -->
-
-<!-- 
-			<script>
-				$(function() {
-					$('a[title]').tooltip();
-				});
-			</script>
-
-			<section style="background: #efefe9;">
-				<div class="container">
-					<div class="row">
-						<div class="board">
-							<h2>Welcome to IGHALO!<sup>™</sup></h2>
-							<div class="board-inner">
-								<ul class="nav nav-tabs" id="myTab">
-									<div class="liner"></div>
-									<li class="active"><a href="#home" data-toggle="tab"
-										title="welcome"> <span class="round-tabs one"> <i
-												class="glyphicon glyphicon-home"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#profile" data-toggle="tab" title="profile">
-											<span class="round-tabs two"> <i
-												class="glyphicon glyphicon-user"></i>
-										</span>
-									</a></li>
-									<li><a href="#messages" data-toggle="tab"
-										title="bootsnipp goodies"> <span class="round-tabs three">
-												<i class="glyphicon glyphicon-gift"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#settings" data-toggle="tab"
-										title="blah blah"> <span class="round-tabs four"> <i
-												class="glyphicon glyphicon-comment"></i>
-										</span>
-									</a></li>
-
-									<li><a href="#doner" data-toggle="tab" title="completed">
-											<span class="round-tabs five"> <iclass ="glyphiconglyphicon-ok">
-												</i></span>
-									</a></li>
-
-								</ul>
-							</div>
-
-
-						</div>
-					</div>
-				</div>
-			</section>
- -->
-
-
-
-
-
-			<!-- -------------TOP<END>---------------- -->
-					
-					
+								
+					<!-- -------------TOP<START>--------------- -->
 					
 					
 						<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-default" value="나를 위한 맞춤정보" /> 
 						<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-default" value="같이 갈 친구 찾기" />
 						<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p>
-						<button type="button" class="btn" data-toggle="modal"data-target="#addText">글씨쓰기</button>
-						<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
-						<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
-						<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>
 						<p></p>
 						<img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px">
 						<p></p>
@@ -385,6 +508,7 @@ $(function() {
 
 						<c:set var="i" value="0" />
 						<c:forEach var="planContent" items="${list}" varStatus="index">
+							<!-- <img src="/resources/images/dailyPlanContent/line.png" width="200px" style="opacity: 0.6" height="30px" > -->
 							<div id="here${i}"></div>
 							<c:if test="${index.last}">
 								<input type="hidden" id="lastIndex" value="${i}" />
@@ -397,7 +521,6 @@ $(function() {
 
 							<div id="contentsBoxNo${i}" class="realContents">
 
-								<h7 class="contents"> ㅡ </h7>
 								<%-- <p class="contents">콘텐츠 번호 : ${planContent.contentNo}</p>
 								<p class="contents">데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
 								<p class="contents">콘텐츠타입 : ${planContent.contentType}</p> --%>
@@ -433,43 +556,56 @@ $(function() {
 								<c:if test="${!empty planContent.routeDescription}">
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;"><!-- 길찾기결과 :  -->${planContent.routeDescription}</p>
 								</c:if>
+								
+								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
+									<div class="col-xs-12"  style="margin-top: 30px" align="center">
 									<p class="contents">
-										<Strong> Your Map Information</Strong>
+										<Strong> YOUR MAP </Strong>
 									</p>
+									</div>
+									<div class="col-xs-6" align="right">
 									<p class="contents">
-										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px"
-											onclick="javascript:location.href='${planContent.mapUrl}';" />
+										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px" style="border-radius: 99%;"
+											onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
+									</div>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapName}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">${planContent.mapName}</p>
+									<div class="col-xs-6"  style="margin-top:100px ;" align="left">
+									<img src="/resources/images/dailyPlanContent/map.png" width="40px"><p>&nbsp;</p>
+									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">[${planContent.mapName}]</p>
 								</c:if>
 
-								<c:if test="${!empty planContent.mapUrl}">
+								<%-- <c:if test="${!empty planContent.mapUrl}">
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 URL : ${planContent.mapUrl}</p>
-								</c:if>
+								</c:if> --%>
 
 								<c:if test="${!empty planContent.mapAddress}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 주소 : ${planContent.mapAddress}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">ADDRESS : ${planContent.mapAddress}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapPhone}">
-									<p class="contents">PHONE : ${planContent.mapPhone}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;" >PHONE : ${planContent.mapPhone}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapWebsite}">
-									<p class="contents">웹사이트 : ${planContent.mapWebsite}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">WEBSITE: ${planContent.mapWebsite}</p>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapType}">
-									<p class="contents">지도유형 : ${planContent.mapType}</p>
+									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">TYPE : ${planContent.mapType}</p>
+									</div>
 								</c:if>
+								<!-- ---------------------지도정보 <END>-------------------- -->
 
 								<c:if test="${!empty planContent.contentText}">
 									<p>
-										<div class="contentsTxt" style="margin-left:60px; margin-right:60px; font-size:1.1em !important; font-color: #C2C2C2 !important;">${planContent.contentText}</div>
+										<div class="col-xs-12" style="margin-top:50px;  margin-right:60px; font-size:1.1em !important;font-color: #C2C2C2 !important;">
+											${planContent.contentText}
+											<div id="col-xs-12 txtSize" class="txtSize"></div>
+										</div>
 									</p>
 								</c:if>
 
@@ -477,7 +613,7 @@ $(function() {
 									<p class="contentsThis">
 										<img
 											src="/resources/images/dailyPlanContent/${planContent.contentImage}"
-											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 98%;"/>
+											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 5%;"/>
 									</p>
 								</c:if>
 
@@ -496,6 +632,41 @@ $(function() {
 				<div align="right" class="col-xs-1">&nbsp;</div>
 			</div>
 			<!-- 섬네일 전체 박스 부분 -->
+			
+			
+			
+			<!-- -------Floating Button<START>----------- -->
+
+	<div id="container-floating" style="font-family:'JEJUGOTHIC';">
+	
+	  <div class="nd5 nds" class="btn" id="addRouteButton" data-placement="left" >
+	  <p class="letter">ROUTE</p>
+	  </div>
+	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap" data-placement="left" >
+	    <p class="letter">MAP</p>
+	  </div>
+	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" data-placement="left" >
+	   <p class="letter">PICS</p>
+	  </div>
+	  <div class="nd1 nds" data-toggle="modal" data-target="#addText" data-placement="left" >
+	    <p class="letter">TEXT</p>
+	  </div>
+	
+	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
+	    <p class="plus">+</p>
+	  </div>
+	
+	</div>
+
+	<!-- <button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button>
+	<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
+	<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
+	<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>-->
+
+	<!-- -------Floating Button<END>----------- -->
+	
+	
+	
 		</div>
 
 
@@ -521,7 +692,9 @@ $(function() {
 	<!-- ----------CONTENTS<END>----------- -->
 
 	<!-- 	</form> -->
-
+	
+	
+	
 	<!---------- Map Dialog ------------->
 	<div class="modal fade" id="addMap" role="dialog">
 		<div class="modal-dialog modal-lg">
@@ -601,7 +774,7 @@ $(function() {
 						</div>
 						<input type="hidden" name="dailyPlanNo"
 							value="${dailyPlan.dailyPlanNo}" />
-						<button name="add" type="button">ADD</button>
+						<button name="add" class="btn btn-primary btn-sm" type="button">ADD</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -614,29 +787,40 @@ $(function() {
 
 	<!---------- FriendRec Dialog <START>------------->
 
-	<div class="modal fade" id="friendRec" role="dialog">
+	<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
 		<div class="modal-dialog modal-md">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
-						<Strong>나와 같은 장소, 날짜에 여행가는 친구들을 찾아볼까요?</Strong>
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title"align="center" >
+						<Strong>나와 같은 장소, <p>날짜에 여행가는 친구들을 찾아볼까요?</Strong>
 					</h4>
-					<h7 class="modal-title">TWIIO</h7>
 				</div>
-
-				<div class="modal-body" align="center">
-
-					<div id="friendListForRec"></div>
-
-				</div>
+				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
+							<table class="table table-filter" style="align-content: center;">
+								<tbody>
+										<tr data-status="pagado">
+										<div class="media-body">
+										  <td align="left" vailgn="middle">
+											  <div class="row" >
+											  	<div id="friendListForRec"></div>
+											  </div>
+										 	 </td>
+										  </div>
+										</tr>
+								</tbody>
+							</table>
+						
+					</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
+	
+	
 
 	<!---------- FriendRec Dialog <END>------------->
 </body>

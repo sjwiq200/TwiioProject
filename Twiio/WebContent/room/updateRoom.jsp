@@ -31,6 +31,10 @@
 	<!--  ///////////////////////// add,updateRoom.css ////////////////////////// -->
 	<link href="/resources/css/add,updateRoom.css" rel="stylesheet" type="text/css"/>
 	<link rel="stylesheet" href="/resources/css/plan.css" />
+	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -38,8 +42,13 @@
 	
 		//============= Update  Event =============
 		 $(function() {
-			$( "button.btn.btn-primary" ).on("click" , function() {
-				$("form").attr("method" , "POST").attr("action" , "/room/updateRoom").submit();
+			$( "button#go" ).on("click" , function() {
+				swal(" 채팅방 정보가 수정되었습니다!","","success").then((next) => {
+					if(next){
+						$("form").attr("method" , "POST").attr("action" , "/room/updateRoom").submit();	
+					}
+				});// end swal
+				
 			});
 		});	
 		
@@ -54,8 +63,24 @@
 		//============= Delete  Event =============
 		$(function(){
 			$("a:contains('방 삭제')").on("click",function(){
-				alert("hello");
-				$("form").attr("method","POST").attr("action", "/room/deleteRoom").submit();
+				
+				swal({
+					  title: "방을 삭제시키시겠습니까?",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal(" 방이 삭제 되었습니다.", {
+					      icon: "success",
+					    }).then((next) => {
+					    		$("form").attr("method","POST").attr("action", "/room/deleteRoom").submit();
+					    });
+					  } 
+					});//end swal
+				
+				
 			})
 		})
 	</script>		
@@ -152,9 +177,9 @@
 								  
 								  <div class="form-group">
 								    <div class="col-sm-offset-4  col-sm-4 text-center">
-								      <button type="button" class="btn btn-outlined btn-light btn-sm"  >수 &nbsp;정</button>
+								      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go" >수 &nbsp;정</button>
 									  <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button">취&nbsp;소</a>
-									  <a class="btn btn-outlined btn-theme btn-sm" role="botton">방 삭제</a>
+									  <a class="btn btn-outlined btn-theme btn-sm" role="button">방 삭제</a>
 								    </div>
 								  </div>
 								</form>

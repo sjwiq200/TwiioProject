@@ -236,7 +236,7 @@ html, body {
 											<c:forEach var="cityList" items="${cityList}">
 												<c:set var="num" value="${ num+1 }" />
 												<div class="btn-group" role="group" id="cityButtonGroup">
-													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" />
+													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
 												</div>
 											<%-- 	<button class="button" id="${i}">${cityList}</button> --%>
 											</c:forEach>

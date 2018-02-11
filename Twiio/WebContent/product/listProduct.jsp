@@ -118,25 +118,25 @@ body {
 }
 
 
-.btn {	
-	letter-spacing: 1px;
-	text-decoration: none;
-	background: none;
-	-moz-user-select: none;
-	background-image: none;
-	border: 1px solid transparent;
-	border-radius: 0;
-	cursor: pointer;
-	display: inline-block;
-	margin-bottom: 0;
-	vertical-align: middle;
-	white-space: nowrap;
-	font-size: 14px;
-	line-height: 20px;
-	font-weight: 700;
-	text-transform: uppercase;
-	border: 2px solid;
-	padding: 8px 20px;	
+.btn {
+    letter-spacing: 1px;
+    text-decoration: none;
+    background: none;
+    -moz-user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 0;
+    cursor: pointer;
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+    white-space: nowrap;
+    font-size: 90%;
+    line-height: 150%;
+    font-weight: 700;
+    text-transform: uppercase;
+    border: 2px solid;
+    padding: 1% 1%;
 }
 .btn.btn-default:hover, .btn.btn-default:active{
 	color: #FFF;
@@ -157,11 +157,12 @@ body {
 }
 
 .btn-outlined.btn-theme {
-	margin-top: 25px;
-	margin-right: 35px;
-	background: #f4f4f4;
-	color: #08708A;
-	border-color: #08708A;
+    margin-top: 5%;
+    margin-right: 2%;
+    margin-left: 2%;
+    background: #f4f4f4;
+    color: #08708A;
+    border-color: #08708A;
 }
 a.thumbnail{
 	color: #08708A;
@@ -194,12 +195,16 @@ div.caption{
 		});
 
 		$("button.btn.btn-default:contains('검색')").bind("click", function() {
-			fncGetUserList(1);
+			//fncGetUserList(1);
+			$("#currentPage").val(1);				
+			$("form").attr("method", "POST").attr("action", "/product/listProduct").submit();
 		});
 
 		$("#searchKeyword").keydown(function(e) {
 			if (e.keyCode == 13) {
-				fncGetUserList(1);
+				//fncGetUserList(1);
+				$("#currentPage").val(1);				
+				$("form").attr("method", "POST").attr("action", "/product/listProduct").submit();
 			}
 		});
 
@@ -263,6 +268,7 @@ div.caption{
 											"currentPage" : page,
 											"searchCondition" : $('#searchCondition').val(),
 											"searchKeyword" : $('#searchKeword').val(),
+											"priceCondition" : $('#priceCondition').val(),
 											"prodSearchType" :  $('#prodSearchType').val()
 										}),
 										headers : {
@@ -492,7 +498,7 @@ div.caption{
 			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="food">푸드투어</button>
 		</div>
 
-		<div class="row col-sm-offset-3 col-sm-9 text-center">
+		<div class="row col-sm-offset-3 col-sm-10 text-center">
 			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="tracking">트래킹</button>
 			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="activity">액티비티</button>
 			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="night">night투어</button>
@@ -540,14 +546,14 @@ div.caption{
 
 					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 					<input type="hidden" id="currentPage" name="currentPage" value="" />
-					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
+					<input type="hidden" id="priceCondition" name="priceCondition" value="${! empty search.priceCondition ? search.priceCondition : '' }" />
 					<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
-					<p>
+					<div>
 						<font name="high">가격높은순</font>
 						<font name="low">가격낮은순</font>
 						<!-- <font color="blue" name="star">별점순</font>
 						<font color="blue" name="view">조회순</font> -->
-					</p>
+					</div>
 					<p></p>
 				</form>
 
