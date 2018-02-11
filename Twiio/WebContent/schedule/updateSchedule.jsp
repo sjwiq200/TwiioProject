@@ -22,8 +22,6 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<link rel="stylesheet" href="/resources/css/imformation.css" />
-	
 	<style>
        #map {
         height: 400px;
@@ -118,7 +116,6 @@ h3{
     font-style: Pacifico;
     text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
 }
-
     </style>
     
     <script type = "text/javascript" async defer
@@ -351,6 +348,8 @@ h3{
 				}else{
 					$("form")[0].reset();	
 				}
+				 
+			});
 		});	
 	
 
@@ -359,7 +358,6 @@ h3{
 </head>
 
 <body>
-
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -367,12 +365,7 @@ h3{
    	<div class="container">
 		<div class="jumbotron">
 			<h3 align="center"><ins><strong>일정 수정 </strong></ins></h3>
-
-
-
-	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
-
+	
 			<div class="panel-body">
 				<div class="row">
 					<div class="col-md-12">
@@ -422,7 +415,6 @@ h3{
 				</div>
 			</div>
  		</div>
-
 	<!--  화면구성 div end /////////////////////////////////////-->
    
 	
