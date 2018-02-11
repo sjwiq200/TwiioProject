@@ -1,8 +1,14 @@
+@import url(font-awesome.min.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
 @import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
-@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');}
-@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');}
-@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');}
-@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');}
+@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
+@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
+@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOL'; src: url('images/TYPO_JEONGJOL.TTF');} 
+@font-face {font-family:'JEJUGOTHIC'; src: url('images/JEJUGOTHIC.TTF');} 
+@font-face {font-family:'JEJUMYEONGJO'; src: url('images/JEJUMYEONGJO.TTF');} 
+
 body {
     padding-top : 10%;
     background-color: #f4f4f4;
@@ -23,12 +29,24 @@ h2 {
     font-style: Pacifico;
     text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 }
+h3{
+	/* color : #dedede; */
+	color :#474747;
+    font-size: 3em;
+    padding: 0 0.5em 0.25em 0.5em;
+    font-weight: 500;
+    font-family: "Pacifico", cursive;
+    text-transform: none;
+    letter-spacing: 10;
+    font-style: Pacifico;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+}
 
 .jumbotron {
 
 	padding-top : 30px;
 	padding-bottom : 30px;
-	/* background-color: rgba(0, 0, 0, 0.6); */
+	/* background-color: rgba(0, 0, 0, 0.6);  */
    	background: rgba(255, 255, 255, 0.6);
 	padding-left : 30px;
 	padding-right : 30px;

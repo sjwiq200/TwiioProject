@@ -17,6 +17,9 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
         
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -111,35 +114,49 @@
 	
 		 $(function() {		
 			$( "button#go" ).on("click" , function() {
+				swal({
+					  title: "변경되었습니다.",
+					  icon: "success",
+					  button: true,
+					}).then((next) =>{
+						if(next){
+							$.ajax(
+			    					{
+			    						url : "/room/json/updateRoomOpen/",
+			    						method : "POST",
+			    						data : JSON.stringify({
+			    							roomKey : $("#roomKey").val(),
+			    							open : $("input:radio[name='open']:checked").val()
+			    						}),
+			    						dataType : "json",
+			    						headers :{
+			    							"Accept" : "application/json",
+										"Content-Type" : "application/json"
+			    						},
+			    						success : function(JSONData, status){
+			    							
+			    							console.log(status);
+			    							if(status == 'success'){
+			    								window.close();
+			    								
+			    								
+			    							}
+			    						}
+			    					}		
+			    				)//end ajax
+						}//end if
+					}//end swal
+						
 				
-				$.ajax(
-    					{
-    						url : "/room/json/updateRoomOpen/",
-    						method : "POST",
-    						data : JSON.stringify({
-    							roomKey : $("#roomKey").val(),
-    							open : $("input:radio[name='open']:checked").val()
-    						}),
-    						dataType : "json",
-    						headers :{
-    							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-    						},
-    						success : function(JSONData, status){
-    							
-    							console.log(status);
-    							if(status == 'success'){
-    								window.close();
-    							}
-    						}
-    					}		
-    				)
+				)
+				
 			});
 		});	
 		
 		//============= "취소"  Event 처리 및  연결 =============
 		$(function() {
 			$("button#cancel").on("click" , function() {
+				swal("Good job!", "You clicked the button!", "success");
 				window.close();
 			});
 		});	

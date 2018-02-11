@@ -29,6 +29,10 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  <!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
   <script>
   	$(function() {
 		 
@@ -55,9 +59,28 @@
 				 }
 			 })
 		
-			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}",'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */  
-			  window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); 
+			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			  window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			 /*  window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
+		 });
+		 
+		 $("#out").on("click",function(){
+			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
+			 swal({
+				  title: "채팅방을 나가시겠습니까?",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+				.then((willDelete) => {
+				  if (willDelete) {
+				    swal("채팅방에서 퇴장했습니다.", {
+				      icon: "success",
+				    }).then((next) => {
+				    		$("form").attr("method","POST").attr("action", "/room/deleteRoomUser/"+roomKey).submit();
+				    });
+				  } 
+				});//end swal
 		 })
 		 
 		 $("button.btn.btn-default").on("click",function(){
@@ -77,7 +100,7 @@
 		 
 	 });
   	
-  	var page = 1;
+  	/* var page = 1;
 	var flag = 0;
 	var flag2 = 0;
 	var roomCount = ${resultPage.totalCount};
@@ -165,14 +188,52 @@
 									});
 							}
 						});
-	});
+	}); */
   </script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<style>
+		<style>
 	  body {
             padding-top : 50px;
         }
+        
+      .btn.btn-default:hover, .btn.btn-default:active{
+		color: #FFF;
+		background: #08708A;
+		border-color: #08708A;
+	   }
+
+		.btn.btn-default{
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
+		
+		
+		.btn-outlined.btn-theme:hover,
+.btn-outlined.btn-theme:active {
+    color: #dedede;
+    background: #08708A;
+    border-color: #08708A;
+}
+
+.btn-outlined.btn-theme {
+    background: #dedede;
+    color: #08708A;
+	border-color: #08708A;
+}
+.btn-outlined.btn-light:hover,
+.btn-outlined.btn-light:active {
+    color: #dedede;
+    background: #D73A31;
+    border-color: #D73A31;
+}
+
+.btn-outlined.btn-light {
+    background: #dedede;
+    color: #D73A31;
+	border-color: #D73A31;
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -184,6 +245,68 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
+   	
+   	<!--  Carousel Start /////////////////////////////////////-->
+	<div class="container" height = "700px">
+		<div id="carousel" class="carousel slide carousel-fade"
+			data-ride="carousel">
+			
+			<!-- Carousel items -->
+			<div class="carousel-inner carousel-zoom">
+				<div class="active item">
+					<img class="img-responsive"
+						src="https://images.unsplash.com/photo-1419064642531-e575728395f2?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
+					<div class="carousel-caption" style="top:0;">
+					<h2>TwiiChat</h2>
+					</div>
+					<div class="carousel-caption">
+									<!-- FORM -->
+									
+		<form role="form" >
+			<div class="row centered-form" >
+				 <div class="mainbox col-md-12" >
+					<div class="panel" style="background: rgba(255, 255, 255, 0.3);">
+			 			<div class="panel-body" >
+				    			<div class="row">
+				    				<div class="col-md-2" >
+									<div class="form-group">
+									    <select class="form-control" id="searchCondition" name="searchCondition" >
+					                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
+					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
+					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
+										</select>
+				  					</div>
+			  					</div>
+			  					
+				  				<div class="col-md-10">
+								  <div class="form-group">
+								    <label class="sr-only" for="searchKeyword">검색어</label>
+								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+								  	</div>
+								  </div>
+								 
+					    			</div>
+					    			<div class="row">
+					    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
+					    				<input type="hidden" id="currentPage" name="currentPage" value=""/>
+					    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+					    			</div>
+					    	</div>
+			    		</div>
+					</div>
+				</div>
+			</div>
+		
+		</form>
+						<!-- FORM -->
+					</div>
+				</div>
+				
+			</div>
+		</div>
+	</div>
+	<!--  Carousel End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
@@ -202,29 +325,7 @@
 		    </div>
 		    
 		    <div class="col-md-10 text-right">
-			    <form class="form-inline" name="detailForm">
-		        
-			    
-				<div class="form-group">
-				    <select class="form-control" id="searchCondition" name="searchCondition" >
-                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
-                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
-                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
-					</select>
-				  </div>
-				  
-				  <div class="form-group">
-				    <label class="sr-only" for="searchKeyword">검색어</label>
-				    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-				    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
-		    			 
-				  </div>
-				  
-				  <button type="button" class="btn btn-default"><span class=" glyphicon glyphicon-search"></span></button>
-				  
-				  <input type="hidden" id="currentPage" name="currentPage" value=""/>
-				  
-				</form>
+			   
 	    		</div>
 		</div>
 		
@@ -234,27 +335,45 @@
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-3 " style="padding-top : 2%">
-		      <div class="thumbnail" name="getPro" style="height:500px;">
+		      <div class="thumbnail" name="getPro" style="height:550px;">
 		    
-		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
-		          <div class="caption">
+		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
+		        <c:if test="${room.type == '식사'}">
+		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+				  </c:if>
+				  <c:if test="${room.type == '체험' }">
+				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >
+				  </c:if>
+				  	
+				  <c:if test="${room.type == '관람' }">
+				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >
+				  </c:if>
+				  	
+				  <c:if test="${room.type == '미정' }">
+				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+				  </c:if>
+		          <div class="caption" style="text-align: center;">
 		            <h3>${room.roomName} </h3>		            
 		            <p>Date : ${room.date}</p>
 		            <p>country : ${room.country}</p>
 		            <p> city : ${room.city}</p>
 		            <p>${room.headCount}명</p>
-		            <p>
+		            <p style="position: absolute;bottom:10%; right:10%" >
 		            <c:if test="${!empty user}">
-			            <a href="#">
+			            <a href="#" class=" btn btn-default" role="button">
 			            참가
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
+			            </a>
+			            <a class="btn btn-outlined btn-light btn-sm" id="out">
+			            <input type="hidden" id="roomKey" value="${room.roomKey}">
+			            나가기
 			            </a>
 		            </c:if>
 		            <p>
 		            <p>
 		            <c:if test="${user.userNo == room.userNo }">
-		            		<a href="#">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
+		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:15%">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
 		            </c:if>
 		            </p>
 		            
@@ -271,9 +390,6 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
-	
+ 	
 </body>
 </html>
