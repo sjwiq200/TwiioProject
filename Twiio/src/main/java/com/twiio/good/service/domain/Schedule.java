@@ -15,6 +15,7 @@ public class Schedule {
 	private String city;
 	private List<Integer> userNo;
 	private String userNoString;
+	private String mapImg;
 	
 
 	public Schedule() {
@@ -102,12 +103,25 @@ public class Schedule {
 	}
 
 
+	public String getMapImg() {
+		return mapImg;
+	}
+
+
+	public void setMapImg(String mapImg) {
+		this.mapImg = mapImg;
+	}
+
+
 	@Override
 	public String toString() {
 		return "Schedule [roomKey=" + roomKey + ", scheduleTitle=" + scheduleTitle + ", scheduleDate=" + scheduleDate
 				+ ", scheduleAddress=" + scheduleAddress + ", country=" + country + ", city=" + city + ", userNo="
-				+ userNo + ", userNoString=" + userNoString + "]";
+				+ userNo + ", userNoString=" + userNoString + ", mapImg=" + mapImg + "]";
 	}
+	
+	
+
 
 	
 	

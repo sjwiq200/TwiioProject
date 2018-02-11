@@ -32,6 +32,8 @@
 	<link href="/resources/css/add,updateRoom.css" rel="stylesheet" type="text/css"/>
 	
 	<link rel="stylesheet" href="/resources/css/imformation.css" />
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<style>
         body {
@@ -120,24 +122,30 @@
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "가입"  Event 연결 =============
+		//============= Create Room Event =============
 		 $(function() {
-
 			$( "button#go"  ).on("click" , function() {
-				$("form").attr("method" , "POST").attr("action" , "/room/addRoom").submit();
+				 if($("#roomName").val() =='' || $("#country").val() == '' || $("#city").val() == ''){
+					 swal("필수 사항을 입력해 주세요!","","warning");
+				 }else{
+					 swal("채팅방이 생성 되었습니다. ","","success")
+					 .then((value) => {
+						 $("form").attr("method" , "POST").attr("action" , "/room/addRoom").submit();
+					 });
+					 
+					 	 
+				 }
 			});
 		});	
 		
-		
-		//============= "취소"  Event 처리 및  연결 =============
+		//============= Cancel  Event =============
 		$(function() {
 			$("#cancel").on("click" , function() {
-				$("form")[0].reset();
+				history.back();
 			});
 		});	
 		
 		//============= autocomplete ========================
-			
 		$(function() {
 			
 			$( "#country" ).autocomplete({
@@ -211,21 +219,21 @@
 		<div class="col-xs-18">	
 		
 		  <div class="form-group">
-		    <label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">채팅방 이름 </label>
+		    <label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">*채팅방 이름 </label>
 		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="roomName" name="roomName" placeholder="채팅방 이름 ">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="country" class="col-xs-offset-1 col-xs-3 control-label"> 국가명</label>
+		    <label for="country" class="col-xs-offset-1 col-xs-3 control-label"> *국가명</label>
 		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="country" name="country" value="">
 		    </div>
 		  </div>
 		  
 		  <div class="form-group">
-		    <label for="city" class="col-xs-offset-1 col-xs-3 control-label"> 도시명 </label>
+		    <label for="city" class="col-xs-offset-1 col-xs-3 control-label"> *도시명 </label>
 		    <div class="col-xs-4">
 		      <input type="text" class="form-control" id="city" name="city" value="">
 		    </div>

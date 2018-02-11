@@ -63,6 +63,18 @@ public class ScheduleRestController {
 		schedule.setCity(room.getCity());
 		schedule.setCountry(room.getCountry());
 		schedule.setUserNoString(userNoString);
+		
+		String mapImage = schedule.getMapImg();
+		mapImage = mapImage.replaceAll("[(]", "");
+		mapImage =mapImage.replaceAll("[)]","");
+		mapImage =mapImage.replaceAll(" ","");
+		
+		String mapImageResult = "https://maps.googleapis.com/maps/api/staticmap";
+		mapImageResult += "?center=" + mapImage+ "&size=400x400&zoom=15&maptype=google.maps.MapTypeId.ROADMAP&markers=color:red|" + mapImage;
+		
+		schedule.setMapImg(mapImageResult);
+		System.out.println("schedule mapImageResult" + mapImageResult);
+		System.out.println("schedule rest map Image ==>" + schedule);
 		scheduleService.addSchedule(schedule);
 		
 		return true;

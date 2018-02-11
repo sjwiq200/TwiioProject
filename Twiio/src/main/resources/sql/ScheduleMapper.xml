@@ -45,8 +45,7 @@
 	   	<set>
 	   		schedule_title = #{scheduleTitle:VARCHAR} , 
 			schedule_date =	#{scheduleDate:VARCHAR} , 
-			schedule_address = #{scheduleAddress:VARCHAR} ,
-			user_no_string = ${userNoString:VARCHAR}
+			schedule_address = #{scheduleAddress:VARCHAR}
 	   	</set>
 	   	WHERE roomkey = #{roomKey}
 	 </update>

@@ -7,6 +7,7 @@ import java.util.Map;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -71,6 +72,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userNo").all(userNo));
+		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
 		Map<String, Object> map = new HashMap<>();
 		
@@ -95,6 +97,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		update.set("scheduleTitle", schedule.getScheduleTitle());
 		update.set("scheduleDate", schedule.getScheduleDate());
 		update.set("scheduleAddress", schedule.getScheduleAddress());
+		update.set("mapImg", schedule.getMapImg());
 
 		mongoTemplate.updateFirst(query, update ,Schedule.class, "schedules");
 		sqlSession.update("ScheduleMapper.updateSchedule", schedule);

@@ -30,6 +30,9 @@
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
+  <!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
   
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
@@ -37,37 +40,37 @@
   <script>
   	$(function() {
   		
-  		
-		 
-		 $( "button.btn.btn-default:contains('방생성')" ).on("click" , function() {
-			 $("form").attr("method" , "GET").attr("action" , "/room/addRoom").submit();
-		});
 		 
 		 $("button#invite").on("click",function(){
-			 alert("친구초대완료!");
-			 var userNo = $(this).html().split('value="')[1].split('"')[0];
-			 var roomKey = $("#roomKey").val(); 
-			 
-			 $.ajax({
-				 url : "/room/json/addRoomFriend/",
-				 method : "POST",
-				 data : {
-					 userNo : userNo,
-					 roomKey : roomKey
-				 },
-				 dataType : "json",
-				 headders : {
-					 "Accept" : "application/json",
-					"Content-Type" : "application/json"
-				 },
-				 success : function(JSONData, status){
-					if(JSONData == true){
-
-						window.close();
-					}
+			 swal("친구초대완료! ","","success")
+			 .then((next)=>{
+				 if(next){
+					 var userNo = $(this).html().split('value="')[1].split('"')[0];
+					 var roomKey = $("#roomKey").val(); 
 					 
+					 $.ajax({
+						 url : "/room/json/addRoomFriend/",
+						 method : "POST",
+						 data : {
+							 userNo : userNo,
+							 roomKey : roomKey
+						 },
+						 dataType : "json",
+						 headders : {
+							 "Accept" : "application/json",
+							"Content-Type" : "application/json"
+						 },
+						 success : function(JSONData, status){
+							if(JSONData == true){
+
+								window.close();
+							}
+							 
+						 }
+					 })//end ajax
 				 }
-			 })
+			 })//end swal
+			 
 		 })
 	 });
   </script>
@@ -207,48 +210,7 @@
 		</section>
 		
 	</div>
-	
-	
-	
-	
-	<%-- 
-		<div class="page-header text-info">
-	       <h3>친구 목록</h3>
-	    </div>
-		    
-		    <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-          	<th align="center">No</th>
-            <th align="left">Friend No</th>
-            <th align="left" >Friend Name</th>
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-		  <c:set var="i" value="0" />
-		  <input id="roomKey" type="hidden" value="${roomKey }">
-		  <c:forEach var="friend" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${friend.userNo}</td>
-			  <td align="left">${friend.userName}</td>
-			  <td align="left">
-			  	<a href="#">
-		            친구초대
-		            <input type="hidden" id="userNo" value="${friend.userNo}">
-	            </a>
-			  </td>
-			</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table> --%>
+
         
         
 	  <!--  table End /////////////////////////////////////-->
@@ -257,9 +219,6 @@
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
  	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
 	
 </body>
 </html>

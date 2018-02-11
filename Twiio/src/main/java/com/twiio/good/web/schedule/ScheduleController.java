@@ -93,6 +93,17 @@ public class ScheduleController {
 	@RequestMapping(value="/updateSchedule", method=RequestMethod.POST)
 	public String updateSchedule(@ModelAttribute("schedule") Schedule schedule, HttpServletRequest request) throws Exception{
 		System.out.println("/schedule/updateSchedule : POST");
+		
+		String mapImage = schedule.getMapImg();
+		mapImage = mapImage.replaceAll("[(]", "");
+		mapImage =mapImage.replaceAll("[)]","");
+		mapImage =mapImage.replaceAll(" ","");
+		
+		String mapImageResult = "https://maps.googleapis.com/maps/api/staticmap";
+		mapImageResult += "?center=" + mapImage+ "&size=400x400&zoom=15&maptype=google.maps.MapTypeId.ROADMAP&markers=color:red|" + mapImage;
+		
+		schedule.setMapImg(mapImageResult);
+		
 		scheduleService.updateSchedule(schedule);
 		
 		return "redirect:/schedule/listSchedule";
@@ -103,7 +114,18 @@ public class ScheduleController {
 	@RequestMapping(value="/updateScheduleNode", method=RequestMethod.POST)
 	public String updateScheduleNode(@ModelAttribute("schedule") Schedule schedule, HttpServletRequest request) throws Exception{
 		System.out.println("/schedule/updateSchedule : POST");
+		
+		String mapImage = schedule.getMapImg();
+		mapImage = mapImage.replaceAll("[(]", "");
+		mapImage =mapImage.replaceAll("[)]","");
+		mapImage =mapImage.replaceAll(" ","");
+		
+		String mapImageResult = "https://maps.googleapis.com/maps/api/staticmap";
+		mapImageResult += "?center=" + mapImage+ "&size=400x400&zoom=15&maptype=google.maps.MapTypeId.ROADMAP&markers=color:red|" + mapImage;
+		
+		schedule.setMapImg(mapImageResult);
 		scheduleService.updateSchedule(schedule);
+		
 		
 		return "redirect:/schedule/updateScheduleNode.jsp";
 		
