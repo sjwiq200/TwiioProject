@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
@@ -242,5 +244,19 @@ public class UserRestController {
 
 		}
 		return buffer.toString();
+	}
+	
+	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
+	public String faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
+							HttpSession httpsession,
+							User user) throws Exception{
+		System.out.println("/user/json/faceDetect");
+		user = (User)httpsession.getAttribute("user");
+		user.setFile(file);
+
+		boolean a = userService.detectFace(user);
+		System.out.println("들어올까??");
+		return "성공했어요";
+		
 	}
 }

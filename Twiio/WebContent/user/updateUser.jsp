@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -38,6 +37,11 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
+	
+	<!-- 캘린더 2 -->
+	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -159,24 +163,49 @@
 			});
 		});
 	
-	
 		
+		 $(function() {
+			$("#userBirthday").flatpickr({
+			    altInput: true,
+			    altFormat: "Y-m-d",
+			    dateFormat: "Y-m-d"
+			});
+		}); 
+	
+				
 		//============= 회원정보수정 Event  처리 =============	
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-			  /* $( "#updateUser" ).on("click" , function() {
-				  aler("수정");
-					//self.location = "/user/updateUser?userId=${user.userId}"
-				 $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();		
-					
-				});  */
+			   $( "#updateUser" ).on("click" , function() {
+				  alert("수정");
+			   if(userType.val() == 2){
+				   var username=$('#userName').val();
+				   var userphone=$('#userPhone').val();
+				   var userbank=$('#userBank').val();
+				   var useraccount=$('#userAccount').val();
+				   
+				   if(username==''||userphone==''||userbank==''||useraccount==''){
+					   
+				   }
+			   }else{
+			   $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			   }
+		 });  
 			
 			
 				
 				 
 		 		$("#password2").on("keyup",function(){
 	            	checkPwd();
-	            });           
+	            });
+		 		
+		 		$("#userPhone").on("keyup",function(){
+		 			checkPhone();
+		 		});
+		 		
+		 		$("#userBirthday").on("keyup",function(){
+		 			checkBirthday();
+		 		});
 	            
 	            $("#userName").on("click" , function() {
 	            	$("#userName").css("background-color", "#fff");					 
@@ -196,6 +225,18 @@
 		});
 		
 		
+		//핸드폰 번호 체크
+		function checkPhone(){
+			var phonenum = $("#userPhone").val();
+			var phonesplit = phonenum.split('-');
+			
+			if(phonesplit.length < 3){
+				$("#userPhone").css("background-color", "#FFCECE");
+			}else{
+				$("#userPhone").css("background-color", "#B0F6AC");
+			}
+		}
+				
 		//재입력 비밀번호 체크하여 가입버튼 비활성화 또는 맞지않음을 알림.
 			function checkPwd() {
 				var inputed = $("#password").val();
@@ -223,26 +264,29 @@
 				}
 			}
 		
+			//document.getElementsByName([Input필드의 name값])[0].value = "";
+			///////////////////googlevision////////////////////////
+			$('#file').ready('click',function(){
+				alert("바뀌었니??");
+				/*   */
+			});
+		
 		
 		///////////////////호스트 등록////////////////////////////
 			$(function() {
-				
 				 $("#addHost").on("click" , function() {
-					 
-					 var userImage = $("#file").val();	
+					 var userImage = $("#userImage").val();	
 					 var userName = $("#userName").val();
 					 var userPhone = $("#userPhone").val();
+					 var userBank = $("#userBank").val();
 					 var userAccount = $("#userAccount").val();
 					 var userBirthday = $("#userBirthday").val();
 					 var userGender = $(".userGender").val();
-					 alert(userImage);
 					 
 					 var flag = true;
 					 
 					 
-					 
-					 alert("호스트");
-					 
+					 					 
 					 if(userImage==""){
 						 $("#imgHelpBlock").show();
 						 alert("이미지를 등록 해주세요");
@@ -253,11 +297,21 @@
 						 alert("이름을 등록 해주세요");
 						 flag = false;
 					 }
-					if(userPhone==""){
+					 if(userPhone==""){
 						 $("#phoneHelpBlock").show();
 						 alert("휴대폰 번호를 등록 해주세요");
 						 flag = false;
 					 }
+					 if(userBank==""){
+						 $("#banknameHelpBlock").show();
+						 alert("은행명을 등록 해주세요");
+						 flag = false;
+					}
+					if(userAccount==""){
+						 $("#accountHelpBlock").show();
+						 alert("은행명을 입력해주세요");
+						 flag = false;
+					}
 					if(userAccount==""){
 						 $("#accountHelpBlock").show();
 						 alert("계좌를 등록 해주세요");
@@ -274,31 +328,82 @@
 						 flag = false;
 					}
 					 
-					$("#userType").val("2"); 
 					
-						if(flag){
-							alert("고고");
-						 $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
-						}
+					
+					if(flag){
+						/* var userType = document.getElementById('userType');
+						var userTypeView = document.getElementById('userTypeView');
+						userType.value=2;
+						userTypeView.value=2; */
+						$("#userType").val("2");
+						$("#userTypeView").val("호스트");
+						alert('호스트등록완료');
+					}
+					
 				  });
 				 
 				 
 				 $(document).ready(function() { 
 					 $("#imgHelpBlock").hide();
+					 $("#banknameHelpBlock").hide();
 					 $("#accountHelpBlock").hide();
 					 $("#birthHelpBlock").hide();
 					 $("#genderHelpBlock").hide();
 					 $("#phoneHelpBlock").hide();
 					 $("#nameHelpBlock").hide();
-					 
-				 });
-				 
+				 }); 
 				 
 			 });
 		
 		$('#updateUser').on('click',function(){
-			$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			$("form").attr("method" , "POST").attr("action" , "/user/getUser").submit();
 		});
+		
+		$(function() {
+			$("#file").on('change', function() {
+				readURL(this);
+			});
+		});
+
+		function readURL(input) {
+			if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				reader.onload = function(e) {
+					$('#blah').attr('src', e.target.result);
+				}
+				reader.readAsDataURL(input.files[0]);
+				
+		        var formFile=document.getElementById('file').files[0];
+		        alert($('#file').val());
+		        var formData=new FormData();
+		        formData.append('file', formFile);
+		       	
+				 $.ajax({
+					url : "/user/json/faceDetect",
+					method : "POST" ,
+					dataType : "json",
+					processData : false,
+					contentType : false,
+					data : formData,
+					success : function(result) {
+						alert("success");
+						if(result == true){
+							
+						}else{
+							if($("#userImage").val() == ''){
+								$('#blah').attr('src', 'http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive');
+							}else{
+								$('#blah').attr('src','/resources/images/'+$('#userImage').val());
+							}
+						}
+							
+					}
+				 });
+			 }
+		 }
+		
+		
+		
 	</script>
 	
 </head>
@@ -318,17 +423,21 @@
 	    </div>
 	    
 	<form id="updateUserForm">	
-	
-		
+
 		<input type="hidden"  id="userType" name="userType" />
 		
 		<div class="col-sm-12">
 			
 			<div class="profile-userpic ">
-						<c:if test="${empty user.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-						<c:if test="${!empty user.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive"></c:if>
+				<input type="hidden" id="userImage" value="user05=KakaoTalk_20171217_173604783.jpg"/>
+				<%-- <c:if test="${empty user.userImage}">
+					<img id="blah" style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive">
+				</c:if> --%>
+				<%-- <c:if test="${!empty user.userImage}"> --%>
+					<img style="width:150px; height:150px; alt="" src="/resources/images/userimages/user05=KakaoTalk_20171217_173604783.jpg" class="img-responsive">
+				<%-- </c:if> --%>
 				<label class="file_input">
-			        <input type="file" id="file" class="file" onchange="javascript:document.getElementById('file_route').value=this.value">
+			        <input type="file" id="file" class="file">
 			    </label>
 			    <span id="imgHelpBlock" class="help-block" type="hidden">
 					 <strong  id="text2" class="text-danger col-sm-12 col-sm-offset-5" style="color: #f9d431;">이미지를 등록해 주세요.</strong>
@@ -337,10 +446,7 @@
 			
 			
 			<div class="col-sm-12">
-					
 					<br/><br/><br/>
-					
-				
 					<div class="row">
 						<div class="form-group">
 					  		<label for="userName" class="col-sm-2 col-sm-offset-4 control-label">이름</label>
@@ -404,6 +510,20 @@
 					</div>
 					
 					<br/>
+					
+					<div class="row">
+						<div class="form-group">
+					  		<label for="userBank"class="col-sm-2 col-sm-offset-4 control-label">은행명</label>
+					  			<div class="col-sm-3">
+									<input type="text" class="form-control" id="userBank" name="userBank" value="${user.userBank}">
+									<span id="banknameHelpBlock" class="help-block" type="hidden">
+											 <strong  id="bankText" class="text-danger" style="color: #f9d431;">은행명을 입력해주세요.</strong>
+										</span>
+								</div>
+						</div>
+					</div>
+					
+					<br/>
 						 
 					<div class="row">
 						<div class="form-group">
@@ -418,12 +538,12 @@
 					</div>
 					
 					<br/>
-					
+												
 					<div class="row">
 						<div class="form-group">
 					  		<label for="userBirthday"class="col-sm-2 col-sm-offset-4 control-label">생년월일</label>
 					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="2018-02-28">
+									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="눌러주세요.">
 									<span id="birthHelpBlock" class="help-block" type="hidden">
 											 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
 									</span>
@@ -461,7 +581,17 @@
 						<div class="form-group">
 					  		<label for="userType" class="col-sm-2 col-sm-offset-4 control-label">HOST등록여부</label>
 					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userType" name="userType" value="${user.userType}" readonly="readonly">
+					  								  			
+					  			<c:if test="${user.userType == 1}">
+									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="회원" readonly>
+								</c:if>
+								<c:if test="${user.userType == 2}">
+									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="호스트" readonly>
+								</c:if>
+								<c:if test="${user.userType == 3}">
+									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="Admin" readonly>
+								</c:if>
+								
 									<!-- <img src="/resources/images/addhost.png" id="addHost" style="width: 70px; height: 30px;"/> -->
 									<button class="btn btn-outlined btn-light btn-xs" type="button" id="addHost" >HOST등록</button>
 								</div>
@@ -490,39 +620,7 @@
 		<br/><br/>
  	<!--  화면구성 div Start /////////////////////////////////////-->
  	
- 	
- 	
- 	
-		<!---------- Image Dialog ------------->
-
-		
-			<div class="modal fade" id="addHostModal" role="dialog">
-				<div class="modal-dialog modal-lg">
-					<!-- Modal content-->
-					<div class="modal-content">
-						<div class="modal-header">
-							<h4 class="modal-title">
-								<Strong>호스트 등록</Strong>
-							</h4>
-						</div>
-	
-						<div class="modal-body col-sm-12">
-							<div class="col-sm-4 col-sm-offset-3">				
-								<form name="form" enctype="multipart/form-data" >
-											<input type="text" class="form-control"id="inputNum" placeholder="인증번호를 입력해주세요." />
-								</form>
-							</div>
-							<div class="col-sm-5">
-								<button name="authNum" type="button" id="goAuth" class="btn btn-outlined btn-light btn-sm" >인증하기</button>
-							</div>
-						</div>
-						<div class="modal-footer">
-							<button type="button" class="btn btn-outlined btn-theme btn-xs" data-dismiss="modal">닫기</button>
-						</div>
-					</div>
-				</div>
-			</div>
-		<!-- --------------------------------------------------------------------------------------------------------------- -->
+ 
  	
 </body>
 

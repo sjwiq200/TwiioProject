@@ -108,16 +108,15 @@
 	 <update	id="updateUser"	parameterType="user" >
 	   	UPDATE users
 	   	<set>
-	   		user_name 	= #{userName} ,
-			phone	= #{userPhone:VARCHAR},
-			password 				= #{password:VARCHAR} ,
-			profile_image 				= #{userImage:VARCHAR} ,
-			gender 				= #{userGender:CHAR} ,
-			birth 				= #{userBirthday:DATE} ,
-			public_state 				= #{profilePublic:CHAR} ,
-			host_account 				= #{userAccount:VARCHAR} ,
-			bank 				= #{userBank:VARCHAR} ,
-			user_type 				= #{userType}		
+	   		user_name 		= #{userName:VARCHAR} ,
+			phone			= #{userPhone:VARCHAR},
+			password 		= #{password:VARCHAR} ,
+			profile_image 	= #{userImage:VARCHAR} ,
+			gender 			= #{userGender:CHAR} ,
+			birth 			= #{userBirthday:DATE} ,
+			public_state 	= #{profilePublic:CHAR} ,
+			host_account 	= #{userAccount:VARCHAR} ,
+			user_type 		= #{userType}		
 	   	</set>
 	   	WHERE user_no = #{userNo}
 	 </update>

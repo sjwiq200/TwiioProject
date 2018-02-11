@@ -224,6 +224,7 @@ $(function() {
 				class="img-rounded">
 			<div class="text"><h1>${transaction.tranPro.productName}</h1></div>
 		</c:if> 
+		
 		<c:if test="${empty transaction.tranPro.thumbnail}">
 			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg"
 				style="width: 200px; height: 170px;" alt="..."

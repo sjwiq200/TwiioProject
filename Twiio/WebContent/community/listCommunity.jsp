@@ -67,7 +67,7 @@
      }
      else self.name = ''; 
 	
-	$(document).ready(function(){
+	 $(document).ready(function(){
 		$(window).scroll(function(){
 			
 			var scrollHeight=$(window).scrollTop() + $(window).height();
