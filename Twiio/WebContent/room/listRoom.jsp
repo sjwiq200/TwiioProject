@@ -324,7 +324,7 @@
 		            <p>날짜 : ${room.date}</p>
 		            <p>인원 : ${room.headCount}명</p>
 		            <c:if test="${!empty user}" >
-			            <a href="#" class=" btn btn-default" role="button" >
+			            <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
 			            참가
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">

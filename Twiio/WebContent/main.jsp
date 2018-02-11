@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <!--  ///////////////////////// JSTL  ////////////////////////// -->
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -9,7 +11,9 @@
 <meta charset="EUC-KR">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE&callback=initMap">
+    </script>
 	
 	<!--   jQuery , Bootstrap CDN  -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -39,6 +43,8 @@
 	
 	
 	
+	
+	
 	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
 	<style>
 	
@@ -52,28 +58,55 @@
    	
    	
    	<script type="text/javascript">
-	
+   	
+   	var geocoder;
+    var map;
+    
+    var address = [];
+	   	
+	<c:forEach var="schedule" items="${list}">
+	address.push("${schedule.scheduleAddress}")
+
+	</c:forEach>	
+		  
+   	
+   	
 	function initMap() {
-		//var num1 = ${lat};
-		//var num2 = ${lng};
-		
-		//alert(num1);alert(num2);
-		
+		for( i =0 ; i < address.length ; i ++){
+			console.log(address[i]);
+		}
+        
         var uluru = {lat:37.494762, lng:127.027583};
         
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 2,
+        map = new google.maps.Map(document.getElementById("map"), {
+          zoom: 1,
           center: uluru
         });
-        /* var marker = new google.maps.Marker({
-          position: uluru,
-          map: map
-        }); */
-      }
+        
+        geocoder = new google.maps.Geocoder();
+        for (i = 0; i < address.length; i++) {
+          codeAddress(geocoder, map,address[i]);
+        }
+        google.maps.event.addDomListener(window, "load", initMap);
+	}
+	   	
+	   	function codeAddress(geocoder, map, hello) {
+	        geocoder.geocode({'address': hello}, function(results, status) {
+	          if (status === 'OK') {
+	            /* map.setCenter(results[0].geometry.location); */
+
+	            var marker = new google.maps.Marker({
+	              map: map,
+	              position: results[0].geometry.location
+	            });
+	          } else {
+	            alert('Geocode was not successful for the following reason: ' + status);
+	          }
+	        });
+	      }
+
     </script>
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&callback=initMap">
-			
-	</script>
+    
    	
 </head>
 	<body>
@@ -96,7 +129,7 @@
 					
 					<section id="intro" class="main">
 					
-					<div id="map"></div>
+					<div id="map">maps error</div>
 						<!--  <span class="icon fa-diamond major"></span>
 						<h2>Magna porta maximus</h2>
 						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed vitae<br />
