@@ -39,10 +39,6 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- 내 CSS -->
-<link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
-
-<!--  ///////////////////////// CSS ////////////////////////// -->
-		<link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
@@ -51,7 +47,7 @@
 <style type="text/css">
 
 #mainBody {
-	padding-top: 50px;
+	padding-top: 140px;
 	font-family:'JEJUGOTHIC';
 }
 
@@ -77,94 +73,12 @@
 	display: inline-block;
 	border-radius: 6px;
 }
-
-/* //////////////////eunae_modal////////////////////////// */
-		.content h1 {
-			text-align: center;
-		}
-		.panel {
-			border: 1px solid #ddd;
-			background-color: #fcfcfc;
-		}
-		.table-filter {
-			background-color: #fff;
-			font-size: 15px;
-		}
-		.table-filter tbody tr:hover {
-			cursor: pointer;
-			background-color: #eee;
-		}
-		.table-filter tbody tr td {
-			padding: 10px;
-			vertical-align: middle;
-			border-top-color: #FFF;
-		}
-		.table-filter tbody tr.selected td {
-			background-color: #eee;
-		}
-		.table-filter tr td:first-child {
-			width: 60px;
-		}
-		.media-photo{
-		  float: none;
-		  margin: 0 auto;
-		  -webkit-border-radius: 50% !important;
-		  -moz-border-radius: 50% !important;
-		  border-radius: 50% !important;
-		  border: 3px solid;
-		}
-}
 .btn {
 	font-family:'JEJUGOTHIC';
 }
 
 
-/* 사이드바 <START> */
 
-.sidenav {
-	margin-top: 53px;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #C2C2C2;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
-}
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-#main {
-    transition: margin-left .5s;
-    padding: 16px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
 
 
 
@@ -221,7 +135,7 @@
 							},
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++) /* {
+		    					for(var i=0;i<user.length;i++){
 		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
 		    								+'<span>  [이름] : '+user[i].userName+'</span>'
@@ -229,15 +143,7 @@
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}  */
-		    					{
-		    						
-		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+user[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
-									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'+
-									'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-primary btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-									
-		    						
-		    					} 
+		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
@@ -251,7 +157,7 @@
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).attr("disabled","true");  
+	    $("#addToMyFriendList"+i).remove(); 
 	}
 	
 
@@ -388,77 +294,7 @@ $(function() {
 
 </head>
 <body id="mainBody">
-	
-	
-	
-	<!-- ----------------------------------- -->
 
-
-	<div id="mySidenav" class="sidenav">
-		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<c:set var="i" value="0" />
-							<c:forEach var="dailyPlan" items="${listDailyPlan}">
-								<c:set var="i" value="${ i+1 }" />
-								<input type="hidden"name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
-							    <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-							    <div class="col-xs-12 contentsBox" id="contentsBox">
-							    	<div class="col-xs-12 contents" name="contents" align="left">
-								    <h5>DAY${ i }</h5>
-								   <span>
-										<h4>${dailyPlan.dailyDate}</h4>
-										<h6>${dailyPlan.dailyCity}</h6> 
-									</span>
-									</div>
-									<!--<div class="col-xs-1"><p>국가 </p>
-									<div class="col-xs-12" align="left"></div><p>도시 </p> </div> -->
-									<%-- <p>${dailyPlan.dailyCountry}</p> --%>
-									<%-- <p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
-									<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p> 
-									<p>유저번호 : ${dailyPlan.user.userNo }</p>--%>
-									 <%--<div class="col-xs-2" id="contents">
-										 <c:if test="${empty dailyPlan.dailyCity}">
-											<c:set var="num" value="0" />
-											<c:forEach var="cityList" items="${cityList}">
-												<c:set var="num" value="${ num+1 }" />
-												<div class="btn-group" role="group" id="cityButtonGroup">
-													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
-												</div>
-												<button class="button" id="${i}">${cityList}</button>
-											</c:forEach>
-										</c:if> 
-										<p></p>
-									</div>--%>
-								</div>
-								  <!-- <div class="col-xs-2"></div><div class="col-xs-8" id="line"></div> <div class="col-xs-2"></div> -->
-							</c:forEach>
-	</div>
-
-	<div id="main">
-		<h2>&nbsp;</h2>
-		<p>&nbsp;</p>
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
-			open</span>
-	</div>
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
-			document.body.style.backgroundColor = "white";
-		}
-	</script>
-
-
-
-
-
-	<!-- ----------------------------------- -->
 
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
 
@@ -774,7 +610,7 @@ $(function() {
 						</div>
 						<input type="hidden" name="dailyPlanNo"
 							value="${dailyPlan.dailyPlanNo}" />
-						<button name="add" class="btn btn-primary btn-sm" type="button">ADD</button>
+						<button name="add" type="button">ADD</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -787,40 +623,29 @@ $(function() {
 
 	<!---------- FriendRec Dialog <START>------------->
 
-	<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
+	<div class="modal fade" id="friendRec" role="dialog">
 		<div class="modal-dialog modal-md">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"align="center" >
-						<Strong>나와 같은 장소, <p>날짜에 여행가는 친구들을 찾아볼까요?</Strong>
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						<Strong>나와 같은 장소, 날짜에 여행가는 친구들을 찾아볼까요?</Strong>
 					</h4>
+					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
-							<table class="table table-filter" style="align-content: center;">
-								<tbody>
-										<tr data-status="pagado">
-										<div class="media-body">
-										  <td align="left" vailgn="middle">
-											  <div class="row" >
-											  	<div id="friendListForRec"></div>
-											  </div>
-										 	 </td>
-										  </div>
-										</tr>
-								</tbody>
-							</table>
-						
-					</div>
+
+				<div class="modal-body" align="center">
+
+					<div id="friendListForRec"></div>
+
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
 
 	<!---------- FriendRec Dialog <END>------------->
 </body>

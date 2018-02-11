@@ -75,7 +75,7 @@
 		</div>
 
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-		<button name="add" type="button">ADD</button>
+		<button name="add"  class="btn btn-primary btn-sm" type="button">ADD</button>
 
 	</form>
 
