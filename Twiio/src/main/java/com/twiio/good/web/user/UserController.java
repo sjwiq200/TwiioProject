@@ -154,11 +154,11 @@ public class UserController {
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
 		System.out.println("userUpdatePost :: "+user);
-		//userService.updateUser(user);
+		userService.updateUser(user);
 		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
 		
-		if(sessionId.equals(user.getUserId())){
+		if(sessionId.equals(user.getUserId()) || sessionId.equals("admin")){
 			session.setAttribute("user", user);
 		}
 		

@@ -28,6 +28,8 @@
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   	 <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	
+	  <!-- Bootstrap Dropdown Hover JS -->
+   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 	
 	
 	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
@@ -42,6 +44,9 @@
 	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -146,6 +151,8 @@
 			#addHost{
 				cursor: pointer;
 			}
+			
+			
 
 	        
      </style>
@@ -159,7 +166,7 @@
 		$(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$("#cancel").on("click" , function() {
-				$("form")[0].reset();
+				history.go(-1);
 			});
 		});
 	
@@ -177,18 +184,76 @@
 		 $(function() {
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			   $( "#updateUser" ).on("click" , function() {
-				  alert("수정");
-			   if(userType.val() == 2){
+				   var password = $('#password').val();
+				   var password2 = $('#password2').val();
+				   
+				   var flag = true;
+					
+					if(flag){
+						var phonenum = $("#userPhone").val();
+						var phonesplit = phonenum.split('-');
+						
+						
+						if(phonenum == ''){
+							
+						}else{
+							if(phonenum.length > 13){
+								flag = false;
+							}else{
+								if(phonesplit.length < 3){
+									flag = false;
+								}else{
+									if(phonesplit[2].length<1){
+										flag = false;
+									}
+								}
+							}
+						}
+						
+						if(password != password2){
+							flag = false;
+						}
+					}
+					
+					
+				if(flag == true){
+				   if(password == ''){
+					   $('#password').val("${user.password}");
+				   }
+				   
+				   alert("수정");
+				   
+			   	   if($('#userType').val() == 2){
 				   var username=$('#userName').val();
 				   var userphone=$('#userPhone').val();
 				   var userbank=$('#userBank').val();
 				   var useraccount=$('#userAccount').val();
 				   
 				   if(username==''||userphone==''||userbank==''||useraccount==''){
-					   
+					   swal({
+							  title: "호스트 등록이 취소됩니다 그래도 진행하시겠습니까?",
+							  icon: "warning",
+							  buttons: true,
+							  dangerMode: true,
+							})
+							.then((willDelete) => {
+							  if (willDelete) {
+							    swal("회원으로 전환되었습니다.", {
+							      icon: "success",
+							    }).then((next) => {
+							    		$("#userType").val("1");
+							    		$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+							    });
+							  } 
+							});//end swal
+				   }else{
+					   $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 				   }
+			   	}else{
+			   		$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+			   }
 			   }else{
-			   $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
+				   alert("틀린부분을 수정하세요.");
 			   }
 		 });  
 			
@@ -230,10 +295,23 @@
 			var phonenum = $("#userPhone").val();
 			var phonesplit = phonenum.split('-');
 			
-			if(phonesplit.length < 3){
+			if(phonenum == ''){
+				
+			}else{
+			
+			if(phonenum.length > 13){
 				$("#userPhone").css("background-color", "#FFCECE");
 			}else{
-				$("#userPhone").css("background-color", "#B0F6AC");
+				if(phonesplit.length < 3){
+					$("#userPhone").css("background-color", "#FFCECE");
+				}else{
+					if(phonesplit[2].length<1){
+						$("#userPhone").css("background-color", "#FFCECE");
+					}else{
+						$("#userPhone").css("background-color", "#B0F6AC");
+					}
+				}
+			}
 			}
 		}
 				
@@ -354,10 +432,8 @@
 				 }); 
 				 
 			 });
-		
-		$('#updateUser').on('click',function(){
-			$("form").attr("method" , "POST").attr("action" , "/user/getUser").submit();
-		});
+
+		/////////////////////////////////////////////////////////
 		
 		$(function() {
 			$("#file").on('change', function() {
@@ -424,12 +500,12 @@
 	    
 	<form id="updateUserForm">	
 
-		<input type="hidden"  id="userType" name="userType" />
-		
+		<input type="hidden"  id="userType" name="userType" value="${user.userType }"/>
+		<input type="hidden"  id="userNo" name="userNo" value="${user.userNo }"/>
 		<div class="col-sm-12">
 			
 			<div class="profile-userpic ">
-				<input type="hidden" id="userImage" value="user05=KakaoTalk_20171217_173604783.jpg"/>
+				<input type="hidden" id="userImage" value="${user.userImage }"/>
 				<%-- <c:if test="${empty user.userImage}">
 					<img id="blah" style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive">
 				</c:if> --%>
@@ -465,7 +541,7 @@
 						<div class="form-group">
 					  		<label for="userPhone" class="col-sm-2 col-sm-offset-4 control-label">휴대전화번호</label>
 					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userPhone" name="userPhone" value="${user.userPhone}">
+									<input type="text" class="form-control" id="userPhone" name="userPhone" value="${user.userPhone}" maxlength="13" placeholder="xxx-xxxx-xxxx">
 									<span id="phoneHelpBlock" class="help-block" type="hidden">
 											 <strong  id="phoneText" class="text-danger" style="color: #f9d431;">휴대전화번호를 입력해 주세요.</strong>
 										</span>
@@ -597,9 +673,28 @@
 								</div>
 						</div>
 					</div>
-					
 					<br/>
 					
+					<%-- <div class="row">
+						<div class="form-group">
+					  		<label for="userRegisterType" class="col-sm-2 col-sm-offset-4 control-label">공개설정</label>
+					  			<div class="col-sm-3">
+						  			<c:if test = "${user.profilePublic == 0}"> 
+										<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic"   checked="checked" value="0" />비공개</label>
+										<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"  value="1" />공개</label>
+									 </c:if> 
+									 
+									&nbsp;&nbsp;
+									 <c:if test = "${user.profilePublic == 1}">
+										<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic" value="0" />비공개</label>
+										<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"   	value="1" checked="checked"/>공개</label>
+									</c:if>
+								</div>
+						</div>
+					</div> --%>
+
+					
+										
 				</div>
 			</div>
 			

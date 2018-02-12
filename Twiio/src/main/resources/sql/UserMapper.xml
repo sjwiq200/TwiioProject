@@ -41,7 +41,7 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type) 
+		INTO users( user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type,public_state) 
 		VALUES	 ( seq_users_user_no.nextval , 
 					#{userId} , 
 					#{userName} , 
@@ -53,13 +53,14 @@
 					#{userEmail:VARCHAR} , 
 					SYSDATE , 
 					#{userBirthday:DATE} , 
-					#{userRegisterType} )
+					#{userRegisterType},
+					1)
 	 </insert>
 	 
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank, main_plan_no_shared	
+		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, to_char(birth,'yyyy-mm-dd') birth, sign_up_type, public_state, resign, host_account, bank, main_plan_no_shared	
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -75,8 +76,8 @@
 		profile_image, 
 		phone, gender, 
 		email , 
-		reg_date, 
-		birth, 
+		reg_date,
+		to_char(birth,'yyyy-mm-dd') birth, 
 		sign_up_type, 
 		public_state, 
 		resign, 
@@ -115,6 +116,7 @@
 			gender 			= #{userGender:CHAR} ,
 			birth 			= #{userBirthday:DATE} ,
 			public_state 	= #{profilePublic:CHAR} ,
+			bank			= #{userBank:VARCHAR},
 			host_account 	= #{userAccount:VARCHAR} ,
 			user_type 		= #{userType}		
 	   	</set>

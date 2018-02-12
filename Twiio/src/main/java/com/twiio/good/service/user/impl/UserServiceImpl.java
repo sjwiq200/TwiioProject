@@ -328,8 +328,8 @@ public class UserServiceImpl implements UserService{
 		// System.out.println(file.toString());
 
 		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
-		//String fileName = file.getOriginalFilename();
-		String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
+		String fileName = user.getFile().getOriginalFilename();
+		//String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
 		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
 		System.out.println("11111");
 		PrintStream out = System.out;

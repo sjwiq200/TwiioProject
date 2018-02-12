@@ -254,7 +254,13 @@ public class UserRestController {
 		user = (User)httpsession.getAttribute("user");
 		user.setFile(file);
 
-		boolean a = userService.detectFace(user);
+		boolean face = userService.detectFace(user);
+		if(face == true) {
+			
+		}else {
+			
+		}
+		
 		System.out.println("들어올까??");
 		return "성공했어요";
 		
