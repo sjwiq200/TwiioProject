@@ -209,8 +209,6 @@
 </head>
 
 <body>
-
-
 	<div class="container">
 		<div class="jumbotron">
 			<div class="jumbotron" id="mainJum" style="font-family: 'Noto Sans KR', sans-serif !important; color :#000000; ">
@@ -284,10 +282,8 @@
 							      <button type="button" class="btn btn-outlined btn-light btn-sm" id ="go"  >친구추가</button>
 						      	</c:if>
 								  <a class="btn btn-outlined btn-light btn-sm" href="#" role="button" id="cancel">취&nbsp;소</a>
-							    </div>
-							    
-							  </div>
-							
+							    </div>							    
+							  </div>							
 							</form>
 						</div>
 					</div>

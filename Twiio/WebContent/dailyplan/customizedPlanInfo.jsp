@@ -27,6 +27,9 @@
 <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 <script src="/resources/chart/Chart.min.js"></script>
 
+<!--  ///////////////////////// CSS ////////////////////////// -->
+<link rel="stylesheet" href="/resources/css/font.css" />
+
 
 <style type="text/css">
 body {
@@ -49,7 +52,57 @@ body {
 	text-align: right;
 	padding-top: 10px;
 }
+button {
+  margin: 20px 0;
+  line-height: 34px;
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  outline:none !important;
+  width:100%;
+}
 
+button:active {
+
+  outline:none;
+}
+
+button.ribbon {
+  
+  outline:none;
+  outline-color: transparent;
+}
+button.ribbon:before, button.ribbon:after {
+  top: 5px;
+  z-index: -10;
+}
+button.ribbon:before {
+  border-color: #53dab6 #53dab6 #53dab6 transparent;
+  left: -25px;
+  border-width: 17px;
+}
+button.ribbon:after {
+  border-color: #53dab6 transparent #53dab6 #53dab6;
+  right: -25px;
+  border-width: 17px;
+}
+
+button:before, button:after {
+  content: '';
+  position: absolute;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 0;
+  outline:none;
+}
+    button.btn-danger:before {
+  border-color: #ac2925 #ac2925 #ac2925 transparent;
+    }
+    button.btn-danger:after {
+  border-color: #ac2925 transparent #ac2925 #ac2925;
+    }
+   
 </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -359,8 +412,10 @@ $(function() {
 	<div class="wrap">
 	<jsp:include page="/layout/toolbar.jsp" />
 
-	<div class="container">
+	<div class="container" style="font-family:'JEJUGOTHIC' !important;">
 		
+	
+	<div class="jumbotron" id="jumbotron" style="align-content: center; background-color: rgba(244, 244, 244, 1);" >	
 		
 		
 		<div class="top_fix_zone" id="topBar" >
@@ -373,7 +428,7 @@ $(function() {
 		<div class="text-info" align="center">
 			<p>&nbsp;</p>
 			<p>&nbsp;</p>
-			<h1><strong>나의 여행 맞춤 정보</strong> </h1>
+			<button type="button" class="btn btn-danger ribbon">나의 여행 맞춤 정보</button>
 		</div>
 
 		<form class="form-horizontal">
@@ -535,9 +590,9 @@ $(function() {
 		<!-- -----------------날씨<END>------------------- -->
 
 
+			</div>
+
 		</div>
-
-
 	</div>
 	
 </div>

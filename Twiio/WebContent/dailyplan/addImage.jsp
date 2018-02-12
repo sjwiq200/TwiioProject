@@ -35,6 +35,7 @@
 				$('#blah').attr('src', e.target.result).attr('width', '300px');
 			}
 			reader.readAsDataURL(input.files[0]);
+			alert($('#uploadFile').val());
 			alert(e.target.result);
 		}
 	}

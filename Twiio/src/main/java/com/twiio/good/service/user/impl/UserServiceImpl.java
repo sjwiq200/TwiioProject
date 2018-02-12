@@ -331,24 +331,33 @@ public class UserServiceImpl implements UserService{
 		String fileName = user.getFile().getOriginalFilename();
 		//String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
 		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
-		
+		System.out.println("11111");
 		PrintStream out = System.out;
+		System.out.println("22222");
 		// String filePath=file.getOriginalFilename();
 		// File file02=new File("C:\\Users\\bitcamp\\Desktop\\pic\\", fileName);
 		File file02 = new File(userFaceFilePath, fileName);
+		System.out.println("33333");
 		user.getFile().transferTo(file02);
+		System.out.println(user.getFile());
+		System.out.println(file02);
+		System.out.println("44444");
 		// ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 		ByteString imgBytes = ByteString.readFrom(new FileInputStream(file02));
 
 		Image img = Image.newBuilder().setContent(imgBytes).build();
 		Feature feat = Feature.newBuilder().setType(Type.TYPE_UNSPECIFIED.FACE_DETECTION).build();
+		System.out.println("55555");
 		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+		System.out.println("66666");
 		requests.add(request);
-
+		System.out.println("77777");
 		try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+			System.out.println("00000");
 			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+			System.out.println("88888");
 			List<AnnotateImageResponse> responses = response.getResponsesList();
-
+			System.out.println("99999");
 			for (AnnotateImageResponse res : responses) {
 				// System.out.println("[[[res]]]===================> :"+res);
 				if (res.hasError()) {
