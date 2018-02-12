@@ -127,7 +127,7 @@
 			    margin: 20px 10px;
 			}
 			table.type10 thead th {
-			    width: 150px;
+			 	max-width: 150px;
 			    padding: 10px;
 			    font-weight: bold;
 			    vertical-align: top;
@@ -137,12 +137,12 @@
 			    border: 3px solid rgba(215, 58, 49, 0.8);
 			}
 			table.type10 tbody th {
-			    width: 150px;
+			    max-width: 150px;
 			    padding: 10px;
 			    border: 3px solid rgba(215, 58, 49, 0.8);
 			}
 			table.type10 td {
-			    width: 350px;
+			    max-width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
 			    border: 3px solid rgba(215, 58, 49, 0.8);
@@ -252,7 +252,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	<div class="jumbotron" id="jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px;" >	
+	<div class="jumbotron col-xs-18" id="jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >	
 	
 		<div class="row" align="center">
 	  		<div class="col-xs-12" id="info1" style="height: 100px;" ><ins><h2 style=" color : #212121;"><strong>${context[0]}</strong></h2></ins></div>
@@ -266,7 +266,7 @@
 		<div class="row">
 		<c:if test="${image != null}">
 			<c:if test="${image.size()==2}">
-				<div class="col-md-12"><a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="width: 700px; height: 450px;"/></a>
+				<div class="col-md-12"><a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="max-width: 700px; max-height: 450px;"/></a>
 				<div class="col-md-3"><img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
 									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
 									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>

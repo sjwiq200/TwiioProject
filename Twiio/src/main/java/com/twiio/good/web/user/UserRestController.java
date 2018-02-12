@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -74,12 +75,21 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )
-	public User getUser( @PathVariable int userNo ) throws Exception{
+	public User getUserNo( @PathVariable int userNo ) throws Exception{
 		
 		System.out.println("/user/json/getUser : GET ");
 		
 		//Business Logic
 		return userService.getUserInNo(userNo);
+	}
+	
+	@RequestMapping( value="json/getUserId/{userId}", method=RequestMethod.GET )
+	public User getUserId( @PathVariable String userId ) throws Exception{
+		
+		System.out.println("/user/json/getUserId : GET ");
+		
+		//Business Logic
+		return userService.getUser(userId);
 	}
 	
 	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
@@ -262,6 +272,20 @@ public class UserRestController {
 		}
 		
 		System.out.println("들어올까??");
+		return "성공했어요";
+		
+	}
+	
+	@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
+	public String deleteUser(@ModelAttribute User user) throws Exception{
+		
+		System.out.println("/user/json/deleteUser");
+		
+		User user2 = userService.getUserInNo(user.getUserNo());
+		
+		userService.deleteUser(user2);
+		
+		System.out.println("결과"+user2);
 		return "성공했어요";
 		
 	}
