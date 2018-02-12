@@ -65,9 +65,15 @@
 	<form name="form">
 		<textarea id="summernote" name="contentText"></textarea>
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+
 		<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" />
 		<input type="hidden" name="textContents" id="textContents" />
-		<input type="submit" value="ADD" />
+
+		<input type="hidden" name="textContents" id="textContents" style="padding-top : 50px;" />
+		<div align="center" >
+		<input type="submit" class="btn btn-primary btn-sm" value="ADD" />
+		</div>
+
 	</form>
 </body>
 

@@ -36,7 +36,10 @@
   
   <script>
   	$(function() {
-	 
+	 	$("#profile").on("click", function(){
+	 		var userNo = $(this).html().split('value="')[1].split('"')[0];
+	 		self.location =  "/room/getProfile/"+userNo;
+	 	})
 	 });
   </script>
 	
@@ -148,19 +151,18 @@
 										 	 <div class="col-sm-3 col-sm-offset-1" ><img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" 
 										 	 style="width: 32px; height: 32px;" class="media-photo"></div>
 										  
-										 	 <div class="col-sm-5 "  style="padding-top: 8px;" >${friend.userName}</div>
+										 	 <div class="col-sm-5 "  style="padding-top: 8px;" >${roomUser.userName}</div>
 										  </div>
 										 </div> 
 										  
 										  </td>
 											  <td align="right" style="padding-left: 40px;">
-											  <button type="button" class="btn btn-outlined btn-light btn-sm" >
+											  <button type="button" class="btn btn-outlined btn-light btn-sm" id="profile">
 											 <a href="#">
-									            <!-- 친구초대 -->
-									            <input type="hidden" id="roomKey" value="">
 								            </a> 
-											  옛다 버튼</button>
-											  	<%-- <a href="#">친구초대<input type="hidden" id="userNo" value="${friend.userNo}"></a> --%>
+								            <input type="hidden" id="userNo" value="${roomUser.userNo}"></a>
+											  프로필 보기 </button>
+											  	<a href="#">
 											  </td>
 										  </div>
 										</tr>
@@ -176,50 +178,12 @@
 		</section>
 		
 	</div>
-	
-	
-      <%-- <table class="table table-hover table-striped" >
-      
-        <thead>
-          <tr>
-          	<th align="center">No</th>
-            <th align="left">User No</th>
-            <th align="left" >User Name</th>
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-		  <c:set var="i" value="0" />
-		  <c:forEach var="roomUser" items="${list}">
-			<c:set var="i" value="${ i+1 }" />
-			<tr>
-			  <td align="center">${ i }</td>
-			  <td align="left"  title="Click : 회원정보 확인">${roomUser.userNo}</td>
-			  <td align="left">${roomUser.userName}</td>
-			  <td align="left">
-			  	<a href="#">
-		            <!-- 친구초대 -->
-		            <input type="hidden" id="roomKey" value="${}">
-	            </a>
-			  </td>
-			</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table> --%>
-        
-        
-	  <!--  table End /////////////////////////////////////-->
+
 	  
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
+
 	
 </body>
 </html>

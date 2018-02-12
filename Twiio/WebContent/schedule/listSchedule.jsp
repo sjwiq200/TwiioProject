@@ -29,12 +29,14 @@
   <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <!—  구글  —>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</script>
   <script>
   	$(function() {
   		
-  		$("a:contains('방 수정')").on("click",function(){
+  		$("a:contains('일정 수정')").on("click",function(){
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
-			 alert(roomKey);
 			 self.location = "/schedule/updateSchedule/"+roomKey;
 		 });
 		 
@@ -47,6 +49,18 @@
 	  body {
             padding-top : 50px;
         }
+        
+        .btn.btn-default:hover, .btn.btn-default:active{
+		color: #FFF;
+		background: #08708A;
+		border-color: #08708A;
+	   }
+
+		.btn.btn-default{
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -61,7 +75,7 @@
    	<div class="container">
 	
 		<div class="page-header text-info">
-	       <h3>메신저 방목록 조회 </h3>
+	       <h3> 일정 목록 조회 </h3>
 	    </div>
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -69,7 +83,7 @@
 	    
 		    <div class="col-md-6 text-left">
 		    	<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+		    		전체  ${totalCount } 건수
 		    	</p>
 		    </div>
 		    
@@ -80,11 +94,17 @@
    	<c:set var="i" value="0" />
 		  <c:forEach var="schedule" items="${schedule}" varStatus="status">
 			<!-- <div class="row"> -->
-		    <div class="col-sm-3 " >
-		      <div class="thumbnail" name="getPro" style="height:500px;">
-		    
-		        <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
-		          <div class="caption">
+		    <div class="col-sm-3 " style="padding-top : 2%">
+		      <div class="thumbnail" name="getPro" style="height:600px;">
+		    		<c:if test="${empty schedule.mapImg }">
+		    			<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">
+		    		</c:if>
+		    		<c:if test="${!empty schedule.mapImg }">
+		    			<img src="${schedule.mapImg }&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" class="img-rounded">
+		    			<!-- &key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM -->
+		    		</c:if>
+		        
+		          <div class="caption" style="text-align: center;">
 		            <h3>Title : ${schedule.scheduleTitle} </h3>		            
 		            <p>Date : ${schedule.scheduleDate}</p>
 		            <p>Address : ${schedule.scheduleAddress}</p>
@@ -95,7 +115,7 @@
 		            
 		            <p>
 		            <c:if test="${user.userNo == room[status.index].userNo }">
-		            		<a href="#">일정 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
+		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:10%">일정 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
 		            </c:if>
 		            </p>
 		            
@@ -108,10 +128,6 @@
 		    </div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
- 	
- 	<!-- PageNavigation Start... -->
-	<jsp:include page="../common/pageNavigator_new.jsp"/>
-	<!-- PageNavigation End... -->
 
 </body>
 </html>

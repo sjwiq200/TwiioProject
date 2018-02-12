@@ -29,6 +29,9 @@
 	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<script src="/resources/chart/Chart.min.js"></script>
 	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<link rel="stylesheet" href="/resources/css/imformation.css" />
 	
@@ -122,31 +125,38 @@
 		//============= "가입"  Event 연결 =============
 		 $(function() {
 			$( "button#go" ).on("click" , function() {
-				
-				$.ajax({
-					url : "/room/json/addReport/",
-					method : "POST",
-					data : JSON.stringify({
-						targetUserNo : $("#targetUserNo option:selected").val(),
-						targetRoomKey : $("#roomKey").val(),
-						reportTitle : $("#reportTitle").val(),
-						reportContent : $("#reportContent").val()
-					}),
-					dataType : "json",
-					headers : {
-						"Accept" : "application/json",
-						"Content-Type" : "application/json"
-					},
-					success : function(JSONData, status){
-						alert("??"+status);
-						alert(JSONData);
-						if(status == 'success'){
-							
-							window.close();
+				if($("#reportContent").val() ==''){
+					swal("내용을 기입해주세요!","","warning");
+				}else{
+					swal("신고가 완료되었습니다!","","success").then((next) => {
+						if(next){
+							$.ajax({
+								url : "/room/json/addReport/",
+								method : "POST",
+								data : JSON.stringify({
+									targetUserNo : $("#targetUserNo option:selected").val(),
+									targetRoomKey : $("#roomKey").val(),
+									reportTitle : $("#reportTitle").val(),
+									reportContent : $("#reportContent").val()
+								}),
+								dataType : "json",
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData, status){
+									if(status == 'success'){
+										window.close();
+									}
+								}
+								
+							});//end ajax
 						}
-					}
+					});//end swal
 					
-				});
+				}
+				
+				
 			});
 		});	
 		
