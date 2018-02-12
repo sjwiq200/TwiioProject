@@ -49,10 +49,19 @@
 <title>getDailyPlan</title>
 
 <style type="text/css">
+body::-webkit-scrollbar {
+  width: 0.7em;
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 
 #mainBody {
+	
 	padding-top: 70px;
 	font-family:'JEJUGOTHIC';
+	background: #f4f4f4;
 }
 
 #innerMain {
@@ -61,6 +70,7 @@
 }
 
 #thumbnailMainBox {
+	min-height: 1500px;
 	font-family:'JEJUMYEONGJO';
 	background: linear-gradient(-45deg, #08708A, transparent),linear-gradient(45deg, #D73A31, transparent);
 	border-radius: 8px;
@@ -72,6 +82,7 @@
 }
 
 #thumbnailMainThumbBox {
+	min-height: 1500px;
 	background: #fff;
 	display: inline-block;
 	border-radius: 6px;
@@ -83,6 +94,14 @@
 
 /* 사이드바 <START> */
 
+.sidenav::-webkit-scrollbar {
+  width: 0.7em;
+  background: transparent;
+}
+.sidenav::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
 .sidenav {
 	margin-top: 53px;
     height: 100%;
@@ -91,13 +110,11 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #56B1BF;
     overflow-x: hidden;
-    transition: 0.3s;
+    transition: 0.6s;
     padding-top: 60px;
     background-color: #ffffff;
-    background-color: rgba( 255, 255, 255, 0.5 );
-    border-right: solid 0.8px #303030;
+    border-right: solid 0.8px #C2C2C2;
 }
 
 .sidenav a {
@@ -132,8 +149,8 @@
 }
 
 #contentsBox {
-	height: 5em;
-	border-bottom: solid 0.8px #303030;
+	height: 6em;
+	border-bottom: dashed 0.5px #C2C2C2;
 }
 /* 사이드바 <END> */
 
@@ -529,9 +546,7 @@ $(function() {
 			         doc.text(20, 20, 'Hello world!'); 
 			    	doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
 			    	doc.addPage();  
-					//console.log(imgData);
 			    	doc.addImage(imgData, 'JPEG',8, 8, 90, 95);
-					 //doc.addImage(imgData, 'JPEG', 8, 8, 90, 95);
 			        doc.save('test.pdf');
 			    }
 			}); 
@@ -547,26 +562,33 @@ $(function() {
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "280px";
 			document.getElementById("main").style.marginLeft = "280px";
-			document.body.style.backgroundColor = "white";
+			document.body.style.backgroundColor = "#f4f4f4";
+			
 		}
 
 		function closeNav() {
 			document.getElementById("mySidenav").style.width = "0";
 			document.getElementById("main").style.marginLeft = "0";
-			document.body.style.backgroundColor = "white";
+			document.body.style.backgroundColor = "#f4f4f4";
 		}
 		
 		$(function() {
 			$("div[name=contentsBox]").hover(function() {
 				var index = $("div[name=contentsBox]").index(this);
- 				$($("div[name=contentsBox]")[index]).attr("style","background-color:black;");
+ 				$($("div[name=contentsBox]")[index]).attr("style","background-color:#A6A0A5; color:white;");
  					}, function(){
  						var index = $("div[name=contentsBox]").index(this);
- 						$($("div[name=contentsBox]")[index]).attr("style","background-color:white;");
+ 						$($("div[name=contentsBox]")[index]).attr("style","background-color:#ffffff;");
  					
  			});
  		});
 		
+		$(function() {
+			$("#contentList").on("click",function() {
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
+				$(location).attr('href', url);
+			});
+		});
 		
 		
 		$(function() {
@@ -684,40 +706,46 @@ $(function() {
 
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-			<div class="col-xs-12" align="center" style="margin-bottom: 1.5em;">
-				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="80px" style="border-radius: 10%">
+			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
+				<h2><strong>Contents</strong></h2><br/><br/>
+				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" style="border-radius: 5%;">
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
-					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="80px" style="border-radius: 10%">
+					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" style="border-radius: 5%;">
 				</c:forEach>
-				<h6> Writer :  ${dailyPlan.user.userName}
+				<h5> Writer :  ${dailyPlan.user.userName}
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
 					& ${listUser.userName}
 				</c:forEach>
-				</h6>
+				</h5>
+				
 			</div>
+			
+			<div class="col-xs-12" style="background:transparent;">
 		<c:set var="i" value="0" />
+			<h5 align="right" id="contentList">크게보기</h5>
 		<c:forEach var="dailyPlan" items="${listDailyPlan}">
 			<c:set var="i" value="${ i+1 }" />
 			<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
 			<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-			<div class="col-xs-12 contentsBox" id="contentsBox" name="contentsBox">
+			<div class="col-xs-12 contentsBox" id="contentsBox" name="contentsBox" style="border-radius: 10%;">
 				
 				<div class="col-xs-4 contents dayClick" name="contents" align="left">
 					<h4>DAY${ i }</h4>
 				</div>
-				<div class="col-xs-8 contents dayClick" name="contents" align="left">
+				<div class="col-xs-8 contents dayClick" name="contents" align="center">
 					<h6>${dailyPlan.dailyDate}</h6>
 					<h6>${dailyPlan.dailyCity}</h6>
 				</div>
 			</div>
 		</c:forEach>
+		</div>
 	</div>
 
-	<div id="main" style="position:fixed; z-index:1000;">
+	<div id="main" style="position:fixed; z-index:1000;" id="openSideBar">
 
 		<h2>&nbsp;</h2>
 		<p>&nbsp;</p>
-		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()">&#9776;
+		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()" >&#9776;
 		OPEN</span>
 	</div>
 
@@ -846,7 +874,7 @@ $(function() {
 									</div>
 									<div class="col-xs-6" align="center">
 									<p class="contents">
-										<img src="${planContent.mapImage}&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" name="mapImg" class="contentsDelete" width="250px" style="border-radius: 99%;"
+										<img src="${planContent.mapImage}&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" name="mapImg" class="contentsDelete" width="300px" style="border-radius: 99%;"
 											onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
 									</div>
 								</c:if>
@@ -856,10 +884,6 @@ $(function() {
 									<p>&nbsp;</p>
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">[${planContent.mapName}]</p>
 								</c:if>
-
-								<%-- <c:if test="${!empty planContent.mapUrl}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 URL : ${planContent.mapUrl}</p>
-								</c:if> --%>
 
 								<c:if test="${!empty planContent.mapAddress}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">ADDRESS : ${planContent.mapAddress}</p>
@@ -918,35 +942,30 @@ $(function() {
 			
 			<!-- -------Floating Button<START>----------- -->
 
-	<div id="container-floating" style="font-family:'JEJUGOTHIC';">
+	<div id="container-floating" style="font-family:'JEJUGOTHIC'; ">
 	
 	  <div class="nd6 nds" class="btn" id="fixedbtn"  >
-	  <p class="letter">&nbsp;&nbsp;&nbsp;&nbsp;편집</p>
+	  <p class="letter">&nbsp;&nbsp;&nbsp;&nbsp;<strong>편집</strong></p>
 	  </div>
 	  
 	  <div class="nd5 nds" class="btn" id="addRouteButton" >
-	  <p class="letter">길찾기</p>
+	  <p class="letter"><strong>길찾기</strong></p>
 	  </div>
 	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap"  >
-	    <p class="letter">지도</p>
+	    <p class="letter"><strong>지도</strong></p>
 	  </div>
 	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" >
-	   <p class="letter">사진</p>
+	   <p class="letter"><strong>사진</strong></p>
 	  </div>
 	  <div class="nd1 nds" data-toggle="modal" data-target="#addText"  >
-	    <p class="letter">글</p>
+	    <p class="letter"><strong>글</strong></p>
 	  </div>
 	
 	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
-	    <p class="plus">+</p>
+	    <p class="plus"><strong>+</strong></p>
 	  </div>
 	
 	</div>
-
-	<!-- <button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button>
-	<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
-	<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
-	<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>-->
 
 	<!-- -------Floating Button<END>----------- -->
 	
@@ -955,8 +974,6 @@ $(function() {
 
 	<!-- ----------CONTENTS<END>----------- -->
 
-	<!-- 	</form> -->
-	
 	
 	
 	<!---------- Map Dialog ------------->
@@ -968,7 +985,7 @@ $(function() {
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>M A P</Strong>
+						<Strong>지도</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
@@ -992,7 +1009,7 @@ $(function() {
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>T E X T</Strong>
+						<Strong>글</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
@@ -1021,7 +1038,7 @@ $(function() {
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>Image</Strong>
+						<Strong>사진</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
