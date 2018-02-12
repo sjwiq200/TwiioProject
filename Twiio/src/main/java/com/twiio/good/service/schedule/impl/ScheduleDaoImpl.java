@@ -1,10 +1,13 @@
 package com.twiio.good.service.schedule.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -44,34 +47,40 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"addSchedule()");
 		
-		System.out.println("==>"+schedule);
-		
 		Criteria criteria = new Criteria("roomKey");
 		criteria.is(schedule.getRoomKey());
-
 
 		Query query = new Query(criteria);
 		System.out.println(mongoTemplate.find(query, Schedule.class, "schedules"));
 		Schedule existSchedule = mongoTemplate.findOne(query, Schedule.class, "schedules");
-		System.out.println("1234==>"+existSchedule);
+		
 		if(existSchedule == null) {
+			
 			mongoTemplate.insert(schedule,"schedules");
+			//Oracle DB
 			sqlSession.insert("ScheduleMapper.addSchedule",schedule);
+			
 		}
 		
 	}
 
 	@Override
-	public List<Schedule> listSchedule(int userNo) throws Exception {
+	public Map<String, Object> listSchedule(int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"listSchedule()");
 		
 
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userNo").all(userNo));
+		query.with(new Sort(Sort.Direction.DESC,"_id"));
+		
+		Map<String, Object> map = new HashMap<>();
 		
 		System.out.println("listSchedule Result = >"+mongoTemplate.find(query, Schedule.class,"schedules"));
-		return mongoTemplate.find(query, Schedule.class,"schedules");
+		int totalCount = (int)mongoTemplate.count(query, Schedule.class,"schedules");
+		map.put("totalCount", totalCount);
+		map.put("list", mongoTemplate.find(query, Schedule.class,"schedules"));
+		return map;
 	}
 
 	@Override
@@ -88,6 +97,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		update.set("scheduleTitle", schedule.getScheduleTitle());
 		update.set("scheduleDate", schedule.getScheduleDate());
 		update.set("scheduleAddress", schedule.getScheduleAddress());
+		update.set("mapImg", schedule.getMapImg());
 
 		mongoTemplate.updateFirst(query, update ,Schedule.class, "schedules");
 		sqlSession.update("ScheduleMapper.updateSchedule", schedule);
@@ -108,6 +118,25 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		System.out.println(mongoTemplate.findOne(query, Schedule.class, "schedules"));;
 		return mongoTemplate.findOne(query, Schedule.class, "schedules");
 	}
+
+
+
+	@Override
+	public Map<String, Object> listScheduleAll() throws Exception {
+		// TODO Auto-generated method stub
+		List<Schedule> list = sqlSession.selectList("ScheduleMapper.listSchedule");
+		int totalCount = sqlSession.selectOne("ScheduleMapper.getTotalCount");
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("list", list);
+		map.put("totalCount", totalCount);
+		
+		
+		return map;
+	}
+	
+	
+	
 	
 	
 	

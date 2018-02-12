@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -201,8 +200,8 @@
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
-					<div class="col-sm-4">${user.userBirthday}</div>
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>은행명</strong></div>
+					<div class="col-sm-4">${user.userBank}</div>
 				</div>
 				
 				<br/>
@@ -247,11 +246,18 @@
 				<hr/>
 				
 				<div class="row">
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
+					<div class="col-sm-4">${user.userBirthday}</div>
+				</div>
+				
+				<hr/>
+				
+				<div class="row">
 			  		<div class="col-sm-3 col-sm-offset-4"><strong>가입일자</strong></div>
 					<div class="col-sm-4">${user.regDate}</div>
 				</div>
 				
-				<hr/>
+				<br/>
 				
 					</div>
 				

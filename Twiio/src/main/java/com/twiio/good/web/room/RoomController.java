@@ -185,6 +185,8 @@ public class RoomController {
 		
 		User user = (User)session.getAttribute("user");
 		
+		System.out.println("user ==>" +user);
+		
 		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
 		
 		List<User> listFriend = new Vector<>();
@@ -230,11 +232,12 @@ public class RoomController {
 	}
 	
 	@RequestMapping(value = "/deleteRoomUser/{roomKey}")
-	public String deleteRoomUser(@PathVariable String roomKey) throws Exception {
+	public String deleteRoomUser(@PathVariable String roomKey,HttpSession session) throws Exception {
 		System.out.println("/room/deleteRoomUser : ");
+		User user = (User)session.getAttribute("user");
 		
-		roomService.deleteRoomUser(roomKey);
-		return "";
+		roomService.deleteRoomUser(roomKey,user.getUserNo());
+		return "redirect:/room/listMyRoom";
 	}
 	
 	@RequestMapping(value = "/updateRoomOpen/{roomKey}", method=RequestMethod.GET)

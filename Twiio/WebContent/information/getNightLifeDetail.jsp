@@ -256,9 +256,9 @@
 	
 		<div class="row" align="center">
 	  		<div class="col-xs-12" id="info1" style="height: 100px;" ><ins><h2 style=" color : #212121;"><strong>${context[0]}</strong></h2></ins></div>
-			<div class="col-xs-12" style=" color : #212121; height: 30px; " ><h3>${context[1]}</h3></div>
-			<div class="col-xs-12" style=" color : #212121; height: 30px;" ><h3>${context[2]}</h3></div>
-			<div class="col-xs-12" style=" color : #212121; height: 30px;"><h3>${context[3]}</h3></div>
+	  		<c:forEach  items="${context}" varStatus="status">
+				<div class="col-xs-12" style=" color : #212121; height: 30px;"><h3>${context[status.index+1]}</h3></div>
+			</c:forEach>
 		</div>
 		<hr/>
 		

@@ -12,22 +12,31 @@
 	<result property="scheduleAddress" column="schedule_address" jdbcType="VARCHAR"/>
 	<result property="country" column="country" jdbcType="VARCHAR"/>
 	<result property="city" column="city" jdbcType="VARCHAR"/>
+	<result property="userNoString" column="user_no_string" jdbcType="VARCHAR"/>
 </resultMap>
 
 	
 	<!-- SQL : INSERT -->
 	<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
-		INTO schedule(schedule_no, roomkey, schedule_title, schedule_date, schedule_address, country, city) 
+		INTO schedule(schedule_no, roomkey, schedule_title, schedule_date, schedule_address, country, city,user_no_string) 
 		VALUES	 ( seq_schedule_schedule_no.nextval , 
 					#{roomKey:VARCHAR} , 
 					#{scheduleTitle:VARCHAR} , 
 					#{scheduleDate:VARCHAR} , 
 					#{scheduleAddress:VARCHAR} , 
 					#{country:VARCHAR} , 
-					#{city:VARCHAR}
+					#{city:VARCHAR},
+					#{userNoString:VARCHAR}
 				)
 	 </insert>
+	 
+	 <!-- SQL : SELECT LIST -->
+	<select  id="listSchedule" resultMap="scheduleSelectMap">
+	  	SELECT *
+	  	FROM schedule
+	 </select>
+
 	
 	 
 	 <!-- SQL : UPDATE -->
@@ -36,11 +45,16 @@
 	   	<set>
 	   		schedule_title = #{scheduleTitle:VARCHAR} , 
 			schedule_date =	#{scheduleDate:VARCHAR} , 
-			schedule_address = #{scheduleAddress:VARCHAR}  
+			schedule_address = #{scheduleAddress:VARCHAR}
 	   	</set>
 	   	WHERE roomkey = #{roomKey}
 	 </update>
 	 
+	 
+	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
+	  	SELECT COUNT(*)
+	  	FROM schedule			
+	 </select>
 	 
 	 
 </mapper>

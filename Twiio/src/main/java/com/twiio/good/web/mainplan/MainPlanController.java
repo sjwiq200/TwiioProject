@@ -47,93 +47,99 @@ public class MainPlanController {
 	
 	///Method
 	@RequestMapping(value = "addMainPlan")
-	public String addMainPlan(@ModelAttribute("mainPlan") MainPlan mainPlan,Model model, HttpSession session) throws Exception {
+	   public String addMainPlan(@ModelAttribute("mainPlan") MainPlan mainPlan,Model model, HttpSession session) throws Exception {
 
-		
-		System.out.println("-----Controller : addMainPlan <START>");
-		
-		String cityResult = "";
-		String countryResult="";
-		
-		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
-			if(i==mainPlan.getCityList().length-1) {
-				cityResult += mainPlan.getCityList()[i];
-			}else {
-				cityResult += mainPlan.getCityList()[i] + ",";
-			}
-		}
-		
-		for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
-			if(i==mainPlan.getCountryList().length-1) {
-				countryResult += mainPlan.getCountryList()[i];
-			}else {
-				countryResult += mainPlan.getCountryList()[i] + ",";
-			}
-		}
-		
-		User user = (User) session.getAttribute("user");
-		mainPlan.setCity(cityResult);
-		mainPlan.setUser(user);
-		mainPlan.setCountry(countryResult);
-		
-		mainPlanService.addMainPlan(mainPlan);
+	      
+	      System.out.println("-----Controller : addMainPlan <START>");
+	      
+	      String cityResult = "no";
+	      String countryResult="";
+	      
+//	      for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
+//	         if(i==mainPlan.getCityList().length-1) {
+//	            cityResult += mainPlan.getCityList()[i];
+//	         }else {
+//	            cityResult += mainPlan.getCityList()[i] + ",";
+//	         }
+//	      }
+	      System.out.println("mainPlan :: "+mainPlan);
+	            
+	      for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
+	         if(i== mainPlan.getCountryList().length-1) {
+	            countryResult +=  mainPlan.getCountryList()[i];
+	         }else {
+	            countryResult +=  mainPlan.getCountryList()[i] + ",";
+	         }
+	      }
+	      
+	      User user = (User) session.getAttribute("user");
+	      mainPlan.setCity(cityResult);
+	      mainPlan.setUser(user);
+	      mainPlan.setCountry(countryResult);
+//	      System.out.println(mainPlan.getFile().getOriginalFilename());
+//	      String fileName = user.getUserNo()+"="+ mainPlan.getFile().getOriginalFilename();      
+//	      mainPlan.setMainThumbnail(fileName);
+//	      File file = new File(mainPlanFilePath, fileName);
+//	      mainPlan.getFile().transferTo(file);
+	      
+	      mainPlanService.addMainPlan(mainPlan);
 
-		System.out.println("플랜제목 : " + mainPlan.getPlanTitle());
-		System.out.println("출발일 : "+ mainPlan.getDepartureDate());
-		System.out.println("도착일 : " + mainPlan.getArrivalDate());
-		System.out.println("여행지 : " + mainPlan.getCity());
-		
-		DailyPlan dailyPlan = new DailyPlan();
-		dailyPlan.setMainPlan(mainPlan);
-		dailyPlan.setUser(user);
-		
-		Date departureDate = mainPlan.getDepartureDate();
-		Date arrivalDate = mainPlan.getArrivalDate();
-		
-		if(departureDate != arrivalDate) {
-			java.util.Date departureDateUtil = departureDate;
-			java.util.Date arrivalDateUtil = arrivalDate;
-			
-			long diff = arrivalDateUtil.getTime() - departureDateUtil.getTime();
-	        long diffDays = diff / (24 * 60 * 60 * 1000);
-	        
-	        Date dailyDate = mainPlan.getDepartureDate();
-	        
-	        for(int i = 0 ; i <diffDays+1 ; i++) {
-	        	
-	        	//dailyPlan.setDailyCity(cityResult);
-			    //dailyPlan.setDailyCountry(mainPlan.getCountry());
-			    dailyPlan.setDay(i+1);
-			    dailyPlan.setDailyDate(dailyDate);
-			    dailyPlan.setMainPlan(mainPlan);
-			    dailyPlan.setUser(user);
-			    
-			    dailyPlanService.addDailyPlan(dailyPlan); 
-			    
-		        Calendar calendar = Calendar.getInstance();//+1위해 Calendar형식으로 변환
-		        calendar.setTime(dailyDate);
-		        calendar.add(Calendar.DATE,1);
-		        java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
+	      System.out.println("플랜제목 : " + mainPlan.getPlanTitle());
+	      System.out.println("출발일 : "+ mainPlan.getDepartureDate());
+	      System.out.println("도착일 : " + mainPlan.getArrivalDate());
+	      //System.out.println("여행지 : " + mainPlan.getCity());
+	      
+	      DailyPlan dailyPlan = new DailyPlan();
+	      dailyPlan.setMainPlan(mainPlan);
+	      dailyPlan.setUser(user);
+	      
+	      Date departureDate = mainPlan.getDepartureDate();
+	      Date arrivalDate = mainPlan.getArrivalDate();
+	      
+	      if(departureDate != arrivalDate) {
+	         java.util.Date departureDateUtil = departureDate;
+	         java.util.Date arrivalDateUtil = arrivalDate;
+	         
+	         long diff = arrivalDateUtil.getTime() - departureDateUtil.getTime();
+	           long diffDays = diff / (24 * 60 * 60 * 1000);
+	           
+	           Date dailyDate = mainPlan.getDepartureDate();
+	           
+	           for(int i = 0 ; i <diffDays+1 ; i++) {
+	              
+	              dailyPlan.setDailyCity(cityResult);
+	             dailyPlan.setDailyCountry(mainPlan.getCountry());
+	             dailyPlan.setDay(i+1);
+	             dailyPlan.setDailyDate(dailyDate);
+	             dailyPlan.setMainPlan(mainPlan);
+	             dailyPlan.setUser(user);
+	             
+	             dailyPlanService.addDailyPlan(dailyPlan); 
+	             
+	              Calendar calendar = Calendar.getInstance();//+1위해 Calendar형식으로 변환
+	              calendar.setTime(dailyDate);
+	              calendar.add(Calendar.DATE,1);
+	              java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
 
-		
-		        final String FORMAT = "yyyy-MM-dd";
-		        SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
-		        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String값
-		        dailyDate=Date.valueOf(dailyDateFormat);
-	        }
-		} else {
-			//dailyPlan.setDailyCity(cityResult);
-	        //dailyPlan.setDailyCountry(mainPlan.getCountry());
-	        dailyPlan.setDay(1);
-	        dailyPlan.setDailyDate(mainPlan.getArrivalDate());
-	        dailyPlan.setMainPlan(mainPlan);
-	        dailyPlan.setUser(user);
-		}
-		
-		System.out.println("-----Controller : addMainPlan <END>");
-		
-		return "forward:/mainplan/listMainPlan";
-	}
+	      
+	              final String FORMAT = "yyyy-MM-dd";
+	              SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
+	              String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String값
+	              dailyDate=Date.valueOf(dailyDateFormat);
+	           }
+	      } else {
+	         dailyPlan.setDailyCity(cityResult);
+	           dailyPlan.setDailyCountry(mainPlan.getCountry());
+	           dailyPlan.setDay(1);
+	           dailyPlan.setDailyDate(mainPlan.getArrivalDate());
+	           dailyPlan.setMainPlan(mainPlan);
+	           dailyPlan.setUser(user);
+	      }
+	      
+	      System.out.println("-----Controller : addMainPlan <END>");
+	      
+	      return "forward:/mainplan/listMainPlan";
+	   }
 
 	
 	@RequestMapping(value = "listMainPlan")
@@ -207,10 +213,14 @@ public class MainPlanController {
 		System.out.println("Controller : updateMainPlanView <START>" + "Param값 : " + mainPlanNo);
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
-		String[] cityList = (mainPlan.getCity()).split(",");
-		mainPlan.setCityList(cityList);
+		String[] country = (mainPlan.getCountry().split(","));
+		List<String> countryList = new ArrayList<String>();
+		for(int i =0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		
 		model.addAttribute("mainPlan", mainPlan);
-		model.addAttribute("cityList",cityList);
+		model.addAttribute("countryList",countryList);
 		
 		System.out.println("Controller : updateMainPlanView <END>");
 		
@@ -225,16 +235,16 @@ public class MainPlanController {
 		System.out.println("Controller : updateMainPlan <START>"+mainPlan);
 		
 		/////mainPlanUpdate////////////////////////////////////////////////////////////////
-			String cityResult = "";
-			for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
-				if(i==mainPlan.getCityList().length-1) {
-					cityResult += mainPlan.getCityList()[i];
+			String countryResult = "";
+			for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
+				if(i==mainPlan.getCountryList().length-1) {
+					countryResult += mainPlan.getCountryList()[i];
 				}else {
-					cityResult += mainPlan.getCityList()[i] + ",";
+					countryResult += mainPlan.getCountryList()[i] + ",";
 				}
 			}
-			mainPlan.setCity(cityResult);
-			mainPlan.setCountry("국가");
+			mainPlan.setCity("no");
+			mainPlan.setCountry(countryResult);
 		//////////////////////////////////////////////////////////////////////////////////
 		
 			
@@ -248,9 +258,9 @@ public class MainPlanController {
 		Date arrivalDateDB = mainPlanDB.getArrivalDate();
 		Boolean departureCompared = departureDate.equals(departureDateDB)&&arrivalDate.equals(arrivalDateDB);
 		
-		String city = cityResult;
-		String cityDB = mainPlanDB.getCity();
-		Boolean cityCompared = city.equals(cityDB);
+		String country = countryResult;
+		String countryDB = mainPlanDB.getCountry();
+		Boolean countryCompared = country.equals(countryDB);
 		long diffDaysDB = mainPlanService.getDayCount(mainPlanDB.getMainPlanNo());
 		
 		mainPlanService.updateMainPlan(mainPlan);

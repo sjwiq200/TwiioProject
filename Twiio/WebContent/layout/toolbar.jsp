@@ -13,7 +13,7 @@
 	
 	<div class="container">
 	       
-		<a class="navbar-brand" href="/main.jsp">TWIIO</a>
+		<a class="navbar-brand" href="/">TWIIO</a>
 		
 		<!-- toolBar Button Start //////////////////////// -->
 		<div class="navbar-header">
