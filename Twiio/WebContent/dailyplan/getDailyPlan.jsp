@@ -846,6 +846,7 @@ $(function() {
 	<!---------- Map Dialog ------------->
 		<div class="modal fade" id="addMap" role="dialog">
 		<div class="modal-dialog modal-lg">
+
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">

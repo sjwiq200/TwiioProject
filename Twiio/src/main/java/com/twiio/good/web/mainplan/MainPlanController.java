@@ -1,5 +1,6 @@
 package com.twiio.good.web.mainplan;
 
+import java.io.File;
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -38,6 +40,9 @@ public class MainPlanController {
 	@Qualifier("dailyPlanServiceImpl")
 	private DailyPlanService dailyPlanService;
 	
+	////////사진 업로드////////
+	@Value("#{commonProperties['mainPlanFilePath']}")
+	String mainPlanFilePath;
 	
 	///Constructor
 	public MainPlanController() {
@@ -49,40 +54,41 @@ public class MainPlanController {
 	@RequestMapping(value = "addMainPlan")
 	   public String addMainPlan(@ModelAttribute("mainPlan") MainPlan mainPlan,Model model, HttpSession session) throws Exception {
 
-	      
-	      System.out.println("-----Controller : addMainPlan <START>");
-	      
-	      String cityResult = "no";
-	      String countryResult="";
-	      
-//	      for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
-//	         if(i==mainPlan.getCityList().length-1) {
-//	            cityResult += mainPlan.getCityList()[i];
-//	         }else {
-//	            cityResult += mainPlan.getCityList()[i] + ",";
-//	         }
-//	      }
-	      System.out.println("mainPlan :: "+mainPlan);
-	            
-	      for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
-	         if(i== mainPlan.getCountryList().length-1) {
-	            countryResult +=  mainPlan.getCountryList()[i];
-	         }else {
-	            countryResult +=  mainPlan.getCountryList()[i] + ",";
-	         }
-	      }
-	      
-	      User user = (User) session.getAttribute("user");
-	      mainPlan.setCity(cityResult);
-	      mainPlan.setUser(user);
-	      mainPlan.setCountry(countryResult);
-//	      System.out.println(mainPlan.getFile().getOriginalFilename());
-//	      String fileName = user.getUserNo()+"="+ mainPlan.getFile().getOriginalFilename();      
-//	      mainPlan.setMainThumbnail(fileName);
-//	      File file = new File(mainPlanFilePath, fileName);
-//	      mainPlan.getFile().transferTo(file);
-	      
-	      mainPlanService.addMainPlan(mainPlan);
+		System.out.println("-----Controller : addMainPlan <START>");
+		
+		String cityResult = "no";
+		String countryResult="";
+		
+//		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
+//			if(i==mainPlan.getCityList().length-1) {
+//				cityResult += mainPlan.getCityList()[i];
+//			}else {
+//				cityResult += mainPlan.getCityList()[i] + ",";
+//			}
+//		}
+		System.out.println("mainPlan :: "+mainPlan);
+				
+		for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
+			if(i== mainPlan.getCountryList().length-1) {
+				countryResult +=  mainPlan.getCountryList()[i];
+			}else {
+				countryResult +=  mainPlan.getCountryList()[i] + ",";
+			}
+		}
+		
+		User user = (User) session.getAttribute("user");
+		mainPlan.setCity(cityResult);
+		mainPlan.setUser(user);
+		mainPlan.setCountry(countryResult);
+		System.out.println("getOriginalFilename :: "+mainPlan.getFile().getOriginalFilename());
+		String fileName = user.getUserNo()+"="+ mainPlan.getFile().getOriginalFilename();
+		System.out.println("fileName :: "+fileName);
+		mainPlan.setMainThumbnail(fileName);
+		File file = new File(mainPlanFilePath, fileName);
+		mainPlan.getFile().transferTo(file);
+		
+		mainPlanService.addMainPlan(mainPlan);
+
 
 	      System.out.println("플랜제목 : " + mainPlan.getPlanTitle());
 	      System.out.println("출발일 : "+ mainPlan.getDepartureDate());
@@ -245,6 +251,17 @@ public class MainPlanController {
 			}
 			mainPlan.setCity("no");
 			mainPlan.setCountry(countryResult);
+			
+			User user = (User) session.getAttribute("user");
+			
+			if(mainPlan.getFile().getOriginalFilename() != null && mainPlan.getFile().getOriginalFilename() != "") {
+				System.out.println("getOriginalFilename :: "+mainPlan.getFile().getOriginalFilename());
+				String fileName = user.getUserNo()+"="+ mainPlan.getFile().getOriginalFilename();
+				System.out.println("fileName :: "+fileName);
+				mainPlan.setMainThumbnail(fileName);
+				File file = new File(mainPlanFilePath, fileName);
+				mainPlan.getFile().transferTo(file);
+			}
 		//////////////////////////////////////////////////////////////////////////////////
 		
 			
@@ -262,7 +279,7 @@ public class MainPlanController {
 		String countryDB = mainPlanDB.getCountry();
 		Boolean countryCompared = country.equals(countryDB);
 		long diffDaysDB = mainPlanService.getDayCount(mainPlanDB.getMainPlanNo());
-		
+		System.out.println("?????");
 		mainPlanService.updateMainPlan(mainPlan);
 		
 		////Case1 : 일정변경없이 city만 변경된 경우 => dailyPlan city 초기화하기 
@@ -337,7 +354,7 @@ public class MainPlanController {
 					System.out.println("새로 입력한 DAY수가 기존 입력 DAY수 보다 큽니다.");
 					Date dailyDate = mainPlan.getDepartureDate();
 					
-					User user = (User) session.getAttribute("user");
+					//User user = (User) session.getAttribute("user");
 					
 					DailyPlan dailyPlan = new DailyPlan();
 					dailyPlan.setMainPlan(mainPlan);
