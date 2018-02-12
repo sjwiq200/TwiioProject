@@ -9,6 +9,7 @@
 
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
+	String mainPlanNo = (String) request.getParameter("mainPlanNo");
 %>
 
 <meta charset="UTF-8">
@@ -75,7 +76,8 @@
 		</div>
 
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-		<button name="add"  class="btn btn-primary btn-sm" type="button">ADD</button>
+		<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" />
+		<button name="add" type="button">ADD</button>
 
 	</form>
 

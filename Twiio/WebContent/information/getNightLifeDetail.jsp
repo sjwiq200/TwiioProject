@@ -161,7 +161,7 @@
 	        	
 	       }
 	       .jumbotron {
-	        	/* border: 3px solid #FFF; */
+	        	border: 3px solid #FFF;
 	       }
 	       
 	       

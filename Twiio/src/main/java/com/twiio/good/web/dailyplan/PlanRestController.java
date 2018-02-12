@@ -94,32 +94,32 @@ public class PlanRestController {
 		System.out.println("RestController : listFriendRec <START>");
 		System.out.println("dailyPlanNo : " + dailyPlanNo);
 		
-		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);//dailyPlanNo¸¦ ÅëÇØ dailyPlanÀüºÎ °¡Á®¿Â´Ù.
-		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);//ÇØ´ç dailyPlanÀ» ÅëÇØ ÀÚ½ÅÀÇ dailyPlan°ú °°Àº list¸¦ °¡Á®¿Â´Ù.
+		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);//dailyPlanNoï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ dailyPlanï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
+		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);//ï¿½Ø´ï¿½ dailyPlanï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ú½ï¿½ï¿½ï¿½ dailyPlanï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ listï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Â´ï¿½.
 		List<User> userListUndone = new ArrayList<User>();
 		
 		User myUserInfo = (User)session.getAttribute("user");
 		int myUserNo = myUserInfo.getUserNo();
 		
 		
-		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); //  º»ÀÎ Ä£±¸ ¸ñ·Ï °¡Á®¿È
-		for(DailyPlan dailyPlan:list) {//´Ù¸¥ À¯Àú µ¥ÀÏ¸®ÇÃ·£ for¹® µ¹¸°´Ù.
-			int userNo = dailyPlan.getUser().getUserNo(); // ÀÚ½ÅÀÇ ÀÏÁ¤°ú ¸Â´Â À¯Àú NO
-			for(Friend friendCheck : listFriend) {//Ä£±¸ ¸®½ºÆ® ¸¸Å­ For¹® µ¹¸°´Ù.
+		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); //  ï¿½ï¿½ï¿½ï¿½ Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+		for(DailyPlan dailyPlan:list) {//ï¿½Ù¸ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ã·ï¿½ forï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
+			int userNo = dailyPlan.getUser().getUserNo(); // ï¿½Ú½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Â´ï¿½ ï¿½ï¿½ï¿½ï¿½ NO
+			for(Friend friendCheck : listFriend) {//Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ® ï¿½ï¿½Å­ Forï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
 				if(friendCheck.getFriendNo()==userNo) {
-					System.out.println("debug : ÀÌ¹Ì Ä£±¸ÀÓ");
+					System.out.println("debug : ï¿½Ì¹ï¿½ Ä£ï¿½ï¿½ï¿½ï¿½");
 					userNo=0;
 				}
 			}
 			if(userNo!=0) {
-			User user = userService.getUserInNo(userNo);//Ä£±¸ Á¤º¸
+			User user = userService.getUserInNo(userNo);//Ä£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 			
 			userListUndone.add(user);
 			}
 		}
 	
 		System.out.println(userListUndone);
-		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); //¸®½ºÆ®¿¡¼­ Áßº¹µÈ °Å Á¦¿Ü½ÃÅ°±â
+		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); //ï¿½ï¿½ï¿½ï¿½Æ®ï¿½ï¿½ï¿½ï¿½ ï¿½ßºï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Ü½ï¿½Å°ï¿½ï¿½
 		Map<String, List> userInfo = new HashMap();
 		userInfo.put("userList", userList);
 		return userInfo;
@@ -137,15 +137,15 @@ public class PlanRestController {
 		System.out.println("mainPlanNoString : " + mainPlanNoString);
 		
 		for(Friend friendCheck : listFriend) {
-			System.out.println("µé¾î¿È");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½");
 			User friend = userService.getUserInNo(friendCheck.getFriendNo());
-			System.out.println("µé¾î¿È 1 " + friend);
-			if(friend.getMainPlanNoShared() != null){//°øÀ¯ÇÑ ÇÃ·£ÀÌ ÀÖ´Ù, °Ë»çÇØ¾ß ÇÑ´Ù.
-				System.out.println("µé¾î¿È 2 " + friend.getMainPlanNoShared());
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ 1 " + friend);
+			if(friend.getMainPlanNoShared() != null){//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½, ï¿½Ë»ï¿½ï¿½Ø¾ï¿½ ï¿½Ñ´ï¿½.
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ 2 " + friend.getMainPlanNoShared());
 				String[] sharedPlanNo = friend.getMainPlanNoShared().split(",");
 				int i = 0;
 				for(String sharedPlanNoCheck : sharedPlanNo) {
-					System.out.println("µé¾î¿È 3 " + sharedPlanNoCheck);
+					System.out.println("ï¿½ï¿½ï¿½ï¿½ 3 " + sharedPlanNoCheck);
 					if(sharedPlanNoCheck.equals(mainPlanNoString)) {
 						i=1;
 						break;
@@ -200,7 +200,7 @@ public class PlanRestController {
 		standardCountryEnc = URLDecoder.decode(standardCountryEnc,"UTF-8");
 		compareCountryEnc = URLDecoder.decode(compareCountryEnc,"UTF-8");
 		
-		String contentText = "<p>È¯À² Á¤º¸</p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
+		String contentText = "<p>È¯ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
 				+"<p>"+resultCurrency+"  "+compareCountryEnc+"</p>";
 		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
 		PlanContent planContent = new PlanContent();
@@ -298,15 +298,15 @@ public class PlanRestController {
 		
 		List<String> mainResultEnd = new ArrayList<String>();
 		List<String> detailResultEnd = new ArrayList<String>();
-		mainResultEnd.add("<p></p><img src=\"/resources/images/icon/lines/line12.png\" id=\"detailResultLine\" width=\"200px\">");
+//		mainResultEnd.add("<p></p><img src=\"/resources/images/icon/lines/line12.png\" id=\"detailResultLine\" width=\"200px\">");
 		for(String mainResultFinal : mainResult) {
 			System.out.println("mainResult : " + mainResultFinal);
 			mainResultEnd.add("<strong>"+mainResultFinal+"</strong>");
 		}
 		
 		for(String detailResultFinal : detailResult) {
-			if((detailResultFinal.indexOf("ÀÌµ¿¼ö´Ü") != -1)) {
-				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
+			if((detailResultFinal.indexOf("ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½") != -1)) {
+//				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
 			}
 			detailResultEnd.add(detailResultFinal);
 			
@@ -327,14 +327,20 @@ public class PlanRestController {
 		
 		System.out.println("RestController : sharePlan <START>");
 		
-		System.out.println("debug : Ä£±¸ ¹øÈ£ " +userNo +" : "+ mainPlanNo);
+		System.out.println("debug : Ä£ï¿½ï¿½ ï¿½ï¿½È£ " +userNo +" : "+ mainPlanNo);
 		
 		User user = userService.getUserInNo(userNo);
 		String mainPlanNoBefore = user.getMainPlanNoShared();
+		System.out.println("##debug : " + mainPlanNoBefore);
 		if(mainPlanNoBefore == null) {
+			System.out.println("ê³µìœ ëœ í”Œëœ ê¸°ë¡ ì—†ìŒ ");
 			userService.updateSharedPlan(userNo,String.valueOf(mainPlanNo));
-			}else {
-			userService.updateSharedPlan(userNo,(mainPlanNoBefore+","+mainPlanNo));
+			
+		}else {
+			System.out.println("ê³µìœ ëœ í”Œëœ ê¸°ë¡ ìˆìŒ  ");
+			String resultMainPlanNoShared = mainPlanNoBefore + "," + mainPlanNo;
+			userService.updateSharedPlan(userNo,resultMainPlanNoShared);
+			System.out.println("ê²°ê³¼ : " + userService.getUserInNo(userNo).getMainPlanNoShared());
 		}
 		System.out.println("RestController : sharePlan <END>");
 		

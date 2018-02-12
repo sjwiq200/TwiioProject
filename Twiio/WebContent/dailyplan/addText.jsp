@@ -9,6 +9,7 @@
 <title>addText</title>
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
+	String mainPlanNo = (String) request.getParameter("mainPlanNo");
 %>
 <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
 <meta charset="UTF-8">
@@ -64,10 +65,9 @@
 	<form name="form">
 		<textarea id="summernote" name="contentText"></textarea>
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+		<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" />
 		<input type="hidden" name="textContents" id="textContents" />
-		<div align="center" >
-		<input type="submit" class="btn btn-primary btn-sm" value="ADD" />
-		</div>
+		<input type="submit" value="ADD" />
 	</form>
 </body>
 

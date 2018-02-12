@@ -39,26 +39,25 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
 <!-- 내 CSS -->
-<link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
-
-<!--  ///////////////////////// CSS ////////////////////////// -->
-		<link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
 <title>getDailyPlan</title>
 
 <style type="text/css">
+#wrapper {
+width: 60em ;margin: 0 auto;
+} 
+#wrapper .container {max-width: 100%; display: block;}
 
 #mainBody {
-	padding-top: 50px;
+	padding-top: 70px;
 	font-family:'JEJUGOTHIC';
 }
 
 #innerMain {
 	font-size: 6em;
-	margin-top: 130px;
-	margin-bottom: 10px;
+	margin-top: 1.5em;
 }
 
 #thumbnailMainBox {
@@ -77,43 +76,6 @@
 	display: inline-block;
 	border-radius: 6px;
 }
-
-/* //////////////////eunae_modal////////////////////////// */
-		.content h1 {
-			text-align: center;
-		}
-		.panel {
-			border: 1px solid #ddd;
-			background-color: #fcfcfc;
-		}
-		.table-filter {
-			background-color: #fff;
-			font-size: 15px;
-		}
-		.table-filter tbody tr:hover {
-			cursor: pointer;
-			background-color: #eee;
-		}
-		.table-filter tbody tr td {
-			padding: 10px;
-			vertical-align: middle;
-			border-top-color: #FFF;
-		}
-		.table-filter tbody tr.selected td {
-			background-color: #eee;
-		}
-		.table-filter tr td:first-child {
-			width: 60px;
-		}
-		.media-photo{
-		  float: none;
-		  margin: 0 auto;
-		  -webkit-border-radius: 50% !important;
-		  -moz-border-radius: 50% !important;
-		  border-radius: 50% !important;
-		  border: 3px solid;
-		}
-}
 .btn {
 	font-family:'JEJUGOTHIC';
 }
@@ -129,10 +91,13 @@
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: #C2C2C2;
+    background-color: #56B1BF;
     overflow-x: hidden;
-    transition: 0.5s;
+    transition: 0.3s;
     padding-top: 60px;
+    background-color: #ffffff;
+    background-color: rgba( 255, 255, 255, 0.5 );
+    border-right: solid 0.8px #303030;
 }
 
 .sidenav a {
@@ -166,6 +131,11 @@
   .sidenav a {font-size: 18px;}
 }
 
+#contentsBox {
+	height: 5em;
+	border-bottom: solid 0.8px #303030;
+}
+/* 사이드바 <END> */
 
 
 </style>
@@ -191,6 +161,17 @@
 				});
 			})
 			
+			
+			 
+	 $(function() {
+			$(".dayClick:contains('DAY')").bind("click",function() {
+				var index = $(".dayClick:contains('DAY')").index(this);
+				var dailyPlanNo = $($("input[name='dailyPlanNo']")[index]).val();
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+		 })
 </script>
 
 <script type="text/javascript">
@@ -221,7 +202,7 @@
 							},
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++) /* {
+		    					for(var i=0;i<user.length;i++){
 		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
 		    								+'<span>  [이름] : '+user[i].userName+'</span>'
@@ -229,15 +210,7 @@
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}  */
-		    					{
-		    						
-		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+user[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
-									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'+
-									'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-primary btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-									
-		    						
-		    					} 
+		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
@@ -251,7 +224,7 @@
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).attr("disabled","true");  
+	    $("#addToMyFriendList"+i).remove(); 
 	}
 	
 
@@ -300,28 +273,25 @@
 <script>
 	$(function() {
 		$("#addRouteButton").on("click",function() {
-			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo};
+			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo}+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
 			$(location).attr('href', url);
 				});
 	});
-	</script>
-<script type="text/javascript">
 	/////////////////////////맞춤 여행 정보 기능 구현///////////////////////////
 	$(function() {
 		$("#customizedPlanInfo").on("click",function() {
+			
 			var dailyPlanNo = $("#idDailyPlanNo").val();
-			 var dailyCity=$("#idDailyCity").val();
-			 var dailyDate=$("#idDailyDate").val();
-			 dailyCity = encodeURI(encodeURIComponent(dailyCity));
-			 self.location = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity+"&dailyDate="+dailyDate;
+			var dailyCity=$("#idDailyCity").val();
+			var dailyDate=$("#idDailyDate").val();
+			dailyCity = encodeURI(encodeURIComponent(dailyCity));
+			var url = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity
+			 												+"&dailyDate="+dailyDate+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
+			$(location).attr('href', url); 
 		});
 	});
 	
 	
-	
-</script>
-
-<script type="text/javascript">
 	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
 /* 	$(function() {
 		$(".contentsTxt").hover(function() {
@@ -343,7 +313,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
 <script>
 /////////////////////////PDF 기능 구현///////////////////////////
@@ -386,6 +355,33 @@ $(function() {
 	});
 </script>
 
+<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+			document.getElementById("main").style.marginLeft = "280px";
+			document.body.style.backgroundColor = "white";
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "white";
+		}
+		
+		$(function() {
+			$("div[name=contentsBox]").hover(function() {
+				var index = $("div[name=contentsBox]").index(this);
+ 				$($("div[name=contentsBox]")[index]).attr("style","background-color:black;");
+ 					}, function(){
+ 						var index = $("div[name=contentsBox]").index(this);
+ 						$($("div[name=contentsBox]")[index]).attr("style","background-color:white;");
+ 					
+ 			});
+ 		});
+		
+		
+</script>
+
 </head>
 <body id="mainBody">
 	
@@ -394,65 +390,44 @@ $(function() {
 	<!-- ----------------------------------- -->
 
 
-	<div id="mySidenav" class="sidenav">
+	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<c:set var="i" value="0" />
-							<c:forEach var="dailyPlan" items="${listDailyPlan}">
-								<c:set var="i" value="${ i+1 }" />
-								<input type="hidden"name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
-							    <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-							    <div class="col-xs-12 contentsBox" id="contentsBox">
-							    	<div class="col-xs-12 contents" name="contents" align="left">
-								    <h5>DAY${ i }</h5>
-								   <span>
-										<h4>${dailyPlan.dailyDate}</h4>
-										<h6>${dailyPlan.dailyCity}</h6> 
-									</span>
-									</div>
-									<!--<div class="col-xs-1"><p>국가 </p>
-									<div class="col-xs-12" align="left"></div><p>도시 </p> </div> -->
-									<%-- <p>${dailyPlan.dailyCountry}</p> --%>
-									<%-- <p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
-									<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p> 
-									<p>유저번호 : ${dailyPlan.user.userNo }</p>--%>
-									 <%--<div class="col-xs-2" id="contents">
-										 <c:if test="${empty dailyPlan.dailyCity}">
-											<c:set var="num" value="0" />
-											<c:forEach var="cityList" items="${cityList}">
-												<c:set var="num" value="${ num+1 }" />
-												<div class="btn-group" role="group" id="cityButtonGroup">
-													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
-												</div>
-												<button class="button" id="${i}">${cityList}</button>
-											</c:forEach>
-										</c:if> 
-										<p></p>
-									</div>--%>
-								</div>
-								  <!-- <div class="col-xs-2"></div><div class="col-xs-8" id="line"></div> <div class="col-xs-2"></div> -->
-							</c:forEach>
+			<div class="col-xs-12" align="center" style="margin-bottom: 1.5em;">
+				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="80px" style="border-radius: 10%">
+				<c:forEach var="listUser" items="${listForMainPlanShared}">
+					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="80px" style="border-radius: 10%">
+				</c:forEach>
+				<h6> Writer :  ${dailyPlan.user.userName}
+				<c:forEach var="listUser" items="${listForMainPlanShared}">
+					& ${listUser.userName}
+				</c:forEach>
+				</h6>
+			</div>
+		<c:set var="i" value="0" />
+		<c:forEach var="dailyPlan" items="${listDailyPlan}">
+			<c:set var="i" value="${ i+1 }" />
+			<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+			<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
+			<div class="col-xs-12 contentsBox" id="contentsBox" name="contentsBox">
+				
+				<div class="col-xs-4 contents dayClick" name="contents" align="left">
+					<h4>DAY${ i }</h4>
+				</div>
+				<div class="col-xs-8 contents dayClick" name="contents" align="left">
+					<h6>${dailyPlan.dailyDate}</h6>
+					<h6>${dailyPlan.dailyCity}</h6>
+				</div>
+			</div>
+		</c:forEach>
 	</div>
 
-	<div id="main">
+	<div id="main" style="position:fixed; z-index:1000;">
+
 		<h2>&nbsp;</h2>
 		<p>&nbsp;</p>
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
-			open</span>
+		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()">&#9776;
+		OPEN</span>
 	</div>
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
-			document.body.style.backgroundColor = "white";
-		}
-	</script>
 
 
 
@@ -463,10 +438,12 @@ $(function() {
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
 
 	<form class="form-horizontal">
+	  <div id="wrapper">
 		<div class="container">
 			<div class="col-xs-12 inner" id="thumbnailMainBox">
 				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
-				<div class="col-xs-12 inner" id="thumbnailMainThumbBox"align="center">
+				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+					<div class="col-xs-12" >
 
 
 					<div class="row" align="center">
@@ -479,7 +456,7 @@ $(function() {
 						<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-default" value="같이 갈 친구 찾기" />
 						<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p>
 						<p></p>
-						<img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px">
+						<!-- <img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px"> -->
 						<p></p>
 						<div class="col-xs-12 innerMain" id="innerMain" align="center">
 						<p>DAY ${dailyPlan.day}</p>
@@ -488,11 +465,10 @@ $(function() {
 						<p>${dailyPlan.dailyDate}</p> 
 						<p>${dailyPlan.dailyCity}</p>
 						</div>
-						<div class="col-xs-12" style="margin-top:150px" align="center">
+						<div class="col-xs-12" style="margin-top:130px" align="center">
 						<input type="hidden" value="${dailyPlan.dailyPlanNo}" id="idDailyPlanNo" />
 						<input type="hidden" value="${dailyPlan.dailyDate}" id="idDailyDate" /> 
 						<input type="hidden" value="${dailyPlan.dailyCity}" id="idDailyCity" />
-						<p></p>
 						</div>
 					</div>
 
@@ -560,21 +536,21 @@ $(function() {
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
-									<div class="col-xs-12"  style="margin-top: 30px" align="center">
+									<div class="col-xs-12"  style="margin-top: 20px" align="center">
 									<p class="contents">
-										<Strong> YOUR MAP </Strong>
+										<Strong> <img src="/resources/images/dailyPlanContent/map.png" width="40px"> </Strong>
 									</p>
 									</div>
-									<div class="col-xs-6" align="right">
+									<div class="col-xs-6" align="center">
 									<p class="contents">
-										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px" style="border-radius: 99%;"
+										<img src="${planContent.mapImage}&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" name="mapImg" class="contentsDelete" width="250px" style="border-radius: 99%;"
 											onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
 									</div>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapName}">
-									<div class="col-xs-6"  style="margin-top:100px ;" align="left">
-									<img src="/resources/images/dailyPlanContent/map.png" width="40px"><p>&nbsp;</p>
+									<div class="col-xs-6"  style="margin-top:30px ;" align="left">
+									<p>&nbsp;</p>
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">[${planContent.mapName}]</p>
 								</c:if>
 
@@ -597,12 +573,13 @@ $(function() {
 								<c:if test="${!empty planContent.mapType}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">TYPE : ${planContent.mapType}</p>
 									</div>
+								<div class="col-xs-12"  style="height: 30px" align="center"></div>
 								</c:if>
 								<!-- ---------------------지도정보 <END>-------------------- -->
-
+							
 								<c:if test="${!empty planContent.contentText}">
 									<p>
-										<div class="col-xs-12" style="margin-top:50px;  margin-right:60px; font-size:1.1em !important;font-color: #C2C2C2 !important;">
+										<div class="col-xs-12" align="center" style="margin-top:20px;font-size:1.1em !important;font-color: #C2C2C2 !important;">
 											${planContent.contentText}
 											<div id="col-xs-12 txtSize" class="txtSize"></div>
 										</div>
@@ -611,9 +588,8 @@ $(function() {
 
 								<c:if test="${!empty planContent.contentImage}">
 									<p class="contentsThis">
-										<img
-											src="/resources/images/dailyPlanContent/${planContent.contentImage}"
-											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 5%;"/>
+										<img src="/resources/images/dailyPlanContent/${planContent.contentImage}"
+											class="contentsDelete" width="400px" style="border-radius: 5%;"/>
 									</p>
 								</c:if>
 
@@ -626,11 +602,14 @@ $(function() {
 							</div>
 
 						</c:forEach>
-
+						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
+						
+						</div>
 					</div>
 				</div>
 				<div align="right" class="col-xs-1">&nbsp;</div>
 			</div>
+		</div>
 			<!-- 섬네일 전체 박스 부분 -->
 			
 			
@@ -639,17 +618,21 @@ $(function() {
 
 	<div id="container-floating" style="font-family:'JEJUGOTHIC';">
 	
-	  <div class="nd5 nds" class="btn" id="addRouteButton" data-placement="left" >
-	  <p class="letter">ROUTE</p>
+	  <div class="nd6 nds" class="btn" id="fixedbtn"  >
+	  <p class="letter">&nbsp;&nbsp;&nbsp;&nbsp;편집</p>
 	  </div>
-	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap" data-placement="left" >
-	    <p class="letter">MAP</p>
+	  
+	  <div class="nd5 nds" class="btn" id="addRouteButton" >
+	  <p class="letter">길찾기</p>
 	  </div>
-	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" data-placement="left" >
-	   <p class="letter">PICS</p>
+	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap"  >
+	    <p class="letter">지도</p>
 	  </div>
-	  <div class="nd1 nds" data-toggle="modal" data-target="#addText" data-placement="left" >
-	    <p class="letter">TEXT</p>
+	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" >
+	   <p class="letter">사진</p>
+	  </div>
+	  <div class="nd1 nds" data-toggle="modal" data-target="#addText"  >
+	    <p class="letter">글</p>
 	  </div>
 	
 	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
@@ -665,27 +648,6 @@ $(function() {
 
 	<!-- -------Floating Button<END>----------- -->
 	
-	
-	
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	</form>
 
@@ -733,6 +695,7 @@ $(function() {
 				<div class="modal-body">
 					<jsp:include page="/dailyplan/addText.jsp" flush="true">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
+						<jsp:param name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
 					</jsp:include>
 				</div>
 				<div class="modal-footer">
@@ -767,14 +730,12 @@ $(function() {
 							</label>
 
 							<div class="col-sm-6">
-								<input type="file" name="uploadFile" class="ct_input_g"
-									style="width: 300px; height: 30px" maxLength="20"
-									id="uploadFile" /> <img id="addImageContent" />
+								<input type="file" name="uploadFile" class="ct_input_g" style="width: 300px; height: 30px" maxLength="20" id="uploadFile" /> <img id="addImageContent" />
 							</div>
 						</div>
-						<input type="hidden" name="dailyPlanNo"
-							value="${dailyPlan.dailyPlanNo}" />
-						<button name="add" class="btn btn-primary btn-sm" type="button">ADD</button>
+						<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+						<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
+						<button name="add" type="button">ADD</button>
 					</form>
 				</div>
 				<div class="modal-footer">
@@ -787,40 +748,29 @@ $(function() {
 
 	<!---------- FriendRec Dialog <START>------------->
 
-	<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
+	<div class="modal fade" id="friendRec" role="dialog">
 		<div class="modal-dialog modal-md">
-				<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"align="center" >
-						<Strong>나와 같은 장소, <p>날짜에 여행가는 친구들을 찾아볼까요?</Strong>
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+					<h4 class="modal-title">
+						<Strong>나와 같은 장소, 날짜에 여행가는 친구들을 찾아볼까요?</Strong>
 					</h4>
+					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
-							<table class="table table-filter" style="align-content: center;">
-								<tbody>
-										<tr data-status="pagado">
-										<div class="media-body">
-										  <td align="left" vailgn="middle">
-											  <div class="row" >
-											  	<div id="friendListForRec"></div>
-											  </div>
-										 	 </td>
-										  </div>
-										</tr>
-								</tbody>
-							</table>
-						
-					</div>
+
+				<div class="modal-body" align="center">
+
+					<div id="friendListForRec"></div>
+
+				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 				</div>
 			</div>
 		</div>
 	</div>
-	
-	
 
 	<!---------- FriendRec Dialog <END>------------->
 </body>

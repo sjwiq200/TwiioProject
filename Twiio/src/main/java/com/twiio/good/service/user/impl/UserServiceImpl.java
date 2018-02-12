@@ -112,6 +112,13 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 
+	
+	@Override
+	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.listUserForSharedMainPlan(mainPlanNo);
+	}
+
 	@Override
 	public void updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub

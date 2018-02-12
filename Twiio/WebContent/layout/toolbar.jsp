@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 
+
+
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
@@ -268,6 +270,7 @@
 	
 	
 	<style>
+				
 			.navbar, .dropdown-menu{
 			background:rgba(215, 58, 49, 0.8);
 			border: none;

@@ -27,6 +27,8 @@ public interface UserService {
 	// 회원정보리스트 
 	public Map<String , Object> listUser(Search search) throws Exception;
 	
+	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception;
+	
 	// 회원정보수정
 	public void updateUser(User user) throws Exception;
 	
