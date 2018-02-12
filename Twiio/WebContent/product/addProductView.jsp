@@ -34,7 +34,10 @@
   	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script> 
   	
   	<!-- ---------font ------------ -->
-  	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />      
+  	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />  
+  	
+  	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
 
 <style>
        body > div.container{
@@ -79,24 +82,63 @@ function fncAddProduct(){
 	var description=$("textarea[name='description']").val();
 	var tripDate=$("input[name='tripDate']").val();
 	var price=$("input[name='productPrice']").val();
+	var city=$("input[name='city']").val();
+	var country=$("input[name='country']").val();
+	var tourHeadCount=$("input[name='tourHeadCount']").val();
 
 	if(name == null || name.length<1){
-		alert("상품명은 반드시 입력하여야 합니다.");
+		//alert("상품명은 반드시 입력하여야 합니다.");
+		swal("투어명은 반드시 입력하여야 합니다.",{
+			  icon: "warning",
+			});
 		return;
 	}
-	if(description == null || description.length<1){
-		alert("상품상세정보는 반드시 입력하여야 합니다.");
+	if(country == null || country.length<1){
+		//alert("가격은 반드시 입력하셔야 합니다.");
+		swal("국가는 반드시 입력하셔야 합니다.",{
+			  icon: "warning",
+			});
+		return;
+	}
+	if(city == null || city.length<1){
+		//alert("가격은 반드시 입력하셔야 합니다.");
+		swal("도시는 반드시 입력하셔야 합니다.",{
+			  icon: "warning",
+			});
 		return;
 	}
 	if(tripDate == null || tripDate.length<1){
-		alert("제조일자는 반드시 입력하셔야 합니다.");
+		//alert("제조일자는 반드시 입력하셔야 합니다.");
+		swal("투어일자는 반드시 입력하셔야 합니다.",{
+			  icon: "warning",
+			});
+		return;
+	}
+	if(tourHeadCount == null || tourHeadCount.length<1){
+		//alert("가격은 반드시 입력하셔야 합니다.");
+		swal("1일투어인원은 반드시 입력하셔야 합니다.",{
+			  icon: "warning",
+			});
 		return;
 	}
 	if(price == null || price.length<1){
-		alert("가격은 반드시 입력하셔야 합니다.");
+		//alert("가격은 반드시 입력하셔야 합니다.");
+		swal("가격은 반드시 입력하셔야 합니다.",{
+			  icon: "warning",
+			});
 		return;
 	}
-
+	if(description == null || description.length<1){
+		//alert("상품상세정보는 반드시 입력하여야 합니다.");
+		swal("상품상세정보는 반드시 입력하여야 합니다.",{
+			  icon: "warning",
+			});
+		return;
+	}
+		
+	swal("Daily Tour가 등록되었습니다.",{
+		  icon: "success",
+		});
 	$("form").attr("method" , "POST").attr("action" , "/product/addProduct").attr("enctype", "multipart/form-data").submit();
 }
 

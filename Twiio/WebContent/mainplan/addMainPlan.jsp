@@ -113,15 +113,19 @@ body {
 
 <script>
 	function fncAddMainPlan(){
-		var planTitle =  $("#planTitle").val();				
+		var planTitle =  $("#planTitle").val();
+		var mainThumbnail = $("#mainThumbnail").val();
 		var datepicker1 = $("#datepicker1").val();
 		var datepicker2 = $("#datepicker2").val();
-		
+		//alert(mainThumbnail);
 		var flag = true;
 		
 		if (planTitle == "" ) {			
 			flag = false;
-		} 			
+		} 
+		if (mainThumbnail == "" ) {			
+			flag = false;
+		} 
 		if (datepicker1 == "" ) {			
 			flag = false;
 		} 
@@ -143,7 +147,9 @@ body {
 		
 		if(flag){
 			
-			$("div[name='planer']").remove();		
+			$("div[name='planer']").remove();
+			$("div[name='addThumbnail']").remove();
+			$("input[name='file']").attr("style","display:none");
 						
 			addPlan += '<input type="hidden" name="planTitle" value="'+planTitle+'">'					
 					+ '<input type="hidden" name="departureDate" value="'+datepicker1+'">'
@@ -162,7 +168,7 @@ body {
 				"click",
 				function() {
 					$("form").attr("method", "POST").attr("action",
-							"/mainplan/addMainPlan").submit();
+							"/mainplan/addMainPlan").attr("enctype", "multipart/form-data").submit();
 				});
 	});
 
@@ -244,6 +250,10 @@ body {
 		$("input[name='countryList']").on("change", function() {
 			fncAddMainPlan();
 		});
+		
+		$("#mainThumbnail").on("change", function() {
+			fncAddMainPlan();
+		});
 
 		$("#datepicker1").on("change", function() {
 			fncAddMainPlan();
@@ -315,6 +325,24 @@ $(function() {
 		});
 	});
 });
+
+$(function() {
+	$("#mainThumbnail").on('change', function() {
+		readURL(this);
+	});
+});
+
+function readURL(input) {
+	if (input.files && input.files[0]) {
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			$('#blah').attr('src', e.target.result).attr('width', '300px');
+		}
+		reader.readAsDataURL(input.files[0]);
+		alert($('#mainThumbnail').val());
+		alert(e.target.result);
+	}
+}
 </script>
 
 </head>
@@ -337,7 +365,12 @@ $(function() {
 			<form>
 
 				<div class="form-group center-block contentsList">
-						<div name="planer">	
+						<div name="addThumbnail">	
+						<label for="mainThumbnail" class="col-sm-12 control-label">썸네일을 등록해주세요</label>
+							<img id="blah" />
+						</div>	
+							<input type="file" class="form-control contents"  id="mainThumbnail" name="file" placeholder="Your thumbnail"><p>&nbsp;</p>
+						<div name="planer">												
 						<label for="planTitle" class="col-md-12 control-label">당신의 플랜북 이름을 정해주세요</label>
 							<input type="text" class="form-control contents"  style="position: absoloute" id="planTitle" name="planTitle" placeholder="Your book title" ><p>&nbsp;</p>
 						<div name="addCountry">
@@ -352,7 +385,8 @@ $(function() {
 							<input type="text" class="form-control contents" id="datepicker1" name="departureDate"placeholder="Your departure date"><p>&nbsp;</p>
 							
 						<label for="arrivalDate" class="col-sm-12 control-label">도착일을 입력해주세요</label>
-							<input type="text" class="form-control contents"  id="datepicker2" name="arrivalDate" placeholder="Your arrival date"><p>&nbsp;</p>							
+							<input type="text" class="form-control contents"  id="datepicker2" name="arrivalDate" placeholder="Your arrival date"><p>&nbsp;</p>	
+													
 						</div>
 						</div>
 						<input type="submit" class="btn-1"  style="background-color:transparent;  border:0px transparent solid; aria-label="Right Align" id="submit" value="" >
