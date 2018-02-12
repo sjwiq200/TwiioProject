@@ -229,7 +229,7 @@
 			        		    	name = place.name;
 			        		    	website = place.website;
 			        		    	
-			        		    	$("#resultMap").empty();
+			        		    	//$("#resultMap").empty();
 			        		    	
 									$("#resultMap")
 			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>["+name+"]</strong></div>")
@@ -306,19 +306,9 @@
 
 		$(function(){
 			$("button[name='addMapToPlan']").on("click",function(){
-				alert("안");			
-				var mapUrl= $("#mapUrl").val().toString();
-				var mapName = document.getElementById("addr1").value;
-				var mapType = $("#mapType").val().toString();
-				var mapPhone = $("#mapPhone").val().toString();
-				var name=$("#addr1").val();
-				var mapAddress = $("#mapAddress").val();
-				var korName = encodeURI(encodeURIComponent(mapName));
-				var korAddress= encodeURI(encodeURIComponent(mapAddress));
-				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?mainPlanNo="+<%=mainPlanNo%>+"&dailyPlanNo="+dailyPlanNo+"&mapType="
-						+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
-				
+				$("#mapImage").val(mapImage);
+				$("form[name='modalMap']").attr("method", "POST").attr("action","/dailyplan/addMap").submit();
+
 			});
 		});
 
@@ -339,28 +329,31 @@
 					</span>
 				</div>
 			</div>
-		<div class="col-sm-12">&nbsp;</div>
+			<div class="col-sm-12">&nbsp;</div>
 		</div>
 
-		<div class="col-sm-12" id="map" style="font-family: 'JEJUGOTHIC';" align="center"></div>
+		<div class="col-sm-12" id="map" style="font-family: 'JEJUGOTHIC';"
+			align="center"></div>
 
 		<div id="resultMap" class="col-sm-12" style="margin-left: 50px;">
-			
-				<form >
-					<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-					<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" />
-				    <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
-					<input type="hidden" name="mapAddress" id="mapAddress" value="기본값" />
-				    <input type="hidden" name="mapName" id="mapName" value="기본값" />
-				    <input type="hidden" name="mapPhone" id="mapPhone" value="기본값" />
-				    <input type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" />
-				    <input type="hidden" name="mapType" id="mapType" value="" />
-				</form>
+
+			<form name="modalMap">
+				<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+				<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" /> <input
+					type="hidden" name="mapUrl" id="mapUrl" value="기본값" /> <input
+					type="hidden" name="mapAddress" id="mapAddress" value="기본값" /> <input
+					type="hidden" name="mapName" id="mapName" value="기본값" /> <input
+					type="hidden" name="mapPhone" id="mapPhone" value="기본값" /> <input
+					type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" /> <input
+					type="hidden" name="mapType" id="mapType" value="" />
+				 <input type="hidden" name="mapImage" id="mapImage" value="" />
+			</form>
 		</div>
-		<div class="col-sm-12" > &nbsp;</div>
-			<div class="col-sm-12" >
-				<button type="button"  class="btn btn-default" name="addMapToPlan">내 플랜에 추가</button>
-			</div>
+		<div class="col-sm-12">&nbsp;</div>
+		<div class="col-sm-12">
+			<button type="button" class="btn btn-default" name="addMapToPlan">
+				트위북에 등록하기</button>
+		</div>
 
 
 	</div>

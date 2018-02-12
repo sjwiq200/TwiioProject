@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -246,20 +247,16 @@ public class DailyPlanController {
 
 	@RequestMapping(value = "addMap")
 	public String addMap(
-			@RequestParam("mapUrl") String mapUrl,
-			@RequestParam("mapType") String mapType, 
-			@RequestParam("mapPhone") String mapPhone, 
+			@ModelAttribute("planContent") PlanContent planContent,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
-			@RequestParam("mapImage") String mapImage,
 			@RequestParam("mainPlanNo") int mainPlanNo,
-			HttpServletRequest request,
-			Model model) throws Exception {
+			HttpServletRequest request, Model model) throws Exception {
 		
 		System.out.println("Controller : addMap <START>");
-		String mapName = URLDecoder.decode(request.getParameter("korName"),"UTF-8");
-		String mapAddress = URLDecoder.decode(request.getParameter("korAddress"),"UTF-8");
 		
-		mapImage = mapImage.replaceAll("[(]", "");
+		System.out.println("####" + planContent);
+		
+		String mapImage = (planContent.getMapAddress()).replaceAll("[(]", "");
 		mapImage =mapImage.replaceAll("[)]","");
 		mapImage =mapImage.replaceAll(" ","");
 
@@ -268,14 +265,8 @@ public class DailyPlanController {
 		
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		
-		PlanContent planContent = new PlanContent();
 		int countForOrder = dailyPlanService.getPlanContentCount(dailyPlanNo);
 		planContent.setContentType(3);
-		planContent.setMapUrl(mapUrl);
-		planContent.setMapType(mapType);
-		planContent.setMapPhone(mapPhone);
-		planContent.setMapAddress(mapAddress);
-		planContent.setMapName(mapName);
 		planContent.setDailyPlan(dailyPlan);
 		planContent.setOrderNo(countForOrder+1);
 		planContent.setMapImage(mapImageResult);
