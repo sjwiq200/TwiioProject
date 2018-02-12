@@ -78,7 +78,7 @@
 	border-radius: 6px;
 }
 
-/* //////////////////eunae_modal////////////////////////// */
+/* //////////////////eunae_modal_table////////////////////////// */
 		.content h1 {
 			text-align: center;
 		}
@@ -117,6 +117,98 @@
 .btn {
 	font-family:'JEJUGOTHIC';
 }
+
+/*///////////////////// imaged preview ///////////////////*/ 
+.filebox input[type="file"] {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip:rect(0,0,0,0);
+    border: 0;
+}
+
+.filebox label {
+    display: inline-block;
+    padding: .5em .75em;
+    color: #999;
+    font-size: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #fdfdfd;
+    cursor: pointer;
+    border: 1px solid #ebebeb;
+    border-bottom-color: #e2e2e2;
+    border-radius: .25em;
+}
+/*///////////////////// map_modal_size ///////////////////*/ 
+.modal-dialog.modal-map {
+  width: 55%;
+  height: 55%;
+  margin: 0;
+  padding: 0;
+  display: inline-block; 
+  text-align: left; 
+  vertical-align: middle; 
+    left: 20%;
+
+}
+
+/* named upload */
+.filebox .upload-name {
+    display: inline-block;
+    padding: .5em .75em;
+    font-size: inherit;
+    font-family: inherit;
+    line-height: normal;
+    vertical-align: middle;
+    background-color: #f5f5f5;
+  border: 1px solid #ebebeb;
+  border-bottom-color: #e2e2e2;
+  border-radius: .25em;
+  -webkit-appearance: none; /* 네이티브 외형 감추기 */
+  -moz-appearance: none;
+  appearance: none;
+}
+
+/* imaged preview */
+.filebox .upload-display {
+    margin-bottom: 5px;
+}
+
+@media(min-width: 768px) {
+    .filebox .upload-display {
+        display: inline-block;
+        margin-right: 5px;
+        margin-bottom: 0;
+    }
+}
+
+.filebox .upload-thumb-wrap {
+    display: inline-block;
+    width: 54px;
+    padding: 2px;
+    vertical-align: middle;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+}
+
+.filebox .upload-display img {
+    display: block;
+    /* max-width: 100%;
+    width: 200px;
+    height: auto; */
+}
+
+.filebox.bs3-primary label {
+  color: #fff;
+  background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
 
 
 /* 사이드바 <START> */
@@ -194,6 +286,57 @@
 </script>
 
 <script type="text/javascript">
+
+		/////////////////////////이미지 제목 노출///////////////////////////
+		
+		
+		$("#addImage").ready(function(){
+			   var fileTarget = $('.filebox .upload-hidden');
+
+			    fileTarget.on('change', function(){
+			        if(window.FileReader){
+			            // 파일명 추출
+			            var filename = $(this)[0].files[0].name;
+			        } 
+
+			        else {
+			            // Old IE 파일명 추출
+			            var filename = $(this).val().split('/').pop().split('\\').pop();
+			        };
+
+			        $(this).siblings('.upload-name').val(filename);
+			    });
+
+			    //preview image 
+			    var imgTarget = $('.preview-image .upload-hidden');
+
+			    imgTarget.on('change', function(){
+			        var parent = $(this).parent();
+			        parent.children('.upload-display').remove();
+
+			        if(window.FileReader){
+			            //image 파일만
+			            if (!$(this)[0].files[0].type.match(/image\//)) return;
+			            
+			            var reader = new FileReader();
+			            reader.onload = function(e){
+			                var src = e.target.result;
+			                parent.prepend('<div class="upload-display col-sm-4 col-sm-offset-4"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb" style=" width:200px; height:auto"></div></div><br/>');
+			            }
+			            reader.readAsDataURL($(this)[0].files[0]);
+			        }
+
+			        else {
+			            $(this)[0].select();
+			            $(this)[0].blur();
+			            var imgSrc = document.selection.createRange().text;
+			            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+			            var img = $(this).siblings('.upload-display').find('img');
+			            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+			        }
+			    });
+			});
 
 	/////////////////////////이미지 추가 버튼 클릭했을 때 작동///////////////////////////
 
@@ -697,7 +840,7 @@ $(function() {
 	
 	<!---------- Map Dialog ------------->
 	<div class="modal fade" id="addMap" role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-map">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -730,7 +873,7 @@ $(function() {
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body  col-sm-12">
 					<jsp:include page="/dailyplan/addText.jsp" flush="true">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 					</jsp:include>
@@ -759,23 +902,30 @@ $(function() {
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
 
-				<div class="modal-body">
-
-					<form name="form" enctype="multipart/form-data">
-						<div class="form-group">
-							<label for="uploadFile" class="col-sm-4 control-label">상품이미지
-							</label>
-
-							<div class="col-sm-6">
-								<input type="file" name="uploadFile" class="ct_input_g"
-									style="width: 300px; height: 30px" maxLength="20"
-									id="uploadFile" /> <img id="addImageContent" />
+				<div class="modal-body col-sm-12">
+				
+						<form name="form" enctype="multipart/form-data">
+							<div class="form-group">
+	
+								
+									
+									<div class="filebox bs3-primary preview-image">
+			                            <input class="upload-name col-sm-4 col-sm-offset-3"  value="파일선택" disabled="disabled" style="width: 200px;">
+			                            <label for="input_file" class="col-sm-2 col-offset-4">사진 선택</label> 
+			                          <input type="file" id="input_file" name="uploadFile" class="upload-hidden"> 
+	                       			</div>
+	
+									<!-- <label class="file_input">
+										<input type="file" name="uploadFile" 
+											id="uploadFile" />  <img id="addImageContent" />
+									</label> -->
 							</div>
-						</div>
-						<input type="hidden" name="dailyPlanNo"
-							value="${dailyPlan.dailyPlanNo}" />
-						<button name="add" class="btn btn-primary btn-sm" type="button">ADD</button>
-					</form>
+							<br/>
+							<input type="hidden" name="dailyPlanNo" 
+								value="${dailyPlan.dailyPlanNo}" />
+							<button name="add" class="btn btn-primary btn-sm col-sm-2 col-sm-offset-5 text-center" type="button">ADD</button>
+						</form>
+						<br/>
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

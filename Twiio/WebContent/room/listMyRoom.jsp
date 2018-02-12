@@ -358,7 +358,7 @@
 		            <p>country : ${room.country}</p>
 		            <p> city : ${room.city}</p>
 		            <p>${room.headCount}명</p>
-		            <p>
+		            <p style="position: absolute;bottom:10%; right:10%" >
 		            <c:if test="${!empty user}">
 			            <a href="#" class=" btn btn-default" role="button">
 			            참가
@@ -373,7 +373,7 @@
 		            <p>
 		            <p>
 		            <c:if test="${user.userNo == room.userNo }">
-		            		<a href="#" class=" btn btn-default">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
+		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:15%">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
 		            </c:if>
 		            </p>
 		            

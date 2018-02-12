@@ -169,10 +169,13 @@ public class InformationRestController {
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
 	public Map<String,List> searchHistoryWeather(@RequestParam String cityName) throws Exception {
 
-		System.out.println("json/searchHistoryWeather ");
-		System.out.println("cityName : " + cityName);
+		System.out.println("/imformation/json/searchHistoryWeather ");
 		
-		Map<Object,String[]> map = informationService.searchHistoryWeather(cityName);
+		String name = URLDecoder.decode(cityName, "UTF-8");
+		
+		System.out.println("cityName : " + name);
+		
+		Map<Object,String[]> map = informationService.searchHistoryWeather(name);
 		
 		List<String> list = new ArrayList<String>();
 		List<String> data = new ArrayList<String>();
