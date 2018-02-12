@@ -53,7 +53,7 @@
 	  
 	  <select  id="listFriendRec"  parameterType="dailyPlan" resultMap="dailyPlanSelectMap" >
 		  SELECT * FROM daily_plan
-		  	WHERE daily_date = #{dailyDate} AND daily_city = #{dailyCity} 
+		  	WHERE daily_date = #{dailyDate} AND daily_country = #{dailyCountry} 
 		  			AND user_no != #{user.userNo}
 	  </select>
 	  

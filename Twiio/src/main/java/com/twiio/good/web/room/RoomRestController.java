@@ -19,6 +19,7 @@ import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Message;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.Room;
+import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mypage.MyPageService;
 import com.twiio.good.service.room.RoomService;
@@ -57,6 +58,7 @@ public class RoomRestController {
 	@RequestMapping("/json/addRoomFriend/")
 	public boolean addRoomFriend(@RequestBody String data, HttpSession session) throws Exception {
 		System.out.println("room/json/addRoomFriend/");
+		boolean flag = false;
 		
 		String[] json = data.split("&");
 		String userNo =  json[0].split("=")[1];
@@ -64,16 +66,27 @@ public class RoomRestController {
 		
 		User user = (User)session.getAttribute("user");
 		Room room = roomService.getRoom(roomKey);
+		List<RoomUser> list = roomService.listRoomUser(roomKey);
+		for (RoomUser roomUser : list) {
+			if(roomUser.getUserNo() == Integer.parseInt(userNo)) {
+				flag = true;
+				break;
+			}
+		}
+		if(flag) {
+			
+		}else {
+			//채팅 초대 메시지 전송
+			Message message = new Message();
+			message.setFromUserNo(user.getUserNo());
+			message.setToUserNo(Integer.parseInt(userNo));
+			message.setMessageTitle("채팅방 초대");
+			message.setMessageContent(user.getUserName()+"님이 " +room.getRoomName() +"채팅방에 초대하였습니다.");
+			
+			mypageService.addMessage(message);
+			roomService.addRoomUser(roomKey, Integer.parseInt(userNo));
+		}
 		
-		//채팅 초대 메시지 전송
-		Message message = new Message();
-		message.setFromUserNo(user.getUserNo());
-		message.setToUserNo(Integer.parseInt(userNo));
-		message.setMessageTitle("채팅방 초대");
-		message.setMessageContent(user.getUserName()+"님이 " +room.getRoomName() +"채팅방에 초대하였습니다.");
-		
-		mypageService.addMessage(message);
-		roomService.addRoomUser(roomKey, Integer.parseInt(userNo));
 		
 		return true;
 		

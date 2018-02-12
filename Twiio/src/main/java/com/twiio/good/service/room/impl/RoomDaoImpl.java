@@ -49,19 +49,22 @@ public class RoomDaoImpl implements RoomDao {
 		
 		if(search.getSearchCondition() == null) {
 			System.out.println("this is null");
+			query.addCriteria(Criteria.where("open").is(true));
 		}else if(search.getSearchCondition().equals("0")) {
 			System.out.println("SearchCondition 0");
-			query.addCriteria(Criteria.where("roomName").regex(search.getSearchKeyword(),"i"));
+			query.addCriteria(Criteria.where("open").is(true).where("roomName").regex(search.getSearchKeyword(),"i"));
 			
 		}else if(search.getSearchCondition().equals("1")) {
 			System.out.println("SearchCondition 1");
-			query.addCriteria(Criteria.where("country").regex(search.getSearchKeyword(),"i"));
+			query.addCriteria(Criteria.where("open").is(true).where("country").regex(search.getSearchKeyword(),"i"));
 			
 		}else if(search.getSearchCondition().equals("2")) {
 			System.out.println("SearchCondition 2");
-			query.addCriteria(Criteria.where("city").regex(search.getSearchKeyword(),"i"));
+			query.addCriteria(Criteria.where("open").is(true).where("city").regex(search.getSearchKeyword(),"i"));
 			
 		}
+		
+		
 		
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
@@ -167,10 +170,6 @@ public class RoomDaoImpl implements RoomDao {
 		System.out.println("mongotemplate list ==>"+mongoTemplate.find(query, RoomUser.class, "roomUser"));
 		List<RoomUser> list =mongoTemplate.find(query, RoomUser.class, "roomUser"); 
 		
-		//map.put("list", list);
-		
-//////////////////////////////////
-//		List<RoomUser> list = (List<RoomUser>)map.get("list");
 		List<Room> listRoom = new Vector<Room>();
 		
 		int totalCount = 0;
@@ -292,13 +291,15 @@ public class RoomDaoImpl implements RoomDao {
 	}
 
 	@Override
-	public void deleteRoomUser(String roomKey) throws Exception {
+	public void deleteRoomUser(String roomKey,int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+".deleteRoomUser()");
 		
 		Criteria criteria = new Criteria("roomKey");
 		criteria.is(roomKey);
 		Query query = new Query(criteria);
+		
+		query.addCriteria(Criteria.where("roomKey").is(roomKey).where("userNo").is(userNo));
 		
 		WriteResult roomUserResult = mongoTemplate.remove(query,"roomUser");
 		System.out.println("delete roomUserResult"+roomUserResult.getN());

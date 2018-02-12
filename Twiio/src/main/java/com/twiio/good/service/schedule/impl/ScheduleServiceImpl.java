@@ -1,6 +1,7 @@
 package com.twiio.good.service.schedule.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -28,7 +29,7 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 	
-	public List<Schedule> listSchedule(int userNo) throws Exception{
+	public Map<String, Object> listSchedule(int userNo) throws Exception{
 		return scheduleDao.listSchedule(userNo);
 	}
 
@@ -44,6 +45,13 @@ public class ScheduleServiceImpl implements ScheduleService {
 		// TODO Auto-generated method stub
 		return scheduleDao.getSchedule(roomKey);
 	}
+
+	@Override
+	public Map<String, Object> listScheduleAll() throws Exception {
+		// TODO Auto-generated method stub
+		return scheduleDao.listScheduleAll();
+	}
+	
 	
 
 }

@@ -899,10 +899,11 @@ public class InformationDaoImpl implements InformationDao {
 	     	 System.out.println(hrefs.get(i));
 	      }
 	         
-			///////////////////////////////////////////////////////상세페이지 이미지 가져오기/////////////////////////////////////////////////////
-			WebElement str = driver.findElement(By.xpath("//div[@class='prw_rup prw_common_static_map_no_style staticMap']//img"));
+			///////////////////////////////////////////////////////상세페이지 지도 가져오기/////////////////////////////////////////////////////
+	      Thread.sleep(1000);
+	      WebElement str = driver.findElement(By.xpath("//div[@class='prw_rup prw_common_static_map_no_style staticMap']//img"));
 			
-			System.out.println("+++++++++++\n\n"+str.getAttribute("src"));
+			System.out.println("+++++++++++\n\n"+str.getAttribute("src")+"\n\n+++++++++++\n\n");
 			google.add(str.getAttribute("src"));
 			
 			

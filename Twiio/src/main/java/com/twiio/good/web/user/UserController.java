@@ -153,14 +153,16 @@ public class UserController {
 
 		System.out.println("/user/updateUser : POST");
 		//Business Logic
-		//userService.updateUser(user);
+		System.out.println("userUpdatePost :: "+user);
+		userService.updateUser(user);
 		
 		String sessionId=((User)session.getAttribute("user")).getUserId();
-		if(sessionId.equals(user.getUserId())){
+		
+		if(sessionId.equals(user.getUserId()) || sessionId.equals("admin")){
 			session.setAttribute("user", user);
 		}
 		
-		return "redirect:/user/getUser?userNo="+user.getUserNo();
+		return "redirect:/user/getUser?userNo="+((User)session.getAttribute("user")).getUserNo();
 	}	
 
 	
@@ -238,8 +240,5 @@ public class UserController {
 		
 		return "forward:/user/updateUser.jsp";
 	}
-	
-	
-	
-	
+
 }
