@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 
 <!DOCTYPE html>
 
@@ -166,7 +168,10 @@
     vertical-align: middle;
 }
         
-        
+.modal-content.modal-refund {
+  height: 50%;
+  border-radius: 0;
+}
     	
     
         
@@ -240,6 +245,7 @@
 
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
+  		
   		if(${empty user.userId}){
   			 alert('로그인후 사용하여주세요');	 
   		 }else{
@@ -264,8 +270,72 @@
   			}); 
   		}); */
   		});
-
-   
+      
+      ///////////////////////////환불하기 버튼//////////////////////////////
+       $(document).on('click','#refund', function() {
+    	   var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var productno = $($('input[name=productNo]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var totalprice = $($('input[name=totalPrice]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var productname = $($('input[name=productName]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var thumbnail = $($('input[name=thumbnail]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var regdate = $($('input[name=regDate]')[$('.ct_list_pop #refund').index(this)]).val();
+		   
+    	   	 if(${empty user.userId}){
+    			 alert('로그인후 사용하여주세요');	 
+    		 }else{
+    			 $("#modalThumbNail").val(thumbnail);
+    			 $("#modalProductNo").val(productno);
+    			 $("#modalTranNo").val(tranno);
+    			 $("#modalProductName").val(productname);
+    			 $("#modalTotalPrice").val(totalprice);
+    			 $("#modalRegDate").val(regdate);
+    			 
+    
+			 	var img ='';
+			 	if(thumbnail == ''){
+			 		img = '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="100" width="100" />';
+			 	}else{
+			 		img = '<img src="/resources/images/productThumbnail/'+thumbnail+'" height="100" width="100" />';
+			 	}
+    			 $('#thum').html(img);
+    			 $('#addRefundModal').modal('show');
+    		 }
+    	   	 
+       });
+      
+       $(document).on('click','#modalrefund',function(){
+    	    var modalProductNo = $("#modalProductNo").val();
+			var modalTranNo = $("#modalTranNo").val();
+			var modalProductName = $("#modalProductName").val();
+			var modalTotalPrice = $("#modalTotalPrice").val();
+			var modalRegDate = $("#modalRegDate").val();
+			var modalRefundAccount = $("#modalRefundAccount").val();
+			var modalRefundBank = $("#modalRefundBank").val();
+			
+			
+			if(modalProductNo == '' || modalTranNo == '' || modalTotalPrice =='' || modalRefundAccount=='' || modalRefundBank==''){
+				alert("입력을 완료해주세요.");
+			}else{
+				 $.ajax( 
+							{
+							url : "/transaction/json/addRefund",
+							method : "POST" ,
+							dataType : "json" ,
+							contentType:"application/json;charset=UTF-8",
+							data : JSON.stringify({
+								"tranNo":modalTranNo,
+								"refundPrice":modalTotalPrice,
+								"refundAccount":modalRefundAccount,
+								"refundBank":modalRefundBank,
+								"userNo":"${user.userNo}"
+							}),
+							success : function(JSONData) {
+								alert("완료");
+								$('#addRefundModal').modal('toggle');
+							}
+				});			  
+			}
+       });
    </script>
    
 </head>
@@ -326,26 +396,48 @@
       <tbody>
       
         <c:set var="i" value="0" />
+        <c:set var="today" value="<%=new java.util.Date()%>"/>
         <c:forEach var="transaction" items="${list}">
          <c:set var="i" value="${ i+1 }" />
          <tr class="ct_list_pop">
-     		<input type="hidden" name="tranNo" value="${transaction.tranNo}"/>
-         <input type="hidden" name="productNo" value="${transaction.tranPro.productNo}"/>
+     		<input type="hidden" id="tranNo" name="tranNo" value="${transaction.tranNo}"/>
+         	<input type="hidden" id="productNo" name="productNo" value="${transaction.tranPro.productNo}"/>
+         	<input type="hidden" id="regDate" name="regDate" value="${transaction.regDate}"/>
+         	<input type="hidden" id="totalPrice" name="totalPrice" value="${transaction.totalPrice}"/>
+         	<input type="hidden" id="productName" name="productName" value="${transaction.tranPro.productName}"/>
+         	<input type="hidden" id="thumbnail" name="thumbnail" value="${transaction.tranPro.thumbnail}"/>
+         	
            <td align="left">${transaction.regDate}</td>
            <td align="left">
            <c:if test="${empty transaction.tranPro.thumbnail}">
-                        <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="80" width="80" />
-                     </c:if> 
-                     <c:if test="${!empty transaction.tranPro.thumbnail}">
-                        <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" height="80" width="80" />
-                     </c:if>
+               <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="80" width="80" />
+           </c:if> 
+           <c:if test="${!empty transaction.tranPro.thumbnail}">
+               <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" height="80" width="80" />
+           </c:if>
            </td>
            <td align="left">${transaction.tranPro.productName}</td>
            <td align="left">${transaction.tripDate}</td>
            <td align="left">${transaction.count}</td>
            <td align="left">${transaction.totalPrice}</td>
            <td align="left" id="eval"><a href="#">평가하기</a></td>
-           <td align="left"><a href="#">환불하기</a></td>
+           <td align="left" id="refund"><a href="#">
+           <%-- <c:if test="${transaction.refundCode == '1'}">
+           <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
+           <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
+           <c:if test="${trip-now < 2 && trip>now}">환불하기</c:if>
+           </a>
+           </c:if>
+           <c:if test="${transaction.refundCode == '2'}">
+           	환불처리중
+           </c:if> 
+           <c:if test="${transaction.refundCode == '3'}">
+           	환불처리완료
+           </c:if> 
+           --%>
+           	환불하기
+           	</a>
+           </td>
          </tr>
           </c:forEach>  
         <tr>
@@ -426,6 +518,55 @@
 		</div>
 		</div>
 		</div>
+		
+				
+		
+		<div class="modal fade" id="addRefundModal"  role="dialog">
+			<div class="modal-dialog modal-refund">
+		<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h3 class="modal-title">
+							<Strong>환불</Strong>
+						</h3>
+					</div>
+					<div class="modal-body col-sm-12">
+						<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>
+         				<input type="hidden" id="modalProductNo" name="modalProductNo" value=""/>
+         				<input type="hidden" id="modalThumbNail" name="modalThumnail" value=""/>
+						<div class="thum col-sm-8 col-sm-offset-4" id="thum">
+
+						</div>
+           			 	<br/>
+           			 	<br/>
+                			
+           			 	상품이름
+           			 	<input type="text" class="form-control" id="modalProductName" name="modalProductName" value="" readonly>
+           			 	<br/>
+           			 	상품가격
+           			 	<input type="text" class="form-control" id="modalTotalPrice"  name="modalTotalPrice" value="" readonly>
+           			 	<br/>
+           			 	구매일자
+           			 	<input type="text" class="form-control" id="modalRegDate"  name="modalRegDate" value="" readonly>
+           			 	<br/>
+           			 	은행명
+           			 	<input type="text" class="form-control" id="modalRefundAccount"  name="modalRefundAccount" value="">
+           			 	<br/>
+           			 	계좌번호
+           			 	<input type="text" class="form-control" id="modalRefundBank"  name="modalRefundBank" value="">	
+           			 	
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default"id="modalrefund">환불신청</button>
+						<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+					</div>
+				</div>
+			</div>
+		</div>
+	
+		
+		
     <!--  화면구성 div End /////////////////////////////////////-->
     
     

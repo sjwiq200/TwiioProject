@@ -318,18 +318,19 @@ public class UserServiceImpl implements UserService{
 	}		
 	
 	@Override
-	public boolean detectFace(User user) throws Exception, IOException {
-
+	public Map<String, Object> detectFace(User user) throws Exception, IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		System.out.println(":: detectFaces start!! :: ");
-		boolean flag = false;
+		String face = "";
 		System.out.println(user.getFile().getContentType());
 		// System.out.println(file.getName());
 		System.out.println("업로드시 파일 이름 :: "+user.getFile().getOriginalFilename());
 		// System.out.println(file.toString());
 
 		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
-		String fileName = user.getFile().getOriginalFilename();
-		//String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
+		//String fileName = user.getFile().getOriginalFilename();
+		String fileName = user.getUserId()+"test.jpg";
 		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
 		System.out.println("11111");
 		PrintStream out = System.out;
@@ -362,11 +363,19 @@ public class UserServiceImpl implements UserService{
 				// System.out.println("[[[res]]]===================> :"+res);
 				if (res.hasError()) {
 					out.printf("Error: %s\n", res.getError().getMessage());
-					flag = false;
+					face = user.getUserImage();
+					map.put("face", face);
+					map.put("flag", "0");
 				}
 				System.out.println("오냐?");
 				if (res.getFaceAnnotationsList().size() != 1) {
 					// out.close();
+					
+					/*if(user.getUserNo()!=null) {
+						if(userDao.getUserInNo(user.getUserNo()).getUserImage()!=null) {
+							
+						}
+					}*/
 					System.gc();
 					System.runFinalization();
 					if (file02.exists() == true) {
@@ -375,7 +384,9 @@ public class UserServiceImpl implements UserService{
 					}
 
 					System.out.println("파일삭제");
-					flag = false;
+					face = user.getUserImage();
+					map.put("face", face);
+					map.put("flag", "0");
 
 				} else {
 
@@ -393,10 +404,23 @@ public class UserServiceImpl implements UserService{
 								// annotation.,
 								annotation.getBoundingPoly());
 					}
-					// out.close();
 					System.gc();
+					System.runFinalization();
+					if (file02.exists() == true) {
+						boolean boo = file02.delete();
+						System.out.println(boo);
+						System.out.println("test 파일삭제");
+					}
+					
+					String realName = user.getUserId()+".jpg";
+					File file03 = new File(userFaceFilePath, realName);
+					user.getFile().transferTo(file03);
+					// out.close();
+					//System.gc();
 					System.out.println("업로드 성공");
-					flag = true;
+					face = realName;
+					map.put("face", face);
+					map.put("flag", "1");
 				}				
 
 			}
@@ -406,7 +430,7 @@ public class UserServiceImpl implements UserService{
 		}
 		System.out.println(":: detectFaces end ::");
 		
-		return flag;
+		return map;
 	}	
 
 	@Override

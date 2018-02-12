@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -56,7 +57,7 @@ public class UserRestController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-		if(user.getFile()!=null) {
+/*		if(user.getFile()!=null) {
 			if(userService.detectFace(user)) {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
@@ -68,7 +69,7 @@ public class UserRestController {
 			//Business Logic
 			userService.addUser(user);
 			System.out.println(":: Twiio 자제 회원가입 완료 ::");
-		}
+		}*/
 		
 		return "redirect:/user/loginView.jsp";
 	}
@@ -82,14 +83,14 @@ public class UserRestController {
 		return userService.getUserInNo(userNo);
 	}
 	
-	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
+/*	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
 	public boolean detectFace( @RequestBody User user ) throws Exception{
 		
 		System.out.println("/user/json/detectFace ");
 		System.out.println(user);
 		//Business Logic
 		return userService.detectFace(user);
-	}
+	}*/
 	
 	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
 	public Map<String, Boolean> checkDuplication( @RequestBody String userId ) throws Exception{
@@ -247,22 +248,17 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
-	public String faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
+	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
 							HttpSession httpsession,
 							User user) throws Exception{
 		System.out.println("/user/json/faceDetect");
 		user = (User)httpsession.getAttribute("user");
 		user.setFile(file);
-
-		boolean face = userService.detectFace(user);
-		if(face == true) {
-			
-		}else {
-			
-		}
+		String faceto =""; 
+		Map<String, Object> map= userService.detectFace(user);
 		
 		System.out.println("들어올까??");
-		return "성공했어요";
 		
+		return map;
 	}
 }

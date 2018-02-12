@@ -97,40 +97,48 @@
   		});
   	});
      
+      ////////////////////////환불 처리 모달/////////////////////////////////////////////
      $(function(){
       $('td:nth-child(5)').on('click',function(){
     		
-    	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(5)').index(this)]).val();
+    	  var refundno = $($('input[name=refundNo]')[$('td:nth-child(5)').index(this)]).val();
     				$.ajax({
-    	  			url : "/common/json/getReport",
+    	  			url : "/transaction/json/getRefund",
     	  			method : "POST" ,
     	  			dataType : "json" ,
     	  			contentType:"application/json;charset=UTF-8",
     	  			data : JSON.stringify({
-    	  				"reportNo":reportinfo
+    	  				"refundNo":refundno
     	  			}),
     	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
     	  					var info =
+    	  						'<input type="hidden" class="form-control" id="refundCode" value="3"/>'+
+    	  						'<input type="hidden" class="form-control" id="refundNo" value="'+JSONData.refundNo+'"/>'+
     	  	    				'<div class="row">'+
-    	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
+    	  	    				'등 록 일   <input type="text" class="form-control" id="refundRegDate" value="'+JSONData.refundRegDate+'" readonly/></div>'+
     	  	    				'<br/><div class="row">'+
-    	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
+    	  	    				'환불회원   <input type="text" class="form-control" id="userName" value="'+JSONData.userName+'" readonly/>'+
     	  	    				'</div>'+
     	  	    				'<br/><div class="row">'+
-								'제  목'+    	  	    				
+								'환불은행'+    	  	    				
     	  	    				'</div>'+
     	  	    				'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
+    	  	    				'<input type="text" class="form-control" id="refundBank" value="'+JSONData.refundBank+'" readonly/>'+
     	  	    				'</div>'+
     	  	    				'<br/><div class="row">'+
-								'내  용'+    	  	    				
+								'환불계좌'+    	  	    				
 	  	    					'</div>'+
 	  	    					'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="reportcontent" value="'+JSONData.reportContent+'" readonly/>'+	
+    	  	    				'<input type="text" class="form-control" id="refundAccount" value="'+JSONData.refundAccount+'" readonly/>'+	
+    	  	    				'</div>'+
+    	  	    				'환불금액'+    	  	    				
+	  	    					'</div>'+
+	  	    					'<div class="row">'+
+    	  	    				'<input type="text" class="form-control" id="refundPrice" value="'+JSONData.refundPrice+'" readonly/>'+	
     	  	    				'</div>';
-    	  	    			$('#reportview').html(info);
-    	  	    			$('#viewReport').modal('show');	
+    	  	    			$('#view').html(info);
+    	  	    			$('#viewRefund').modal('show');	
     	  			 }
     	  		});
       	   });
@@ -139,9 +147,7 @@
 
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		
-  		 
-  		
+  			
   		/* $(document).on('click','#updatereplym',function(){
   			 $.ajax({
   					url : "/common/json/updateReply",
@@ -195,7 +201,7 @@
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
-						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>신고제목</option>
+						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품이름</option>
 					</select>
 				  </div>
 				  
@@ -223,42 +229,32 @@
       
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">작성자</th>
-            <th align="center" width="140">신고대상</th>
-            <th align="left" width="250">신고제목</th>
-            <th align="left" width="120">신고날짜</th>
-            <th align="left" width="100">신고유형</th>
-            <th align="left" width="140">신고처리유무</th>
+            <th align="center" width="120" align="">등록일</th>
+            <th align="center" width="100">환불회원이름</th>
+            <th align="left" width="100">상품이름</th>
+            <th align="left" width="100">환불은행</th>
+            <th align="left" width="100">환불계좌번호</th>
+            <th align="left" width="100">환불가격</th>
+            <th align="left" width="100">환불처리날짜</th>           
+            <th align="left" width="100">환불처리</th>
           </tr>
         </thead>       
       <tbody>
       
         <c:set var="i" value="0" />
-        <c:forEach var="report" items="${list}">
+        <c:forEach var="refund" items="${list}">
          <c:set var="i" value="${ i+1 }" />
          <tr class="ct_list_pop">
          	
-     	   <input type="hidden" name="reportNo" value="${report.reportNo}"/>
-     	   <input type="hidden" name="reportlist" value="${report}"/>
-           <td align="left">${report.userName}</td>
-           <td align="left">
-           		${report.targetUserName}
-           </td>
-           <td align="left">${report.reportTitle}</td>
-           <td align="left">${report.reportRegDate}</td>
-           <td align="left">
-           <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0}">	
-           	 커뮤니티
-           </c:if>
-           <c:if test="${!empty report.targetRoomKey}">
-           	 채팅방
-           </c:if>
-           <c:if test="${report.targetReplyNo != 0 && !empty report.targetCommunityNo}">  
-           	 댓글
-           </c:if>
-           </td>
-           <td align="left"></td>
-
+     	   <input type="hidden" name="reportNo" value="${refund.refundNo}"/>
+           <td align="left">${refund.regDate}</td>
+           <td align="left">${refund.userName}</td>
+           <td align="left">${refund.productName}</td>
+           <td align="left">${refund.refundBank}</td>
+           <td align="left">${refund.refundAccount}</td>
+           <td align="left">${refund.refundPrice}</td>
+           <td align="left">${refund.confirmDate}</td>
+           <td align="left">${refund.confirmDate}</td>
          </tr>
           </c:forEach>
         
@@ -277,19 +273,19 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
+    <div class="modal fade" id="viewRefund"  role="dialog" aria-labelledby="mySmallModalLabel">
 		<div class="modal-dialog modal-sm">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h3 class="modal-title">
-					<Strong>REPORT</Strong>
+					<Strong>환불처리</Strong>
 				</h3>
 			</div>
 			<div class="modal-body">
 			
-				<div id="reportview">
+				<div id="view">
 				</div>
 
 			</div>
