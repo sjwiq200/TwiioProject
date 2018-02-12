@@ -7,6 +7,7 @@
 
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
+	String mainPlanNo = (String) request.getParameter("mainPlanNo");
 %>
 
 
@@ -141,18 +142,22 @@ body {
 										+ ' //거리:'+ response.routes[0].legs[0].distance.text;
 
 								for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-									detailedDisplay += ' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
-											+ '//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+									if(response.routes[0].legs[0].steps[i].transit == null){
+										detailedDisplay += ' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
+										+ '//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+										+ ' //거리:'+ response.routes[0].legs[0].steps[i].distance.text
+										+ ' //설명:'+ response.routes[0].legs[0].steps[i].instructions
+										+ '-----------';
+									}else{
+											detailedDisplay += '//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 											+ ' //거리:'+ response.routes[0].legs[0].steps[i].distance.text
-											+ ' //설명:'+ response.routes[0].legs[0].steps[i].instructions;
-
-									if (response.routes[0].legs[0].steps[i].transit != null) {
-										detailedDisplay += ' //대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-												+ ' //출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-												+ ' //도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-												+ ' //차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
-												+ ' //차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name;
-												
+											+ ' //설명:'+ response.routes[0].legs[0].steps[i].instructions
+											+ ' //대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
+											+ ' //출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+											+ ' //도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
+											+ ' //차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
+											+ ' //차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
+											+'---------------';
 									}
 									console.log('detailedDisplay : '
 											+ detailedDisplay);
@@ -257,6 +262,7 @@ body {
 
 			<form>
 				<input type="hidden" name="dailyPlanNo" value="${dailyPlanNo}" />
+				<input type="hidden" name="mainPlanNo" value="${mainPlanNo}" />
 				<input type="hidden" name="totalDisplay" id="totalDisplay"/> 
 				<input type="hidden" name="detailedDisplay" id="detailedDisplay"/>
 				<input type="hidden" name="type" id="type"/>

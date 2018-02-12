@@ -45,9 +45,6 @@
 
 <!-- ---------Floating Button------------ -->
  <link href="/resources/css/floatingButton.css" rel="stylesheet" type="text/css" />
- 
- <!--  ///////////////////////// CSS ////////////////////////// -->
-		<link rel="stylesheet" href="/resources/css/font.css" />
 
 <title>MainPlanList</title>
 
@@ -108,40 +105,7 @@ html, body {
 	background-image: url("/resources/images/dailyPlanContent/daum_gallery_photo_20160913155706.jpg");
 	opacity: 0.3;
 }
-/* //////////////////eunae_modal////////////////////////// */
-		.content h1 {
-			text-align: center;
-		}
-		.panel {
-			border: 1px solid #ddd;
-			background-color: #fcfcfc;
-		}
-		.table-filter {
-			background-color: #fff;
-			font-size: 15px;
-		}
-		.table-filter tbody tr:hover {
-			cursor: pointer;
-		}
-		.table-filter tbody tr td {
-			padding: 10px;
-			vertical-align: middle;
-			border-top-color: #FFF;
-		}
-		.table-filter tbody tr.selected td {
-			background-color: #eee;
-		}
-		.table-filter tr td:first-child {
-			width: 60px;
-		}
-		.media-photo{
-		  float: none;
-		  margin: 0 auto;
-		  -webkit-border-radius: 50% !important;
-		  -moz-border-radius: 50% !important;
-		  border-radius: 50% !important;
-		  border: 3px solid;
-		}
+
 
 </style>
 
@@ -213,7 +177,8 @@ html, body {
 	
 		$("button:contains('공유')").bind("click",function() {
 			var index = $("button:contains('공유')").index(this);
-			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+			var mainPlanNo = $($("input[name='mainPlanNo']")[index-1]).val();
+			alert("mainPlanNo" + mainPlanNo);
 			
 			var friend;
 			var result ="";
@@ -228,7 +193,7 @@ html, body {
 							},
 	    				success:function(JSONData){
 	    					friend = JSONData.friendInfo;
-		    					/* for(var i=0;i<friend.length;i++){
+		    					for(var i=0;i<friend.length;i++){
 		    						result +='<p> [USER NO] : '+friend[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+friend[i].userId+'</span>'
 		    								+'<span>  [이름] : '+friend[i].userName+'</span>'
@@ -236,16 +201,7 @@ html, body {
 		    								+'<span>  [사진] : '+friend[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="sharePlan'+i+'" class="btn btn-success btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
-		    					} */
-		    					
-		    					for(var i=0;i<friend.length;i++){
-		    						
-		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
-		    									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+friend[i].userName+'</div>'+
-		    									'<button type="button" id="sharePlan'+i+'" class="btn btn-primary btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
 		    					}
-		    					
-		    					
 		    				 $('#shareWithFriendList').html(result);
 		    				 $('#shareWithFriend').modal('show');  
 	    					}
@@ -259,7 +215,7 @@ html, body {
 	            type:'get'
 	         });
 	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).attr("disabled","true"); 
+	    $("#sharePlan"+i).remove(); 
 	}
 	
 </script>
@@ -360,30 +316,21 @@ html, body {
 
 <!---------- ShareWithFriend Dialog <START>------------->
 
-		<div class="modal fade" id="shareWithFriend" role="dialog" style="font-family: 'Jeju Gothic', serif;">
+		<div class="modal fade" id="shareWithFriend" role="dialog">
 			<div class="modal-dialog modal-md">
 				<!-- Modal content-->
 				<div class="modal-content">
 					<div class="modal-header">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"align="center" >
+						<h4 class="modal-title">
 							<Strong>나의 플랜 북을 친구들과 공유할까요?</Strong>
 						</h4>
+						<h7 class="modal-title">TWIIO</h7>
 					</div>
-					<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
-							<table class="table table-filter" style="align-content: center;">
-								<tbody>
-										<tr data-status="pagado">
-										<div class="media-body">
-										  <td align="left" vailgn="middle">
-											  <div class="row" >
-											  	<div id="shareWithFriendList"></div>
-											  </div>
-										 	 </td>
-										  </div>
-										</tr>
-								</tbody>
-							</table>
+
+					<div class="modal-body" align="center">
+						
+						<div id="shareWithFriendList" > </div>
 						
 					</div>
 					<div class="modal-footer">

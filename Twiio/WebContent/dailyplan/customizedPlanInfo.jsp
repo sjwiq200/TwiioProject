@@ -341,7 +341,7 @@ $(function() {
 	$(function(){
 		$("#closeButton").on("click",function(){
 			var dailyPlanNo = $("#dailyPlanNo").val();
-			var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo;
+			var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+${mainPlanNo};
 			$(location).attr('href', url);
 			});
 	});

@@ -213,7 +213,7 @@
 			
 			
 			if(flag){
-				alert($('#addUserForm').serialize());
+				
 				$.post( '/user/addUser', $('#addUserForm').serialize())
 				  .done(function( data ) {
 					  $(location).attr('href', '/user/loginView.jsp');

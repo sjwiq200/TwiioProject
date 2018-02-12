@@ -9,6 +9,7 @@
 
 <% 
 	String dailyPlanNo = (String) request.getParameter("data"); 
+	String mainPlanNo = (String) request.getParameter("mainPlanNo"); 
 %>
 
 
@@ -24,7 +25,6 @@
 	 font-family:'JEJUGOTHIC';
 }
 	#map {
-		
         height: 400px;
         width: 500px;
       }
@@ -274,8 +274,7 @@
 
 		$(function(){
 			$("button[name='addMapToPlan']").on("click",function(){
-				
-				
+				alert("안");			
 				var mapUrl= $("#mapUrl").val().toString();
 				var mapName = document.getElementById("addr1").value;
 				var mapType = $("#mapType").val().toString();
@@ -285,7 +284,7 @@
 				var korName = encodeURI(encodeURIComponent(mapName));
 				var korAddress= encodeURI(encodeURIComponent(mapAddress));
 				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
+				self.location = "/dailyplan/addMap?mainPlanNo="+<%=mainPlanNo%>+"&dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
 				
 			});
 		});
