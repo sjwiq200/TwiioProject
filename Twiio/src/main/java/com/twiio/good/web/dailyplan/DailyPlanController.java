@@ -119,15 +119,12 @@ public class DailyPlanController {
 		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		model.addAttribute("dailyPlan", dailyPlan);
 		
-		//사이드바에 뿌릴 데일리플랜 정보//
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
 		model.addAttribute("listDailyPlan", listDailyPlan);
 		//////////////////////////
 		
-		//공유하고 있는 친구들 찾기 //
 		if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
 		List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
-		System.out.println("공유하고 있는 친구들 찾음"  );
 		for(User a : listForMainPlanShared) {
 			a.getUserName();
 			System.out.println("debug sharedUser : "+a);
@@ -166,12 +163,10 @@ public class DailyPlanController {
 		}
 		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		model.addAttribute("dailyPlan", dailyPlan);
-		System.out.println("본인찾기 위한 디버깅 : " + dailyPlan);
 		
-		//공유하고 있는 친구들 찾기 //
+		/////////////////////////////////////////
 				if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
 				List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
-				System.out.println("공유하고 있는 친구들 찾음"  );
 				for(User a : listForMainPlanShared) {
 					a.getUserName();
 					System.out.println("debug sharedUser : "+a);
@@ -180,13 +175,8 @@ public class DailyPlanController {
 				}
 				///////////////////////////
 				
-		/*�߰�*/
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
-		/*String city = mainPlan.getCity();
-		String[] cityList = city.split(",");
-		model.addAttribute("cityList",cityList);*/
 		model.addAttribute("listDailyPlan", listDailyPlan);
-		/*�߰�*/
 		System.out.println("###dailyPlanDebug : " + dailyPlan);
 		System.out.println("Controller : getDailyPlanFromMain <END>");
 		
@@ -239,7 +229,7 @@ public class DailyPlanController {
 
 		try {
 			File file = new File(
-					"/다영폴더/workspace/Twiio-0209  (1)/WebContent/resources/images/dailyPlanContent"
+					"/WebContent/resources/images/dailyPlanContent"
 							+ fileName);
 			uploadFile.transferTo(file);
 		} catch (IOException e) {

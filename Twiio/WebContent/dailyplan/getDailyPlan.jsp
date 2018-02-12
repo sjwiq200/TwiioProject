@@ -49,10 +49,6 @@
 <title>getDailyPlan</title>
 
 <style type="text/css">
-#wrapper {
-width: 60em ;margin: 0 auto;
-} 
-#wrapper .container {max-width: 100%; display: block;}
 
 #mainBody {
 	padding-top: 70px;
@@ -630,7 +626,6 @@ $(function() {
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
 
 	<form class="form-horizontal">
-	  <div id="wrapper">
 		<div class="container">
 			<div class="col-xs-12 inner" id="thumbnailMainBox">
 				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
@@ -801,7 +796,6 @@ $(function() {
 				</div>
 				<div align="right" class="col-xs-1">&nbsp;</div>
 			</div>
-		</div>
 			<!-- 섬네일 전체 박스 부분 -->
 			
 			
@@ -851,7 +845,7 @@ $(function() {
 	
 	<!---------- Map Dialog ------------->
 		<div class="modal fade" id="addMap" role="dialog">
-		<div class="modal-dialog modal-map">
+		<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
@@ -861,7 +855,7 @@ $(function() {
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="center">
 					<jsp:include page="/dailyplan/addMap.jsp" flush="false">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 						<jsp:param name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />

@@ -12,8 +12,8 @@
 	String mainPlanNo = (String) request.getParameter("mainPlanNo"); 
 %>
 
-
  <title>Geocoding service</title>
+ 
  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
  <meta charset="UTF-8">
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -21,12 +21,10 @@
 
 <style type="text/css">
 
-.container{
-	 font-family:'JEJUGOTHIC';
-}
 	#map {
-        height: 400px;
-        width: 550px;
+        max-width: 100%;
+        max-height: 100%;
+		height: 300px;
       }
       html, body {
         height: 100%;
@@ -234,12 +232,12 @@
 			        		    	$("#resultMap").empty();
 			        		    	
 									$("#resultMap")
-			        		    	.append("<br/><div class=\"testmap col-sm-8\"  align=\"center\"><strong>["+name+"]</strong></div><br/><br/>")
-			        		    	.append("<div class=\"testmap col-sm-8\"  align=\"center\"><strong>▶주소 : </strong>"+address+"</div><br/>")
-			        		    	.append("<div class=\"testmap col-sm-8\" align=\"center\"><strong>▶전화번호 : </strong>"+phone+"</div><br/>")
-			        		    	.append("<div class=\"testmap col-sm-8\"  align=\"center\"><strong>▶웹사이트 : </strong>"+website+"</div><br/>")
-									.append("<div class=\"testmap col-sm-8\"  align=\"center\"><strong>▶URL : </strong>"+url+"</div><br/>")
-									.append("<div class=\"testmap col-sm-8\"  align=\"center\"><strong>▶유형 : </strong>"+types+"</div><br/>");
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>["+name+"]</strong></div>")
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶주소 : </strong>"+address+"</div>")
+			        		    	.append("<div class=\"testmap col-sm-7\" align=\"left\"><strong>▶전화번호 : </strong>"+phone+"</div>")
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶웹사이트 : </strong>"+website+"</div>")
+									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶URL : </strong>"+url+"</div>")
+									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶유형 : </strong>"+types+"</div>");
 									
 									$("#mapName").val(name);
 									$("#mapAddress").val(address);
@@ -318,51 +316,55 @@
 				var korName = encodeURI(encodeURIComponent(mapName));
 				var korAddress= encodeURI(encodeURIComponent(mapAddress));
 				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?mainPlanNo="+<%=mainPlanNo%>+"&dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
+				self.location = "/dailyplan/addMap?mainPlanNo="+<%=mainPlanNo%>+"&dailyPlanNo="+dailyPlanNo+"&mapType="
+						+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
 				
 			});
 		});
 
 </script>
 <body>
-	<div class="container">
-		
-		
-		<div class="row">
-        <div class="col-sm-6">
-            <div id="custom-search-input">
-                <div class="input-group col-sm-12">
-                    <input type="text" class="form-control input-lg"   id="addr1" name="address" value="" />
-                    <span class="input-group-btn">
-                        <button class="btn btn-info btn-lg" type="button" name="submit" value="okay"
-                        onclick='codeAddress(); return false;'>
-                            <i class="glyphicon glyphicon-search"></i>
-                        </button>
-                    </span>
-                </div>
-            </div>
-        </div>
-	</div>
-		
-		
-		<div> &nbsp; </div>
-		<br/>
-		<div class="col-sm-12" id="map" style="padding-left: 15px;"></div>
-		
-				<div id="resultMap"  class="col-sm-8" style="padding: 15px;">
-						<form class="col-sm-6">
-						  <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-						  <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
-						  <input type="hidden" name="mapAddress" id="mapAddress"value="기본값"  />
-						  <input type="hidden" name="mapName" id="mapName"  value="기본값" />
-						  <input type="hidden" name="mapPhone"  id="mapPhone" value="기본값" />
-						  <input type="hidden" name="mapWebsite"  id="mapWebsite" value="기본값"  />
-						  <input type="hidden" name="mapType" id="mapType" value=""  />
-						 </form>
+
+
+	<div class="row" style="font-family: 'JEJUGOTHIC';">
+		<div class="col-sm-12">
+			<div id="custom-search-input">
+				<div class="input-group col-sm-12">
+					<input type="text" class="form-control input-lg" id="addr1"
+						name="address" value="" /> <span class="input-group-btn">
+						<button class="btn btn-info btn-lg" type="button" name="submit"
+							value="okay" onclick='codeAddress(); return false;'>
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</span>
 				</div>
-			<div class="col-sm-12" style="padding-left: 80px;">
-			<button type="button" class="btn btn-default col-sm-3 col-sm-offset-1" data-dismiss="modal" name="addMapToPlan">내 플랜에 추가하기</button>
+			</div>
+		<div class="col-sm-12">&nbsp;</div>
 		</div>
+
+		<div class="col-sm-12" id="map" style="font-family: 'JEJUGOTHIC';" align="center"></div>
+
+		<div id="resultMap" class="col-sm-12" style="margin-left: 50px;">
+			
+				<form >
+					<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+					<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" />
+				    <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
+					<input type="hidden" name="mapAddress" id="mapAddress" value="기본값" />
+				    <input type="hidden" name="mapName" id="mapName" value="기본값" />
+				    <input type="hidden" name="mapPhone" id="mapPhone" value="기본값" />
+				    <input type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" />
+				    <input type="hidden" name="mapType" id="mapType" value="" />
+				</form>
+		</div>
+		<div class="col-sm-12" > &nbsp;</div>
+			<div class="col-sm-12" >
+				<button type="button"  class="btn btn-default" name="addMapToPlan">내 플랜에 추가</button>
+			</div>
+
+
 	</div>
+
+
 </body>
 </html>
