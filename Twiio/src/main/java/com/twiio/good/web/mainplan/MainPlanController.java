@@ -114,7 +114,7 @@ public class MainPlanController {
 	           for(int i = 0 ; i <diffDays+1 ; i++) {
 	              
 	              dailyPlan.setDailyCity(cityResult);
-	             dailyPlan.setDailyCountry(mainPlan.getCountry());
+	             //dailyPlan.setDailyCountry(mainPlan.getCountry());
 	             dailyPlan.setDay(i+1);
 	             dailyPlan.setDailyDate(dailyDate);
 	             dailyPlan.setMainPlan(mainPlan);
@@ -135,7 +135,7 @@ public class MainPlanController {
 	           }
 	      } else {
 	         dailyPlan.setDailyCity(cityResult);
-	           dailyPlan.setDailyCountry(mainPlan.getCountry());
+	           //dailyPlan.setDailyCountry(mainPlan.getCountry());
 	           dailyPlan.setDay(1);
 	           dailyPlan.setDailyDate(mainPlan.getArrivalDate());
 	           dailyPlan.setMainPlan(mainPlan);

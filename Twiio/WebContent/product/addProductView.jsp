@@ -138,8 +138,10 @@ function fncAddProduct(){
 		
 	swal("Daily Tour가 등록되었습니다.",{
 		  icon: "success",
+		}).then((value) => {
+			$("form").attr("method" , "POST").attr("action" , "/product/addProduct").attr("enctype", "multipart/form-data").submit();
 		});
-	$("form").attr("method" , "POST").attr("action" , "/product/addProduct").attr("enctype", "multipart/form-data").submit();
+	
 }
 
 $(function() {

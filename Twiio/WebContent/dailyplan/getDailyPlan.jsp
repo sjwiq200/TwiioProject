@@ -568,6 +568,110 @@ $(function() {
  		});
 		
 		
+		
+		$(function() {
+			$("#select").on("click",function(){
+				$("#select").empty();				
+				alert('${dailyPlan.mainPlan.mainPlanNo}');
+				
+				$("#countryButtonGroup").removeAttr("style");
+				/* var button = '<div>'
+						+'<div class="btn-group" role="group" id="countryButtonGroup">';
+						
+						
+						 $.ajax( 
+									{
+									url : "/dailyplan/json/getMainCountry/${dailyPlan.mainPlan.mainPlanNo}",
+									method : "GET" ,
+									dataType : "json" ,
+									contentType:"application/json;charset=UTF-8",									
+									success : function(JSONData) {
+										//alert(JSON.stringify(JSONData));
+																				
+										for(var i=0; i<JSONData.length; i++){
+											
+											button += '<input type="button" class="button" name="countrySelectButton" id="country'+(i+1)+'" class="btn btn-default" value="'+JSONData[i]+'" style="font-family:\'JEJUGOTHIC\';"/>';
+										}
+												
+										button += '</div>';				
+										
+										$("#select").append(button);
+										
+									}
+							});			 */
+				
+				
+			});
+			
+			 /* $( document ).on('click',"input[name='countrySelectButton']",function() {
+								
+				var target = $( event.target );	
+				//alert(target.index());
+				//alert(target.val());
+				//$("p.getCountry").empty();
+				$("p.getCountry").append(target.val());
+				$( document ).delegate(target,'remove');
+			
+			}); */
+			
+			$("input[name='countrySelectButton']").on('click',function() {
+				//alert($("input[name='countrySelectButton']").index(this));
+				var target = $( event.target );	
+				
+				/* var countryName ="";
+				if(${dailyPlan.dailyCountry} != null){
+					countryName += ${dailyPlan.dailyCountry}+","+target.val();
+				}else{
+					countryName = target.val();
+				} */
+				
+				$.ajax( 
+						{
+						url : "/dailyplan/json/selectCountryNew",
+						method : "GET" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							dailyPlanNo : ${dailyPlan.dailyPlanNo},
+							countryName : target.val()
+						},
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));								
+							
+						}
+				});			
+				
+				$("p.getCountry").append(target.val()+"  ");
+				target.attr("style","display:none");
+			});
+			
+			$("p.getCountry").on("click",function(){
+				
+				$.ajax( 
+						{
+						url : "/dailyplan/json/resetCountry",
+						method : "GET" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
+						},
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));	
+							
+							
+						}
+				});	
+			
+				$("p.getCountry").empty();
+				$("#countryButtonGroup").removeAttr("style");
+				$("input.countrySelectButton").removeAttr("style");
+			});
+			
+			
+		});
+		
+		
 </script>
 
 </head>
@@ -651,12 +755,24 @@ $(function() {
 						<div class="col-xs-12" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;" align="center">
 						<p>${dailyPlan.dailyDate}</p> 
 						<p>${dailyPlan.dailyCity}</p>
+						<p class="getCountry">${dailyPlan.dailyCountry}</p>						
+						</div>
+						<c:if test="${empty dailyPlan.dailyCountry }">
+						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;"><p>나라와 도시를 선택해주세요!!</p></div>
+						</c:if>
+						<div style="display:none"; class="btn-group" role="group" id="countryButtonGroup">
+						<c:set var="i" value="0" />
+						<c:forEach var="countryList" items="${countryList}">
+						<c:set var="i" value="${i+1}" />
+						<input type="button" class="countrySelectButton" name="countrySelectButton" id="country${i}" class="btn btn-default" value="${countryList}" style="font-family:\'JEJUGOTHIC\';"/>
+						</c:forEach>
 						</div>
 						<div class="col-xs-12" style="margin-top:130px" align="center">
 						<input type="hidden" value="${dailyPlan.dailyPlanNo}" id="idDailyPlanNo" />
 						<input type="hidden" value="${dailyPlan.dailyDate}" id="idDailyDate" /> 
 						<input type="hidden" value="${dailyPlan.dailyCity}" id="idDailyCity" />
 						</div>
+						
 					</div>
 
 					<!-- -------------TOP<END>--------------- -->

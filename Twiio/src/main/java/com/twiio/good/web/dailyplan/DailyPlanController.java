@@ -122,6 +122,14 @@ public class DailyPlanController {
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
 		model.addAttribute("listDailyPlan", listDailyPlan);
 		//////////////////////////
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		model.addAttribute("countryList",countryList);
+		/////////////////////////////////////
 		
 		if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
 		List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
@@ -165,6 +173,18 @@ public class DailyPlanController {
 		model.addAttribute("dailyPlan", dailyPlan);
 		
 		/////////////////////////////////////////
+		//////////////////////////
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+		countryList.add(country[i]);
+		}
+		System.out.println("countryList :: "+countryList);
+		System.out.println("countryList[0] :: "+countryList.get(0));
+		model.addAttribute("countryList",countryList);
+		
+		//////////////////////////////////////////
 				if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
 				List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
 				for(User a : listForMainPlanShared) {

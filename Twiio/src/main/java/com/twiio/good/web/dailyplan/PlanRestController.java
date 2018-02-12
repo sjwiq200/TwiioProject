@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -83,6 +84,70 @@ public class PlanRestController {
 		dailyPlanService.updateDailyPlan(dailyPlan);
 		
 		System.out.println("RestController : selectCity <END>");
+		
+	}
+	
+	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.GET)
+	public void selectCountryNew(@RequestParam int dailyPlanNo ,@RequestParam String countryName) throws Exception {
+		
+		System.out.println("RestController : json/selectCountryNew <START>");
+		
+		String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		String country ;
+		
+		if(dailyPlan.getDailyCountry()==null) {
+			dailyPlan.setDailyCountry(countryKor);
+		} else {
+			country = dailyPlan.getDailyCountry();
+			country = country+","+countryKor;
+			dailyPlan.setDailyCountry(country);
+		}
+		dailyPlanService.updateDailyPlan(dailyPlan);
+		
+		System.out.println("RestController : json/selectCountryNew <END>");
+		
+	}
+	
+	@RequestMapping(value = "json/resetCountry", method = RequestMethod.GET)
+	public void resetCountry(@RequestParam int dailyPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/resetCountry <START>");
+		
+		//String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+//		String country ;
+//		
+//		if(dailyPlan.getDailyCountry()==null) {
+//			dailyPlan.setDailyCountry(countryKor);
+//		} else {
+//			country = dailyPlan.getDailyCountry();
+//			country = country+","+countryKor;
+//			dailyPlan.setDailyCountry(country);
+//		}
+		dailyPlan.setDailyCountry(null);
+		dailyPlanService.updateDailyPlan(dailyPlan);
+		
+		System.out.println("RestController : json/resetCountry <END>");
+		
+	}
+	
+	
+	@RequestMapping(value = "json/getMainCountry/{mainPlanNo}", method = RequestMethod.GET)
+	public List<String> getMainCountry(@PathVariable int mainPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/getMainCountry <START>");
+		
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		//String countryList = mainPlan.getCountry();
+		System.out.println("countryList :: "+countryList);
+		//model.addAttribute("countryList",countryList);
+		return countryList;
 		
 	}
 	
