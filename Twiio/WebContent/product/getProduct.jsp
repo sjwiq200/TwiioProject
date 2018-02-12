@@ -38,14 +38,17 @@
 	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-
-	<!--reply  -->
+	
+	 <!-- ---------Floating Button------------ -->
+  	<link href="/resources/css/floatingButtonPro.css" rel="stylesheet" type="text/css" />
+  	
+  	<!--reply  -->
   	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
-	 <!-- ---------Floating Button------------ -->  	
-  	<link href="/resources/css/floatingButtonPro.css" rel="stylesheet" type="text/css" />
+  	 	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>   
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -706,9 +709,23 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	  $(function() {
 			
 			 $( "div.nd4" ).on("click" , function() {
-				
-				 self.location="/product/deleteProduct?productNo="+${product.productNo};
-				 alert("상품이 삭제 되었습니다.");
+				 swal({
+					  title: "Daily Tour를 정말로 삭제하시겠습니까?",
+					  text: "한번 삭제하면 복구할 수 없습니다.",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal("Daily Tour 삭제가 완료되었습니다.", {
+					      icon: "success",
+					    }).then((value) => {self.location="/product/deleteProduct?productNo="+${product.productNo}});
+					  } else {
+					    swal("삭제가 취소되었습니다.");
+					  }
+					});				 
+				 
 			});
 		});
 	  
@@ -961,7 +978,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		</c:if>
 		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
-			data-original-title="listProduct" title="목록보기">
+			data-original-title="listProduct" title="목록">
 			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
 		</div>
 

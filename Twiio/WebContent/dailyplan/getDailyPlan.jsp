@@ -42,26 +42,35 @@
 <link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
-		<link rel="stylesheet" href="/resources/css/font.css" />
+<link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
 <title>getDailyPlan</title>
 
 <style type="text/css">
+body::-webkit-scrollbar {
+  width: 0.7em;
+  background: transparent;
+}
+body::-webkit-scrollbar-thumb {
+  background: transparent;
+}
 
 #mainBody {
-	padding-top: 50px;
+	
+	padding-top: 70px;
 	font-family:'JEJUGOTHIC';
+	background: #f4f4f4;
 }
 
 #innerMain {
 	font-size: 6em;
-	margin-top: 130px;
-	margin-bottom: 10px;
+	margin-top: 1.5em;
 }
 
 #thumbnailMainBox {
+	min-height: 1500px;
 	font-family:'JEJUMYEONGJO';
 	background: linear-gradient(-45deg, #08708A, transparent),linear-gradient(45deg, #D73A31, transparent);
 	border-radius: 8px;
@@ -73,10 +82,79 @@
 }
 
 #thumbnailMainThumbBox {
+	min-height: 1500px;
 	background: #fff;
 	display: inline-block;
 	border-radius: 6px;
 }
+.btn {
+	font-family:'JEJUGOTHIC';
+}
+
+
+/* 사이드바 <START> */
+
+.sidenav::-webkit-scrollbar {
+  width: 0.7em;
+  background: transparent;
+}
+.sidenav::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.sidenav {
+	margin-top: 53px;
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    overflow-x: hidden;
+    transition: 0.6s;
+    padding-top: 60px;
+    background-color: #ffffff;
+    border-right: solid 0.8px #C2C2C2;
+}
+
+.sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    transition: 0.3s;
+}
+
+.sidenav a:hover {
+    color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+}
+
+#main {
+    transition: margin-left .5s;
+    padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+  .sidenav {padding-top: 15px;}
+  .sidenav a {font-size: 18px;}
+}
+
+#contentsBox {
+	height: 6em;
+	border-bottom: dashed 0.5px #C2C2C2;
+}
+/* 사이드바 <END> */
+
+/* 은애 */
 
 /* //////////////////eunae_modal_table////////////////////////// */
 		.content h1 {
@@ -143,18 +221,6 @@
     border-bottom-color: #e2e2e2;
     border-radius: .25em;
 }
-/*///////////////////// map_modal_size ///////////////////*/ 
-.modal-dialog.modal-map {
-  width: 55%;
-  height: 55%;
-  margin: 0;
-  padding: 0;
-  display: inline-block; 
-  text-align: left; 
-  vertical-align: middle; 
-    left: 20%;
-
-}
 
 /* named upload */
 .filebox .upload-name {
@@ -211,54 +277,21 @@
 
 
 
-/* 사이드바 <START> */
 
-.sidenav {
-	margin-top: 53px;
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #C2C2C2;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 60px;
+/////////
+
+/*///////////////////// map_modal_size ///////////////////*/ 
+.modal-dialog.modal-map {
+  width: 55%;
+  height: 55%;
+  margin: 0;
+  padding: 0;
+  display: inline-block; 
+  text-align: left; 
+  vertical-align: middle; 
+    left: 20%;
+
 }
-
-.sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-    transition: 0.3s;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.sidenav .closebtn {
-    position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-}
-
-#main {
-    transition: margin-left .5s;
-    padding: 16px;
-}
-
-@media screen and (max-height: 450px) {
-  .sidenav {padding-top: 15px;}
-  .sidenav a {font-size: 18px;}
-}
-
-
 
 </style>
 
@@ -283,10 +316,20 @@
 				});
 			})
 			
+			
+			 
+	 $(function() {
+			$(".dayClick:contains('DAY')").bind("click",function() {
+				var index = $(".dayClick:contains('DAY')").index(this);
+				var dailyPlanNo = $($("input[name='dailyPlanNo']")[index]).val();
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+		 })
 </script>
 
 <script type="text/javascript">
-
 		/////////////////////////이미지 제목 노출///////////////////////////
 		
 		
@@ -364,7 +407,7 @@
 							},
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
-		    					for(var i=0;i<user.length;i++) /* {
+		    					for(var i=0;i<user.length;i++){
 		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
 		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
 		    								+'<span>  [이름] : '+user[i].userName+'</span>'
@@ -372,15 +415,7 @@
 		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
 		    								+'<span>&nbsp;</span>'
 		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-		    					}  */
-		    					{
-		    						
-		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+user[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
-									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'+
-									'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-primary btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
-									
-		    						
-		    					} 
+		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
 	    					}
@@ -394,7 +429,7 @@
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).attr("disabled","true");  
+	    $("#addToMyFriendList"+i).remove(); 
 	}
 	
 
@@ -443,28 +478,25 @@
 <script>
 	$(function() {
 		$("#addRouteButton").on("click",function() {
-			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo};
+			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo}+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
 			$(location).attr('href', url);
 				});
 	});
-	</script>
-<script type="text/javascript">
 	/////////////////////////맞춤 여행 정보 기능 구현///////////////////////////
 	$(function() {
 		$("#customizedPlanInfo").on("click",function() {
+			
 			var dailyPlanNo = $("#idDailyPlanNo").val();
-			 var dailyCity=$("#idDailyCity").val();
-			 var dailyDate=$("#idDailyDate").val();
-			 dailyCity = encodeURI(encodeURIComponent(dailyCity));
-			 self.location = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity+"&dailyDate="+dailyDate;
+			var dailyCity=$("#idDailyCity").val();
+			var dailyDate=$("#idDailyDate").val();
+			dailyCity = encodeURI(encodeURIComponent(dailyCity));
+			var url = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity
+			 												+"&dailyDate="+dailyDate+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
+			$(location).attr('href', url); 
 		});
 	});
 	
 	
-	
-</script>
-
-<script type="text/javascript">
 	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
 /* 	$(function() {
 		$(".contentsTxt").hover(function() {
@@ -486,7 +518,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.2.61/jspdf.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/0.9.0rc1/jspdf.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
-
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
 <script>
 /////////////////////////PDF 기능 구현///////////////////////////
@@ -515,9 +546,7 @@ $(function() {
 			         doc.text(20, 20, 'Hello world!'); 
 			    	doc.text(20, 30, 'This is client-side Javascript, pumping out a PDF.');
 			    	doc.addPage();  
-					//console.log(imgData);
 			    	doc.addImage(imgData, 'JPEG',8, 8, 90, 95);
-					 //doc.addImage(imgData, 'JPEG', 8, 8, 90, 95);
 			        doc.save('test.pdf');
 			    }
 			}); 
@@ -529,6 +558,144 @@ $(function() {
 	});
 </script>
 
+<script>
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+			document.getElementById("main").style.marginLeft = "280px";
+			document.body.style.backgroundColor = "#f4f4f4";
+			
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "#f4f4f4";
+		}
+		
+		$(function() {
+			$("div[name=contentsBox]").hover(function() {
+				var index = $("div[name=contentsBox]").index(this);
+ 				$($("div[name=contentsBox]")[index]).attr("style","background-color:#A6A0A5; color:white;");
+ 					}, function(){
+ 						var index = $("div[name=contentsBox]").index(this);
+ 						$($("div[name=contentsBox]")[index]).attr("style","background-color:#ffffff;");
+ 					
+ 			});
+ 		});
+		
+		$(function() {
+			$("#contentList").on("click",function() {
+				var url = "/dailyplan/listDailyPlan?mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
+				$(location).attr('href', url);
+			});
+		});
+		
+		
+		$(function() {
+			$("#select").on("click",function(){
+				$("#select").empty();				
+				alert('${dailyPlan.mainPlan.mainPlanNo}');
+				
+				$("#countryButtonGroup").removeAttr("style");
+				/* var button = '<div>'
+						+'<div class="btn-group" role="group" id="countryButtonGroup">';
+						
+						
+						 $.ajax( 
+									{
+									url : "/dailyplan/json/getMainCountry/${dailyPlan.mainPlan.mainPlanNo}",
+									method : "GET" ,
+									dataType : "json" ,
+									contentType:"application/json;charset=UTF-8",									
+									success : function(JSONData) {
+										//alert(JSON.stringify(JSONData));
+																				
+										for(var i=0; i<JSONData.length; i++){
+											
+											button += '<input type="button" class="button" name="countrySelectButton" id="country'+(i+1)+'" class="btn btn-default" value="'+JSONData[i]+'" style="font-family:\'JEJUGOTHIC\';"/>';
+										}
+												
+										button += '</div>';				
+										
+										$("#select").append(button);
+										
+									}
+							});			 */
+				
+				
+			});
+			
+			 /* $( document ).on('click',"input[name='countrySelectButton']",function() {
+								
+				var target = $( event.target );	
+				//alert(target.index());
+				//alert(target.val());
+				//$("p.getCountry").empty();
+				$("p.getCountry").append(target.val());
+				$( document ).delegate(target,'remove');
+			
+			}); */
+			
+			$("input[name='countrySelectButton']").on('click',function() {
+				//alert($("input[name='countrySelectButton']").index(this));
+				var target = $( event.target );	
+				
+				/* var countryName ="";
+				if(${dailyPlan.dailyCountry} != null){
+					countryName += ${dailyPlan.dailyCountry}+","+target.val();
+				}else{
+					countryName = target.val();
+				} */
+				
+				$.ajax( 
+						{
+						url : "/dailyplan/json/selectCountryNew",
+						method : "GET" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							dailyPlanNo : ${dailyPlan.dailyPlanNo},
+							countryName : target.val()
+						},
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));								
+							
+						}
+				});			
+				
+				$("p.getCountry").append(target.val()+"  ");
+				target.attr("style","display:none");
+			});
+			
+			$("p.getCountry").on("click",function(){
+				
+				$.ajax( 
+						{
+						url : "/dailyplan/json/resetCountry",
+						method : "GET" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
+						},
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));	
+							
+							
+						}
+				});	
+			
+				$("p.getCountry").empty();
+				$("#countryButtonGroup").removeAttr("style");
+				$("input.countrySelectButton").removeAttr("style");
+			});
+			
+			
+		});
+		
+		
+</script>
+
 </head>
 <body id="mainBody">
 	
@@ -537,65 +704,50 @@ $(function() {
 	<!-- ----------------------------------- -->
 
 
-	<div id="mySidenav" class="sidenav">
+	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-	<c:set var="i" value="0" />
-							<c:forEach var="dailyPlan" items="${listDailyPlan}">
-								<c:set var="i" value="${ i+1 }" />
-								<input type="hidden"name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
-							    <input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-							    <div class="col-xs-12 contentsBox" id="contentsBox">
-							    	<div class="col-xs-12 contents" name="contents" align="left">
-								    <h5>DAY${ i }</h5>
-								   <span>
-										<h4>${dailyPlan.dailyDate}</h4>
-										<h6>${dailyPlan.dailyCity}</h6> 
-									</span>
-									</div>
-									<!--<div class="col-xs-1"><p>국가 </p>
-									<div class="col-xs-12" align="left"></div><p>도시 </p> </div> -->
-									<%-- <p>${dailyPlan.dailyCountry}</p> --%>
-									<%-- <p>데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
-									<p>메인플랜번호 : ${dailyPlan.mainPlan.mainPlanNo}</p> 
-									<p>유저번호 : ${dailyPlan.user.userNo }</p>--%>
-									 <%--<div class="col-xs-2" id="contents">
-										 <c:if test="${empty dailyPlan.dailyCity}">
-											<c:set var="num" value="0" />
-											<c:forEach var="cityList" items="${cityList}">
-												<c:set var="num" value="${ num+1 }" />
-												<div class="btn-group" role="group" id="cityButtonGroup">
-													<input type="button" class="button" name="citySelectButton" id="${i}" class="btn btn-default" value="${cityList}" style="font-family:'JEJUGOTHIC';"/>
-												</div>
-												<button class="button" id="${i}">${cityList}</button>
-											</c:forEach>
-										</c:if> 
-										<p></p>
-									</div>--%>
-								</div>
-								  <!-- <div class="col-xs-2"></div><div class="col-xs-8" id="line"></div> <div class="col-xs-2"></div> -->
-							</c:forEach>
+			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
+				<h2><strong>Contents</strong></h2><br/><br/>
+				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" style="border-radius: 5%;">
+				<c:forEach var="listUser" items="${listForMainPlanShared}">
+					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" style="border-radius: 5%;">
+				</c:forEach>
+				<h5> Writer :  ${dailyPlan.user.userName}
+				<c:forEach var="listUser" items="${listForMainPlanShared}">
+					& ${listUser.userName}
+				</c:forEach>
+				</h5>
+				
+			</div>
+			
+			<div class="col-xs-12" style="background:transparent;">
+		<c:set var="i" value="0" />
+			<h5 align="right" id="contentList">크게보기</h5>
+		<c:forEach var="dailyPlan" items="${listDailyPlan}">
+			<c:set var="i" value="${ i+1 }" />
+			<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+			<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
+			<div class="col-xs-12 contentsBox" id="contentsBox" name="contentsBox" style="border-radius: 10%;">
+				
+				<div class="col-xs-4 contents dayClick" name="contents" align="left">
+					<h4>DAY${ i }</h4>
+				</div>
+				<div class="col-xs-8 contents dayClick" name="contents" align="center">
+					<h6>${dailyPlan.dailyDate}</h6>
+					<h6>${dailyPlan.dailyCity}</h6>
+				</div>
+			</div>
+		</c:forEach>
+		</div>
 	</div>
 
-	<div id="main">
+	<div id="main" style="position:fixed; z-index:1000;" id="openSideBar">
+
 		<h2>&nbsp;</h2>
 		<p>&nbsp;</p>
-		<span style="font-size: 30px; cursor: pointer" onclick="openNav()">&#9776;
-			open</span>
+		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()" >&#9776;
+		OPEN</span>
 	</div>
-
-	<script>
-		function openNav() {
-			document.getElementById("mySidenav").style.width = "250px";
-			document.getElementById("main").style.marginLeft = "250px";
-			document.body.style.backgroundColor = "rgba(0,0,0,0.4)";
-		}
-
-		function closeNav() {
-			document.getElementById("mySidenav").style.width = "0";
-			document.getElementById("main").style.marginLeft = "0";
-			document.body.style.backgroundColor = "white";
-		}
-	</script>
 
 
 
@@ -609,7 +761,8 @@ $(function() {
 		<div class="container">
 			<div class="col-xs-12 inner" id="thumbnailMainBox">
 				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
-				<div class="col-xs-12 inner" id="thumbnailMainThumbBox"align="center">
+				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+					<div class="col-xs-12" >
 
 
 					<div class="row" align="center">
@@ -622,7 +775,7 @@ $(function() {
 						<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-default" value="같이 갈 친구 찾기" />
 						<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p>
 						<p></p>
-						<img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px">
+						<!-- <img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px"> -->
 						<p></p>
 						<div class="col-xs-12 innerMain" id="innerMain" align="center">
 						<p>DAY ${dailyPlan.day}</p>
@@ -630,13 +783,24 @@ $(function() {
 						<div class="col-xs-12" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;" align="center">
 						<p>${dailyPlan.dailyDate}</p> 
 						<p>${dailyPlan.dailyCity}</p>
+						<p class="getCountry">${dailyPlan.dailyCountry}</p>						
 						</div>
-						<div class="col-xs-12" style="margin-top:150px" align="center">
+						<c:if test="${empty dailyPlan.dailyCountry }">
+						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;"><p>나라와 도시를 선택해주세요!!</p></div>
+						</c:if>
+						<div style="display:none"; class="btn-group" role="group" id="countryButtonGroup">
+						<c:set var="i" value="0" />
+						<c:forEach var="countryList" items="${countryList}">
+						<c:set var="i" value="${i+1}" />
+						<input type="button" class="countrySelectButton" name="countrySelectButton" id="country${i}" class="btn btn-default" value="${countryList}" style="font-family:\'JEJUGOTHIC\';"/>
+						</c:forEach>
+						</div>
+						<div class="col-xs-12" style="margin-top:130px" align="center">
 						<input type="hidden" value="${dailyPlan.dailyPlanNo}" id="idDailyPlanNo" />
 						<input type="hidden" value="${dailyPlan.dailyDate}" id="idDailyDate" /> 
 						<input type="hidden" value="${dailyPlan.dailyCity}" id="idDailyCity" />
-						<p></p>
 						</div>
+						
 					</div>
 
 					<!-- -------------TOP<END>--------------- -->
@@ -703,27 +867,23 @@ $(function() {
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
-									<div class="col-xs-12"  style="margin-top: 30px" align="center">
+									<div class="col-xs-12"  style="margin-top: 20px" align="center">
 									<p class="contents">
-										<Strong> YOUR MAP </Strong>
+										<Strong> <img src="/resources/images/dailyPlanContent/map.png" width="40px"> </Strong>
 									</p>
 									</div>
-									<div class="col-xs-6" align="right">
+									<div class="col-xs-6" align="center">
 									<p class="contents">
-										<img src="${planContent.mapImage}" name="mapImg" class="contentsDelete" width="350px" style="border-radius: 99%;"
+										<img src="${planContent.mapImage}&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" name="mapImg" class="contentsDelete" width="300px" style="border-radius: 99%;"
 											onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
 									</div>
 								</c:if>
 
 								<c:if test="${!empty planContent.mapName}">
-									<div class="col-xs-6"  style="margin-top:100px ;" align="left">
-									<img src="/resources/images/dailyPlanContent/map.png" width="40px"><p>&nbsp;</p>
+									<div class="col-xs-6"  style="margin-top:30px ;" align="left">
+									<p>&nbsp;</p>
 									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">[${planContent.mapName}]</p>
 								</c:if>
-
-								<%-- <c:if test="${!empty planContent.mapUrl}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;">지도 URL : ${planContent.mapUrl}</p>
-								</c:if> --%>
 
 								<c:if test="${!empty planContent.mapAddress}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">ADDRESS : ${planContent.mapAddress}</p>
@@ -740,12 +900,13 @@ $(function() {
 								<c:if test="${!empty planContent.mapType}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">TYPE : ${planContent.mapType}</p>
 									</div>
+								<div class="col-xs-12"  style="height: 30px" align="center"></div>
 								</c:if>
 								<!-- ---------------------지도정보 <END>-------------------- -->
-
+							
 								<c:if test="${!empty planContent.contentText}">
 									<p>
-										<div class="col-xs-12" style="margin-top:50px;  margin-right:60px; font-size:1.1em !important;font-color: #C2C2C2 !important;">
+										<div class="col-xs-12" align="center" style="margin-top:20px;font-size:1.1em !important;font-color: #C2C2C2 !important;">
 											${planContent.contentText}
 											<div id="col-xs-12 txtSize" class="txtSize"></div>
 										</div>
@@ -754,9 +915,8 @@ $(function() {
 
 								<c:if test="${!empty planContent.contentImage}">
 									<p class="contentsThis">
-										<img
-											src="/resources/images/dailyPlanContent/${planContent.contentImage}"
-											class="contentsDelete img-responsive" width="400px" alt="Responsive image" style="border-radius: 5%;"/>
+										<img src="/resources/images/dailyPlanContent/${planContent.contentImage}"
+											class="contentsDelete" width="400px" style="border-radius: 5%;"/>
 									</p>
 								</c:if>
 
@@ -769,7 +929,9 @@ $(function() {
 							</div>
 
 						</c:forEach>
-
+						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
+						
+						</div>
 					</div>
 				</div>
 				<div align="right" class="col-xs-1">&nbsp;</div>
@@ -780,79 +942,57 @@ $(function() {
 			
 			<!-- -------Floating Button<START>----------- -->
 
-	<div id="container-floating" style="font-family:'JEJUGOTHIC';">
+	<div id="container-floating" style="font-family:'JEJUGOTHIC'; ">
 	
-	  <div class="nd5 nds" class="btn" id="addRouteButton" data-placement="left" >
-	  <p class="letter">ROUTE</p>
+	  <div class="nd6 nds" class="btn" id="fixedbtn"  >
+	  <p class="letter">&nbsp;&nbsp;&nbsp;&nbsp;<strong>편집</strong></p>
 	  </div>
-	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap" data-placement="left" >
-	    <p class="letter">MAP</p>
+	  
+	  <div class="nd5 nds" class="btn" id="addRouteButton" >
+	  <p class="letter"><strong>길찾기</strong></p>
 	  </div>
-	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" data-placement="left" >
-	   <p class="letter">PICS</p>
+	  <div class="nd4 nds" data-toggle="modal" data-target="#addMap"  >
+	    <p class="letter"><strong>지도</strong></p>
 	  </div>
-	  <div class="nd1 nds" data-toggle="modal" data-target="#addText" data-placement="left" >
-	    <p class="letter">TEXT</p>
+	  <div class="nd3 nds" data-toggle="modal" data-target="#addImage" >
+	   <p class="letter"><strong>사진</strong></p>
+	  </div>
+	  <div class="nd1 nds" data-toggle="modal" data-target="#addText"  >
+	    <p class="letter"><strong>글</strong></p>
 	  </div>
 	
 	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
-	    <p class="plus">+</p>
+	    <p class="plus"><strong>+</strong></p>
 	  </div>
 	
 	</div>
 
-	<!-- <button type="button" class="btn" data-toggle="modal" data-target="#addText">글씨쓰기</button>
-	<span><button type="button" class="btn" data-toggle="modal" data-target="#addImage">사진추가</button> </span> 
-	<span><button type="button" class="btn" data-toggle="modal" data-target="#addMap">지도</button></span> 
-	<span><button type="button" class="btn" id="addRouteButton">길찾기</button> </span>-->
-
 	<!-- -------Floating Button<END>----------- -->
 	
-	
-	
-		</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	</form>
 
 	<!-- ----------CONTENTS<END>----------- -->
 
-	<!-- 	</form> -->
-	
 	
 	
 	<!---------- Map Dialog ------------->
-	<div class="modal fade" id="addMap" role="dialog">
-		<div class="modal-dialog modal-map">
+		<div class="modal fade" id="addMap" role="dialog">
+		<div class="modal-dialog modal-lg">
+
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>M A P</Strong>
+						<Strong>지도</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" align="center">
 					<jsp:include page="/dailyplan/addMap.jsp" flush="false">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
+						<jsp:param name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
 					</jsp:include>
 				</div>
 				<div class="modal-footer">
@@ -869,13 +1009,14 @@ $(function() {
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>T E X T</Strong>
+						<Strong>글</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
-				<div class="modal-body  col-sm-12">
+				<div class="modal-body">
 					<jsp:include page="/dailyplan/addText.jsp" flush="true">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
+						<jsp:param name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
 					</jsp:include>
 				</div>
 				<div class="modal-footer">
@@ -890,14 +1031,14 @@ $(function() {
 	<!---------- Image Dialog ------------->
 
 
-	<div class="modal fade" id="addImage" role="dialog">
+		<div class="modal fade" id="addImage" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
-						<Strong>Image</Strong>
+						<Strong>사진</Strong>
 					</h4>
 					<h7 class="modal-title">TWIIO</h7>
 				</div>
@@ -914,15 +1055,10 @@ $(function() {
 			                            <label for="input_file" class="col-sm-2 col-offset-4">사진 선택</label> 
 			                          <input type="file" id="input_file" name="uploadFile" class="upload-hidden"> 
 	                       			</div>
-	
-									<!-- <label class="file_input">
-										<input type="file" name="uploadFile" 
-											id="uploadFile" />  <img id="addImageContent" />
-									</label> -->
 							</div>
 							<br/>
-							<input type="hidden" name="dailyPlanNo" 
-								value="${dailyPlan.dailyPlanNo}" />
+							<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
+							<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
 							<button name="add" class="btn btn-primary btn-sm col-sm-2 col-sm-offset-5 text-center" type="button">ADD</button>
 						</form>
 						<br/>
@@ -937,7 +1073,7 @@ $(function() {
 
 	<!---------- FriendRec Dialog <START>------------->
 
-	<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
+		<div class="modal fade" id="friendRec" role="dialog" style="font-family: 'Jeju Gothic', serif;">
 		<div class="modal-dialog modal-md">
 				<!-- Modal content-->
 				<div class="modal-content">
@@ -969,7 +1105,6 @@ $(function() {
 			</div>
 		</div>
 	</div>
-	
 	
 
 	<!---------- FriendRec Dialog <END>------------->

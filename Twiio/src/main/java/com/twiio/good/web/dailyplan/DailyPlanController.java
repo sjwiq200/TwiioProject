@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -26,6 +27,7 @@ import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.information.InformationService;
 import com.twiio.good.service.mainplan.MainPlanService;
+import com.twiio.good.service.user.UserService;
 
 @Controller
 @RequestMapping("/dailyplan/*")
@@ -44,6 +46,10 @@ public class DailyPlanController {
 	@Autowired
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	public DailyPlanController() {
 
@@ -101,7 +107,7 @@ public class DailyPlanController {
 	
 
 	@RequestMapping(value = "getDailyPlan")
-	public String getDailyPlan(@RequestParam("dailyPlanNo") int dailyPlanNo, Model model, HttpSession session)
+	public String getDailyPlan(@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam("mainPlanNo") int mainPlanNo,  Model model, HttpSession session)
 			throws Exception {
 
 		System.out.println("Controller : getDailyPlan <START>");
@@ -111,7 +117,31 @@ public class DailyPlanController {
 			List<PlanContent> list = dailyPlanService.getPlanContentList(dailyPlanNo);
 			model.addAttribute("list", list);
 		}
+		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		model.addAttribute("dailyPlan", dailyPlan);
+		
+		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
+		model.addAttribute("listDailyPlan", listDailyPlan);
+		//////////////////////////
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		model.addAttribute("countryList",countryList);
+		/////////////////////////////////////
+		
+		if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
+		List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
+		for(User a : listForMainPlanShared) {
+			a.getUserName();
+			System.out.println("debug sharedUser : "+a);
+		}
+		model.addAttribute("listForMainPlanShared", listForMainPlanShared);
+		}
+		///////////////////////////
+		
 		System.out.println("Controller : getDailyPlan <END>");
 		
 		return "forward:/dailyplan/getDailyPlan.jsp";
@@ -140,15 +170,34 @@ public class DailyPlanController {
 			model.addAttribute("list", list);
 			System.out.println("##debug : " + list);
 		}
+		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		model.addAttribute("dailyPlan", dailyPlan);
 		
-		/*추가*/
+		/////////////////////////////////////////
+		//////////////////////////
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+		countryList.add(country[i]);
+		}
+		System.out.println("countryList :: "+countryList);
+		System.out.println("countryList[0] :: "+countryList.get(0));
+		model.addAttribute("countryList",countryList);
+		
+		//////////////////////////////////////////
+				if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
+				List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
+				for(User a : listForMainPlanShared) {
+					a.getUserName();
+					System.out.println("debug sharedUser : "+a);
+				}
+				model.addAttribute("listForMainPlanShared", listForMainPlanShared);
+				}
+				///////////////////////////
+				
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
-		/*String city = mainPlan.getCity();
-		String[] cityList = city.split(",");
-		model.addAttribute("cityList",cityList);*/
 		model.addAttribute("listDailyPlan", listDailyPlan);
-		/*추가*/
 		System.out.println("###dailyPlanDebug : " + dailyPlan);
 		System.out.println("Controller : getDailyPlanFromMain <END>");
 		
@@ -160,8 +209,8 @@ public class DailyPlanController {
 	@RequestMapping(value = "addText")
 	public String addText(
 			@RequestParam("dailyPlanNo") int dailyPlanNo,
+			@RequestParam("mainPlanNo") int mainPlanNo,
 			@RequestParam("textContents") String textContents,
-			HttpServletRequest request, 
 			Model model) throws Exception {
 
 		System.out.println("Controller : addText <START>");
@@ -178,12 +227,14 @@ public class DailyPlanController {
 		dailyPlanService.addPlanContent(planContent);
 
 		System.out.println("Controller : addText <END>");
-		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo;
+		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo+"&mainPlanNo=" + mainPlanNo;
 	}
 
 	@RequestMapping(value = "addImage", method = RequestMethod.POST)
 	public String addImage(@RequestParam("dailyPlanNo") int dailyPlanNo,
-			@RequestParam("uploadFile") MultipartFile uploadFile, Model model, HttpSession session) throws Exception {
+			@RequestParam("mainPlanNo") int mainPlanNo,
+			@RequestParam("uploadFile") MultipartFile uploadFile, 
+			Model model) throws Exception {
 
 		System.out.println("Controller : addImage <START>");
 
@@ -199,7 +250,7 @@ public class DailyPlanController {
 
 		try {
 			File file = new File(
-					"C:\\Users\\bitcamp\\git\\TwiioProject\\Twiio\\WebContent\\resources\\images\\dailyPlanContent\\"
+					"/WebContent/resources/images/dailyPlanContent"
 							+ fileName);
 			uploadFile.transferTo(file);
 		} catch (IOException e) {
@@ -210,24 +261,22 @@ public class DailyPlanController {
 		planContent.setOrderNo(a + 1);
 		dailyPlanService.addPlanContent(planContent);
 
-		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo;
+		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo+"&mainPlanNo=" + mainPlanNo;
 
 	}
 
 	@RequestMapping(value = "addMap")
 	public String addMap(
-			@RequestParam("mapUrl") String mapUrl,
-			@RequestParam("mapType") String mapType, 
-			@RequestParam("mapPhone") String mapPhone, 
+			@ModelAttribute("planContent") PlanContent planContent,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
-			@RequestParam("mapImage") String mapImage,
-			HttpServletRequest request,
-			Model model) throws Exception {
-
-		String mapName = URLDecoder.decode(request.getParameter("korName"),"UTF-8");
-		String mapAddress = URLDecoder.decode(request.getParameter("korAddress"),"UTF-8");
+			@RequestParam("mainPlanNo") int mainPlanNo,
+			HttpServletRequest request, Model model) throws Exception {
 		
-		mapImage = mapImage.replaceAll("[(]", "");
+		System.out.println("Controller : addMap <START>");
+		
+		System.out.println("####" + planContent);
+		
+		String mapImage = (planContent.getMapAddress()).replaceAll("[(]", "");
 		mapImage =mapImage.replaceAll("[)]","");
 		mapImage =mapImage.replaceAll(" ","");
 
@@ -236,14 +285,8 @@ public class DailyPlanController {
 		
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		
-		PlanContent planContent = new PlanContent();
 		int countForOrder = dailyPlanService.getPlanContentCount(dailyPlanNo);
 		planContent.setContentType(3);
-		planContent.setMapUrl(mapUrl);
-		planContent.setMapType(mapType);
-		planContent.setMapPhone(mapPhone);
-		planContent.setMapAddress(mapAddress);
-		planContent.setMapName(mapName);
 		planContent.setDailyPlan(dailyPlan);
 		planContent.setOrderNo(countForOrder+1);
 		planContent.setMapImage(mapImageResult);
@@ -252,16 +295,18 @@ public class DailyPlanController {
 
 		System.out.println("Controller : addMap <END>");
 		
-		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo;
+		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
 
 	}
 	
 	@RequestMapping(value = "addRouteBefore", method = RequestMethod.GET)
-	public String addRouteBefore(@RequestParam("dailyPlanNo") int dailyPlanNo, Model model, HttpSession session)
+	public String addRouteBefore(@RequestParam("dailyPlanNo") int dailyPlanNo, 
+			@RequestParam("mainPlanNo") int mainPlanNo,Model model, HttpSession session)
 			throws Exception {
 
 		System.out.println("Controller : addRouteBefore <START>");
 		model.addAttribute("dailyPlanNo", dailyPlanNo);
+		model.addAttribute("mainPlanNo", mainPlanNo);
 		System.out.println("Controller : addRouteBefore <END>");
 		
 		return "forward:/dailyplan/addRoute.jsp";
@@ -269,7 +314,9 @@ public class DailyPlanController {
 	
 	
 	@RequestMapping(value = "addRoute", method = RequestMethod.POST)
-	public String addRoute(@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam String totalDisplay, 
+	public String addRoute(@RequestParam("dailyPlanNo") int dailyPlanNo, 
+							@RequestParam String totalDisplay, 
+							@RequestParam("mainPlanNo") int mainPlanNo, 
 							@RequestParam("detailedDisplay") String detailedDisplay, @RequestParam("type") String type, Model model)
 			throws Exception {
 
@@ -287,12 +334,12 @@ public class DailyPlanController {
 		dailyPlanService.addPlanContent(planContent);
 		System.out.println("Controller : addRoute <END>");
 
-		return "forward:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlan.getDailyPlanNo();
+		return "redirect:/dailyplan/getDailyPlan?dailyPlanNo=" + dailyPlanNo+"&mainPlanNo="+mainPlanNo;
 
 	}
 	///////////////////////////customizedPlanInfo///////////////////////////
 	@RequestMapping(value = "customizedPlanInfo")
-	public String customizedPlanInfo(@RequestParam int dailyPlanNo,
+	public String customizedPlanInfo(@RequestParam int dailyPlanNo,@RequestParam int mainPlanNo,
 									@RequestParam String dailyCity,
 									 @RequestParam String dailyDate,
 									 Model model)throws Exception {
@@ -307,6 +354,7 @@ public class DailyPlanController {
 	    model.addAttribute("dailyPlanNo", dailyPlanNo);
 	    model.addAttribute("dailyCitySelected", dailyCity);
 	    model.addAttribute("dailyDate", dailyDate);
+	    model.addAttribute("mainPlanNo", mainPlanNo);
 		
 		return "forward:/dailyplan/customizedPlanInfo.jsp";
 	}

@@ -173,6 +173,29 @@
 
 				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
 		-->
+		
+	 <!-- SQL : SELECT LIST -->
+	 <select id="listUserForSharedMainPlan"	parameterType="int"	resultMap="userSelectMap">
+		SELECT
+		user_no , 
+		user_id , 
+		user_name , 
+		password , 
+		user_type , 
+		profile_image, 
+		phone, gender, 
+		email , 
+		reg_date, 
+		birth, 
+		sign_up_type, 
+		public_state, 
+		resign, 
+		host_account, 
+		bank, 
+		main_plan_no_shared	
+		FROM users 
+		WHERE main_plan_no_shared LIKE '%${value}%'
+	 </select>
 	
 	<!-- SQL : SELECT ROW Count -->	 
 	 <select  id="getTotalCount"  parameterType="search"	 resultType="int">

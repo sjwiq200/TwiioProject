@@ -222,6 +222,10 @@
 								},
 								success : function(JSONData , status) {
 	
+									alert(status);
+									alert("JSONData : \n"+JSONData);
+									//Debug...									
+									//alert(displayValue);
 									$( "#compare" ).val(JSONData);
 								},
 								error : function(JSONData , status) {
