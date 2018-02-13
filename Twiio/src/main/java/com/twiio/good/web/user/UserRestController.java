@@ -9,7 +9,6 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
-import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -32,7 +30,7 @@ import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserService;
 
 
-//==> È¸¿ø°ü¸® RestController
+//==> È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RestController
 @RestController
 @RequestMapping("/user/*")
 public class UserRestController {
@@ -41,7 +39,7 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method ±¸Çö ¾ÊÀ½
+	//setter Method ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 	public UserRestController(){
 		System.out.println(this.getClass());
@@ -58,25 +56,25 @@ public class UserRestController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-/*		if(user.getFile()!=null) {
-			if(userService.detectFace(user)) {
-				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
-				userService.addUser(user);
-				System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á/»çÁø ¾÷·Îµå  ::");	
-			}else {
-				System.out.println(":: È¸¿ø°¡ÀÔ ½ÇÆÐ =====> ¾ó±¼À» ¸íÈ®È÷ ÀÎ½ÄÇÒ ¼ö ÀÖ´Â »çÁøÀ¸·Î ´Ù½Ã ¾÷·Îµå ¹Ù¶÷  ::");
-			}			
-		}else {
-			//Business Logic
-			userService.addUser(user);
-			System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á ::");
-		}*/
+//		if(user.getFile()!=null) {
+//			if(userService.detectFace(user)) {
+//				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
+//				userService.addUser(user);
+//				System.out.println(":: Twiio ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½  ::");	
+//			}else {
+//				System.out.println(":: È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =====> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ù¶ï¿½  ::");
+//			}			
+//		}else {
+//			//Business Logic
+//			userService.addUser(user);
+//			System.out.println(":: Twiio ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ::");
+//		}
 		
 		return "redirect:/user/loginView.jsp";
 	}
 	
 	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )
-	public User getUserNo( @PathVariable int userNo ) throws Exception{
+	public User getUser( @PathVariable int userNo ) throws Exception{
 		
 		System.out.println("/user/json/getUser : GET ");
 		
@@ -84,16 +82,26 @@ public class UserRestController {
 		return userService.getUserInNo(userNo);
 	}
 	
-
-/*	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
-
-	public boolean detectFace( @RequestBody User user ) throws Exception{
+	@RequestMapping(value="json/getUserAndroid/{userId}")
+	public User getUser(@PathVariable String userId) throws Exception{
+		System.out.println("/user/json/getUserAndroid/{userId} : ");
+		return userService.getUser(userId);
+	}
+	
+	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
+	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
+							HttpSession httpsession,
+							User user) throws Exception{
+		System.out.println("/user/json/faceDetect");
+		user = (User)httpsession.getAttribute("user");
+		user.setFile(file);
+		String faceto =""; 
+		Map<String, Object> map= userService.detectFace(user);
 		
-		System.out.println("/user/json/detectFace ");
-		System.out.println(user);
-		//Business Logic
-		return userService.detectFace(user);
-	}*/
+		System.out.println("ï¿½ï¿½ï¿½Ã±ï¿½??");
+		
+		return map;
+	}
 	
 	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
 	public Map<String, Boolean> checkDuplication( @RequestBody String userId ) throws Exception{
@@ -162,7 +170,7 @@ public class UserRestController {
 //	
 //		System.out.println("/user/json/addStarEvalHost");
 //		
-//		String review = "Â¯ÀÌ¿¡¿ä ±Â±Â";
+//		String review = "Â¯ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Â±ï¿½";
 //		int starPoint  = 3;
 //		
 //		Transaction transaction = new Transaction();
@@ -225,8 +233,8 @@ public class UserRestController {
 		
 		 String authNum = RandomNum();
 		
-		System.out.println("ÀÔ·ÂÇÑ ÀÌ¸ÞÀÏ"+mail[1]);
-		System.out.println("»ý¼ºÇÑ ÀÎÁõ¹øÈ£"+authNum);
+		System.out.println("ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½"+mail[1]);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£"+authNum);
 		
 		userService.sendMail(mail[1], authNum);
 		
@@ -249,33 +257,5 @@ public class UserRestController {
 		}
 		return buffer.toString();
 	}
-	
-	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
-	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
-							HttpSession httpsession,
-							User user) throws Exception{
-		System.out.println("/user/json/faceDetect");
-		user = (User)httpsession.getAttribute("user");
-		user.setFile(file);
-		String faceto =""; 
-		Map<String, Object> map= userService.detectFace(user);
-		
-		System.out.println("µé¾î¿Ã±î??");
-		
-		return map;
-	}
-	
-	@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
-	public String deleteUser(@ModelAttribute User user) throws Exception{
-		
-		System.out.println("/user/json/deleteUser");
-		
-		User user2 = userService.getUserInNo(user.getUserNo());
-		
-		userService.deleteUser(user2);
-		
-		System.out.println("°á°ú"+user2);
-		return "¼º°øÇß¾î¿ä";
-		
-	}
+
 }

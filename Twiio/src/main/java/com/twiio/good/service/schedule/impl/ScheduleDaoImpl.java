@@ -14,6 +14,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Repository;
 
+import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.Schedule;
 import com.twiio.good.service.domain.User;
@@ -64,8 +65,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		
 	}
 
-	@Override
-	public Map<String, Object> listSchedule(int userNo) throws Exception {
+	public Map<String, Object> listSchedule(Search search, int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"listSchedule()");
 		
@@ -73,6 +73,9 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userNo").all(userNo));
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
+		
+		query.skip(search.getStartRowNum());
+		query.limit(search.getEndRowNum());
 		
 		Map<String, Object> map = new HashMap<>();
 		
