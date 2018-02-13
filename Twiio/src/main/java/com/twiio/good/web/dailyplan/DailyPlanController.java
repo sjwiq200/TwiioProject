@@ -375,14 +375,16 @@ public class DailyPlanController {
 		
 		
 		String dailyCountry = dailyPlan.getDailyCountry();
+		String dailyCity = dailyPlan.getDailyCity();
 		System.out.println("##dailyCountry" + dailyCountry);
 		Date dailyDate=dailyPlan.getDailyDate();
 		List<Currency> returnList= new ArrayList<Currency>();
 		returnList = informationService.addCurrency();
-	        
+	    System.out.println("####" + returnList);
 	    model.addAttribute("returnList", returnList);
 	    model.addAttribute("dailyPlanNo", dailyPlanNo);
 	    model.addAttribute("dailyCountrySelected", dailyCountry);
+	    model.addAttribute("dailyCitySelected", dailyCity);
 	    model.addAttribute("dailyDate", dailyDate);
 	    model.addAttribute("mainPlanNo", mainPlanNo);
 		
