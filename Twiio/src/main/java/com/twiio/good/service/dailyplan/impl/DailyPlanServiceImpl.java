@@ -81,4 +81,9 @@ public class DailyPlanServiceImpl implements DailyPlanService{
 		return dailyPlanDao.listFriendRec(dailyPlan);
 	}
 
+	@Override
+	public List<DailyPlan> listPlanForFixedSchedule(DailyPlan dailyPlan) throws Exception {
+		return dailyPlanDao.listPlanForFixedSchedule(dailyPlan);
+	}
+
 }

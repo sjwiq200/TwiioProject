@@ -214,7 +214,6 @@
             <th align="center" width="120" align="">등록일자</th>
             <th align="center" width="140">상품사진</th>
             <th align="left" width="250">상품이름</th>
-            <th align="left" width="120">여행일자</th>
             <th align="left" width="100">총판매량</th>
             <th align="left" width="140">상품판매금액</th>
             <th align="left" width="100">도시</th>
@@ -239,7 +238,6 @@
                      </c:if>
            </td>
            <td align="left">${product.productName}</td>
-           <td align="left">${product.tripDate}</td>
            <td align="left">${product.productCount}</td>
            <td align="left">${product.productPrice}</td>
            <td align="left">${product.city}</td>

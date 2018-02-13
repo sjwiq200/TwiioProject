@@ -61,7 +61,7 @@ public class UserController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-		if(user.getFile()!=null) {
+		/*if(user.getFile()!=null) {
 			if(userService.detectFace(user)) {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
@@ -75,7 +75,7 @@ public class UserController {
 			userService.addUser(user);
 			model.addAttribute("user",user);
 			System.out.println(":: Twiio 자제 회원가입 완료 ::");
-		}
+		}*/
 		
 		return "redirect:/user/loginView.jsp";
 	}

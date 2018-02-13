@@ -3,6 +3,8 @@ package com.twiio.good.web.dailyplan;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLDecoder;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +13,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -50,6 +53,10 @@ public class DailyPlanController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	////////사진 업로드////////
+	@Value("#{commonProperties['dailyPlanImageFilePath']}")
+	String dailyPlanImageFilePath;
 
 	public DailyPlanController() {
 
@@ -247,11 +254,8 @@ public class DailyPlanController {
 		planContent.setContentImage(fileName);
 		planContent.setDailyPlan(dailyPlan);
 		planContent.setContentType(2);
-
 		try {
-			File file = new File(
-					"/WebContent/resources/images/dailyPlanContent"
-							+ fileName);
+			File file = new File(dailyPlanImageFilePath, fileName);
 			uploadFile.transferTo(file);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -339,19 +343,47 @@ public class DailyPlanController {
 	}
 	///////////////////////////customizedPlanInfo///////////////////////////
 	@RequestMapping(value = "customizedPlanInfo")
-	public String customizedPlanInfo(@RequestParam int dailyPlanNo,@RequestParam int mainPlanNo,
-									@RequestParam String dailyCity,
-									 @RequestParam String dailyDate,
-									 Model model)throws Exception {
+	public String customizedPlanInfo(@RequestParam int dailyPlanNo,
+			@RequestParam int mainPlanNo,
+			//@RequestParam String dailyCity,
+			//@RequestParam String dailyDate, 
+			Model model)throws Exception {
 		
 		System.out.println("RestController : customizedPlanInfo <START>");
 		
-		dailyCity= URLDecoder.decode(dailyCity,"UTF-8");
+		
+		
+		////////////////////////사이드 바 추가로 생긴 부분//////////////////////////
+		
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+		model.addAttribute("dailyPlan", dailyPlan);
+		
+		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
+		model.addAttribute("listDailyPlan", listDailyPlan);
+		
+		if(userService.listUserForSharedMainPlan(mainPlanNo) != null) {
+		List<User> listForMainPlanShared = userService.listUserForSharedMainPlan(mainPlanNo);
+		for(User a : listForMainPlanShared) {
+			a.getUserName();
+		}
+		model.addAttribute("listForMainPlanShared", listForMainPlanShared);
+		}
+		
+		//////////////////////////////////////////////////
+		//dailyCity= URLDecoder.decode(dailyCity,"UTF-8");
+		
+		
+		String dailyCountry = dailyPlan.getDailyCountry();
+		String dailyCity = dailyPlan.getDailyCity();
+		System.out.println("##dailyCountry" + dailyCountry);
+		Date dailyDate=dailyPlan.getDailyDate();
 		List<Currency> returnList= new ArrayList<Currency>();
 		returnList = informationService.addCurrency();
-	        
+	    System.out.println("####" + returnList);
 	    model.addAttribute("returnList", returnList);
 	    model.addAttribute("dailyPlanNo", dailyPlanNo);
+	    model.addAttribute("dailyCountrySelected", dailyCountry);
 	    model.addAttribute("dailyCitySelected", dailyCity);
 	    model.addAttribute("dailyDate", dailyDate);
 	    model.addAttribute("mainPlanNo", mainPlanNo);

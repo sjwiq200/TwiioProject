@@ -16,6 +16,8 @@ public interface DailyPlanDao {
 
 	public List<DailyPlan> getDailyPlanList(int mainPlanNo);
 	
+	public List<DailyPlan> listPlanForFixedSchedule(DailyPlan dailyPlan);
+	
 	public void deleteDailyPlan(int mainPlanNo);
 
 	//plan_content/////////////////////////////////////////////////////////////

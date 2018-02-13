@@ -63,6 +63,11 @@ public class TransactionDaoImpl implements TransactionDao {
 	@Override
 	public void addRefund(Refund refund) throws Exception {
 		// TODO Auto-generated method stub
+		Transaction transaction = new Transaction();
+		transaction.setRefundCode("2");
+		transaction.setTranNo(refund.getTranNo());
+		
+		sqlsession.update("TransactionMapper.updateTransactionCode",transaction);
 		sqlsession.insert("TransactionMapper.addRefund", refund);
 	}
 
@@ -112,6 +117,21 @@ public class TransactionDaoImpl implements TransactionDao {
 	public void addStarEvalHost(Transaction transaction) throws Exception {
 		// TODO Auto-generated method stub
 		sqlsession.insert("TransactionMapper.listBest", transaction);
+	}
+
+	@Override
+	public Refund getRefund(int userNo) throws Exception {
+		// TODO Auto-generated method stub
+			   
+		return sqlsession.selectOne("TransactionMapper.getRefund", userNo);
+	}
+
+	@Override
+	public void deleteTransaction(int tranNo) throws Exception {
+		// TODO Auto-generated method stub
+		sqlsession.delete("TransactionMapper.deleteTransaction",tranNo);
 	}	
+	
+	
 
 }

@@ -84,6 +84,7 @@ public class MainPlanController {
 		String fileName = user.getUserNo()+"="+ mainPlan.getFile().getOriginalFilename();
 		System.out.println("fileName :: "+fileName);
 		mainPlan.setMainThumbnail(fileName);
+		System.out.println("######debug : " + mainPlan);
 		File file = new File(mainPlanFilePath, fileName);
 		mainPlan.getFile().transferTo(file);
 		
@@ -144,7 +145,7 @@ public class MainPlanController {
 	      
 	      System.out.println("-----Controller : addMainPlan <END>");
 	      
-	      return "forward:/mainplan/listMainPlan";
+	      return "redirect:/mainplan/listMainPlan";
 	   }
 
 	

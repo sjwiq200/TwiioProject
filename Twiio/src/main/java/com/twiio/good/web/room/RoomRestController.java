@@ -23,6 +23,7 @@ import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mypage.MyPageService;
 import com.twiio.good.service.room.RoomService;
+import com.twiio.good.service.user.UserService;
 
 @RestController
 @RequestMapping("/room/*")
@@ -39,6 +40,10 @@ public class RoomRestController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	public RoomRestController() {
 		// TODO Auto-generated constructor stub
@@ -139,6 +144,19 @@ public class RoomRestController {
 		
 		List<Room> list = (List<Room>)roomService.listMyRoom(search,user.getUserNo()).get("list");
 		System.out.println("roomrestController "+ list);
+		return list;
+	}
+	
+	@RequestMapping("/json/listMyRoom/{userId}")
+	public List<Room> listMyRoom(@RequestBody Search search,  @PathVariable String userId) throws Exception {
+		System.out.println("/room/json/listRoom : ");
+		User user = userService.getUser(userId);
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		List<Room> list = (List<Room>)roomService.listMyRoom(search, user.getUserNo()).get("list");
 		return list;
 	}
 	

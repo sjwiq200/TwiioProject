@@ -14,8 +14,7 @@ public class DailyPlan {
 	private int day;
 	private Date dailyDate;
 	private String dailyCity;
-	private String dailyCountry;
-	
+	private String dailyCountry;	
 	
 	
 	public int getDailyPlanNo() {

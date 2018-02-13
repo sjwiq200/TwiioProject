@@ -70,7 +70,8 @@
 		 
 	 });//end of function()
 	 
-	 var page = 1;
+	 //infinite scroll
+	    var page = 1;
 		var flag = 0;
 		var flag2 = 0;
 		var roomCount = ${resultPage.totalCount};
@@ -104,7 +105,7 @@
 											data : JSON.stringify({
 												"currentPage" : page,
 												"searchCondition" : $('#searchCondition').val(),
-												"searchKeyword" : $('#searchKeword').val(),
+												"searchKeyword" : $('#searchKeyword').val(),
 												"prodSearchType" :  $('#prodSearchType').val()
 											}),
 											headers : {
@@ -146,13 +147,13 @@
 															+ '">'
 															+ '</div>'
 
-													$('.row2').append(displayValue);
+													$('div.row2').append(displayValue);
 												}
 											}
 										});
 								}
 							});
-		});
+		}); 
 
   	
   	<!--  ///////////////////////// tooltip ////////////////////////// -->

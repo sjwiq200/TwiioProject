@@ -11,9 +11,7 @@
 <meta charset="EUC-KR">
 	
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE&callback=initMap">
-    </script>
+	
 	
 	<!--   jQuery , Bootstrap CDN  -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -43,7 +41,9 @@
 	
 	
 	
-	
+	<script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE&callback=initMap">
+    </script>
 	
 	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
 	<style>
