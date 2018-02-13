@@ -15,32 +15,31 @@ public class Community {
 	private String communityType;
 	private String communityContent;
 	private String userName;
+	private String targetUserName;
 	
 	
 	public Community() {
 	}
 
-
-	
-
 	public String getUserName() {
 		return userName;
 	}
 
+	public String getTargetUserName() {
+		return targetUserName;
+	}
 
-
+	public void setTargetUserName(String targetUserName) {
+		this.targetUserName = targetUserName;
+	}
 
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
-
-
-
 	public int getCommunityNo() {
 		return communityNo;
 	}
-
 
 	public void setCommunityNo(int communityNo) {
 		this.communityNo = communityNo;

@@ -172,7 +172,7 @@ function resetData() {
 							
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
-												'<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+												 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
 												 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 												 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
 												'<div class="col-md-2 col-md-offset-1">'+
@@ -365,7 +365,7 @@ function resetData() {
 	 		$('#reportbody').html(reportbody);
 	 		$('#modalreport').modal('show');
 	 	 }
-		
+	
 		$(document).on('click','#addreportcommunity',function(){
 			 	var reportcontent = $('#reportcontent').val();
 			 	var reporttitle = $('#reporttitle').val();
@@ -409,7 +409,7 @@ function resetData() {
 		 	$('#modalfriend').modal('show');
 		 }
 		
-		$(document).on('click','#addmodalfriend',function(){
+			$(document).on('click','#addmodalfriend',function(){
 			  $.ajax({
 						url : "/common/json/addFriend",
 						method : "POST" ,
@@ -422,7 +422,7 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalfriend').modal('toggle');					
-					}
+						}
 				}); 
 			});
 		});
@@ -432,8 +432,9 @@ function resetData() {
 		 var msguserno = $($('input[name=userNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var inmsg =
-			 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
-			'<input type="text" class="form-control" id="msgno" row="6" col="50"  value="'+msguserno+'" readonly/>'+
+			'<input type="hidden" class="form-control" id="msgno" row="6" col="50" value="'+msguserno+'"/>'+
+			'<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+			'<input type="text" class="form-control" id="msgusername" row="6" col="50"  value="'+msgusername+'" readonly/>'+
 			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 		 
 		 if(${empty user.userId}){
@@ -444,36 +445,40 @@ function resetData() {
 			$('#msg').html(inmsg);
 		 	$('#modalmessage').modal('show');
 		 }
-		 $(document).on('click','#upmessage',function(){
+	});
+	
+	$(document).on('click','#upmessage',function(){
+			var msguserno = $('#msguserno').val();
 			var msgcontent = $('#msgcontent').val();
 			var msgtitle = $('#msgtitle').val();
+			var msgusername = $('#msgusername').val();
 			//modalmessage
 
-				if(msgcontent==''| msgtitle==''){
-				 alert('내용과 제목을 입력하세요.');			 
-				 }
-				 else{
-				  $.ajax( 
-						{
-						url : "/mypage/json/addMessage",
-						method : "POST" ,
-						dataType : "json" ,
-						contentType:"application/json;charset=UTF-8",
-						data : JSON.stringify({
-							"toUserNo":"${user.userNo}",
-							"fromUserNo":msguserno,
-							"messageContent":msgcontent,
-							"messageType":"2",
-							"messageTitle":msgtitle							
-						}),
-						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							$('#modalmessage').modal('toggle');
-						}
-				});
-			 	}
-			});	
-		});
+			if(msgcontent==''| msgtitle==''){
+				alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+			  	$.ajax({
+					url : "/mypage/json/addMessage",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"toUserNo":"${user.userNo}",
+						"fromUserNo":msguserno,
+						"messageContent":msgcontent,
+						"messageType":"2",
+						"messageTitle":msgtitle,
+						"targetUserName":msgusername,
+						"userName":"${user.userName}"
+					}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#modalmessage').modal('toggle');
+				    } 
+			   });
+			}			
+	});
 	
 	///////////////////////////////////////////////deleteReply/////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=deletereply]', function() {

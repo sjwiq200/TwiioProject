@@ -14,21 +14,45 @@ public class Message {
 	private char messageType;
 	private String messageTitle;
 	private int productNo;
+	private String targetUserName;
+	private String userName;
+	
 	public int getMessageNo() {
 		return messageNo;
 	}
+	
+	public String getTargetUserName() {
+		return targetUserName;
+	}
+
+	public void setTargetUserName(String targetUserName) {
+		this.targetUserName = targetUserName;
+	}
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+
 	public void setMessageNo(int messageNo) {
 		this.messageNo = messageNo;
 	}
+	
 	public int getToUserNo() {
 		return toUserNo;
 	}
+	
 	public void setToUserNo(int toUserNo) {
 		this.toUserNo = toUserNo;
 	}
+	
 	public int getFromUserNo() {
 		return fromUserNo;
 	}
+	
 	public void setFromUserNo(int fromUserNo) {
 		this.fromUserNo = fromUserNo;
 	}
@@ -67,7 +91,7 @@ public class Message {
 		// TODO Auto-generated method stub
 		return "Message : [ messageNo : "+messageNo+", toUserNo : "+toUserNo+", fromUserNo : "+fromUserNo
 				+", messageContent : "+messageContent+", messageRegDate : "+messageRegDate+", messageType : "+messageType
-				+", messageTitle : "+messageTitle+", productNo : "+productNo+" ]";
+				+", messageTitle : "+messageTitle+", productNo : "+productNo+", userName : "+userName+", targetUserName : "+targetUserName+"]";
 	}
 	
 	
