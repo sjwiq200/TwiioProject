@@ -53,12 +53,12 @@
 .material-button {
     position: relative;
     top: 0;
-    z-index: 1;
+    z-index: 10000;
     width: 70px;
     height: 70px;
     font-size: 1.5em;
     color: #fff;
-    background: #2C98DE;
+    background: #A6A0A5;
     border: none;
     border-radius: 50%;
     outline: none;

@@ -67,7 +67,7 @@ html, body {
 }
 
 #floating-button{
-	opacity: 0.8;
+	opacity: 0.6;
 }
 
 
@@ -150,6 +150,11 @@ html, body {
 	background-color:rgba(192,192,192,0.2);
 }
 
+#floating-button:hover {
+	background-color:#D73A31;
+	color: black;
+}
+
 </style>
 
 
@@ -182,14 +187,6 @@ html, body {
 			});
 	 })
 	 
-	 	 $(function() {
-			$("button:contains('선택')").bind("click",function() {
-				var index = $("button:contains('선택')").index(this);
-				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-				var url = "/dailyplan/getDailyPlanFromMain?mainPlanNo="+mainPlanNo;
-				$(location).attr('href', url);
-			});
-	 })
 	 
 	  $(function() {
 			$(".select").bind("click",function() {
@@ -234,19 +231,10 @@ html, body {
 							},
 							success:function(JSONData){
 		    					friend = JSONData.friendInfo;
-			    					/* for(var i=0;i<friend.length;i++){
-			    						result +='<p> [USER NO] : '+friend[i].userNo+ '</p>'
-			    								+'<span>  [아이디] : '+friend[i].userId+'</span>'
-			    								+'<span>  [이름] : '+friend[i].userName+'</span>'
-			    								+'<span>  [성별] : '+friend[i].userGender+'</span>'
-			    								+'<span>  [사진] : '+friend[i].userImage+'</span>'
-			    								+'<span>&nbsp;</span>'
-			    								+'<button type="button" id="sharePlan'+i+'" class="btn btn-success btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
-			    					} */
 			    					
 			    					for(var i=0;i<friend.length;i++){
 			    						
-			    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
+			    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
 			    									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+friend[i].userName+'</div>'+
 			    									'<button type="button" id="sharePlan'+i+'" class="btn btn-primary btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
 			    					}
@@ -301,7 +289,6 @@ html, body {
 				<div  class="col-xs-12 inner" id="thumbnailMainBox">
 				  <div align="center" class="col-xs-1">&nbsp;</div> <!-- 그라디언트 보이게 해주려고 한 부분 -->
 					<div class="col-xs-12 inner" id="thumbnailMainThumbBox">
-						<!-- <img src="/resources/images/dailyPlanContent/lineline.png" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"> -->
 
 						<c:set var="i" value="0" />
 						<c:forEach var="mainPlan" items="${list}">
@@ -314,7 +301,7 @@ html, body {
 										
 										 <div class="row">
 										 	<div class="col-md-1" id="buttonBox"></div>
-											   <div class="col-md-4 thumbnailClass select" style="width: 320px; height: 250px; overflow: hidden">
+											   <div class="col-md-4 thumbnailClass" style="width: 320px; height: 250px; overflow: hidden">
 												<img src="/resources/images/thumbnail_plan/${mainPlan.mainThumbnail}" style="width: 300px; height: 250px; display: block;border-radius: 2%;" class="img-responsive" alt="Responsive image"/> 
 											   </div>
 											   
@@ -354,7 +341,7 @@ html, body {
 		<!--  Floating Button <START> -->
 		<div id="container-floating">
 			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create">
-				<p class="letter" id="addMainPlan">+</p>
+				<p class="letter" id="addMainPlan" style="margin-top: 5px;font-family: 'TYPO_JEONGJOL'; font-size:20px;">Write</p>
 			</div>
 		</div>
 		<!--  Floating Button <END> -->

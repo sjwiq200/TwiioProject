@@ -29,17 +29,55 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <link rel="stylesheet" href="/resources/css/font.css" />
+<link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
 
 <style type="text/css">
-body {
-	padding-top: 50px;
+body::-webkit-scrollbar {
+	width: 0.7em;
+	background: transparent;
 }
 
+body::-webkit-scrollbar-thumb {
+	background: transparent;
+}
+
+body {
+	padding-top: 70px;
+	font-family: 'JEJUGOTHIC';
+	background: #f4f4f4;
+}
+
+#innerMain {
+	font-size: 6em;
+	margin-top: 1.5em;
+}
+
+#thumbnailMainBox {
+	min-height: 1500px;
+	font-family: 'JEJUMYEONGJO';
+	background: linear-gradient(-45deg, #08708A, transparent),
+		linear-gradient(45deg, #D73A31, transparent);
+	border-radius: 8px;
+	border-color: #000000;
+	border-width: 10px;
+	display: inline-block;
+	padding: 1px;
+	text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+	min-height: 1500px;
+	background: #fff;
+	display: inline-block;
+	border-radius: 6px;
+}
+
+/* ---------------------------------------------------- */
 .top_bar_fix {
 	position: fixed;
 	top: 50px;
-	left: 0;
+	right: 0;
 	width: 100%;
 	bottom: 100px;
 }
@@ -102,7 +140,74 @@ button:before, button:after {
     button.btn-danger:after {
   border-color: #ac2925 transparent #ac2925 #ac2925;
     }
-   
+ 
+ /* 사이드바 <START> */
+.sidenav::-webkit-scrollbar {
+	width: 0.7em;
+	background: transparent;
+}
+
+.sidenav::-webkit-scrollbar-thumb {
+	background: transparent;
+}
+
+.sidenav {
+	margin-top: 53px;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	z-index: 1;
+	top: 0;
+	left: 0;
+	overflow-x: hidden;
+	transition: 0.6s;
+	padding-top: 60px;
+	background-color: #ffffff;
+	border-right: solid 0.8px #C2C2C2;
+}
+
+.sidenav a {
+	padding: 8px 8px 8px 32px;
+	text-decoration: none;
+	font-size: 25px;
+	color: #818181;
+	display: block;
+	transition: 0.3s;
+}
+
+.sidenav a:hover {
+	color: #f1f1f1;
+}
+
+.sidenav .closebtn {
+	position: absolute;
+	top: 0;
+	right: 25px;
+	font-size: 36px;
+	margin-left: 50px;
+}
+
+#main {
+	transition: margin-left .5s;
+	padding: 16px;
+}
+
+@media screen and (max-height: 450px) {
+	.sidenav {
+		padding-top: 15px;
+	}
+	.sidenav a {
+		font-size: 18px;
+	}
+}
+
+#contentsBox {
+	height: 6em;
+	border-bottom: dashed 0.5px #C2C2C2;
+}
+/* 사이드바 <END> */
+
+
 </style>
 
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
@@ -122,9 +227,6 @@ button:before, button:after {
 					if( docScrollY > 1 ) {
 						barThis.addClass("top_bar_fix");
 						fixNext.addClass("pd_top_50");
-					}else{
-						barThis.removeClass("top_bar_fix");
-						fixNext.removeClass("pd_top_50");
 					}
 
 				});
@@ -163,6 +265,8 @@ $(function() {
 
 		 	standardCountry = $("#standardCountry").val();
 			compareCountry = $("#compareCountryValue").val();
+		 	alert(standartCountry);
+		 	alert(compareCountry);
 			inputPrice = $("#standard").val();
 			
 				$.ajax( 
@@ -348,13 +452,13 @@ $(function() {
 
 $(function() {
 		 $("input[name='unsafeCityInfo']").on("click" , function() {
-			var city = $("#cityDangerCheck").val();
+			var country = $("#countryDangerCheck").val();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/getUnsafeRegion",
 	    					method:"POST",
 	    					data:{
-	    						"city" : city
+	    						"country" : country
 	    					},
 	    					dataType: "json",
 	    					contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
@@ -402,12 +506,127 @@ $(function() {
 </script>
 
 
-<!-- -------------------------------- -->
 
 
+<!-- -------------사이드바 ------------------- -->
+
+<script type="text/javascript">
+		
+			$(document).ready(function(){
+				var topBar = $("#topBar").offset();
+				$(window).scroll(function(){
+					var docScrollY = $(document).scrollTop()
+					var barThis = $("#topBar")
+					var fixNext = $("#fixNextTag")
+					if( docScrollY > 1 ) {
+						barThis.addClass("top_bar_fix");
+						fixNext.addClass("pd_top_50");
+					}else{
+						barThis.removeClass("top_bar_fix");
+						fixNext.removeClass("pd_top_50");
+					}
+				});
+			})
+			
+			
+			 
+	 $(function() {
+			$(".dayClick:contains('DAY')").bind("click",function() {
+				var index = $(".dayClick:contains('DAY')").index(this);
+				var dailyPlanNo = $($("input[name='dailyPlanNo']")[index]).val();
+				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+				var url = "/dailyplan/getDailyPlan?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+mainPlanNo;
+				$(location).attr('href', url);
+			});
+		 })
+		 
+		 	function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+			document.getElementById("main").style.marginLeft = "280px";
+			document.body.style.backgroundColor = "#f4f4f4";
+			
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "#f4f4f4";
+		}
+		
+</script>
 
 	<body>
+	
+		<!-- ---------------사이드바-------------------- -->
 
+
+	<div id="mySidenav" class="sidenav"
+		style="font-family: 'JEJUMYEONGJO';">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+		<div class="col-xs-12" align="center" style="margin-bottom: 4em;">
+			<h2>
+				<strong>Contents</strong>
+			</h2>
+			<br />
+			<br /> <img src="/resources/images/userimages/${dailyPlan.user.userImage}"
+				width="80px" height="80px" style="border-radius: 5%; overflow:hidden;">
+			<c:forEach var="listUser" items="${listForMainPlanShared}">
+				<img src="/resources/images/userimages/${listUser.userImage}"
+					width="80px" height="80px" style="border-radius: 5%;">
+			</c:forEach>
+			<h5>
+				Writer : ${dailyPlan.user.userName}
+				<c:forEach var="listUser" items="${listForMainPlanShared}">
+					& ${listUser.userName}
+				</c:forEach>
+			</h5>
+
+		</div>
+
+		<div class="col-xs-12" style="background: transparent;">
+			<c:set var="i" value="0" />
+			<h5 align="right" id="contentList">크게보기</h5>
+			<c:forEach var="dailyPlan" items="${listDailyPlan}">
+				<c:set var="i" value="${ i+1 }" />
+				<input type="hidden" name="dailyPlanNo"
+					value="${dailyPlan.dailyPlanNo}" />
+				<input type="hidden" name="mainPlanNo"
+					value="${dailyPlan.mainPlan.mainPlanNo}" />
+				<div class="col-xs-12 contentsBox" id="contentsBox"
+					name="contentsBox" style="border-radius: 10%;">
+
+					<div class="col-xs-4 contents dayClick" name="contents"
+						align="left">
+						<h4>DAY${ i }</h4>
+					</div>
+					<div class="col-xs-8 contents dayClick" name="contents"
+						align="center">
+						<h6>${dailyPlan.dailyDate}</h6>
+						<h6>${dailyPlan.dailyCity}</h6>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</div>
+
+	<div id="main" style="position: fixed; z-index: 1000;" id="openSideBar">
+
+		<h2>&nbsp;</h2>
+		<p>&nbsp;</p>
+		<span
+			style="font-size: 20px; font-family: 'JEJUMYEONGJO'; cursor: pointer"
+			onclick="openNav()">&#9776; OPEN</span>
+	</div>
+
+
+
+
+
+	<!-- ----------------------------------- -->
+	
+	
+	
+	
 
 	<div class="wrap">
 	<jsp:include page="/layout/toolbar.jsp" />
@@ -415,22 +634,35 @@ $(function() {
 	<div class="container" style="font-family:'JEJUGOTHIC' !important;">
 		
 	
-	<div class="jumbotron" id="jumbotron" style="align-content: center; background-color: rgba(244, 244, 244, 1);" >	
+		<div class="col-xs-12 inner" id="thumbnailMainBox">
+				<div align="center" class="col-xs-1">&nbsp;</div>
+				<!-- 그라디언트 보이게 해주려고 한 부분 -->
+				<div class="col-xs-12 inner" id="thumbnailMainThumbBox"
+					align="center">
 		
 		
-		<div class="top_fix_zone" id="topBar" >
-			<input type="button"  id="closeButton" value="Close" />
-		</div>
-		
-		
-		<div class="top_con_zone" id="fixNextTag">
-		<!-- -----------------환율<START>------------------- -->
-		<div class="text-info" align="center">
-			<p>&nbsp;</p>
-			<p>&nbsp;</p>
-			<button type="button" class="btn btn-danger ribbon">나의 여행 맞춤 정보</button>
+		<!-- -------Floating Button<START>----------- -->
+
+		<div id="container-floating" style="font-family: 'JEJUGOTHIC';"  id="closeButton">
+			<div id="floating-button"  data-placement="left" id="closeButton">
+				<p class="plus"  id="closeButton" style="font-size:15px; 	font-family: 'JEJUMYEONGJO';">
+					<strong>BACK</strong>
+				</p>
+			</div>
 		</div>
 
+		<!-- -------Floating Button<END>----------- -->
+		
+		<div class="top_con_zone" id="fixNextTag">
+			
+		<div align="center">
+			<p>&nbsp;</p>
+			<p>&nbsp;</p>
+			<h3>DAY ${dailyPlan.day}</h3>
+			<h1><strong>맞춤여행정보</strong></h1>
+		</div>
+		
+	<!-- -----------------환율<START>------------------- -->
 		<form class="form-horizontal">
 
 			<div align="center">
@@ -475,12 +707,12 @@ $(function() {
 						<c:forEach var="currency" items="${returnList}">
 						
 							<c:set var = "theString" value = "${currency.cur_nm}"/>
-							<c:set var = "dailyCity" value = "${dailyCitySelected}"/>
-							<c:if test="${fn:contains(theString,dailyCity)}">
+							<c:set var = "dailyCountry" value = "${dailyCountrySelected}"/>
+							<c:if test="${fn:contains(theString,dailyCountry)}">
 							<option value="${currency.cur_nm}" selected>${currency.cur_nm}</option>
 							</c:if>
 							
-							<c:if test="${! fn:contains(theString,dailyCity)}">
+							<c:if test="${! fn:contains(theString,dailyCountry)}">
 							<option value="${currency.cur_nm}">${currency.cur_nm}</option>
 							</c:if>
 							
@@ -531,7 +763,7 @@ $(function() {
 				</div>
 			</div>	
 			
-			<input type="hidden" id="cityDangerCheck" name="unsafeCityInfo"value="${dailyCitySelected}">
+			<input type="hidden" id="countryDangerCheck" name="unsafeCountryInfo"value="${dailyCountrySelected}">
 			<div class="info" id="info"></div>
 		</div>
 
@@ -591,11 +823,15 @@ $(function() {
 
 
 			</div>
-
+					</div>
+				</div>
+			</div>
+			<div align="right" class="col-xs-1">&nbsp;</div>
 		</div>
-	</div>
 	
-</div>
+	
+	
+
 </body>
 
 </html>
