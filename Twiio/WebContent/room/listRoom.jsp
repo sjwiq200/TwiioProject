@@ -54,8 +54,8 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
-			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			  /* window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			   window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 		 });
 		 
 		 $("button#search").on("click",function(){
@@ -70,7 +70,8 @@
 		 
 	 });//end of function()
 	 
-	 var page = 1;
+	 //infinite scroll
+	    var page = 1;
 		var flag = 0;
 		var flag2 = 0;
 		var roomCount = ${resultPage.totalCount};
@@ -104,7 +105,7 @@
 											data : JSON.stringify({
 												"currentPage" : page,
 												"searchCondition" : $('#searchCondition').val(),
-												"searchKeyword" : $('#searchKeword').val(),
+												"searchKeyword" : $('#searchKeyword').val(),
 												"prodSearchType" :  $('#prodSearchType').val()
 											}),
 											headers : {
@@ -146,13 +147,13 @@
 															+ '">'
 															+ '</div>'
 
-													$('.row2').append(displayValue);
+													$('div.row2').append(displayValue);
 												}
 											}
 										});
 								}
 							});
-		});
+		}); 
 
   	
   	<!--  ///////////////////////// tooltip ////////////////////////// -->

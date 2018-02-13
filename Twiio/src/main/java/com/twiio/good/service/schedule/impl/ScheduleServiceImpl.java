@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Schedule;
 import com.twiio.good.service.schedule.ScheduleDao;
 import com.twiio.good.service.schedule.ScheduleService;
@@ -29,8 +30,8 @@ public class ScheduleServiceImpl implements ScheduleService {
 		
 	}
 	
-	public Map<String, Object> listSchedule(int userNo) throws Exception{
-		return scheduleDao.listSchedule(userNo);
+	public Map<String, Object> listSchedule(Search search,int userNo) throws Exception{
+		return scheduleDao.listSchedule(search, userNo);
 	}
 
 	@Override

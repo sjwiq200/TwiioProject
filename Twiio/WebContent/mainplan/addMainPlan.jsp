@@ -64,7 +64,7 @@
 html, body {
 	width: auto;
 	height: auto;
-	min-height: 1300px;
+	min-height: 1000px;
 	background: linear-gradient(-45deg, #56B1BF, transparent),
 		linear-gradient(45deg, #D73A31, transparent);
 }
@@ -75,6 +75,8 @@ body {
 }
 
 .inner {
+
+	text-shadow: 3px 3px #212121;
 }
 
 
@@ -105,7 +107,7 @@ site-wrapper>.site-wrapper {
 	padding: 10px 0 10px 0;
 	background-color: rgba(255, 255, 255, 0) !important;
 	background: rgba(255, 255, 255, 0);
-	color: #fff;
+	color: #ffffff;
 	font-size: 15px;
 	border-bottom: 1px dotted #fff;
 	border-radius: 0;
@@ -171,17 +173,14 @@ site-wrapper>.site-wrapper {
 			//alert(addPlan);
 			$(".form-group.center-block.contentsList").append(addPlan);
 
-			$(".btn-1").attr('value', '여행을 시작해 볼까요?').attr('style','font-size: 2.8em; font-family: "JEJUMYEONGJO";background-color:transparent;margin-top:120px;');
-
+			$(".btn-1").attr('value', '여행을 시작해 볼까요?').attr('style','display: inline;font-size: 2.8em; font-family: "JEJUMYEONGJO";background-color:transparent;margin-top:120px;');
+			$("#letsGo").append('<img src="/resources/images/dailyPlanContent/letsGotoTrip.jpg" width="400px" style="margin-top:50px;border-radius: 5%;">');
 		}
 	}
 
 	$(function() {
-		$("#submit").on(
-				"click",
-				function() {
-					$("form").attr("method", "POST").attr("action",
-							"/mainplan/addMainPlan").attr("enctype",
+		$("#submit").on("click",function() {
+					$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan").attr("enctype",
 							"multipart/form-data").submit();
 				});
 	});
@@ -209,23 +208,16 @@ site-wrapper>.site-wrapper {
 		});
 	});
 
-	$(document)
-			.ready(
-					function() {
-						$("input[name='countryList']")
-								.each(
-										function(index) {
+	$(document).ready(function() {
+						$("input[name='countryList']").each(function(index) {
 											//alert(index);
-											$(
-													$("input[name='countryList']")[index])
-													.autocomplete(
+											$($("input[name='countryList']")[index]).autocomplete(
 															{
 																source : function(
 																		request,
 																		response) {
 
-																	$
-																			.ajax({
+																	$.ajax({
 																				url : "/information/json/countryAutoComplete/",
 																				method : "POST",
 																				data : {
@@ -416,14 +408,12 @@ site-wrapper>.site-wrapper {
 						
 						<div name="addCountry">
 							<label class="control-label" for="textinput">여행하고 싶은 국가를 입력해주세요</label> 
-							<input type="text" id="country1" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요." class="form-control input-md contents">
-							
-							
-						<div class="btn-group"></div>
 							<a class="btn btn-default btn" href="#" role="button" id="addCountry" name="addCountry">
 							<span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#A6A0A5;"></span></a> 
 							<a class="btn btn-default btn" href="#" role="button" id="removeCountry" name="removeCountry" disabled="true">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true" style="color:#A6A0A5;"></span></a>
+							<input type="text" id="country1" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요." class="form-control input-md contents">
+							<div class="btn-group"></div>
 						</div>
 						<p>&nbsp;</p>
 						<label for="departureDate" class="col-sm-12 control-label ">출발일을 입력해주세요</label> 
@@ -436,7 +426,8 @@ site-wrapper>.site-wrapper {
 
 					</div>
 				</div>
-				<input type="submit" class="btn-1" style="background-color: transparent; " id="submit" value="">
+				<div id="letsGo"></div>
+				<input type="submit" class="btn-1" style="background-color: transparent;display: none; " id="submit" value="">
 			</form>
 		</div>
 

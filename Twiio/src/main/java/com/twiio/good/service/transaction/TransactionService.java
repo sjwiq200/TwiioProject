@@ -29,6 +29,7 @@ public interface TransactionService {
 //	// 환불 코드 변경
 //	public void updateTransactionCode(Transaction transaction) throws Exception;
 	
+	public Refund getRefund(int userNo) throws Exception;
 	// 환불 신청
 	public void addRefund(Refund refund) throws Exception;
 	
@@ -39,6 +40,8 @@ public interface TransactionService {
 	public Map<String, Object> listRefund(Search search, User user) throws Exception;
 
 	// 환불 취소
-	public void deleteRefund(int tranNo) throws Exception;	
+	public void deleteRefund(int tranNo) throws Exception;
+	
+	public void deleteTransaction(int tranNo) throws Exception;
 
 }

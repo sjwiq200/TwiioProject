@@ -178,6 +178,19 @@ public class TransactionServiceImpl implements TransactionService {
 		Transaction transaction = transactionDao.getTransaction(tranNo);
 		transaction.setRefundCode("1");
 		transactionDao.updateTransactionCode(transaction);
-	}	
+	}
+
+	@Override
+	public Refund getRefund(int userNo) throws Exception {
+		return transactionDao.getRefund(userNo);
+	}
+
+	@Override
+	public void deleteTransaction(int tranNo) throws Exception {
+		transactionDao.deleteTransaction(tranNo);
+		
+	}
+	
+	
 
 }
