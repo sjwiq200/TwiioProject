@@ -952,7 +952,6 @@ $(function() {
 					<div class="col-xs-12">
 
 
-<<<<<<< HEAD
 					<div class="row" align="center">
 					
 								
@@ -1008,61 +1007,7 @@ $(function() {
 					</div>
 
 					<!-- -------------TOP<END>--------------- -->
-=======
-						<div class="row" align="center">
->>>>>>> refs/remotes/origin/master
 
-
-							<!-- -------------TOP<START>--------------- -->
-
-
-							<input type="button" id="customizedPlanInfo"
-								name="customizedPlanInfo" class="btn btn-default"
-								value="나를 위한 맞춤정보" /> <input type="button" id="friendRecButton"
-								name="friendRecButton" class="btn btn-default"
-								value="같이 갈 친구 찾기" /> <input type="button" id="saveAsPDF"
-								name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" />
-							</p>
-							<p></p>
-							<!-- <img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px"> -->
-							<p></p>
-							<div class="col-xs-12 innerMain" id="innerMain" align="center">
-								<p>DAY ${dailyPlan.day}</p>
-							</div>
-							<div class="col-xs-12"
-								style="font-family: 'JEJUGOTHIC' !important; font-size: 1.1em !important;"
-								align="center">
-								<p>${dailyPlan.dailyDate}</p>
-								<p>${dailyPlan.dailyCity}</p>
-								<p class="getCountry">${dailyPlan.dailyCountry}</p>
-							</div>
-							<c:if test="${empty dailyPlan.dailyCountry }">
-								<div id="select"
-									style="font-family: 'JEJUGOTHIC' !important; font-size: 1.1em !important;">
-									<p>나라와 도시를 선택해주세요!!</p>
-								</div>
-							</c:if>
-							<div style="display: none" ; class="btn-group" role="group"
-								id="countryButtonGroup">
-								<c:set var="i" value="0" />
-								<c:forEach var="countryList" items="${countryList}">
-									<c:set var="i" value="${i+1}" />
-									<input type="button" class="countrySelectButton"
-										name="countrySelectButton" id="country${i}"
-										class="btn btn-default" value="${countryList}"
-										style="font-family: \'JEJUGOTHIC\';" />
-								</c:forEach>
-							</div>
-							<div class="col-xs-12" style="margin-top: 130px" align="center">
-								<input type="hidden" value="${dailyPlan.dailyPlanNo}"
-									id="idDailyPlanNo" /> <input type="hidden"
-									value="${dailyPlan.dailyDate}" id="idDailyDate" /> <input
-									type="hidden" value="${dailyPlan.dailyCity}" id="idDailyCity" />
-							</div>
-
-						</div>
-
-						<!-- -------------TOP<END>--------------- -->
 
 
 
