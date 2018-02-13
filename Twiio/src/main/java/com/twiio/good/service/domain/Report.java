@@ -19,6 +19,7 @@ public class Report
   private int targetCommunityNo;
   private String targetUserName;
   private String targetUserId;
+  private String reportState;
   
   
 
@@ -131,11 +132,24 @@ public void setUserName(String userName) {
 }
 
 
+public String getReportState() {
+	return reportState;
+}
+
+
+public void setReportState(String reportState) {
+	this.reportState = reportState;
+}
+
+
 @Override
 public String toString() {
-	return "Report [reportNo=" + reportNo + ", userNo=" + userNo + ", userName=" + userName +", reportContent=" + reportContent + ", reportTitle="
-			+ reportTitle + ", reportRegDate=" + reportRegDate + ", targetUserNo=" + targetUserNo + ", targetRoomKey="
-			+ targetRoomKey + ", targetReplyNo=" + targetReplyNo + ", targetCommunityNo=" + targetCommunityNo + "]";
+	return "Report [reportNo=" + reportNo + ", userNo=" + userNo + ", userName=" + userName + ", reportContent="
+			+ reportContent + ", reportTitle=" + reportTitle + ", reportRegDate=" + reportRegDate + ", targetUserNo="
+			+ targetUserNo + ", targetRoomKey=" + targetRoomKey + ", targetReplyNo=" + targetReplyNo
+			+ ", targetCommunityNo=" + targetCommunityNo + ", targetUserName=" + targetUserName + ", targetUserId="
+			+ targetUserId + ", reportState=" + reportState + "]";
 }
+
  
 }

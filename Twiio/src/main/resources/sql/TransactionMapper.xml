@@ -45,7 +45,9 @@
 		<result property="refundAccount" 			column="refund_account" 		jdbcType="VARCHAR" />
 		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />
 		<result property="userNo" 					column="user_no" 				jdbcType="NUMERIC" />
-		<result property="hostNo" 					column="host_no" 				jdbcType="NUMERIC" />			
+		<result property="hostNo" 					column="host_no" 				jdbcType="NUMERIC" />	
+		<result property="productName" 				column="product_name" 			jdbcType="VARCHAR" />
+		<!-- <result property="refundCode" 				column="_" 			jdbcType="CHAR" />		 -->
 	</resultMap>
 	
 	<!-- SQL : INSERT -->
@@ -74,6 +76,13 @@
 		WHERE tran_no = #{value}
 	 </select>
 	 
+	 <select  id="getRefund" parameterType="int" resultMap="refundSelectMap">
+	 	select r. 
+	 	from refund r, users u 
+	 	where r.user_no = u.user_no
+	 	and
+	 </select>
+	 
 	 <!-- <select 	id="getPurchase2"	parameterType="int"	resultMap="transactionSelectMap">
 		SELECT
 		tran_no , prod_no , buyer_id , payment_option , receiver_name, receiver_phone, demailaddr, dlvy_request, tran_status_code, order_data, dlvy_date 		
@@ -85,7 +94,7 @@
 	 <update	id="updateTransactionCode"	parameterType="transaction" >
 	   	UPDATE transaction
 	   	<set>	   		
-			refund_code		= #{refundCode}
+			refund_code	= #{refundCode}
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
@@ -124,13 +133,15 @@
 	
 	<insert 	id="addRefund"		parameterType="refund" >
 	 	INSERT
-		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank) 
+		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank,user_no) 
 		VALUES	 (	seq_REFUND_REFUND_NO.NEXTVAL , 
 					#{tranNo} , 
 					SYSDATE , 
 					#{refundPrice} , 
 					#{refundAccount} , 
-					#{refundBank} )
+					#{refundBank}, 
+					#{userNo}
+					)
 	 </insert>
 	
 	<update id="updateRefund" parameterType="refund">
@@ -336,6 +347,5 @@
 				</otherwise>				
 				</choose>				
 			 ) countTable						
-	 </select>
-	 
+	 </select> 
 </mapper>

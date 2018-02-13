@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -56,7 +58,7 @@ public class UserRestController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-		if(user.getFile()!=null) {
+/*		if(user.getFile()!=null) {
 			if(userService.detectFace(user)) {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
@@ -68,13 +70,13 @@ public class UserRestController {
 			//Business Logic
 			userService.addUser(user);
 			System.out.println(":: Twiio 자제 회원가입 완료 ::");
-		}
+		}*/
 		
 		return "redirect:/user/loginView.jsp";
 	}
 	
 	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )
-	public User getUser( @PathVariable int userNo ) throws Exception{
+	public User getUserNo( @PathVariable int userNo ) throws Exception{
 		
 		System.out.println("/user/json/getUser : GET ");
 		
@@ -82,14 +84,16 @@ public class UserRestController {
 		return userService.getUserInNo(userNo);
 	}
 	
-	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
+
+/*	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
+
 	public boolean detectFace( @RequestBody User user ) throws Exception{
 		
 		System.out.println("/user/json/detectFace ");
 		System.out.println(user);
 		//Business Logic
 		return userService.detectFace(user);
-	}
+	}*/
 	
 	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
 	public Map<String, Boolean> checkDuplication( @RequestBody String userId ) throws Exception{
@@ -247,21 +251,30 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
-	public String faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
+	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
 							HttpSession httpsession,
 							User user) throws Exception{
 		System.out.println("/user/json/faceDetect");
 		user = (User)httpsession.getAttribute("user");
 		user.setFile(file);
-
-		boolean face = userService.detectFace(user);
-		if(face == true) {
-			
-		}else {
-			
-		}
+		String faceto =""; 
+		Map<String, Object> map= userService.detectFace(user);
 		
 		System.out.println("들어올까??");
+		
+		return map;
+	}
+	
+	@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
+	public String deleteUser(@ModelAttribute User user) throws Exception{
+		
+		System.out.println("/user/json/deleteUser");
+		
+		User user2 = userService.getUserInNo(user.getUserNo());
+		
+		userService.deleteUser(user2);
+		
+		System.out.println("결과"+user2);
 		return "성공했어요";
 		
 	}

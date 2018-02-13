@@ -578,7 +578,8 @@ public class TransactionController {
 		
 		// Business Logic		
 		transactionService.addRefund(refund);
-
+		transactionService.deleteTransaction(refund.getTranNo());
+		
 		return "redirect:/purchase/getPurchase?tranNo=";
 	}
 	

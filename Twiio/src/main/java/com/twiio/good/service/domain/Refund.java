@@ -14,6 +14,9 @@ public class Refund {
 	private int userNo;
 	private int hostNo;
 	private String userType;
+	private String userName;
+	private String productName;
+	private String refundCode;
 
 	public Refund() {
 		// TODO Auto-generated constructor stub
@@ -97,6 +100,32 @@ public class Refund {
 
 	public void setUserType(String userType) {
 		this.userType = userType;
+	}
+	
+
+	public String getUserName() {
+		return userName;
+	}
+
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
+
+	public String getRefundCode() {
+		return refundCode;
+	}
+
+	public void setRefundCode(String refundCode) {
+		this.refundCode = refundCode;
 	}
 
 	@Override

@@ -250,6 +250,8 @@
 					   $("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 				   }
 			   	}else{
+			   		
+			   		alert($("#updateUserForm").serialize());
 			   		$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 			   }
 			   }else{
@@ -448,12 +450,10 @@
 					$('#blah').attr('src', e.target.result);
 				}
 				reader.readAsDataURL(input.files[0]);
-				
 		        var formFile=document.getElementById('file').files[0];
-		        alert($('#file').val());
+		       // alert($('#file').val());
 		        var formData=new FormData();
 		        formData.append('file', formFile);
-		       	
 				 $.ajax({
 					url : "/user/json/faceDetect",
 					method : "POST" ,
@@ -462,17 +462,21 @@
 					contentType : false,
 					data : formData,
 					success : function(result) {
-						alert("success");
-						if(result == true){
-							
+						//alert("success");
+						//alert(result.face);
+						$('#userImage').val(result.face);
+						//alert($('#userImage').val());
+						if(result.flag == '0'){
+							swal("인증 실패 되었습니다.", {
+							      icon: "warning"
+							  });
+							$('#blah').attr('src','/resources/images/userimages/'+result.face);
 						}else{
-							if($("#userImage").val() == ''){
-								$('#blah').attr('src', 'http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive');
-							}else{
-								$('#blah').attr('src','/resources/images/'+$('#userImage').val());
-							}
+						
+						 swal("인증되었습니다.", {
+						      icon: "success"
+						  });
 						}
-							
 					}
 				 });
 			 }
@@ -505,12 +509,12 @@
 		<div class="col-sm-12">
 			
 			<div class="profile-userpic ">
-				<input type="hidden" id="userImage" value="${user.userImage }"/>
+				<input type="hidden" id="userImage" name="userImage" value="${user.userImage}"/>
 				<%-- <c:if test="${empty user.userImage}">
 					<img id="blah" style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive">
 				</c:if> --%>
 				<%-- <c:if test="${!empty user.userImage}"> --%>
-					<img style="width:150px; height:150px; alt="" src="/resources/images/userimages/user05=KakaoTalk_20171217_173604783.jpg" class="img-responsive">
+					<img id="blah" style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive">
 				<%-- </c:if> --%>
 				<label class="file_input">
 			        <input type="file" id="file" class="file">

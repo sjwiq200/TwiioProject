@@ -278,33 +278,7 @@
 			
 		
 		//////////////////////////////////유저정보보기////////////////////////////////////
-		$(function() {
-			
-			$("td:nth-child(3)").bind("click",function() {
-				var userNo = $($('input[name=userss]')[$('td:nth-child(3)').index(this)] ).val(); 
-				 $.ajax({
-		    				url:"/user/json/getUser?userNo="+userNo,
-		    				method:"GET",	    					
-		    				dataType:"json",
-		    				headers : {
-									"Accept" : "application/json",
-									"Content-Type" : "application/json"
-								},
-		    				success:function(JSONData){
-		    					
-		    				/* var result = '<jsp:include page="/user/getUserProfile2.jsp" flush="true">'+
-		    							 	'<jsp:param name="'+userNo+'" value="'+JSONData.userNo+'"/>'+
-		    								
-		    							'</jsp:include>'; */
-										
-			    						
-			    				
-			    				 $('#info').html(result);
-			    				 $('#getUserProfile').modal('show'); 
-		    					}
-				    });
-			});
-		 });
+		 
 	
 	</script>
 	
@@ -404,7 +378,7 @@
  	</div>
  	</div>
  	
- 	<div class="modal fade" id="getUserProfile" role="dialog">
+ 	<div class="modal fade" id="getUserProfile2" role="dialog">
 		<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 			<div class="modal-content">

@@ -140,6 +140,12 @@ public class CommonDaoImpl implements CommonDao {
 	public List<Friend> listFriendOnly(int userNo) throws Exception {
 		return sqlSession.selectList("CommonMapper.listFriendOnly",userNo);
 	}
+
+	@Override
+	public Report updateReport(int reportNo) throws Exception {
+			sqlSession.update("CommonMapper.updateReport", reportNo);
+		return sqlSession.selectOne("CommonMapper.getReport",reportNo) ;
+	}
 	
 
 }
