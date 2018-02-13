@@ -20,6 +20,7 @@
 		<result property="targetCommunityNo" 	column="target_community_no" 	jdbcType="NUMERIC"/>
 		<result property="targetUserName" 		column="target_user_name" 		jdbcType="VARCHAR"/>
 		<result property="targetUserId" 		column="target_user_id" 		jdbcType="VARCHAR"/>
+		<result property="reportState" 			column="report_state" 			jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="friendSelectMap" type="friend">
@@ -271,4 +272,14 @@
 					</where>
 				) countTable						
 	 </select>
+	 
+	 <update id="updateReport" parameterType="int">
+		UPDATE REPORT
+	   	<set>
+			report_state 	= 'Y'
+	   	</set>
+	   	WHERE REPORT = #{reportNo}
+	</update>
+	 
+	 
 </mapper>

@@ -14,6 +14,8 @@
 <!-- 참조 : http://getbootstrap.com/css/   참조 -->
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
+
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
@@ -28,10 +30,58 @@
 
 
 <style>
-
-body {
-    padding-top : 50px;
+html, body {
+	width: 100%;
+	height: 100%;
+	background-image:url("/resources/images/dailyPlanContent/friendBack.jpg");
+	background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: top;  
+    background-size: 1168px 380px;
+    border-radius: 10%;
 }
+
+#header .inner {
+	margin-top: 150px;
+	text-align: center;
+	width: 100%;
+	height: 100%;
+}
+
+#thumbnailMainBox {
+	background: linear-gradient(-45deg, #56B1BF, transparent),
+		linear-gradient(45deg, #D73A31, transparent);
+	border-radius: 8px;
+	border-color:#000000;
+	border-width:10px;
+	display: inline-block;
+	padding: 1px;
+	text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+	background: #fff;
+	display: inline-block;
+	border-radius: 6px;
+}
+
+.textArea {
+	 margin-top: 80px;
+	 border-bottom: solid 1px #000000; 
+}
+
+.thumbnailClass{
+	margin-top: 20px;
+	margin-bottom: 20px;
+	text-align: right;
+}
+
+
+.mainBackImage {
+	background-image: url("/resources/images/dailyPlanContent/daum_gallery_photo_20160913155706.jpg");
+	opacity: 0.3;
+}
+
 
 </style>
 
@@ -100,73 +150,73 @@ body {
 		<jsp:include page="/layout/toolbar.jsp" />
 
 	<form>
-		
+
 		<div class="container">
-			
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			<div align="center">
-			<h2> 공유된 플랜 보기</h2>
-			</div>
-			<div>&nbsp;</div>
-			<div>&nbsp;</div>
-			
-			
-
-			<c:set var="i" value="0" />
-				  	<c:forEach var="mainPlan" items="${list}">
-				  		<c:set var="i" value="${ i+1 }" />
-
-				<div class="col">
-				
-					<div class="col-md-6">
-						<div class="thumbnail">
-						
-							<img
-								src="/resources/images/thumbnail_plan/main_thumbnail4.jpg"
-								style="width: 300px; " />
-							
-							
-							<div class="caption">
-
-								<input type="hidden" name="mainPlanNo"
-									value="${mainPlan.mainPlanNo}" />
-								
-								<div>[${ i }]</div>
-								<div>플랜번호 : ${mainPlan.mainPlanNo}</div>
-								<div>유저번호 : ${mainPlan.user.userNo}</div>
-								<div>출발일 : ${mainPlan.departureDate }</div>
-								<div>도착일 : ${mainPlan.arrivalDate}</div>
-								<div>국가명 : ${mainPlan.country}</div>
-								<div>도시명 : ${mainPlan.city}</div>
-								<div>플랜제목 : ${mainPlan.planTitle}</div>
-								<div>섬네일이미지 : ${mainPlan.mainThumbnail}</div>
-
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="update"></span>수정
-								</button>
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="delete"></span>삭제
-								</button>
-
-								<button type="button" class="btn btn-default">
-									<span class="glyphicon glyphicon-ok" aria-hidden="true"
-										id="submit"></span>선택
-								</button>
-
-							</div>
-						</div>
-					</div>
+			<header id="header" class="alt">
+			<div class="row">
+				<div class="col-xs-10 inner">
+					<p style="font-family: Pacifico; color:white;" align="center">TWIIBOOK with
+						your friend,</p>
 				</div>
+			</div>
+			<p
+				style="font-family: TYPO_JEONGJOL; color:white; font-size: 1.5em; margin-bottom: 70px;"
+				align="center">친구와 함께라면 어디든 좋아</p>
+			</header>
 
-			</c:forEach>
-			
-			
-    		<!---------- ShareWithFriend Dialog <START>------------->
+			<div class="row" style="font-family: 'TYPO_JEONGJOL';">
+				<div class="col-xs-12 inner" id="thumbnailMainBox">
+					<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
+					<div class="col-xs-12 inner" id="thumbnailMainThumbBox">
+
+						<c:set var="i" value="0" />
+						<c:forEach var="mainPlan" items="${list}">
+							<c:set var="i" value="${ i+1 }" />
+
+							<div class="col">
+
+								<div class="col-md-12">
+									<div class="thumbnail">
+											<div class="caption" >
+
+										<div class="caption">
+										 <div class="row">
+										 	<div class="col-md-5 thumbnailClass">
+										 		<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="margin-left:80px;width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+											</div>
+											<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" />
+											<div class="col-md-6 textArea">
+													<div class="col-md-8 select">
+													<h2> ${mainPlan.planTitle}</h2>
+													<p> ${mainPlan.departureDate } ~ ${mainPlan.arrivalDate}</p>
+													<p><Strong>국가</Strong> ${mainPlan.country}</p>
+													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
+													</div>
+													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
+														<button type="button" class="btn btn-default">공유</button>
+														<button type="button" class="btn btn-default">수정</button>
+														<button type="button" class="btn btn-default">삭제</button>
+														<button type="button" class="btn btn-default">선택</button>
+														</div>
+												</div>
+											<div class="col-md-1" id="buttonBox" align="right">
+
+											</div>
+										</div>
+									</div>
+								</div>
+								
+							</div>
+					</div>
+					</c:forEach>
+
+				</div>
+				<div align="right" class="col-xs-1">&nbsp;</div>
+			</div>
+			<!-- 섬네일 전체 박스 부분 -->
+		</div>
+
+		<!---------- ShareWithFriend Dialog <START>------------->
 
 		<div class="modal fade" id="shareWithFriend" role="dialog">
 			<div class="modal-dialog modal-md">

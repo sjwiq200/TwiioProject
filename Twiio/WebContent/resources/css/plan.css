@@ -10,16 +10,9 @@
 @font-face {font-family:'JEJUMYEONGJO'; src: url('images/JEJUMYEONGJO.TTF');} 
 
 
-/* body, input, select, textarea {
-	font-family: "Source Sans Pro", Helvetica, sans-serif;
-	font-size: 10pt;
-	font-weight: 600;
-	line-height: 1.65;
-} */
-
 
 #header .inner {
-	font-size: 3.5em;
+	font-size: 2.8em;
 	padding: 0 0.5em 0.25em 0.5em;
 	font-family: "Pacifico", cursive;
 	text-transform: none;
@@ -30,12 +23,6 @@
 .inner h1{
 	font-size: 2em;
 	border-bottom: solid 0px #ffffff;
-}
-
-@font-face {
-    font-family:'TYPO_JEONGJOL';
-    src: url('images/TYPO_JEONGJOL.TTF') format('truetype');
-    font-style: normal;
 }
 
 .material-button-anim {

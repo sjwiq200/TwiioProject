@@ -36,8 +36,12 @@ public interface CommonService
   
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
+  public Report updateReport(int reportNo) throws Exception;
+  
   ///////////////////////잘모르겠습니다.///////////////////////////
   public void searchKeyword() throws Exception;
   
   public void listSearch() throws Exception;
+  
+  
 }

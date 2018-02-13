@@ -112,7 +112,7 @@
     	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
     	  					var info =
-    	  	    				'<div class="row">'+
+    	  	    				'<input type="hidden" id="delete" name="delete" val="'+JSONData.targetUserNo+'"><div class="row">'+
     	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
     	  	    				'<br/><div class="row">'+
     	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
@@ -159,8 +159,46 @@
   					}
   			}); 
   		}); */
+  		
+  		
   		});
 
+      
+      $(function() {
+	  		$(  "#btnSubmit" ).on("click" , function() {
+	  			alert("뀨 시작");
+	  			var userNo = $("#delete").val();
+	  			var reportNo = $("#reportNo").val();
+	  		$.ajax({
+	  			url : "user/json/deleteUser",
+	  			method : "POST" ,
+	  			dataType : "json" ,
+	  			contentType:"application/json;charset=UTF-8",
+	  			data : JSON.stringify({
+	  				"userNo":userNo
+	  			}),
+	  			success : function(JSONData) {			
+	  					alert("뀨 성공");
+	  					
+	  					$.ajax({
+	  		                type: "get",
+	  		                url: "common/json/updateReport?reportNo="+reportNo,
+	  		                success: function (data) {
+	  		                	
+	  		                	alert("뀨규 성공");
+	  		                	
+	  		                	location.reload();
+
+	  		                }
+	  		            });
+	  					
+	  			 }
+	  		});
+	  			
+	  			
+	  		});
+	  	});
+		
    
    </script>
    
@@ -238,7 +276,7 @@
          <c:set var="i" value="${ i+1 }" />
          <tr class="ct_list_pop">
          	
-     	   <input type="hidden" name="reportNo" value="${report.reportNo}"/>
+     	   <input type="hidden" name="reportNo" id="reportNo" value="${report.reportNo}"/>
      	   <input type="hidden" name="reportlist" value="${report}"/>
            <td align="left">${report.userName}</td>
            <td align="left">
@@ -257,7 +295,7 @@
            	 댓글
            </c:if>
            </td>
-           <td align="left"></td>
+           <td align="left">${report.reportState}</td>
 
          </tr>
           </c:forEach>
@@ -278,7 +316,7 @@
     </div>
     
     <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-sm">
+		<div class="modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">

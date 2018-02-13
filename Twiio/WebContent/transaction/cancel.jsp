@@ -1,5 +1,5 @@
-<%@ page contentType="text/html; charset=UTF-8" %>
-<%@ page pageEncoding="UTF-8"%>
+<%@ page contentType="text/html; charset=EUC-KR" %>
+<%@ page pageEncoding="EUC-KR"%>
 
 
 <!DOCTYPE html>
@@ -7,9 +7,9 @@
 <html lang="ko">
 	
 <head>
-	<meta charset="UTF-8">
+	<meta charset="EUC-KR">
 	
-	<!-- ì°¸ì¡° : http://getbootstrap.com/css/   ì°¸ì¡° -->
+	<!-- ÂüÁ¶ : http://getbootstrap.com/css/   ÂüÁ¶ -->
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	
 	<!--  ///////////////////////// Firebase Eamil Auth ////////////////////////// -->
@@ -23,6 +23,12 @@
 	  
 	   <link rel="stylesheet" href="main.css">
 	  
+	  <!-- Import and configure the Firebase SDK -->
+	  <!-- These scripts are made available when the app is served or deployed on Firebase Hosting -->
+	  <!-- If you do not serve/host your project using Firebase Hosting see https://firebase.google.com/docs/web/setup -->
+	  <script src="/__/firebase/4.0.0/firebase-app.js"></script>
+	  <script src="/__/firebase/4.0.0/firebase-auth.js"></script>
+	  <script src="/__/firebase/init.js"></script>		
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
@@ -34,64 +40,21 @@
  	<link rel="stylesheet" href="/resources/demos/style.css">
   	<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
   	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-	<!-- ---------font ------------ -->
-  	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" /> 
-  	
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
        body > div.container{
-       
         	border: 3px solid #D6CDB7;
             margin-top: 10px;
         }
-         body{
-        	background:  #f4f4f4;	
-        }
-        h1{
-        	color: rgba(215, 58, 49, 0.7);
-        	font-family: 'Pacifico', 'cursive';
-        	font-size: 45px;
-        }
-        .btn {	
-			letter-spacing: 1px;
-			text-decoration: none;
-			background: none;
-			-moz-user-select: none;
-			background-image: none;
-			border: 1px solid transparent;
-			border-radius: 0;
-			cursor: pointer;
-			display: inline-block;
-			margin-bottom: 0;
-			vertical-align: middle;
-			white-space: nowrap;
-			font-size: 14px;
-			line-height: 20px;
-			font-weight: 700;
-			text-transform: uppercase;
-			border: 2px solid;
-			padding: 8px 20px;	
-			margin-top: 10px;
-		}		
-		.btn.btn-primary:hover, .btn.btn-primary:active {	
-			color: #FFF;
-			background: #08708A;
-			border-color: #08708A;
-		}
-		
-		.btn.btn-primary {			
-			background: #f4f4f4;
-			color: #08708A;
-			border-color: #08708A;
-		}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-		//============= "ê°€ì…"  Event ì—°ê²° =============
+		//============= "°¡ÀÔ"  Event ¿¬°á =============
 		 $(function() {
-			//==> DOM Object GET 3ê°€ì§€ ë°©ë²• ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			//==> DOM Object GET 3°¡Áö ¹æ¹ı ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "button.btn.btn-primary" ).on("click" , function() {
 				history.go(-1);
 			});
@@ -112,12 +75,12 @@
 
 	
 
-	<!--  í™”ë©´êµ¬ì„± div Start /////////////////////////////////////-->
-	<!-- <div class="container">
+	<!--  È­¸é±¸¼º div Start /////////////////////////////////////-->
+	<div class="container">
 	
-		<h1 class="text-center">ê²°ì œê°€ ì·¨ì†Œë˜ì—ˆìŠµë‹ˆë‹¤</h1>
+		<h1 class="bg-primary text-center">°áÁ¦°¡ Ãë¼ÒµÇ¾ú½À´Ï´Ù</h1>
 		
-		form Start /////////////////////////////////////
+		<!-- form Start /////////////////////////////////////-->
 		
 		
 		  
@@ -129,50 +92,16 @@
 		  
 		  <div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		    disabled="disabled" 
-		      <button type="button" class="btn btn-primary"  >í™•ì¸</button>
-			  
-		    </div>
-		  </div>
-		
-		form Start /////////////////////////////////////
-		
- 	</div> -->
-	<!--  í™”ë©´êµ¬ì„± div end /////////////////////////////////////-->
-	<div class="container-fluid">
-	
-		
-		<h1>Daily Tour</h1>
-		
-		
-		
-		<div class="jumbotron col-md-8 col-md-offset-2">
-		<!-- form Start /////////////////////////////////////-->
-		
-			
-		 <!-- <div class="row">
-		 <div class="col-md-12"> -->			  
-			  
-			  <div class="form-group">
-			   <div class="col-sm-offset-4  col-sm-4 text-center">
-			    ê²°ì œê°€ ì·¨ì†Œ ë˜ì—ˆìŠµë‹ˆë‹¤.
-			    </div>
-			  </div>
-			  
-			  <div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		    <!-- disabled="disabled"  -->
-		      <button type="button" class="btn btn-primary"  >í™•ì¸</button>
+		      <button type="button" class="btn btn-primary"  >È®ÀÎ</button>
 			  
 		    </div>
 		  </div>
-
 		
-		</div>
 		<!-- form Start /////////////////////////////////////-->
-				   
-		    
-	
+		
+ 	</div>
+	<!--  È­¸é±¸¼º div end /////////////////////////////////////-->
 	
 </body>
 

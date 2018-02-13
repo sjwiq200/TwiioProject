@@ -222,4 +222,16 @@ public class CommonRestController {
 		System.out.println("report2 : "+ report2);
 		return report2;
 	}
+	
+	@RequestMapping(value = "json/updateReport/{reportNo}" )
+	public Report updateReport(@PathVariable int reportNo) throws Exception {
+		
+		System.out.println("/common/updateReport");
+		
+		Report report = commonService.updateReport(reportNo);
+		
+		System.out.println("report : "+ report);
+		
+		return report;
+	}
 }

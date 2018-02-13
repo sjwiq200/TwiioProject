@@ -139,7 +139,7 @@
 			    margin: 20px 10px;
 			}
 			table.type10 thead th {
-			    width: 150px;
+			    max-width: 150px;
 			    padding: 10px;
 			    font-weight: bold;
 			    vertical-align: top;
@@ -149,12 +149,12 @@
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 tbody th {
-			    width: 150px;
+			    max-width: 150px;
 			    padding: 10px;
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 td {
-			    width: 350px;
+			    max-width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
 			    border: 1px solid #60b6c3;
@@ -214,7 +214,7 @@
 									image[i]= '/resources/images/no_img.png';
 								}	
 									list += '<tr><td align="center" valign="middle" id="img"><img src="'+image[i]+
-									'"  style="width: 250px; height: 200px;"/></td>'+
+									'"  style="max-width: 250px; max-height: 200px;"/></td>'+
 									'<td align="center" valign="middle" id="con" style="padding-top : 50px; font-family:\'JEJUGOTHIC\' !important; "><a href="#"><input type="hidden" id="info" value="'+url[i]+
 									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									

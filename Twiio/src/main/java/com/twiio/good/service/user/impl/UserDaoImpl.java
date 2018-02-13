@@ -72,7 +72,12 @@ import com.twiio.good.service.user.UserDao;
 		public List<User> listUser(Search search) throws Exception {
 			return sqlSession.selectList("UserMapper.listUser", search);
 		}
-	
+		
+		@Override
+		public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception {
+			return sqlSession.selectList("UserMapper.listUserForSharedMainPlan", mainPlanNo);
+		}
+		
 		@Override
 		public void updateUser(User user) throws Exception {
 			sqlSession.update("UserMapper.updateUser", user);
@@ -197,6 +202,6 @@ import com.twiio.good.service.user.UserDao;
  
 			
 		}
-
+		
 	
 	}

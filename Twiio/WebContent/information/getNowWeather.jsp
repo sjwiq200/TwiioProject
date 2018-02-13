@@ -137,7 +137,7 @@
 				aria-label: "Right Align";
 			}
 			.jumbotron {
-	        	/* border: 2px solid rgba(215, 58, 49, 0.8); */
+	        	border: 2px solid rgba(215, 58, 49, 0.8);
 	       }
 </style>
 

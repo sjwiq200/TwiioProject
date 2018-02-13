@@ -14,6 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -86,6 +87,70 @@ public class PlanRestController {
 		
 	}
 	
+	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.GET)
+	public void selectCountryNew(@RequestParam int dailyPlanNo ,@RequestParam String countryName) throws Exception {
+		
+		System.out.println("RestController : json/selectCountryNew <START>");
+		
+		String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		String country ;
+		
+		if(dailyPlan.getDailyCountry()==null) {
+			dailyPlan.setDailyCountry(countryKor);
+		} else {
+			country = dailyPlan.getDailyCountry();
+			country = country+","+countryKor;
+			dailyPlan.setDailyCountry(country);
+		}
+		dailyPlanService.updateDailyPlan(dailyPlan);
+		
+		System.out.println("RestController : json/selectCountryNew <END>");
+		
+	}
+	
+	@RequestMapping(value = "json/resetCountry", method = RequestMethod.GET)
+	public void resetCountry(@RequestParam int dailyPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/resetCountry <START>");
+		
+		//String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+//		String country ;
+//		
+//		if(dailyPlan.getDailyCountry()==null) {
+//			dailyPlan.setDailyCountry(countryKor);
+//		} else {
+//			country = dailyPlan.getDailyCountry();
+//			country = country+","+countryKor;
+//			dailyPlan.setDailyCountry(country);
+//		}
+		dailyPlan.setDailyCountry(null);
+		dailyPlanService.updateDailyPlan(dailyPlan);
+		
+		System.out.println("RestController : json/resetCountry <END>");
+		
+	}
+	
+	
+	@RequestMapping(value = "json/getMainCountry/{mainPlanNo}", method = RequestMethod.GET)
+	public List<String> getMainCountry(@PathVariable int mainPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/getMainCountry <START>");
+		
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
+		String[] country = mainPlan.getCountry().split(",");
+		List<String> countryList = new ArrayList<String>();
+		for(int i=0; i<country.length; i++) {
+			countryList.add(country[i]);
+		}
+		//String countryList = mainPlan.getCountry();
+		System.out.println("countryList :: "+countryList);
+		//model.addAttribute("countryList",countryList);
+		return countryList;
+		
+	}
+	
 	@RequestMapping(value = "json/listFriendRec", produces = "application/json; charset=utf8")
 	public Map<String,List> listFriendRec(
 			@RequestParam int dailyPlanNo,HttpSession session
@@ -94,32 +159,31 @@ public class PlanRestController {
 		System.out.println("RestController : listFriendRec <START>");
 		System.out.println("dailyPlanNo : " + dailyPlanNo);
 		
-		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);//dailyPlanNo를 통해 dailyPlan전부 가져온다.
-		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);//해당 dailyPlan을 통해 자신의 dailyPlan과 같은 list를 가져온다.
+		DailyPlan myDailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		List<DailyPlan> list = dailyPlanService.listFriendRec(myDailyPlan);
 		List<User> userListUndone = new ArrayList<User>();
 		
 		User myUserInfo = (User)session.getAttribute("user");
 		int myUserNo = myUserInfo.getUserNo();
 		
 		
-		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); //  본인 친구 목록 가져옴
-		for(DailyPlan dailyPlan:list) {//다른 유저 데일리플랜 for문 돌린다.
-			int userNo = dailyPlan.getUser().getUserNo(); // 자신의 일정과 맞는 유저 NO
-			for(Friend friendCheck : listFriend) {//친구 리스트 만큼 For문 돌린다.
+		List<Friend> listFriend = commonService.listFriendOnly(myUserNo); 
+		for(DailyPlan dailyPlan:list) {
+			int userNo = dailyPlan.getUser().getUserNo(); 
+			for(Friend friendCheck : listFriend) {
 				if(friendCheck.getFriendNo()==userNo) {
-					System.out.println("debug : 이미 친구임");
 					userNo=0;
 				}
 			}
 			if(userNo!=0) {
-			User user = userService.getUserInNo(userNo);//친구 정보
+			User user = userService.getUserInNo(userNo);
 			
 			userListUndone.add(user);
 			}
 		}
 	
 		System.out.println(userListUndone);
-		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); //리스트에서 중복된 거 제외시키기
+		List<User> userList = new ArrayList<User>(new HashSet<User>(userListUndone)); 
 		Map<String, List> userInfo = new HashMap();
 		userInfo.put("userList", userList);
 		return userInfo;
@@ -137,15 +201,11 @@ public class PlanRestController {
 		System.out.println("mainPlanNoString : " + mainPlanNoString);
 		
 		for(Friend friendCheck : listFriend) {
-			System.out.println("들어옴");
 			User friend = userService.getUserInNo(friendCheck.getFriendNo());
-			System.out.println("들어옴 1 " + friend);
-			if(friend.getMainPlanNoShared() != null){//공유한 플랜이 있다, 검사해야 한다.
-				System.out.println("들어옴 2 " + friend.getMainPlanNoShared());
+			if(friend.getMainPlanNoShared() != null){
 				String[] sharedPlanNo = friend.getMainPlanNoShared().split(",");
 				int i = 0;
 				for(String sharedPlanNoCheck : sharedPlanNo) {
-					System.out.println("들어옴 3 " + sharedPlanNoCheck);
 					if(sharedPlanNoCheck.equals(mainPlanNoString)) {
 						i=1;
 						break;
@@ -200,7 +260,7 @@ public class PlanRestController {
 		standardCountryEnc = URLDecoder.decode(standardCountryEnc,"UTF-8");
 		compareCountryEnc = URLDecoder.decode(compareCountryEnc,"UTF-8");
 		
-		String contentText = "<p>환율 정보</p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
+		String contentText = "<p>CURRENCY</p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
 				+"<p>"+resultCurrency+"  "+compareCountryEnc+"</p>";
 		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
 		PlanContent planContent = new PlanContent();
@@ -298,15 +358,15 @@ public class PlanRestController {
 		
 		List<String> mainResultEnd = new ArrayList<String>();
 		List<String> detailResultEnd = new ArrayList<String>();
-		mainResultEnd.add("<p></p><img src=\"/resources/images/icon/lines/line12.png\" id=\"detailResultLine\" width=\"200px\">");
+//		mainResultEnd.add("<p></p><img src=\"/resources/images/icon/lines/line12.png\" id=\"detailResultLine\" width=\"200px\">");
 		for(String mainResultFinal : mainResult) {
 			System.out.println("mainResult : " + mainResultFinal);
 			mainResultEnd.add("<strong>"+mainResultFinal+"</strong>");
 		}
 		
 		for(String detailResultFinal : detailResult) {
-			if((detailResultFinal.indexOf("이동수단") != -1)) {
-				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
+			if((detailResultFinal.indexOf("이동") != -1)) {
+//				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
 			}
 			detailResultEnd.add(detailResultFinal);
 			
@@ -327,14 +387,16 @@ public class PlanRestController {
 		
 		System.out.println("RestController : sharePlan <START>");
 		
-		System.out.println("debug : 친구 번호 " +userNo +" : "+ mainPlanNo);
 		
 		User user = userService.getUserInNo(userNo);
 		String mainPlanNoBefore = user.getMainPlanNoShared();
+		System.out.println("##debug : " + mainPlanNoBefore);
 		if(mainPlanNoBefore == null) {
 			userService.updateSharedPlan(userNo,String.valueOf(mainPlanNo));
-			}else {
-			userService.updateSharedPlan(userNo,(mainPlanNoBefore+","+mainPlanNo));
+			
+		}else {
+			String resultMainPlanNoShared = mainPlanNoBefore + "," + mainPlanNo;
+			userService.updateSharedPlan(userNo,resultMainPlanNoShared);
 		}
 		System.out.println("RestController : sharePlan <END>");
 		

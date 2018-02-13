@@ -4,9 +4,6 @@
 @import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
 @import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
-@import url(font-awesome.min.css);
-@import url(http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
-@import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
 @font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
 @font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
 @font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
@@ -14,9 +11,5 @@
 @font-face {font-family:'TYPO_JEONGJOL'; src: url('images/TYPO_JEONGJOL.TTF');} 
 @font-face {font-family:'JEJUGOTHIC'; src: url('images/JEJUGOTHIC.TTF');} 
 @font-face {font-family:'JEJUMYEONGJO'; src: url('images/JEJUMYEONGJO.TTF');} 
-@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
-@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
-@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
-@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
 
 
