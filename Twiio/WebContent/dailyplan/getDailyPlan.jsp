@@ -317,7 +317,7 @@ body::-webkit-scrollbar-thumb {
 <script type="text/javascript"
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
 
-<!-- 스크립트 -->
+<!-- 사이드 바스크립트 -->
 <script type="text/javascript">
 		
 			$(document).ready(function(){
@@ -495,6 +495,7 @@ body::-webkit-scrollbar-thumb {
 	 }
 	 
 	 </script>
+	 
 <script>
 	$(function() {
 		$("#addRouteButton").on("click",function() {
@@ -507,11 +508,13 @@ body::-webkit-scrollbar-thumb {
 		$("#customizedPlanInfo").on("click",function() {
 			
 			var dailyPlanNo = $("#idDailyPlanNo").val();
+			/* 
 			var dailyCity=$("#idDailyCity").val();
-			var dailyDate=$("#idDailyDate").val();
-			dailyCity = encodeURI(encodeURIComponent(dailyCity));
-			var url = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity
-			 												+"&dailyDate="+dailyDate+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
+			var dailyDate=$("#idDailyDate").val(); 
+			*/
+			
+			/* dailyCity = encodeURI(encodeURIComponent(dailyCity)); */
+			var url = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
 			$(location).attr('href', url); 
 		});
 	});
@@ -583,6 +586,7 @@ $(function() {
 </script>
 
 <script>
+
 		function openNav() {
 			document.getElementById("mySidenav").style.width = "280px";
 			document.getElementById("main").style.marginLeft = "280px";
@@ -736,11 +740,11 @@ $(function() {
 				<strong>Contents</strong>
 			</h2>
 			<br />
-			<br /> <img src="/resources/images/dailyPlanContent/${dailyPlan.user.profileImage}"
-				width="60px" style="border-radius: 5%;">
+			<br /> <img src="/resources/images/userimages/${dailyPlan.user.userImage}"
+				width="80px" height="80px" style="border-radius: 5%; overflow:hidden;">
 			<c:forEach var="listUser" items="${listForMainPlanShared}">
-				<img src="/resources/images/userImages/${listUser.profileImage}"
-					width="60px" style="border-radius: 5%;">
+				<img src="/resources/images/userimages/${listUser.userImage}"
+					width="80px" height="80px" style="border-radius: 5%;">
 			</c:forEach>
 			<h5>
 				Writer : ${dailyPlan.user.userName}
@@ -967,7 +971,7 @@ $(function() {
 											${planContent.mapWebsite}</p>
 									</c:if>
 
-									<c:if test="${!empty planContent.mapType}">
+								<c:if test="${!empty planContent.mapType}">
 										<p class="contents"
 											style="font-size: 0.9em !important; font-color: #C2C2C2 !important;">TYPE
 											: ${planContent.mapType}</p>
