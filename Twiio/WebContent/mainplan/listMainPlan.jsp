@@ -98,7 +98,7 @@ html, body {
 .thumbnailClass{
 	margin-top: 20px;
 	margin-bottom: 20px;
-	text-align: right;
+	text-align: center;
 }
 
 #buttonBox {
@@ -145,7 +145,10 @@ html, body {
 		  border-radius: 50% !important;
 		  border: 1px solid;
 		}
-		
+
+#thumbnail:hover {
+	background-color:rgba(192,192,192,0.2);
+}
 
 </style>
 
@@ -184,7 +187,6 @@ html, body {
 				var index = $("button:contains('선택')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/getDailyPlanFromMain?mainPlanNo="+mainPlanNo;
-				/* var url = "/dailyplan/getDailyPlan?mainPlanNo="+mainPlanNo+"&dailyPlanNo="+dailyPlanNo; */
 				$(location).attr('href', url);
 			});
 	 })
@@ -266,6 +268,7 @@ html, body {
 	    $("#sharePlan"+i).remove(); 
 	}
 	
+	
 </script>
 
 </head>
@@ -310,18 +313,20 @@ html, body {
 										<div class="caption" >
 										
 										 <div class="row">
-											   <div class="col-md-5 thumbnailClass">
-										<%-- 	   ${mainPlan.mainThumbnail} --%>
-												<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="margin-left:80px;width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+										 	<div class="col-md-1" id="buttonBox"></div>
+											   <div class="col-md-4 thumbnailClass select" style="width: 320px; height: 250px; overflow: hidden">
+												<img src="/resources/images/thumbnail_plan/${mainPlan.mainThumbnail}" style="width: 300px; height: 250px; display: block;border-radius: 2%;" class="img-responsive" alt="Responsive image"/> 
 											   </div>
 											   
 												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
 												<div class="col-md-6 textArea">
 													<div class="col-md-8 select">
 													<h2> ${mainPlan.planTitle}</h2>
+													<div style="font-family:'JEJUGOTHIC'">
 													<p> ${mainPlan.departureDate } ~ ${mainPlan.arrivalDate}</p>
-													<p><Strong>국가</Strong> ${mainPlan.country}</p>
-													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
+													<p><Strong>나라</Strong> ${mainPlan.country}</p>
+													<p><Strong>도시</Strong> ${mainPlan.city}</p>
+													</div>
 													</div>
 													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
 														<button type="button" class="btn btn-default">공유</button><br/>
