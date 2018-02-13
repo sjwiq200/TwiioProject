@@ -74,6 +74,39 @@ public class UserRestController {
 		return "redirect:/user/loginView.jsp";
 	}
 	
+	@RequestMapping( value="json/login", method=RequestMethod.POST )
+	public Boolean login(@RequestBody String str , HttpSession session ) throws Exception{
+		
+		System.out.println("/user/json/login : POST");
+		
+		String[] loginInfo = str.split("&");
+		
+		String[] id = loginInfo[3].split("=");
+		String[] pwd = loginInfo[4].split("=");
+		
+		User user = new User();
+		user.setUserId(id[1]);
+		user.setPassword(pwd[1]);
+		
+		//Business Logic
+		User dbUser=userService.getUser(user.getUserId());
+		
+		if(dbUser==null) {
+			return false;
+		}
+		
+		if(dbUser.getUserLeave()!=null) {
+			
+			return false;
+		}
+		
+		if( user.getPassword().equals(dbUser.getPassword())){
+			session.setAttribute("user", dbUser);
+		}
+		
+		return true;
+	}
+	
 	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )
 	public User getUserNo( @PathVariable int userNo ) throws Exception{
 		
@@ -277,16 +310,20 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
-	public String deleteUser(@ModelAttribute User user) throws Exception{
+	public Boolean deleteUser(@ RequestBody User  user) throws Exception{
 		
 		System.out.println("/user/json/deleteUser");
 		
 		User user2 = userService.getUserInNo(user.getUserNo());
 		
+		if(user2.getUserLeave().equals("Y")) {
+			
+			return false;
+		}else {
+		
 		userService.deleteUser(user2);
 		
-		System.out.println("결과"+user2);
-		return "성공했어요";
-		
+		return true;
+		}
 	}
 }

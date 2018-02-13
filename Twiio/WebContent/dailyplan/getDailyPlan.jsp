@@ -429,7 +429,7 @@ body::-webkit-scrollbar-thumb {
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).remove(); 
+	    $("#addToMyFriendList"+i).attr('disabled','true'); 
 	}
 	
 

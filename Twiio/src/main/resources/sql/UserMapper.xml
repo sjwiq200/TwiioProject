@@ -133,10 +133,10 @@
 	 
 	 
 	 <!-- SQL : UPDATE -->
-	 <update	id="deleteUser"	parameterType="user" >
+	 <update	id="deleteUser"	parameterType="int" >
 	   	UPDATE users
 	   	<set>	   		
-			resign				=	#{userLeave}
+			resign				=	'Y'
 	   	</set>
 	   	WHERE user_no = #{userNo}
 	 </update>
