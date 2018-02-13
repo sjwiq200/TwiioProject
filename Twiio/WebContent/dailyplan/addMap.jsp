@@ -311,6 +311,12 @@
 
 			});
 		});
+		
+		$("#addr1").keydown(function(e) {
+			if (e.keyCode == 13) {
+				codeAddress(event);
+			}
+		});
 
 </script>
 <body>
