@@ -1019,13 +1019,13 @@ $(function() {
 								
 								<!--  채팅 일정 픽스 사진  -->
 								<c:if test="${!empty planContent.mapUrl}">
-									<c:if test="${!empty planContent.mapUrl}">
-										<div class="col-xs-6" align="center">
+										<div class="col-xs-12" align="center" style="margin-bottom:20px;">
+										<h3><img src="/resources/images/icon/plan/promise.png" width="45px">약속정보 </h3> </div>
+										<div>
 										<p class="contents">
-											<img src="${planContent.mapImage}&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" name="mapImg" class="contentsDelete" width="300px" style="border-radius: 99%;"
+											<img src="${planContent.mapUrl}" name="mapImg" class="contentsDelete" width="300px" style="border-color:#56B1BF;border-style: solid;border-width: 3px;border-radius: 99%;"
 												onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
 										</div>
-									</c:if> 
 								</c:if>
 								
 								<c:if test="${!empty planContent.contentText}">

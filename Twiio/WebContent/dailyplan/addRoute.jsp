@@ -167,20 +167,21 @@ body {
 									if(flagRight){
 										resultNotYet += "<td>"
 										if(response.routes[0].legs[0].steps[i].transit == null){
-											detailedDisplay += '#';
+											detailedDisplay='';
+											detailedDisplay += '#'
 												
-											/* 	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
-											+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+											 +	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
+											/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 											+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
 											+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
 											+ '-----------'; */
 										}else{
-												detailedDisplay += '#';
+												detailedDisplay += '#'
 											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
-												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-												+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
+												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name;
+											/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
 												+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
 												+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
 												+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
@@ -201,28 +202,29 @@ body {
 											resultNotYet = resultNotYet+"<td>-></td>";
 										}
 									}else{
-										
-										resultNotYet += "<td>";
+										detailedDisplay='';
+										detailedDisplay += "<td>";
 											if(response.routes[0].legs[0].steps[i].transit == null){
-												detailedDisplay += '%';
-											/* 		' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
-												+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+												detailedDisplay += '%'
+											 	+	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
+												/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
 												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
 												+ '-----------'; */
 											}else{
-													detailedDisplay +='%';
+													detailedDisplay +='%'
 											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 													+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-													+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
+													+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
 													+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-													+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+												/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
 													+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
 													+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
 													+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
 													+'---------------'; */
 											}
-											resultNotYet +=detailedDisplay+"</td>";
+											var a = detailedDisplay+"</td>";
+											resultNotYet = a+resultNotYet;
 											detailedDisplay='';
 											if(i%3==2){
 												resultC +="<tr>"+resultNotYet+"</tr>";
