@@ -140,34 +140,108 @@ body {
 										+ ' //출발:'+ response.routes[0].legs[0].start_address
 										+ ' //도착:'+ response.routes[0].legs[0].end_address
 										+ ' //거리:'+ response.routes[0].legs[0].distance.text;
-
-								for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-									if(response.routes[0].legs[0].steps[i].transit == null){
-										detailedDisplay += ' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
-										+ '//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-										+ ' //거리:'+ response.routes[0].legs[0].steps[i].distance.text
-										+ ' //설명:'+ response.routes[0].legs[0].steps[i].instructions
-										+ '-----------';
-									}else{
-											detailedDisplay += '//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-											+ ' //거리:'+ response.routes[0].legs[0].steps[i].distance.text
-											+ ' //설명:'+ response.routes[0].legs[0].steps[i].instructions
-											+ ' //대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-											+ ' //출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-											+ ' //도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-											+ ' //차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
-											+ ' //차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
-											+'---------------';
+								
+										
+								var flagRight=true;
+								var resultA="<tr><td> Row1 cell1 </td><td> Row1 Cell3 </td><td> Row1 cell2 </td><td> Row1 Cell3 </td> <td> 화살표 아래 </td></tr>";
+								var resultB="<tr><td> 화살표 아래 </td><td> Row1 Cell3 </td><td> Row1 cell2 </td><td> Row1 Cell3 </td> <td> Row1 Cell3 </td></tr>";
+								
+						/* 		var result = "<table id='myTable'>"; */
+								//var count= 0 ; 
+						/* 		for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
+									if(count%3==0){
+										 result += "<tr>"
+										 				+"<td> Row1 cell 1</td><td> Row1 Cell3 </td><td> Row1 cell2 </td><td> Row1 Cell3 </td> <td> Row1 Cell3 </td>"
+										 			+"</tr>"
 									}
-									console.log('detailedDisplay : '
-											+ detailedDisplay);
-
+									count++;
+								}
+								result += "</table>";
+								
+								$("#resultMap").append(result); */
+								
+								var resultC="<tr>";
+								var middle="";
+								var resultNotYet= "";
+								for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
+									if(flagRight){
+										resultNotYet += "<td>"
+										if(response.routes[0].legs[0].steps[i].transit == null){
+											detailedDisplay += '#';
+												
+											/* 	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
+											+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+											+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
+											+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
+											+ '-----------'; */
+										}else{
+												detailedDisplay += '#';
+											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
+												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
+												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
+												+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+												+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
+												+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
+												+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
+												+'---------------'; */
+										}
+										resultNotYet +=detailedDisplay+"</td>";
+										detailedDisplay='';
+										
+										
+										//middle +="</td>"
+										if(i%3==2){
+											resultC +="<tr>"+resultNotYet+"</tr>";
+											flagRight=false;
+											$("#resultMap").append("<table id='myTable'>"+resultC+resultA+"</table>");
+											resultC = "";
+											resultNotYet="";
+										}else{
+											resultNotYet = resultNotYet+"<td>-></td>";
+										}
+									}else{
+										
+										resultNotYet += "<td>";
+											if(response.routes[0].legs[0].steps[i].transit == null){
+												detailedDisplay += '%';
+											/* 		' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
+												+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
+												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
+												+ '-----------'; */
+											}else{
+													detailedDisplay +='%';
+											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+													+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
+													+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
+													+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
+													+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+													+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
+													+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
+													+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
+													+'---------------'; */
+											}
+											resultNotYet +=detailedDisplay+"</td>";
+											detailedDisplay='';
+											if(i%3==2){
+												resultC +="<tr>"+resultNotYet+"</tr>";
+												flagRight=true;
+												$("#resultMap").append("<table id='myTable'>"+resultC+resultB+"</table>");
+												resultC = "";
+												resultNotYet="";
+											}else{
+												resultNotYet = "<td><-</td>"+resultNotYet;
+											}
+										
+									}
 								}
 								
-								$("#totalDisplay").val(totalDisplay);
-								$("#detailedDisplay").val(detailedDisplay);
 								
-								$.ajax( 
+								//$("#totalDisplay").val(totalDisplay);
+								//$("#detailedDisplay").val(detailedDisplay);
+								
+								/* $.ajax( 
 										{
 											url : "/dailyplan/json/getRouteResult/",
 											method : "POST" ,
@@ -206,7 +280,7 @@ body {
 												
 											}
 											
-							});
+							}); */
 								
 								
 
