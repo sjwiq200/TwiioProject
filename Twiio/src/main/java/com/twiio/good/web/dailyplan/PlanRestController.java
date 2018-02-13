@@ -93,23 +93,23 @@ public class PlanRestController {
 		
 	}
 	
-	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.GET)
-	public void selectCountryNew(@RequestParam int dailyPlanNo ,@RequestParam String countryName) throws Exception {
+	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.POST)
+	public void selectCountryNew(@RequestBody DailyPlan dailyPlan ) throws Exception {
 		
 		System.out.println("RestController : json/selectCountryNew <START>");
 		
-		String countryKor = URLDecoder.decode(countryName,"UTF-8");
-		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-		String country ;
+		//String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlanDB = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
+		String country=dailyPlan.getDailyCountry();
 		
-		if(dailyPlan.getDailyCountry()==null) {
-			dailyPlan.setDailyCountry(countryKor);
+		if(dailyPlanDB.getDailyCountry()==null) {
+			dailyPlanDB.setDailyCountry(country);
 		} else {
-			country = dailyPlan.getDailyCountry();
-			country = country+","+countryKor;
+			country = dailyPlanDB.getDailyCountry();
+			country = country+","+country;
 			dailyPlan.setDailyCountry(country);
 		}
-		dailyPlanService.updateDailyPlan(dailyPlan);
+		dailyPlanService.updateDailyPlan(dailyPlanDB);
 		
 		System.out.println("RestController : json/selectCountryNew <END>");
 		

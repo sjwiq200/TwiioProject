@@ -614,13 +614,13 @@ $(function() {
 				$.ajax( 
 						{
 						url : "/dailyplan/json/selectCountryNew",
-						method : "GET" ,
+						method : "POST" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
-						data : {
+						data : JSON.stringify({
 							dailyPlanNo : ${dailyPlan.dailyPlanNo},
-							countryName : target.val()
-						},
+							dailyCountry : target.val()
+						}),
 						success : function(JSONData) {
 							//alert(JSON.stringify(JSONData));				
 							
