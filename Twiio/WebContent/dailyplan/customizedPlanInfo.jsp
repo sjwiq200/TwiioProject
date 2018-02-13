@@ -265,6 +265,8 @@ $(function() {
 
 		 	standardCountry = $("#standardCountry").val();
 			compareCountry = $("#compareCountryValue").val();
+		 	alert(standartCountry);
+		 	alert(compareCountry);
 			inputPrice = $("#standard").val();
 			
 				$.ajax( 
@@ -450,13 +452,13 @@ $(function() {
 
 $(function() {
 		 $("input[name='unsafeCityInfo']").on("click" , function() {
-			var city = $("#cityDangerCheck").val();
+			var country = $("#countryDangerCheck").val();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/getUnsafeRegion",
 	    					method:"POST",
 	    					data:{
-	    						"city" : city
+	    						"country" : country
 	    					},
 	    					dataType: "json",
 	    					contentType: "application/x-www-form-urlencoded; charset=UTF-8", 
@@ -705,12 +707,12 @@ $(function() {
 						<c:forEach var="currency" items="${returnList}">
 						
 							<c:set var = "theString" value = "${currency.cur_nm}"/>
-							<c:set var = "dailyCity" value = "${dailyCitySelected}"/>
-							<c:if test="${fn:contains(theString,dailyCity)}">
+							<c:set var = "dailyCountry" value = "${dailyCountrySelected}"/>
+							<c:if test="${fn:contains(theString,dailyCountry)}">
 							<option value="${currency.cur_nm}" selected>${currency.cur_nm}</option>
 							</c:if>
 							
-							<c:if test="${! fn:contains(theString,dailyCity)}">
+							<c:if test="${! fn:contains(theString,dailyCountry)}">
 							<option value="${currency.cur_nm}">${currency.cur_nm}</option>
 							</c:if>
 							
@@ -761,7 +763,7 @@ $(function() {
 				</div>
 			</div>	
 			
-			<input type="hidden" id="cityDangerCheck" name="unsafeCityInfo"value="${dailyCitySelected}">
+			<input type="hidden" id="countryDangerCheck" name="unsafeCountryInfo"value="${dailyCountrySelected}">
 			<div class="info" id="info"></div>
 		</div>
 

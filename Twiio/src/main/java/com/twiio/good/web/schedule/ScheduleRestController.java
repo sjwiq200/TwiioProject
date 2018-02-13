@@ -17,6 +17,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.dailyplan.DailyPlanService;
+import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.domain.Room;
 import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.Schedule;
@@ -40,6 +43,10 @@ public class ScheduleRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	@Autowired
+	@Qualifier("dailyPlanServiceImpl")
+	private DailyPlanService dailyPlanService;
 
 	public ScheduleRestController() {
 		// TODO Auto-generated constructor stub
@@ -47,7 +54,7 @@ public class ScheduleRestController {
 	}
 	
 	@RequestMapping("/json/addSchedule/")
-	public boolean addRoom(@RequestBody Schedule schedule) throws Exception {
+	public boolean addSchedule(@RequestBody Schedule schedule) throws Exception {
 		System.out.println("/schedule/json/addSchedule : POST");
 		
 		String roomKey = schedule.getRoomKey();
@@ -58,7 +65,6 @@ public class ScheduleRestController {
 		
 		List<Integer> listUserNo = new Vector<>();
 		for (RoomUser roomUser : list) {
-			
 			listUserNo.add(roomUser.getUserNo());
 		}
 		//Room Information
@@ -90,6 +96,37 @@ public class ScheduleRestController {
 		System.out.println("schedule rest map Image ==>" + schedule);
 		scheduleService.addSchedule(schedule);
 		
+		
+		/////////////////±∏µ•±‚ æ∆¥— ∞≈-¥Ÿøµ¿Ã≤®/////////////////////
+		String date = schedule.getScheduleDate();
+		String address = schedule.getScheduleAddress();
+		String country = schedule.getCountry();
+		
+		DailyPlan dailyPlan = new DailyPlan();
+		dailyPlan.setDailyCountry(country);
+		dailyPlan.setDailyDate(java.sql.Date.valueOf(date));
+		
+		List<DailyPlan> listDailyPlan = dailyPlanService.listPlanForFixedSchedule(dailyPlan);
+		
+		for(DailyPlan dailyPlanEach : listDailyPlan) {//sameSchedule
+			System.out.println("##Debug : " + dailyPlanEach);
+			String contentText = address + "/" + schedule.getUserNoString();
+			
+			int dailyPlanNo = dailyPlanEach.getDailyPlanNo();
+			int countForOrder = dailyPlanService.getPlanContentCount(dailyPlanNo);
+			
+			PlanContent planContent = new PlanContent();
+			planContent.setDailyPlan(dailyPlanEach);
+			planContent.setOrderNo(countForOrder+1);
+			planContent.setContentText(contentText);
+			planContent.setContentType(6); //schedule content
+			planContent.setMapUrl(mapImageResult);
+			dailyPlanService.addPlanContent(planContent);
+		}
+		
+		//dailyPlanService.get
+		//PlanContent planContent = new PlanContent();
+		
 		return true;
 	}
 	
@@ -119,7 +156,7 @@ public class ScheduleRestController {
 		for (Schedule schedule : list) {
 			if(roomService.getRoom(schedule.getRoomKey()) ==null) {
 				Room nullRoom = new Room();
-				nullRoom.setRoomName("ÏÇ≠Ï†ú");
+				nullRoom.setRoomName("ªË¡¶");
 				nullRoom.setUserNo(0);
 				roomList.add(nullRoom);
 			}else {

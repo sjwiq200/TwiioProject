@@ -57,8 +57,11 @@
 		  			AND user_no != #{user.userNo}
 	  </select>
 	  
+	  <select  id="listPlanForFixedSchedule"  parameterType="dailyPlan" resultMap="dailyPlanSelectMap" >
+		  SELECT * FROM daily_plan
+		  	WHERE daily_date = #{dailyDate} AND daily_country = #{dailyCountry} 
+	  </select>
 	  
-	
 	 <delete  id="deleteDailyPlan"  parameterType="int"	>
 	 DELETE FROM daily_plan WHERE main_plan_no = #{mainPlanNo}
 	 </delete>

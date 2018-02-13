@@ -706,6 +706,7 @@ $(function() {
 						data : {
 							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
 						},
+						
 						success : function(JSONData) {
 							//alert(JSON.stringify(JSONData));	
 							

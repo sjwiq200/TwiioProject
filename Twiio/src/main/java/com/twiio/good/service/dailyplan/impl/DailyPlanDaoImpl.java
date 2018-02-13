@@ -86,5 +86,10 @@ public class DailyPlanDaoImpl implements DailyPlanDao {
 		return sqlSession.selectList("DailyPlanMapper.listFriendRec", dailyPlan);
 	}
 
+	@Override
+	public List<DailyPlan> listPlanForFixedSchedule(DailyPlan dailyPlan) {
+		return sqlSession.selectList("DailyPlanMapper.listPlanForFixedSchedule", dailyPlan);
+	}
+
 
 }
