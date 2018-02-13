@@ -82,6 +82,7 @@ html, body {
 }
 
 #thumbnailMainBox {
+	min-height: 1500px;
 	background: linear-gradient(-45deg, #56B1BF, transparent),
 		linear-gradient(45deg, #D73A31, transparent);
 	border-radius: 8px;
@@ -93,6 +94,7 @@ html, body {
 }
 
 #thumbnailMainThumbBox {
+	min-height: 1500px;
 	background: #fff;
 	display: inline-block;
 	border-radius: 6px;

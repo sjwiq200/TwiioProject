@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -161,8 +160,7 @@
 	<div class="col-sm-12">
 		
 		<div class="profile-userpic ">
-					<c:if test="${empty user.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-					<c:if test="${!empty user.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive"></c:if>
+					<img style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive">
 		</div>
 		
 		<div class="col-sm-12">
@@ -201,8 +199,8 @@
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
-					<div class="col-sm-4">${user.userBirthday}</div>
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>은행명</strong></div>
+					<div class="col-sm-4">${user.userBank}</div>
 				</div>
 				
 				<br/>
@@ -247,11 +245,18 @@
 				<hr/>
 				
 				<div class="row">
+			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
+					<div class="col-sm-4">${user.userBirthday}</div>
+				</div>
+				
+				<hr/>
+				
+				<div class="row">
 			  		<div class="col-sm-3 col-sm-offset-4"><strong>가입일자</strong></div>
 					<div class="col-sm-4">${user.regDate}</div>
 				</div>
 				
-				<hr/>
+				<br/>
 				
 					</div>
 				

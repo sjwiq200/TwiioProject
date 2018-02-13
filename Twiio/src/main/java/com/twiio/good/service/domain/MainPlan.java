@@ -3,6 +3,8 @@ package com.twiio.good.service.domain;
 import java.sql.Date;
 import java.util.Arrays;
 
+import org.springframework.web.multipart.MultipartFile;
+
 public class MainPlan {
 
 	public MainPlan() {
@@ -20,6 +22,7 @@ public class MainPlan {
 	private String planTitle;
 	private String mainThumbnail;
 	private int endClick;
+	private MultipartFile file;
 	
 	////////////////////클릭수에 따른 메인 섬네일 개수 표헌////
 
@@ -88,20 +91,25 @@ public class MainPlan {
 	public void setCityList(String[] cityList) {
 		this.cityList = cityList;
 	}
-	@Override
-	public String toString() {
-		final int maxLen = 10;
-		return "MainPlan [mainPlanNo=" + mainPlanNo + ", departureDate=" + departureDate
-				+ ", arrivalDate=" + arrivalDate + ", country=" + country + ", cityList="
-				+ (cityList != null ? Arrays.asList(cityList).subList(0, Math.min(cityList.length, maxLen)) : null)
-				+ ", city=" + city + ", planTitle=" + planTitle + ", mainThumbnail=" + mainThumbnail + ", endClick="
-				+ endClick + ", user=" + user + "]";
-	}
+	
 	public String[] getCountryList() {
 		return countryList;
 	}
 	public void setCountryList(String[] countryList) {
 		this.countryList = countryList;
+	}
+	public MultipartFile getFile() {
+		return file;
+	}
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
+	@Override
+	public String toString() {
+		return "MainPlan [mainPlanNo=" + mainPlanNo + ", user=" + user + ", departureDate=" + departureDate
+				+ ", arrivalDate=" + arrivalDate + ", country=" + country + ", cityList=" + Arrays.toString(cityList)
+				+ ", countryList=" + Arrays.toString(countryList) + ", city=" + city + ", planTitle=" + planTitle
+				+ ", mainThumbnail=" + mainThumbnail + ", endClick=" + endClick + ", file=" + file + "]";
 	}
 	
 	

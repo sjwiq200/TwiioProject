@@ -42,7 +42,7 @@ public class User {
 	private String reviewHost;
 	private String emailVer;
 	private String mainPlanNoShared;
-	@JsonIgnore
+	
 	private MultipartFile file;
 	
 	private String phone1;
@@ -408,7 +408,7 @@ public class User {
 				+ regDate + ", profilePublic=" + profilePublic + ", userRegisterType=" + userRegisterType
 				+ ", userLeave=" + userLeave + ", userBank=" + userBank 
 				+ ", attendanceRate=" + attendanceRate + ", profileCredibility="
-				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost + "]";
+				+ profileCredibility + ", starEvalHost=" + starEvalHost + ", reviewHost=" + reviewHost +",  file = "+file+"]";
 	}
 
 

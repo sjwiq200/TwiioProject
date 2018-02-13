@@ -42,4 +42,6 @@ public interface CommonDao
   public void searchKeyword() throws Exception;
   
   public void listSearch() throws Exception;
+  
+  public Report updateReport(int reportNo) throws Exception;
 }

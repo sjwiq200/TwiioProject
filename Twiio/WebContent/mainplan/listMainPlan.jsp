@@ -46,7 +46,7 @@
 <!-- ---------Floating Button------------ -->
  <link href="/resources/css/floatingButton.css" rel="stylesheet" type="text/css" />
  
- <!--  ///////////////////////// CSS ////////////////////////// -->
+  <!--  ///////////////////////// CSS ////////////////////////// -->
 		<link rel="stylesheet" href="/resources/css/font.css" />
 
 <title>MainPlanList</title>
@@ -72,6 +72,7 @@ html, body {
 
 
 #thumbnailMainBox {
+	min-height: 1500px;
 	background: linear-gradient(-45deg, #56B1BF, transparent),
 		linear-gradient(45deg, #D73A31, transparent);
 	border-radius: 8px;
@@ -83,6 +84,7 @@ html, body {
 }
 
 #thumbnailMainThumbBox {
+	min-height: 1500px;
 	background: #fff;
 	display: inline-block;
 	border-radius: 6px;
@@ -96,7 +98,7 @@ html, body {
 .thumbnailClass{
 	margin-top: 20px;
 	margin-bottom: 20px;
-	text-align: right;
+	text-align: center;
 }
 
 #buttonBox {
@@ -108,6 +110,7 @@ html, body {
 	background-image: url("/resources/images/dailyPlanContent/daum_gallery_photo_20160913155706.jpg");
 	opacity: 0.3;
 }
+
 /* //////////////////eunae_modal////////////////////////// */
 		.content h1 {
 			text-align: center;
@@ -140,8 +143,12 @@ html, body {
 		  -webkit-border-radius: 50% !important;
 		  -moz-border-radius: 50% !important;
 		  border-radius: 50% !important;
-		  border: 3px solid;
+		  border: 1px solid;
 		}
+
+#thumbnail:hover {
+	background-color:rgba(192,192,192,0.2);
+}
 
 </style>
 
@@ -180,7 +187,6 @@ html, body {
 				var index = $("button:contains('선택')").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/dailyplan/getDailyPlanFromMain?mainPlanNo="+mainPlanNo;
-				/* var url = "/dailyplan/getDailyPlan?mainPlanNo="+mainPlanNo+"&dailyPlanNo="+dailyPlanNo; */
 				$(location).attr('href', url);
 			});
 	 })
@@ -189,7 +195,7 @@ html, body {
 			$(".select").bind("click",function() {
 				var index = $(".select").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
-				var url = "/dailyplan/listDailyPlan?mainPlanNo="+mainPlanNo;
+				var url = "/dailyplan/getDailyPlanFromMain?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
 			});
 	 })
@@ -213,7 +219,7 @@ html, body {
 	
 		$("button:contains('공유')").bind("click",function() {
 			var index = $("button:contains('공유')").index(this);
-			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
+			var mainPlanNo = $($("input[name='mainPlanNo']")[index-1]).val();
 			
 			var friend;
 			var result ="";
@@ -226,32 +232,32 @@ html, body {
 								"Accept" : "application/json", 
 								"Content-Type" : "application/json"
 							},
-	    				success:function(JSONData){
-	    					friend = JSONData.friendInfo;
-		    					/* for(var i=0;i<friend.length;i++){
-		    						result +='<p> [USER NO] : '+friend[i].userNo+ '</p>'
-		    								+'<span>  [아이디] : '+friend[i].userId+'</span>'
-		    								+'<span>  [이름] : '+friend[i].userName+'</span>'
-		    								+'<span>  [성별] : '+friend[i].userGender+'</span>'
-		    								+'<span>  [사진] : '+friend[i].userImage+'</span>'
-		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="sharePlan'+i+'" class="btn btn-success btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
-		    					} */
-		    					
-		    					for(var i=0;i<friend.length;i++){
-		    						
-		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
-		    									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+friend[i].userName+'</div>'+
-		    									'<button type="button" id="sharePlan'+i+'" class="btn btn-primary btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
+							success:function(JSONData){
+		    					friend = JSONData.friendInfo;
+			    					/* for(var i=0;i<friend.length;i++){
+			    						result +='<p> [USER NO] : '+friend[i].userNo+ '</p>'
+			    								+'<span>  [아이디] : '+friend[i].userId+'</span>'
+			    								+'<span>  [이름] : '+friend[i].userName+'</span>'
+			    								+'<span>  [성별] : '+friend[i].userGender+'</span>'
+			    								+'<span>  [사진] : '+friend[i].userImage+'</span>'
+			    								+'<span>&nbsp;</span>'
+			    								+'<button type="button" id="sharePlan'+i+'" class="btn btn-success btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
+			    					} */
+			    					
+			    					for(var i=0;i<friend.length;i++){
+			    						
+			    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
+			    									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+friend[i].userName+'</div>'+
+			    									'<button type="button" id="sharePlan'+i+'" class="btn btn-primary btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
+			    					}
+			    					
+			    					
+			    				 $('#shareWithFriendList').html(result);
+			    				 $('#shareWithFriend').modal('show');  
 		    					}
-		    					
-		    					
-		    				 $('#shareWithFriendList').html(result);
-		    				 $('#shareWithFriend').modal('show');  
-	    					}
-			    });
-		});
-	 });
+				    });
+			});
+		 });
 	 
 	function sharePlan(userNo,i,mainPlanNo) {
 			$.ajax({
@@ -259,8 +265,9 @@ html, body {
 	            type:'get'
 	         });
 	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).attr("disabled","true"); 
+	    $("#sharePlan"+i).remove(); 
 	}
+	
 	
 </script>
 
@@ -306,24 +313,25 @@ html, body {
 										<div class="caption" >
 										
 										 <div class="row">
-											   <div class="col-md-5 thumbnailClass">
-										<%-- 	   ${mainPlan.mainThumbnail} --%>
-												<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="margin-left:80px;width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+										 	<div class="col-md-1" id="buttonBox"></div>
+											   <div class="col-md-4 thumbnailClass select" style="width: 320px; height: 250px; overflow: hidden">
+												<img src="/resources/images/thumbnail_plan/${mainPlan.mainThumbnail}" style="width: 300px; height: 250px; display: block;border-radius: 2%;" class="img-responsive" alt="Responsive image"/> 
 											   </div>
 											   
 												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
 												<div class="col-md-6 textArea">
 													<div class="col-md-8 select">
 													<h2> ${mainPlan.planTitle}</h2>
+													<div style="font-family:'JEJUGOTHIC'">
 													<p> ${mainPlan.departureDate } ~ ${mainPlan.arrivalDate}</p>
-													<p><Strong>국가</Strong> ${mainPlan.country}</p>
-													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
+													<p><Strong>나라</Strong> ${mainPlan.country}</p>
+													<p><Strong>도시</Strong> ${mainPlan.city}</p>
+													</div>
 													</div>
 													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
-														<button type="button" class="btn btn-default">공유</button>
-														<button type="button" class="btn btn-default">수정</button>
+														<button type="button" class="btn btn-default">공유</button><br/>
+														<button type="button" class="btn btn-default">수정</button><br/>
 														<button type="button" class="btn btn-default">삭제</button>
-														<button type="button" class="btn btn-default">선택</button>
 													</div>
 												</div>
 											
@@ -394,6 +402,5 @@ html, body {
 		</div>
 		
 		<!---------- ShareWithFriend Dialog <END>------------->
-		
 		
 </html>

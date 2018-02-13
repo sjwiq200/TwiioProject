@@ -23,6 +23,9 @@ public interface UserDao {
 
 	// SELECT LIST
 	public List<User> listUser(Search search) throws Exception ;
+	
+	// SELECT LIST
+	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception ;
 
 	// UPDATE
 	public void updateUser(User user) throws Exception ;

@@ -112,6 +112,13 @@ public class UserServiceImpl implements UserService{
 		return map;
 	}
 
+	
+	@Override
+	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception {
+		// TODO Auto-generated method stub
+		return userDao.listUserForSharedMainPlan(mainPlanNo);
+	}
+
 	@Override
 	public void updateUser(User user) throws Exception {
 		// TODO Auto-generated method stub
@@ -318,46 +325,64 @@ public class UserServiceImpl implements UserService{
 	}		
 	
 	@Override
-	public boolean detectFace(User user) throws Exception, IOException {
-
+	public Map<String, Object> detectFace(User user) throws Exception, IOException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
 		System.out.println(":: detectFaces start!! :: ");
-		boolean flag = false;
+		String face = "";
 		System.out.println(user.getFile().getContentType());
 		// System.out.println(file.getName());
 		System.out.println("업로드시 파일 이름 :: "+user.getFile().getOriginalFilename());
 		// System.out.println(file.toString());
 
 		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
-		//String fileName = file.getOriginalFilename();
-		String fileName = user.getUserId()+"="+user.getFile().getOriginalFilename();
+		//String fileName = user.getFile().getOriginalFilename();
+		String fileName = user.getUserId()+"test.jpg";
 		System.out.println("실제 저장 될 파일 이름 :: "+fileName);
-		
+		System.out.println("11111");
 		PrintStream out = System.out;
+		System.out.println("22222");
 		// String filePath=file.getOriginalFilename();
 		// File file02=new File("C:\\Users\\bitcamp\\Desktop\\pic\\", fileName);
 		File file02 = new File(userFaceFilePath, fileName);
+		System.out.println("33333");
 		user.getFile().transferTo(file02);
+		System.out.println(user.getFile());
+		System.out.println(file02);
+		System.out.println("44444");
 		// ByteString imgBytes = ByteString.readFrom(new FileInputStream(filePath));
 		ByteString imgBytes = ByteString.readFrom(new FileInputStream(file02));
 
 		Image img = Image.newBuilder().setContent(imgBytes).build();
 		Feature feat = Feature.newBuilder().setType(Type.TYPE_UNSPECIFIED.FACE_DETECTION).build();
+		System.out.println("55555");
 		AnnotateImageRequest request = AnnotateImageRequest.newBuilder().addFeatures(feat).setImage(img).build();
+		System.out.println("66666");
 		requests.add(request);
-
+		System.out.println("77777");
 		try (ImageAnnotatorClient client = ImageAnnotatorClient.create()) {
+			System.out.println("00000");
 			BatchAnnotateImagesResponse response = client.batchAnnotateImages(requests);
+			System.out.println("88888");
 			List<AnnotateImageResponse> responses = response.getResponsesList();
-
+			System.out.println("99999");
 			for (AnnotateImageResponse res : responses) {
 				// System.out.println("[[[res]]]===================> :"+res);
 				if (res.hasError()) {
 					out.printf("Error: %s\n", res.getError().getMessage());
-					flag = false;
+					face = user.getUserImage();
+					map.put("face", face);
+					map.put("flag", "0");
 				}
 				System.out.println("오냐?");
 				if (res.getFaceAnnotationsList().size() != 1) {
 					// out.close();
+					
+					/*if(user.getUserNo()!=null) {
+						if(userDao.getUserInNo(user.getUserNo()).getUserImage()!=null) {
+							
+						}
+					}*/
 					System.gc();
 					System.runFinalization();
 					if (file02.exists() == true) {
@@ -366,7 +391,9 @@ public class UserServiceImpl implements UserService{
 					}
 
 					System.out.println("파일삭제");
-					flag = false;
+					face = user.getUserImage();
+					map.put("face", face);
+					map.put("flag", "0");
 
 				} else {
 
@@ -384,10 +411,23 @@ public class UserServiceImpl implements UserService{
 								// annotation.,
 								annotation.getBoundingPoly());
 					}
-					// out.close();
 					System.gc();
+					System.runFinalization();
+					if (file02.exists() == true) {
+						boolean boo = file02.delete();
+						System.out.println(boo);
+						System.out.println("test 파일삭제");
+					}
+					
+					String realName = user.getUserId()+".jpg";
+					File file03 = new File(userFaceFilePath, realName);
+					user.getFile().transferTo(file03);
+					// out.close();
+					//System.gc();
 					System.out.println("업로드 성공");
-					flag = true;
+					face = realName;
+					map.put("face", face);
+					map.put("flag", "1");
 				}				
 
 			}
@@ -397,7 +437,7 @@ public class UserServiceImpl implements UserService{
 		}
 		System.out.println(":: detectFaces end ::");
 		
-		return flag;
+		return map;
 	}	
 
 	@Override

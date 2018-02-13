@@ -61,7 +61,10 @@ public interface TransactionDao {
 
 	// UPDATE
 	public void addStarEvalHost(Transaction transaction) throws Exception;
-
+	
+	public Refund getRefund(int userNo) throws Exception;
+	
+	public void deleteTransaction(int tranNo) throws Exception;
 	// SELECT LIST
 	//public Map<String, Object> listStarEvalHost(Search search, int productNo) throws Exception;
 

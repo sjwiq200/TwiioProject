@@ -9,10 +9,11 @@
 
 <% 
 	String dailyPlanNo = (String) request.getParameter("data"); 
+	String mainPlanNo = (String) request.getParameter("mainPlanNo"); 
 %>
 
-
  <title>Geocoding service</title>
+ 
  <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
  <meta charset="UTF-8">
  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
@@ -20,13 +21,10 @@
 
 <style type="text/css">
 
-.container{
-	 font-family:'JEJUGOTHIC';
-}
 	#map {
-		
-        height: 400px;
-        width: 500px;
+        max-width: 100%;
+        max-height: 100%;
+		height: 300px;
       }
       html, body {
         height: 100%;
@@ -41,6 +39,40 @@
       .pac-container {
    			 z-index: 100000; /* AutoComplete이 Modal창 안에 뜰 수 있도록! */
 		}
+		
+		
+/* 검색 CSS*/		
+#custom-search-input{
+    padding: 3px;
+    border: solid 1px #E4E4E4;
+    border-radius: 6px;
+    background-color: #fff;
+}
+
+#custom-search-input input{
+    border: 0;
+    box-shadow: none;
+}
+
+#custom-search-input button{
+    margin: 2px 0 0 0;
+    background: none;
+    box-shadow: none;
+    border: 0;
+    color: #666666;
+    padding: 0 8px 0 10px;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input button:hover{
+    border: 0;
+    box-shadow: none;
+    border-left: solid 1px #ccc;
+}
+
+#custom-search-input .glyphicon-search{
+    font-size: 23px;
+}
 
 </style>
 
@@ -197,15 +229,15 @@
 			        		    	name = place.name;
 			        		    	website = place.website;
 			        		    	
-			        		    	$(".testmap").remove();
+			        		    	//$("#resultMap").empty();
 			        		    	
 									$("#resultMap")
-			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>["+name+"]</strong></div>")
-			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶주소 : </strong>"+address+"</div>")
-			        		    	.append("<div class=\"testmap\" align=\"center\"><strong>▶전화번호 : </strong>"+phone+"</div>")
-			        		    	.append("<div class=\"testmap\"  align=\"center\"><strong>▶웹사이트 : </strong>"+website+"</div>")
-									.append("<div class=\"testmap\"  align=\"center\"><strong>▶URL : </strong>"+url+"</div>")
-									.append("<div class=\"testmap\"  align=\"center\"><strong>▶유형 : </strong>"+types+"</div>");
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>["+name+"]</strong></div>")
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶주소 : </strong>"+address+"</div>")
+			        		    	.append("<div class=\"testmap col-sm-7\" align=\"left\"><strong>▶전화번호 : </strong>"+phone+"</div>")
+			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶웹사이트 : </strong>"+website+"</div>")
+									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶URL : </strong>"+url+"</div>")
+									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶유형 : </strong>"+types+"</div>");
 									
 									$("#mapName").val(name);
 									$("#mapAddress").val(address);
@@ -220,13 +252,13 @@
 								    google.maps.event.addListener(servicemarker, 'click', function() {
 								    	console.log(JSON.stringify(place));
 								        infowindow.setContent(
-								      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br>' +
-								          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br>' +
-								          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br>' +
-								          '<strong>평점</strong>: ' + place.rating+ '<br>' +
-								          '<strong>장소유형</strong>: ' + place.types  + '<br>' +
-								          '<strong>URL</strong>: ' + place.url + '<br>' +
-								          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br>' );
+								      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br><p>' +
+								          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br><p>' +
+								          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br><p>' +
+								          '<strong>평점</strong>: ' + place.rating+ '<br><p>' +
+								          '<strong>장소유형</strong>: ' + place.types  + '<br><p>' +
+								          '<strong>URL</strong>: ' + place.url + '<br><p>' +
+								          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br><p>' );
 								        infowindow.open(map, this);
 								      });
 								});
@@ -274,45 +306,58 @@
 
 		$(function(){
 			$("button[name='addMapToPlan']").on("click",function(){
-				
-				
-				var mapUrl= $("#mapUrl").val().toString();
-				var mapName = document.getElementById("addr1").value;
-				var mapType = $("#mapType").val().toString();
-				var mapPhone = $("#mapPhone").val().toString();
-				var name=$("#addr1").val();
-				var mapAddress = $("#mapAddress").val();
-				var korName = encodeURI(encodeURIComponent(mapName));
-				var korAddress= encodeURI(encodeURIComponent(mapAddress));
-				var dailyPlanNo = <%=request.getParameter("data")%>;
-				self.location = "/dailyplan/addMap?dailyPlanNo="+dailyPlanNo+"&mapType="+mapType+"&mapUrl="+mapUrl+"&mapPhone="+mapPhone+"&korName="+korName+"&korAddress="+korAddress+"&mapImage="+mapImage;
-				
+				$("#mapImage").val(mapImage);
+				$("form[name='modalMap']").attr("method", "POST").attr("action","/dailyplan/addMap").submit();
+
 			});
 		});
 
 </script>
 <body>
-	<div class="container">
-		<div>
-			<input type="text" id="addr1" name="address" value="" />
-			<span> &nbsp; </span>
-			<button name="submit" value="okay" onclick='codeAddress(); return false;'>♥</button>
+
+
+	<div class="row" style="font-family: 'JEJUGOTHIC';">
+		<div class="col-sm-12">
+			<div id="custom-search-input">
+				<div class="input-group col-sm-12">
+					<input type="text" class="form-control input-lg" id="addr1"
+						name="address" value="" /> <span class="input-group-btn">
+						<button class="btn btn-info btn-lg" type="button" name="submit"
+							value="okay" onclick='codeAddress(); return false;'>
+							<i class="glyphicon glyphicon-search"></i>
+						</button>
+					</span>
+				</div>
+			</div>
+			<div class="col-sm-12">&nbsp;</div>
 		</div>
-		<div> &nbsp; </div>
-		<div id="map"></div>
-		<div id="resultMap">
-				<form>
-				  <input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-				  <input type="hidden" name="mapUrl" id="mapUrl" value="기본값" />
-				  <input type="hidden" name="mapAddress" id="mapAddress"value="기본값"  />
-				  <input type="hidden" name="mapName" id="mapName"  value="기본값" />
-				  <input type="hidden" name="mapPhone"  id="mapPhone" value="기본값" />
-				  <input type="hidden" name="mapWebsite"  id="mapWebsite" value="기본값"  />
-				  <input type="hidden" name="mapType" id="mapType" value=""  />
-				 </form>
+
+		<div class="col-sm-12" id="map" style="font-family: 'JEJUGOTHIC';"
+			align="center"></div>
+
+		<div id="resultMap" class="col-sm-12" style="margin-left: 50px;">
+
+			<form name="modalMap">
+				<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
+				<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" /> <input
+					type="hidden" name="mapUrl" id="mapUrl" value="기본값" /> <input
+					type="hidden" name="mapAddress" id="mapAddress" value="기본값" /> <input
+					type="hidden" name="mapName" id="mapName" value="기본값" /> <input
+					type="hidden" name="mapPhone" id="mapPhone" value="기본값" /> <input
+					type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" /> <input
+					type="hidden" name="mapType" id="mapType" value="" />
+				 <input type="hidden" name="mapImage" id="mapImage" value="" />
+			</form>
 		</div>
-		<div> &nbsp; </div>
-		<button type="button" class="btn btn-default" data-dismiss="modal" name="addMapToPlan">내 플랜에 추가하기</button>
+		<div class="col-sm-12">&nbsp;</div>
+		<div class="col-sm-12">
+			<button type="button" class="btn btn-default" name="addMapToPlan">
+				트위북에 등록하기</button>
+		</div>
+
+
 	</div>
+
+
 </body>
 </html>

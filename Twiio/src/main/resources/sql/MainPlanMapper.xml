@@ -43,8 +43,10 @@
 			arrival_date	= #{arrivalDate:DATE},
 			country 				= #{country:VARCHAR},
 			city				=	#{city:VARCHAR},
-			plan_title =#{planTitle:VARCHAR},
-			main_thumbnail =#{mainThumbnail:VARCHAR}
+			<if test="mainThumbnail != null">
+			main_thumbnail = #{mainThumbnail:VARCHAR},
+			</if>
+			plan_title =#{planTitle:VARCHAR}			
 	   	</set>
 	   	WHERE main_plan_no = #{mainPlanNo}
 	 </update>

@@ -18,7 +18,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
@@ -54,19 +56,19 @@ public class UserRestController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-		if(user.getFile()!=null) {
-			if(userService.detectFace(user)) {
-				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
-				userService.addUser(user);
-				System.out.println(":: Twiio ���� ȸ������ �Ϸ�/���� ���ε�  ::");	
-			}else {
-				System.out.println(":: ȸ������ ���� =====> ���� ��Ȯ�� �ν��� �� �ִ� �������� �ٽ� ���ε� �ٶ�  ::");
-			}			
-		}else {
-			//Business Logic
-			userService.addUser(user);
-			System.out.println(":: Twiio ���� ȸ������ �Ϸ� ::");
-		}
+//		if(user.getFile()!=null) {
+//			if(userService.detectFace(user)) {
+//				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
+//				userService.addUser(user);
+//				System.out.println(":: Twiio ���� ȸ������ �Ϸ�/���� ���ε�  ::");	
+//			}else {
+//				System.out.println(":: ȸ������ ���� =====> ���� ��Ȯ�� �ν��� �� �ִ� �������� �ٽ� ���ε� �ٶ�  ::");
+//			}			
+//		}else {
+//			//Business Logic
+//			userService.addUser(user);
+//			System.out.println(":: Twiio ���� ȸ������ �Ϸ� ::");
+//		}
 		
 		return "redirect:/user/loginView.jsp";
 	}
@@ -86,13 +88,19 @@ public class UserRestController {
 		return userService.getUser(userId);
 	}
 	
-	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
-	public boolean detectFace( @RequestBody User user ) throws Exception{
+	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
+	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
+							HttpSession httpsession,
+							User user) throws Exception{
+		System.out.println("/user/json/faceDetect");
+		user = (User)httpsession.getAttribute("user");
+		user.setFile(file);
+		String faceto =""; 
+		Map<String, Object> map= userService.detectFace(user);
 		
-		System.out.println("/user/json/detectFace ");
-		System.out.println(user);
-		//Business Logic
-		return userService.detectFace(user);
+		System.out.println("���ñ�??");
+		
+		return map;
 	}
 	
 	@RequestMapping( value="json/checkDuplication", method=RequestMethod.POST )
@@ -249,4 +257,5 @@ public class UserRestController {
 		}
 		return buffer.toString();
 	}
+
 }

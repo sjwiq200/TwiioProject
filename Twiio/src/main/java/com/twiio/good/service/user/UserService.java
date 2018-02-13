@@ -27,6 +27,8 @@ public interface UserService {
 	// 회원정보리스트 
 	public Map<String , Object> listUser(Search search) throws Exception;
 	
+	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception;
+	
 	// 회원정보수정
 	public void updateUser(User user) throws Exception;
 	
@@ -49,7 +51,7 @@ public interface UserService {
 	public User googleLogin(String code) throws Exception;
 	
 	// 구글 얼굴인식
-	public boolean detectFace(User user) throws Exception, IOException;
+	public Map<String , Object> detectFace(User user) throws Exception, IOException;
 	
 	// 아이디 중복체크
 	public boolean checkDuplication(String userId) throws Exception;

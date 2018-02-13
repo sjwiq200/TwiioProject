@@ -115,4 +115,9 @@ public class CommonServiceImpl implements CommonService {
 	public List<Friend> listFriendOnly(int userNo) throws Exception {
 		return commonDao.listFriendOnly(userNo);
 	}
+
+	@Override
+	public Report updateReport(int reportNo) throws Exception {
+		return commonDao.updateReport(reportNo);
+	}
 }

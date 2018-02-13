@@ -114,24 +114,8 @@
 <script type="text/javascript">
 
 function fncKakaoPay() {
-	//alert("??");	
+	//document.addPurchase.submit();
 	$("form").attr("method" , "POST").attr("action" , "/transaction/kakaoPayReady").submit();
-	
-	/* var requirement = $("#requirement").val();
-	var window = window.open('','','location=no,menubar=no,resizable=no,status=no,right=0,width=500,height=500'):
-		window.
-	window.open("http://192.168.0.35:8080/transaction/kakaoPayPopUpReady/${transaction.tripDate}/${transaction.count}/${transaction.totalPrice}/${user.userNo}/requirement/${transaction.tranPro.productNo}",
-			'location=no,menubar=no,resizable=no,status=no,right=0,width=500,height=500'); */
-	
-	 /* var myForm = document.detailForm;
-	 var url = "http://192.168.0.35:8080/transaction/kakaoPayReady";
-	 window.open("" ,"popForm", 
-	       "toolbar=no, width=540, height=467, directories=no, status=no,    scrollorbars=no, resizable=no"); 
-	 myForm.action =url; 
-	 myForm.method="post";
-	 myForm.target="detailForm";	 
-	 myForm.submit(); */
-	
 }
 
 function fncPayPal() {
@@ -240,6 +224,7 @@ $(function() {
 				class="img-rounded">
 			<div class="text"><h1>${transaction.tranPro.productName}</h1></div>
 		</c:if> 
+		
 		<c:if test="${empty transaction.tranPro.thumbnail}">
 			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg"
 				style="width: 200px; height: 170px;" alt="..."
