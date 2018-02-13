@@ -10,12 +10,15 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.twiio.good.common.Page;
+import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Room;
 import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.Schedule;
@@ -34,6 +37,11 @@ public class ScheduleController {
 	@Autowired
 	@Qualifier("roomServiceImpl")
 	private RoomService roomService;
+	
+	@Value("#{commonProperties['pageUnit']}")
+	int pageUnit;
+	@Value("#{commonProperties['pageSize']}")
+	int pageSize;
 
 	public ScheduleController() {
 		// TODO Auto-generated constructor stub
@@ -54,13 +62,25 @@ public class ScheduleController {
 	}
 	
 	@RequestMapping(value = "/listSchedule")
-	public String listSchedule(HttpSession session,HttpServletRequest request) throws Exception {
+	public String listSchedule(HttpSession session,HttpServletRequest request, Search search) throws Exception {
 		System.out.println("/schedule/listSchedule : ");
+		
+		if(search.getCurrentPage() == 0) {
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(12);
+		
+		
 		User user = (User)session.getAttribute("user");
 		Map<String, Object> map = new HashMap<>();
 		
-		map = scheduleService.listSchedule(user.getUserNo());
+		map = scheduleService.listSchedule(search, user.getUserNo());
 		List<Schedule> scheduleList = (List<Schedule>)map.get("list");
+		
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
+		System.out.println("resultPage:: "+resultPage);
+		
+		
 		List<Room> roomList = new Vector<>();
 		for (Schedule schedule : scheduleList) {
 			roomList.add(roomService.getRoom(schedule.getRoomKey()));
@@ -68,6 +88,7 @@ public class ScheduleController {
 		request.setAttribute("schedule", scheduleList);
 		request.setAttribute("room", roomList);
 		request.setAttribute("totalCount", map.get("totalCount"));
+		request.setAttribute("resultPage", resultPage);
 
 		return "forward:/schedule/listSchedule.jsp";
 	}

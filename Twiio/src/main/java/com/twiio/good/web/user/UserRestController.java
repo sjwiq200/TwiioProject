@@ -28,7 +28,7 @@ import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserService;
 
 
-//==> È¸¿ø°ü¸® RestController
+//==> È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ RestController
 @RestController
 @RequestMapping("/user/*")
 public class UserRestController {
@@ -37,7 +37,7 @@ public class UserRestController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method ±¸Çö ¾ÊÀ½
+	//setter Method ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		
 	public UserRestController(){
 		System.out.println(this.getClass());
@@ -58,14 +58,14 @@ public class UserRestController {
 			if(userService.detectFace(user)) {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
-				System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á/»çÁø ¾÷·Îµå  ::");	
+				System.out.println(":: Twiio ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½/ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½  ::");	
 			}else {
-				System.out.println(":: È¸¿ø°¡ÀÔ ½ÇÆÐ =====> ¾ó±¼À» ¸íÈ®È÷ ÀÎ½ÄÇÒ ¼ö ÀÖ´Â »çÁøÀ¸·Î ´Ù½Ã ¾÷·Îµå ¹Ù¶÷  ::");
+				System.out.println(":: È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ =====> ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½Î½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½Îµï¿½ ï¿½Ù¶ï¿½  ::");
 			}			
 		}else {
 			//Business Logic
 			userService.addUser(user);
-			System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á ::");
+			System.out.println(":: Twiio ï¿½ï¿½ï¿½ï¿½ È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï·ï¿½ ::");
 		}
 		
 		return "redirect:/user/loginView.jsp";
@@ -78,6 +78,12 @@ public class UserRestController {
 		
 		//Business Logic
 		return userService.getUserInNo(userNo);
+	}
+	
+	@RequestMapping(value="json/getUserAndroid/{userId}")
+	public User getUser(@PathVariable String userId) throws Exception{
+		System.out.println("/user/json/getUserAndroid/{userId} : ");
+		return userService.getUser(userId);
 	}
 	
 	@RequestMapping( value="json/detectFace", method=RequestMethod.POST)
@@ -156,7 +162,7 @@ public class UserRestController {
 //	
 //		System.out.println("/user/json/addStarEvalHost");
 //		
-//		String review = "Â¯ÀÌ¿¡¿ä ±Â±Â";
+//		String review = "Â¯ï¿½Ì¿ï¿½ï¿½ï¿½ ï¿½Â±ï¿½";
 //		int starPoint  = 3;
 //		
 //		Transaction transaction = new Transaction();
@@ -219,8 +225,8 @@ public class UserRestController {
 		
 		 String authNum = RandomNum();
 		
-		System.out.println("ÀÔ·ÂÇÑ ÀÌ¸ÞÀÏ"+mail[1]);
-		System.out.println("»ý¼ºÇÑ ÀÎÁõ¹øÈ£"+authNum);
+		System.out.println("ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ï¿½ï¿½"+mail[1]);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£"+authNum);
 		
 		userService.sendMail(mail[1], authNum);
 		
