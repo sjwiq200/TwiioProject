@@ -61,49 +61,55 @@ public class PlanRestController {
 	public PlanRestController() {
 	}
 	
-	@RequestMapping(value = "json/selectCity", method = RequestMethod.GET)
+	@RequestMapping(value = "json/selectCity", method = RequestMethod.POST)
 	public void selectCity(
-			@RequestParam int dailyPlanNo4city 
-			,@RequestParam String cityName
+			@RequestBody DailyPlan dailyPlan 
+			
 			) 
 			throws Exception {
 		
 		System.out.println("RestController : selectCity <START>");
+		System.out.println("dailyPlan :: "+dailyPlan);
+		System.out.println("cityName :: "+dailyPlan.getDailyCity());
+		//String cityKor = URLDecoder.decode(dailyPlan.getDailyCity(),"UTF-8");
+		//System.out.println("cityKor :: "+cityKor);
+		DailyPlan dailyPlanDB = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
+		String[] city = dailyPlan.getDailyCity().split(",");
+		String city02="";
 		
-		String cityKor = URLDecoder.decode(cityName,"UTF-8");
-		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo4city);
-		String city ;
-		
-		if(dailyPlan.getDailyCity()==null) {
-			dailyPlan.setDailyCity(cityKor);
-		} else {
-			city = dailyPlan.getDailyCity();
-			city = city+","+cityKor;
-			dailyPlan.setDailyCity(city);
-		}
-		dailyPlanService.updateDailyPlan(dailyPlan);
+		if(dailyPlanDB.getDailyCity()==null) {
+			for(int i =0; i<city.length; i++) {
+				if(i==city.length-1) {
+					city02 += city[i].trim();
+				}else {
+					city02 += city[i].trim()+",";
+				}
+			}
+			dailyPlanDB.setDailyCity(city02);
+		} 
+		dailyPlanService.updateDailyPlan(dailyPlanDB);
 		
 		System.out.println("RestController : selectCity <END>");
 		
 	}
 	
-	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.GET)
-	public void selectCountryNew(@RequestParam int dailyPlanNo ,@RequestParam String countryName) throws Exception {
+	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.POST)
+	public void selectCountryNew(@RequestBody DailyPlan dailyPlan ) throws Exception {
 		
 		System.out.println("RestController : json/selectCountryNew <START>");
 		
-		String countryKor = URLDecoder.decode(countryName,"UTF-8");
-		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
-		String country ;
+		//String countryKor = URLDecoder.decode(countryName,"UTF-8");
+		DailyPlan dailyPlanDB = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
+		String country=dailyPlan.getDailyCountry();
 		
-		if(dailyPlan.getDailyCountry()==null) {
-			dailyPlan.setDailyCountry(countryKor);
+		if(dailyPlanDB.getDailyCountry()==null) {
+			dailyPlanDB.setDailyCountry(country);
 		} else {
-			country = dailyPlan.getDailyCountry();
-			country = country+","+countryKor;
+			country = dailyPlanDB.getDailyCountry();
+			country = country+","+country;
 			dailyPlan.setDailyCountry(country);
 		}
-		dailyPlanService.updateDailyPlan(dailyPlan);
+		dailyPlanService.updateDailyPlan(dailyPlanDB);
 		
 		System.out.println("RestController : json/selectCountryNew <END>");
 		
@@ -126,10 +132,27 @@ public class PlanRestController {
 //			dailyPlan.setDailyCountry(country);
 //		}
 		dailyPlan.setDailyCountry(null);
+		dailyPlan.setDailyCity(null);
 		dailyPlanService.updateDailyPlan(dailyPlan);
 		
 		System.out.println("RestController : json/resetCountry <END>");
 		
+	}
+	
+	@RequestMapping(value = "json/getDailyCountry", method = RequestMethod.GET)
+	public boolean getDailyCountry(@RequestParam int dailyPlanNo) throws Exception {
+		System.out.println("RestController : json/getDailyCountry <START>");
+		
+		boolean flag = false;
+		
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		if(dailyPlan.getDailyCountry() == null ) {
+			flag=true;
+		}
+		
+		System.out.println("RestController : json/getDailyCountry <END>");
+		
+		return flag;
 	}
 	
 	
