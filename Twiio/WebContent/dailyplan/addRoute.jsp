@@ -143,8 +143,8 @@ body {
 								
 										
 								var flagRight=true;
-								var resultA="<tr><td> Row1 cell1 </td><td> Row1 Cell3 </td><td> Row1 cell2 </td><td> Row1 Cell3 </td> <td> 화살표 아래 </td></tr>";
-								var resultB="<tr><td> 화살표 아래 </td><td> Row1 Cell3 </td><td> Row1 cell2 </td><td> Row1 Cell3 </td> <td> Row1 Cell3 </td></tr>";
+								var resultA="<tr><td> </td><td>  </td><td>  </td><td>  </td> <td> <img src='/resources/images/icon/plan/downButton.png' width='50px'></td> </tr>";
+								var resultB="<tr><td> <img src='/resources/images/icon/plan/downButton.png' width='50px'></td><td> </td><td></td><td>  </td> <td>  </td></tr>";
 								
 						/* 		var result = "<table id='myTable'>"; */
 								//var count= 0 ; 
@@ -161,65 +161,79 @@ body {
 								$("#resultMap").append(result); */
 								
 								var resultC="<tr>";
-								var middle="";
+								var count=0;
 								var resultNotYet= "";
 								for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-									if(flagRight){
-										resultNotYet += "<td>"
+									
+									if(flagRight){//to the right
+										resultNotYet += "<td  style='word-break:break-all;'>"
 										if(response.routes[0].legs[0].steps[i].transit == null){
 											detailedDisplay='';
 											detailedDisplay += '#'
 												
-											 +	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
-											/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+											 +	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
+											+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 											+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-											+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
-											+ '-----------'; */
+											+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions;
+											/*+ '-----------'; */
 										}else{
 												detailedDisplay += '#'
 											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
 												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
-												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name;
-											/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-												+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-												+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
+												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
+												+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+												+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name;
+											/*	+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
 												+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
 												+'---------------'; */
 										}
 										resultNotYet +=detailedDisplay+"</td>";
 										detailedDisplay='';
 										
-										
-										//middle +="</td>"
-										if(i%3==2){
+										if(i%3==2){//choose whether it needs to have a new row or not
+											if(count==response.routes[0].legs[0].steps.length-1){//but if it is last, it needs to delete arrow
+												resultC +="<tr>"+resultNotYet+"</tr>";
+												flagRight=false;
+												$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+"</table>");
+												resultC = "";
+												resultNotYet="";
+											}else{
+												resultC +="<tr>"+resultNotYet+"</tr>";
+												flagRight=false;
+												$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+resultA+"</table>");
+												resultC = "";
+												resultNotYet="";
+											}
+										}else if(count==response.routes[0].legs[0].steps.length-1){
 											resultC +="<tr>"+resultNotYet+"</tr>";
 											flagRight=false;
-											$("#resultMap").append("<table id='myTable'>"+resultC+resultA+"</table>");
+											$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+"</table>");
 											resultC = "";
 											resultNotYet="";
 										}else{
-											resultNotYet = resultNotYet+"<td>-></td>";
+											resultNotYet = resultNotYet+"<td style='word-break:break-all;'><img src='/resources/images/icon/plan/rightButton.png' width='50px'> </td>";
 										}
 									}else{
 										detailedDisplay='';
-										detailedDisplay += "<td>";
+										detailedDisplay += "<td style='word-break:break-all;'>";
 											if(response.routes[0].legs[0].steps[i].transit == null){
+												
 												detailedDisplay += '%'
-											 	+	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
-												/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
+											 	+	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode
+												+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
-												+ '-----------'; */
+												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions;
+												/*+ '-----------'; */
 											}else{
 													detailedDisplay +='%'
 											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
 													+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
 													+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
 													+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-												/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-													+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-													+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
+													+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
+													+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name;
+												/*	+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
 													+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
 													+'---------------'; */
 											}
@@ -227,18 +241,34 @@ body {
 											resultNotYet = a+resultNotYet;
 											detailedDisplay='';
 											if(i%3==2){
+												if(count==response.routes[0].legs[0].steps.length-1){//마지막인데 짝수인 경우 
+													resultC +="<tr>"+resultNotYet+"</tr>";
+													flagRight=true;
+													$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+"</table>");
+													resultC = "";
+													resultNotYet="";
+												}else{
+													resultC +="<tr>"+resultNotYet+"</tr>";
+													flagRight=true;
+													$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+resultB+"</table>");
+													resultC = "";
+													resultNotYet="";
+												}
+											}else if(count==response.routes[0].legs[0].steps.length-1){
 												resultC +="<tr>"+resultNotYet+"</tr>";
 												flagRight=true;
-												$("#resultMap").append("<table id='myTable'>"+resultC+resultB+"</table>");
+												$("#resultMap").append("<table id='myTable' width='600px'>"+resultC+"</table>");
 												resultC = "";
 												resultNotYet="";
 											}else{
-												resultNotYet = "<td><-</td>"+resultNotYet;
+												resultNotYet = "<td style='word-break:break-all;'><img src='/resources/images/icon/plan/leftButton.png' width='50px'></td>"+resultNotYet;
 											}
 										
 									}
+									count++;
 								}
 								
+								alert(count);
 								
 								//$("#totalDisplay").val(totalDisplay);
 								//$("#detailedDisplay").val(detailedDisplay);
