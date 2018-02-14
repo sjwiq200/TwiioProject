@@ -89,12 +89,12 @@ public class UserController {
 		User user = userService.getUserInNo(userNo);
 		User userEval = userService.getEvalUser(userNo);
 		System.out.println("userEval : "+userEval);
-		if(userEval != null) {
+		/*if(userEval != null) {
 			double per = userEval.getUserEval();
 			user.setUserEval(Double.parseDouble(String.format("%.2f",(per/20))));
 			double per2 = userEval.getUserEvalCredit();
 			user.setUserEvalCredit(Double.parseDouble(String.format("%.2f",(per2/20))));
-		}
+		}*/
 		
 		
 	
