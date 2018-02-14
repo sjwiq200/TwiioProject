@@ -3,7 +3,7 @@ package com.twiio.good.service.domain;
 public class Like {
 	private int userNo;
 	private int communityNo;
-	private char like;
+	private String like;
 	private int likeNo;
 	
 	public Like() {
@@ -20,10 +20,10 @@ public class Like {
 	public void setCommunityNo(int communityNo) {
 		this.communityNo = communityNo;
 	}
-	public char getLike() {
+	public String getLike() {
 		return like;
 	}
-	public void setLike(char like) {
+	public void setLike(String like) {
 		this.like = like;
 	}
 	public int getLikeNo() {

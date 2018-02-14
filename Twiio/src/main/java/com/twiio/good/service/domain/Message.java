@@ -11,7 +11,7 @@ public class Message {
 	private int fromUserNo;
 	private String messageContent;
 	private String messageRegDate;
-	private char messageType;
+	private String messageType;
 	private String messageTitle;
 	private int productNo;
 	private String targetUserName;
@@ -68,10 +68,10 @@ public class Message {
 	public void setMessageRegDate(String messageRegDate) {
 		this.messageRegDate = messageRegDate;
 	}
-	public char getMessageType() {
+	public String getMessageType() {
 		return messageType;
 	}
-	public void setMessageType(char messageType) {
+	public void setMessageType(String messageType) {
 		this.messageType = messageType;
 	}
 	public String getMessageTitle() {

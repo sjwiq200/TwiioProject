@@ -432,7 +432,7 @@ function resetData() {
 		 var msguserno = $($('input[name=userNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var inmsg =
-			'<input type="hidden" class="form-control" id="msgno" row="6" col="50" value="'+msguserno+'"/>'+
+			'<input type="hidden" class="form-control" id="msguserno" row="6" col="50" value="'+msguserno+'"/>'+
 			'<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
 			'<input type="text" class="form-control" id="msgusername" row="6" col="50"  value="'+msgusername+'" readonly/>'+
 			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
@@ -464,8 +464,8 @@ function resetData() {
 					dataType : "json" ,
 					contentType:"application/json;charset=UTF-8",
 					data : JSON.stringify({
-						"toUserNo":"${user.userNo}",
-						"fromUserNo":msguserno,
+						"toUserNo":msguserno,
+						"fromUserNo":"${user.userNo}",
 						"messageContent":msgcontent,
 						"messageType":"2",
 						"messageTitle":msgtitle,
@@ -473,7 +473,7 @@ function resetData() {
 						"userName":"${user.userName}"
 					}),
 					success : function(JSONData) {
-						alert(JSON.stringify(JSONData));
+						alert("메시지가 보내기 성공.!!");
 						$('#modalmessage').modal('toggle');
 				    } 
 			   });

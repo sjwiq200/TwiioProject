@@ -315,29 +315,27 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-lg">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>REPORT</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-			
-				<div id="reportview">
-				</div>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
+    
+		
+		
+		<div class="modal fade" id="viewReport" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">	
+    			<div class="modal-dialog">
+    				<div class="modal-content">
+          				<div class="modal-header">
+          				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        					<h4 class="modal-title custom_align" id="Heading">REPORT</h4>
+      					</div>
+          			<div class="modal-body">
+          				<div id="reportview"></div>
+        			</div>
+         			<div class="modal-footer ">
+         				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-			</div>
-		</div>
-		</div>
-		</div>
+        				<!-- <button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button> -->
+      				</div>
+        			</div>
+  	  			</div>
+				</div> 
     
     <!--  화면구성 div End /////////////////////////////////////-->
     

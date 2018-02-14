@@ -17,7 +17,7 @@
 		<result property="messageTitle" 		column="message_title" 		jdbcType="VARCHAR"/>
 		<result property="productNo"	 		column="product_no" 		jdbcType="NUMERIC"/>
 		<result property="userName"	 			column="user_name" 			jdbcType="NUMERIC"/>
-		<result property="targetUsername"	 	column="target_user_name" 	jdbcType="NUMERIC"/>
+		<result property="targetUserName"	 	column="target_user_name" 	jdbcType="NUMERIC"/>
 	</resultMap>
 		
 	<!--SQL : INSERT  -->
@@ -31,7 +31,7 @@
 		#{messageType:VARCHAR},
 		#{messageTitle:VARCHAR},
 		<if test="productNo == 0">
-		NULL
+		0
 		</if>
 		<if test="productNo != 0">
 		#{productNo:NUMERIC}
@@ -72,8 +72,8 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getMessage" parameterType="int" resultType="message">
-		SELECT * FROM PRODUCT WHERE MESSAGE_NO = #{messageNo}
+	<select id="getMessage" parameterType="int" resultMap="messageSelectMap">
+		SELECT * FROM MESSAGE WHERE MESSAGE_NO = #{messageNo}
 	</select>
 	
 

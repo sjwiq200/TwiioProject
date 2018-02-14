@@ -27,6 +27,7 @@ import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mypage.MyPageService;
+import com.twiio.good.service.user.UserService;
 
 
 @RestController
@@ -35,6 +36,10 @@ public class MyPageRestController {
 	@Autowired
 	@Qualifier("mypageServiceImpl")
 	private MyPageService mypageService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 		
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -57,24 +62,32 @@ public class MyPageRestController {
 		System.out.println("/message/addMessage : POST");
 		System.out.println("들어오니??");
 		System.out.println(message);
+		message.setTargetUserName(userService.getUserInNo(message.getToUserNo()).getUserName());
 		mypageService.addMessage(message);
 		System.out.println("저장되었ㄴ미??");
 		return message;
 	}
 	
-	/*@RequestMapping(value = "/message/getMessage")
-	public String getMessage(@RequestParam("messageNo") int messageNo,
-							   Model model
+	@RequestMapping(value = "json/deleteMessage", method = RequestMethod.POST )
+	public Message deleteMessage(@RequestBody Message message
 							   ) throws Exception {
-		System.out.println("/message/getMessage");
+		System.out.println("/message/deleteMessage : POST");
 		
-		Message message = mypageService.getMessage(messageNo);
-		
-		model.addAttribute("message", message);
-		
-		return "forward:/message/getMessage.jsp";
+		mypageService.deleteMessage(message.getMessageNo());
+		System.out.println("저장되었ㄴ미??");
+		return message;
 	}
 	
+	@RequestMapping(value = "json/getMessage")
+	public Message getMessage(@RequestBody Message message
+							   ) throws Exception {
+		System.out.println("/message/getMessage");
+		message = mypageService.getMessage(message.getMessageNo());
+		return message;
+	}
+	
+	
+	/*
 	@RequestMapping(value = "/message/deleteMessage", method = RequestMethod.GET )
 	public String deleteCommunity(@RequestParam("messageNo") int messageNo,
 							Model model

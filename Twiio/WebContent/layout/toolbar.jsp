@@ -116,7 +116,7 @@
 	                         <li><a href="#">구매목록조회</a></li>
 	                         <li><a href="#">판매목록조회</a></li>
 	                         <li><a href="#">신고목록조회</a></li>
-	                         <li><a href="#"></a></li>
+	                         <!-- <li><a href="#">친구목록조회</a></li> -->
 	                         <li class="divider"></li>
 	                     </ul>
 	                 </li>
@@ -266,6 +266,10 @@
 			$(self.location).attr("href","/user/listUser");
 		});
 		
+		/* $( "a:contains('친구목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/mypage/listFriend");
+		});
+		 */
 	</script>  
 	
 	
