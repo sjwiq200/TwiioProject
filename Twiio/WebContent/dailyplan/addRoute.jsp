@@ -352,95 +352,14 @@ body::-webkit-scrollbar-thumb {
 									count++;
 								}
 
-
-								$("#resultMap").append(result); */
 								
-								var resultC="<tr>";
-								var middle="";
-								var resultNotYet= "";
-								for (var i = 0; i < response.routes[0].legs[0].steps.length; i++) {
-									if(flagRight){
-										resultNotYet += "<td>"
-										if(response.routes[0].legs[0].steps[i].transit == null){
-											detailedDisplay='';
-											detailedDisplay += '#'
-												
-											 +	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
-											/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-											+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-											+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
-											+ '-----------'; */
-										}else{
-												detailedDisplay += '#'
-											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
-												+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name;
-											/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-												+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-												+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
-												+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
-												+'---------------'; */
-										}
-										resultNotYet +=detailedDisplay+"</td>";
-										detailedDisplay='';
-										
-										
-										//middle +="</td>"
-										if(i%3==2){
-											resultC +="<tr>"+resultNotYet+"</tr>";
-											flagRight=false;
-											$("#resultMap").append("<table id='myTable'>"+resultC+resultA+"</table>");
-											resultC = "";
-											resultNotYet="";
-										}else{
-											resultNotYet = resultNotYet+"<td>-></td>";
-										}
-									}else{
-										detailedDisplay='';
-										detailedDisplay += "<td>";
-											if(response.routes[0].legs[0].steps[i].transit == null){
-												detailedDisplay += '%'
-											 	+	' //이동수단:'+ response.routes[0].legs[0].steps[i].travel_mode;
-												/*+ ' 이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-												+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-												+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions
-												+ '-----------'; */
-											}else{
-													detailedDisplay +='%'
-											/* 		'//이동 소요시간:'+ response.routes[0].legs[0].steps[i].duration.text
-													+ ' 거리:'+ response.routes[0].legs[0].steps[i].distance.text
-													+ ' 설명:'+ response.routes[0].legs[0].steps[i].instructions*/
-													+ ' 대중교통수단 :'+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name
-												/*	+ ' 출발장소:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name
-													+ ' 도착장소:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name
-													+ ' 차량이름:'+ response.routes[0].legs[0].steps[i].transit.line.name
-													+ ' 차량번호:'+ response.routes[0].legs[0].steps[i].transit.line.short_name
-													+'---------------'; */
-											}
-											var a = detailedDisplay+"</td>";
-											resultNotYet = a+resultNotYet;
-											detailedDisplay='';
-											if(i%3==2){
-												resultC +="<tr>"+resultNotYet+"</tr>";
-												flagRight=true;
-												$("#resultMap").append("<table id='myTable'>"+resultC+resultB+"</table>");
-												resultC = "";
-												resultNotYet="";
-											}else{
-												resultNotYet = "<td><-</td>"+resultNotYet;
-											}
-										
-									}
-								}
-								
-								
-								//$("#totalDisplay").val(totalDisplay);
-								//$("#detailedDisplay").val(detailedDisplay);
-								
-								/* $.ajax( 
-										{
-
+								var resultMap=$("#resultMap").html();
+								var resultMapSummary=$("#resultMapSummary").html();
+								//alert(resultMapSummary);
+								$("#totalDisplay").val(resultMapSummary);
+								$("#detailedDisplay").val(resultMap);
+/* 
+								$.ajax({
 											url : "/dailyplan/json/getRouteResult/",
 											method : "POST",
 											data : {
