@@ -278,7 +278,7 @@
 	   	<set>
 			report_state 	= 'Y'
 	   	</set>
-	   	WHERE REPORT = #{reportNo}
+	   	WHERE report_no = #{reportNo}
 	</update>
 	 
 	 

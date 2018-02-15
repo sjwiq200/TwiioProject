@@ -364,6 +364,21 @@ site-wrapper>.site-wrapper {
 			$('#mainThumbnail').click();
 		});
 	});
+	
+	$(function(){
+		$(".form-control").keydown(function(e) {
+			if (e.keyCode == 13) {
+				 return false;
+			}
+		});
+						
+		$("document").on("keydown",".form-control", function(e) {  
+			if (e.keyCode == 13) {
+				 return false;
+			}
+		});
+
+	});
 </script>
 
 </head>

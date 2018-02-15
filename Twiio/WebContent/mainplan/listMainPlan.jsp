@@ -253,7 +253,7 @@ html, body {
 	            type:'get'
 	         });
 	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).remove(); 
+	    $("#sharePlan"+i).attr('disabled','true'); 
 	}
 	
 	

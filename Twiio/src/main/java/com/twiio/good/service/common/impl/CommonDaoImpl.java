@@ -144,6 +144,8 @@ public class CommonDaoImpl implements CommonDao {
 	@Override
 	public Report updateReport(int reportNo) throws Exception {
 			sqlSession.update("CommonMapper.updateReport", reportNo);
+			
+			System.out.println("°á°ú"+ sqlSession.selectOne("CommonMapper.getReport",reportNo));
 		return sqlSession.selectOne("CommonMapper.getReport",reportNo) ;
 	}
 	
