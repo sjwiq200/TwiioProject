@@ -952,7 +952,13 @@ $(function() {
 								<c:if test="${!empty scrap.scrapNo }">
 									<p class="contents">스크랩번호 : ${scrap.scrapNo }</p>
 								</c:if> --%>
-
+								
+								<c:if test="${!empty planContent.routeDescription}">
+									<p class="contents" align="center" 
+									style="font-size:1.1em !important; font-color: #C2C2C2 !important;">
+									${planContent.routeDescription}</p>
+								</c:if>
+								
 								<c:if test="${!empty planContent.route}">
 									<p class="contentsDelete">루트 : ${planContent.route}</p>
 								</c:if>
@@ -973,9 +979,6 @@ $(function() {
 									<p class="contents">이동방법 : ${planContent.routeType}</p>
 								</c:if> --%>
 
-								<c:if test="${!empty planContent.routeDescription}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;"><!-- 길찾기결과 :  -->${planContent.routeDescription}</p>
-								</c:if>
 								
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
