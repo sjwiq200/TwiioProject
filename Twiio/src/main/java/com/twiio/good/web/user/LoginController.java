@@ -77,6 +77,11 @@ public class LoginController {
 			return "redirect:/user/loginView.jsp";
 		}
 		
+		if(dbUser.getUserLeave()!=null) {
+			
+			return "redirect:/user/loginView.jsp";
+		}
+		
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
 		}

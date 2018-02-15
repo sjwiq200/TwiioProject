@@ -11,14 +11,15 @@
 <meta charset="UTF-8">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css">
 <link href="//cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/build/css/bootstrap-datetimepicker.css"
 	rel="stylesheet">
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
@@ -44,6 +45,8 @@
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
+
+
 
 
 <title>getDailyPlan</title>
@@ -429,7 +432,7 @@ body::-webkit-scrollbar-thumb {
 	            type:'get'
 	         });
 	   var a = "#addToMyFriendList" + i;
-	    $("#addToMyFriendList"+i).remove(); 
+	    $("#addToMyFriendList"+i).attr('disabled','true'); 
 	}
 	
 
@@ -593,81 +596,43 @@ $(function() {
 		
 		$(function() {
 			$("#select").on("click",function(){
-				$("#select").empty();				
-				alert('${dailyPlan.mainPlan.mainPlanNo}');
-				
-				$("#countryButtonGroup").removeAttr("style");
-				/* var button = '<div>'
-						+'<div class="btn-group" role="group" id="countryButtonGroup">';
-						
-						
-						 $.ajax( 
-									{
-									url : "/dailyplan/json/getMainCountry/${dailyPlan.mainPlan.mainPlanNo}",
-									method : "GET" ,
-									dataType : "json" ,
-									contentType:"application/json;charset=UTF-8",									
-									success : function(JSONData) {
-										//alert(JSON.stringify(JSONData));
-																				
-										for(var i=0; i<JSONData.length; i++){
-											
-											button += '<input type="button" class="button" name="countrySelectButton" id="country'+(i+1)+'" class="btn btn-default" value="'+JSONData[i]+'" style="font-family:\'JEJUGOTHIC\';"/>';
-										}
-												
-										button += '</div>';				
-										
-										$("#select").append(button);
-										
-									}
-							});			 */
-				
+				$("#select").hide();				
+				//alert('${dailyPlan.mainPlan.mainPlanNo}');
+								
+				$("#countryButtonGroup").show();
+				$("input.countrySelectButton").show();
+								
 				
 			});
 			
-			 /* $( document ).on('click',"input[name='countrySelectButton']",function() {
-								
-				var target = $( event.target );	
-				//alert(target.index());
-				//alert(target.val());
-				//$("p.getCountry").empty();
-				$("p.getCountry").append(target.val());
-				$( document ).delegate(target,'remove');
-			
-			}); */
+			 
 			
 			$("input[name='countrySelectButton']").on('click',function() {
 				//alert($("input[name='countrySelectButton']").index(this));
 				var target = $( event.target );	
 				
-				/* var countryName ="";
-				if(${dailyPlan.dailyCountry} != null){
-					countryName += ${dailyPlan.dailyCountry}+","+target.val();
-				}else{
-					countryName = target.val();
-				} */
-				
 				$.ajax( 
 						{
 						url : "/dailyplan/json/selectCountryNew",
-						method : "GET" ,
+						method : "POST" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
-						data : {
+						data : JSON.stringify({
 							dailyPlanNo : ${dailyPlan.dailyPlanNo},
-							countryName : target.val()
-						},
+							dailyCountry : target.val()
+						}),
 						success : function(JSONData) {
-							//alert(JSON.stringify(JSONData));								
+							//alert(JSON.stringify(JSONData));				
 							
 						}
 				});			
 				
 				$("p.getCountry").append(target.val()+"  ");
-				target.attr("style","display:none");
+				
+				target.hide();
 			});
 			
-			$("p.getCountry").on("click",function(){
+			$("div.get").on("click",function(){
 				
 				$.ajax( 
 						{
@@ -678,22 +643,203 @@ $(function() {
 						data : {
 							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
 						},
+						
 						success : function(JSONData) {
-							//alert(JSON.stringify(JSONData));	
-							
+							//alert(JSON.stringify(JSONData));							
 							
 						}
 				});	
 			
 				$("p.getCountry").empty();
-				$("#countryButtonGroup").removeAttr("style");
-				$("input.countrySelectButton").removeAttr("style");
+				$("p.getCity").empty();
+				
+				$("#countryButtonGroup").show();
+				$("input.countrySelectButton").show();
+				
 			});
+			
+			$("input.SelectButton").on("click",function(){
+				alert($(".cityList").index($(".cityList").last()));
+				var cityName="";
+				for(var i=0; i<$(".cityList").index($(".cityList").last())+1; i++){
+					
+					if(i==$(".cityList").index($(".cityList").last())){
+						cityName += $($(".cityList")[i]).val();				
+					}else{
+						cityName += $($(".cityList")[i]).val()+",";
+					}
+					
+				}
+				$("input[name='cityList']").val();
+				//var standardCityName= encodeURI(encodeURIComponent(cityName));
+				$.ajax( 
+						{
+						url : "/dailyplan/json/selectCity",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"dailyPlanNo" : ${dailyPlan.dailyPlanNo},
+							"dailyCity" : cityName
+						}),
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));				
+							
+						}
+				});		
+				
+				
+				$("#countryButtonGroup").hide();
+				$("input.countrySelectButton").hide();
+				
+				$.ajax( 
+						{
+						url : "/dailyplan/json/getDailyCountry",
+						method : "GET" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : {
+							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
+						},
+						success : function(JSONData) {
+							//alert(JSON.stringify(JSONData));
+							if(JSONData){
+								$("#select").show();
+							}
+							
+						}
+				});	
+				
+			});
+			
 			
 			
 		});
 		
+		$(function(){
+			$.ajax( 
+					{
+					url : "/dailyplan/json/getDailyCountry",
+					method : "GET" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : {
+						dailyPlanNo : ${dailyPlan.dailyPlanNo}							
+					},
+					success : function(JSONData) {
+						//alert(JSON.stringify(JSONData));
+						if(JSONData){
+							$("#select").show();
+						}
+						
+					}
+			});				
 		
+		});
+		
+		$(document).on('change',"input[name='cityList']",function() {
+			//alert($("input[name='countrySelectButton']").index(this));
+			var target = $( event.target );				
+					
+			$("p.getCity").append(target.val()+"  ");
+			
+		});
+		
+	//////////////////////////////////////////////cityautocomplete/////////////
+	/* 	
+	$(document).ready(function() {
+		$("input[name='cityList']").each(function(index) {
+			//alert(index);
+			$($("input[name='cityList']")[index]).autocomplete({
+				source : function(request,response) {
+					$.ajax({
+							url : "/information/json/cityAutoComplete/",
+							method : "POST",
+							data : {
+									keyword : $($("input[name='cityList']")[index]).val()
+							},
+							dataType : "json",
+							success : function(JSONData) {
+										response($.map(JSONData,function(item) {
+										return item;
+										}));
+									}
+							});
+				}		
+			});
+		});
+
+	}); */
+	////////////////////////////////////////////addcity////
+	var i = 1;
+	$(function() {
+
+		$("#addCity").on("click",function() {
+			
+			if (i == 1) {$("#removeCity").attr("disabled", false);
+			i++;		
+			//alert("1");
+			$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+			}
+			else if (i > 4) {//alert("2");
+			$("#addCity").attr("disabled", true);
+			}
+			else if(i==4){
+				i++;
+				//alert("3");
+				$("#addCity").attr("disabled", true);
+				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+			}
+			else{
+				i++;
+				//alert("4");
+				$("#removeCity").attr("disabled", false);
+				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+			}
+			
+			/* $(document).find("input[name='cityList']").removeClass('ui-autocomplete-input').each(function(index) {
+						
+					$($("input[name='cityList']")[index]).autocomplete(	{source : function(request,response) {
+																				$.ajax({
+																					url : "/information/json/cityAutoComplete/",
+																					method : "POST",
+																					data : {keyword : $($("input[name='cityList']")[index]).val()
+																					},
+																					dataType : "json",
+																					success : function(JSONData) {
+
+																						response($.map(JSONData,function(item) {
+
+																									return item;
+																								}));
+																					}
+																				});
+																			}
+																		});
+							}); */
+		});
+
+		$(function() {
+
+			$("#removeCity").on("click", function() {
+				if (i > 2) {
+					//alert("11");
+					$("#addCity").attr("disabled", false);
+					$('#city' + i).remove();
+					i--;
+				} else if (i == 2) {
+					//alert("22");
+					$("#removeCity").attr("disabled", true);
+					$('#city' + i).remove();
+					i--;
+				}
+
+			});
+		});
+	});
+	
+	
+	
 </script>
 
 </head>
@@ -781,19 +927,35 @@ $(function() {
 						<p>DAY ${dailyPlan.day}</p>
 						 </div>
 						<div class="col-xs-12" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;" align="center">
-						<p>${dailyPlan.dailyDate}</p> 
-						<p>${dailyPlan.dailyCity}</p>
-						<p class="getCountry">${dailyPlan.dailyCountry}</p>						
+						<p>${dailyPlan.dailyDate}</p>
+						<div class="get"> 
+						<p class="getCity">${dailyPlan.dailyCity}</p>
+						<p class="getCountry">${dailyPlan.dailyCountry}</p>	
+						</div>					
 						</div>
-						<c:if test="${empty dailyPlan.dailyCountry }">
-						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important;"><p>나라와 도시를 선택해주세요!!</p></div>
-						</c:if>
+						<%-- <c:if test="${empty dailyPlan.dailyCountry }"> --%>
+						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important; display:none"><p>나라와 도시를 선택해주세요!!</p></div>
+						<%-- </c:if> --%>
 						<div style="display:none"; class="btn-group" role="group" id="countryButtonGroup">
 						<c:set var="i" value="0" />
 						<c:forEach var="countryList" items="${countryList}">
 						<c:set var="i" value="${i+1}" />
 						<input type="button" class="countrySelectButton" name="countrySelectButton" id="country${i}" class="btn btn-default" value="${countryList}" style="font-family:\'JEJUGOTHIC\';"/>
 						</c:forEach>
+						<input type="button" class="SelectButton" name="SelectButton" class="btn btn-default" value="확인" style="font-family:\'JEJUGOTHIC\';"/>
+						
+						<div name="addCity">
+							<label class="control-label" for="textinput">여행하고 싶은 도시를 입력해주세요</label> 
+							<input type="text" id="city1" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요." class="cityList form-control input-md contents">
+													
+						<div class="btn-group">
+							<a class="btn btn-default btn" href="#" role="button" id="addCity" name="addCity">
+							<span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#A6A0A5;"></span></a> 
+							<a class="btn btn-default btn" href="#" role="button" id="removeCity" name="removeCity" disabled="true">
+							<span class="glyphicon glyphicon-minus" aria-hidden="true" style="color:#A6A0A5;"></span></a>
+						</div>
+						</div>
+						
 						</div>
 						<div class="col-xs-12" style="margin-top:130px" align="center">
 						<input type="hidden" value="${dailyPlan.dailyPlanNo}" id="idDailyPlanNo" />

@@ -223,15 +223,24 @@ public class CommonRestController {
 		return report2;
 	}
 	
-	@RequestMapping(value = "json/updateReport/{reportNo}" )
-	public Report updateReport(@PathVariable int reportNo) throws Exception {
+	@RequestMapping(value = "json/updateReport" )
+	public Boolean updateReport(@RequestBody Report report) throws Exception {
 		
 		System.out.println("/common/updateReport");
 		
-		Report report = commonService.updateReport(reportNo);
+		Report con = commonService.getReport(report.getReportNo());
 		
-		System.out.println("report : "+ report);
+		if(con.getReportState()!=null) {
+			
+			return false;
+		}else{
 		
-		return report;
+		System.out.println("²ó?");	
+		Report report2= commonService.updateReport(report.getReportNo());
+		
+		System.out.println("report : "+ report2);
+		
+		return true;
+		}
 	}
 }

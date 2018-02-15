@@ -9,6 +9,8 @@ import java.util.Vector;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
@@ -43,6 +45,7 @@ public class RoomDaoImpl implements RoomDao {
 	public Map<String, Object> listRoom(Search search) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+".listRoom()");
+		System.out.println("roomDaoImpl == >" +search);
 		Map<String, Object> map = new HashMap<>();
 		List<Room> list;
 		Query query = new Query();
@@ -68,8 +71,11 @@ public class RoomDaoImpl implements RoomDao {
 		
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
-		query.skip(search.getStartRowNum()-1); //start Num
+		query.skip(search.getStartRowNum()); //start Num
 		query.limit(search.getEndRowNum()); //end Num
+//		Pageable pageable = new PageRequest(search.getStartRowNum(),search.getEndRowNum());
+		
+//		query.with(pageable);
 		list = mongoTemplate.find(query, Room.class, "rooms");
 		System.out.println("daoImpl ==>" + list);
 		map.put("list", list);
@@ -164,7 +170,7 @@ public class RoomDaoImpl implements RoomDao {
 		
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
-		query.skip(search.getStartRowNum()-1); //start Num
+		query.skip(search.getStartRowNum()); //start Num
 		query.limit(search.getEndRowNum()); //end Num
 		
 		System.out.println("mongotemplate list ==>"+mongoTemplate.find(query, RoomUser.class, "roomUser"));

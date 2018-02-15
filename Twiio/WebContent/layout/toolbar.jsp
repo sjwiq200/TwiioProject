@@ -114,7 +114,9 @@
 	                     	 <li><a href="#">회원리스트조회</a></li>
 	                         <li><a href="#">Message</a></li>
 	                         <li><a href="#">구매목록조회</a></li>
-	                         <li><a href="#">판매목록조회</a></li>
+	                         <c:if test="${sessionScope.user.userType == '2'}">
+	                        	 <li><a href="#">판매목록조회</a></li>
+	                         </c:if>
 	                         <li><a href="#">신고목록조회</a></li>
 	                         <!-- <li><a href="#">친구목록조회</a></li> -->
 	                         <li class="divider"></li>
@@ -226,7 +228,12 @@
 		/* Planer */
 		
 		$( "a:contains('MyTripBook')" ).on("click" , function() {
-			$(self.location).attr("href","/mainplan/listMainPlan");
+			
+			if(${sessionScope.user == null}){
+				$(self.location).attr("href","/user/login");
+			}else{
+				$(self.location).attr("href","/mainplan/listMainPlan");
+			}
 		});
 		
 		/* Login */

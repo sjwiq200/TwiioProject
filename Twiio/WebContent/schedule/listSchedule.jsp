@@ -43,6 +43,104 @@
 		 
 	 });
   </script>
+  
+  <script type="text/javascript">
+//infinite scroll
+  var page = 1;
+	var flag = 0;
+	var flag2 = 0;
+	var scheduleCount = ${resultPage.totalCount};
+
+	if (self.name != 'reload') {
+		self.name = 'reload';
+		self.location.reload(true);
+	} else
+		self.name = '';
+
+	$(function() {
+		$(window).scroll(function() {
+							var documentHeight = $(document).height();
+							console.log('$(window).scrollTop() :: '+ ($(window).scrollTop()));
+							console.log('$(document).height() - $(window).height() :: '+ ($(document).height() - $(window).height()));
+							if (($(window).scrollTop()) != $(document).height()- $(window).height()& flag2 == 1) {
+								flag2 = 0;
+								console.log('flag :: ' + flag2);
+							}
+							if (($(window).scrollTop() + 0.8) >= $(document).height()- $(window).height()& flag2 == 0) {
+								flag2 = 1;
+								console.log('$(window).scrollTop() :: '+ $(window).scrollTop());
+								console.log('$(document).height() - $(window).height() :: '+ ($(document).height() - $(window).height()));
+								page = page + 1;
+								
+								$.ajax({
+										url : "/schedule/json/listSchedule",
+										method : "POST",
+										dataType : "json",
+										contentType : "application/json;charset=UTF-8",
+										data : JSON.stringify({
+											"currentPage" : page,
+											"searchCondition" : $('#searchCondition').val(),
+											"searchKeyword" : $('#searchKeyword').val(),
+											"prodSearchType" :  $('#prodSearchType').val()
+										}),
+										headers : {
+											"Accept" : "application/json",
+											"Content-Type" : "application/json"
+										},
+										success : function(JSONData, status) {
+											console.log("SUCCESS");
+											var scheduleObject = JSON.parse(JSON.stringify(JSONData));
+											console.log(scheduleObject.room.length);
+											console.log(scheduleObject.schedule);
+											if (flag == 0) {
+												/* scheduleCount = scheduleCount- JSONData.length; */
+												scheduleCount = scheduleCount- scheduleObject.schedule.length;
+												flag = 1;
+											}
+
+											/* for (var i = 0; i < JSONData.schedule.length; i++) { */
+											for (var i = 0; i < scheduleObject.schedule.length; i++) {
+												
+												console.log("Hello"+scheduleObject.schedule[i].mapImg);
+												var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
+														+ '<div class="thumbnail" name="getPro" style="height:600px;">'
+														if(scheduleObject.schedule[i].mapImg == null){
+															displayValue +='<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">'
+														}else{
+															displayValue +='<img src="'+scheduleObject.schedule[i].mapImg+'&key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE" class="img-rounded">'
+														}
+														displayValue += '<div class="caption">'
+														+ '<h3> Title :'
+														+ scheduleObject.schedule[i].scheduleTitle
+														+ '</h3>'
+														+ '<p> Date : '
+														+ scheduleObject.schedule[i].scheduleDate
+														+ '</p>'
+														+ '<p> Address : '
+														+ scheduleObject.schedule[i].scheduleAddress
+														+ '</p>'
+														+ '<p> User : '
+														+ scheduleObject.schedule[i].userNo
+														+ '</p>'
+														+ '<p> roomKey : '
+														+ scheduleObject.schedule[i].roomKey
+														+ '</p>'
+														
+														if(scheduleObject.room[i].userNo == ${user.userNo} ){
+														+'<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:10%">일정 수정<input type="hidden" id="roomKey" value="'+scheduleObject.schedule[i].roomKey+'"></a>'
+														}	
+														
+														+ '</div>'
+														console.log("manner makes man ==>" + displayValue);
+
+												$('div.row2').append(displayValue);
+											}
+										}
+									});
+							}
+						});
+	}); 
+  </script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -87,9 +185,50 @@
 		    	</p>
 		    </div>
 		    
+		    <!-- FORM -->
+		<form role="form" >
+			<div class="row centered-form" >
+				 <div class="mainbox col-md-12" >
+					<div class="panel" style="background: rgba(255, 255, 255, 0.3);">
+			 			<div class="panel-body" >
+				    			<div class="row">
+				    				<div class="col-md-2" >
+									<div class="form-group">
+									    <select class="form-control" id="searchCondition" name="searchCondition" >
+					                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
+					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
+					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
+										</select>
+				  					</div>
+			  					</div>
+			  					
+				  				<div class="col-md-10">
+								  <div class="form-group">
+								    <label class="sr-only" for="searchKeyword">검색어</label>
+								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+								  	</div>
+								  </div>
+								 
+					    			</div>
+					    			<div class="row">
+					    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
+					    				<input type="hidden" id="currentPage" name="currentPage" value=""/>
+					    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+					    			</div>
+					    	</div>
+			    		</div>
+					</div>
+				</div>
+			</div>
+		
+		</form>
+						<!-- FORM -->
+		    
 		    
 	    	
 		</div>
+   	<div class="row2">
    	
    	<c:set var="i" value="0" />
 		  <c:forEach var="schedule" items="${schedule}" varStatus="status">
@@ -124,8 +263,8 @@
 		      </div>
 		    </div>
 		    </c:forEach>
-		    
 		    </div>
+	    </div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
 

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -112,7 +113,9 @@
     	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
     	  					var info =
-    	  	    				'<input type="hidden" id="delete" name="delete" val="'+JSONData.targetUserNo+'"><div class="row">'+
+    	  	    				'<input type="hidden" id="delete" name="delete" value="'+JSONData.targetUserNo+'">'+
+    	  	    				'<input type="hidden" id="deleteReportNo" name="deleteReportNo" value="'+JSONData.reportNo+'">'+
+    	  						'<div class="row">'+
     	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
     	  	    				'<br/><div class="row">'+
     	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
@@ -131,6 +134,7 @@
     	  	    				'</div>';
     	  	    			$('#reportview').html(info);
     	  	    			$('#viewReport').modal('show');	
+    	  	    			
     	  			 }
     	  		});
       	   });
@@ -163,40 +167,52 @@
   		
   		});
 
-      
+       
       $(function() {
-	  		$(  "#btnSubmit" ).on("click" , function() {
-	  			alert("뀨 시작");
-	  			var userNo = $("#delete").val();
-	  			var reportNo = $("#reportNo").val();
-	  		$.ajax({
-	  			url : "user/json/deleteUser",
-	  			method : "POST" ,
-	  			dataType : "json" ,
-	  			contentType:"application/json;charset=UTF-8",
-	  			data : JSON.stringify({
-	  				"userNo":userNo
-	  			}),
-	  			success : function(JSONData) {			
-	  					alert("뀨 성공");
-	  					
-	  					$.ajax({
-	  		                type: "get",
-	  		                url: "common/json/updateReport?reportNo="+reportNo,
-	  		                success: function (data) {
-	  		                	
-	  		                	alert("뀨규 성공");
-	  		                	
-	  		                	location.reload();
+	  		$("#btnSubmit" ).on("click" , function() {
+	 		 //$(document).on("click","#btnSubmit" , function(){	
+		    	  	   	  			var userNo = $("#delete").val();
+		    	  	   	  			var reportNo = $("#deleteReportNo").val();
+		    	  	   	  		$.ajax({
+		    	  	   	  			url : "/user/json/deleteUser",
+		    	  	   	  			method : "POST" ,
+		    	  	   	  			dataType : "json" ,
+		    	  	   	  			contentType:"application/json;charset=UTF-8",
+		    	  	   	  			data : JSON.stringify({
+		    	  	   	  				"userNo":userNo
+		    	  	   	  			}),
+		    	  	   	  			success : function(JSONData, state) {
+		    	  	   	  				
+										if(JSONData==false){
+												alert("이미 탈퇴된 회원입니다.");
+										}
+		    	  	   	  					 $.ajax({
+		    	  	   	  		                url: "/common/json/updateReport",
+		    	  	   	  		       			 method : "POST" ,
+				    	  	   	  				dataType : "json" ,
+				    	  	   	  				contentType:"application/json;charset=UTF-8",
+				    	  	   	  				data : JSON.stringify({
+				    	  	   	  					"reportNo":reportNo
+				    	  	   	  				}),
+		    	  	   	  		                success: function (JSONData) {
+		    	  	   	  		                	
+		    	  	   	  		                	if(JSONData==true){
+		    	  	   	  		                		alert("신고 처리가 완료되었습니다.");
+		    	  	   	  		                	}else{
+		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
+		    	  	   	  		                	}
+		    	  	   	  		                	
+		    	  	   	  		                	location.reload();
+		
+		    	  	   	  		                },error : function(request,status,error) {
 
-	  		                }
-	  		            });
-	  					
-	  			 }
-	  		});
-	  			
-	  			
-	  		});
+		    		    	  	   	  	    	}
+		    	  	   	  		            });
+		    	  	   	  	    	}
+		    	  	   	  		});
+		    	  	   	  			
+    	  	   	  			
+    	  	   	  			});
 	  	});
 		
    

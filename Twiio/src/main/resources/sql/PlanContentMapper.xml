@@ -80,5 +80,8 @@
 		 DELETE FROM plan_content WHERE daily_plan_no=#{dailyPlanNo}
 	 </delete>
 	 
+	  <delete  id="deletePlanContentEach"  parameterType="int">
+		 DELETE FROM plan_content WHERE content_no=#{contentNo}
+	 </delete>
 	 
 </mapper>
