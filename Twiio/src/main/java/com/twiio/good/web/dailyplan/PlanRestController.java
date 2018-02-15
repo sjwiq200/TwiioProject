@@ -61,6 +61,7 @@ public class PlanRestController {
 	public PlanRestController() {
 	}
 	
+	
 	@RequestMapping(value = "json/selectCity", method = RequestMethod.POST)
 	public void selectCity(
 			@RequestBody DailyPlan dailyPlan 
