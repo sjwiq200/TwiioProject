@@ -293,13 +293,13 @@ public class UserRestController {
 	
 		
 		@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
-		public Boolean deleteUser(@ RequestBody User  user) throws Exception{
+		public Map<String, Object> deleteUser(@RequestBody User  user) throws Exception{
 			
 			System.out.println("/user/json/deleteUser");
 			
 			User user2 = userService.getUserInNo(user.getUserNo());
 			
-			if(user2.getUserLeave().equals("Y")) {
+			/*if(user2.getUserLeave().equals("Y")) {
 				
 				return false;
 			}else {
@@ -307,6 +307,15 @@ public class UserRestController {
 			userService.deleteUser(user2);
 			
 			return true;
+			}*/
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(user2.getUserLeave()==null) {
+				userService.deleteUser(user2);
+				map.put("resign", "1");
+				return map;
+			}else {
+				map.put("resign", "0");
+				return map;
 			}
 	}
 }

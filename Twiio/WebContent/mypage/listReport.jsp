@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -102,6 +101,11 @@
       $('td:nth-child(5)').on('click',function(){
     		
     	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(5)').index(this)]).val();
+    	  var reportState = $($('input[name=reportState]')[$('td:nth-child(5)').index(this)]).val();
+    	  
+    	  if(reportState == 'Y'){
+    		  alert('신고처리완료');
+    	  }else{
     				$.ajax({
     	  			url : "/common/json/getReport",
     	  			method : "POST" ,
@@ -137,6 +141,7 @@
     	  	    			
     	  			 }
     	  		});
+    	      }
       	   });
      });
      
@@ -195,8 +200,8 @@
 				    	  	   	  					"reportNo":reportNo
 				    	  	   	  				}),
 		    	  	   	  		                success: function (JSONData) {
-		    	  	   	  		                	
-		    	  	   	  		                	if(JSONData==true){
+		    	  	   	  		                	alert(JSON.stringify(JSONData));		    	  	   	  		                	
+		    	  	   	  		                	if(JSONData.resign == '1'){
 		    	  	   	  		                		alert("신고 처리가 완료되었습니다.");
 		    	  	   	  		                	}else{
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
@@ -205,7 +210,8 @@
 		    	  	   	  		                	location.reload();
 		
 		    	  	   	  		                },error : function(request,status,error) {
-
+													alert('에러다.');
+													location.reload();
 		    		    	  	   	  	    	}
 		    	  	   	  		            });
 		    	  	   	  	    	}
@@ -293,7 +299,7 @@
          <tr class="ct_list_pop">
          	
      	   <input type="hidden" name="reportNo" id="reportNo" value="${report.reportNo}"/>
-     	   <input type="hidden" name="reportlist" value="${report}"/>
+     	   <input type="hidden" name="reportState" value="${report.reportState}"/>
            <td align="left">${report.userName}</td>
            <td align="left">
            		${report.targetUserName}
