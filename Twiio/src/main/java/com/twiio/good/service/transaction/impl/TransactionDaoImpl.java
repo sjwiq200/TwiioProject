@@ -130,8 +130,17 @@ public class TransactionDaoImpl implements TransactionDao {
 	public void deleteTransaction(int tranNo) throws Exception {
 		// TODO Auto-generated method stub
 		sqlsession.delete("TransactionMapper.deleteTransaction",tranNo);
-	}	
-	
-	
+	}
 
+	@Override
+	public void updateTransactionEval(Transaction transaction) throws Exception {
+		System.out.println("transactionEval GOGO");
+		sqlsession.update("TransactionMapper.updateTransactionEval",transaction);	
+	}
+
+	@Override
+	public int getTransactionCount(Transaction transaction) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlsession.selectOne("TransactionMapper.getTransactionCount",transaction);	
+	}
 }

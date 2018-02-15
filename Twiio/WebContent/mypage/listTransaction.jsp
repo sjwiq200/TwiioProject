@@ -253,10 +253,14 @@
         
 	.modal-content.modal-refund {
   		height: 50%;
- 		width: 30%;
   		border-radius: 0;
 	}    	
     
+    .modal-content.modal-eval {
+  		height: 40%;
+  		width: 30%;
+  		border-radius: 0;
+	}    
         
        <!-- ##### -->
     </style>
@@ -274,7 +278,7 @@
          $("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${menu}").submit();
       }
      
-      
+     /////////////////////////////////////////////////////////////////////////////// 
       $(document).ready(function(){ 
     	    $('#characterLeft').text('60 characters left');
     	    $('#message').keyup(function () {
@@ -312,7 +316,9 @@
   	        }
   	    });    
   	});
+      ///////////////////////////////////////////////////////////////////////////////////
       
+      //////////////////////////////////////상품 정보보기/////////////////////////////////////
       $(function(){
           $('td:nth-child(4)').on('click',function(){
         	  var productno = $($('input[name=productNo]')[$('td:nth-child(4)').index(this)]).val();
@@ -325,34 +331,56 @@
            	  self.location = "/product/getProduct?productNo="+productno;
            });
          });
-
+         ///////////////////////////////////////////////////////////////////////////////////
+         
+         
+	/////////////////////////////////리뷰 작성하기///////////////////////////////////////
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		
-  		if(${empty user.userId}){
-  			 alert('로그인후 사용하여주세요');	 
+  		var evalreview = $($('input[name=evalReview]')[$('.ct_list_pop #eval').index(this)]).val();
+  		 if(${empty user.userId} | evalreview == '1'){
+  			 	 
   		 }else{
+  			 alert(tranno);
+  			 $('#modalTranNo').val(tranno);
   			 $('#addReivew').modal('show');
   		 }
       });
-  		/* $(document).on('click','#updatereplym',function(){
-  			 $.ajax({
-  					url : "/common/json/updateReply",
-  					method : "POST" ,
-  					dataType : "json" ,
-  					contentType:"application/json;charset=UTF-8",
-  					data : JSON.stringify({
-  						"replyNo":updatereplyno,
-  						"replyContent":$('#updatecontent').val()
-  					}),
-  						success : function(JSONData) {
-  							alert(JSON.stringify(JSONData));
-  							 $('#updatemodalreply').modal('toggle');		
-  							window.location.reload();
-  					}
-  			}); 
-  		}); */
-  		
+      
+      $(document).on('click','#btnSubmit',function(){
+   	   var index=$('input[type=radio][name=star-input]:checked').val();
+   	   var index2=$('input[type=radio][name=star-input2]:checked').val();
+   	   if(index2 == null){
+   		   index2=0;
+   	   }
+   	   if(index == null){
+   		   index=0;
+   	   }
+		   var hostcontent=$('#message').val();
+		   var productcontent=$('#message2').val();
+		   var tranNo = $('#modalTranNo').val();
+		   
+		   $.ajax({
+					url : "/transaction/json/updateTransactionEval",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"starEvalProduct":index2,
+						"starEvalHost":index,
+						"reviewProduct":productcontent,
+						"reviewHost":hostcontent,
+						"tranNo":tranNo
+					}),
+					success : function(JSONData) {
+						alert("완료");
+						$('#addReivew').modal('toggle');
+						location.reload();
+					}
+		  });
+		   
+      });
+  		/////////////////////////////////////////////////////////////////////
       
       ///////////////////////////환불하기 버튼//////////////////////////////
        $(document).on('click','#refund', function() {
@@ -362,9 +390,10 @@
     	   var productname = $($('input[name=productName]')[$('.ct_list_pop #refund').index(this)]).val();
     	   var thumbnail = $($('input[name=thumbnail]')[$('.ct_list_pop #refund').index(this)]).val();
     	   var regdate = $($('input[name=regDate]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var refundcode = $($('input[name=refundCode]')[$('.ct_list_pop #refund').index(this)]).val();
 		   
     	   	 if(${empty user.userId}){
-    			 alert('로그인후 사용하여주세요');	 
+    			 alert('로그인후 사용하여주세요');	     			 
     		 }else{
     			 $("#modalThumbNail").val(thumbnail);
     			 $("#modalProductNo").val(productno);
@@ -372,7 +401,7 @@
     			 $("#modalProductName").val(productname);
     			 $("#modalTotalPrice").val(totalprice);
     			 $("#modalRegDate").val(regdate);
-    			 
+    			 $("#modalrefundCode").val(refundcode);
     
 			 	var img ='';
 			 	if(thumbnail == ''){
@@ -395,7 +424,6 @@
 			var modalRefundAccount = $("#modalRefundAccount").val();
 			var modalRefundBank = $("#modalRefundBank").val();
 			
-			
 			if(modalProductNo == '' || modalTranNo == '' || modalTotalPrice =='' || modalRefundAccount=='' || modalRefundBank==''){
 				alert("입력을 완료해주세요.");
 			}else{
@@ -415,18 +443,15 @@
 							success : function(JSONData) {
 								alert("완료");
 								$('#addRefundModal').modal('toggle');
+								location.reload();
 							}
 				});			  
 			}
        });
+       ///////////////////////////////////////////////////////////////////////////
        
-	   $(document).on('click','#btnSubmit',function(){
-    	   var index=$('input[type=radio][name=star-input]:checked').val();
-    	   var index2=$('input[type=radio][name=star-input2]:checked').val();
-			alert(index);
-			alert(index2);
-    	
-       });
+       
+	  
        
    </script>
    
@@ -498,6 +523,8 @@
          	<input type="hidden" id="totalPrice" name="totalPrice" value="${transaction.totalPrice}"/>
          	<input type="hidden" id="productName" name="productName" value="${transaction.tranPro.productName}"/>
          	<input type="hidden" id="thumbnail" name="thumbnail" value="${transaction.tranPro.thumbnail}"/>
+         	<input type="hidden" id="refundCode" name="refundCode" value="${transaction.refundCode}"/>
+         	<input type="hidden" id="evalReview" name="evalReview" value="${transaction.evalReview}"/>
          	
            <td align="left">${transaction.regDate}</td>
            <td align="left">
@@ -512,13 +539,18 @@
            <td align="left">${transaction.tripDate}</td>
            <td align="left">${transaction.count}</td>
            <td align="left">${transaction.totalPrice}</td>
-           <td align="left" id="eval"><a href="#">평가하기</a></td>
-           <td align="left" id="refund"><a href="#">
-           <%-- <c:if test="${transaction.refundCode == '1'}">
+           <td align="left" id="eval"><a href="#">
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
-           <c:if test="${trip-now < 2 && trip>now}">환불하기</c:if>
-           </a>
+           <c:if test="${(trip<now)}">
+           <c:if test="${transaction.evalReview == null}">평가하기</c:if> 
+           </c:if>
+           </a></td>
+           <td align="left" id="refund"><a href="#">
+           <c:if test="${transaction.refundCode == '1'}">
+           <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
+           <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
+           <c:if test="${(trip-now > 2) && (trip>now)}">환불하기</c:if>
            </c:if>
            <c:if test="${transaction.refundCode == '2'}">
            	환불처리중
@@ -526,8 +558,6 @@
            <c:if test="${transaction.refundCode == '3'}">
            	환불처리완료
            </c:if> 
-           --%>
-           	환불하기
            	</a>
            </td>
          </tr>
@@ -546,10 +576,11 @@
     </div>
     
     	<div class="modal fade" id="addReivew"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-eval">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
+				<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>	
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
 				<h3 class="modal-title">
 					<Strong>평 가</Strong>
@@ -557,7 +588,8 @@
 			</div>
 			<div class="modal-body">
 				<div class="form-group">
-			호스트 별점</br>
+			호스트 별점
+			</br>
 			<span class="star-input">
   			<span class="input">
     			<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
@@ -573,6 +605,7 @@
   				</span>
 				</span>
 			
+				</br>
 				</br>
                               호스트 리뷰
             	</br>
@@ -598,6 +631,8 @@
   				</span>
 				</span>
 				</br>
+				</br>
+				
 				상품 리뷰
                 <textarea class="form-control input-sm " type="textarea" id="message2" style="resize:none;" placeholder="Message2" maxlength="60" rows="1"></textarea>
                 <span class="help-block"><p id="characterLeft2" class="help-block ">You have reached the limit</p></span>
@@ -627,6 +662,7 @@
 						<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>
          				<input type="hidden" id="modalProductNo" name="modalProductNo" value=""/>
          				<input type="hidden" id="modalThumbNail" name="modalThumnail" value=""/>
+         				<input type="hidden" id="modalrefundCode" name="modalrefundCode" value=""/>
 						<div class="thum col-sm-8 col-sm-offset-4" id="thum">
 
 						</div>
@@ -650,7 +686,9 @@
            			 	
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default"id="modalrefund">환불신청</button>
+						<c:if test="${modalrefundCode == '1'}">
+						<button type="button" class="btn btn-default" id="modalrefund">환불신청</button>
+						</c:if>
 						<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 					</div>
 				</div>

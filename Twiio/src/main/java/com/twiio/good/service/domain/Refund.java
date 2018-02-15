@@ -19,7 +19,7 @@ public class Refund {
 	private String refundCode;
 
 	public Refund() {
-		// TODO Auto-generated constructor stub
+		// TODO Auto-g onstructor stub
 	}
 
 	public int getRefundNo() {

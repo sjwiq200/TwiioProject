@@ -184,7 +184,7 @@
       <div class="page-header text-info">
           <h3>
           <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	신고목록조회
+          	환불목록조회
          </h3>
        </div>
        
@@ -192,7 +192,7 @@
        <div class="row">
           <div class="pull-left">
              <p class="text-primary">
-                전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+                	전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
              </p>
           </div>
                   

@@ -29,11 +29,12 @@
 		<result property="evalHost" 				column="eval_host" 				jdbcType="NUMERIC" />
 		<result property="userName" 				column="user_name" 				jdbcType="VARCHAR" />
 		<result property="hostName" 				column="host_name" 				jdbcType="VARCHAR" />
+		<result property="evalReview" 				column="eval_review" 			jdbcType="VARCHAR" />
 		<result property="tranPro.thumbnail" 		column="thumbnail" 				jdbcType="VARCHAR" />
 		<result property="tranPro.hostImage" 		column="profile_image" 			jdbcType="VARCHAR" />
 		<result property="tranPro.country" 			column="country" 				jdbcType="VARCHAR" />
 		<result property="tranPro.city" 			column="city" 					jdbcType="VARCHAR" />
-		<result property="tranPro.productName" 		column="product_title" 			jdbcType="VARCHAR" />			
+		<result property="tranPro.productName" 		column="product_name" 			jdbcType="VARCHAR" />			
 	</resultMap>
 	
 	<resultMap id="refundSelectMap" type="refund">
@@ -98,22 +99,53 @@
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
+	 
+	 <update	id="updateTransactionEval"	parameterType="transaction" >
+	   	UPDATE 
+	   	transaction 
+	   	<set>
+	   	host_star_eval = #{starEvalHost}, 
+	   	host_review = #{reviewHost},
+	   	product_star_eval = #{starEvalProduct}, 			 		
+		product_review = #{reviewProduct},
+		eval_review = #{evalReview}  				   		
+	   	</set>
+	   	WHERE tran_no = #{tranNo}
+	 </update>
 		 
 	<!-- SQL : SELECT LIST -->
 	<select  id="listTransaction"  parameterType="map"	resultMap="transactionSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT 
-									  	tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price, refund_code
-									  	FROM transaction
-									  	<where>
+									  	t.tran_no as tran_no, 
+									  	t.tran_date as tran_date, 
+									  	t.trip_date as trip_date, 
+									  	t.requirement as requirement, 
+									  	t.pay_type as pay_type, 
+									  	t.product_no as product_no,
+									  	t.host_no as host_no, 
+									  	t.tran_count as tran_count, 
+									  	t.product_price as product_price, 
+									  	t.user_no as user_no, 
+									  	t.tran_price as tran_price, 
+									  	t.refund_code as refund_code,
+									  	t.product_star_eval as product_star_eval,
+									  	t.eval_review as eval_review,
+									  	p.thumbnail as thumbnail,
+									  	p.product_title as product_name
+									  	FROM transaction t, product p
+									  	WHERE t.product_no = p.product_no
+									  	AND t.user_no= #{user.userNo}
+									  	<!-- <where>
 										  	<if test="user.userType == 1">
-							 					user_no= #{user.userNo}
+							 					
 							 				</if>
 							 				<if test="user.userType == 2">
 							 					host_no= #{user.userNo}
 							 				</if>
-						 				</where>								  	 
+						 				</where> -->
+						 				AND t.product_no = p.product_no								  	 
 									  	ORDER BY tran_date DESC
 									 ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
@@ -347,5 +379,11 @@
 				</otherwise>				
 				</choose>				
 			 ) countTable						
-	 </select> 
+	 </select>
+	 
+	 <select  id="getTransactionCount"  parameterType="map"	 resultType="int">
+	 SELECT COUNT(*)
+	 FROM(SELECT * from transaction where product_no = #{productNo} and trip_date = #{tripDate})
+	 countTable	 	
+	 </select>
 </mapper>

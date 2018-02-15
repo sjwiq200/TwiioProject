@@ -43,5 +43,9 @@ public interface TransactionService {
 	public void deleteRefund(int tranNo) throws Exception;
 	
 	public void deleteTransaction(int tranNo) throws Exception;
+	
+	public void updateTransactionEval(Transaction transaction) throws Exception;
+	
+	public int getTransactionCount(Transaction transaction) throws Exception;
 
 }

@@ -190,7 +190,19 @@ public class TransactionServiceImpl implements TransactionService {
 		transactionDao.deleteTransaction(tranNo);
 		
 	}
+
+	@Override
+	public void updateTransactionEval(Transaction transaction) throws Exception {
+		transactionDao.updateTransactionEval(transaction);
+		
+	}
+
+	@Override
+	public int getTransactionCount(Transaction transaction) throws Exception {
+		// TODO Auto-generated method stub
+		return transactionDao.getTransactionCount(transaction);
+	}
 	
-	
+
 
 }

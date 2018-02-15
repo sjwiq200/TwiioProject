@@ -74,4 +74,7 @@ public interface TransactionDao {
 	// SELECT LIST
 	//public List<Transaction> listBestHost(Search search) throws Exception;
 	
+	public void updateTransactionEval(Transaction transaction) throws Exception;
+
+	public int getTransactionCount(Transaction transaction) throws Exception;
 }
