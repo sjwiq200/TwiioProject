@@ -46,7 +46,7 @@
 	<link rel="stylesheet" href="/resources/css/plan.css" />
 	<style>
        body {
-            padding-top : 80px;
+            padding-top : 100px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -492,14 +492,14 @@
 										      <button class="btn btn-outlined btn-light btn-xs" id="emailVer" >이메일 인증</button>
 										    </div>          
 										  </div>
-										  <div class="form-group">
+										 <!--  <div class="form-group">
 										    <label for="file" class="col-sm-offset-1 col-sm-3 control-label" style="color: #dedede;">사진</label>
 										    <div class="col-sm-4">
 										    		<label class="file_input">
 												        <input type="file" id="file" name="file" onchange="javascript:document.getElementById('file_route').value=this.value">
 												    </label>     
 										    </div>
-										  </div>
+										  </div> -->
 										  
 										  <br/>
 										  <br/>

@@ -267,8 +267,20 @@
 							return;
 						}
 	
-						$("form").attr("method", "POST").attr("action",
-								"/user/login").attr("target", "_parent").submit();
+						//$("form").attr("method", "POST").attr("action",
+								//"/user/login").attr("target", "_parent").submit();
+						$.post( '/user/json/login', $('#loginForm').serialize())
+						  .done(function( data ) {
+							  if(data==true){
+								  
+								  $(location).attr('href', '/main.jsp');
+							  }else{
+								  alert("탈퇴한 아이디 혹은 없는 아이디 입니다.");
+							  }
+						  }).fail(function( data ) {
+						  });
+						
+						
 					});
 		});
 	
@@ -312,7 +324,7 @@
 								</div>
 								
 								    <div class="col-sm-6" style="border-left:1px solid #ccc;height:160px">
-										<form class="form-horizontal">
+										<form class="form-horizontal" id="loginForm">
 										
 										<div class="col-sm-9 col-sm-offset-2">
 										

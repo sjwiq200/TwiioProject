@@ -59,6 +59,7 @@ import com.twiio.good.service.user.UserDao;
 	
 		@Override
 		public User getUser(String userId) throws Exception {
+			System.out.println("userId :: "+userId);
 			return  sqlSession.selectOne("UserMapper.getUser", userId);
 		}
 	
