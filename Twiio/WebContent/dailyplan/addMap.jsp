@@ -312,11 +312,15 @@
 			});
 		});
 		
-		$("#addr1").keydown(function(e) {
-			if (e.keyCode == 13) {
-				codeAddress(event);
-			}
+		$(function(){
+			$("#addr1").keydown(function(e) {
+				if (e.keyCode == 13) {
+					codeAddress(e);
+				}
+			});			
+
 		});
+		
 
 </script>
 <body>
