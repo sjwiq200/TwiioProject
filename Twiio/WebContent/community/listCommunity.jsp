@@ -41,18 +41,81 @@
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<!-- 다이얼로그  -->
-	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 		
 	<style>
-	  body {
-            padding-top : 50px;
+	   body {
+            padding-top : 50px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif ;
         }
         
-        textarea {
-	  width: 100%;
-	  height: 100px;
-	  resize: none;
-		}
+         .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #FFF;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #FFF;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:15px;
+				border: 1px solid;
+				padding:5px 10px;
+				height: 30px;
+			}
+	        textarea {
+				  width: 100%;
+				  height: 100px;
+				  resize: none;
+			}
     </style>
 
 <script type="text/javascript">
@@ -119,6 +182,10 @@
 							}else{
 								thumbnail='<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>';							
 							}
+							var report = '';
+							if(${user.userNo} != JSONData[i].userNo){
+								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
+							}
 							var displayValue = 
 						    '<div class="col-md-3">'+
 						      '<div class="thumbnail" style="height:400px">'+
@@ -132,14 +199,13 @@
 						            '<p>[ 등록일 :'+JSONData[i].regDate+' ]</p>'+
 						            '<p>[ 조회수 :'+JSONData[i].viewCount+' ]</p>'+
 						            '<p>[ 커뮤니티번호 :'+JSONData[i].communityNo+' ]</p>'+
-						            '<p><a class="btn btn-primary" id="getButton">상세보기</a>'+ 
-						            '<c:if test="'+${user.userNo != JSONData[i].userNo}+'">'+
-									'<a class="btn btn-default" id="reportButton">신고하기</a> </c:if></p>'+
+						            '<p><a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>'+ 
+						            report+
 						        '</div>'+
 						      '</div>'+
 						 	'</div>';			           
-								communityNo=communityNo-1;
-									$('.row2').append(displayValue);
+							communityNo=communityNo-1;
+							$('.row2').append(displayValue);
 								}
 							}
 					}); 
@@ -249,7 +315,7 @@
    	<!-- ToolBar End /////////////////////////////////////-->
    	
  <div class="container"> 
- 	<div class="page-header text-info">
+ 	<div class="page-header text-info" style="font-family: 'Pacifico', cursive;">
 		<c:if test="${communityType == '0'}">
 			<h1>Question Q&A</h1>
 		</c:if>
@@ -271,7 +337,7 @@
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
 			    	
-			      <button type="button" id="write" class="btn btn-default">글 쓰 기</button>
+			      <button type="button" id="write" class="btn btn-outlined btn-light btn-xs" style="border: 3px solid;">글 쓰 기</button>
 				  
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
@@ -286,7 +352,7 @@
 				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default" id="searchButton">검색</button>
+				  <button type="button" class="btn btn-outlined btn-theme btn-xs" id="searchButton">검색</button>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
@@ -320,9 +386,9 @@
           <p>[등록일 : ${community.regDate }]</p>
           <p>[조회수 : ${community.viewCount }]</p>
           <p>[커뮤니티번호 : ${community.communityNo }]</p>     
-            <p><a class="btn btn-primary" id="getButton">상세보기</a>
+            <p><a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>
             <c:if test="${user.userNo != community.userNo}">
-               <a class="btn btn-default" id="reportButton">신고하기</a>
+               <a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a>
             </c:if>
             </p>
           </div>
