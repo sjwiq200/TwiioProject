@@ -47,7 +47,7 @@
 		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />
 		<result property="userNo" 					column="user_no" 				jdbcType="NUMERIC" />
 		<result property="hostNo" 					column="host_no" 				jdbcType="NUMERIC" />	
-		<result property="productName" 				column="product_name" 			jdbcType="VARCHAR" />
+		<result property="userName" 				column="user_name" 			jdbcType="VARCHAR" />
 		<!-- <result property="refundCode" 				column="_" 			jdbcType="CHAR" />		 -->
 	</resultMap>
 	
@@ -95,7 +95,7 @@
 	 <update	id="updateTransactionCode"	parameterType="transaction" >
 	   	UPDATE transaction
 	   	<set>	   		
-			refund_code	= #{refundCode}
+		refund_code	= #{refundCode}
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
@@ -163,7 +163,7 @@
 				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
 		-->
 	
-	<insert 	id="addRefund"		parameterType="refund" >
+	<insert id="addRefund"	parameterType="refund" >
 	 	INSERT
 		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank,user_no) 
 		VALUES	 (	seq_REFUND_REFUND_NO.NEXTVAL , 
@@ -178,13 +178,14 @@
 	
 	<update id="updateRefund" parameterType="refund">
 		UPDATE refund 
-		SET 
-			refund_confirm_date=#{confirmDate} 
+		<set>
+		refund_confirm_date = SYSDATE
+		</set>
 		WHERE refund_no=#{refundNo}	
 	</update>
 	
 	<!-- SQL : SELECT LIST -->
-	<select  id="listRefund"  parameterType="map"	resultMap="refundSelectMap">
+	<select  id="listRefund"  parameterType="Search"	resultMap="refundSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.tran_no as tran_no,
@@ -194,16 +195,14 @@
 											   r.refund_price as refund_price,
 											   r.refund_account as refund_account,
 											   r.refund_bank as refund_bank,
-											   t.user_no as user_no,
-											   t.host_no as host_no
-									FROM refund r, transaction t
-									WHERE r.tran_no=t.tran_no
-									<if test="user.userType==1">AND user_no=#{user.userNo}</if>
-									<if test="user.userType==2">AND host_no=#{user.userNo}</if>									
+											   r.user_no as user_no,
+											   u.user_name as user_name
+									FROM refund r, users u
+									WHERE r.user_no=u.user_no							
 									ORDER BY refund_reg_date DESC
 									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	
 	<delete id="deleteRefund" parameterType="int">
@@ -384,6 +383,12 @@
 	 <select  id="getTransactionCount"  parameterType="map"	 resultType="int">
 	 SELECT COUNT(*)
 	 FROM(SELECT * from transaction where product_no = #{productNo} and trip_date = #{tripDate})
+	 countTable	 	
+	 </select>
+	 
+	 <select  id="getTotalCountRefund"  parameterType="Search"	 resultType="int">
+	 SELECT COUNT(*)
+	 FROM(SELECT * from refund)
 	 countTable	 	
 	 </select>
 </mapper>

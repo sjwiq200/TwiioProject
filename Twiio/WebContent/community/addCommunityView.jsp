@@ -26,14 +26,12 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- ///////////////////////summnernote/////////////////////////// -->
-	<link href="/resources/css/summernote.css" rel="stylesheet">
-    <script src="/resources/javascript/summernote.min.js"></script> 
+	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
+	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> 
+  	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
     
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
     
 	
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -69,10 +67,14 @@
 
 $(function() {
 	//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.	
-	 $("button.btn.btn-primary").bind("click" , function() {
+	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
+	 $("button.btn.btn-primary").on("click",function(){
+    	$("textarea").val($("#summernote").summernote("code"));
+    	$("form").attr("method" , "POST").attr("action" , "/community/addCommunity").submit();
+    });
+/* 	 $("button.btn.btn-primary").bind("click" , function() {
 		 $("form").attr("method" , "POST").attr("action" , "/community/listCommunity").submit();
-	});
+	}); */
 });	
 
 
@@ -89,41 +91,52 @@ $(function() {
 	});
 });
 
-	$(function() {
-    $('#summernote').summernote({
-    	 toolbar: [
-    		    // [groupName, [list of button]]
-    		    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
-    		    ['font', ['font family', 'strikethrough', 'superscript', 'subscript']],
-    		    ['fontsize', ['fontsize']],
-    		    ['color', ['color']],
-    		    ['para', ['ul', 'ol', 'paragraph']],
-    		    ['height', ['height']],
-    		    ['insert', ['table', 'picture', 'video', 'link']],
-    		    ['misc', ['undo', 'redo', 'codeview', 'help']]
-    		  ],
-    	        	
-    	lang: 'ko-KR', // default: 'en-US'
-    	height: 300,                 // set editor height
-    	minHeight: null,             // set minimum height of editor
-    	maxHeight: null,             // set maximum height of editor
-    	focus: true,                  // set focus to editable area after initializing summernote
-    	placeholder: 'write here...',
-    	/* callback: {
-    		onImageUpload: function(files) {
-        		sendFile(files[0]);
-        	}
-    	} */
-    	
-    });
+function sendFile(file, editor) {              
+    // 파일 전송을 위한 폼생성
+		data = new FormData();
+	    data.append("uploadFile", file);
+	    alert('파일업로드 들어오니??');
+	    $.ajax({ // ajax를 통해 파일 업로드 처리
+	        data : data,
+	        type : "POST",
+	        url : "uploadImage",
+	        cache : false,
+	        contentType : false,
+	        processData : false,
+	        success : function(data) { // 처리가 성공할 경우
+            // 에디터에 이미지 출력
+	        	$(editor).summernote('editor.insertImage', "\n\n"+data.relativeUrl+"\n\n");
+	        },
+	        error : function() {
+			alert("파일 업로드에 실패했습니다.")
+		}
+	    });
+	}
+function deleteFile(file) {
+}
+
+
     
-    $("button.btn.btn-primary").on("click",function(){
-    	$("textarea").val($("#summernote").summernote("code"));
-    	$("form").attr("method" , "POST").attr("action" , "/community/addCommunity").submit();
-    });
+   
     
-    
-});
+    $(function() {
+		$("#file").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#blah').attr('src', e.target.result).attr('width', '300px');
+			}
+			reader.readAsDataURL(input.files[0]);
+			alert($('#file').val());
+			alert(e.target.result);
+		}
+	}
+
 
 </script>
 </head>
@@ -159,10 +172,50 @@ $(function() {
 		    <div class="col-xs-8">
 		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
 		    </div>
+		    
+		    <div class="input-group">		
+			  <span class="input-group-addon">썸네일</span>	    	     	    			    
+			    <input type="file" id="file" name="file">
+			    <img id="blah" />
+			    
+			    </div>			   
+		      <span id="helpBlock" class="help-block">
+		      	 <strong class="text-danger">썸네일을 등록해 주세요</strong>
+		      </span>
 		</div>
 		
 		<div class="form-group">
 			<textarea id="summernote" name="communityContent"></textarea>
+			<script>
+			$(document).ready(function() {
+			    $('#summernote').summernote({
+			    	 toolbar: [
+			    		    // [groupName, [list of button]]
+			    		    ['style', ['bold', 'italic', 'underline', 'clear']],
+			                ['fontsize', ['fontsize']],
+			                ['color', ['color']],
+			                ['para', ['ul', 'ol', 'paragraph']],
+			                ['height', ['height']],
+			                ['insert', ['picture']]
+			    		  ],
+			    	        	
+			    	lang: 'ko-KR', // default: 'en-US'
+			    	height: 500,                 // set editor height
+			    	minHeight: null,             // set minimum height of editor
+			    	maxHeight: null,             // set maximum height of editor
+			    	focus: true,                  // set focus to editable area after initializing summernote
+			    	placeholder: 'write here...',
+			    	callback: {
+			    		onImageUpload: function(files, editor, welEditable) {
+			    			console.log('들어오니');
+					    	for(i=0;i<files.length;i++){
+					    		sendFile(files[i], this);
+					    	}
+			    		}
+			    	}
+			   	});
+			});
+			</script>		
 		</div>
 
 	<div class="form-group">

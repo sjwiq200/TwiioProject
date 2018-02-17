@@ -22,6 +22,8 @@ public interface CommonDao
   public List<Friend> listFriend(Search search, int userNo) throws Exception;
   
   public List<Friend> listFriendOnly(int userNo) throws Exception;
+  
+  public List<Friend> listRefund(Search search) throws Exception;
 
   public void deleteFriend(int no) throws Exception;
 
@@ -36,6 +38,8 @@ public interface CommonDao
   public int getTotalCountReply(String targetType, int codeNo) throws Exception;
   
   public int getTotalCountFriend(int userNo) throws Exception;
+  
+  public int getTotalCountRefund(Search search) throws Exception;
   
   public Friend getFriend(Friend friend) throws Exception;
   

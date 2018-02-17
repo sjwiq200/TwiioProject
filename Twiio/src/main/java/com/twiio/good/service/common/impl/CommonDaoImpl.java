@@ -75,6 +75,14 @@ public class CommonDaoImpl implements CommonDao {
 		List<Friend> list = sqlSession.selectList("CommonMapper.listFriend", map);
 		return list;
 	}
+	
+	@Override
+	public List listRefund(Search search) throws Exception {
+		System.out.println("들어오니?");
+		System.out.println("daoimpl :: "+search);
+		List<Report> list = sqlSession.selectList("CommonMapper.listRefund", search);
+		return list;
+	}
 
 	@Override
 	public void deleteFriend(int no) throws Exception {
@@ -122,6 +130,12 @@ public class CommonDaoImpl implements CommonDao {
 	public int getTotalCountFriend(int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		return sqlSession.selectOne("CommonMapper.getTotalCountFriend", userNo);
+	}
+	
+	@Override
+	public int getTotalCountRefund(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlSession.selectOne("CommonMapper.getTotalCountRefund",search);
 	}
 
 	@Override

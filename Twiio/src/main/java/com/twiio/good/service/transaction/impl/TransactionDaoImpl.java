@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import com.twiio.good.common.Search;
 import com.twiio.good.service.domain.Refund;
+import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.transaction.TransactionDao;
 
@@ -78,9 +79,11 @@ public class TransactionDaoImpl implements TransactionDao {
 	}
 
 	@Override
-	public List<Refund> listRefund(Map<String, Object> map) throws Exception {
+	public List<Refund> listRefund(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		return sqlsession.selectList("TransactionMapper.listRefund", map);
+		System.out.println("daoimpl :: "+search);
+		List<Refund> list = sqlsession.selectList("TransactionMapper.listRefund", search);
+		return list;
 	}
 
 	@Override
@@ -143,4 +146,11 @@ public class TransactionDaoImpl implements TransactionDao {
 		// TODO Auto-generated method stub
 		return sqlsession.selectOne("TransactionMapper.getTransactionCount",transaction);	
 	}
+	
+	@Override
+	public int getTotalCountRefund(Search search) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlsession.selectOne("TransactionMapper.getTotalCountRefund",search);
+	}
+
 }

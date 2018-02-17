@@ -107,16 +107,16 @@ public class TransactionRestController {
 		return"forward:/purchase/listPurchase";
 	}
 	
-	/*//@RequestMapping("/updateTranCodeByProd.do")
-	@RequestMapping(value="json/updateRefund", method=RequestMethod.GET)
-	public boolean updateRefund(@ModelAttribute("refund") Refund refund) throws Exception {
+
+	@RequestMapping(value="json/updateRefund", method=RequestMethod.POST)
+	public boolean updateRefund(@RequestBody Refund refund) throws Exception {
 		
 		System.out.println("/transaction/updateRefund : GET");
 				
 		transactionService.updateRefund(refund);
 		
 		return true;
-	}*/
+	}
 	
 	@RequestMapping(value="json/updateTransactionEval", method=RequestMethod.POST)
 	public boolean update(@RequestBody Transaction transaction) throws Exception {

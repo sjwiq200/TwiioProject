@@ -71,7 +71,13 @@ public class CommonServiceImpl implements CommonService {
 		return map;
 	}
 	
-	
+	public Map<String, Object> listRefund(Search search) throws Exception {
+		int totalCountRefund = commonDao.getTotalCountRefund(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCountFriend", totalCountRefund);
+		map.put("list", commonDao.listRefund(search));
+		return map;
+	}
 
 	@Override
 	public int getTotalCountReply(String targetType, int codeNo) throws Exception {

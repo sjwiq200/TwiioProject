@@ -134,15 +134,16 @@ public class TransactionServiceImpl implements TransactionService {
 		return map;
 	}	
 
-//	@Override
-//	public void updateTransactionCode(Transaction transaction) throws Exception {
-//		// TODO Auto-generated method stub
-//		transactionDao.updateTransactionCode(transaction);
-//	}
+	@Override
+	public void updateTransactionCode(Transaction transaction) throws Exception {
+		// TODO Auto-generated method stub
+		transactionDao.updateTransactionCode(transaction);
+	}
 
 	@Override
 	public void addRefund(Refund refund) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("service refund :: "+refund);
 		Transaction transaction =transactionDao.getTransaction(refund.getTranNo());
 		transaction.setRefundCode("2");
 		transactionDao.updateTransactionCode(transaction);
@@ -151,22 +152,22 @@ public class TransactionServiceImpl implements TransactionService {
 
 	@Override
 	public void updateRefund(Refund refund) throws Exception {
-		// TODO Auto-generated method stub
+		System.out.println("serviceimpl refund :: "+refund);
+		Transaction transaction =transactionDao.getTransaction(refund.getTranNo());
+		transaction.setRefundCode("3");
+		System.out.println("transaction :: "+transaction);
+		transactionDao.updateTransactionCode(transaction);
 		transactionDao.updateRefund(refund);
 	}
 
 	@Override//session userNo userType, search
-	public Map<String, Object> listRefund(Search search, User user) throws Exception {
+	public Map<String, Object> listRefund(Search search) throws Exception {
 		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("search", search);
-		map.put("user", user);
-		List<Refund> list = transactionDao.listRefund(map);
-		int totalCount = transactionDao.getTotalCount(map);
 		
-		map.clear();
-		map.put("list", list);
-		map.put("totalCount", totalCount);
+		int totalCountRefund = transactionDao.getTotalCountRefund(search);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("totalCountRefund", totalCountRefund);
+		map.put("list", transactionDao.listRefund(search));
 		
 		return map;
 	}

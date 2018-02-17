@@ -320,14 +320,14 @@
       
       //////////////////////////////////////상품 정보보기/////////////////////////////////////
       $(function(){
-          $('td:nth-child(4)').on('click',function(){
-        	  var productno = $($('input[name=productNo]')[$('td:nth-child(4)').index(this)]).val();
+          $('td:nth-child(2)').on('click',function(){
+        	  var productno = $($('input[name=productNo]')[$('td:nth-child(2)').index(this)]).val();
         	  self.location = "/product/getProduct?productNo="+productno;
           });
          });
          $(function(){
-             $('td:nth-child(5)').on('click',function(){
-           	  var productno = $($('input[name=productNo]')[$('td:nth-child(5)').index(this)]).val();
+             $('td:nth-child(3)').on('click',function(){
+           	  var productno = $($('input[name=productNo]')[$('td:nth-child(3)').index(this)]).val();
            	  self.location = "/product/getProduct?productNo="+productno;
            });
          });
@@ -341,7 +341,7 @@
   		 if(${empty user.userId} | evalreview == '1'){
   			 	 
   		 }else{
-  			 alert(tranno);
+  			 //alert(tranno);
   			 $('#modalTranNo').val(tranno);
   			 $('#addReivew').modal('show');
   		 }
@@ -392,6 +392,7 @@
     	   var regdate = $($('input[name=regDate]')[$('.ct_list_pop #refund').index(this)]).val();
     	   var refundcode = $($('input[name=refundCode]')[$('.ct_list_pop #refund').index(this)]).val();
 		   
+    	   if(refundcode == '1'){
     	   	 if(${empty user.userId}){
     			 alert('로그인후 사용하여주세요');	     			 
     		 }else{
@@ -412,6 +413,7 @@
     			 $('#thum').html(img);
     			 $('#addRefundModal').modal('show');
     		 }
+    	   }
     	   	 
        });
       
@@ -423,7 +425,7 @@
 			var modalRegDate = $("#modalRegDate").val();
 			var modalRefundAccount = $("#modalRefundAccount").val();
 			var modalRefundBank = $("#modalRefundBank").val();
-			
+						
 			if(modalProductNo == '' || modalTranNo == '' || modalTotalPrice =='' || modalRefundAccount=='' || modalRefundBank==''){
 				alert("입력을 완료해주세요.");
 			}else{
@@ -448,11 +450,7 @@
 				});			  
 			}
        });
-       ///////////////////////////////////////////////////////////////////////////
-       
-       
-	  
-       
+       ///////////////////////////////////////////////////////////////////////////      
    </script>
    
 </head>
@@ -516,8 +514,7 @@
         <c:set var="today" value="<%=new java.util.Date()%>"/>
         <c:forEach var="transaction" items="${list}">
          <c:set var="i" value="${ i+1 }" />
-         <tr class="ct_list_pop">
-     		<input type="hidden" id="tranNo" name="tranNo" value="${transaction.tranNo}"/>
+         <input type="hidden" id="tranNo" name="tranNo" value="${transaction.tranNo}"/>
          	<input type="hidden" id="productNo" name="productNo" value="${transaction.tranPro.productNo}"/>
          	<input type="hidden" id="regDate" name="regDate" value="${transaction.regDate}"/>
          	<input type="hidden" id="totalPrice" name="totalPrice" value="${transaction.totalPrice}"/>
@@ -525,7 +522,7 @@
          	<input type="hidden" id="thumbnail" name="thumbnail" value="${transaction.tranPro.thumbnail}"/>
          	<input type="hidden" id="refundCode" name="refundCode" value="${transaction.refundCode}"/>
          	<input type="hidden" id="evalReview" name="evalReview" value="${transaction.evalReview}"/>
-         	
+         <tr class="ct_list_pop">
            <td align="left">${transaction.regDate}</td>
            <td align="left">
            <c:if test="${empty transaction.tranPro.thumbnail}">

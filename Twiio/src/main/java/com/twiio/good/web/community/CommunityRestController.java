@@ -1,12 +1,17 @@
 package com.twiio.good.web.community;
 
+import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -102,5 +107,29 @@ public class CommunityRestController {
 
 		return (List)map.get("list");
 		//return null;
+	}
+	
+	@RequestMapping(value="json/uploadImage")
+	public JSONObject uploadImage(HttpServletRequest request) {
+		String rootPath = request.getSession().getServletContext().getRealPath("/");  
+	    String uploadPath = rootPath+"resources\\images\\communityimages\\";
+		String fileName = "";
+		
+		int size = 10 * 1024 * 1024;
+		try {
+			MultipartRequest multi = new MultipartRequest(request, uploadPath, size, "UTF-8", new DefaultFileRenamePolicy());
+			Enumeration files = multi.getFileNames();
+			String file = (String) files.nextElement();
+			fileName = multi.getFilesystemName(file);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		uploadPath += fileName;
+		JSONObject jobj = new JSONObject();	
+		String filePath = "../resources/images/communityimages/"+fileName;
+		jobj.put("url", uploadPath);
+		jobj.put("relativeUrl", filePath);
+		return jobj;
 	}
 }

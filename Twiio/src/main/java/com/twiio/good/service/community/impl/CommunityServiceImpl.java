@@ -60,7 +60,11 @@ public class CommunityServiceImpl implements CommunityService {
 		communityDao.updateCommunity(community);
 	}
 	
-	
+	@Override
+	public void updateThumbnail(Community community) throws Exception {
+		communityDao.updateThumbnail(community);
+	}
+
 	public void deleteCommunity(int communityNo) throws Exception{
 		communityDao.deleteCommunity(communityNo);
 	}

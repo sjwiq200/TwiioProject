@@ -112,13 +112,19 @@
 									flag=1;
 								}
 								
-							for(var i=0; i<JSONData.length;i++){								
+							for(var i=0; i<JSONData.length;i++){
+							var thumbnail ='';
+							if(JSONData[i].thumbnail == ''){
+								thumbnail='<img src="/resources/images/communitythumbnail/'+JSONData[i].thumbnail+'" style="width:300px; height:150px;" alt="" title="" class="property_img"/>';							
+							}else{
+								thumbnail='<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>';							
+							}
 							var displayValue = 
 						    '<div class="col-md-3">'+
 						      '<div class="thumbnail" style="height:400px">'+
 						      '<input type="hidden" name="communityNo" value="'+JSONData[i].communityNo+'"/>'+
 							  '<input type="hidden" name="userNo" value="'+JSONData[i].userNo+'"/>'+
-						        '<img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>'+
+							  thumbnail+
 						         ' <div class="caption">'+
 						          	'[ 게판번호 :'+communityNo+' ]'+
 						          	'<p>[ 제   목 :'+JSONData[i].communityTitle+' ]</p>'+ 
@@ -301,7 +307,12 @@
       <div class="thumbnail" style="height:400px">
         <input type="hidden" name="communityNo" value="${community.communityNo}"/>
 		<input type="hidden" name="communityNouserNo" value="${community.userNo}"/>
-        <img src="https://lh4.googleusercontent.com/-1wzlVdxiW14/USSFZnhNqxI/AAAAAAAABGw/YpdANqaoGh4/s1600-w400/Google%2BSydney" style="width:300px; height:150px;"/>
+		<c:if test="${! empty community.thumbnail}">
+			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+		</c:if> 
+		<c:if test="${empty community.thumbnail}">
+			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+		</c:if>
           <div class="caption">
           <p>[게시판번호  : ${i}]</p>
     	  <p>[제   목 : ${community.communityTitle }]</p>

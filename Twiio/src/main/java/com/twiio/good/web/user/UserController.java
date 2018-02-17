@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.user.UserService;
@@ -31,7 +33,7 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
-	//setter Method ±¸Çö ¾ÊÀ½
+	//setter Method êµ¬í˜„ ì•ŠìŒ
 		
 	public UserController(){
 		System.out.println(this.getClass());
@@ -41,7 +43,7 @@ public class UserController {
 	int pageUnit;
 	@Value("#{commonProperties['pageSize']}")
 	int pageSize;
-	////////»çÁø ¾÷·Îµå////////
+	////////ì‚¬ì§„ ì—…ë¡œë“œ////////
 	@Value("#{commonProperties['path']}")
 	String path;
 	
@@ -66,15 +68,15 @@ public class UserController {
 				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
 				userService.addUser(user);
 				model.addAttribute("user",user);
-				System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á/»çÁø ¾÷·Îµå  ::");	
+				System.out.println(":: Twiio ìì œ íšŒì›ê°€ì… ì™„ë£Œ/ì‚¬ì§„ ì—…ë¡œë“œ  ::");	
 			}else {
-				System.out.println(":: È¸¿ø°¡ÀÔ ½ÇÆĞ =====> ¾ó±¼À» ¸íÈ®È÷ ÀÎ½ÄÇÒ ¼ö ÀÖ´Â »çÁøÀ¸·Î ´Ù½Ã ¾÷·Îµå ¹Ù¶÷  ::");
+				System.out.println(":: íšŒì›ê°€ì… ì‹¤íŒ¨ =====> ì–¼êµ´ì„ ëª…í™•íˆ ì¸ì‹í•  ìˆ˜ ìˆëŠ” ì‚¬ì§„ìœ¼ë¡œ ë‹¤ì‹œ ì—…ë¡œë“œ ë°”ëŒ  ::");
 			}			
 		}else {
 			//Business Logic
 			userService.addUser(user);
 			model.addAttribute("user",user);
-			System.out.println(":: Twiio ÀÚÁ¦ È¸¿ø°¡ÀÔ ¿Ï·á ::");
+			System.out.println(":: Twiio ìì œ íšŒì›ê°€ì… ì™„ë£Œ ::");
 		}*/
 		
 		return "redirect:/user/loginView.jsp";
@@ -99,7 +101,7 @@ public class UserController {
 		
 	
 		System.out.println("regDate : "+user.getRegDate());
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		//System.out.println("per : "+per);
 		//System.out.println("per2 : "+per2);
 		System.out.println("user :: "+user);
@@ -126,7 +128,7 @@ public class UserController {
 		Map<String, Object> map = userService.listStarEvalHost(search, hostNo);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());
 				
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		model.addAttribute("host", host);
 		model.addAttribute("evalHost", evalHost);
 		model.addAttribute("totalCount", map.get("totalCount"));
@@ -142,7 +144,7 @@ public class UserController {
 		System.out.println("/user/updateUser : GET");
 		//Business Logic
 		User user = userService.getUserInNo(userNo);
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		model.addAttribute("user", user);
 		
 		return "forward:/user/updateUser.jsp";
@@ -176,13 +178,13 @@ public class UserController {
 		}
 		search.setPageSize(pageSize);
 		
-		// Business logic ¼öÇà
+		// Business logic ìˆ˜í–‰
 		Map<String , Object> map=userService.listUser(search);
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		//model.addAttribute("search", search);
@@ -196,7 +198,7 @@ public class UserController {
 		System.out.println("/user/deleteUser : ");
 		//Business Logic
 		User user = userService.getUserInNo(userNo);
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		model.addAttribute("user", user);
 		
 		return "forward:/main.jsp";
@@ -209,10 +211,10 @@ public class UserController {
 		//Business Logic
 		String userId = userService.findId(user);
 		
-		//À¯Àú ¾ÆÀÌµğ °íÃÄ¼­ º¸³»±â
+		//ìœ ì € ì•„ì´ë”” ê³ ì³ì„œ ë³´ë‚´ê¸°
 		int index = userId.length()-4;
 		String userIdHint = userId.substring(0,index)+"****";
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		model.addAttribute("userIdHint", userIdHint);
 		
 		return "forward:/user/updateUser.jsp";
@@ -226,19 +228,46 @@ public class UserController {
 		User dbUser = userService.getUser(user.getUserId());
 		if(dbUser != null) {
 			if(user.getUserEmail().equals(dbUser.getUserEmail()) && user.getUserName().equals(dbUser.getUserName())) {
-				//ÀÓ½Ã ÆĞ½º¿öµå ¹ß±Ş
+				//ì„ì‹œ íŒ¨ìŠ¤ì›Œë“œ ë°œê¸‰
 				//userService.findPassword(dbUser);
 			}else {
-				System.out.println(":: ÀÌ¸§ ¶Ç´Â ÀÌ¸ŞÀÏ ºÒÀÏÄ¡ ::");
+				System.out.println(":: ì´ë¦„ ë˜ëŠ” ì´ë©”ì¼ ë¶ˆì¼ì¹˜ ::");
 			}
 		}else {
-			System.out.println(":: Á¸ÀçÇÏÁö ¾Ê´Â ¾ÆÀÌµğ ::");
+			System.out.println(":: ì¡´ì¬í•˜ì§€ ì•ŠëŠ” ì•„ì´ë”” ::");
 		}
 		//User user = userService.getUser(user);
-		// Model °ú View ¿¬°á
+		// Model ê³¼ View ì—°ê²°
 		//model.addAttribute("user", user);
 		
 		return "forward:/user/updateUser.jsp";
+	}
+	
+	@RequestMapping(value = "getProfile2")
+	public String getProfile2(@RequestParam("userNo") int userNo, HttpServletRequest request, HttpSession session) throws Exception{
+		System.out.println("/room/getProfile2/ : ");
+		
+		User user = (User)session.getAttribute("user");
+		/*Friend friend = new Friend();
+		friend.setUserNo(user.getUserNo());
+		friend.setFriendNo(userNo);
+		
+		Friend friendCheck = commonService.getFriend(friend);
+		System.out.println("friend Check ==>" + friendCheck);
+		
+		if(friendCheck != null) {
+			request.setAttribute("flag", true); //ï¿½ì” èª˜ï¿½ ç§»ì’“ë„
+		}else {
+			request.setAttribute("flag", false);
+		}*/
+		
+		
+		User profile = userService.getUserInNo(userNo);
+		
+		request.setAttribute("profile", profile);
+		
+		
+		return "forward:/mypage/getProfile.jsp";
 	}
 
 }

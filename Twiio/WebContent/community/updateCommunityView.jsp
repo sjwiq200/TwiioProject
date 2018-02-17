@@ -122,6 +122,24 @@ $(function() {
     	$("form").attr("method" , "POST").attr("action" , "/community/updateCommunity").submit();
     });
 });
+	
+	$(function() {
+		$("#file").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#blah').attr('src', e.target.result).attr('width', '300px');
+			}
+			reader.readAsDataURL(input.files[0]);
+			alert($('#file').val());
+			alert(e.target.result);
+		}
+	}
 
 </script>
 </head>
@@ -157,6 +175,17 @@ $(function() {
 		    <div class="col-xs-8">
 		      <input type="text" class="form-control" id="communityTitle" name="communityTitle" value="${community.communityTitle}">
 		    </div>
+		    
+		    <div class="input-group">		
+			  <span class="input-group-addon">썸네일</span>	    	     
+			    <!-- <label for="files">파일 업로드</label>	 -->		    			    
+			    <input type="file" id="file" name="file">
+			    <img id="blah" />
+			    
+			    </div>			   
+		      <span id="helpBlock" class="help-block">
+		      	 <strong class="text-danger">썸네일을 등록해 주세요</strong>
+		      </span>
 		</div>
 		
 		<div class="form-group">

@@ -350,10 +350,11 @@ function resetData() {
 	///////////////////////////////////////////////////addreport////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addreport]', function() {
 		 var reportuserno = $($('input[name=userNo]')[$('.row2 a[name=addreport]').index(this)]).val();
+		 var reportusername = $($('input[name=userName]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportbody = 
 			        '<h3>신고글 작성<h3>'+
-					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportuserno+'" readonly/>'+
+					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportusername+'" readonly/>'+
 					'<input type="text" class="form-control" id="reporttitle" row="6" col="50" placeholder="신고 제목 작성" value=""/>'+
 					'<textarea id="reportcontent"  name="reportcontent" row="6" col="50" value="" placeholder="신고 내용"></textarea>';
 		 
@@ -365,6 +366,7 @@ function resetData() {
 	 		$('#reportbody').html(reportbody);
 	 		$('#modalreport').modal('show');
 	 	 }
+	
 	
 		$(document).on('click','#addreportcommunity',function(){
 			 	var reportcontent = $('#reportcontent').val();
@@ -391,12 +393,11 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalreport').modal('toggle');	
-						}
-					});
-			 	 }
-			});
+					}
+				});
+			 }
+		});
 	});
-	
 	///////////////////////////////////////////////addfriend///////////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addfriend]', function() {
 		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
@@ -715,7 +716,7 @@ function resetData() {
 				<h4 class="modal-title">
 					<Strong>REPORT</Strong>
 				</h4>
-				<h7 class="modal-title">TWIIO</h7>
+				<h7 class="modal-title"></h7>
 			</div>
 			<div class="modal-body">
 			

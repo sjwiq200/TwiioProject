@@ -3,6 +3,7 @@ package com.twiio.good.service.domain;
 import java.sql.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
+import org.springframework.web.multipart.MultipartFile;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
 public class Community {
@@ -16,6 +17,8 @@ public class Community {
 	private String communityContent;
 	private String userName;
 	private String targetUserName;
+	private String thumbnail;
+	private MultipartFile file;
 	
 	
 	public Community() {
@@ -115,6 +118,21 @@ public class Community {
 		this.communityContent = communityContent;
 	}
 
+	public String getThumbnail() {
+		return thumbnail;
+	}
+
+	public void setThumbnail(String thumbnail) {
+		this.thumbnail = thumbnail;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
+	}
 
 	@Override
 	public String toString() {

@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -603,6 +604,26 @@ public class TransactionController {
 		transactionService.updateRefund(refund);
 		
 		return "forward:/product/listProduct?menu=manage";
+	}
+	
+	@RequestMapping(value = "listRefund")
+	public String listRefund(@ModelAttribute("search") Search search,
+			Model model
+			) throws Exception {
+		System.out.println("/common/listRefund");
+		if(search.getCurrentPage() ==0 ){
+			search.setCurrentPage(1);
+		}
+		search.setPageSize(pageSize);
+		Map<String , Object> map=transactionService.listRefund(search);
+		System.out.println("ss");
+		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCountRefund")).intValue(), pageUnit, pageSize);
+		System.out.println("trtrt");
+		model.addAttribute("list", map.get("list"));
+		model.addAttribute("resultPage", resultPage);
+		model.addAttribute("search", search);
+		System.out.println("model :: "+ model);
+		return "forward:/mypage/listRefund.jsp";
 	}
 
 }

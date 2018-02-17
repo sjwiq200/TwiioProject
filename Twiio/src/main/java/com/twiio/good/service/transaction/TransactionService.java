@@ -27,7 +27,7 @@ public interface TransactionService {
 	//public Map<String,Object> listTransactionHost(Search search,int hostNo) throws Exception;
 	
 //	// 환불 코드 변경
-//	public void updateTransactionCode(Transaction transaction) throws Exception;
+	public void updateTransactionCode(Transaction transaction) throws Exception;
 	
 	public Refund getRefund(int userNo) throws Exception;
 	// 환불 신청
@@ -37,7 +37,7 @@ public interface TransactionService {
 	public void updateRefund(Refund refund) throws Exception;
 
 	// 환불 리스트
-	public Map<String, Object> listRefund(Search search, User user) throws Exception;
+	public Map<String, Object> listRefund(Search search) throws Exception;
 
 	// 환불 취소
 	public void deleteRefund(int tranNo) throws Exception;

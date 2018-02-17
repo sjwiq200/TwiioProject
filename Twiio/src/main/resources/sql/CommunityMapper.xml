@@ -15,6 +15,7 @@
 		<result property="communityType" 		column="community_type" 		jdbcType="VARCHAR"/>
 		<result property="communityContent" 	column="community_content" 		jdbcType="VARCHAR"/>
 		<result property="userName" 			column="user_name" 				jdbcType="VARCHAR"/>
+		<result property="thumbnail" 			column="thumbnail" 				jdbcType="VARCHAR"/>
 	</resultMap>
 	
 	<resultMap id="likeSelectMap" type="like">
@@ -38,7 +39,8 @@
 		#{communitySubTitle:VARCHAR},
 		#{communityType:VARCHAR},
 		#{communityContent:VARCHAR},
-		#{userName:VARCHAR})
+		#{userName:VARCHAR},
+		#{thumbnail:VARCHAR})		
 	</insert>
 	
 	<select id="getCommunity" parameterType="int" resultMap="communitytSelectMap">
@@ -59,7 +61,16 @@
 	   	<set>
 	   		COMMUNITY_TITLE		= #{communityTitle:VARCHAR} ,
 	   		COMMUNITY_SUB_TITLE = #{communitySubTitle:VARCHAR},
-			COMMUNITY_CONTENT	= #{communityContent:VARCHAR}
+			COMMUNITY_CONTENT	= #{communityContent:VARCHAR},
+			THUMBNAIL = #{thumbnail:VARCHAR}
+	   	</set>
+	   	WHERE COMMUNITY_NO = #{communityNo}
+	</update>
+	
+	<update id="updateThumbnail" parameterType="community">
+		UPDATE COMMUNITY
+	   	<set>
+	   		THUMBNAIL = #{thumbnail:VARCHAR}
 	   	</set>
 	   	WHERE COMMUNITY_NO = #{communityNo}
 	</update>
@@ -91,7 +102,7 @@
 								  	 	AND COMMUNITY_TITLE LIKE '%${search.searchKeyword}%'
 									</if>
 									<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-								 		AND USER_ID LIKE '%${search.searchKeyword}%'
+								 		AND USER_NAME LIKE '%${search.searchKeyword}%'
 									</if>
 								</if>
 							   </otherwise>
@@ -126,7 +137,7 @@
 								  	 	AND COMMUNITY_TITLE LIKE '%${search.searchKeyword}%'
 									</if>
 									<if test="search.searchCondition == 1 and search.searchKeyword !='' ">
-								 		AND USER_ID LIKE '%${search.searchKeyword}%'
+								 		AND USER_NAME LIKE '%${search.searchKeyword}%'
 									</if>
 								</if>
 							   </otherwise>
