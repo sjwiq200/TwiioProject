@@ -26,14 +26,16 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- ///////////////////////summnernote/////////////////////////// -->
-	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet"> 
-  	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+	
+	<link href="/resources/css/summernote.css" rel="stylesheet">
+    <script src="/resources/javascript/summernote.min.js"></script> 
     
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
-    
-	
+    <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+    <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -94,18 +96,20 @@ $(function() {
 function sendFile(file, editor) {              
     // 파일 전송을 위한 폼생성
 		data = new FormData();
-	    data.append("uploadFile", file);
-	    alert('파일업로드 들어오니??');
+	    data.append("file", file);
+	    //alert('파일업로드 들어오니??');
 	    $.ajax({ // ajax를 통해 파일 업로드 처리
 	        data : data,
+	        dataType : "json",
 	        type : "POST",
-	        url : "uploadImage",
+	        url : "/community/json/uploadImage",
 	        cache : false,
 	        contentType : false,
 	        processData : false,
 	        success : function(data) { // 처리가 성공할 경우
             // 에디터에 이미지 출력
-	        	$(editor).summernote('editor.insertImage', "\n\n"+data.relativeUrl+"\n\n");
+     
+	        	$(editor).summernote('editor.insertImage',data.relativeUrl);
 	        },
 	        error : function() {
 			alert("파일 업로드에 실패했습니다.")
@@ -115,7 +119,30 @@ function sendFile(file, editor) {
 function deleteFile(file) {
 }
 
-
+$(document).ready(function() {
+    $('#summernote').summernote({
+    	 toolbar: [
+    		    // [groupName, [list of button]]
+    		    ['style', ['bold', 'italic', 'underline', 'clear']],
+                ['fontsize', ['fontsize']],
+                ['color', ['color']],
+                ['para', ['ul', 'ol', 'paragraph']],
+                ['height', ['height']],
+                ['insert', ['picture']]
+    		  ],   	        	
+    	height: 500,                 // set editor height
+    	/* minHeight: null,             // set minimum height of editor
+    	maxHeight: null,             // set maximum height of editor
+    	placeholder: 'write here...', */
+    	callbacks: {
+    		onImageUpload: function(files, editor, welEditable) {
+		    	for(i=0;i<files.length;i++){
+		    		sendFile(files[i], this);
+		    	}
+    		}
+    	} 
+   	});
+});
     
    
     
@@ -133,7 +160,7 @@ function deleteFile(file) {
 			}
 			reader.readAsDataURL(input.files[0]);
 			alert($('#file').val());
-			alert(e.target.result);
+			/* alert(e.target.result); */
 		}
 	}
 
@@ -154,7 +181,6 @@ function deleteFile(file) {
 		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
-		
 		<div class="form-group">
 		<c:if test="${communityType==1}">
 		    <div class="col-xs-6 col-sm-4">
@@ -179,45 +205,12 @@ function deleteFile(file) {
 			    <img id="blah" />
 			    
 			    </div>			   
-		      <span id="helpBlock" class="help-block">
-		      	 <strong class="text-danger">썸네일을 등록해 주세요</strong>
-		      </span>
 		</div>
 		
 		<div class="form-group">
-			<textarea id="summernote" name="communityContent"></textarea>
-			<script>
-			$(document).ready(function() {
-			    $('#summernote').summernote({
-			    	 toolbar: [
-			    		    // [groupName, [list of button]]
-			    		    ['style', ['bold', 'italic', 'underline', 'clear']],
-			                ['fontsize', ['fontsize']],
-			                ['color', ['color']],
-			                ['para', ['ul', 'ol', 'paragraph']],
-			                ['height', ['height']],
-			                ['insert', ['picture']]
-			    		  ],
-			    	        	
-			    	lang: 'ko-KR', // default: 'en-US'
-			    	height: 500,                 // set editor height
-			    	minHeight: null,             // set minimum height of editor
-			    	maxHeight: null,             // set maximum height of editor
-			    	focus: true,                  // set focus to editable area after initializing summernote
-			    	placeholder: 'write here...',
-			    	callback: {
-			    		onImageUpload: function(files, editor, welEditable) {
-			    			console.log('들어오니');
-					    	for(i=0;i<files.length;i++){
-					    		sendFile(files[i], this);
-					    	}
-			    		}
-			    	}
-			   	});
-			});
-			</script>		
+			<textarea id="summernote" name="communityContent"></textarea>		
 		</div>
-
+		<div id="cndThumbnail"></div>
 	<div class="form-group">
 		    <div class="col-sm-offset-4  col-sm-4 text-center">
 		      <button type="button" name="save" class="btn btn-primary">작 성</button>

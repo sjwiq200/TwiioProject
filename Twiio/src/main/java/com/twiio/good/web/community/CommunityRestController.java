@@ -1,5 +1,6 @@
 package com.twiio.good.web.community;
 
+import java.io.File;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.List;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
@@ -46,6 +48,9 @@ public class CommunityRestController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Value("#{commonProperties['communityimagesFilePath']}")
+	String communityimagesFilePath;
 	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -110,26 +115,33 @@ public class CommunityRestController {
 	}
 	
 	@RequestMapping(value="json/uploadImage")
-	public JSONObject uploadImage(HttpServletRequest request) {
-		String rootPath = request.getSession().getServletContext().getRealPath("/");  
-	    String uploadPath = rootPath+"resources\\images\\communityimages\\";
-		String fileName = "";
+	public JSONObject uploadImage(Community community) {
+		//String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath :: "+communityimagesFilePath);
+	    String uploadPath = communityimagesFilePath;
+		String fileName =  System.currentTimeMillis()+community.getFile().getOriginalFilename();
 		
-		int size = 10 * 1024 * 1024;
+		System.out.println("들어오니");
 		try {
-			MultipartRequest multi = new MultipartRequest(request, uploadPath, size, "UTF-8", new DefaultFileRenamePolicy());
-			Enumeration files = multi.getFileNames();
-			String file = (String) files.nextElement();
-			fileName = multi.getFilesystemName(file);
+			System.out.println("들어오니1");
+			File file = new File(communityimagesFilePath, fileName);
+			community.getFile().transferTo(file);
+			System.out.println("들어오니5");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
 		uploadPath += fileName;
 		JSONObject jobj = new JSONObject();	
-		String filePath = "../resources/images/communityimages/"+fileName;
+		String filePath = "/resources/images/communityimages/"+fileName;
 		jobj.put("url", uploadPath);
 		jobj.put("relativeUrl", filePath);
+		System.out.println("들어오니6");
+		try {
+		Thread.sleep(3500);
+		}catch(InterruptedException e) {
+		
+		}
 		return jobj;
 	}
 }
