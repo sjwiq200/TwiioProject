@@ -318,7 +318,7 @@
 	
 	<form class="form-horizontal">
 		  <div class="form-group" align="center">
-		    <div class="col-xs-4 col-xs-offset-4">
+		    <div class="col-sm-4 col-sm-offset-4">
 		      <input type="text" class="form-control" id="city" name="city" placeholder="나라명을 입력해 주세요.">
 		    </div>
 		  </div>

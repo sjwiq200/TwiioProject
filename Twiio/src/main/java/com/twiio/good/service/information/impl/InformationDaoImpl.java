@@ -339,6 +339,7 @@ public class InformationDaoImpl implements InformationDao {
 		 result = departFlight.split("\n");
 		
 		for(int i = 0 ; i<result.length; i++ ) {
+			System.out.println("::"+result[i]);
 			list.add(result[i]);
 		}
 		
@@ -347,10 +348,14 @@ public class InformationDaoImpl implements InformationDao {
 			String s = iter.next();
 		 
 			if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
-					||s.contains("선택")||s.contains("비행")||s.contains("남음")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("에서")||s.contains("직항")
+					||s.contains("선택")||s.contains("비행")||s.contains("공항")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("대기")||s.contains("직항")
 					||s.contains("예약했")||s.equals("")) {
 				iter.remove();
 			}
+		}
+		
+		for(int i = 0 ; i<list.size(); i++) {
+			System.out.println("**"+list.get(i));
 		}
 		
 		List<String > url = new ArrayList();
@@ -389,9 +394,7 @@ public class InformationDaoImpl implements InformationDao {
 			
 			 driver.findElement(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")).click();//첫번째 가는편 선택
 			
-			 searchField = (new WebDriverWait(driver, 150))
-					 .until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#outboundflightModule")));
-			
+			 System.out.println("1111");
 			  searchField = (new WebDriverWait(driver, 150))
 						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("#wizard-summary")));
 //			  
@@ -402,33 +405,33 @@ public class InformationDaoImpl implements InformationDao {
 //					.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//button[@class='btn-secondary btn-action t-select-btn']")));//페이지 이동 기다리기
 			
 			Thread.sleep(1000);
-			 
+			System.out.println("222");
 			   searchField = (new WebDriverWait(driver, 150))
 						.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='#route-happy']")));
-			 
+			   System.out.println("3333");
 				 String returnFlight  = driver.findElement(By.id("flightModuleList")).getText();
 					
 					String[] info2 = returnFlight.split("\n");
 					
 					for(int i = 0 ; i<info2.length; i++ ) {
-						
+						System.out.println("::"+info2[i]);
 						list.add(info2[i]);
 					}
-					
-					System.out.println("return줄이기전"+list.size());
 					
 					Iterator<String> iter = list.iterator();
 					while (iter.hasNext()) {
 						String s = iter.next();
 					 
 						if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
-								||s.contains("선택")||s.contains("비행")||s.contains("남음")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("에서")||s.contains("직항")
+								||s.contains("선택")||s.contains("비행")||s.contains("공항")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("대기")||s.contains("직항")
 								||s.contains("예약했")||s.equals("")) {
 							iter.remove();
 						}
 					}
 					
-					System.out.println("return줄인후"+list.size());
+					for(int i = 0 ; i<list.size(); i++) {
+						System.out.println("**"+list.get(i));
+					}
 					
 					List<String > urlReturn = new ArrayList();
 					urlReturn.add(driver.getCurrentUrl());
