@@ -61,6 +61,66 @@ public class PlanRestController {
 	public PlanRestController() {
 	}
 	
+
+	@RequestMapping(value = "json/listDailyPlan/{mainPlanNo}", method = RequestMethod.GET)
+	public Map<String, Object> listDailyPlan(@PathVariable int mainPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/listDailyPlan <START>");
+		System.out.println("mainPlanNo : " + mainPlanNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
+		for (DailyPlan result : list) {
+			System.out.println("result : " + result);
+		}
+		
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		String city = mainPlan.getCity();
+		String[] cityList = city.split(",");
+		
+		map.put("cityList", cityList);	
+		map.put("list", list);
+		
+		System.out.println("RestController : json/listDailyPlan <END>");
+		
+		return map;
+		
+	}	
+
+
+	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
+	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/getDailyPlanFromMain <START>");
+		System.out.println("mainPlanNo : " + mainPlanNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
+		DailyPlan dailyPlan = listMain.get(0);
+		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
+		int dailyPlanNo = dailyPlan.getDailyPlanNo();
+
+		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+			List<PlanContent> list = new ArrayList<PlanContent>();
+			for(PlanContent listPlanContent : listBefore) {
+				listPlanContent.setDailyPlan(dailyPlan);
+				list.add(listPlanContent);
+			}
+			map.put("list", list);
+			System.out.println("##debug : " + list);
+		}
+		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+		
+		map.put("dailyPlan", dailyPlan);		
+		
+		System.out.println("RestController : json/getDailyPlanFromMain <END>");
+		
+		return map;
+		
+	}
+
+	
 	@RequestMapping(value = "json/selectCity", method = RequestMethod.POST)
 	public void selectCity(
 			@RequestBody DailyPlan dailyPlan 
@@ -425,5 +485,43 @@ public class PlanRestController {
 		
 	}
 	
+	//////////////////////addText///////////////////////
+	@RequestMapping(value = "json/addText", method = RequestMethod.POST)
+	public Map<String, Object> addText(@RequestBody PlanContent planContent,
+	Model model) throws Exception {
+	
+	System.out.println("Controller : addText <START>");
+	System.out.println("##Debug : " + planContent);
+	
+	int dailyPlanNo = planContent.getDailyPlan().getDailyPlanNo();
+	DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+	
+	int orderNum = dailyPlanService.getPlanContentCount(dailyPlanNo);
+	planContent.setOrderNo(orderNum + 1);
+	dailyPlanService.addPlanContent(planContent);
+	
+	Map<String, Object> map = new HashMap<String, Object>();
+	
+	if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+	List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+	List<PlanContent> list = new ArrayList<PlanContent>();
+	for(PlanContent listPlanContent : listBefore) {
+	listPlanContent.setDailyPlan(dailyPlan);
+	list.add(listPlanContent);
+	}
+	map.put("list", list);
+	System.out.println("##debug : " + list);
+	}
+	dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+	map.put("dailyPlan", dailyPlan);		
+	
+	System.out.println("Controller : addText <END>");
+	
+	System.out.println("what is the result? " + map.get("dailyPlan") + " : " + map.get("list"));
+	
+	
+	return map;
+	
+	}
 	
 }

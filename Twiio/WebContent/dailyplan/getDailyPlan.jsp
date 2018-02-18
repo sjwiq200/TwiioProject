@@ -680,6 +680,7 @@ $(function() {
 						contentType:"application/json;charset=UTF-8",
 						data : JSON.stringify({
 							"dailyPlanNo" : ${dailyPlan.dailyPlanNo},
+							
 							"dailyCity" : cityName
 						}),
 						success : function(JSONData) {
@@ -738,39 +739,12 @@ $(function() {
 		});
 		
 		$(document).on('change',"input[name='cityList']",function() {
-			//alert($("input[name='countrySelectButton']").index(this));
 			var target = $( event.target );				
 					
 			$("p.getCity").append(target.val()+"  ");
 			
 		});
-		
-	//////////////////////////////////////////////cityautocomplete/////////////
-	/* 	
-	$(document).ready(function() {
-		$("input[name='cityList']").each(function(index) {
-			//alert(index);
-			$($("input[name='cityList']")[index]).autocomplete({
-				source : function(request,response) {
-					$.ajax({
-							url : "/information/json/cityAutoComplete/",
-							method : "POST",
-							data : {
-									keyword : $($("input[name='cityList']")[index]).val()
-							},
-							dataType : "json",
-							success : function(JSONData) {
-										response($.map(JSONData,function(item) {
-										return item;
-										}));
-									}
-							});
-				}		
-			});
-		});
 
-	}); */
-	////////////////////////////////////////////addcity////
 	var i = 1;
 	$(function() {
 
@@ -778,7 +752,6 @@ $(function() {
 			
 			if (i == 1) {$("#removeCity").attr("disabled", false);
 			i++;		
-			//alert("1");
 			$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
 			}
 			else if (i > 4) {//alert("2");
@@ -786,37 +759,15 @@ $(function() {
 			}
 			else if(i==4){
 				i++;
-				//alert("3");
 				$("#addCity").attr("disabled", true);
 				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
 			}
 			else{
 				i++;
-				//alert("4");
 				$("#removeCity").attr("disabled", false);
 				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
 			}
 			
-			/* $(document).find("input[name='cityList']").removeClass('ui-autocomplete-input').each(function(index) {
-						
-					$($("input[name='cityList']")[index]).autocomplete(	{source : function(request,response) {
-																				$.ajax({
-																					url : "/information/json/cityAutoComplete/",
-																					method : "POST",
-																					data : {keyword : $($("input[name='cityList']")[index]).val()
-																					},
-																					dataType : "json",
-																					success : function(JSONData) {
-
-																						response($.map(JSONData,function(item) {
-
-																									return item;
-																								}));
-																					}
-																				});
-																			}
-																		});
-							}); */
 		});
 
 		$(function() {
@@ -1001,7 +952,13 @@ $(function() {
 								<c:if test="${!empty scrap.scrapNo }">
 									<p class="contents">스크랩번호 : ${scrap.scrapNo }</p>
 								</c:if> --%>
-
+								
+								<c:if test="${!empty planContent.routeDescription}">
+									<p class="contents" align="center" 
+									style="font-size:1.1em !important; font-color: #C2C2C2 !important;">
+									${planContent.routeDescription}</p>
+								</c:if>
+								
 								<c:if test="${!empty planContent.route}">
 									<p class="contentsDelete">루트 : ${planContent.route}</p>
 								</c:if>
@@ -1022,9 +979,6 @@ $(function() {
 									<p class="contents">이동방법 : ${planContent.routeType}</p>
 								</c:if> --%>
 
-								<c:if test="${!empty planContent.routeDescription}">
-									<p class="contents" style="font-size:1.1em !important; font-color: #C2C2C2 !important;"><!-- 길찾기결과 :  -->${planContent.routeDescription}</p>
-								</c:if>
 								
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
@@ -1065,7 +1019,21 @@ $(function() {
 								<div class="col-xs-12"  style="height: 30px" align="center"></div>
 								</c:if>
 								<!-- ---------------------지도정보 <END>-------------------- -->
-							
+								
+								<!--  채팅 일정 픽스 사진  -->
+								<c:if test="${planContent.contentType eq 6}">
+									<c:if test="${!empty planContent.mapUrl}">
+											<div class="col-xs-12" align="center" style="margin-bottom:20px;font-family:'JEJUMYEONGJO';">
+											<h3>Your appointment</h3>
+											</div>
+											<div>
+											<p class="contents">
+												<img src="${planContent.mapUrl}" name="mapImg" class="contentsDelete" width="300px" style="border-color:#C2C2C2;border-style: solid;border-width: 3px;border-radius: 99%;"
+													onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
+											</div>
+									</c:if>
+								</c:if>
+								
 								<c:if test="${!empty planContent.contentText}">
 									<p>
 										<div class="col-xs-12" align="center" style="margin-top:20px;font-size:1.1em !important;font-color: #C2C2C2 !important;">

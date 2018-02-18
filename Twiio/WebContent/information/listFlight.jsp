@@ -68,10 +68,13 @@
 			  display:none;  
 			}
        #loadingImg {
+       			  left:40%;
+       			  right:40%;
+			 	  top:30%;
 				  position:absolute;
-				  left:45%;
-				  top:50%;
 				  z-index:120;
+				  max-width:30%;
+				  max-height:30%;
 				}
 				
 		 .btn-sm{
@@ -230,11 +233,12 @@
 										
 										for(var i = 0 ; i<info.length; i++){
 											
-											list += '<tr><td align="center" valign="middle" style="padding-top : 30px;">'+(i+1)+'</td>'+
+											list += '<tr><td align="center" valign="middle" style="padding-top : 50px;">'+(i+1)+'</td>'+
 											'<td align="center" id="info" style="padding-top : 20px;">'+info[i]+
-											'</td>'+'<td align="center" valign="middle" id="type" style="padding-top : 30px;">'+type[i]+
-											'</td>'+'<td align="center" valign="middle" id="price" style="padding-top : 25px;">'+price[i]+
-											'<td align="center"  valign="middle" id="new"><button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick">선&nbsp;택</button></td></tr>';
+											'</td>'+'<td align="center" valign="middle" id="type" style="padding-top : 50px;">'+type[i]+
+											'</td>'+'<td align="center" valign="middle" id="price" style="padding-top : 50px;">'+price[i]+
+											'<td align="center"  valign="middle" id="new">'+
+											'<button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick" style="margin-top : 40px;">선&nbsp;택</button></td></tr>';
 										}
 									$("#listTbody").html(list);
 			    							    							    						
@@ -387,7 +391,7 @@
 			<div class="panel">
 			 			<div class="panel-body">
 			    			<div class="row">
-			    				<div class="col-xs-2 col-sm-2 col-md-2">
+			    				<div class="col-sm-2">
 			    					<div class="form-group">
 			    					 <div class="input-group">
 				    					<span class="input-group-addon"><i class="glyphicon glyphicon-plane"></i></span>
@@ -398,7 +402,7 @@
 									</div>
 			    					</div>
 			    				</div>
-			    				<div class="col-xs-5 col-sm-5 col-md-5">
+			    				<div class="col-sm-5">
 			    					<div class="form-group">
 			    						 <div class="input-group">
 				    						<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
@@ -406,7 +410,7 @@
 				    					</div>
 			    					</div>
 			    				</div>
-			    				<div class="col-xs-5 col-sm-5 col-md-5">
+			    				<div class="col-sm-5">
 			    					<div class="form-group">
 			    						 <div class="input-group">
 				    						<span class="input-group-addon"><i class="glyphicon glyphicon-globe"></i></span>
@@ -417,7 +421,7 @@
 			    			</div>
 
 			    			<div class="row">
-			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    				<div class="col-sm-4">
 			    					<div class="form-group">
 			    						 <div class="input-group">
 				    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -425,7 +429,7 @@
 				    					</div>
 			    					</div>
 			    				</div>
-			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    				<div class="col-sm-4">
 			    					<div class="form-group">
 			    						 <div class="input-group">
 				    						<span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
@@ -433,7 +437,7 @@
 				    					</div>
 			    					</div>
 			    				</div>
-			    				<div class="col-xs-4 col-sm-4 col-md-4">
+			    				<div class="col-sm-4">
 			    					<div class="form-group">
 			    						 <div class="input-group">
 				    						<span class="input-group-addon"><i class="glyphicon glyphicon-plus"></i></span>
@@ -449,8 +453,8 @@
 			    					</div>
 			    				</div>
 			    			
-			    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
-			    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+			    			<div class="col-xs-8 col-sm-8 col-md-8">	
+			    				 <button class="col-xs-12 col-xs-offset-3 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
 			    			</div>
 			    	</div>
 	    		</div>
