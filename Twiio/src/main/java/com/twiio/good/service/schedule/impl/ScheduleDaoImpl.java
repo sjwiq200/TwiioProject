@@ -74,7 +74,7 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		query.addCriteria(Criteria.where("userNo").all(userNo));
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
-		query.skip(search.getStartRowNum());
+		query.skip(search.getStartRowNum()-1);
 		query.limit(search.getEndRowNum());
 		
 		Map<String, Object> map = new HashMap<>();

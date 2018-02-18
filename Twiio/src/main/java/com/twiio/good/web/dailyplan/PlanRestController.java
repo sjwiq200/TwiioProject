@@ -61,6 +61,7 @@ public class PlanRestController {
 	public PlanRestController() {
 	}
 	
+
 	@RequestMapping(value = "json/listDailyPlan/{mainPlanNo}", method = RequestMethod.GET)
 	public Map<String, Object> listDailyPlan(@PathVariable int mainPlanNo) throws Exception {
 		
@@ -84,8 +85,9 @@ public class PlanRestController {
 		
 		return map;
 		
-	}
-	
+	}	
+
+
 	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
 	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
 		
@@ -117,6 +119,7 @@ public class PlanRestController {
 		return map;
 		
 	}
+
 	
 	@RequestMapping(value = "json/selectCity", method = RequestMethod.POST)
 	public void selectCity(
