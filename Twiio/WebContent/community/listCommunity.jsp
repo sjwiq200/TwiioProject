@@ -1,6 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -42,81 +44,7 @@
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		<!-- 다이얼로그  -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-		
-	<style>
-	   body {
-            padding-top : 50px ;
-            background-color: #f4f4f4;
-			color: #666666 ;
-			font-family: "Source Sans Pro", Helvetica, sans-serif ;
-        }
-        
-         .btn-sm{
-				font-size:12px;
-				line-height:16px;
-				border: 2px solid;
-				padding:8px 15px;
-			}
-			
-			.btn {
-				letter-spacing: 1px;
-				text-decoration: none;
-				background: none;
-			    -moz-user-select: none;
-			    background-image: none;
-			    border: 1px solid transparent;
-			    border-radius: 0;
-			    cursor: pointer;
-			    display: inline-block;
-			    margin-bottom: 0;
-			    vertical-align: middle;
-			    white-space: nowrap;
-				font-size:14px;
-				line-height:20px;
-				font-weight:700;
-				text-transform:uppercase;
-				border: 3px solid;
-				padding:8px 20px;
-			}
-			
-			.btn-outlined.btn-theme:hover,
-			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
-			}
-			
-			.btn-outlined.btn-theme {
-			    background: #FFF;
-			    color: #08708A;
-				border-color: #08708A;
-			}
-			.btn-outlined.btn-light:hover,
-			.btn-outlined.btn-light:active {
-			    color: #FFF;
-			    background: #D73A31;
-			    border-color: #D73A31;
-			}
-			
-			.btn-outlined.btn-light {
-			    background: #FFF;
-			    color: #D73A31;
-				border-color: #D73A31;
-			}
-			
-			.btn-xs{
-				font-size:11px;
-				line-height:15px;
-				border: 1px solid;
-				padding:5px 10px;
-				height: 30px;
-			}
-	        textarea {
-				  width: 100%;
-				  height: 100px;
-				  resize: none;
-			}
-    </style>
+	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
 
 <script type="text/javascript">
 	var page = 1;
@@ -186,6 +114,12 @@
 							if(${user.userNo} != JSONData[i].userNo){
 								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
 							}
+							
+							var title = JSONData[i].communityTitle;
+							if(title.length>12){
+								title=title.substring(0,11)+"..."
+							}
+							
 							var displayValue = 
 						    '<div class="col-md-3">'+
 						      '<div class="thumbnail" style="height:400px">'+
@@ -194,11 +128,10 @@
 							  thumbnail+
 						         ' <div class="caption">'+
 						          	'[ 게판번호 :'+communityNo+' ]'+
-						          	'<p>[ 제   목 :'+JSONData[i].communityTitle+' ]</p>'+ 
+						          	'<p>[ 제   목 :'+title+' ]</p>'+ 
 						            '<p>[ 작성자 :'+JSONData[i].userName+' ]</p>'+
 						            '<p>[ 등록일 :'+JSONData[i].regDate+' ]</p>'+
 						            '<p>[ 조회수 :'+JSONData[i].viewCount+' ]</p>'+
-						            '<p>[ 커뮤니티번호 :'+JSONData[i].communityNo+' ]</p>'+
 						            '<p><a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>'+ 
 						            report+
 						        '</div>'+
@@ -235,9 +168,11 @@
 	$(document).on('click' ,'#reportButton', function() {
 		var reportcommunityno=$($('input[name=communityNo]')[$('a[id=reportButton]').index(this)]).val();
 		var reportcommunityuserno=$($('input[name=communityNouserNo]')[$('a[id=reportButton]').index(this)]).val();
+		var reportusername = $($('input[name=communityUserName]')[$('a[id=reportButton]').index(this)]).val();
 		var reportbody = 
-	        '<h3>신고글 작성<h3>'+
-			'<input type="text" class="form-control" id="reportuser" row="7" col="50" value="'+reportcommunityuserno+'" readonly/>'+
+	        '<h3>Report<h3>'+
+	        '<input type="hidden" class="form-control" id="reportcommunityno" row="7" col="50" value="'+reportcommunityno+'" readonly/>'+
+			'<input type="text" class="form-control" id="reportuser" row="7" col="50" value="'+reportusername+'" readonly/>'+
 			'<input type="text" class="form-control" id="reporttitle" row="7" col="50" placeholder="신고 제목 작성" value=""/>'+
 			'<textarea id="reportcontent"  name="reportcontent" row="7" col="50" value="" placeholder="신고 내용"></textarea>';
  
@@ -249,10 +184,12 @@
 		$('#reportbody').html(reportbody);
 		$('#modalreport').modal('show');
 		}
- 		
+	});	
+	
  		$(document).on('click','#addreportcommunity',function(){
 		 	var reportcontent = $('#reportcontent').val();
 		 	var reporttitle = $('#reporttitle').val();
+		 	var reportcommunityno = $('#reportcommunityno').val();
 		 	if(reportcontent==''| reporttitle==''){
 				 alert('내용과 제목을 입력하세요.');			 
 			}
@@ -268,7 +205,7 @@
 						"reportContent":reportcontent,
 						"reportTitle":reporttitle,
 						"targetUserNo":reportcommunityuserno,
-						"targetCommunityNo":${community.communityNo}reportcommunityno
+						"targetCommunityNo":reportcommunityno
 					}),
 					success : function(JSONData) {
 						alert(JSON.stringify(JSONData));
@@ -277,7 +214,7 @@
 				});
 		 	 }
 		});
-	});	
+	
 	
 
 	function fncGetCommunityList(currentPage) {
@@ -313,21 +250,22 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-   	
+  	
  <div class="container"> 
+
  	<div class="page-header text-info" style="font-family: 'Pacifico', cursive;">
 		<c:if test="${communityType == '0'}">
-			<h1>Question Q&A</h1>
+		<h2 align="center" style="color:#08708A;"><strong>Question Q&A</strong></h2>
 		</c:if>
 		<c:if test="${communityType == '1'}">
-			<h1>Trip Review</h1>
+		<h2 align="center" style="color:#08708A;"><strong>Trip Review</strong></h2>
 		</c:if>
 	</div>
 
  
  	<form name="detailForm" action="/community/listCommunity" method="post"></form>
 	 
- 	<div class="row">
+ 	
    	<div class="col-md-6 text-left">
 		    	<p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수
@@ -336,9 +274,11 @@
 	
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    	
+			    <c:if test="${empty user.userNo}">
+			    </c:if>
+			    <c:if test="${!empty user.userNo}">
 			      <button type="button" id="write" class="btn btn-outlined btn-light btn-xs" style="border: 3px solid;">글 쓰 기</button>
-				  
+				</c:if>  
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
@@ -357,8 +297,8 @@
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
 				</form>
-	    </div>
 	</div>
+	
 	
 	<div class="col-md-12">
 		<hr sytle="border-style:dotted">
@@ -370,9 +310,10 @@
 		<c:forEach var="community" items="${list}">
 		
     <div class="col-md-3">
-      <div class="thumbnail" style="height:400px">
+      <div class="thumbnail" style="height:370px">
         <input type="hidden" name="communityNo" value="${community.communityNo}"/>
 		<input type="hidden" name="communityNouserNo" value="${community.userNo}"/>
+		<input type="hidden" name="communityUserName" value="${community.userName}"/>
 		<c:if test="${! empty community.thumbnail}">
 			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
 		</c:if> 
@@ -381,11 +322,15 @@
 		</c:if>
           <div class="caption">
           <p>[게시판번호  : ${i}]</p>
-    	  <p>[제   목 : ${community.communityTitle }]</p>
+          <c:if test="${fn:length(community.communityTitle) > 12}">
+          <p>[제   목 : <c:out value="${fn:substring(community.communityTitle,0,11)}"/>...]</p>
+          </c:if>
+          <c:if test="${fn:length(community.communityTitle) <= 12 }">
+          <p>[제   목 : ${community.communityTitle }]</p>
+          </c:if>
           <p>[작성자 : ${community.userName }]</p>
           <p>[등록일 : ${community.regDate }]</p>
-          <p>[조회수 : ${community.viewCount }]</p>
-          <p>[커뮤니티번호 : ${community.communityNo }]</p>     
+          <p>[조회수 : ${community.viewCount }]</p>     
             <p><a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>
             <c:if test="${user.userNo != community.userNo}">
                <a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a>
@@ -398,7 +343,9 @@
  	</c:forEach>
  	</div>
  	
- 	<div class="modal fade" id="modalreport"  role="dialog">
+</div>
+	
+ 		<div class="modal fade" id="modalreport"  role="dialog">
 		<div class="modal-dialog modal-lg">
 		<!-- Modal content-->
 		<div class="modal-content">
@@ -410,9 +357,7 @@
 				<h7 class="modal-title">TWIIO</h7>
 			</div>
 			<div class="modal-body">
-			
-				<div id="reportbody"></div>
-			
+				<div id="reportbody"></div>			
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
@@ -421,6 +366,6 @@
 		</div>
 		</div>
 		</div>
-</div>    
+  
 </body>
 </html>

@@ -336,7 +336,7 @@
 	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT
-	  			<choose>
+	  			<!-- <choose>
 	  				<when test="user.userType == 3 or user.userType == 2">
 	  										   r.tran_no as tran_no,
 											   r.refund_no as refund_no,
@@ -349,20 +349,21 @@
 											   t.host_no as host_no
 									FROM refund r, transaction t																		
 					</when>
-	  				<otherwise>tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
+	  				<otherwise> -->
+	  					tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
 							FROM transaction
-					</otherwise>
-	  			</choose>	  			
+					<!-- </otherwise>
+	  			</choose>	 -->  			
 	  			<choose>												 
-				<when test="user.userType == 1">
+				<when test="user.userType==1 or user.userType==2">
 					WHERE user_no=#{user.userNo}
 					ORDER BY tran_date DESC
 				</when>
-				<when test="user.userType == 2">
+				<!-- <when test="user.userType == 2">
 					WHERE t.tran_no=r.tran_no(+)
-					AND host_no=#{user.userNo}
+					AND user_no=#{user.userNo}
 					ORDER BY refund_reg_date DESC
-				</when>
+				</when> -->
 				<otherwise>
 					<choose>
 					<when test="evalType == 'product'">

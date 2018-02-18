@@ -62,7 +62,9 @@
 	   		COMMUNITY_TITLE		= #{communityTitle:VARCHAR} ,
 	   		COMMUNITY_SUB_TITLE = #{communitySubTitle:VARCHAR},
 			COMMUNITY_CONTENT	= #{communityContent:VARCHAR},
+			<if test="thumbnail != null">
 			THUMBNAIL = #{thumbnail:VARCHAR}
+			</if>
 	   	</set>
 	   	WHERE COMMUNITY_NO = #{communityNo}
 	</update>

@@ -179,9 +179,7 @@
 																						
 											//alert(JSON.stringify(JSONData));
 											$("div[name='eval']").append(JSON.stringify(JSONData));
-											
-											
-									        				
+   				
 										}
 									}
 								);
@@ -1098,7 +1096,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 					                            </ul>
 					             </div>				
 								</c:if>
-							</div>
+								</div>
 								<div class ="row" name="upcontent" style="padding-top: 10px;">
 					    		<div class="col-sm-3">
 					    			${reply.replyContent}

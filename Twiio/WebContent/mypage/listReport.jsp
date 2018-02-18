@@ -340,8 +340,8 @@
     
 		
 		
-		<div class="modal fade" id="viewReport" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">	
-    			<div class="modal-dialog">
+		<div class="modal fade" id="viewReport" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
     				<div class="modal-content">
           				<div class="modal-header">
           				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>

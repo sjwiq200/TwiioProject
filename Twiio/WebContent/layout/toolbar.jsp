@@ -112,7 +112,9 @@
 	                     <ul class="dropdown-menu">
 	                     	 <li><a href="#">개인정보조회</a></li>	                     	 
 	                         <li><a href="#">Message</a></li>
+	                         <c:if test="${sessionScope.user.userType != '3'}">
 	                         <li><a href="#">구매목록조회</a></li>
+	                          </c:if>
 	                         <c:if test="${sessionScope.user.userType == '2'}">
 	                        	 <li><a href="#">판매목록조회</a></li>
 	                         </c:if>

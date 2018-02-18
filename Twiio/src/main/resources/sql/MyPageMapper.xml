@@ -52,7 +52,7 @@
 							   TO_USER_NO,
 							   FROM_USER_NO,
 							   MESSAGE_CONTENT,
-							   to_char(message_reg_date,'yyyy-mm-dd hh24:mi:ss') MESSAGE_REG_DATE,
+							   to_char(message_reg_date,'yyyy-mm-dd hh24:mi:ss') as MESSAGE_REG_DATE,
 							   MESSAGE_TYPE,
 							   MESSAGE_TITLE,
 							   PRODUCT_NO,
