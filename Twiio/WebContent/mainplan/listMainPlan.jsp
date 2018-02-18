@@ -17,6 +17,14 @@
 <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 <link rel="stylesheet" href="/resources/css/plan-listMainPlan.css" />
 
+
+<!-- 캘린더 2 -->
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+
 <!-- ///////////////////////////////////////////////////////////////////////// -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bttn.css/0.2.4/bttn.min.css">
 <!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
@@ -41,6 +49,10 @@
 <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
 <!-- jQuery UI toolTip 사용 JS-->
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 
 <!-- ---------Floating Button------------ -->
@@ -155,8 +167,20 @@ html, body {
 	color: black;
 }
 
-</style>
+/*Modal Autocomplete Function */
+.ui-autocomplete {
+position: absolute;
+z-index: 2150000000 !important;
+cursor: default;
+border: 2px solid #ccc;
+padding: 5px 0;
+border-radius: 2px;
+}
 
+</style>
+<script>
+
+</script>
 
 <script>
 
@@ -210,6 +234,14 @@ html, body {
 			 $(location).attr('href', url);
 		 })
 	 })
+	 
+	 $(function(){
+		 $("#addMain").bind("click",function(){
+			 $('#addMainModal').appendTo("body").modal('show');
+		 })
+	 })
+	  
+
 
 	 /////////////////////////친구와 공유하기 기능///////////////////////////
 	$(function() {
@@ -259,12 +291,269 @@ html, body {
 	
 </script>
 
+<!-- /////////////addMainPaln <START> ////////////// -->
+
+<script>
+	function fncAddMainPlan() {
+		var planTitle = $("#planTitle").val();
+		var mainThumbnail = $("#mainThumbnail").val();
+		var datepicker1 = $("#datepicker1").val();
+		var datepicker2 = $("#datepicker2").val();
+		//alert(mainThumbnail);
+		var flag = true;
+
+		if (planTitle == "") {
+			flag = false;
+		}
+		if (mainThumbnail == "") {
+			flag = false;
+		}
+		if (datepicker1 == "") {
+			flag = false;
+		}
+		if (datepicker2 == "") {
+			flag = false;
+		}
+
+		var addPlan = "";
+
+		$("input[name='countryList']")
+				.each(
+						function(index) {
+
+							if ($($("input[name='countryList']")[index]).val() == "") {
+								flag = false;
+							} else {
+								addPlan += '<input type="hidden" name="countryList" value="'
+										+ $(
+												$("input[name='countryList']")[index])
+												.val() + '">';
+							}
+						});
+
+		if (flag) {
+
+			//$("div[name='planer']").remove();
+			//$("div[name='addThumbnail']").remove();
+			//$("input[name='file']").attr("style", "display:none");
+
+			addPlan += '<input type="hidden" name="planTitle" value="'+planTitle+'">'
+					+ '<input type="hidden" name="departureDate" value="'+datepicker1+'">'
+					+ '<input type="hidden" name="arrivalDate" value="'+datepicker2+'">';
+			//alert(addPlan);
+			$(".form-group.center-block.contentsList").append(addPlan);
+
+			$(".btn-1").attr('value', '여행을 시작해 볼까요?');
+			$("#letsGo").append('<img src="/resources/images/dailyPlanContent/letsGotoTrip.jpg" width="400px">');
+		}
+	}
+
+	$(function() {
+		$("#submit").on("click",function() {
+					$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan").attr("enctype",
+							"multipart/form-data").submit();
+				});
+	});
+
+	//AutoComplete///////////////////
+
+	$(function() {
+		$("#city1").autocomplete({
+			source : function(request, response) {
+				$.ajax({
+					url : "/information/json/cityAutoComplete/",
+					method : "POST",
+					data : {
+						keyword : $("#city1").val()
+					},
+					dataType : "json",
+					success : function(JSONData) {
+						response($.map(JSONData, function(item) {
+							return item;
+						}));
+					}
+				});
+			},
+			minLength : 3
+		});
+	});
+
+	$(document).ready(function() {$("input[name='countryList']").each(function(index) {
+											//alert(index);
+											$($("input[name='countryList']")[index]).autocomplete(
+															{
+																source : function(request,response) {
+
+																	$.ajax({
+																				url : "/information/json/countryAutoComplete/",
+																				method : "POST",
+																				data : {
+																					keyword : $($("input[name='countryList']")[index]).val()
+																				},
+																				dataType : "json",
+																				success : function(JSONData) {
+
+																					response($.map(JSONData,function(item) {
+																										return item;
+																									}));
+																				}
+																			});
+																}
+															});
+										});
+
+					});
+
+	/////////////////////////////////
+
+	$(function() {
+		$("#datepicker1").flatpickr({
+			altInput : true,
+			altFormat : "F j, Y",
+			dateFormat : "Y-m-d",
+		});
+	});
+
+	$(function() {
+		$("#datepicker2").flatpickr({
+			altInput : true,
+			altFormat : "F j, Y",
+			dateFormat : "Y-m-d",
+		});
+
+	});
+
+	$(function() {
+		$("#planTitle").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("input[name='countryList']").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#mainThumbnail").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#datepicker1").on("change", function() {
+			fncAddMainPlan();
+		});
+
+		$("#datepicker2").change(function() {
+			var start = $("#datepicker1").val();
+			var end = $("#datepicker2").val();
+			if (start > end) {
+				swal("도착일이 출발일보다 빠를 수 없습니다. \n재입력 부탁드립니다.");
+			} else {
+				fncAddMainPlan();
+			}
+		});
+	});
+
+	////////////////////////////////////////////addcountry////
+	var i = 1;
+	$(function() {
+
+		$("#addCountry")
+				.on("click",function() {
+							i++;
+							if (i == 2) {$("#removeCountry").attr("disabled", false);}
+							if (i > 19) {$("#addCountry").attr("disabled", true);}
+
+							$("div[name=addCountry]").append($('<input  type="text" id="country'+i+'" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="form-control input-md contents" >'));
+							$(document).find("input[name='countryList']").removeClass('ui-autocomplete-input')
+									.each(function(index) {
+										$($("input[name='countryList']")[index]).autocomplete(	{source : function(request,response) {
+																					$.ajax({
+																					url : "/information/json/countryAutoComplete/",
+																					method : "POST",
+																					data : {keyword : $($("input[name='countryList']")[index]).val()
+																					},
+																					dataType : "json",
+																					success : function(JSONData) {
+
+																						response(
+																								$.map(JSONData,function(item) {
+
+																											return item;
+																										}));
+																					}
+																				});
+																	}
+																});
+											});
+						});
+
+		$(function() {
+
+			$("#removeCountry").on("click", function() {
+				if (i > 2) {
+					$("#addTripDate").attr("disabled", false);
+					$('#country' + i).remove();
+					i--;
+				} else if (i == 2) {
+					$("#removeCountry").attr("disabled", true);
+					$('#country' + i).remove();
+					i--;
+				}
+
+			});
+		});
+	});
+
+	$(function() {
+		$("#mainThumbnail").on('change', function() {
+			readURL(this);
+		});
+	});
+
+	function readURL(input) {
+		if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			reader.onload = function(e) {
+				$('#blah').attr('src', e.target.result).attr('width', '50px');
+			}
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	
+	$(function(){
+		$("#fileUpload").on("click",function(){
+			$('#mainThumbnail').click();
+		});
+	});
+	
+	$(function(){
+		$(".form-control").keydown(function(e) {
+			if (e.keyCode == 13) {
+				 return false;
+			}
+		});
+						
+		$("document").on("keydown",".form-control", function(e) {  
+			if (e.keyCode == 13) {
+				 return false;
+			}
+		});
+
+	});
+</script>
+
+
+<!-- /////////////addMainPaln <END> ////////////// -->
+
+
 </head>
 <body>
 		<jsp:include page="/layout/toolbar.jsp" />
 	<form>
 		
 		<div class="container">
+		
+		
+
+
 			
 			<header id="header" class="alt">
 				<div class="row">
@@ -274,6 +563,10 @@ html, body {
 				</div>
 					<p style="font-family:TYPO_JEONGJOL;font-size: 1.5em;	margin-bottom: 70px;" align="center">여행을 맞이하는, 설렘부터  </p>
 			</header>
+			
+			
+			
+			
 			
 				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
 				<div class="row" style="font-family:'TYPO_JEONGJOL';">
@@ -337,16 +630,22 @@ html, body {
 				</div><!-- 섬네일 전체 박스 부분 -->
 		</div>
 
+
+
+
+
+
+
 		
 		<!--  Floating Button <START> -->
 		<div id="container-floating">
 			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create">
-				<p class="letter" id="addMainPlan" style="margin-top: 5px;font-family: 'TYPO_JEONGJOL'; font-size:20px;">Write</p>
+				<p class="letter" id="addMain" style="margin-top: 5px;font-family: 'TYPO_JEONGJOL'; font-size:20px;">Write</p>
 			</div>
 		</div>
 		<!--  Floating Button <END> -->
-
-
+<!-- 					<button type="button" class="btn btn-info btn-lg" id="addMain">Open Modal</button>
+ -->	
 	</form>
 
 
@@ -389,5 +688,92 @@ html, body {
 		</div>
 		
 		<!---------- ShareWithFriend Dialog <END>------------->
+
+
+		<!---------------- addMainPlan Dialog <START> -->
+		<div id="addMainModal" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+				
+					
+				<!-- Modal content-->
+			<!-- 	<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title">Design your twiiBook</h4>
+					</div>
+					<div class="modal-body">-->
+						<form id="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#3B3B3B;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									Design your TwiiBook
+									</h1>
+								</div>
+								<div style="margin-bottom:50px;font-family:TYPO_JEONGJOL;">당신의 트위북을 만들어보세요</div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">
+								<div name="addThumbnail">
+									<label for="mainThumbnail" class="col-sm-12 control-label">표지</label> <img id="blah" /> 
+									<img src="/resources/images/icon/plan/imageInput.png" width="20px" style="position: absoloute" id="fileUpload" name="fileUpload">
+<!-- 									<input type="button" class="form-control contents" style="position: absoloute" id="fileUpload" name="fileUpload">
+ -->									<p>&nbsp;</p>
+								</div>
+				
+								<input type="file" class="col-sm-offset-3 form-control contents" id="mainThumbnail" name="file" style="display: none;">
+				
+				
+								<div name="planer">
+									<label for="planTitle" class="col-md-12 control-label">제목</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="planTitle" name="planTitle" placeholder="Your book title">
+									<p>&nbsp;</p>
+				
+									<div name="addCountry">
+										<label class="control-label" for="textinput">국가</label> 
+										<a class="btn btn-default btn" href="#" role="button" id="addCountry" name="addCountry">
+										<span class="glyphicon glyphicon-plus" aria-hidden="true" style="color: #A6A0A5;"></span></a> 
+										<a class="btn btn-default btn" href="#" role="button" id="removeCountry" name="removeCountry" disabled="true">
+										<span class="glyphicon glyphicon-minus" aria-hidden="true" style="color: #A6A0A5;"></span></a> 
+										<input type="text" id="country1" name="countryList"
+											style="position: absoloute" placeholder=""
+											class="form-control input-md contents">
+										<div class="btn-group"></div>
+									</div>
+									<p>&nbsp;</p>
+									<label for="departureDate" class="col-sm-12 control-label ">출발일</label> 
+									<input type="text" class="form-control contents" id="datepicker1" name="departureDate" placeholder="Your departure date">
+									<p>&nbsp;</p>
+				
+									<label for="arrivalDate" class="col-sm-12 control-label">도착일</label>
+									<input type="text" class="form-control contents" id="datepicker2"
+										name="arrivalDate" placeholder="Your arrival date">
+									<p>&nbsp;</p>
+									
+									<input type="submit" class="btn-1" id="submit" style="margin-bottom:50px;"value="완성">
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
+				<!-- 	<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					</div>
+				</div> -->
 		
+			</div>
+
+		
+		<!------------------- addMainPlan Dialog <END> -->
+
+
+
 </html>

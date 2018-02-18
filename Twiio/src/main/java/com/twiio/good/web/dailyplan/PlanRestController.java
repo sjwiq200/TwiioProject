@@ -459,5 +459,43 @@ public class PlanRestController {
 		
 	}
 	
+	//////////////////////addText///////////////////////
+	@RequestMapping(value = "json/addText", method = RequestMethod.POST)
+	public Map<String, Object> addText(@RequestBody PlanContent planContent,
+	Model model) throws Exception {
+	
+	System.out.println("Controller : addText <START>");
+	System.out.println("##Debug : " + planContent);
+	
+	int dailyPlanNo = planContent.getDailyPlan().getDailyPlanNo();
+	DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+	
+	int orderNum = dailyPlanService.getPlanContentCount(dailyPlanNo);
+	planContent.setOrderNo(orderNum + 1);
+	dailyPlanService.addPlanContent(planContent);
+	
+	Map<String, Object> map = new HashMap<String, Object>();
+	
+	if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+	List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+	List<PlanContent> list = new ArrayList<PlanContent>();
+	for(PlanContent listPlanContent : listBefore) {
+	listPlanContent.setDailyPlan(dailyPlan);
+	list.add(listPlanContent);
+	}
+	map.put("list", list);
+	System.out.println("##debug : " + list);
+	}
+	dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+	map.put("dailyPlan", dailyPlan);		
+	
+	System.out.println("Controller : addText <END>");
+	
+	System.out.println("what is the result? " + map.get("dailyPlan") + " : " + map.get("list"));
+	
+	
+	return map;
+	
+	}
 	
 }
