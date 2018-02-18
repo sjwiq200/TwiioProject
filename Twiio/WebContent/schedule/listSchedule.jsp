@@ -39,6 +39,11 @@
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 self.location = "/schedule/updateSchedule/"+roomKey;
 		 });
+  		
+  		$("a:contains('유저 평가')").on("click",function(){
+  			var roomKey = $(this).html().split('value="')[1].split('"')[0];
+  			self.location = "/schedule/addEvalUser/"+roomKey
+		 });
 		 
 		 
 	 });
@@ -159,6 +164,29 @@
 			color: #08708A;
 			border-color: #08708A;
 		}
+		
+.btn-outlined.btn-theme:hover,.btn-outlined.btn-theme:active {
+    color: #dedede;
+    background: #08708A;
+    border-color: #08708A;
+}
+
+.btn-outlined.btn-theme {
+    background: #dedede;
+    color: #08708A;
+	border-color: #08708A;
+}
+.btn-outlined.btn-light:hover,.btn-outlined.btn-light:active {
+    color: #dedede;
+    background: #D73A31;
+    border-color: #D73A31;
+}
+
+.btn-outlined.btn-light {
+    background: #dedede;
+    color: #D73A31;
+	border-color: #D73A31;
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -254,8 +282,11 @@
 		            
 		            <p>
 		            <c:if test="${user.userNo == room[status.index].userNo }">
-		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:10%">일정 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
+		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:40%">일정 수정<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
 		            </c:if>
+		            </p>
+		            <p>
+		            		<a href="#" class="btn btn-outlined btn-light" style="position: absolute;bottom:5%; right:10%">유저 평가<input type="hidden" id="roomKey" value="${room[status.index].roomKey}"></a>
 		            </p>
 		            
 		            

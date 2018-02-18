@@ -31,7 +31,7 @@
 	</resultMap>
 	
 	<resultMap id="userEvalSelectMap" type="userEval">
-		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="NUMERIC"/>
+		<result property="scheduleNo" 		column="schedule_no" 		jdbcType="VARCHAR"/>
 		<result property="profileTnF"		column="profile_credit" 	jdbcType="NUMERIC"/>
 		<result property="attendanceTnF" 	column="attendance" 		jdbcType="NUMERIC"/>
 		<result property="userNo"			column="user_no" 			jdbcType="NUMERIC"/>
@@ -215,12 +215,15 @@
 						</if> ) countTable						
 	 </select>
 	 
-	 <insert	id="addEvalUser"  parameterType="map" >
+	 <insert	id="addEvalUser"  parameterType="userEval" >
 	   INSERT INTO	usereval
-	   	(user_eval_no, schedule_no, profile_credit, attendance, user_no, target_no )
-		VALUES(seq_usereval_user_eval_no.nextval, #{scheduleNo}, #{tagetUser.profileTnF}, #{tagetUser.attendanceTnF}, #{tagetUser.userId},
-		#{evalUser.userId})
+	   	(user_eval_no, profile_credit, attendance, user_no, target_no, schedule_no )
+		VALUES(seq_usereval_user_eval_no.nextval, #{profileTnF}, #{attendanceTnF}, #{userNo},#{targetNo},#{scheduleNo})
 	</insert>
+	
+	<select id="addEvalUserCheck" parameterType="userEval" resultType="int">
+		select COUNT(*) from usereval where user_no = #{userNo} AND schedule_no = #{scheduleNo}
+	</select>
 	
 	<select 	id="getEvalUser"	parameterType="int"	resultMap="userSelectMap">
 		SELECT

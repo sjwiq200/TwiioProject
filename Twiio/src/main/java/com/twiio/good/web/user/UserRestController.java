@@ -215,35 +215,7 @@ public class UserRestController {
 //		return transaction ;
 //	}
 	
-	@RequestMapping( value="json/addEvalUser")
-	public Map  addEvalUser(	) throws Exception{
-	
-		System.out.println("/user/json/addEvalUser");
-		//Business Logic
-		
-		User evalUser = new User();
-		evalUser.setUserId("user01");
-		
-		UserEval targetUser = new UserEval();
-		
-		User targetNo = userService.getUser("user02");
-		targetUser.setTargetNo(targetNo.getUserNo());
-		targetUser.setAttendanceTnF(1);
-		targetUser.setProfileTnF(0);
-	
-		
-		String scheduleNo = "123";
-		
-		userService.addEvalUser(targetUser, evalUser, scheduleNo); 
-		
-		Map<String , Object> map = new HashMap();
-		map.put("tagetUser", targetUser);
-		map.put("evalUser", evalUser);
-		map.put("scheduleNo", scheduleNo);
-		
-		return map;
-		
-	}
+
 	
 	@RequestMapping( value="json/getEmailVer", method=RequestMethod.POST )
 	public List  getEmailVer(@RequestBody String user	) throws Exception{

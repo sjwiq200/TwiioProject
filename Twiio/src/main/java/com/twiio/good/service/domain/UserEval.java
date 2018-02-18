@@ -6,7 +6,7 @@ public class UserEval {
 	private int targetNo;
 	private int profileTnF;
 	private int attendanceTnF;
-	private int scheduleNo;
+	private String scheduleNo;
 	private int userEvalNo;
 	
 	public UserEval() {
@@ -44,11 +44,11 @@ public class UserEval {
 		this.attendanceTnF = attendanceTnF;
 	}
 
-	public int getScheduleNo() {
+	public String getScheduleNo() {
 		return scheduleNo;
 	}
 
-	public void setScheduleNo(int scheduleNo) {
+	public void setScheduleNo(String scheduleNo) {
 		this.scheduleNo = scheduleNo;
 	}
 	
@@ -59,6 +59,16 @@ public class UserEval {
 	public void setUserEvalNo(int userEvalNo) {
 		this.userEvalNo = userEvalNo;
 	}
+
+	@Override
+	public String toString() {
+		return "UserEval [userNo=" + userNo + ", targetNo=" + targetNo + ", profileTnF=" + profileTnF
+				+ ", attendanceTnF=" + attendanceTnF + ", scheduleNo=" + scheduleNo + ", userEvalNo=" + userEvalNo
+				+ "]";
+	}
+	
+	
+	
 	
 	
 }

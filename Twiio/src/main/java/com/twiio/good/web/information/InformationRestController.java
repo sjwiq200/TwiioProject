@@ -20,8 +20,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.oracle.jrockit.jfr.FlightRecorder;
-import com.sun.xml.internal.bind.v2.runtime.output.StAXExStreamWriterOutput;
 import com.twiio.good.service.domain.Flight;
 import com.twiio.good.service.domain.Hotel;
 import com.twiio.good.service.domain.WeatherMain;
@@ -352,9 +350,9 @@ public class InformationRestController {
 			con.add(list.get(i)+list.get(i+2));
 			loc.add(list.get(i+3));
 			
-			if(list.get(i+5).matches(	".*[¤¡-¤¾¤¿-¤Ó°¡-ÆR]+.*")) {
+			if(list.get(i+5).matches(	".*[ï¿½ï¿½-ï¿½ï¿½ï¿½ï¿½-ï¿½Ó°ï¿½-ï¿½R]+.*")) {
 				
-					System.out.println("°É·¯Áö´Ï@@"+list.get(i+5));
+					System.out.println("ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½@@"+list.get(i+5));
 					price.add(list.get(i+4));
 					i=i+4;
 				}else {
@@ -364,7 +362,7 @@ public class InformationRestController {
 				
 		}
 		
-		System.out.println("¹¹ÇÏ´Ï");
+		System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½");
 		
 		Map<String, List> end = new HashMap();
 		

@@ -48,7 +48,7 @@ import com.twiio.good.service.user.UserService;
 
 
 
-//==> È¸¿ø°ü¸® ¼­ºñ½º ±¸Çö
+//==> È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService{
 	
@@ -74,7 +74,7 @@ public class UserServiceImpl implements UserService{
 	@Value("#{apikeyProperties['googleAPPSecretKey']}")
 	String googleAPPSecretKey;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½////////
 	@Value("#{commonProperties['userFaceFilePath']}")
 	String userFaceFilePath;
 
@@ -147,7 +147,7 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User kakaoLogin(String access_token) throws Exception {
 		
-		String getPersnalInfoUrl = "https://kapi.kakao.com/v1/user/me"; // ·Î±×ÀÎÈÄ »ç¿ëÀÚ Á¤º¸ ¹Þ¾Æ ¿À±âÀ§ÇÑ url
+		String getPersnalInfoUrl = "https://kapi.kakao.com/v1/user/me"; // ï¿½Î±ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ url
 
         String token_type = "token_type";
         HttpsURLConnection conn = null;
@@ -169,7 +169,7 @@ public class UserServiceImpl implements UserService{
         writer.flush();
 
         int responseCodeResult = conn.getResponseCode();
-        System.out.println("Sending 'POST' request to URL : " + getPersnalInfoUrl); // v1/user/me·Î »ç¿ëÀÚ Á¤º¸ ¿äÃ» 
+        System.out.println("Sending 'POST' request to URL : " + getPersnalInfoUrl); // v1/user/meï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã» 
         System.out.println("Response Code : " + responseCodeResult);
 
         InputStreamReader isr2= null;
@@ -198,7 +198,7 @@ public class UserServiceImpl implements UserService{
 		 	User dbUser = new User();
 		 	
         	if(userDao.getUser(id) == null) {
-        		System.out.println("Ä«Ä«¿ÀÅå ·Î±×ÀÎ ¾ÆÀÌµð ÀÌ·Â ¾øÀ½");
+        		System.out.println("Ä«Ä«ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½");
 
         		//user = new User();
         		user.setUserId(id);
@@ -209,7 +209,7 @@ public class UserServiceImpl implements UserService{
 
         		dbUser = userDao.getUser(id);
         		
-        		System.out.println(name+"´ÔÀÌ Ä«Ä«¿ÀÅåÀ» ÅëÇØ »õ·Î °¡ÀÔÇÏ¼Ì½À´Ï´Ù. ");            		
+        		System.out.println(name+"ï¿½ï¿½ï¿½ï¿½ Ä«Ä«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½. ");            		
         		
         	}else {     		
         		System.out.println(":: kakao Login ::");
@@ -230,7 +230,7 @@ public class UserServiceImpl implements UserService{
 
 	@Override
 	public User googleLogin(String code) throws Exception {
-		// HTTP POSTÀü¼Û
+		// HTTP POSTï¿½ï¿½ï¿½ï¿½
 		URL AccessTokenURL = new URL("https://accounts.google.com/o/oauth2/token");
 		HttpURLConnection http = (HttpURLConnection) AccessTokenURL.openConnection();
 
@@ -245,13 +245,13 @@ public class UserServiceImpl implements UserService{
 		buffer.append("grant_type=authorization_code&code=" + code + "&client_id=" + googleAPPKey + "&client_secret="
 			+ googleAPPSecretKey + "&redirect_uri=" + redirect_url);
 
-		// µ¥ÀÌÅÍ Àü¼Û
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 		OutputStreamWriter outStream = new OutputStreamWriter(http.getOutputStream(), "UTF-8");
 		PrintWriter writer = new PrintWriter(outStream);
 		writer.write(buffer.toString());
 		writer.flush();
 
-		// °á°ú°ªÀ» ºÒ·¯¿Â´Ù.
+		// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ò·ï¿½ï¿½Â´ï¿½.
 		InputStreamReader inputStream = new InputStreamReader(http.getInputStream(), "UTF-8");
 		BufferedReader bufferReader = new BufferedReader(inputStream);
 		StringBuilder builder = new StringBuilder();
@@ -308,7 +308,7 @@ public class UserServiceImpl implements UserService{
 			dbUser = userDao.getUser(googleUser.getId());
 			//session.setAttribute("user", dbUser);
 		} else {
-			System.out.println("±¸±Û ·Î±×ÀÎ ¾ÆÀÌµð ÀÌ·Â ¾øÀ½");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½ ï¿½Ì·ï¿½ ï¿½ï¿½ï¿½ï¿½");
 			
 			googleUser.setUserId(googleUser.getId());
 			googleUser.setUserEmail(googleUser.getEmail());
@@ -318,7 +318,7 @@ public class UserServiceImpl implements UserService{
 			userDao.addUser(googleUser);
 			dbUser = googleUser;
 			//session.setAttribute("user", googleUser);
-			System.out.println(googleUser.getUserName() + "´ÔÀÌ ±¸±ÛÀ» ÅëÇØ »õ·Î °¡ÀÔÇÏ¼Ì½À´Ï´Ù. ");
+			System.out.println(googleUser.getUserName() + "ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¼Ì½ï¿½ï¿½Ï´ï¿½. ");
 		}
 
 		return dbUser;
@@ -332,13 +332,13 @@ public class UserServiceImpl implements UserService{
 		String face = "";
 		System.out.println(user.getFile().getContentType());
 		// System.out.println(file.getName());
-		System.out.println("¾÷·Îµå½Ã ÆÄÀÏ ÀÌ¸§ :: "+user.getFile().getOriginalFilename());
+		System.out.println("ï¿½ï¿½ï¿½Îµï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ :: "+user.getFile().getOriginalFilename());
 		// System.out.println(file.toString());
 
 		List<AnnotateImageRequest> requests = new ArrayList<AnnotateImageRequest>();
 		//String fileName = user.getFile().getOriginalFilename();
 		String fileName = user.getUserId()+"test.jpg";
-		System.out.println("½ÇÁ¦ ÀúÀå µÉ ÆÄÀÏ ÀÌ¸§ :: "+fileName);
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½ :: "+fileName);
 		System.out.println("11111");
 		PrintStream out = System.out;
 		System.out.println("22222");
@@ -374,7 +374,7 @@ public class UserServiceImpl implements UserService{
 					map.put("face", face);
 					map.put("flag", "0");
 				}
-				System.out.println("¿À³Ä?");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½?");
 				if (res.getFaceAnnotationsList().size() != 1) {
 					// out.close();
 					
@@ -390,7 +390,7 @@ public class UserServiceImpl implements UserService{
 						System.out.println(boo);
 					}
 
-					System.out.println("ÆÄÀÏ»èÁ¦");
+					System.out.println("ï¿½ï¿½ï¿½Ï»ï¿½ï¿½ï¿½");
 					face = user.getUserImage();
 					map.put("face", face);
 					map.put("flag", "0");
@@ -399,7 +399,7 @@ public class UserServiceImpl implements UserService{
 
 					// For full list of available annotations, see http://g.co/cloud/vision/docs
 					for (FaceAnnotation annotation : res.getFaceAnnotationsList()) {
-						System.out.println("¿À¿¹");
+						System.out.println("ï¿½ï¿½ï¿½ï¿½");
 						out.printf(
 								// "anger: %s\njoy: %s\nsurprise: %s\nposition: %s",
 								// annotation.getAngerLikelihood(),
@@ -416,7 +416,7 @@ public class UserServiceImpl implements UserService{
 					if (file02.exists() == true) {
 						boolean boo = file02.delete();
 						System.out.println(boo);
-						System.out.println("test ÆÄÀÏ»èÁ¦");
+						System.out.println("test ï¿½ï¿½ï¿½Ï»ï¿½ï¿½ï¿½");
 					}
 					
 					String realName = user.getUserId()+".jpg";
@@ -424,7 +424,7 @@ public class UserServiceImpl implements UserService{
 					user.getFile().transferTo(file03);
 					// out.close();
 					//System.gc();
-					System.out.println("¾÷·Îµå ¼º°ø");
+					System.out.println("ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½ï¿½");
 					face = realName;
 					map.put("face", face);
 					map.put("flag", "1");
@@ -451,8 +451,11 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
-		userDao.addEvalUser(tagetUser, evalUser, scheduleNo);
+	public void addEvalUser(UserEval tagetUser) throws Exception {
+		userDao.addEvalUser(tagetUser);
+	}
+	public int addEvalUserCheck(UserEval userEval) throws Exception{
+		return userDao.addEvalUserCheck(userEval);
 	}
 
 	@Override

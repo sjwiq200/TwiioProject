@@ -24,6 +24,7 @@ import com.twiio.good.service.domain.Room;
 import com.twiio.good.service.domain.RoomUser;
 import com.twiio.good.service.domain.Schedule;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.room.RoomService;
 import com.twiio.good.service.schedule.ScheduleService;
 import com.twiio.good.service.user.UserService;
@@ -97,7 +98,7 @@ public class ScheduleRestController {
 		scheduleService.addSchedule(schedule);
 		
 		
-		/////////////////±¸µ¥±â ¾Æ´Ñ °Å-´Ù¿µÀÌ²¨/////////////////////
+		/////////////////ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½-ï¿½Ù¿ï¿½ï¿½Ì²ï¿½/////////////////////
 		String date = schedule.getScheduleDate();
 		String address = schedule.getScheduleAddress();
 		String country = schedule.getCountry();
@@ -156,7 +157,7 @@ public class ScheduleRestController {
 		for (Schedule schedule : list) {
 			if(roomService.getRoom(schedule.getRoomKey()) ==null) {
 				Room nullRoom = new Room();
-				nullRoom.setRoomName("»èÁ¦");
+				nullRoom.setRoomName("ï¿½ï¿½ï¿½ï¿½");
 				nullRoom.setUserNo(0);
 				roomList.add(nullRoom);
 			}else {
@@ -171,6 +172,21 @@ public class ScheduleRestController {
 		map.put("room", roomList);
 		
 		return map;
+	}
+	
+	@RequestMapping(value = "/json/addEvalUser/{roomKey}", method=RequestMethod.POST)
+	public String addEvalUser(@RequestBody UserEval userEval,@PathVariable String roomKey, HttpSession session) throws Exception {
+		System.out.println("/schedule/addEvalUser/ : POST");
+		User user = (User)session.getAttribute("user");
+		
+		userEval.setUserNo(user.getUserNo());
+		userEval.setScheduleNo(roomKey);
+		System.out.println("ShimJaewoo ==> " + userEval.toString());
+		
+		
+		userService.addEvalUser(userEval);
+		
+		return "/schedule/listSchedule";
 	}
 
 }
