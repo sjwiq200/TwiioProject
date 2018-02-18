@@ -69,12 +69,12 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+"listSchedule()");
 		
-
+		System.out.println("userNo"+userNo);
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userNo").all(userNo));
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
-		query.skip(search.getStartRowNum());
+		query.skip(search.getStartRowNum()-1);
 		query.limit(search.getEndRowNum());
 		
 		Map<String, Object> map = new HashMap<>();

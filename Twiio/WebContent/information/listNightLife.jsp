@@ -139,33 +139,30 @@
 			    margin: 20px 10px;
 			}
 			table.type10 thead th {
-			    max-width: 150px;
+			    width: 150px;
 			    padding: 10px;
 			    font-weight: bold;
 			    vertical-align: top;
 			    color: #fff;
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.7);
 			    margin: 20px 10px;
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 tbody th {
-			    max-width: 150px;
 			    padding: 10px;
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 td {
-			    max-width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 .even {
-			    background: #56B1BF;
+			    background: rgba(8, 112, 138, 0.4);
 			}
 			table {
 		    margin-left: auto;
 		    margin-right: auto;
-		    text-align: center;
 		  }
 		   h3 {
 				font-size: 1em;
@@ -364,24 +361,25 @@
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
 		</div> 
 		
+	<div class="col-sm-12">	
 		<table class="type10 col-sm-12" >
 		
 	        <thead>
 	          <tr>
-	            <th class="col-sm-4">사진</th>
-	            <th class="col-sm-8">정보</th>
+	            <th align="center" class="col-sm-6">사진</th>
+	            <th align="center" class="col-sm-6">정보</th>
 	          </tr>
 	        </thead>
 	       
 				<tbody id="listTbody">
 					<tr>
-					 <td id="img"></td>
-					 <td id="con"></td>
+					 <td align="center" id="img"></td>
+					 <td align="center" id="con"></td>
 					</tr>
 		        </tbody>
 	      
 	      	</table>
-	
+	</div>	
 	    
  		</div>
 	<!--  화면구성 div Start /////////////////////////////////////-->

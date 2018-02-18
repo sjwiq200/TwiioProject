@@ -62,6 +62,32 @@ public class PlanRestController {
 	}
 	
 
+	@RequestMapping(value = "json/listDailyPlan/{mainPlanNo}", method = RequestMethod.GET)
+	public Map<String, Object> listDailyPlan(@PathVariable int mainPlanNo) throws Exception {
+		
+		System.out.println("RestController : json/listDailyPlan <START>");
+		System.out.println("mainPlanNo : " + mainPlanNo);
+		
+		Map<String, Object> map = new HashMap<String, Object>();
+		List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlanNo);
+		for (DailyPlan result : list) {
+			System.out.println("result : " + result);
+		}
+		
+		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		String city = mainPlan.getCity();
+		String[] cityList = city.split(",");
+		
+		map.put("cityList", cityList);	
+		map.put("list", list);
+		
+		System.out.println("RestController : json/listDailyPlan <END>");
+		
+		return map;
+		
+	}	
+
+
 	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
 	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
 		
