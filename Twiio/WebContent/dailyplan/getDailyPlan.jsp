@@ -1021,14 +1021,17 @@ $(function() {
 								<!-- ---------------------지도정보 <END>-------------------- -->
 								
 								<!--  채팅 일정 픽스 사진  -->
-								<c:if test="${!empty planContent.mapUrl}">
-										<div class="col-xs-12" align="center" style="margin-bottom:20px;">
-										<h3><img src="/resources/images/icon/plan/promise.png" width="45px">약속정보 </h3> </div>
-										<div>
-										<p class="contents">
-											<img src="${planContent.mapUrl}" name="mapImg" class="contentsDelete" width="300px" style="border-color:#56B1BF;border-style: solid;border-width: 3px;border-radius: 99%;"
-												onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
-										</div>
+								<c:if test="${planContent.contentType eq 6}">
+									<c:if test="${!empty planContent.mapUrl}">
+											<div class="col-xs-12" align="center" style="margin-bottom:20px;font-family:'JEJUMYEONGJO';">
+											<h3>Your appointment</h3>
+											</div>
+											<div>
+											<p class="contents">
+												<img src="${planContent.mapUrl}" name="mapImg" class="contentsDelete" width="300px" style="border-color:#C2C2C2;border-style: solid;border-width: 3px;border-radius: 99%;"
+													onclick="javascript:location.href='${planContent.mapUrl}';" /></p>
+											</div>
+									</c:if>
 								</c:if>
 								
 								<c:if test="${!empty planContent.contentText}">

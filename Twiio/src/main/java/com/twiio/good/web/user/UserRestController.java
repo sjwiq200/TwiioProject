@@ -30,7 +30,6 @@ import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserService;
 
 
-//==> ȸ������ RestController
 @RestController
 @RequestMapping("/user/*")
 public class UserRestController {
@@ -56,19 +55,7 @@ public class UserRestController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-//		if(user.getFile()!=null) {
-//			if(userService.detectFace(user)) {
-//				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
-//				userService.addUser(user);
-//				System.out.println(":: Twiio ���� ȸ������ �Ϸ�/���� ���ε�  ::");	
-//			}else {
-//				System.out.println(":: ȸ������ ���� =====> ���� ��Ȯ�� �ν��� �� �ִ� �������� �ٽ� ���ε� �ٶ�  ::");
-//			}			
-//		}else {
-//			//Business Logic
-//			userService.addUser(user);
-//			System.out.println(":: Twiio ���� ȸ������ �Ϸ� ::");
-//		}
+
 		
 		return "redirect:/user/loginView.jsp";
 	}
@@ -131,7 +118,6 @@ public class UserRestController {
 		String faceto =""; 
 		Map<String, Object> map= userService.detectFace(user);
 		
-		System.out.println("���ñ�??");
 		
 		return map;
 	}
@@ -198,22 +184,6 @@ public class UserRestController {
 		return userService.getEvalUser(evalUser.getUserNo());
 	}
 
-//	@RequestMapping( value="json/addStarEvalHost")
-//	public Transaction addStarEvalHost(	 ) throws Exception{
-//	
-//		System.out.println("/user/json/addStarEvalHost");
-//		
-//		String review = "¯�̿��� �±�";
-//		int starPoint  = 3;
-//		
-//		Transaction transaction = new Transaction();
-//		transaction.setReviewHost(review);
-//		transaction.setStarPointHost(starPoint);
-//		
-//		userService.addStarEvalHost(transaction);
-//		
-//		return transaction ;
-//	}
 	
 
 	
@@ -237,9 +207,6 @@ public class UserRestController {
 		System.out.println(mail[1]);
 		
 		 String authNum = RandomNum();
-		
-		System.out.println("�Է��� �̸���"+mail[1]);
-		System.out.println("������ ������ȣ"+authNum);
 		
 		userService.sendMail(mail[1], authNum);
 		

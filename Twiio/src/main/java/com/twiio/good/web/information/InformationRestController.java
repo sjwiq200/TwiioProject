@@ -260,19 +260,13 @@ public class InformationRestController {
 			List<String> price = new ArrayList<>();
 			List<String> type = new ArrayList<>();
 		
-		for(int i = 0; i<list.size()-6; i++) {
-			info.add((list.get(i))+"\n"+(list.get(i+1))+"\n"+(list.get(i+2))+"\n"+(list.get(i+3)));
+		for(int i = 0; i<list.size()-5; i++) {
+			info.add((list.get(i))+"<p>"+(list.get(i+1))+"<p>"+(list.get(i+2))+"<p>"+(list.get(i+3)));
 			
-			if(list.get(i+4).matches(	".*[a-zA-Z].*")) {
-				
-				price.add(list.get(i+5));
-				type.add(list.get(i+7));
-				i=i+7;
-			}else {
-				price.add(list.get(i+5));
-				type.add(list.get(i+6));
-				i=i+6;
-			}
+			price.add(list.get(i+4));
+			type.add(list.get(i+5));
+			i=i+5;
+			
 		}
 		
 			Map<String, List> end = new HashMap();

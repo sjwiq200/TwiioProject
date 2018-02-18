@@ -57,7 +57,12 @@ public class DailyPlanController {
 	////////사진 업로드////////
 	@Value("#{commonProperties['dailyPlanImageFilePath']}")
 	String dailyPlanImageFilePath;
+	
+	////////사진 업로드////////
+	@Value("#{commonProperties['dailyPlanImageFilePathLocal']}")
+	String dailyPlanImageFilePathLocal;
 
+	
 	public DailyPlanController() {
 
 	}
@@ -161,10 +166,11 @@ public class DailyPlanController {
 			throws Exception {
 
 		System.out.println("Controller : getDailyPlanFromMain <START>");
-		System.out.println("mainPlanNo : " + mainPlanNo);
+		
 		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
 		DailyPlan dailyPlan = listMain.get(0);
 		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
+		
 		int dailyPlanNo = dailyPlan.getDailyPlanNo();
 
 		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
@@ -175,21 +181,17 @@ public class DailyPlanController {
 				list.add(listPlanContent);
 			}
 			model.addAttribute("list", list);
-			System.out.println("##debug : " + list);
 		}
 		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		model.addAttribute("dailyPlan", dailyPlan);
 		
 		/////////////////////////////////////////
-		//////////////////////////
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);		
 		String[] country = mainPlan.getCountry().split(",");
 		List<String> countryList = new ArrayList<String>();
 		for(int i=0; i<country.length; i++) {
 		countryList.add(country[i]);
 		}
-		System.out.println("countryList :: "+countryList);
-		System.out.println("countryList[0] :: "+countryList.get(0));
 		model.addAttribute("countryList",countryList);
 		
 		//////////////////////////////////////////
@@ -205,7 +207,6 @@ public class DailyPlanController {
 				
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
 		model.addAttribute("listDailyPlan", listDailyPlan);
-		System.out.println("###dailyPlanDebug : " + dailyPlan);
 		System.out.println("Controller : getDailyPlanFromMain <END>");
 		
 		return "forward:/dailyplan/getDailyPlan.jsp";
@@ -256,6 +257,13 @@ public class DailyPlanController {
 		planContent.setContentType(2);
 		try {
 			File file = new File(dailyPlanImageFilePath, fileName);
+			uploadFile.transferTo(file);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			File file = new File(dailyPlanImageFilePathLocal, fileName);
 			uploadFile.transferTo(file);
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -329,7 +337,8 @@ public class DailyPlanController {
 		
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		PlanContent planContent = new PlanContent();
-		planContent.setRouteDescription(totalDisplay+detailedDisplay);
+		planContent.setRoute(totalDisplay);
+		planContent.setRouteDescription(detailedDisplay);
 		planContent.setRouteType("4");
 		planContent.setContentType(4);
 		planContent.setDailyPlan(dailyPlan);
