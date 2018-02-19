@@ -85,8 +85,10 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
+    	  if(${resultPage.maxPage}>=currentPage){
          $("#currentPage").val(currentPage)
          $("form").attr("method" , "POST").attr("action" , "/mypage/listRefund").submit();
+      	}
       }
    
      

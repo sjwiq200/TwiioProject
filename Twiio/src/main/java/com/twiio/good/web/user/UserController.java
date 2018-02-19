@@ -180,14 +180,14 @@ public class UserController {
 		
 		// Business logic 수행
 		Map<String , Object> map=userService.listUser(search);
-		
+		System.out.println("pageUnit ::: "+pageUnit);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
 		// Model 과 View 연결
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
-		//model.addAttribute("search", search);
+		model.addAttribute("search", search);
 		
 		return "forward:/mypage/listUser.jsp";
 	}

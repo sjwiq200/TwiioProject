@@ -24,15 +24,23 @@
    
     <!-- Bootstrap Dropdown Hover JS -->
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-	
+	<link rel="stylesheet" href="/resources/css/font.css" />
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
  		body {
-            padding-top : 50px;
+            padding-top : 100px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        
+         h1 {
+			text-align: center;
+		}        
+        .panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
         .profile-userpic img {
 		  float: none;
 		  margin: 0 auto;
@@ -154,14 +162,15 @@
 	<div class="container">
 	
 		<div class="page-header">
-	       <h3 class=" text-info">회원상세정보</h3>
+	       <h1 style="font-family: 'Jeju Gothic', serif; ">회원상세정보</h1>
 	    </div>
-		
-	<div class="col-sm-12">
-		
+	
+	
+		<div class="panel panel-default">	
+		<div class="col-md-10 col-md-offset-1">
 		<div class="profile-userpic ">
-		<c:if test="${empty user.userImage}"><img style="width:70px; height:70px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-		<c:if test="${!empty user.userImage}"><img style="width:70px; height:70px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
+		<c:if test="${empty user.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
+		<c:if test="${!empty user.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
 		</div>
 		
 		<div class="col-sm-12">
@@ -173,34 +182,34 @@
 				<div class="col-sm-12">
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>이 름</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>이 름</strong></div>
 					<div class="col-sm-4">${user.userName}</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>휴대전화번호</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>휴대전화번호</strong></div>
 					<div class="col-sm-4">${ !empty user.userPhone?user.userPhone :''}	</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>이 메 일</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>이 메 일</strong></div>
 					<div class="col-sm-4">${user.email}</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>계좌번호</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>계좌번호</strong></div>
 					<div class="col-sm-4">${user.userAccount}</div>
 				</div>
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>은행명</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>은행명</strong></div>
 					<div class="col-sm-4">${user.userBank}</div>
 				</div>
 				
@@ -215,7 +224,7 @@
 				<div class="col-sm-12">
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>유 형</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>유 형</strong></div>
 					<div class="col-sm-4">
 					<c:if test="${user.userType == 1}">
 						회원
@@ -232,28 +241,28 @@
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>평 점<br/>(참석/프로필)</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>평 점<br/>(참석/프로필)</strong></div>
 					<div class="col-sm-4">${empty user.userEval?0:user.userEval} | ${empty user.userEvalCredit?0:user.userEvalCredit}</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>성별</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>성별</strong></div>
 					<div class="col-sm-4">${user.userGender}</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>생년월일</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>생년월일</strong></div>
 					<div class="col-sm-4">${user.userBirthday}</div>
 				</div>
 				
 				<hr/>
 				
 				<div class="row">
-			  		<div class="col-sm-3 col-sm-offset-4"><strong>가입일자</strong></div>
+			  		<div class="col-sm-4 col-sm-offset-2"><strong>가입일자</strong></div>
 					<div class="col-sm-4">${user.regDate}</div>
 				</div>
 				
@@ -264,22 +273,19 @@
 				</div>
 		
 			</div>
-			
+			</div>
 			<br/>
 			
-			<div class="row"></div>
-				
+			<div class="row"></div>				
 				<div class="row">
 			  		<div class="col-sm-12 text-center ">
 			  			<button type="button" class="btn btn-outlined btn-theme btn-sm" id="updateuser">회원정보수정</button>
 			  		</div>
 				</div>
-
+			</div>
 		<br/> 
 		
 		</div>
-		
- 	</div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 </body>

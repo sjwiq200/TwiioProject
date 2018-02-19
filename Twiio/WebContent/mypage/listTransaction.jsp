@@ -53,22 +53,30 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
+	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
    <style>
      body {
-            padding-top : 50px;
+            padding-top : 100px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
         
         <!-- ##### -->
-         .ct_list_pop {margin-left: 80px;color: blue; float: center;}
+        .ct_list_pop {margin-left: 80px;color: blue; float: center;}
 
         td { cursor: default;}
 
         span {color: gray; }
-        .red{
-    	color:red;
-   	   }
+
    	   
 .star-input>.input,
 .star-input>.input>label:hover,
@@ -274,9 +282,12 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetList(currentPage) {
-         $("#currentPage").val(currentPage)
+    	  if(${resultPage.maxPage}>=currentPage){
+    		
+         $("#currentPage").val(currentPage);
          $("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${menu}").submit();
       }
+   }
      
      /////////////////////////////////////////////////////////////////////////////// 
       $(document).ready(function(){ 
@@ -338,10 +349,14 @@
       $(document).on('click','#eval', function() {
   		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
   		var evalreview = $($('input[name=evalReview]')[$('.ct_list_pop #eval').index(this)]).val();
-  		 if(${empty user.userId} | evalreview == '1'){
-  			 	 
-  		 }else{
-  			 //alert(tranno);
+  		var tripdate = $($('input[name=tripDate]')[$('.ct_list_pop #eval').index(this)]).val();
+  		var date = new Date();
+  		var date2 = new Date(tripdate);
+ 		 
+  		 if(${empty user.userId}){	 	 
+  		 }else if(evalreview == '1'){ 
+  		 }else if(date<=date2){ 
+      	 }else{
   			 $('#modalTranNo').val(tranno);
   			 $('#addReivew').modal('show');
   		 }
@@ -391,10 +406,17 @@
     	   var thumbnail = $($('input[name=thumbnail]')[$('.ct_list_pop #refund').index(this)]).val();
     	   var regdate = $($('input[name=regDate]')[$('.ct_list_pop #refund').index(this)]).val();
     	   var refundcode = $($('input[name=refundCode]')[$('.ct_list_pop #refund').index(this)]).val();
-		   
+    	   var tripdate = $($('input[name=tripDate]')[$('.ct_list_pop #refund').index(this)]).val();
+    	   var date = new Date();
+     	   var date2 = new Date(tripdate);
+     	   
+     	  //alert(date>(date2-2));
     	   if(refundcode == '1'){
+    		   
     	   	 if(${empty user.userId}){
     			 alert('로그인후 사용하여주세요');	     			 
+    		 }else if(date>(date2-2)){
+    			 
     		 }else{
     			 $("#modalThumbNail").val(thumbnail);
     			 $("#modalProductNo").val(productno);
@@ -413,6 +435,7 @@
     			 $('#thum').html(img);
     			 $('#addRefundModal').modal('show');
     		 }
+    	   	 
     	   }
     	   	 
        });
@@ -463,17 +486,13 @@
    
    <!--  화면구성 div Start /////////////////////////////////////-->
    <div class="container col-md-8 col-md-offset-2">
-   
-      <div class="page-header text-info">
-          <h3>
-          <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	구매목록조회
-
-         </h3>
-       </div>
-       
+   	   <div class="col-md-12">
+   	   <div class="table-responsive">
+       <h1 style="font-family: 'Jeju Gothic', serif;">
+           	Transaction
+       </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-       <div class="row">
+       
           <div class="pull-left">
              <p class="text-primary">
                 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
@@ -488,19 +507,21 @@
               
             </form>
           </div>
-          
       </div>
+   </div>
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
       
       <!--  table Start /////////////////////////////////////-->
+      <div class="col-md-12">
+      <div class="panel panel-default">
       <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
-      
+
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">구매일자</th>
+            <th align="center" width="120">구매일자</th>
             <th align="center" width="140">상품사진</th>
-            <th align="left" width="200">상품이름</th>
+            <th align="left" width="300">상품이름</th>
             <th align="left" width="120">여행일자</th>
             <th align="left" width="100">구매수량</th>
             <th align="left" width="120">상품구매금액</th>
@@ -514,7 +535,7 @@
         <c:set var="today" value="<%=new java.util.Date()%>"/>
         <c:forEach var="transaction" items="${list}">
          <c:set var="i" value="${ i+1 }" />
-         <input type="hidden" id="tranNo" name="tranNo" value="${transaction.tranNo}"/>
+         	<input type="hidden" id="tranNo" name="tranNo" value="${transaction.tranNo}"/>
          	<input type="hidden" id="productNo" name="productNo" value="${transaction.tranPro.productNo}"/>
          	<input type="hidden" id="regDate" name="regDate" value="${transaction.regDate}"/>
          	<input type="hidden" id="totalPrice" name="totalPrice" value="${transaction.totalPrice}"/>
@@ -522,6 +543,8 @@
          	<input type="hidden" id="thumbnail" name="thumbnail" value="${transaction.tranPro.thumbnail}"/>
          	<input type="hidden" id="refundCode" name="refundCode" value="${transaction.refundCode}"/>
          	<input type="hidden" id="evalReview" name="evalReview" value="${transaction.evalReview}"/>
+         	<input type="hidden" id="tripDate" name="tripDate" value="${transaction.tripDate}"/>
+         	
          <tr class="ct_list_pop">
            <td align="left">${transaction.regDate}</td>
            <td align="left">
@@ -543,17 +566,19 @@
            <c:if test="${transaction.evalReview == null}">평가하기</c:if> 
            </c:if>
            </a></td>
+           
            <td align="left" id="refund"><a href="#">
            <c:if test="${transaction.refundCode == '1'}">
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
            <c:if test="${(trip-now > 2) && (trip>now)}">환불하기</c:if>
+           <c:if test="${trip-now < 2}">구매완료</c:if>
            </c:if>
            <c:if test="${transaction.refundCode == '2'}">
            	환불처리중
            </c:if> 
            <c:if test="${transaction.refundCode == '3'}">
-           	환불처리완료
+           	환불완료
            </c:if> 
            	</a>
            </td>
@@ -565,12 +590,15 @@
         </tbody>
       
       </table>
+      </div>
+      </div>
      <!--  table End /////////////////////////////////////-->
+     <div class="row">
+     	<jsp:include page="../common/pageNavigator_new.jsp"/>
+     </div>
     
     </div>
-     <div class="col-md-2 col-md-offset-1">
-    <jsp:include page="../common/pageNavigator_new.jsp"/>
-    </div>
+     
     
     	<div class="modal fade" id="addReivew"  role="dialog">
 		<div class="modal-dialog modal-eval">
