@@ -198,7 +198,7 @@ $(document).ready(function() {
 					</select>
 		    	</div>
 			</c:if>
-			<c:if test="${communityType=='0'}">
+			<c:if test="${communityType=='1'}">
 		    <div class="col-xs-8">
 		    	<div class="input-group">
 		    		<span class="input-group-addon">제목</span>

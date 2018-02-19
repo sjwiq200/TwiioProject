@@ -64,7 +64,10 @@
 				  max-width:30%;
 				  max-height:30%;
 				}
-				
+		 #img {
+       			 max-width:200px;
+				 max-height:150px;
+				}
 		 .btn-sm{
 				font-size:12px;
 				line-height:16px;
@@ -212,7 +215,7 @@
 								for(var i = 0 ; i<con.length; i++){
 									
 									list += '<tr><td align="center" valign="middle" style="padding-top : 50px;">'+(i+1)+'</td>'+
-									'<td align="center" id="img"><img src="'+img[i]+'"  style="width: 200px; height: 150px;"/></td>'+
+									'<td align="center" id="img"><img src="'+img[i]+'"  style="max-width: 100%; max-height: 100%;"/></td>'+
 									'<td align="center" valign="middle" id="con" style="padding-top : 50px;">'+con[i]+'</td>'+
 									'<td align="center" valign="middle" id="loc" style="padding-top : 50px;">'+loc[i]+'</td>'+
 									'<td align="center" valign="middle" id="price" style="padding-top : 50px;">'+price[i]+'</td>'+
