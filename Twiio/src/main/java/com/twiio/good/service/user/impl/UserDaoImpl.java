@@ -154,15 +154,15 @@ import com.twiio.good.service.user.UserDao;
 		@Override
 		public void sendMail(String email, String authNum) throws Exception {
 			
-			String host = "smtp.gmail.com";// smtpï¿½ï¿½ï¿½ï¿½
-			String subject = "Twiio ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½";
-			String fromName = "Twiio ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½";
-			String from = "eunae10193@gmail.com";// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½
-			String to = email;// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ï¿½ï¿½
+			String host = "smtp.gmail.com";// smtp¼­¹ö
+			String subject = "Twiio ÀÎÁõ¹øÈ£ Àü¼Û";
+			String fromName = "Twiio °ü¸®ÀÚ";
+			String from = "eunae10193@gmail.com";// °ü¸®ÀÚ ¸ÞÀÏ ÁÖ¼Ò
+			String to = email;// ÀÎÁõ¹øÈ£ ¹ÞÀ» À¯ÀúÀÇÀÌ¸ÞÀÏ
 			
-			System.out.println("ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½ï¿½"+email+"ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£"+authNum);
+			System.out.println("¸ÞÀÏ¸ÞÀÏ"+email+"ÀÎÁõ¹øÈ£"+authNum);
 			
-			String content = "Twiio ï¿½Ì¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½. \n\n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£[ " + authNum + " ]\n\n ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½È®ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ :D" ;
+			String content = "Twiio ÀÌ¸ÞÀÏ ÀÎÁõ ¸ÞÀÏÀÔ´Ï´Ù. \n\n ÀÎÁõ¹øÈ£[ " + authNum + " ]\n\n ÀÎÁõ¹øÈ£¸¦ Á¤È®È÷ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :D" ;
 			
 			try {
 
@@ -177,19 +177,19 @@ import com.twiio.good.service.user.UserDao;
 
 				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from, "eunae1019");
+						return new PasswordAuthentication("eunae10193@gmail.com", "eunae1019");
 					}
 				});
 				Message msg = new MimeMessage(mailSession);
 				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
 
 				InternetAddress[] address1 = { new InternetAddress(to) };
-				msg.setRecipients(Message.RecipientType.TO, address1);// ï¿½Þ´Â»ï¿½ï¿½
-				msg.setSubject(subject);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
-				msg.setSentDate(new Date());// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
-				msg.setContent(content, "text/html;charset=euc-kr");// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(HTMLï¿½ï¿½ï¿½ï¿½)
+				msg.setRecipients(Message.RecipientType.TO, address1);// ¹Þ´Â»ç¶÷
+				msg.setSubject(subject);// ¸ÞÀÏÁ¦¸ñ
+				msg.setSentDate(new Date());// º¸³»´Â ³¯Â¥
+				msg.setContent(content, "text/html;charset=euc-kr");// ³»¿ë ¼³Á¤(HTMLÇü½Ä)
 
-				Transport.send(msg);// ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½
+				Transport.send(msg);// ¸ÞÀÏº¸³»±â
 				
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -201,6 +201,7 @@ import com.twiio.good.service.user.UserDao;
  
 			
 		}
+
 		
 	
 	}
