@@ -33,7 +33,7 @@ import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 
-	//==> ȸ������ DAO CRUD ����
+	//==> 회占쏙옙占쏙옙占쏙옙 DAO CRUD 占쏙옙占쏙옙
 	@Repository("userDaoImpl")
 	public class UserDaoImpl implements UserDao{
 		
@@ -154,15 +154,15 @@ import com.twiio.good.service.user.UserDao;
 		@Override
 		public void sendMail(String email, String authNum) throws Exception {
 			
-			String host = "smtp.gmail.com";// smtp����
-			String subject = "Twiio ������ȣ ����";
-			String fromName = "Twiio ������";
-			String from = "eunae10193@gmail.com";// ������ ���� �ּ�
-			String to = email;// ������ȣ ���� �������̸���
-			
-			System.out.println("���ϸ���"+email+"������ȣ"+authNum);
-			
-			String content = "Twiio �̸��� ���� �����Դϴ�. \n\n ������ȣ[ " + authNum + " ]\n\n ������ȣ�� ��Ȯ�� �Է��� �ּ��� :D" ;
+			String host = "smtp.gmail.com";// smtp서버
+	         String subject = "Twiio 인증번호 전송";
+	         String fromName = "Twiio 관리자";
+	         String from = "eunae10193@gmail.com";// 관리자 메일 주소
+	         String to = email;// 인증번호 받을 유저의이메일
+	         
+	         System.out.println("메일메일"+email+"인증번호"+authNum);
+	         
+	         String content = "Twiio 이메일 인증 메일입니다. \n\n 인증번호[ " + authNum + " ]\n\n 인증번호를 정확히 입력해 주세요 :D" ;
 			
 			try {
 
@@ -177,19 +177,19 @@ import com.twiio.good.service.user.UserDao;
 
 				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from, "eunae1019");
+						return new PasswordAuthentication("eunae10193@gmail.com", "eunae1019");
 					}
 				});
 				Message msg = new MimeMessage(mailSession);
 				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
 
 				InternetAddress[] address1 = { new InternetAddress(to) };
-				msg.setRecipients(Message.RecipientType.TO, address1);// �޴»��
-				msg.setSubject(subject);// ��������
-				msg.setSentDate(new Date());// ������ ��¥
-				msg.setContent(content, "text/html;charset=euc-kr");// ���� ����(HTML����)
+				msg.setRecipients(Message.RecipientType.TO, address1);// 占쌨는삼옙占�
+				msg.setSubject(subject);// 占쏙옙占쏙옙占쏙옙占쏙옙
+				msg.setSentDate(new Date());// 占쏙옙占쏙옙占쏙옙 占쏙옙짜
+				msg.setContent(content, "text/html;charset=euc-kr");// 占쏙옙占쏙옙 占쏙옙占쏙옙(HTML占쏙옙占쏙옙)
 
-				Transport.send(msg);// ���Ϻ�����
+				Transport.send(msg);// 占쏙옙占싹븝옙占쏙옙占쏙옙
 				
 			} catch (MessagingException e) {
 				e.printStackTrace();

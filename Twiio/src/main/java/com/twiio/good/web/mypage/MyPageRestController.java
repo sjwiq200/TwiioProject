@@ -1,5 +1,6 @@
 package com.twiio.good.web.mypage;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -84,6 +86,26 @@ public class MyPageRestController {
 		System.out.println("/message/getMessage");
 		message = mypageService.getMessage(message.getMessageNo());
 		return message;
+	}
+	
+	@RequestMapping("json/deleteSelectMessage/{messageNo}")
+	public Map deleteMessage(@PathVariable("messageNo") String messageNoList) throws Exception{
+		System.out.println(this.getClass()+"  json/deleteMessage");
+		int count =0;
+		String[] messageNos = ( (messageNoList.trim() ).split(",")); 
+		
+		for (int i = 0; i < messageNos.length; i++) {
+			int messageNo = Integer.parseInt(messageNos[i]);
+			System.out.println(messageNo);
+			mypageService.deleteMessage(messageNo);
+			++count;
+		}
+		
+		Map map = new HashMap();
+		map.put("count", count);
+	
+		return map;
+		
 	}
 	
 	
