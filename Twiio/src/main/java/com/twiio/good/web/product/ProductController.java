@@ -116,7 +116,7 @@ public class ProductController {
 		}
 		
 		
-		return "forward:/product/addProduct.jsp";
+		return "forward:/product/listProduct";
 	}
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
@@ -208,7 +208,7 @@ public class ProductController {
 			productService.updateProduct(product);
 		}		
 		
-		return "redirect:/product/listProduct.jsp";
+		return "redirect:/product/listProduct";
 	}
 	
 	@RequestMapping(value="deleteProduct", method=RequestMethod.GET)
@@ -218,7 +218,7 @@ public class ProductController {
 		
 		productService.deleteProduct(productNo);		
 		
-		return "redirect:/product/listProduct.jsp";
+		return "redirect:/product/listProduct";
 	}
 	
 	@RequestMapping(value="listProduct")///검색조건 추가
