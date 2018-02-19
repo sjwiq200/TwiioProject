@@ -122,7 +122,7 @@ public class RoomRestController {
 	
 	@RequestMapping("/json/listRoom")
 	public List<Room> listRoom(@RequestBody Search search) throws Exception{
-		System.out.println("/room/json/listRoom : ");
+		System.out.println("/room/json/listRoom : " +search);
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
