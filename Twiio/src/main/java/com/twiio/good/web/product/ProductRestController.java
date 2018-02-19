@@ -1,11 +1,13 @@
 package com.twiio.good.web.product;
 
+import java.io.File;
 import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.domain.Community;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.product.ProductService;
@@ -51,7 +54,41 @@ public class ProductRestController {
 	@Value("#{commonProperties['pageSize']}")
 	//@Value("#{commonProperties['pageSize'] ?: 2}")
 	int pageSize;
+	
+	@Value("#{commonProperties['productContentImagesPath']}")
+	String productContentImagesPath;
+	
+	
+	@RequestMapping(value="json/uploadProContentImages")
+	public JSONObject uploadProContentImages(Product product) {
+		//String rootPath = request.getSession().getServletContext().getRealPath("/");
+		System.out.println("rootPath :: "+productContentImagesPath);
+	    String uploadPath = productContentImagesPath;
+		String fileName =  System.currentTimeMillis()+product.getFile().getOriginalFilename();
 		
+		System.out.println("들어오니");
+		try {
+			System.out.println("들어오니1");
+			File file = new File(productContentImagesPath, fileName);
+			product.getFile().transferTo(file);
+			System.out.println("들어오니5");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		uploadPath += fileName;
+		JSONObject jobj = new JSONObject();	
+		String filePath = "/resources/images/productContentImages/"+fileName;
+		jobj.put("url", uploadPath);
+		jobj.put("relativeUrl", filePath);
+		System.out.println("들어오니6");
+		try {
+		Thread.sleep(3500);
+		}catch(InterruptedException e) {
+		
+		}
+		return jobj;
+	}
 		
 	@RequestMapping(value="/json/listStarEvalProduct")
 	public Map<String, Object> listStarEvalProduct( @RequestBody String search ) throws Exception {

@@ -17,6 +17,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.dailyplan.DailyPlanService;
@@ -62,7 +64,30 @@ public class MainPlanRestController {
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
 	
+	////////사진 업로드////////
+	@Value("#{commonProperties['mainPlanFilePath']}")
+	String mainPlanFilePath;
+	
 	public MainPlanRestController() {
+	}
+	
+	
+	@RequestMapping(value = "json/uploadImage", method = RequestMethod.POST )
+	public String uploadImage(@RequestBody MultipartFile file) throws Exception {
+		
+		System.out.println("RestController : uploadImage <START>");
+		System.out.println("file :: "+file);
+		System.out.println("fileName :: "+file.getOriginalFilename());
+		
+		if(!file.isEmpty()) {
+			File file02 = new File(mainPlanFilePath, file.getOriginalFilename());
+			file.transferTo(file02);
+		}
+		
+		System.out.println("RestController : uploadImage <END>");
+		
+		return null;
+		
 	}
 	
 	@RequestMapping(value = "json/listMainPlan", method = RequestMethod.POST)
@@ -87,7 +112,7 @@ public class MainPlanRestController {
 	}
 	
 	@RequestMapping(value = "json/addMainPlan", method = RequestMethod.POST)
-	public Boolean addMainPlan(	@RequestBody MainPlan mainPlan) throws Exception {
+	public String addMainPlan(	@RequestBody MainPlan mainPlan) throws Exception {
 		
 		System.out.println("RestController : addMainPlan <START>");
 		System.out.println("mainPlan :: "+mainPlan);
@@ -173,7 +198,7 @@ public class MainPlanRestController {
 		
 	    System.out.println("RestController : addMainPlan <END>");  
 	      
-		return true;
+		return "ok";
 		
 	}
 	
