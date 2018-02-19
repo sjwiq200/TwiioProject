@@ -148,6 +148,7 @@
 							<tbody>
 									<c:set var="i" value="0" />
 									<c:forEach var="friend" items="${list}">
+									<%-- <input type="hidden" id="friendNo" name="friendNo" value="${friend.profilePublic}"/> --%>
 									<c:set var="i" value="${ i+1 }"/>
 									<tr data-status="pagado">
 									<div class="media-body">

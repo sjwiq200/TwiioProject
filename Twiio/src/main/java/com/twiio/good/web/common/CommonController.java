@@ -138,11 +138,13 @@ public class CommonController {
 		System.out.println("user ==>" +user);
 		
 		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
 		
 		List<User> listFriend = new Vector<>();
 		for (Friend friend : list) {
 			User user2 = userService.getUserInNo(friend.getFriendNo());
-			
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
 			listFriend.add(user2);
 		}
 		
