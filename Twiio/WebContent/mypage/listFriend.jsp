@@ -38,41 +38,7 @@
 	
 	<link rel="stylesheet" href="/resources/css/font.css" />
   <script>
-  	$(function() {
-  		
-		 
-		 $("button#invite").on("click",function(){
-			 swal("친구초대완료! ","","success")
-			 .then((next)=>{
-				 if(next){
-					 var userNo = $(this).html().split('value="')[1].split('"')[0];
-					 var roomKey = $("#roomKey").val(); 
-					 
-					 $.ajax({
-						 url : "/room/json/addRoomFriend/",
-						 method : "POST",
-						 data : {
-							 userNo : userNo,
-							 roomKey : roomKey
-						 },
-						 dataType : "json",
-						 headders : {
-							 "Accept" : "application/json",
-							"Content-Type" : "application/json"
-						 },
-						 success : function(JSONData, status){
-							if(JSONData == true){
-
-								window.close();
-							}
-							 
-						 }
-					 })//end ajax
-				 }
-			 })//end swal
-			 
-		 })
-	 });
+  	
   </script>
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -136,7 +102,19 @@
 			}
     </style>
     
-     <!--  ///////////////////////// JavaScript ////////////////////////// -->
+     <script type="text/javascript">
+     $(function(){
+ 		$("#friendDelete").on("click", function(){
+ 			var friendNo = $($('input[name=friendNo]')[$('button[id=friendDelete]').index(this)]).val();
+ 			alert(friendNo);
+ 			
+ 		});
+ 	});
+
+     
+     </script>
+     
+     
 	
 	
 </head>
@@ -148,9 +126,7 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-	
-	
+
 		<div class="row">
 
 		<section class="content">
@@ -161,7 +137,6 @@
 					<div class="panel-body">
 						<div class="table-container">
 							<table class="table table-filter" style="align-content: center;">
-							
 							<thead>
 					          <tr data-status="pagado">
 					          	<th align="center">No</th>
@@ -176,12 +151,21 @@
 									<c:set var="i" value="${ i+1 }"/>
 									<tr data-status="pagado">
 									<div class="media-body">
-									<td align="center">${ i }</td>
+									<td align="left">${ i }</td>
 									<td align="left" vailgn="middle">
-									<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 32px; height: 32px;">										  		 	 
+									<c:if test="${empty friend.userImage}">
+										<img  alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+									</c:if>
+									<c:if test="${!empty friend.userImage}">
+										<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+									</c:if>
 									</td>
 									<td alignt="left">
 										${friend.userName}
+									</td>
+									<td>
+									<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" id="friendMessage">쪽&nbsp;지</a>
+									<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" id="friendDelete">삭&nbsp;제</a>
 									</td>
 									</div>
 									</tr>

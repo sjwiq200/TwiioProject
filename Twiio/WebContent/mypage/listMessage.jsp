@@ -184,6 +184,48 @@ $(document).on('click','#modalDeleteMessage',function(){
 	    } 
   }); 
 });
+
+
+	$(function(){
+		$("#deletemesgselect").on("click", function(){
+			var checkedMessage = $("input[name=checkbox]").length;
+			var checkedMessageCount = $("input[name=checkbox]:checked").length;
+			var messageNoList="";
+			//var array = new Array();
+			
+			for (var i = 0; i < checkedMessageCount; i++) {
+				if(i != checkedMessageCount-1){
+					var value = $($("input[name=checkbox]:checked")[i]).val()+","; 
+				}else{
+					var value = $($("input[name=checkbox]:checked")[i]).val();
+				}
+				
+				messageNoList += value;
+			
+			}
+			
+			//alert(messageNoList);
+			deleteMessage(messageNoList);
+		});
+	});
+	
+	function deleteMessage(messageNoList){
+		$.ajax({
+			url:"/mypage/json/deleteSelectMessage/"+messageNoList,
+			method:"GET",
+			dataType:"json",
+			headers :{
+				"Accept" : "application/json",
+				"Content-Type" : "application/json"
+			},						
+			success: function(returnData){
+				var count = returnData.count;
+				alert(count+"개의 메시지가 삭제되었습니다");
+				window.location.reload();
+			}
+			
+		});
+	}
 </script>
 </head>
 
@@ -205,6 +247,11 @@ $(document).on('click','#modalDeleteMessage',function(){
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
 		    	</p>
 			</div>
+			<div class="pull-right">
+		  		<p class="text-primary">
+					선택 삭제   :  <td align="left"><button class="btn btn-danger btn-xs" id="deletemesgselect"><span class="glyphicon glyphicon-trash"></span></button></td>
+				</p>
+			</div>
 			<form class="form-inline" name="detailForm"> 
 			 <input type="hidden" id="currentPage" name="currentPage" value="" />
     		</form>
@@ -215,7 +262,7 @@ $(document).on('click','#modalDeleteMessage',function(){
              <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
               
                    <thead>   
-                   <th align="center"><input type="checkbox" id="checkall"/></th>
+                   <th align="center"></th>
                    <th align="left" width="10%">보낸 사람</th>
                    <th align="left" width="10%">쪽지 유형</th>
                    <th align="left" width="40%">작성 제목</th>
@@ -231,7 +278,7 @@ $(document).on('click','#modalDeleteMessage',function(){
     		  <input type="hidden" id="toUserName" name="toUserName" value="${message.userName}"/>
     		  <input type="hidden" id="fromUserNo" name="fromUserNo" value="${message.fromUserNo }"/>   
     		  <tr>	  	 
-    		 	<td><input type="checkbox" class="checkthis" /></td>
+    		 	<td><input type="checkbox" name="checkbox" id="checkbox" value="${message.messageNo}">  </td>
     		  	<td align="left">${message.userName}</td>
     		 	 <td align="left">
     		 	  <c:if test="${message.messageType == '1'}">상품</c:if>

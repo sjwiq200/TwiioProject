@@ -41,7 +41,6 @@ import org.w3c.dom.Document;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-import com.sun.jndi.toolkit.url.Uri;
 import com.twiio.good.service.domain.City;
 import com.twiio.good.service.domain.Continent;
 import com.twiio.good.service.domain.Country;
