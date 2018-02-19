@@ -44,7 +44,7 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
-            padding-top : 50px ;
+            padding-top : 100px ;
             background-color: #f4f4f4;
 			color: #666666 ;
 			font-family: "Source Sans Pro", Helvetica, sans-serif ;
@@ -191,7 +191,7 @@
 		<section class="content">
 			<h1 style="font-family: 'Jeju Gothic', serif; ">친구 목록</h1>
 			<hr/>
-			<div class="col-md-6 col-md-offset-3">
+			<div class="col-md-4 col-md-offset-4">
 				<div class="panel panel-default">
 					<div class="panel-body">
 						<div class="table-container">
@@ -199,7 +199,7 @@
 							<thead>
 					          <tr data-status="pagado">
 					          	<th align="center" class="col-md-1">No</th>
-					          	<th align="center" class="col-md-1">사진</th>
+					          	<th align="center" class="col-md-2">사진</th>
 					            <th align="center" class="col-md-3">Friend</th>
 					            <th align="right" class="col-md-3"></th>
 					          </tr>
@@ -222,7 +222,7 @@
 										<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 									</c:if>
 									</td>
-									<td align="center">
+									<td align="left">
 										${friend.userName}
 									</td>
 									<td align="right">

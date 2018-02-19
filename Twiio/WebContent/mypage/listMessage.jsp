@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
   <script src="http://code.jquery.com/jquery-latest.min.js"></script>
   <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
+  <link rel="stylesheet" href="/resources/css/font.css" />
 
 
 
@@ -52,33 +52,46 @@
  	
 	
 <style>
- /*    --------------------------------------------------
-	:: General
-	-------------------------------------------------- */
- body {
-            padding-top : 50px;
+body {
+            padding-top : 100px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+        }
+        h1 {
+			text-align: center;
+		}
+        
+
+        .ct_list_pop {
+        	margin-left: 80px;
+        	color: blue; 
+        	float: center;
         }
         
-        <!-- ##### -->
-         .ct_list_pop {margin-left: 80px;color: blue; float: center;}
-
-        td { cursor: default;}
-
+ 		td { 
+        	cursor: default;
+        }
         
-       <!-- ##### -->
-       
+        .panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
+
        .red{
     	color:red;
-   	   }
-
+   	   	}
+ 		
 </style>
 
 <script type="text/javascript">
 
  function fncGetUserList(currentPage) {
+	 if(${resultPage.maxPage}>=currentPage){
 	$("#currentPage").val(currentPage);
 	$("form").attr("method" , "POST").attr("action" , "/mypage/message/listMessage").submit();
-}
+	}
+ }
 
 
 //============= "검색"  Event  처리 =============	
@@ -193,6 +206,9 @@ $(document).on('click','#modalDeleteMessage',function(){
 			var messageNoList="";
 			//var array = new Array();
 			
+			if(checkedMessageCount < 1){
+				alert("메세지를 선택해주세요.");
+			}else{
 			for (var i = 0; i < checkedMessageCount; i++) {
 				if(i != checkedMessageCount-1){
 					var value = $($("input[name=checkbox]:checked")[i]).val()+","; 
@@ -206,6 +222,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 			
 			//alert(messageNoList);
 			deleteMessage(messageNoList);
+			}
 		});
 	});
 	
@@ -237,11 +254,12 @@ $(document).on('click','#modalDeleteMessage',function(){
  
    	<div class="container">
 
-	<div class="row col-xs-10 col-xs-offset-1">
-       <div class="col-xs-12">
-
+	<div class="row col-md-10 col-md-offset-1">
+	
+        <div class="col-md-12">
+		
         <div class="table-responsive">
-       	<h2>Message</h4>	    
+       	<h1 style="font-family: 'Jeju Gothic', serif; ">Message</h1>	    
 			<div class="pull-left">
 		  		<p class="text-primary">
 		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
@@ -249,7 +267,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 			</div>
 			<div class="pull-right">
 		  		<p class="text-primary">
-					선택 삭제   :  <td align="left"><button class="btn btn-danger btn-xs" id="deletemesgselect"><span class="glyphicon glyphicon-trash"></span></button></td>
+					[ 삭제   :  <td align="left"><button class="btn btn-danger btn-xs" id="deletemesgselect"><span class="glyphicon glyphicon-trash"></span></button></td> ]
 				</p>
 			</div>
 			<form class="form-inline" name="detailForm"> 
@@ -258,7 +276,9 @@ $(document).on('click','#modalDeleteMessage',function(){
 		</div>
         </div>  
             
-       <div class="row col-xs-12">       
+       <div class="row">
+       <div class="col-md-12">
+       <div class="panel panel-default">       
              <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
               
                    <thead>   
@@ -294,13 +314,13 @@ $(document).on('click','#modalDeleteMessage',function(){
     		  </c:forEach>
     		</tbody>        
 			</table> 
+			</div>
+			<div class ="row">
+	  		<jsp:include page="../common/pageNavigator_new.jsp"/>
+	  	 </div>
          </div>
         </div>
-	
     </div>
-    
-    <div class="col-md-2 col-md-offset-1">
-    <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
     <div class="modal fade" id="modalwrite" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
