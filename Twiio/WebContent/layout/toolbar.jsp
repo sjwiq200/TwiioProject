@@ -112,6 +112,7 @@
 	                     <ul class="dropdown-menu">
 	                     	 <li><a href="#">개인정보조회</a></li>	                     	 
 	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#">Friend</a></li>
 	                         <c:if test="${sessionScope.user.userType != '3'}">
 	                         <li><a href="#">구매목록조회</a></li>
 	                          </c:if>
@@ -286,11 +287,11 @@
 		$( "a:contains('일정목록조회')" ).on("click" , function() {
 			$(self.location).attr("href","/schedule/listSchedule");
 		});
-		
-		 $( "a:contains('친구목록조회')" ).on("click" , function() {
-			$(self.location).attr("href","/mypage/listFriend");
+		*/
+		 $( "a:contains('Friend')" ).on("click" , function() {
+			$(self.location).attr("href","/common/listFriend");
 		});
-		 */
+		 
 	</script>  
 	
 	

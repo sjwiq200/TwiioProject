@@ -197,6 +197,7 @@ $(document).ready(function() {
 						<option value="5">기타</option>
 					</select>
 		    	</div>
+		    	
 			</c:if>
 			<c:if test="${communityType=='1'}">
 		    <div class="col-xs-8">

@@ -7,10 +7,14 @@ import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.User;
+import com.twiio.good.service.user.UserService;
 
 import java.io.PrintStream;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +23,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +35,10 @@ public class CommonController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -100,7 +109,7 @@ public class CommonController {
 		return "forward:/mypage/listReport.jsp";
 	}
 
-	@RequestMapping(value = "listFriend")
+	/*@RequestMapping(value = "listFriend")
 	public String listFriend(@ModelAttribute("search") Search search,
 			@RequestParam("userNo") int userNo,
 			Model model
@@ -118,6 +127,31 @@ public class CommonController {
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
 		return "forward:/common/listFriend.jsp";
+	}*/
+	
+	@RequestMapping(value = "listFriend")
+	public String listFriend(Model model,HttpSession session) throws Exception{
+		System.out.println("/room/listFriend : ");
+		
+		User user = (User)session.getAttribute("user");
+		
+		System.out.println("user ==>" +user);
+		
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
+		
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
+		model.addAttribute("list", listFriend);
+
+		return "forward:/mypage/listFriend.jsp";
 	}
 
 	@RequestMapping(value = "listProductReply")

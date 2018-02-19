@@ -215,6 +215,15 @@ public class CommonRestController {
 		return friend;
 	}
 	
+	@RequestMapping(value = "json/deleteFriend/{friendNo}")
+	public boolean deleteFriend(@PathVariable int friendNo) throws Exception {
+		boolean friendCheck = false;
+		System.out.println("/common/addFriend : GET");
+		System.out.println("friendNo==>"+friendNo);		
+		commonService.deleteFriend(friendNo);	
+		return true;
+	}
+	
 	@RequestMapping(value = "json/getReport" )
 	public Report getReport(@RequestBody Report report) throws Exception {
 		System.out.println("/common/getReport : GET");

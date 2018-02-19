@@ -8,7 +8,7 @@
 
 <html lang="ko">
 <head>
-<title>구매 목록조회</title>
+<title>Transaction</title>
 
 <meta charset="UTF-8">
 	
