@@ -116,6 +116,7 @@ public class MainPlanRestController {
 		
 		System.out.println("RestController : addMainPlan <START>");
 		System.out.println("mainPlan :: "+mainPlan);
+		System.out.println("mainPlan.mainThumbnail :: "+mainPlan.getMainThumbnail());
 		
 		String countryResult="";
 		

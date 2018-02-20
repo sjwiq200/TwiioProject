@@ -682,7 +682,7 @@ div.caption{
 	<!--  Floating Button <START> -->
 	<c:if test="${user.userType==2}">
 		<div id="container-floating">
-			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="addProduct" title="addProduct">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="addProduct" title="투어 등록">
 				<!-- <p class="letter" id="addProduct"><img src="/resources/images/productIcons/edit.png" style="width: 45x; height: 45px;"></p> -->
 				<p class="letter" id="addProduct">+</p>
 			</div>
