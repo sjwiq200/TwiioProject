@@ -116,6 +116,7 @@
  						swal("삭제되었습니다..", {
  					      icon: "success",
  					    });
+ 						alert("삭제 성공");
  						window.location.reload();
  			    } 
  		  }); 
@@ -197,14 +198,14 @@
 						<div class="table-container">
 							<table class="table table-filter" style="align-content: center;">
 							<thead>
-					          <tr data-status="pagado">
-					          	<th align="center" class="col-md-1">No</th>
-					          	<th align="center" class="col-md-2">사진</th>
-					            <th align="center" class="col-md-3">Friend</th>
-					            <th align="right" class="col-md-3"></th>
-					          </tr>
-					        </thead>					
-							<tbody>
+					          		<tr data-status="pagado">
+					          			<th align="center" class="col-md-1">No</th>
+					          			<th align="center" class="col-md-2">사진</th>
+					            		<th align="center" class="col-md-3">Friend</th>
+					            		<th align="right" class="col-md-3"></th>
+					          		</tr>
+					       		    </thead>					
+									<tbody>
 									<c:set var="i" value="0" />
 									<c:forEach var="friend" items="${list}">								    
 									<c:set var="i" value="${ i+1 }"/>

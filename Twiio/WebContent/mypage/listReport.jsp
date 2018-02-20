@@ -2,6 +2,8 @@
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+
+
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -52,12 +54,22 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
+	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
    <style>
-     body {
-            padding-top : 50px;
+      body {
+            padding-top : 100px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
         
         <!-- ##### -->
          .ct_list_pop {margin-left: 80px;color: blue; float: center;}
@@ -86,7 +98,7 @@
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
     	  if(${resultPage.maxPage}>=currentPage){
-         $("#currentPage").val(currentPage)
+         $("#currentPage").val(currentPage);
          $("form").attr("method" , "POST").attr("action" , "/common/listReport").submit();
       }
       }
@@ -235,20 +247,19 @@
       <!-- ToolBar End /////////////////////////////////////-->
    
    <!--  화면구성 div Start /////////////////////////////////////-->
-   <div class="container col-md-8 col-md-offset-2">
-   
-      <div class="page-header text-info">
-          <h3>
-          <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	신고목록조회
-         </h3>
+  <div class="container col-md-8 col-md-offset-2">
+   	   <div class="col-md-12">
+   	   <div class="table-responsive">
+          <h1 style="font-family: 'Jeju Gothic', serif;">
+          	REPORT
+         </h1>
        </div>
        
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-       <div class="row">
+       
           <div class="pull-left">
              <p class="text-primary">
-                전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+               	 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
              </p>
           </div>
                   
@@ -273,7 +284,7 @@
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
 				</form>
 	    	</div>
-      </div>
+      	</div>
       
      
 	
@@ -281,16 +292,18 @@
       
       
       <!--  table Start /////////////////////////////////////-->
+      <div class="col-md-12">
+      <div class="panel panel-default">
       <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
       
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">작성자</th>
-            <th align="center" width="140">신고대상</th>
-            <th align="left" width="250">신고제목</th>
-            <th align="left" width="120">신고날짜</th>
-            <th align="left" width="100">신고유형</th>
-            <th align="left" width="140">신고처리유무</th>
+            <th class="col-md-1" align="center">작성자</th>
+            <th class="col-md-1" align="center">신고대상</th>
+            <th class="col-md-3" align="left" >신고제목</th>
+            <th class="col-md-2" align="left">신고날짜</th>
+            <th class="col-md-1" align="left">신고유형</th>
+            <th class="col-md-1" align="left">신고처리유무</th>
           </tr>
         </thead>       
       <tbody>
@@ -307,7 +320,9 @@
            		${report.targetUserName}
            </td>
            <td align="left">${report.reportTitle}</td>
-           <td align="left">${report.reportRegDate}</td>
+           <td align="left"> 
+           ${report.reportRegDate} 
+           </td>
            <td align="left">
            <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0}">	
            	 커뮤니티
@@ -319,7 +334,7 @@
            	 댓글
            </c:if>
            </td>
-           <td align="left">${report.reportState}</td>
+           <td align="center">${report.reportState}</td>
 
          </tr>
           </c:forEach>
@@ -333,12 +348,12 @@
      <!--  table End /////////////////////////////////////-->
      
      
-     
     </div>
-    <div class="col-md-2 col-md-offset-1">
-    <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
-    
+    <div class="row">
+     	<jsp:include page="../common/pageNavigator_new.jsp"/>
+     </div>
+    </div>
     
 		
 		
@@ -360,15 +375,5 @@
         			</div>
   	  			</div>
 				</div> 
-    
-    <!--  화면구성 div End /////////////////////////////////////-->
-    
-    <input type="hidden" id="currentPage" name="currentPage" value="" />
-    <%-- <input type="hidden" id="menu" name="menu" value="${menu}" /> --%> 
-    <%-- //<input type="hidden" id="priceList" name="priceList" value="${search.priceList}">  --%>
-                   
-    <!-- PageNavigation Start... -->
-   	
-   <!-- PageNavigation End... -->
 </body>
 </html>

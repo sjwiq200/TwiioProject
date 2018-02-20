@@ -201,8 +201,9 @@
 									WHERE r.user_no=u.user_no							
 									ORDER BY refund_reg_date DESC
 									 ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
-		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
+  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
+  		AND #{currentPage}*#{pageSize}
 	 </select>
 	
 	<delete id="deleteRefund" parameterType="int">
@@ -382,9 +383,10 @@
 	 </select>
 	 
 	 <select  id="getTransactionCount"  parameterType="map"	 resultType="int">
-	 SELECT COUNT(*)
-	 FROM(SELECT * from transaction where product_no = #{productNo} and trip_date = #{tripDate})
-	 countTable	 	
+	 select NVL(SUM(tran_count),0) from transaction 
+	 where product_no = #{productNo}
+	 and trip_date = #{tripDate} 
+	 and refund_code = '1'	 	
 	 </select>
 	 
 	 <select  id="getTotalCountRefund"  parameterType="Search"	 resultType="int">

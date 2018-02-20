@@ -2,6 +2,7 @@ package com.twiio.good.web.user;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Transaction;
 import com.twiio.good.service.domain.User;
@@ -33,6 +35,11 @@ public class UserController {
 	@Autowired
 	@Qualifier("userServiceImpl")
 	private UserService userService;
+	
+	///Field
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 	//setter Method 구현 않음
 		
 	public UserController(){
@@ -91,20 +98,34 @@ public class UserController {
 		User user = userService.getUserInNo(userNo);
 		User userEval = userService.getEvalUser(userNo);
 		System.out.println("userEval : "+userEval);
-		/*if(userEval != null) {
+		if(userEval != null) {
 			double per = userEval.getUserEval();
 			user.setUserEval(Double.parseDouble(String.format("%.2f",(per/20))));
 			double per2 = userEval.getUserEvalCredit();
 			user.setUserEvalCredit(Double.parseDouble(String.format("%.2f",(per2/20))));
-		}*/
+		}
 		
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
 		
-	
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
+		
+		// Model 과 View 연결
+
 		System.out.println("regDate : "+user.getRegDate());
 		// Model 과 View 연결
 		//System.out.println("per : "+per);
 		//System.out.println("per2 : "+per2);
 		System.out.println("user :: "+user);
+		model.addAttribute("listFriend", listFriend);
 		model.addAttribute("user", user);
 		
 		return "forward:/user/getUser.jsp";
@@ -169,7 +190,9 @@ public class UserController {
 
 	
 	@RequestMapping( value="listUser")
-	public String listUser( @ModelAttribute("search") Search search , Model model , HttpServletRequest request) throws Exception{
+	public String listUser( @ModelAttribute("search") Search search , Model model , 
+			HttpServletRequest request, HttpSession httpSession) throws Exception{
+		
 		
 		System.out.println("/user/listUser : GET / POST");
 		
@@ -177,14 +200,28 @@ public class UserController {
 			search.setCurrentPage(1);
 		}
 		search.setPageSize(pageSize);
-		
+		User user = (User)httpSession.getAttribute("user");
 		// Business logic 수행
 		Map<String , Object> map=userService.listUser(search);
 		System.out.println("pageUnit ::: "+pageUnit);
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		System.out.println(resultPage);
 		
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
+		
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
+		
 		// Model 과 View 연결
+		model.addAttribute("listFriend", listFriend);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);

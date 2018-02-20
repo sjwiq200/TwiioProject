@@ -270,18 +270,6 @@
      </div>
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
-   
-   
-    
-    
-    <!--  화면구성 div End /////////////////////////////////////-->
-    
-    <input type="hidden" id="currentPage" name="currentPage" value="" />
-    <%-- <input type="hidden" id="menu" name="menu" value="${menu}" /> --%> 
-    <%-- //<input type="hidden" id="priceList" name="priceList" value="${search.priceList}">  --%>
-                   
-    <!-- PageNavigation Start... -->
-   	
-   <!-- PageNavigation End... -->
+
 </body>
 </html>

@@ -158,6 +158,78 @@
 			    color: #D73A31;
 				border-color: #D73A31;
 			}
+			
+			body::-webkit-scrollbar {
+  				width: 0.7em;
+  				background: transparent;
+			}
+			body::-webkit-scrollbar-thumb {
+  				background: transparent;
+			}
+			
+			/* 사이드바 <START> */
+
+	
+			.sidenav::-webkit-scrollbar {
+  			width: 0.7em;
+  			background: transparent;
+			}
+			.sidenav::-webkit-scrollbar-thumb {
+ 	 		background: transparent;
+			}
+
+			.sidenav {
+			margin-top: 53px;
+    		height: 100%;
+		    width: 0;
+		    position: fixed;
+		    z-index: 1;
+		    top: 0;
+   		    left: 0;
+		    overflow-x: hidden;
+		    transition: 0.6s;
+		    padding-top: 60px;
+		    background-color: #ffffff;
+		    border-right: solid 0.8px #C2C2C2;
+			}
+
+			.sidenav a {
+		    padding: 8px 8px 8px 32px;
+		    text-decoration: none;
+	    	font-size: 25px;
+	  		color: #818181;
+		    display: block;
+		    transition: 0.3s;
+			}
+
+			.sidenav a:hover {
+			    color: #f1f1f1;
+			}
+			
+			.sidenav .closebtn {
+			    position: absolute;
+			    top: 0;
+			    right: 25px;
+			    font-size: 36px;
+			    margin-left: 50px;
+			}
+			
+			#main {
+			    transition: margin-left .5s;
+			    padding: 16px;
+			}
+			
+			@media screen and (max-height: 450px) {
+			  .sidenav {padding-top: 15px;}
+			  .sidenav a {font-size: 18px;}
+			}
+			
+			#contentsBox {
+				height: 6em;
+				border-bottom: dashed 0.5px #C2C2C2;
+			}
+			/* 사이드바 <END> */
+			
 		
     </style>
     
@@ -281,14 +353,173 @@
 			
 		
 		//////////////////////////////////유저정보보기////////////////////////////////////
-		 
-	
-	</script>
+		//////////////////////////////////사이드바///////////////////////////////////////function openNav() {
+		function openNav() {
+			document.getElementById("mySidenav").style.width = "280px";
+			document.getElementById("main").style.marginLeft = "280px";
+			document.body.style.backgroundColor = "#f4f4f4";
+			
+		}
+
+		function closeNav() {
+			document.getElementById("mySidenav").style.width = "0";
+			document.getElementById("main").style.marginLeft = "0";
+			document.body.style.backgroundColor = "#f4f4f4";
+		}
+		
+		$(function() {
+			$("div[name=contentsBox]").hover(function() {
+				var index = $("div[name=contentsBox]").index(this);
+ 				$($("div[name=contentsBox]")[index]).attr("style","background-color:#A6A0A5; color:white;");
+ 					}, function(){
+ 						var index = $("div[name=contentsBox]").index(this);
+ 						$($("div[name=contentsBox]")[index]).attr("style","background-color:#ffffff;");
+ 					
+ 			});
+ 		});
+		////////////////////////////////////////사이드바///////////////////////////////////////////////////
+		$(document).on("click",'td:nth-child(4) a[name="friendDelete"]', function(){
+ 			var friendNo = $($('input[name=friendNo]')[$('td:nth-child(4) a[name="friendDelete"]').index(this)]).val();
+ 			$.ajax({
+ 				url : "/common/json/deleteFriend/"+friendNo,
+ 				method:"GET",
+ 				dataType:"json",
+ 				headers :{
+ 					"Accept" : "application/json",
+ 					"Content-Type" : "application/json"
+ 				},		
+ 				success : function(JSONData) {
+ 						swal("삭제되었습니다..", {
+ 					      icon: "success",
+ 					    });
+ 						window.location.reload();
+ 			    } 
+ 		  }); 
+ 		});
+  		
+
+  		$(document).on("click",'td:nth-child(4) a[name="friendMessage"]', function(){
+  			var userNo = $($('input[name=userNo]')[$('td:nth-child(4) a[name="friendMessage"]').index(this)]).val();
+  			var userName = $($('input[name=userName]')[$('td:nth-child(4) a[name="friendMessage"]').index(this)]).val();
+  			
+  			alert(userNo);
+  			alert(userName);
+  			$('#targetNo').val(userNo);
+  			$('#toUsern').val(userName);
+  			$("#modalwrite").modal('show');
+  		});
+
+  		$(document).on('click','#addMess',function(){
+  			var targetNo = $('#targetNo').val();
+  			var toUsern = $('#toUsern').val();
+  			var modalMessageTitle = $('#modalMessageTitle').val();
+  			var modalMessageContent = $('#modalMessageContent').val();
+  			//modalmessage
+
+  			if(modalMessageTitle==''| modalMessageContent==''){
+  				alert('내용과 제목을 입력하세요.');			 
+  			}
+  			else{
+  			  	$.ajax({
+  					url : "/mypage/json/addMessage",
+  					method : "POST" ,
+  					dataType : "json" ,
+  					contentType:"application/json;charset=UTF-8",
+  					data : JSON.stringify({
+  						"toUserNo":targetNo,
+  						"fromUserNo":"${user.userNo}",
+  						"messageContent":modalMessageContent,
+  						"messageType":"2",
+  						"messageTitle":modalMessageTitle,
+  						"targetUserName":toUsern,
+  						"userName":"${user.userName}"
+  					}),
+  					success : function(JSONData) {
+  						alert("메시지가 보내기 성공.!!");
+  						$('#modalwrite').modal('toggle');
+  				    } 
+  			   });
+  			}
+  		});
+		</script>
 	
 </head>
 
 <body>
+
+
+	<!---------------------------------------사이드바--------------------------------------------------------->
+	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			
+			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
+			
+				<c:if test="${empty user.userImage}">
+					<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" style="border-radius: 5%;">
+				</c:if>
+				<c:if test="${!empty user.userImage}">
+					<img src="/resources/images/userimages/${user.userImage}" width="80px" style="border-radius: 5%;">										  		 	 
+				</c:if>
+								
+			</div>
+			
+			<div class="col-xs-12" style="background:transparent;">
+			
+			<table class="table table-filter" style="align-content: center;">
+				<thead>
+					<tr data-status="pagado">
+					    <th align="center" class="col-md-1">No</th>
+					    <th align="center" class="col-md-2">사진</th>
+					    <th align="center" class="col-md-3">Friend</th>
+					    <th align="right" class="col-md-3"></th>
+					</tr>
+					</thead>					
+					<tbody>
+					<c:set var="i" value="0" />
+					<c:forEach var="friend" items="${listFriend}">								    
+						<c:set var="i" value="${ i+1 }"/>
+						<input type="hidden" id="friendNo" name="friendNo" value="${friend.profilePublic}"/>
+						<input type="hidden" id="userNo" name="userNo" value="${friend.userNo}"/>
+						<input type="hidden" id="userName" name="userName" value="${friend.userName}"/>
+						<tr data-status="pagado">
+						<div class="media-body">
+							<td align="pull-right">${ i }</td>
+							<td align="left">
+							<c:if test="${empty friend.userImage}">
+								<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+							</c:if>
+							<c:if test="${!empty friend.userImage}">
+								<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+							</c:if>
+						</td>
+						<td align="left">
+							${friend.userName}
+						</td>
+						<td align="right">
+							<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" name="friendMessage"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
+
+							<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" name="friendDelete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+						</td>
+						</div>
+						</tr>
+					</c:forEach>
+				</tbody>							
+				</table>
+				
+		    </div>
+	</div>
+
+	<div id="main" style="position:fixed; z-index:1000;" id="openSideBar">
+
+		<h2>&nbsp;</h2>
+		<p>&nbsp;</p>
+		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()" >&#9776;
+		OPEN
+		</span>
+	</div>
 	
+	
+	<!---------------------------------------사이드바--------------------------------------------------------->
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
@@ -352,8 +583,7 @@
           </tr>
         </thead>
        
-		<tbody>
-		
+		<tbody>	
 		  <c:set var="i" value="0" />
 		  <c:forEach var="user" items="${list}">
 			<c:set var="i" value="${ i+1 }" />

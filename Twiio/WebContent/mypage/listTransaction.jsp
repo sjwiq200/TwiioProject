@@ -53,6 +53,7 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
    <style>
@@ -71,7 +72,7 @@
 		}
         
         <!-- ##### -->
-        .ct_list_pop {margin-left: 80px;color: blue; float: center;}
+        .ct_list_pop {margin-left: 80px; float: center;}
 
         td { cursor: default;}
 
@@ -375,6 +376,10 @@
 		   var productcontent=$('#message2').val();
 		   var tranNo = $('#modalTranNo').val();
 		   
+		   
+		   
+		   
+		   
 		   $.ajax({
 					url : "/transaction/json/updateTransactionEval",
 					method : "POST" ,
@@ -412,7 +417,6 @@
      	   
      	  //alert(date>(date2-2));
     	   if(refundcode == '1'){
-    		   
     	   	 if(${empty user.userId}){
     			 alert('로그인후 사용하여주세요');	     			 
     		 }else if(date>(date2-2)){
@@ -447,30 +451,43 @@
 			var modalTotalPrice = $("#modalTotalPrice").val();
 			var modalRegDate = $("#modalRegDate").val();
 			var modalRefundAccount = $("#modalRefundAccount").val();
-			var modalRefundBank = $("#modalRefundBank").val();
-						
+			var modalRefundBank = $("#modalRefundBank").val();	
 			if(modalProductNo == '' || modalTranNo == '' || modalTotalPrice =='' || modalRefundAccount=='' || modalRefundBank==''){
 				alert("입력을 완료해주세요.");
 			}else{
-				 $.ajax( 
-							{
-							url : "/transaction/json/addRefund",
-							method : "POST" ,
-							dataType : "json" ,
-							contentType:"application/json;charset=UTF-8",
-							data : JSON.stringify({
-								"tranNo":modalTranNo,
-								"refundPrice":modalTotalPrice,
-								"refundAccount":modalRefundAccount,
-								"refundBank":modalRefundBank,
-								"userNo":"${user.userNo}"
-							}),
-							success : function(JSONData) {
-								alert("완료");
-								$('#addRefundModal').modal('toggle');
-								location.reload();
-							}
-				});			  
+				
+				swal({
+					  title: "환불을 신청 하시겠습니까?"+
+							  "(정보 수정은 불가능합니다.)",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+					.then((willDelete) => {
+					  if (willDelete) {
+					    swal("환불 신청 완료되었습니다..", {
+					      icon: "success",
+					    }).then((next) => {
+					    	$.ajax({
+					    		url : "/transaction/json/addRefund",
+								method : "POST" ,
+								dataType : "json" ,
+								contentType:"application/json;charset=UTF-8",
+								data : JSON.stringify({
+									"tranNo":modalTranNo,
+									"refundPrice":modalTotalPrice,
+									"refundAccount":modalRefundAccount,
+									"refundBank":modalRefundBank,
+									"userNo":"${user.userNo}"
+								}),
+								success : function(JSONData) {
+									$('#addRefundModal').modal('toggle');
+									window.location.reload();
+								}
+					    	 });
+					    });
+					 }					  
+				});  
 			}
        });
        ///////////////////////////////////////////////////////////////////////////      
@@ -495,7 +512,7 @@
        
           <div class="pull-left">
              <p class="text-primary">
-                전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+                               전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
              </p>
           </div>
           
@@ -507,8 +524,8 @@
               
             </form>
           </div>
-      </div>
-   </div>
+      	</div>
+   		</div>
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
       
@@ -519,14 +536,14 @@
 
         <thead>       
           <tr>         
-            <th align="center" width="120">구매일자</th>
-            <th align="center" width="140">상품사진</th>
-            <th align="left" width="300">상품이름</th>
-            <th align="left" width="120">여행일자</th>
-            <th align="left" width="100">구매수량</th>
-            <th align="left" width="120">상품구매금액</th>
-            <th align="left" width="100">평가</th>
-      		<th aligh="legt" widht="100">주문상태</th>    
+            <th align="center">구매일자</th>
+            <th align="center">상품사진</th>
+            <th align="left">상품이름</th>
+            <th align="left">여행일자</th>
+            <th align="left">구매수량</th>
+            <th align="left">상품구매금액</th>
+            <th align="left">평가</th>
+      		<th align="left">주문상태</th>    
           </tr>
         </thead>       
       <tbody>
@@ -549,16 +566,16 @@
            <td align="left">${transaction.regDate}</td>
            <td align="left">
            <c:if test="${empty transaction.tranPro.thumbnail}">
-               <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="80" width="80" />
+               <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="100" width="80" />
            </c:if> 
            <c:if test="${!empty transaction.tranPro.thumbnail}">
-               <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" height="80" width="80" />
+               <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" height="100" width="80" />
            </c:if>
            </td>
-           <td align="left">${transaction.tranPro.productName}</td>
+           <td class="col-md-3" align="left">${transaction.tranPro.productName}</td>
            <td align="left">${transaction.tripDate}</td>
            <td align="left">${transaction.count}</td>
-           <td align="left">${transaction.totalPrice}</td>
+           <td align="left">${transaction.totalPrice}원</td>
            <td align="left" id="eval"><a href="#">
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
@@ -571,8 +588,8 @@
            <c:if test="${transaction.refundCode == '1'}">
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
-           <c:if test="${(trip-now > 2) && (trip>now)}">환불하기</c:if>
-           <c:if test="${trip-now < 2}">구매완료</c:if>
+           <c:if test="${(trip-now > 2)||(trip>now)}">환불하기</c:if>
+           <c:if test="${(trip-now < 2)||(trip<now)}">구매완료</c:if>
            </c:if>
            <c:if test="${transaction.refundCode == '2'}">
            	환불처리중
@@ -707,13 +724,11 @@
            			 	<input type="text" class="form-control" id="modalRefundAccount"  name="modalRefundAccount" value="">
            			 	<br/>
            			 	계좌번호
-           			 	<input type="text" class="form-control" id="modalRefundBank"  name="modalRefundBank" value="">	
+           			 	<input type="text" class="form-control" id="modalRefundBank"  name="modalRefundBank" value="" placeholder=" -  생략">	
            			 	
 					</div>
-					<div class="modal-footer">
-						<c:if test="${modalrefundCode == '1'}">
+					<div class="modal-footer">						
 						<button type="button" class="btn btn-default" id="modalrefund">환불신청</button>
-						</c:if>
 						<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 					</div>
 				</div>
