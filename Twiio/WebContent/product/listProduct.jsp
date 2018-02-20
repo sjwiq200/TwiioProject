@@ -49,11 +49,11 @@
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
+
 body {
-	padding-top: 52px;
-	/* background: rgba(208, 211, 197, 0.3); */
-	background:  #f4f4f4;
-	/* color: #08708A; */
+	padding-top: 70px;
+	font-family:'JEJUGOTHIC';
+	background: #f4f4f4;
 }
 
 /*

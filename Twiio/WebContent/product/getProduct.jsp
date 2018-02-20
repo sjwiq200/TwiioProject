@@ -52,11 +52,34 @@
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-		body {
-			padding-top: 55px;
-			background:  #f4f4f4;
+	
+	body {
+		padding-top: 70px;
+		font-family:'JEJUGOTHIC';
+		background: #f4f4f4;
+		color
 		}
 		
+	#thumbnailMainBox {
+	min-height: 1500px;
+	font-family:'JEJUGOTHIC';
+	background: linear-gradient(-45deg, #56B1BF, transparent),
+		linear-gradient(45deg, #D73A31, transparent);
+	border-radius: 8px;
+	border-color: #000000;
+	border-width: 10px;
+	display: inline-block;
+	padding: 1px;
+	text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+	min-height: 1500px;
+	background: #fff;
+	display: inline-block;
+	border-radius: 6px;
+}
+
 		textarea {
 			width: 100%;
 			height: 100px;
@@ -64,12 +87,10 @@
 		}
 		
 		hr {
-			//color: #08708A;
+			color: #C2C2C2;
 			display: block;
-		    height: 1px;
 		    border: 0;
-		    border-top: 1px solid #08708A;
-		    margin: 1em 0;
+		    border-top: 1px dashed #C2C2C2;
 		    padding: 0;
 		}
 		
@@ -115,6 +136,54 @@
 			color: #08708A;
 			border-color: #08708A;
 		}
+		
+		
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+ /*  font-family:TYPO_JEONGJOL; */
+  color: #545454;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 6px 20px 6px 20px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy:hover {
+  background: #ededed;
+  text-decoration: none;
+  color:#545454;
+}
+
+
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 8px 13px 8px 13px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+
+/* Button-dy css  */
 	</style>
 	<script type="text/javascript">
 	
@@ -185,7 +254,7 @@
 								);
 							//var num=JSONData;
 							/* response($.map(JSONData, function (item) {
-					           
+				           
 								return item;
 					        })); */	
 					        				
@@ -199,7 +268,7 @@
 	
 	$(function() {
 		
-		 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
+		 $( "button.btn-dy2:contains('구매')" ).on("click" , function() {
 			 if(${empty user}){				 
 				 swal("로그인 후 이용해 주세요",{
 					  icon: "warning",
@@ -220,7 +289,7 @@
 	
 	$(function() {
 		
-		 $( "button.btn.btn-primary:contains('이전')" ).on("click" , function() {
+		 $( "button.btn-dy2:contains('이전')" ).on("click" , function() {
 			
 			 history.go(-1);
 		});
@@ -478,11 +547,6 @@
 		 
 	});
 	
-	
-	
-	/* $(document).on('click' ,'.row2', function() {
-		alert($('.row2').index(this));
-	});	 */
 
 		
 	///////////////////////////////////////////top//////////////////
@@ -825,8 +889,36 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="row">
 	<div class="container">
+	
+	
+	
+	<!-- ///////////////dayoung//////////////////// -->
+	<div class="col-xs-12 inner" id="thumbnailMainBox">
+				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
+				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+					<div class="col-xs-12" >
+	<!-- ///////////////dayoung//////////////////// -->				
+					
+					
+					
 		<input type="hidden" name="userNo" value="${user.userNo }"/>
 		<input type="hidden" name="userName" value="${user.userName }"/>
+		<div class="row"> 
+	      <div class="col-sm-12" >
+			<div class="text-info" style="margin-top:80px;margin-bottom:80px;color:#474747;">
+				<h2>
+				${product.productName}
+				</h2>
+			</div>
+			<b class="pull-right">조회수 ${product.viewCount }</b>
+			</div>
+	       <!-- <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5> -->
+	   </div>
+	       
+		
+		<div class="col-xs-12"> 
+		
+		
 		
 		<%-- <button type="button" id="showPro" class="btn btn-default">목록보기</button>
 	       <c:if test="${user.userNo == product.hostNo }">
@@ -834,68 +926,55 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	       <button type="button" class="btn btn-default">삭제</button>
 	       </c:if> --%>
 	       
-		<div class="row"> 
-	      <div class="col-sm-12" >
-			<div class="text-info">
-				<h3>
-				${product.productName}
-				</h3>
-			<b class="pull-right">조회수 ${product.viewCount }</b>
-			</div>
-			</div>
-	       <!-- <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5> -->
-	       </div>
 	       </div>
 	   </div>    
-	      
-	    <div class="container">
-		<hr/>
+
 		<div class="col-sm-12">		
 		<div class="col-sm-6 ">
 				
 		<div class="row">
-	  		<div class="col-xs-4 "><strong>상품유형</strong></div>
-			<div class="col-xs-8">${product.productType }</div>
+	  		<div class="col-xs-6" align="right"><strong>상품유형</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${product.productType }</div>
 		</div>
 				
 		<!-- <hr/> -->
 		<br/>
 		
 		<div class="row">
-	  		<div class="col-xs-4 "><strong>국가</strong></div>
-			<div class="col-xs-8">${product.country }</div>
+	  		<div class="col-xs-6 " align="right"><strong>국가</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${product.country }</div>
 		</div>
 				
 		<!-- <hr/> -->
 		<br/>
 		
 		<div class="row">
-	  		<div class="col-xs-4"><strong>도시</strong></div>
-			<div class="col-xs-8">${product.city }</div>
+	  		<div class="col-xs-6" align="right"><strong>도시</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${product.city }</div>
 		</div>
 				
 		<!-- <hr/> -->
 		<br/>
 		
 		<div class="row">
-	  		<div class="col-xs-4"><strong>1일 투어 인원</strong></div>
-			<div class="col-xs-8 ">${product.tourHeadCount}</div>
+	  		<div class="col-xs-6" align="right"><strong>1일 투어 인원</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${product.tourHeadCount}</div>
 		</div>
 		
 		<!-- <hr/> -->
 		<br/>
 		
 		<div class="row">
-	  		<div class="col-xs-4  "><strong>가격</strong></div>
-			<div class="col-xs-8 ">${product.productPrice}</div>
+	  		<div class="col-xs-6" align="right"><strong>가격</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${product.productPrice}</div>
 		</div>
 		
 		<!-- <hr/>  -->		
  		<br/>
  		
 		<div class="row">
-	  		<div class="col-xs-4"><strong>투어일자</strong></div>
-			<div class="col-xs-8 ">
+	  		<div class="col-xs-6" align="right"><strong>투어일자</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">
 			<c:set var="date" value="${product.tripDate}"></c:set>
 			<c:set var="date_array" value="${fn:split(date,',')}"></c:set>			
 				<c:forEach var="tdate" items="${date_array}" begin="0" step="1">
@@ -903,32 +982,37 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 				</c:forEach>
 			</div>
 		</div>
+		
+		<div class="row">
+	  		<div class="col-xs-6" align="right"><strong>평점</strong></div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">${transaction.evalProduct}</div>
+		</div>
+		
 		<br/>		
 		</div>
 	
 		  <div class="col-sm-6">
 		  
 		  <div class="row col-xs-12">
-		   <div class="col-xs-6">
-		<div class="row">
-		
-	  		<div class="col-xs-5 text-center"><strong>호스트</strong></div>
-	  		<div name="hostInfo" class="col-xs-7">	  		
-			<c:if test="${empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="rounded-circle"></c:if>
-			<c:if test="${!empty product.hostImage}"><img style="width:80px; height:80px; alt="" src="/resources/images/userThumbnail/${product.hostImage}" class="rounded-circle"></c:if>
-			</div>	
-			
-		</div>		
-		<div class="row">
-	  		<div class="col-xs-5 "></div>
-			<div name="hostInfo" class="col-xs-7 ">${product.hostName}	</div>
+		   <div class="col-xs-6" align="center">
+		   
+			<div class="row">
+				<div name="hostInfo" class="col-xs-12" align="right">	  		
+					<c:if test="${empty product.hostImage}"><img style="width:160px; height:160px;border-radius: 99%;" alt="" src="/resources/images/userImage/seojun.jpg" class="rounded-circle"></c:if>
+					<c:if test="${!empty product.hostImage}"><img style="width:160px; height:160px;border-radius: 99%;" alt="" src="/resources/images/userimages/${product.hostImage}" class="rounded-circle"></c:if>
+				
+					</div>	
+			</div>		
+	
 			</div>
-		</div>
-		<br/>
-		
-			<div class="col-xs-3 text-center">
 			<br/>
-			<button type="button" class="btn btn-primary btn-responsive" name="sendQuestion">1:1 문의</button>
+		
+			<div class="col-xs-6" align="left">
+			<br/>
+			<div name="hostInfo" class="col-xs-12 "><strong>호스트</strong> ${product.hostName}	</div>
+	<!-- 		<input type="button" name="sendQuestion" class="btn-dy2" value="1:1 문의" />  -->
+			<button type="button" class="btn-dy2" name="sendQuestion"  width="30px" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';"/>1:1 문의</button>
+			<!-- <button type="button" class="btn btn-primary btn-responsive" name="sendQuestion">1:1 문의</button> -->
 			</div>
 			<br/>
 			</div>
@@ -989,10 +1073,13 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 				</select>
 			</div>
 			<br/>
-			<div class="row col-xs-1"></div>
-			<div class="row col-xs-5">
-	  			<button type="button" class="btn btn-primary">구매</button>
-	  			<button type="button" class="btn btn-primary">이전</button>	  							  			
+	
+			<div class="row col-xs-6">
+				<button type="button" class="btn-dy2" width="30px" style="margin-left:20px;font-size: 12px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>구매</button>
+				<button type="button" class="btn-dy2" width="30px" style="margin-left:20px;font-size: 12px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>이전</button>  
+					
+<!-- 			<button type="button" class="btn btn-primary">구매</button>
+	  			<button type="button" class="btn btn-primary">이전</button>			 -->				  			
 			</div>
 			</div>
 		</form>
@@ -1000,7 +1087,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		
 		</div>
 		</div>
-		</div>
+	
 		
 		
 		<!-- <div class="row">
@@ -1008,25 +1095,21 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div> -->
 		
 		<div class="row">
-		<div class="container">
+		
 		<div class="col-sm-12">
 		<hr/>
 		<div class="row">
-	  		<div class="col-sm-4 "><strong>상품상세정보</strong></div>
-			<div class="col-sm-4">${product.description}</div>
+	  		<div class="col-sm-12" style="margin-bottom:20px;"><strong>상품상세정보</strong></div>
+			<div class="col-sm-12" style="margin-bottom:20px;">${product.description}</div>
 			<!-- <a href="#" type="button" class="top">Top</a> -->
 		
 		</div>
 		</div>
-		<hr/>			
 		
-		<div class="row">
-	  		<div class="col-xs-4 col-md-2 ">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>평점</strong></div>
-			<div class="col-xs-8 col-md-4" name="eval">${transaction.evalProduct}</div>
-		</div>
+		
 		
 		<hr/>		
-	  </div>
+
  	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	
@@ -1051,81 +1134,85 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 			</div>
 		</div>
  	
- 	<div class="container">
- 		<div class="col-xs-4 col-md-2 "><strong>리뷰/별점</strong></div>
- 		<p class="text-primary">
-		    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-		    	</p>
- 	<!--  table Start /////////////////////////////////////-->
- 	<div >
-      <table class="table  table-striped" >
-      <input type="hidden" id="currentPage" name="currentPage" value=""/>
-        <thead>
-          <tr>
-            <th align="left">이름</th>
-            <th align="left" >리뷰</th>                       
-            <th align="left">별점</th>
-          </tr>
-        </thead>
-       
-		<tbody>
-		
-		  <c:set var="i" value="0" />
-		  <c:forEach var="transaction" items="${reviewList}">
-			<c:set var="i" value="${ i+1 }" /> 
-			<tr name="n">
-			  <td align="left" >${transaction.userName}</td>			  
-			  <td align="left" >${transaction.reviewProduct}</td>
-			  <td align="left" >${transaction.starEvalProduct}</td>			  
-			</tr>
-          </c:forEach>
-        
-        </tbody>
-      
-      </table>
-      </div>
-	  <!--  table End /////////////////////////////////////-->
- 	
- 	
- 	<!-- PageNavigation Start... -->
-	<center><jsp:include page="../common/pageNavigator_review.jsp"/> </center>
-	<!-- PageNavigation End... -->
-	
-	<hr/>	
+ 	<div style=" border-radius: 23px; background: #efefef;padding-top:20px;padding-bottom:20px;margin-bottom:150px;">
+ 			<div>
+	 		<div class="col-xs-12"><strong><h3>리 뷰 / 별 점</h3></strong></div>
+	 		<p class="text-primary">
+			    		전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+			 </p>
+			 </div>
+	 	<!--  table Start /////////////////////////////////////-->
+	 		<div>
+			      <table class="table" >
+			      <input type="hidden" align="center" id="currentPage" name="currentPage" value=""/>
+			        <thead>
+			          <tr align="center"> 
+			            <td align="center">이름</th>
+			            <td align="center" >리뷰</th>                       
+			            <td align="center">별점</th>
+			          </tr>
+			        </thead>
+			       
+					<tbody>
+					
+					  <c:set var="i" value="0" />
+					  <c:forEach var="transaction" items="${reviewList}">
+						<c:set var="i" value="${ i+1 }" /> 
+						<tr name="n" align="center">
+						  <td align="center" >${transaction.userName}</td>			  
+						  <td align="center" >${transaction.reviewProduct}</td>
+						  <td align="center" >${transaction.starEvalProduct}</td>			  
+						</tr>
+			          </c:forEach>
+			        
+			        </tbody>
+			      
+			      </table>
+		      </div>
+			  <!--  table End /////////////////////////////////////-->
+		 	
+		 	
+		 	<!-- PageNavigation Start... -->
+			<center><jsp:include page="../common/pageNavigator_review.jsp"/> </center>
+			<!-- PageNavigation End... -->
+			
+			<hr/>	
 	</div>
 	
 	<!-- Reply -->
-	<div class="container">
-	<div class="form-group" id="replyinput">
-         <div class="col-md-10">
-            <textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
-         </div>
-         <div class="col-md-2">
-            <button type="button"  id="write" class="btn btn-default">댓글입력</button>
-         </div>
-      </div>
-      
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <br>
-      <div class="form-group" id = "totalCount">
-         <div class="col-md-2 ">
-            <strong>댓 글 목 록</strong>      
-         </div>
-         <div class="col-md-2" >
-            댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
-                  <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>            
-         </div>
-      </div>
-      
-       <div class="row">
-	      <div class="col-xs-12 ">
-	      <hr sytle="border-style:dotted">
+	
+	<div >
+		  <div class="form-group" id="replyinput">
+	         <div class="col-md-10">
+	            <textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
+	         </div>
+	         <div class="col-md-2">
+	            <button type="button"  id="write" class="btn btn-default">댓글입력</button>
+	         </div>
 	      </div>
-	   </div>  
+      </div>
+      <div>
+	      <br>
+	      <br>
+	      <br>
+	      <br>
+	      <br>
+	      <br>
+	      <div class="form-group" id = "totalCount">
+	         <div class="col-md-12" align="center">
+	            <strong><h3>댓 글 목 록</h3></strong>      
+	         </div>
+	         <div class="col-md-12" align="right">
+	            댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
+	                  <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>            
+	         </div>
+	      </div>
+      
+	       <div class="row">
+		      <div class="col-xs-12 ">
+		      <hr sytle="border-style:dotted">
+		      </div>
+		   </div>  
 					      
 					   <div class="col-sm-12">   
 					      <div class="row" name="row">
@@ -1180,16 +1267,20 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 					 		</c:forEach>
 					 		</div>
        
-       <div class="col-xs-2 col-xs-offset-5" id="aReply">
-         <div class="button-2">
-          <div class="eff-2"></div>
-          <a href="#" id="addReply"> 댓글 더보기 </a>
-           </div>
-           <div class="col-xs-10 col-xs-offset-1">
-         <br/>
-         </div>
+			       <div class="col-xs-2 col-xs-offset-5" id="aReply">
+			         <div class="button-2">
+			          <div class="eff-2"></div>
+			          <a href="#" id="addReply"> 댓글 더보기 </a>
+			           </div>
+			           <div class="col-xs-10 col-xs-offset-1">
+			         <br/>
+			         </div>
+			      </div>
+			      </div>
+      
       </div>
-      </div>
+      
+      
       
      <div class="modal fade" id="modalreport"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
 			<div class="modal-dialog">
@@ -1211,8 +1302,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
 			</div>
-		</div>
-		</div>
+			</div>
+			</div>
 		</div>
 		
 		
@@ -1259,6 +1350,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		</div>
 		
+		
+		
 		<div class="modal fade" id="deletemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
 			<div class="modal-dialog">
 		<!-- Modal content-->
@@ -1298,8 +1391,19 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 				<button type="button" class="btn btn-default" id="updatereplym">수  정</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
 			</div>
+			</div>
+			</div>
 		</div>
-		</div>
+		
+		
+		<!-- ///////////////////////dayoung///////////////////////// -->
+				</div>
+					</div>
+						</div>
+						<div align="right" class="col-xs-1">&nbsp;</div>
+		<!-- ///////////////////////dayoung///////////////////////// -->
+		
+		
 		</div>
 
 </body>

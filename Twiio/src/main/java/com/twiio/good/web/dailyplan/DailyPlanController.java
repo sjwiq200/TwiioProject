@@ -293,22 +293,23 @@ public class DailyPlanController {
 
 	}
 
-	@RequestMapping(value = "addMap", method=RequestMethod.POST)
 	public String addMap(
 			@ModelAttribute("planContent") PlanContent planContent,
 			@RequestBody String aaaaa,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
-			@RequestParam("mainPlanNo") int mainPlanNo
-//			HttpServletRequest request, Model model
-			) throws Exception {
-		
-		
+			@RequestParam("mainPlanNo") int mainPlanNo,
+			@RequestParam("mapAddress") String mapAddress,
+			HttpServletRequest request, Model model) throws Exception {
+
 		
 		System.out.println("Controller : addMap <START>");
 		
-		
+
+		System.out.println("dailyPlanNo :: "+dailyPlanNo);
+		System.out.println("mainPlanNo :: "+mainPlanNo);
+		System.out.println("mapAddress :: "+mapAddress);
+
 		System.out.println("####" + planContent);
-		System.out.println("aaaaa"+ aaaaa);
 		
 		
 		
