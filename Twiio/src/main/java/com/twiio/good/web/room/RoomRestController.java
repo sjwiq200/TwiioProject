@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.util.JSON;
@@ -58,6 +59,12 @@ public class RoomRestController {
 		
 		roomService.addRoomUser(roomKey, user.getUserNo());
 		
+	}
+	
+	@RequestMapping(value="/json/addRoomUser", method=RequestMethod.POST)
+	public void addRoomUser(@RequestBody RoomUser roomUser) throws Exception {
+		System.out.println("/room/json/addRoomUser/ : Android" + roomUser);
+		roomService.addRoomUser(roomUser.getRoomKey(), roomUser.getUserNo());
 	}
 	
 	@RequestMapping("/json/addRoomFriend/")

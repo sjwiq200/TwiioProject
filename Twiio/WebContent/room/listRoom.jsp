@@ -33,6 +33,8 @@
   <!-- ---------Floating Button------------ -->
   <link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  
   <script>
   	$(function() {
 		 
@@ -54,7 +56,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.29:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -167,33 +169,46 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	  body {
-            padding-top : 50px;
-        }
-        
-      .btn.btn-default:hover, .btn.btn-default:active{
-		color: #FFF;
-		background: #08708A;
-		border-color: #08708A;
-	   }
+body {
+    padding-top : 50px;
+}
+      
+.btn.btn-default:hover, .btn.btn-default:active{
+	color: #FFF;
+	background: #08708A;
+	border-color: #08708A;
+  }
 
-		.btn.btn-default{
-			background: #f4f4f4;
-			color: #08708A;
-			border-color: #08708A;
-		}
-		.btn-outlined.btn-theme:hover,
-			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
-			}
+.btn.btn-default{
+	background: #f4f4f4;
+	color: #08708A;
+	border-color: #08708A;
+}
+.btn-outlined.btn-theme:hover,.btn-outlined.btn-theme:active {
+    color: #FFF;
+    background: #08708A;
+    border-color: #08708A;
+}
+	
+.btn-outlined.btn-theme {
+    background: #FFF;
+    color: #08708A;
+	border-color: #08708A;
+}
+h2 {
+	/* color : #dedede; */
+	color :#474747;
+    font-size: 6em;
+    /* padding: 0 0.5em 0.25em 0.5em; */
+    font-weight: 500;
+    font-family: "Pacifico", cursive;
+    text-transform: none;
+    letter-spacing: 10;
+    font-style: Pacifico;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+}
 			
-			.btn-outlined.btn-theme {
-			    background: #FFF;
-			    color: #08708A;
-				border-color: #08708A;
-			}
+
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -205,64 +220,44 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-   	
-   	<!--  Carousel Start /////////////////////////////////////-->
-	<div class="container">
-		<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" >
-			
-			<!-- Carousel items -->
-			<div class="carousel-inner carousel-zoom">
-				<div class="active item">
-					<img class="img-responsive"
-						src="https://images.unsplash.com/photo-1419064642531-e575728395f2?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
-					<div class="carousel-caption" style="top:0;">
-					<h2>TwiiChat</h2>
-					</div>
-					<div class="carousel-caption">
-						<!-- FORM -->
-		<form role="form" >
-			<div class="row centered-form" >
-				 <div class="mainbox col-md-12" >
-					<div class="panel" style="background: rgba(255, 255, 255, 0.3);">
-			 			<div class="panel-body" >
-				    			<div class="row">
-				    				<div class="col-md-2" >
-									<div class="form-group">
-									    <select class="form-control" id="searchCondition" name="searchCondition" >
-					                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
-					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
-					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
-										</select>
-				  					</div>
-			  					</div>
-			  					
-				  				<div class="col-md-10">
-								  <div class="form-group">
-								    <label class="sr-only" for="searchKeyword">검색어</label>
-								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
-								  	</div>
-								  </div>
-								 
-					    			</div>
-					    			<div class="row">
-					    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
-					    				<input type="hidden" id="currentPage" name="currentPage" value=""/>
-					    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
-					    			</div>
-					    	</div>
-			    		</div>
-					</div>
-				</div>
-			</div>
+
+	<div class="container" style="background: url('/resources/images/room/bg-masthead.jpg') no-repeat center center; background-size:cover;height:600px; width:100%;">
 		
-		</form>
-						<!-- FORM -->
-					</div>
-				</div>
-			</div>
-			
+		<h2 class="text-center" style="color:#FFFFFF; margin-top:5%;"><strong>TwiiChat</strong></h2>
+		<!-- FORM -->
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:250px;">
+			<form role="form" style="padding:10px;">
+				
+	    			<div class="row">
+	    				<div class="col-xs-3" >
+						<div class="form-group">
+						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;">
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
+		                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
+		                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
+							</select>
+	  					</div>
+	 					</div>
+	 					
+	  				<div class="col-xs-9">
+					  <div class="form-group">
+					    <label class="sr-only" for="searchKeyword" >검색어</label>
+					    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+					    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+					  	</div>
+					  </div>
+					 
+		    			</div><!-- End row -->
+		    			<div class="row"  >
+		    				<div class="col-xs-8 col-xs-offset-4" >	
+		    					<input type="hidden" id="currentPage" name="currentPage" value=""/>
+		    				 	<button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
+		    				</div>	
+					</div><!-- END row -->
+			</form>
+			<!-- FORM -->
 		</div>
+						
 	</div>
 	<!--  Carousel End /////////////////////////////////////-->
 	

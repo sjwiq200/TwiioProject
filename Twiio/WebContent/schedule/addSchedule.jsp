@@ -25,6 +25,8 @@
 <script type = "text/javascript" async defer
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initialize&sensor=true">
 </script>
+
+
 <script type = "text/javascript">
 
 
@@ -266,8 +268,8 @@
 				    							}
 				    						}
 				    					}		
-				    				)//end ajax	
-							}
+				    				)//end ajax
+							}//end if
 							
 						})//end swal
 					

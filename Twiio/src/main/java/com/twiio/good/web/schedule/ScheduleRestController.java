@@ -7,6 +7,13 @@ import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,6 +64,21 @@ public class ScheduleRestController {
 	@RequestMapping("/json/addSchedule/")
 	public boolean addSchedule(@RequestBody Schedule schedule) throws Exception {
 		System.out.println("/schedule/json/addSchedule : POST");
+		
+		HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost("http://192.168.0.33:8282/v1/requestFCM");
+        httpPost.setHeader("Accept", "application/json");
+        httpPost.setHeader("Content-Type", "application/json");
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String jsonValue = objectMapper.writeValueAsString(schedule);
+        HttpEntity httpEntity = new StringEntity(jsonValue,"utf-8");
+
+        httpPost.setEntity(httpEntity);
+        httpClient.execute(httpPost);
+        
+		
 		
 		String roomKey = schedule.getRoomKey();
 		String userNoString = "";
