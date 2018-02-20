@@ -388,7 +388,19 @@ div.caption{
 			fncGetUserList('${resultPage.currentPage }', 'low','${search.prodSearchType}');
 		});
 
-		$("li").bind("click", function() {
+		/* $("li").on("click", function() {
+			//alert("???");
+			//function(){
+			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
+			//}
+			//alert("dfdfsdf");
+			var productNo = $(this).html().split("value=\"")[1].split("\"")[0];
+			//alert(productNo);
+			self.location = "/product/getProduct?productNo=" + productNo;
+		}); */
+		
+		$(document).on("click","li", function() {
+			//alert("???");
 			//function(){
 			//alert($(this).html().split("value=\"")[1].split("\"")[0]);
 			//}
@@ -453,16 +465,80 @@ div.caption{
 				<div class="active item">
 					<img class="img-responsive"
 						src="https://images.unsplash.com/photo-1419064642531-e575728395f2?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
+						<div class="carousel-caption" style="top:0;">
+						<h2>DailyTour</h2>
+						</div>
 					<div class="carousel-caption">
-						<h2>Title</h2>
-						<p>Description</p>
+						<!-- <h2>DailyTour</h2> -->
+						<!-- <p>Description</p> -->
+						
+				<form name="detailForm">
+				<div class="row centered-form" >	
+				 <div class="mainbox col-md-12" >	
+				 <div class="panel" style="background: rgba(255, 255, 255, 0.3);">	
+				 <div class="panel-body" >	
+				 <div class="row">
+				 <div class="col-md-3" >
+					<div class="form-group">
+						<select class="form-control" name="searchCondition"
+							id="searchCondition">
+							<option value="0"
+								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>국가</option>
+							<option value="1"
+								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>도시</option>
+							<option value="2"
+								${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>투어명</option>
+							<option value="3"
+								${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>호스트</option>
+
+						</select>
+						</div>
+					</div>
+					
+					<div class="col-md-9">
+					<div class="form-group">
+						<label class="sr-only" for="searchKeyword">검색어</label> <input
+							type="text" class="form-control" id="searchKeyword"
+							name="searchKeyword" placeholder="검색어"
+							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+					</div>
+					</div>
+					
+					</div>
+
+					<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">
+					<button type="button" class="btn btn-default">검색</button>
+
+					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
+					<input type="hidden" id="currentPage" name="currentPage" value="" />
+					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
+					<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
+					<p>
+						<font name="high">가격높은순</font>
+						<font name="low">가격낮은순</font>
+						<!-- <font color="blue" name="star">별점순</font>
+						<font color="blue" name="view">조회순</font> -->
+					</p>
+					<p></p>
+					
+					</div>
+					</div>
+					
+					</div>
+					</div>
+					</div>
+					</div>
+				</form>
+
+			
 					</div>
 				</div>
-				<div class="item">
+				<!-- <div class="item">
 					<img class="img-responsive"
 						src="https://images.unsplash.com/photo-1445280471656-618bf9abcfe0?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
 					<div class="carousel-caption">
-						<h2>Title</h2>
+						<h2>DailyTour</h2>
 						<p>Description</p>
 					</div>
 				</div>
@@ -470,10 +546,10 @@ div.caption{
 					<img class="img-responsive"
 						src="https://images.unsplash.com/photo-1445462657202-a0893228a1e1?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
 					<div class="carousel-caption">
-						<h2>Title</h2>
+						<h2>DailyTour</h2>
 						<p>Description</p>
 					</div>
-				</div>
+				</div> -->
 			</div>
 			<!-- Carousel nav -->
 			<a class="carousel-control left" href="#carousel" data-slide="prev">‹</a>
@@ -512,7 +588,7 @@ div.caption{
 				<p class="text-primary">전체 ${totalCount } 건수</p>
 			</div>
 
-			<div class="col-md-6 text-right">
+			<%-- <div class="col-md-6 text-right">
 				<form class="form-inline" name="detailForm">				
 					<div class="form-group">
 						<select class="form-control" name="searchCondition"
@@ -551,7 +627,7 @@ div.caption{
 					<p></p>
 				</form>
 
-			</div>
+			</div> --%>
 
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -606,7 +682,7 @@ div.caption{
 	<!--  Floating Button <START> -->
 	<c:if test="${user.userType==2}">
 		<div id="container-floating">
-			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="addProduct" title="addProduct">
+			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="addProduct" title="투어 등록">
 				<!-- <p class="letter" id="addProduct"><img src="/resources/images/productIcons/edit.png" style="width: 45x; height: 45px;"></p> -->
 				<p class="letter" id="addProduct">+</p>
 			</div>

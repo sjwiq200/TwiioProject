@@ -200,13 +200,17 @@
 	$(function() {
 		
 		 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
-			 if(${empty user}){
-				 alert("로그인 후 이용해 주세요");
+			 if(${empty user}){				 
+				 swal("로그인 후 이용해 주세요",{
+					  icon: "warning",
+					});
 				 return
 			 }
 			 
-			if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){
-				alert("날짜와 갯수를 선택해주세요 :: ");	
+			if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){				
+				 swal("날짜와 갯수를 선택해주세요 :: ",{
+					  icon: "warning",
+					});
 				return
 			}
 			
@@ -279,8 +283,10 @@
 		});
 		 
 		 $("select[name='count']").on("click",function(){
-			if($( "#tripDate" ).val()==0){
-				alert("날짜를 선택해주세요 :: ");
+			if($( "#tripDate" ).val()==0){				
+				swal("날짜를 선택해주세요 :: ",{
+					  icon: "warning",
+					});
 			} 
 		 });
 	});
@@ -310,23 +316,53 @@
 						}),
 						success : function(JSONData) {
 							var displayValue='';
-							//alert(JSONData.length);
-							for(var i=0; i<JSONData.list.length;i++){
+							
+							for(var i=0;i<JSONData.list.length;i++){
+								var tool="";
+								if(${empty user.userId}){
+									tool='';
+								}else{
+									tool='<div class="btn-group pull-right">'+
+									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+									'</button>'+
+									'<ul class="dropdown-menu slidedown">'+
+									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+									'</ul>'+
+								   '</div>';	
+								}
+								
+							//alert(JSONData.length);							
 							
 							if(JSONData.list[i]!=1){
-							displayValue += '<div class="row2">'+
-												'<div class="col-md-12 ">'+
-												JSONData.list[i].userName+
-				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
-				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-				    						   JSONData.list[i].replyRegDate+
-				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-											   '<hr sytle="border-style:dotted">'+
-							  				   '</div></div>';
+								 displayValue += '<div class="row2">'+
+												 '<input type="hidden" name="userReplyNo"	 value="'+JSONData.list[i].userNo+'"/>'+
+												 '<input type="hidden" name="userName" 	 value="'+JSONData.list[i].userName+'"/>'+
+												 '<input type="hidden" name="replyNo" 	 value="'+JSONData.list[i].replyNo+'"/>'+
+												 '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'"/>'+		   
+												   
+													'<div class="col-sm-2 col-sm-offset-1"  style="padding-top: 10px;">'+
+													'<strong>'+JSONData.list[i].userName+'</strong>'+
+					    						   '</div>'+
+					    						   tool+
+					    						   '</div>'+
+					    						   '<div class ="row" name="upcontent" style="padding-top: 10px;">'+
+										    		'<div class="col-sm-3">'+
+										    		(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+										    		'</div>'+
+						    						'<div class="pull-right" style="padding-right: 100px;">'+
+						    						JSONData.list[i].replyRegDate+
+					    						   '</div></div>'+
+					    						   
+					    						   '<div class ="row">'+
+										    		'<div class="col-xs-12">'+
+													'<hr sytle="border-style:dotted">'+
+													'</div>'+
+													'</div>';
 							}
 							}
 							
@@ -353,7 +389,7 @@
 	
 	$(function() {
 		 $("#write").on("click" , function() {
-			
+			//alert("?????");
 			if(${user.userId==null}){
 				 alert('로그인후 사용하여주세요');	 
 			 }
@@ -380,21 +416,50 @@
 							var displayValue='';
 							
 							for(var i=0;i<JSONData.list.length;i++){
-							 displayValue += 
-											   '<div class="row2">'+
-												'<div class="col-md-12">'+
-												JSONData.list[i].userName+
+								var tool="";
+								if(${empty user.userId}){
+									tool='';
+								}else{
+									tool='<div class="btn-group pull-right">'+
+									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+									'</button>'+
+									'<ul class="dropdown-menu slidedown">'+
+									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+									'</ul>'+
+								   '</div>';	
+								}
+								
+							 displayValue += '<div class="row2">'+
+											 '<input type="hidden" name="userReplyNo"	 value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="userName" 	 value="'+JSONData.list[i].userName+'"/>'+
+											 '<input type="hidden" name="replyNo" 	 value="'+JSONData.list[i].replyNo+'"/>'+
+											 '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'"/>'+		   
+											   
+												'<div class="col-sm-2 col-sm-offset-1"  style="padding-top: 10px;">'+
+												'<strong>'+JSONData.list[i].userName+'</strong>'+
 				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+				    						   tool+
 				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-				    						   JSONData.list[i].replyRegDate+
-				    						   '</div>'+
-				    						   '<div class="col-md-12">'+
-											   '<hr sytle="border-style:dotted">'+
-							  				   '</div></div>';
+				    						   '<div class ="row" name="upcontent" style="padding-top: 10px;">'+
+									    		'<div class="col-sm-3">'+
+									    		(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+									    		'</div>'+
+					    						'<div class="pull-right" style="padding-right: 100px;">'+
+					    						JSONData.list[i].replyRegDate+
+				    						   '</div></div>'+
+				    						   
+				    						   '<div class ="row">'+
+									    		'<div class="col-xs-12">'+
+												'<hr sytle="border-style:dotted">'+
+												'</div>'+
+												'</div>';
 							}
+							//alert(displayValue);
 							var totalcount=
 								'<div class="col-md-2">'+
 								'<strong>댓 글 목 록</strong>'+		
@@ -572,9 +637,10 @@ $(document).on('click','.row2 a[name=addmessage]', function() {
 	 var msguserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
 	 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 	 var inmsg =
-		 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
-		'<input type="text" class="form-control" id="msgno" row="6" col="50"  value="'+msguserno+'" readonly/>'+
-		'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
+		 '<input type="hidden" class="form-control" id="msguserno" row="6" col="50" value="'+msguserno+'"/>'+
+			'<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+			'<input type="text" class="form-control" id="msgusername" row="6" col="50"  value="'+msgusername+'" readonly/>'+
+			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 	 
 	 if(${empty user.userId}){
 		 alert('로그인후 사용하여주세요');	 
@@ -785,7 +851,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	    <div class="container">
 		<hr/>
 		<div class="col-sm-12">		
-		<div class="col-sm-4 col-sm-offset-2">
+		<div class="col-sm-6 ">
 				
 		<div class="row">
 	  		<div class="col-xs-4 "><strong>상품유형</strong></div>
@@ -946,7 +1012,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		<div class="col-sm-12">
 		<hr/>
 		<div class="row">
-	  		<div class="col-sm-4 col-sm-offset-2"><strong>상품상세정보</strong></div>
+	  		<div class="col-sm-4 "><strong>상품상세정보</strong></div>
 			<div class="col-sm-4">${product.description}</div>
 			<!-- <a href="#" type="button" class="top">Top</a> -->
 		
@@ -1084,15 +1150,15 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 					                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
 					                            </button>
 					                            <ul class="dropdown-menu slidedown">
-					                           		<c:if test="${user.userNo != reply.userNo}">
+					                           		<%-- <c:if test="${user.userNo != reply.userNo}"> --%>
 					                            	<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
 					                                <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
 					                                <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
-					                                </c:if>
-					                                <c:if test="${user.userNo == reply.userNo}">
+					                                <%-- </c:if> --%>
+					                                <%-- <c:if test="${user.userNo == reply.userNo}"> --%>
 					                                <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
 					                                <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
-					                                </c:if>
+					                                <%-- </c:if> --%>
 					                            </ul>
 					             </div>				
 								</c:if>
@@ -1104,13 +1170,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 					    		<div class="pull-right" style="padding-right: 100px;">
 					    			${reply.replyRegDate}
 					    		</div>
-					    		</div>
-					    		<%-- <div class ="row" name="upregdate">
-					    		<div class="col-sm-3 col-sm-offset-2">
-					    			${reply.replyRegDate}
-					    		</div>
-					    		</div> --%>
-					    		
+					    		</div>					    		
 					    
 					    		<div class ="row">
 					    		<div class="col-xs-12">
@@ -1131,8 +1191,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
       </div>
       </div>
       
-      <div class="modal fade" id="modalreport"  role="dialog">
-		<div class="modal-dialog modal-lg">
+     <div class="modal fade" id="modalreport"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -1140,7 +1200,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 				<h4 class="modal-title">
 					<Strong>REPORT</Strong>
 				</h4>
-				<h7 class="modal-title">TWIIO</h7>
+				<h7 class="modal-title"></h7>
 			</div>
 			<div class="modal-body">
 			
@@ -1156,8 +1216,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		
 		
-		<div class="modal fade" id="modalfriend"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="modalfriend"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -1177,8 +1237,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="modalmessage"  role="dialog">
-			<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="modalmessage"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 			<div class="modal-header">
@@ -1199,13 +1259,13 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="deletemodalreply"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="deletemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
+			 	<h3 class="modal-title">
 					<Strong>댓글삭제</Strong>
 				</h3>
 			</div>
@@ -1220,8 +1280,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="updatemodalreply"  role="dialog">
-			<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="updatemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 			<div class="modal-header">

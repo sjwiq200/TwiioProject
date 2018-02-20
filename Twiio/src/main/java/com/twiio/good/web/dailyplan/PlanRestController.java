@@ -1,6 +1,12 @@
 package com.twiio.good.web.dailyplan;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,6 +17,9 @@ import java.util.Vector;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.simple.JSONObject;
+import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.ui.Model;
@@ -26,6 +35,7 @@ import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
 import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.MainPlan;
+import com.twiio.good.service.domain.Papago;
 import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.information.InformationService;
@@ -88,36 +98,63 @@ public class PlanRestController {
 	}	
 
 
-	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
-	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
-		
-		System.out.println("RestController : json/getDailyPlanFromMain <START>");
-		System.out.println("mainPlanNo : " + mainPlanNo);
-		
+//	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
+//	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
+//		
+//		System.out.println("RestController : json/getDailyPlanFromMain <START>");
+//		System.out.println("mainPlanNo : " + mainPlanNo);
+//		
+//		Map<String, Object> map = new HashMap<String, Object>();
+//		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
+//		DailyPlan dailyPlan = listMain.get(0);
+//		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
+//		int dailyPlanNo = dailyPlan.getDailyPlanNo();
+//
+//		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+//			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+//			List<PlanContent> list = new ArrayList<PlanContent>();
+//			for(PlanContent listPlanContent : listBefore) {
+//				listPlanContent.setDailyPlan(dailyPlan);
+//				list.add(listPlanContent);
+//			}
+//			map.put("list", list);
+//			System.out.println("##debug : " + list);
+//		}
+//		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+//		
+//		map.put("dailyPlan", dailyPlan);		
+//		
+//		System.out.println("RestController : json/getDailyPlanFromMain <END>");
+//		
+//		return map;
+//		
+//	}
+//	
+	@RequestMapping(value = "json/getDailyPlan/{dailyPlanNo}", method = RequestMethod.GET)
+	public Map<String, Object> getDailyPlan(@PathVariable int dailyPlanNo) throws Exception {
+
+		System.out.println("Controller : getDailyPlan <START>");
+
 		Map<String, Object> map = new HashMap<String, Object>();
-		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
-		DailyPlan dailyPlan = listMain.get(0);
-		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
-		int dailyPlanNo = dailyPlan.getDailyPlanNo();
 
 		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
 			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
 			List<PlanContent> list = new ArrayList<PlanContent>();
 			for(PlanContent listPlanContent : listBefore) {
-				listPlanContent.setDailyPlan(dailyPlan);
+				listPlanContent.setDailyPlan(dailyPlanService.getDailyPlan(dailyPlanNo));
 				list.add(listPlanContent);
 			}
 			map.put("list", list);
 			System.out.println("##debug : " + list);
 		}
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
 		
 		map.put("dailyPlan", dailyPlan);		
 		
-		System.out.println("RestController : json/getDailyPlanFromMain <END>");
+		System.out.println("RestController : json/getDailyPlan <END>");
 		
 		return map;
-		
 	}
 
 	
@@ -137,7 +174,7 @@ public class PlanRestController {
 		String[] city = dailyPlan.getDailyCity().split(",");
 		String city02="";
 		
-		if(dailyPlanDB.getDailyCity()==null) {
+		//if(dailyPlanDB.getDailyCity()==null) {
 			for(int i =0; i<city.length; i++) {
 				if(i==city.length-1) {
 					city02 += city[i].trim();
@@ -146,8 +183,19 @@ public class PlanRestController {
 				}
 			}
 			dailyPlanDB.setDailyCity(city02);
-		} 
+		//}lse{
 		dailyPlanService.updateDailyPlan(dailyPlanDB);
+		
+		//////////////////dailyPlan City Information for MainPlanDisplay<START>///////////////////
+		DailyPlan dailyPlanFinal = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
+		MainPlan mainPlan = mainPlanService.getMainPlan(dailyPlanFinal.getMainPlan().getMainPlanNo());
+		if(mainPlan.getCity()!=null) {
+		mainPlan.setCity(mainPlan.getCity()+","+city02);
+		} else {
+			mainPlan.setCity(city02);
+		}
+		mainPlanService.updateMainPlan(mainPlan);
+		//////////////////dailyPlan City Information for MainPlanDisplay<END>///////////////////
 		
 		System.out.println("RestController : selectCity <END>");
 		
@@ -328,6 +376,7 @@ public class PlanRestController {
 		
 	}
 	
+	/////saving currency information to my plan///////////
 	@RequestMapping(value = "json/addTextContent")
 	public void addTextContent(
 			@RequestParam int dailyPlanNo, 
@@ -335,16 +384,38 @@ public class PlanRestController {
 			@RequestParam String compareCountryEnc,
 			@RequestParam String inputPrice,
 			@RequestParam String resultCurrency
-			)
-					throws Exception {
+			)throws Exception {
 		
 		System.out.println("RestController : addTextContent <START>");
 		
 		standardCountryEnc = URLDecoder.decode(standardCountryEnc,"UTF-8");
 		compareCountryEnc = URLDecoder.decode(compareCountryEnc,"UTF-8");
 		
-		String contentText = "<p>CURRENCY</p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
+		String contentText = "<img src=\"/resources/images/money-bag.png\" width=\"50px\"/><p><strong>환율 정보</strong></p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
 				+"<p>"+resultCurrency+"  "+compareCountryEnc+"</p>";
+		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
+		PlanContent planContent = new PlanContent();
+		planContent.setDailyPlan(dailyPlanService.getDailyPlan(dailyPlanNo));
+		planContent.setContentText(contentText);
+		planContent.setContentType(1);
+		dailyPlanService.addPlanContent(planContent);
+		
+		System.out.println("RestController : addTextContent <END>");
+		
+	}
+	
+	/////saving translation information to my plan///////////
+	@RequestMapping(value = "json/addTextContentPapago")
+	public void addTextContentPapago(@RequestBody Papago papago)throws Exception {
+		
+		System.out.println("RestController : addTextContentPapago <START>");
+		int dailyPlanNo = papago.getDailyPlanNo();
+		String contentText
+		= "<img src=\"/resources/images/translate.png\" width=\"50px\"/>"
+		+"<p><strong>번역 정보</strong></p>"
+		+"<p>"+papago.getPapagoMyCountry() + " : " + papago.getTranslate() + "</p>"
+		+"<p>"+papago.getPapagoCompareCountry() + " : " + papago.getCompare() + "</p>";
+		
 		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
 		PlanContent planContent = new PlanContent();
 		planContent.setDailyPlan(dailyPlanService.getDailyPlan(dailyPlanNo));
@@ -353,9 +424,10 @@ public class PlanRestController {
 		
 		dailyPlanService.addPlanContent(planContent);
 		
-		System.out.println("RestController : addTextContent <END>");
+		System.out.println("RestController : addTextContentPapago <END>");
 		
 	}
+	
 	
 	
 	
@@ -448,7 +520,7 @@ public class PlanRestController {
 		}
 		
 		for(String detailResultFinal : detailResult) {
-			if((detailResultFinal.indexOf("이동") != -1)) {
+			if((detailResultFinal.indexOf("占싱듸옙") != -1)) {
 //				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
 			}
 			detailResultEnd.add(detailResultFinal);
@@ -523,5 +595,59 @@ public class PlanRestController {
 	return map;
 	
 	}
+	
+	@RequestMapping(value="/json/papagoTranslate")
+	public Papago papagoTranslate(@RequestBody Papago papago) {
+		System.out.println("papago/json/papagoTranslate");
+		String clientId = "bYH9noOTsKVGcSDuoNRk";//애플리케이션 클라이언트 아이디값";
+        String clientSecret = "nMDSi1NS_h";//애플리케이션 클라이언트 시크릿값";
+        
+        System.out.println(papago.getTranslate());
+        System.out.println("####"+papago.getPapagoCompareCountry());
+        System.out.println("####"+papago.getPapagoMyCountry());
+        //-----------------
+        JSONObject jsonobj = new JSONObject();
+
+        try {
+            
+        	String text = URLEncoder.encode(papago.getTranslate(), "UTF-8");
+            String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
+            URL url = new URL(apiURL);
+            HttpURLConnection con = (HttpURLConnection)url.openConnection();
+            con.setRequestMethod("POST");
+            con.setRequestProperty("X-Naver-Client-Id", clientId);
+            con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
+            // post request
+            String postParams = "source="+papago.getPapagoMyCountry()+"&target="+papago.getPapagoCompareCountry()+"&text=" + text;
+            con.setDoOutput(true);
+            DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+            wr.writeBytes(postParams);
+            wr.flush();
+            wr.close();
+            int responseCode = con.getResponseCode();
+            BufferedReader br;
+            if(responseCode==200) { // 정상 호출
+                br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+                jsonobj = (JSONObject)JSONValue.parse(br);
+                System.out.println("jsonobj==>"+jsonobj);
+                ObjectMapper objectMapper = new ObjectMapper();
+                papago = objectMapper.readValue(jsonobj.toString(), Papago.class);
+                System.out.println(papago);
+                System.out.println("결과값만 추출 : "+papago.getMessage().getResult().getTranslatedText());
+                
+            } else {  // 에러 발생
+                br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+            }
+            
+
+            br.close();
+
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+         
+        return papago;
+	}
+
 	
 }

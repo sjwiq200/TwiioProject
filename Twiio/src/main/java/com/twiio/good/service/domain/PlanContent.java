@@ -30,6 +30,9 @@ public class PlanContent {
 	private String contentImage;
 	private MultipartFile uploadFile;
 	private int contentType;
+	
+	private String resultForMobile;
+	
 
 	public int getContentNo() {
 		return contentNo;
@@ -198,10 +201,19 @@ public class PlanContent {
 	public void setMapType(String mapType) {
 		this.mapType = mapType;
 	}
+	
+	//Add for mobile information 
+	public String getResultForMobile() {
+		return resultForMobile;
+	}
+
+	public void setResultForMobile(String resultForMobile) {
+		this.resultForMobile = resultForMobile;
+	}
 
 	@Override
 	public String toString() {
-		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan + ", scrap=" + scrap + ", route="
+		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan.getDailyPlanNo() + ", scrap=" + scrap + ", route="
 				+ route + ", mapUrl=" + mapUrl + ", mapAddress=" + mapAddress + ", mapPhone=" + mapPhone
 				+ ", mapWebsite=" + mapWebsite + ", mapName=" + mapName + ", mapImage=" + mapImage + ", mapType="
 				+ mapType + ", departureLocation=" + departureLocation + ", arrivalLocation=" + arrivalLocation
@@ -209,6 +221,7 @@ public class PlanContent {
 				+ routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText + ", contentImage="
 				+ contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType + "]";
 	}
+
 
 	
 }

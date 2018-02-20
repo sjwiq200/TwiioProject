@@ -215,7 +215,31 @@ $( function() {
 	});
   } );
   
-  ///////////////////summernote///////////////////////////////////
+  ///////////////////summernote///////////////////////////////////['insert', ['table', 'picture', 'video', 'link']],
+  function sendFile(file, editor) {              
+    // 파일 전송을 위한 폼생성
+		data = new FormData();
+	    data.append("file", file);
+	    //alert('파일업로드 들어오니??');
+	    $.ajax({ // ajax를 통해 파일 업로드 처리
+	        data : data,
+	        dataType : "json",
+	        type : "POST",
+	        url : "/product/json/uploadProContentImages",
+	        cache : false,
+	        contentType : false,
+	        processData : false,
+	        success : function(data) { // 처리가 성공할 경우
+            // 에디터에 이미지 출력
+     
+	        	$(editor).summernote('editor.insertImage',data.relativeUrl);
+	        },
+	        error : function() {
+			alert("파일 업로드에 실패했습니다.")
+		}
+	    });
+	}
+  
    $(function() {
         $('#summernote').summernote({
         	
@@ -227,7 +251,7 @@ $( function() {
      		   ['color', ['color']],
      		   ['para', ['ul', 'ol', 'paragraph']],
      		   ['height', ['height']],
-     		   ['insert', ['table', 'picture', 'video', 'link']],
+     		   ['insert', ['table', 'picture']],
      		   ['misc', ['undo', 'redo', 'codeview', 'help']]
      		 ],       	
         	lang: 'ko-KR', // default: 'en-US'
@@ -235,10 +259,17 @@ $( function() {
         	minHeight: null,             // set minimum height of editor
         	maxHeight: null,             // set maximum height of editor
         	focus: false,                  // set focus to editable area after initializing summernote
-        	placeholder: '투어 내용을 입력해 주세요~'
+        	placeholder: '투어 내용을 입력해 주세요~',
         	//backColor:  'red'
-        });
-       
+        	callbacks: {
+        		onImageUpload: function(files, editor, welEditable) {
+    		    	for(i=0;i<files.length;i++){
+    		    		sendFile(files[i], this);
+    		    	}
+        		}
+        	} 
+        });       
+        
         
        //  $("button[name=save]").on("click",function(){
        // 	$("textarea").val($("#summernote").summernote("code"));
