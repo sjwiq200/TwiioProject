@@ -56,7 +56,7 @@ button {
 button::before,
 button::after {
   background: #D73A31;
-  content: '';
+  color:#ffffff;
   position: absolute;
   z-index: -1;
 }
@@ -74,7 +74,6 @@ button::after {
 
 <div class="container">
   <button class="btn-1">Button 1</button>
-  <button class="btn-2">Button 1</button>
 </div>
 
 

@@ -53,10 +53,9 @@ public class MainPlanController {
 	///Method
 	@RequestMapping(value = "addMainPlan")
 	   public String addMainPlan(@ModelAttribute("mainPlan") MainPlan mainPlan,Model model, HttpSession session) throws Exception {
-
-		System.out.println("-----Controller : addMainPlan <START>");
 		
-		String cityResult = "no";
+		System.out.println("-----Controller : addMainPlan <START>");
+
 		String countryResult="";
 		
 //		for(int i = 0 ; i < mainPlan.getCityList().length;i++) {
@@ -66,7 +65,6 @@ public class MainPlanController {
 //				cityResult += mainPlan.getCityList()[i] + ",";
 //			}
 //		}
-		System.out.println("mainPlan :: "+mainPlan);
 				
 		for(int i = 0 ; i < mainPlan.getCountryList().length;i++) {
 			if(i== mainPlan.getCountryList().length-1) {
@@ -77,7 +75,6 @@ public class MainPlanController {
 		}
 		
 		User user = (User) session.getAttribute("user");
-		mainPlan.setCity(cityResult);
 		mainPlan.setUser(user);
 		mainPlan.setCountry(countryResult);
 		System.out.println("getOriginalFilename :: "+mainPlan.getFile().getOriginalFilename());
@@ -113,8 +110,7 @@ public class MainPlanController {
 	           Date dailyDate = mainPlan.getDepartureDate();
 	           
 	           for(int i = 0 ; i <diffDays+1 ; i++) {
-	              
-	              dailyPlan.setDailyCity(cityResult);
+
 	             //dailyPlan.setDailyCountry(mainPlan.getCountry());
 	             dailyPlan.setDay(i+1);
 	             dailyPlan.setDailyDate(dailyDate);
@@ -135,7 +131,6 @@ public class MainPlanController {
 	              dailyDate=Date.valueOf(dailyDateFormat);
 	           }
 	      } else {
-	         dailyPlan.setDailyCity(cityResult);
 	           //dailyPlan.setDailyCountry(mainPlan.getCountry());
 	           dailyPlan.setDay(1);
 	           dailyPlan.setDailyDate(mainPlan.getArrivalDate());
