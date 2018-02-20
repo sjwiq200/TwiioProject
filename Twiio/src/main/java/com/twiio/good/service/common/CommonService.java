@@ -23,6 +23,8 @@ public interface CommonService
   public Map<String,Object> listFriend(Search search, int userNo) throws Exception;
   
   public List<Friend> listFriendOnly(int userNo) throws Exception;
+  
+  public Map<String,Object> listRefund(Search search) throws Exception;
 
   public void deleteFriend(int no) throws Exception;
 

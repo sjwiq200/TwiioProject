@@ -29,11 +29,12 @@
 		<result property="evalHost" 				column="eval_host" 				jdbcType="NUMERIC" />
 		<result property="userName" 				column="user_name" 				jdbcType="VARCHAR" />
 		<result property="hostName" 				column="host_name" 				jdbcType="VARCHAR" />
+		<result property="evalReview" 				column="eval_review" 			jdbcType="VARCHAR" />
 		<result property="tranPro.thumbnail" 		column="thumbnail" 				jdbcType="VARCHAR" />
 		<result property="tranPro.hostImage" 		column="profile_image" 			jdbcType="VARCHAR" />
 		<result property="tranPro.country" 			column="country" 				jdbcType="VARCHAR" />
 		<result property="tranPro.city" 			column="city" 					jdbcType="VARCHAR" />
-		<result property="tranPro.productName" 		column="product_title" 			jdbcType="VARCHAR" />			
+		<result property="tranPro.productName" 		column="product_name" 			jdbcType="VARCHAR" />			
 	</resultMap>
 	
 	<resultMap id="refundSelectMap" type="refund">
@@ -46,7 +47,7 @@
 		<result property="refundBank" 				column="refund_bank" 			jdbcType="VARCHAR" />
 		<result property="userNo" 					column="user_no" 				jdbcType="NUMERIC" />
 		<result property="hostNo" 					column="host_no" 				jdbcType="NUMERIC" />	
-		<result property="productName" 				column="product_name" 			jdbcType="VARCHAR" />
+		<result property="userName" 				column="user_name" 			jdbcType="VARCHAR" />
 		<!-- <result property="refundCode" 				column="_" 			jdbcType="CHAR" />		 -->
 	</resultMap>
 	
@@ -94,7 +95,20 @@
 	 <update	id="updateTransactionCode"	parameterType="transaction" >
 	   	UPDATE transaction
 	   	<set>	   		
-			refund_code	= #{refundCode}
+		refund_code	= #{refundCode}
+	   	</set>
+	   	WHERE tran_no = #{tranNo}
+	 </update>
+	 
+	 <update	id="updateTransactionEval"	parameterType="transaction" >
+	   	UPDATE 
+	   	transaction 
+	   	<set>
+	   	host_star_eval = #{starEvalHost}, 
+	   	host_review = #{reviewHost},
+	   	product_star_eval = #{starEvalProduct}, 			 		
+		product_review = #{reviewProduct},
+		eval_review = #{evalReview}  				   		
 	   	</set>
 	   	WHERE tran_no = #{tranNo}
 	 </update>
@@ -104,16 +118,34 @@
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT 
-									  	tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price, refund_code
-									  	FROM transaction
-									  	<where>
+									  	t.tran_no as tran_no, 
+									  	t.tran_date as tran_date, 
+									  	t.trip_date as trip_date, 
+									  	t.requirement as requirement, 
+									  	t.pay_type as pay_type, 
+									  	t.product_no as product_no,
+									  	t.host_no as host_no, 
+									  	t.tran_count as tran_count, 
+									  	t.product_price as product_price, 
+									  	t.user_no as user_no, 
+									  	t.tran_price as tran_price, 
+									  	t.refund_code as refund_code,
+									  	t.product_star_eval as product_star_eval,
+									  	t.eval_review as eval_review,
+									  	p.thumbnail as thumbnail,
+									  	p.product_title as product_name
+									  	FROM transaction t, product p
+									  	WHERE t.product_no = p.product_no
+									  	AND t.user_no= #{user.userNo}
+									  	<!-- <where>
 										  	<if test="user.userType == 1">
-							 					user_no= #{user.userNo}
+							 					
 							 				</if>
 							 				<if test="user.userType == 2">
 							 					host_no= #{user.userNo}
 							 				</if>
-						 				</where>								  	 
+						 				</where> -->
+						 				AND t.product_no = p.product_no								  	 
 									  	ORDER BY tran_date DESC
 									 ) inner_table
 						WHERE ROWNUM &lt;= #{search.endRowNum} )
@@ -131,7 +163,7 @@
 				WHERE ROWNUM <![CDATA[ <=]]> #{endRowNum} )
 		-->
 	
-	<insert 	id="addRefund"		parameterType="refund" >
+	<insert id="addRefund"	parameterType="refund" >
 	 	INSERT
 		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank,user_no) 
 		VALUES	 (	seq_REFUND_REFUND_NO.NEXTVAL , 
@@ -146,13 +178,14 @@
 	
 	<update id="updateRefund" parameterType="refund">
 		UPDATE refund 
-		SET 
-			refund_confirm_date=#{confirmDate} 
+		<set>
+		refund_confirm_date = SYSDATE
+		</set>
 		WHERE refund_no=#{refundNo}	
 	</update>
 	
 	<!-- SQL : SELECT LIST -->
-	<select  id="listRefund"  parameterType="map"	resultMap="refundSelectMap">
+	<select  id="listRefund"  parameterType="Search"	resultMap="refundSelectMap">
 		SELECT *
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.tran_no as tran_no,
@@ -162,16 +195,14 @@
 											   r.refund_price as refund_price,
 											   r.refund_account as refund_account,
 											   r.refund_bank as refund_bank,
-											   t.user_no as user_no,
-											   t.host_no as host_no
-									FROM refund r, transaction t
-									WHERE r.tran_no=t.tran_no
-									<if test="user.userType==1">AND user_no=#{user.userNo}</if>
-									<if test="user.userType==2">AND host_no=#{user.userNo}</if>									
+											   r.user_no as user_no,
+											   u.user_name as user_name
+									FROM refund r, users u
+									WHERE r.user_no=u.user_no							
 									ORDER BY refund_reg_date DESC
 									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
-		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
+						WHERE ROWNUM &lt;= #{endRowNum} )
+		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum}
 	 </select>
 	
 	<delete id="deleteRefund" parameterType="int">
@@ -305,7 +336,7 @@
 	 <select  id="getTotalCount"  parameterType="map"	 resultType="int">
 	  	SELECT COUNT(*)
 	  	FROM(	SELECT
-	  			<choose>
+	  			<!-- <choose>
 	  				<when test="user.userType == 3 or user.userType == 2">
 	  										   r.tran_no as tran_no,
 											   r.refund_no as refund_no,
@@ -318,20 +349,21 @@
 											   t.host_no as host_no
 									FROM refund r, transaction t																		
 					</when>
-	  				<otherwise>tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
+	  				<otherwise> -->
+	  					tran_no , tran_date , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, tran_price
 							FROM transaction
-					</otherwise>
-	  			</choose>	  			
+					<!-- </otherwise>
+	  			</choose>	 -->  			
 	  			<choose>												 
-				<when test="user.userType == 1">
+				<when test="user.userType==1 or user.userType==2">
 					WHERE user_no=#{user.userNo}
 					ORDER BY tran_date DESC
 				</when>
-				<when test="user.userType == 2">
+				<!-- <when test="user.userType == 2">
 					WHERE t.tran_no=r.tran_no(+)
-					AND host_no=#{user.userNo}
+					AND user_no=#{user.userNo}
 					ORDER BY refund_reg_date DESC
-				</when>
+				</when> -->
 				<otherwise>
 					<choose>
 					<when test="evalType == 'product'">
@@ -347,5 +379,17 @@
 				</otherwise>				
 				</choose>				
 			 ) countTable						
-	 </select> 
+	 </select>
+	 
+	 <select  id="getTransactionCount"  parameterType="map"	 resultType="int">
+	 SELECT COUNT(*)
+	 FROM(SELECT * from transaction where product_no = #{productNo} and trip_date = #{tripDate})
+	 countTable	 	
+	 </select>
+	 
+	 <select  id="getTotalCountRefund"  parameterType="Search"	 resultType="int">
+	 SELECT COUNT(*)
+	 FROM(SELECT * from refund)
+	 countTable	 	
+	 </select>
 </mapper>

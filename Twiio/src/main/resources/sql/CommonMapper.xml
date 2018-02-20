@@ -53,7 +53,7 @@
 	<!--SQL : INSERT  -->
 	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="report_no" keyProperty="report_no">
 		INSERT 
-		INTO REPORT 
+		INTO REPORT(report_no,user_no,report_content,report_title,report_reg_date,target_user_no,target_room_key,target_reply_no,target_community_no,user_name) 
 		VALUES (
 		seq_report_report_no.nextval,
 		#{userNo:NUMERIC},
@@ -174,7 +174,7 @@
 							   		REPLY_NO,
 							   		USER_NO,
 							   		REPLY_CONTENT,
-							   		REPLY_REG_DATE,
+							   		to_char(REPLY_REG_DATE,'yyyy-mm-dd hh24:mi:ss') as REPLY_REG_DATE,
 							   		PRODUCT_NO,
 							   		COMMUNITY_NO,
 							   		USER_NAME

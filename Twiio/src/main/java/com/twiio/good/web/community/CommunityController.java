@@ -1,5 +1,6 @@
 package com.twiio.good.web.community;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,9 @@ public class CommunityController {
 	@Qualifier("userServiceImpl")
 	private UserService usersService;
 	
+	@Value("#{commonProperties['communityFilePath']}")
+	String communityFilePath;
+	
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -81,6 +85,22 @@ public class CommunityController {
 		community.setUserName(user.getUserName());
 		community.setCommunityType(communityType);
 		communityService.addCommunity(community);
+		
+		if(!community.getFile().isEmpty()) {			
+			String thumbnail = community.getCommunityNo()+"="+community.getFile().getOriginalFilename();
+			
+			File file = new File(communityFilePath, thumbnail);
+			community.getFile().transferTo(file);
+			
+			community.setThumbnail(thumbnail);
+			System.out.println(community);
+			communityService.updateThumbnail(community);
+		}else {
+			System.out.println(community);
+			//communityService.addCommunity(community);
+		}
+		
+		
 		
 		System.out.println(community.getCommunityNo());
 		Community community2 = communityService.getCommunity(community.getCommunityNo());
@@ -144,10 +164,25 @@ public class CommunityController {
 							Model model
 							) throws Exception {
 		System.out.println("/community/updateCommunity : POST");
+		
+		if(!community.getFile().isEmpty()) {			
+			String thumbnail = community.getCommunityNo()+"="+community.getFile().getOriginalFilename();
+			
+			File file = new File(communityFilePath, thumbnail);
+			community.getFile().transferTo(file);
+			
+			community.setThumbnail(thumbnail);
+			System.out.println(community);
+			//communityService.updateThumbnail(community);
+		}else {
+			System.out.println(community);
+			community.setThumbnail("");
+			//communityService.addCommunity(community);
+		}
+		
 		communityService.updateCommunity(community);
 		community = communityService.getCommunity(community.getCommunityNo());
-		model.addAttribute("community",community);
-		  
+		model.addAttribute("community",community);  
 		return "redirect:/community/getCommunity?communityNo="+community.getCommunityNo();
 	}
 	

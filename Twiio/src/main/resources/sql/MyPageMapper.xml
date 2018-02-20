@@ -16,6 +16,8 @@
 		<result property="messageType"	 		column="message_type" 		jdbcType="VARCHAR"/>
 		<result property="messageTitle" 		column="message_title" 		jdbcType="VARCHAR"/>
 		<result property="productNo"	 		column="product_no" 		jdbcType="NUMERIC"/>
+		<result property="userName"	 			column="user_name" 			jdbcType="NUMERIC"/>
+		<result property="targetUserName"	 	column="target_user_name" 	jdbcType="NUMERIC"/>
 	</resultMap>
 		
 	<!--SQL : INSERT  -->
@@ -29,11 +31,13 @@
 		#{messageType:VARCHAR},
 		#{messageTitle:VARCHAR},
 		<if test="productNo == 0">
-		NULL
+		0
 		</if>
 		<if test="productNo != 0">
 		#{productNo:NUMERIC}
-		</if>
+		</if>,
+		#{userName:VARCHAR},
+		#{targetUserName:VARCHAR}
 		)
 	</insert>
 	
@@ -48,10 +52,12 @@
 							   TO_USER_NO,
 							   FROM_USER_NO,
 							   MESSAGE_CONTENT,
-							   to_char(message_reg_date,'yyyy-mm-dd hh24:mi:ss') MESSAGE_REG_DATE,
+							   to_char(message_reg_date,'yyyy-mm-dd hh24:mi:ss') as MESSAGE_REG_DATE,
 							   MESSAGE_TYPE,
 							   MESSAGE_TITLE,
-							   PRODUCT_NO
+							   PRODUCT_NO,
+							   USER_NAME,
+							   TARGET_USER_NAME
 							   FROM 
   							   MESSAGE
   							   WHERE
@@ -66,8 +72,8 @@
 	
 	<!-- SQL : SELECT ONE -->
 	
-	<select id="getMessage" parameterType="int" resultType="message">
-		SELECT * FROM PRODUCT WHERE MESSAGE_NO = #{messageNo}
+	<select id="getMessage" parameterType="int" resultMap="messageSelectMap">
+		SELECT * FROM MESSAGE WHERE MESSAGE_NO = #{messageNo}
 	</select>
 	
 

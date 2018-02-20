@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -102,6 +101,11 @@
       $('td:nth-child(5)').on('click',function(){
     		
     	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(5)').index(this)]).val();
+    	  var reportState = $($('input[name=reportState]')[$('td:nth-child(5)').index(this)]).val();
+    	  
+    	  if(reportState == 'Y'){
+    		  alert('신고처리완료');
+    	  }else{
     				$.ajax({
     	  			url : "/common/json/getReport",
     	  			method : "POST" ,
@@ -137,6 +141,7 @@
     	  	    			
     	  			 }
     	  		});
+    	      }
       	   });
      });
      
@@ -195,8 +200,8 @@
 				    	  	   	  					"reportNo":reportNo
 				    	  	   	  				}),
 		    	  	   	  		                success: function (JSONData) {
-		    	  	   	  		                	
-		    	  	   	  		                	if(JSONData==true){
+		    	  	   	  		                	alert(JSON.stringify(JSONData));		    	  	   	  		                	
+		    	  	   	  		                	if(JSONData.resign == '1'){
 		    	  	   	  		                		alert("신고 처리가 완료되었습니다.");
 		    	  	   	  		                	}else{
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
@@ -205,7 +210,8 @@
 		    	  	   	  		                	location.reload();
 		
 		    	  	   	  		                },error : function(request,status,error) {
-
+													alert('에러다.');
+													location.reload();
 		    		    	  	   	  	    	}
 		    	  	   	  		            });
 		    	  	   	  	    	}
@@ -293,7 +299,7 @@
          <tr class="ct_list_pop">
          	
      	   <input type="hidden" name="reportNo" id="reportNo" value="${report.reportNo}"/>
-     	   <input type="hidden" name="reportlist" value="${report}"/>
+     	   <input type="hidden" name="reportState" value="${report.reportState}"/>
            <td align="left">${report.userName}</td>
            <td align="left">
            		${report.targetUserName}
@@ -331,29 +337,27 @@
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
     
-    <div class="modal fade" id="viewReport"  role="dialog" aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-lg">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>REPORT</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-			
-				<div id="reportview">
-				</div>
-
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
+    
+		
+		
+		<div class="modal fade" id="viewReport" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
+    				<div class="modal-content">
+          				<div class="modal-header">
+          				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        					<h4 class="modal-title custom_align" id="Heading">REPORT</h4>
+      					</div>
+          			<div class="modal-body">
+          				<div id="reportview"></div>
+        			</div>
+         			<div class="modal-footer ">
+         				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
 				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-			</div>
-		</div>
-		</div>
-		</div>
+        				<!-- <button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button> -->
+      				</div>
+        			</div>
+  	  			</div>
+				</div> 
     
     <!--  화면구성 div End /////////////////////////////////////-->
     

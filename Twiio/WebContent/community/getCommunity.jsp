@@ -64,12 +64,14 @@
  	
 	
 	<style>
-       body > div.container{
+      /*  body > div.container{
         	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
+            padding-top : 20px ;
+        } */
         body {
-            padding-top : 50px;
+        	padding-top : 70px ;
+            background-color: #f1eeee;
+			color: #666666 ;
         }
         textarea {
 	  width: 100%;
@@ -78,43 +80,116 @@
 		}
 
  		.button-2{
-  width:140px;
-  height:50px;
-  border:2px solid #34495e;
-  float:left;
-  text-align:center;
-  cursor:pointer;
-  position:relative;
-  box-sizing:border-box;
-  overflow:hidden;
-  margin:0 0 40px 50px;
-}
-.button-2 a{
-  font-family:arial;
-  font-size:16px;
-  color:#34495e;
-  text-decoration:none;
-  line-height:50px;
-  transition:all .5s ease;
-  z-index:2;
-  position:relative;
-}
-.eff-2{
-  width:140px;
-  height:50px;
-  top:-50px;
-  background:#34495e;
-  position:absolute;
-  transition:all .5s ease;
-  z-index:1;
-}
-.button-2:hover .eff-2{
-  top:0;
-}
-.button-2:hover a{
-  color:#fff;
-} 
-
+		  width:140px;
+		  height:50px;
+		  border:2px solid #34495e;
+		  float:left;
+		  text-align:center;
+		  cursor:pointer;
+		  position:relative;
+		  box-sizing:border-box;
+		  overflow:hidden;
+		  margin:0 0 40px 50px;
+		}
+		.button-2 a{
+		  font-family:arial;
+		  font-size:16px;
+		  color:#34495e;
+		  text-decoration:none;
+		  line-height:50px;
+		  transition:all .5s ease;
+		  z-index:2;
+		  position:relative;
+		}
+		.eff-2{
+		  width:140px;
+		  height:50px;
+		  top:-50px;
+		  background:#34495e;
+		  position:absolute;
+		  transition:all .5s ease;
+		  z-index:1;
+		}
+		.button-2:hover .eff-2{
+		  top:0;
+		}
+		.button-2:hover a{
+		  color:#fff;
+		}
+		
+		.btn.btn-default:hover, .btn.btn-default:active{
+			color: #FFF;
+			background: #08708A;
+			border-color: #08708A;
+		}
+		
+		.btn.btn-default{
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
+		.btn.btn-primary:hover, .btn.btn-primary:active {	
+			color: #FFF;
+			background: #08708A;
+			border-color: #08708A;
+		}
+		
+		.btn.btn-primary {			
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
+		.btn {	
+			letter-spacing: 1px;
+			text-decoration: none;
+			background: none;
+			-moz-user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 0;
+			cursor: pointer;
+			display: inline-block;
+			margin-bottom: 0;
+			vertical-align: middle;
+			white-space: nowrap;
+			font-size: 14px;
+			line-height: 20px;
+			font-weight: 700;
+			text-transform: uppercase;
+			border: 2px solid;
+			padding: 8px 20px;	
+		}
+		hr {
+			color: #08708A;
+			display: block;
+		    height: 1px;
+		    border: 0;
+		    border-top: 1px solid #08708A;
+		    margin: 1em 0;
+		    padding: 0;
+		} 
+		.red{
+    	color:red;
+   	   }
+   	   .btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
 
 	</style>
 
@@ -154,8 +229,8 @@ function resetData() {
 			 page=page+1;
 			 
 		  $.ajax( 
-						{
-						url : "/common/json/listCommunityReply",
+							{
+					url : "/common/json/listCommunityReply",
 						method : "POST" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
@@ -169,31 +244,43 @@ function resetData() {
 							var displayValue='';
 							//alert(JSONData.length);
 							for(var i=0; i<JSONData.list.length;i++){
-							
+								if(${empty user.userId}){
+									tool='';
+								}else{
+									tool='<div class="btn-group pull-right">'+
+									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+									'</button>'+
+									'<ul class="dropdown-menu slidedown">'+
+									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+									'</ul>'+
+								   '</div>';	
+								}
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
-												'<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+											 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+											'<div class="col-sm-12"><div style="font-size: 0.8em;"><strong style="font-size: 1.2em;">&nbsp;&nbsp;'+
+											JSONData.list[i].userName+'</strong>&nbsp;&nbsp;'+
+											JSONData.list[i].replyRegDate+
+											'</div></div>'+tool+'<div class ="row" name="upcontent"><div class="col-sm-10 col-sm-offset-1">'+
+											(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+'</div></div></div><hr class="col-sm-12" style="border-style:dotted">';
+											
+								
+								
+								/* '<div class="row2">'+
+												 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
 												 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 												 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
 												'<div class="col-md-2 col-md-offset-1">'+
-												JSONData.list[i].userName+
+												'[ 작성자  : '+JSONData.list[i].userName+' ]'+
 						   						'</div>'+
-						   						'<c:if test="${empty user.userId}">'+
-					    						   '</c:if>'+
-					    						   '<c:if test="${!empty user.userId}">'+
-					    						   '<div class="btn-group pull-right">'+
-													'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
-													' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-													'</button>'+
-													'<ul class="dropdown-menu slidedown">'+
-													'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-													'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-													'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-													' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-													' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-													'</ul>'+
-												   '</div>'+
-												   '</c:if>'+
+						   						tool+
 					    						   '<div class="col-md-10 col-md-offset-1">'+
 					    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 					    						   '</div>'+
@@ -202,7 +289,7 @@ function resetData() {
 					    						   '</div>'+
 					    						   '<div class="col-xs-12">'+
 												   '<hr sytle="border-style:dotted">'+
-								  				   '</div></div>';
+								  				   '</div></div>'; */
 							}
 							}
 							
@@ -210,14 +297,14 @@ function resetData() {
 								 $("#aReply").remove();
 							}
 							var totalcount=
-							'<div class="col-md-2 col-md-offset-1">'+
+								'<div class="col-sm-10 col-sm-offset-1">'+
 								'<strong>댓 글 목 록</strong>'+		
-							'</div>'+
-							'<div class="col-md-2" >'+
-								'댓글수  : '+JSONData.totalCount+				
-							'</div>';
+								'</div>'+
+								'<div class="pull-right" style="font-size: 1em;" >'+
+									'댓글수  : '+JSONData.totalCount+				
+								'</div>';
 	
-							$('.row').html(displayValue);
+							$('#replylist').html(displayValue);
 							$('#totalCount').html(totalcount); 
 						}
 			}); 
@@ -256,31 +343,45 @@ function resetData() {
 							var displayValue='';
 							
 							for(var i=0;i<JSONData.list.length;i++){
-							 displayValue += 
-											   '<div class="row2">'+
+								var tool="";
+								if(${empty user.userId}){
+									tool='';
+								}else{
+									tool='<div class="btn-group pull-right">'+
+									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+									'</button>'+
+									'<ul class="dropdown-menu slidedown">'+
+									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+									'</ul>'+
+								   '</div>';	
+								}
+	    						   
+	    						   
+								
+							 displayValue += '<div class="row2">'+
+											 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+											 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+											'<div class="col-sm-12"><div style="font-size: 0.8em;"><strong style="font-size: 1.2em;">&nbsp;&nbsp;'+
+											JSONData.list[i].userName+'</strong>&nbsp;&nbsp;'+
+											JSONData.list[i].replyRegDate+
+											'</div></div>'+tool+'<div class ="row" name="upcontent"><div class="col-sm-10 col-sm-offset-1">'+
+											(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+'</div></div></div><hr class="col-sm-12" style="border-style:dotted">';
+											
+											  /*  '<div class="row2">'+
 											   '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
 											   '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 											   '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
 											   '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'/>'+
 											   '<div class="col-md-2 col-md-offset-1">'+
-												JSONData.list[i].userName+
+											   '[ 작성자  : '+JSONData.list[i].userName+' ]'+
 				    						   '</div>'+
-				    						   '<c:if test="${empty user.userId}">'+
-				    						   '</c:if>'+
-				    						   '<c:if test="${!empty user.userId}">'+
-				    						   '<div class="btn-group pull-right">'+
-												'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
-												' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-												'</button>'+
-												'<ul class="dropdown-menu slidedown">'+
-												'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-												'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-												'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-												' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-												' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-												'</ul>'+
-											   '</div>'+
-											   '</c:if>'+
+				    						   tool+
 				    						   '<div class="col-md-10 col-md-offset-1">'+
 				    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
 				    						   '</div>'+
@@ -289,19 +390,18 @@ function resetData() {
 				    						   '</div>'+
 				    						   '<div class="col-xs-12">'+
 											   '<hr sytle="border-style:dotted">'+
-							  				   '</div></div>';
+							  				   '</div></div>'; */
 							}
 							var totalcount=
-								'<div class="col-md-2 col-md-offset-1">'+
-								'<strong>댓 글 목 록</strong>'+		
+							'<div class="col-sm-10 col-sm-offset-1">'+
+							'<strong>댓 글 목 록</strong>'+		
 							'</div>'+
-							'<div class="col-md-2" >'+
+							'<div class="pull-right" style="font-size: 1em;" >'+
 								'댓글수  : '+JSONData.totalCount+				
 							'</div>';
 							
-							$('.row').html(displayValue); 				   
+							$('#replylist').html(displayValue); 					   
 							$('#totalCount').html(totalcount);
-							
 						}
 			}); 
 			 } 
@@ -350,10 +450,11 @@ function resetData() {
 	///////////////////////////////////////////////////addreport////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addreport]', function() {
 		 var reportuserno = $($('input[name=userNo]')[$('.row2 a[name=addreport]').index(this)]).val();
+		 var reportusername = $($('input[name=userName]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportbody = 
-			        '<h3>신고글 작성<h3>'+
-					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportuserno+'" readonly/>'+
+			        '<h3>Report<h3>'+
+					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportusername+'" readonly/>'+
 					'<input type="text" class="form-control" id="reporttitle" row="6" col="50" placeholder="신고 제목 작성" value=""/>'+
 					'<textarea id="reportcontent"  name="reportcontent" row="6" col="50" value="" placeholder="신고 내용"></textarea>';
 		 
@@ -365,7 +466,8 @@ function resetData() {
 	 		$('#reportbody').html(reportbody);
 	 		$('#modalreport').modal('show');
 	 	 }
-		
+	
+	
 		$(document).on('click','#addreportcommunity',function(){
 			 	var reportcontent = $('#reportcontent').val();
 			 	var reporttitle = $('#reporttitle').val();
@@ -391,12 +493,11 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalreport').modal('toggle');	
-						}
-					});
-			 	 }
-			});
+					}
+				});
+			 }
+		});
 	});
-	
 	///////////////////////////////////////////////addfriend///////////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addfriend]', function() {
 		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
@@ -409,7 +510,7 @@ function resetData() {
 		 	$('#modalfriend').modal('show');
 		 }
 		
-		$(document).on('click','#addmodalfriend',function(){
+			$(document).on('click','#addmodalfriend',function(){
 			  $.ajax({
 						url : "/common/json/addFriend",
 						method : "POST" ,
@@ -422,7 +523,7 @@ function resetData() {
 						success : function(JSONData) {
 							alert(JSON.stringify(JSONData));
 							$('#modalfriend').modal('toggle');					
-					}
+						}
 				}); 
 			});
 		});
@@ -432,8 +533,9 @@ function resetData() {
 		 var msguserno = $($('input[name=userNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var inmsg =
-			 '<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
-			'<input type="text" class="form-control" id="msgno" row="6" col="50"  value="'+msguserno+'" readonly/>'+
+			'<input type="hidden" class="form-control" id="msguserno" row="6" col="50" value="'+msguserno+'"/>'+
+			'<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
+			'<input type="text" class="form-control" id="msgusername" row="6" col="50"  value="'+msgusername+'" readonly/>'+
 			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 		 
 		 if(${empty user.userId}){
@@ -444,36 +546,40 @@ function resetData() {
 			$('#msg').html(inmsg);
 		 	$('#modalmessage').modal('show');
 		 }
-		 $(document).on('click','#upmessage',function(){
+	});
+	
+	$(document).on('click','#upmessage',function(){
+			var msguserno = $('#msguserno').val();
 			var msgcontent = $('#msgcontent').val();
 			var msgtitle = $('#msgtitle').val();
+			var msgusername = $('#msgusername').val();
 			//modalmessage
 
-				if(msgcontent==''| msgtitle==''){
-				 alert('내용과 제목을 입력하세요.');			 
-				 }
-				 else{
-				  $.ajax( 
-						{
-						url : "/mypage/json/addMessage",
-						method : "POST" ,
-						dataType : "json" ,
-						contentType:"application/json;charset=UTF-8",
-						data : JSON.stringify({
-							"toUserNo":"${user.userNo}",
-							"fromUserNo":msguserno,
-							"messageContent":msgcontent,
-							"messageType":"2",
-							"messageTitle":msgtitle							
-						}),
-						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							$('#modalmessage').modal('toggle');
-						}
-				});
-			 	}
-			});	
-		});
+			if(msgcontent==''| msgtitle==''){
+				alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+			  	$.ajax({
+					url : "/mypage/json/addMessage",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"toUserNo":msguserno,
+						"fromUserNo":"${user.userNo}",
+						"messageContent":msgcontent,
+						"messageType":"2",
+						"messageTitle":msgtitle,
+						"targetUserName":msgusername,
+						"userName":"${user.userName}"
+					}),
+					success : function(JSONData) {
+						alert("메시지가 보내기 성공.!!");
+						$('#modalmessage').modal('toggle');
+				    } 
+			   });
+			}			
+	});
 	
 	///////////////////////////////////////////////deleteReply/////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=deletereply]', function() {
@@ -517,7 +623,7 @@ function resetData() {
 		var updatereplyno = $($('input[name=replyNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
 		var updatecontent = $($('input[name=replyContent]')[$('.row2 a[name=updatereply]').index(this)]).val();
 		var uprel ='<textarea id="updatecontent"  name="updatecontent" row="5" col="40" value="" placeholder="내용 작성">'+updatecontent+'</textarea>';
-		
+		alert($('.row2 a[name=updatereply]').index(this));
 		if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }else if(${user.userNo } == updateuserno){
@@ -552,6 +658,25 @@ function resetData() {
 		$(self.location).attr("href","/community/updateCommunity?communityNo=${community.communityNo}");
 	});
 	
+	$(document).ready(function(){ 
+	    $('#characterLeft').text('100 characters left').attr("style","font-size: 1em;");
+	    $('#replyContent').keyup(function () {
+	        var max = 100;
+	        var len = $(this).val().length;
+	        if (len >= max) {
+	            $('#characterLeft').text('You have reached the limit').attr("style","font-size: 1em;");
+	            $('#characterLeft').addClass('red');
+	            $('#write').addClass('disabled');            
+	        }
+	        else {
+	            var ch  = max - len;
+	            $('#characterLeft').text(ch + ' characters left').attr("style","font-size: 1em;");
+	            $('#write').removeClass('disabled');
+	            $('#characterLeft').removeClass('red');            
+	        }
+	    });    
+	});
+	
 </script>
 </head>
 
@@ -561,148 +686,161 @@ function resetData() {
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	
-   	 <div class="container">
-   	
-		<div class="col-xs-10 col-xs-offset-1 page-header text-info">
-		<h1>커 뮤 니 티 글 보 기</h1>
+   <div class="container jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >
+   	 
+   	 <div class="col-xs-10 col-xs-offset-1">
+   	 			
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
+		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
-		<div class="form-group">
-		   <c:if test="${communityType == 1}">
-		    <div class="col-md-5 col-md-offset-1">
-		    <h4><strong><c:if test="${community.communitySubTitle == 0}">
-		    	[도시]
-		    </c:if>
-		    <c:if test="${community.communitySubTitle == 1}">
-		   	 	[루트]
-		    </c:if>
-		    <c:if test="${community.communitySubTitle == 2}">
-		   	 	[교통]
-		    </c:if>
-		    <c:if test="${community.communitySubTitle == 3}">
-		    	[숙소]
-		    </c:if>
-		    <c:if test="${community.communitySubTitle == 4}">
-		    	[쇼핑]
-		    </c:if>
-		    <c:if test="${community.communitySubTitle == 5}">
-		    	[기타]
-		    </c:if> 
-		       |   ${community.communityTitle}
-		   </strong></h4>
-		   </div>
-		   </c:if>
-			<div class="col-md-4 col-md-offset-2"><h4><strong>조회수  :  ${community.viewCount} / 등록일  :  ${community.regDate}</strong></h4></div>
+		<div class="form-group" style="padding-top : 60px;">
+			<div class="row">
+				<div class="col-sm-12">
+						<div class="col-sm-12">
+								<c:if test="${community.communityType == '0'}">
+									<div style="color:#08708A;">&nbsp;&nbsp;[ Question Q&A ]</div>
+								</c:if>
+								<c:if test="${community.communityType == '1'}">
+									<div style="color:#08708A;">&nbsp;&nbsp;[ Trip Review ]</div>
+								</c:if>
+							<strong style="font-size: 2em;">
+					    	<c:if test="${community.communityType == 1}"> 	
+					    	
+					    	<c:if test="${community.communitySubTitle == 0}">
+					    		[도시]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 1}">
+					   	 		[루트]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 2}">
+					   	 		[교통]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 3}">
+					    		[숙소]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 4}">
+					    		[쇼핑]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 5}">
+					    		[기타]
+					    	</c:if> 
+					       			|	   
+					       	</c:if>${community.communityTitle}
+					   		</strong>
+							<div class="pull-right" style="font-size: 1em; padding-top : 15px;">조회수  :  ${community.viewCount} | 등록일  :  ${community.regDate} | 작성자  :  ${community.userName}</div>
+						</div>
+					</div>
+				</div>
 		</div>
-		<div class="col-xs-12 ">
-		<hr sytle="border-style:dotted">
-		</div>
-		<div class="form-group">
-		    <div class="col-xs-7 col-xs-offset-1"><strong>[  작성자  :  ${community.userName} ]</strong></div>
-		    <c:if test="${empty user.userId}">
-		    </c:if>
-		    <c:if test="${!empty user.userId}">
-		    <div class="col-md-3 col-xs-offset-1">
-		    	<c:if test="${community.userNo != user.userNo}">
-					<button type="button"  id="addfriendcommunity" class="btn btn-default">친구추가</button>
-				</c:if>
-				<c:if test="${community.userNo == user.userNo}">
-					<button type="button"  id="updatecommunity" class="btn btn-default">수정하기</button>
-				</c:if>
+		
+		<hr>
+	
+		<div class="form-group" style="padding-top : 20px; padding-bottom : 20px;">
+			<div class="col-sm-10 col-sm-offset-1">	
+				<div>
+					${community.communityContent}
+				</div>
 			</div>
-		    </c:if>
 		</div>
-		<div class="form-group">
-			<div class="col-xs-11 col-xs-offset-1">
-			${community.communityContent}
+		
+		
+			<div class="form-group">
+				<div class="col-sm-12">
+				    <c:if test="${empty user.userId}">
+				    </c:if>
+				    <c:if test="${!empty user.userId}">
+				    <div class="pull-right">
+				    	<c:if test="${community.userNo != user.userNo}">
+							<button type="button"  id="addfriendcommunity" class="btn btn-outlined btn-light btn-xs">친구추가</button>
+						</c:if>
+						<c:if test="${community.userNo == user.userNo}">
+							<button type="button"  id="updatecommunity" class="btn btn-outlined btn-light btn-xs">수정하기</button>
+						</c:if>
+					</div>
+				    </c:if>
+				  </div>
 			</div>
-		</div>
-		<div class="col-xs-12">
-		<hr sytle="border-style:dotted">
-		</div>
+		<hr>
+	
 		
 		<div class="form-group" id="replyinput">
-			<div class="col-md-8 col-md-offset-1">
-				<textarea id="replyContent"  name="comment_content" row="6" col="50" value=""></textarea>
+			<div class="col-sm-10">
+				<textarea id="replyContent"  name="comment_content" style="resize:none;" row=2 col=50 value=""></textarea>
 			</div>
-			<div class="col-md-1">
-				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
+			<div class="col-sm-2">
+				<button type="button"  id="write" class="btn btn-default" style="margin-top : 20px;">댓글입력</button>
+				<span class="help-block" ><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
 			</div>
 		</div>
 		
-		<br>
-		<br>
-		<br>
+		<br/>
+		<br/>
+		<br/>
 		<div class="form-group" id = "totalCount">
-			<div class="col-md-2 col-md-offset-1">
+			<div class="col-sm-10 col-sm-offset-1">
 				<strong>댓 글 목 록</strong>		
-			</div>
-			<div class="col-md-2" >
-				댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
-					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
+			
+				<div class="pull-right" style="font-size: 1em;">
+					댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
+						   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
+				</div>
 			</div>
 		</div>
-		<div class="col-xs-12">
-		<hr sytle="border-style:dotted">
-		</div>
-		<div class="row">
+		
+			<hr>
+
+		<div class="row col-sm-12" id="replylist">
 		<c:forEach var="reply" items="${list}">
 		<div class= "row2">
 			<input type="hidden" name="userNo" 	  	 value="${reply.userNo}"/>
 			<input type="hidden" name="userName" 	 value="${reply.userName}"/>
 			<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
 			<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
-			<div class="col-md-2 col-md-offset-1">
-    			${reply.userName}
-    		</div>
+			
+			<div class="col-sm-12">
+				<div style="font-size: 0.8em;">
+	    			<strong style="font-size: 1.2em;">&nbsp;&nbsp;${reply.userName}</strong>&nbsp;&nbsp; ${reply.replyRegDate}
+	    		</div>
+	    	</div>	
+	    		
+	    		
     		<c:if test="${empty user.userId}">
 		    </c:if>
 		    <c:if test="${!empty user.userId}">
-    		
     		<div class="btn-group pull-right">
-                            <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">
-                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
-                            </button>
-                            <ul class="dropdown-menu slidedown">
-                            	<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>
-                                <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>
-                                <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
-                                <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
-                                <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
-                            </ul>
+                  <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">
+                  		<span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
+                  </button>
+                  <ul class="dropdown-menu slidedown">                    	
+						    <li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
+					        <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
+					        <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+					        <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+					        <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+                   </ul>
              </div>				
 			</c:if>
-		</div>
-			<div class ="row" name="upcontent">
-    		<div class="col-md-11 col-md-offset-1">
+		
+		<div class ="row" name="upcontent">
+    		<div class="col-sm-10 col-sm-offset-1">
     			${reply.replyContent}
     		</div>
-    		</div>
-    		<div class ="row" name="upregdate">
-    		<div class="col-md-11 col-md-offset-1">
-    			${reply.replyRegDate}
-    		</div>
-    		</div>
-    		<div class ="row">
-    		<div class="col-xs-12">
-			<hr sytle="border-style:dotted">
-			</div>
-			</div>
+    	</div>
+    	
+		</div>
+		<hr class="col-sm-12" style="border-style:dotted">
  		</c:forEach>
  		</div>
  		
- 		<div class="col-xs-2 col-xs-offset-5" id="aReply">
+ 		<div class="col-xs-2 col-xs-offset-4" id="aReply">
 			<div class="button-2">
     		<div class="eff-2"></div>
     		<a href="#" id="addReply"> 댓글 더보기 </a>
   			</div>
-  			<div class="col-xs-12">
-			<hr sytle="border-style:dotted">
-			</div>
 		</div>
 		
-		<div class="modal fade" id="modalreport"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="modalreport"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -710,7 +848,7 @@ function resetData() {
 				<h4 class="modal-title">
 					<Strong>REPORT</Strong>
 				</h4>
-				<h7 class="modal-title">TWIIO</h7>
+				<h7 class="modal-title"></h7>
 			</div>
 			<div class="modal-body">
 			
@@ -726,8 +864,8 @@ function resetData() {
 		</div>
 		
 		
-		<div class="modal fade" id="modalfriend"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="modalfriend"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
@@ -747,8 +885,8 @@ function resetData() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="modalmessage"  role="dialog">
-			<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="modalmessage"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 			<div class="modal-header">
@@ -769,13 +907,13 @@ function resetData() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="deletemodalreply"  role="dialog">
-		<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="deletemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 		<!-- Modal content-->
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
+			 	<h3 class="modal-title">
 					<Strong>댓글삭제</Strong>
 				</h3>
 			</div>
@@ -790,8 +928,8 @@ function resetData() {
 		</div>
 		</div>
 		
-		<div class="modal fade" id="updatemodalreply"  role="dialog">
-			<div class="modal-dialog modal-lg">
+		<div class="modal fade" id="updatemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+			<div class="modal-dialog">
 			<!-- Modal content-->
 			<div class="modal-content">
 			<div class="modal-header">
@@ -814,6 +952,7 @@ function resetData() {
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 		</div>
-	</div>
+		
+		</div>
 </body>
 </html>

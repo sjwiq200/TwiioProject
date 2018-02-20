@@ -1,5 +1,7 @@
 package com.twiio.good.service.domain;
 
+
+
 import java.sql.Date;
 
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
@@ -9,7 +11,7 @@ public class Reply {
 	private int userNo;
 	private String userName;
 	private String replyContent;
-	private Date replyRegDate;
+	private String replyRegDate;
 	private int productNo;
 	private int communityNo;
 	private String targetType;
@@ -95,14 +97,14 @@ public class Reply {
 
 
 
-	public Date getReplyRegDate() {
+	public String getReplyRegDate() {
 		return replyRegDate;
 	}
 
 
 
 
-	public void setReplyRegDate(Date replyRegDate) {
+	public void setReplyRegDate(String replyRegDate) {
 		this.replyRegDate = replyRegDate;
 	}
 

@@ -2,6 +2,7 @@ package com.twiio.good.web.product;
 
 import java.io.File;
 import java.net.URLDecoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -43,6 +44,10 @@ public class ProductController {
 	@Autowired
 	@Qualifier("commonServiceImpl")
 	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("transactionServiceImpl")
+	private TransactionService transactionService;
 	
 	@Value("#{commonProperties['productFilePath']}")
 	String productFilePath;
@@ -257,15 +262,48 @@ public class ProductController {
 		
 				
 		Map<String, Object> productMap = productService.listProduct(search);
+		List<Product> list = (List<Product>)productMap.get("list");
+		List<Product> list2 = new ArrayList<Product>();
+		
+		for(int i=0; i<list.size();i++) {
+			Product product = list.get(i);
+			String tripDate = product.getTripDate();
+			String[] trip = tripDate.split(",");
+			String str ="";
+			
+			for(int j=0; j<trip.length; j++) {
+				String[] day = trip[j].split("=");
+				java.sql.Date d = java.sql.Date.valueOf(day[0]);
+				
+				Transaction transaction = new Transaction();
+				transaction.setProductNo(product.getProductNo());
+				transaction.setTripDate(d);				
+				int transactionCount = transactionService.getTransactionCount(transaction);
+
+				if(j == trip.length-1) {
+					str += day[0]+" : "+transactionCount+" / "+day[1];
+				}else {
+					str += day[0]+" : "+transactionCount+" / "+day[1]+",";
+				}
+				
+				System.out.println("dya[0] :: "+day[0]);
+				System.out.println(transactionCount);
+			}
+			System.out.println("str :: "+str);
+			product.setTripDate(str);
+			list2.add(product);
+			str="";
+		}
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
 		System.out.println("resultPage:: "+resultPage);
 				
 		System.out.println("map :: "+map);
-		map.put("list", (List<Product>)productMap.get("list"));
+		map.put("list", list2);
 		map.put("totalCount", ((Integer)productMap.get("totalCount")).intValue());
 		map.put("resultPage", resultPage);
 		map.put("search", search);
+
 		
 		return "forward:/mypage/listHostProduct.jsp";
 	}

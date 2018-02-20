@@ -33,7 +33,7 @@ import com.twiio.good.service.domain.User;
 import com.twiio.good.service.domain.UserEval;
 import com.twiio.good.service.user.UserDao;
 
-	//==> È¸¿ø°ü¸® DAO CRUD ±¸Çö
+	//==> íšŒå ì™ì˜™å ì™ì˜™å ì™ì˜™ DAO CRUD å ì™ì˜™å ì™ì˜™
 	@Repository("userDaoImpl")
 	public class UserDaoImpl implements UserDao{
 		
@@ -108,14 +108,12 @@ import com.twiio.good.service.user.UserDao;
 		}		
 
 		@Override
-		public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception {
-			
-			Map map = new HashMap();
-			map.put("tagetUser", tagetUser);
-			map.put("evalUser", evalUser);
-			map.put("scheduleNo", scheduleNo);
-			
-			sqlSession.update("UserMapper.addEvalUser", map);
+		public void addEvalUser(UserEval tagetUser) throws Exception {
+			sqlSession.insert("UserMapper.addEvalUser", tagetUser);			
+		}
+		
+		public int addEvalUserCheck(UserEval userEval) throws Exception{
+			return sqlSession.selectOne("UserMapper.addEvalUserCheck", userEval);
 		}
 	
 		@Override
@@ -156,15 +154,15 @@ import com.twiio.good.service.user.UserDao;
 		@Override
 		public void sendMail(String email, String authNum) throws Exception {
 			
-			String host = "smtp.gmail.com";// smtp¼­¹ö
-			String subject = "Twiio ÀÎÁõ¹øÈ£ Àü¼Û";
-			String fromName = "Twiio °ü¸®ÀÚ";
-			String from = "eunae10193@gmail.com";// °ü¸®ÀÚ ¸ŞÀÏ ÁÖ¼Ò
-			String to = email;// ÀÎÁõ¹øÈ£ ¹ŞÀ» À¯ÀúÀÇÀÌ¸ŞÀÏ
-			
-			System.out.println("¸ŞÀÏ¸ŞÀÏ"+email+"ÀÎÁõ¹øÈ£"+authNum);
-			
-			String content = "Twiio ÀÌ¸ŞÀÏ ÀÎÁõ ¸ŞÀÏÀÔ´Ï´Ù. \n\n ÀÎÁõ¹øÈ£[ " + authNum + " ]\n\n ÀÎÁõ¹øÈ£¸¦ Á¤È®È÷ ÀÔ·ÂÇØ ÁÖ¼¼¿ä :D" ;
+			String host = "smtp.gmail.com";// smtpì„œë²„
+	         String subject = "Twiio ì¸ì¦ë²ˆí˜¸ ì „ì†¡";
+	         String fromName = "Twiio ê´€ë¦¬ì";
+	         String from = "eunae10193@gmail.com";// ê´€ë¦¬ì ë©”ì¼ ì£¼ì†Œ
+	         String to = email;// ì¸ì¦ë²ˆí˜¸ ë°›ì„ ìœ ì €ì˜ì´ë©”ì¼
+	         
+	         System.out.println("ë©”ì¼ë©”ì¼"+email+"ì¸ì¦ë²ˆí˜¸"+authNum);
+	         
+	         String content = "Twiio ì´ë©”ì¼ ì¸ì¦ ë©”ì¼ì…ë‹ˆë‹¤. \n\n ì¸ì¦ë²ˆí˜¸[ " + authNum + " ]\n\n ì¸ì¦ë²ˆí˜¸ë¥¼ ì •í™•íˆ ì…ë ¥í•´ ì£¼ì„¸ìš” :D" ;
 			
 			try {
 
@@ -179,19 +177,19 @@ import com.twiio.good.service.user.UserDao;
 
 				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication(from, "eunae1019");
+						return new PasswordAuthentication("eunae10193@gmail.com", "eunae1019");
 					}
 				});
 				Message msg = new MimeMessage(mailSession);
 				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
 
 				InternetAddress[] address1 = { new InternetAddress(to) };
-				msg.setRecipients(Message.RecipientType.TO, address1);// ¹Ş´Â»ç¶÷
-				msg.setSubject(subject);// ¸ŞÀÏÁ¦¸ñ
-				msg.setSentDate(new Date());// º¸³»´Â ³¯Â¥
-				msg.setContent(content, "text/html;charset=euc-kr");// ³»¿ë ¼³Á¤(HTMLÇü½Ä)
+				msg.setRecipients(Message.RecipientType.TO, address1);// ï¿½Ş´Â»ï¿½ï¿½
+				msg.setSubject(subject);// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+				msg.setSentDate(new Date());// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥
+				msg.setContent(content, "text/html;charset=euc-kr");// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(HTMLï¿½ï¿½ï¿½ï¿½)
 
-				Transport.send(msg);// ¸ŞÀÏº¸³»±â
+				Transport.send(msg);// ï¿½ï¿½ï¿½Ïºï¿½ï¿½ï¿½ï¿½ï¿½
 				
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -203,6 +201,7 @@ import com.twiio.good.service.user.UserDao;
  
 			
 		}
+
 		
 	
 	}

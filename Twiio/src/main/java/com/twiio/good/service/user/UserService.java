@@ -15,48 +15,50 @@ import com.twiio.good.service.domain.UserEval;
 
 public interface UserService {
 	
-	// È¸¿ø°¡ÀÔ
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void addUser(User user) throws Exception;
 	
-	// ·Î±×ÀÎ / ¾ÆÀÌµð Áßº¹Ã¼Å© 
+	// ï¿½Î±ï¿½ï¿½ï¿½ / ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½Ã¼Å© 
 	public User getUser(String userId) throws Exception;
 	
-	//³»Á¤º¸È®ÀÎ 
+	//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È®ï¿½ï¿½ 
 	public User getUserInNo(int userNo) throws Exception;
 	
-	// È¸¿øÁ¤º¸¸®½ºÆ® 
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ® 
 	public Map<String , Object> listUser(Search search) throws Exception;
 	
 	public List<User> listUserForSharedMainPlan(int mainPlanNo) throws Exception;
 	
-	// È¸¿øÁ¤º¸¼öÁ¤
+	// È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void updateUser(User user) throws Exception;
 	
-	// ÇÃ·£Á¤º¸¼öÁ¤
+	// ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 	public void updateSharedPlan(int userNo,String mainPlanNo) throws Exception;
 	
-	// È¸¿øÅ»ÅðÃ³¸®
+	// È¸ï¿½ï¿½Å»ï¿½ï¿½Ã³ï¿½ï¿½
 	public void deleteUser(User user) throws Exception;
 		
-	// È¸¿ø ¾ÆÀÌµðÃ£±â
+	// È¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ìµï¿½Ã£ï¿½ï¿½
 	public String findId(User user) throws Exception;
 	
-	// È¸¿ø ºñ¹Ð¹øÈ£ Ã£±â
+	// È¸ï¿½ï¿½ ï¿½ï¿½Ð¹ï¿½È£ Ã£ï¿½ï¿½
 	public void findPassword(User user) throws Exception;
 	
-	// Ä«Ä«¿À ·Î±×ÀÎ
+	// Ä«Ä«ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
 	public User kakaoLogin(String access_token) throws Exception;
 	
-	// ±¸±Û ·Î±×ÀÎ
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½Î±ï¿½ï¿½ï¿½
 	public User googleLogin(String code) throws Exception;
 	
-	// ±¸±Û ¾ó±¼ÀÎ½Ä
+	// ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Î½ï¿½
 	public Map<String , Object> detectFace(User user) throws Exception, IOException;
 	
-	// ¾ÆÀÌµð Áßº¹Ã¼Å©
+	// ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ßºï¿½Ã¼Å©
 	public boolean checkDuplication(String userId) throws Exception;
 	
-	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
+	public void addEvalUser(UserEval tagetUser) throws Exception;
+	
+	public int addEvalUserCheck(UserEval userEval) throws Exception;
 	
 	public Map<String, Object> listStarEvalHost(Search search, int hostNo) throws Exception;
 	

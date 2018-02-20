@@ -1,0 +1,109 @@
+@import url(font-awesome.min.css);
+@import url(http://fonts.googleapis.com/earlyaccess/jejumyeongjo.css);
+@import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
+@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
+@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
+@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
+@font-face {font-family:'TYPO_JEONGJOL'; src: url('images/TYPO_JEONGJOL.TTF');} 
+@font-face {font-family:'JEJUGOTHIC'; src: url('images/JEJUGOTHIC.TTF');} 
+@font-face {font-family:'JEJUMYEONGJO'; src: url('images/JEJUMYEONGJO.TTF');} 
+
+ 		   body {
+            padding-top : 50px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
+           }
+           
+           h2 {
+			/* color : #dedede; */
+			color :#474747;
+   	 		font-size: 7em;
+    		padding: 0 0.5em 0.25em 0.5em;
+    		font-weight: 500;
+    		font-family: "Pacifico", cursive;
+    		text-transform: none;
+    		letter-spacing: 10;
+    		font-style: Pacifico;
+    		text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+			}
+        
+            .btn-sm{
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+			}
+			
+			.btn {
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			
+			.btn-outlined.btn-theme:hover,
+			.btn-outlined.btn-theme:active {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+			    background: #FFF;
+			    color: #08708A;
+				border-color: #08708A;
+			}
+			.btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #FFF;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:15px;
+				border: 1px solid;
+				padding:5px 10px;
+				height: 30px;
+			}
+	        textarea {
+				  width: 100%;
+				  height: 100px;
+				  resize: none;
+			}
+
+
+			.jumbotron {
+
+			/* padding-top : 30px;
+			padding-bottom : 30px; */
+			/* background-color: rgba(0, 0, 0, 0.6);  */
+   			background: rgba(255, 255, 255, 0.6);
+			/* padding-left : 30px;
+			padding-right : 30px; */
+			}
+
+

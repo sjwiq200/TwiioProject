@@ -36,7 +36,7 @@ public interface TransactionDao {
 	public void updateRefund(Refund refund) throws Exception;
 	
 	// SELECT LIST
-	public List<Refund> listRefund(Map<String, Object> map) throws Exception;
+	public List<Refund> listRefund(Search search) throws Exception;
 
 	// DELETE
 	public void deleteRefund(int refundNo) throws Exception;
@@ -74,4 +74,9 @@ public interface TransactionDao {
 	// SELECT LIST
 	//public List<Transaction> listBestHost(Search search) throws Exception;
 	
+	public int getTotalCountRefund(Search search) throws Exception;
+	
+	public void updateTransactionEval(Transaction transaction) throws Exception;
+
+	public int getTransactionCount(Transaction transaction) throws Exception;
 }

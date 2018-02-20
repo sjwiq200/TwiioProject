@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -54,6 +55,9 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
+		
+		<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
    <style>
      body {
             padding-top : 50px;
@@ -69,11 +73,7 @@
        
        .red{
     	color:red;
-   	   }
-   	   
-
-
-            
+   	   }      
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -86,90 +86,55 @@
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
          $("#currentPage").val(currentPage)
-         $("form").attr("method" , "POST").attr("action" , "/common/listReport").submit();
+         $("form").attr("method" , "POST").attr("action" , "/mypage/listRefund").submit();
       }
    
-      $(function() {
-  		$(  "button.btn.btn-default" ).on("click" , function() {
-  			//Debug..
-  			//alert(  $( "td.ct_btn01:contains('검색')" ).html() );
-  			fncGetUserList(1);
-  		});
-  	});
      
       ////////////////////////환불 처리 모달/////////////////////////////////////////////
      $(function(){
-      $('td:nth-child(5)').on('click',function(){
-    		
-    	  var refundno = $($('input[name=refundNo]')[$('td:nth-child(5)').index(this)]).val();
-    				$.ajax({
-    	  			url : "/transaction/json/getRefund",
-    	  			method : "POST" ,
-    	  			dataType : "json" ,
-    	  			contentType:"application/json;charset=UTF-8",
-    	  			data : JSON.stringify({
-    	  				"refundNo":refundno
-    	  			}),
-    	  			success : function(JSONData) {			
-    	  					alert(JSON.stringify(JSONData));
-    	  					var info =
-    	  						'<input type="hidden" class="form-control" id="refundCode" value="3"/>'+
-    	  						'<input type="hidden" class="form-control" id="refundNo" value="'+JSONData.refundNo+'"/>'+
-    	  	    				'<div class="row">'+
-    	  	    				'등 록 일   <input type="text" class="form-control" id="refundRegDate" value="'+JSONData.refundRegDate+'" readonly/></div>'+
-    	  	    				'<br/><div class="row">'+
-    	  	    				'환불회원   <input type="text" class="form-control" id="userName" value="'+JSONData.userName+'" readonly/>'+
-    	  	    				'</div>'+
-    	  	    				'<br/><div class="row">'+
-								'환불은행'+    	  	    				
-    	  	    				'</div>'+
-    	  	    				'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="refundBank" value="'+JSONData.refundBank+'" readonly/>'+
-    	  	    				'</div>'+
-    	  	    				'<br/><div class="row">'+
-								'환불계좌'+    	  	    				
-	  	    					'</div>'+
-	  	    					'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="refundAccount" value="'+JSONData.refundAccount+'" readonly/>'+	
-    	  	    				'</div>'+
-    	  	    				'환불금액'+    	  	    				
-	  	    					'</div>'+
-	  	    					'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="refundPrice" value="'+JSONData.refundPrice+'" readonly/>'+	
-    	  	    				'</div>';
-    	  	    			$('#view').html(info);
-    	  	    			$('#viewRefund').modal('show');	
-    	  			 }
-    	  		});
-      	   });
+      $('td:nth-child(7)').on('click',function(){
+    	  var refundno = $($('input[name=refundNo]')[$('td:nth-child(7)').index(this)]).val();
+    	  var tranno = $($('input[name=tranNo]')[$('td:nth-child(7)').index(this)]).val();
+    	  var confirmDate = $($('input[name=confirmDate]')[$('td:nth-child(7)').index(this)]).val();
+    	  
+    	  if(confirmDate != null){
+    	  }else{
+    	  swal({
+			  title: "환불을 해드리겠습니까??",
+			  icon: "warning",
+			  buttons: true,
+			  dangerMode: true,
+			})
+			.then((willDelete) => {
+			  if (willDelete) {
+			    swal("환불 완료되었습니다..", {
+			      icon: "success",
+			    }).then((next) => {
+			    	$.ajax({
+						url : "/transaction/json/updateRefund",
+						method : "POST" ,
+						dataType : "json" ,
+						contentType:"application/json;charset=UTF-8",
+						data : JSON.stringify({
+							"refundNo":refundno,
+							"tranNo":tranno
+						}),
+						success : function(JSONData) {			
+								location.reload();
+						 }
+			    	 });
+			    });
+			  }
+			  
+			});
+    	  }
+      	}); 
      });
      
-
-      $(document).on('click','#eval', function() {
-  		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  			
-  		/* $(document).on('click','#updatereplym',function(){
-  			 $.ajax({
-  					url : "/common/json/updateReply",
-  					method : "POST" ,
-  					dataType : "json" ,
-  					contentType:"application/json;charset=UTF-8",
-  					data : JSON.stringify({
-  						"replyNo":updatereplyno,
-  						"replyContent":$('#updatecontent').val()
-  					}),
-  						success : function(JSONData) {
-  							alert(JSON.stringify(JSONData));
-  							 $('#updatemodalreply').modal('toggle');		
-  							window.location.reload();
-  					}
-  			}); 
-  		}); */
-  		});
+     
 
    
    </script>
-   
 </head>
 
 <body>
@@ -179,12 +144,12 @@
       <!-- ToolBar End /////////////////////////////////////-->
    
    <!--  화면구성 div Start /////////////////////////////////////-->
-   <div class="container col-md-8 col-md-offset-2">
    
-      <div class="page-header text-info">
+   <div class="container col-md-8 col-md-offset-2">
+       <div class="page-header text-info">
           <h3>
           <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	신고목록조회
+          	환불목록조회
          </h3>
        </div>
        
@@ -192,14 +157,14 @@
        <div class="row">
           <div class="pull-left">
              <p class="text-primary">
-                전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+                	전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
              </p>
           </div>
                   
            <div class="pull-right">
 			    <form class="form-inline" name="detailForm"> 
 				  <div class="form-group">
-				    <select class="form-control" name="searchCondition" id="searchCondition">
+				  <%--   <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품이름</option>
 					</select>
@@ -211,7 +176,7 @@
 				    			 value="${!empty search.searchKeyword ? search.searchKeyword : '' }"  >
 				  </div>
 				  
-				  <button type="button" class="btn btn-default" id="searchButton">검색</button>
+				  <button type="button" class="btn btn-default" id="searchButton">검색</button> --%>
 				  
 				  <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
 				  <input type="hidden" id="currentPage" name="currentPage" value=""/>	  
@@ -225,36 +190,41 @@
       
       
       <!--  table Start /////////////////////////////////////-->
-      <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
+        <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
       
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">등록일</th>
-            <th align="center" width="100">환불회원이름</th>
-            <th align="left" width="100">상품이름</th>
+            <th align="center" width="100" align="">등록일</th>
+            <th align="center" width="80">환불회원이름</th>
             <th align="left" width="100">환불은행</th>
-            <th align="left" width="100">환불계좌번호</th>
+            <th align="left" width="140">환불계좌번호</th>
             <th align="left" width="100">환불가격</th>
             <th align="left" width="100">환불처리날짜</th>           
             <th align="left" width="100">환불처리</th>
           </tr>
         </thead>       
       <tbody>
-      
         <c:set var="i" value="0" />
         <c:forEach var="refund" items="${list}">
          <c:set var="i" value="${ i+1 }" />
-         <tr class="ct_list_pop">
-         	
-     	   <input type="hidden" name="reportNo" value="${refund.refundNo}"/>
+         <input type="hidden" name="refundNo" value="${refund.refundNo}"/>
+     	  <input type="hidden" name="tranNo" value="${refund.tranNo}"/>
+     	  <input type="hidden" name="confirmDate" value="${refund.confirmDate}"/>
+         <tr class="ct_list_pop">  	   
            <td align="left">${refund.regDate}</td>
            <td align="left">${refund.userName}</td>
-           <td align="left">${refund.productName}</td>
            <td align="left">${refund.refundBank}</td>
            <td align="left">${refund.refundAccount}</td>
            <td align="left">${refund.refundPrice}</td>
            <td align="left">${refund.confirmDate}</td>
-           <td align="left">${refund.confirmDate}</td>
+           <td align="left">
+           <c:if test="${refund.confirmDate == null}">
+           	환불처리
+           </c:if>
+           <c:if test="${refund.confirmDate != null}">
+           	환불완료
+           </c:if>
+		 </td>
          </tr>
           </c:forEach>
         
@@ -262,49 +232,15 @@
          
         </tr>
         </tbody>
-      
+
       </table>
-     <!--  table End /////////////////////////////////////-->
-     
-     
-     
+     <!--  table End /////////////////////////////////////-->  
     </div>
+
     <div class="col-md-2 col-md-offset-1">
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
-    
-    <div class="modal fade" id="viewRefund"  role="dialog" aria-labelledby="mySmallModalLabel">
-		<div class="modal-dialog modal-sm">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>환불처리</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-			
-				<div id="view">
-				</div>
 
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-			</div>
-		</div>
-		</div>
-		</div>
-    
-    <!--  화면구성 div End /////////////////////////////////////-->
-    
-    <input type="hidden" id="currentPage" name="currentPage" value="" />
-    <%-- <input type="hidden" id="menu" name="menu" value="${menu}" /> --%> 
-    <%-- //<input type="hidden" id="priceList" name="priceList" value="${search.priceList}">  --%>
-                   
-    <!-- PageNavigation Start... -->
-   	
-   <!-- PageNavigation End... -->
+
 </body>
 </html>

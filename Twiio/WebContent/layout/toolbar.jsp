@@ -110,15 +110,22 @@
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                     	 <li><a href="#">개인정보조회</a></li>
-	                     	 <li><a href="#">회원리스트조회</a></li>
+	                     	 <li><a href="#">개인정보조회</a></li>	                     	 
 	                         <li><a href="#">Message</a></li>
+	                         <li><a href="#">Friend</a></li>
+	                         <c:if test="${sessionScope.user.userType != '3'}">
 	                         <li><a href="#">구매목록조회</a></li>
+	                          </c:if>
 	                         <c:if test="${sessionScope.user.userType == '2'}">
 	                        	 <li><a href="#">판매목록조회</a></li>
 	                         </c:if>
+	                         <c:if test="${sessionScope.user.userType == '3'}">
+	                         <li><a href="#">회원리스트조회</a></li>
 	                         <li><a href="#">신고목록조회</a></li>
-	                         <li><a href="#"></a></li>
+	                         <li><a href="#">환불목록조회</a></li>
+	                         </c:if>
+	                         <!--<li><a href="#">일정목록조회</a></li>
+	                         <li><a href="#">친구목록조회</a></li> -->
 	                         <li class="divider"></li>
 	                     </ul>
 	                 </li>
@@ -273,6 +280,18 @@
 			$(self.location).attr("href","/user/listUser");
 		});
 		
+		$( "a:contains('환불목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/transaction/listRefund");
+		});
+		/*
+		$( "a:contains('일정목록조회')" ).on("click" , function() {
+			$(self.location).attr("href","/schedule/listSchedule");
+		});
+		*/
+		 $( "a:contains('Friend')" ).on("click" , function() {
+			$(self.location).attr("href","/common/listFriend");
+		});
+		 
 	</script>  
 	
 	

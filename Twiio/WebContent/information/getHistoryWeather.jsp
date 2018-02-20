@@ -66,11 +66,14 @@
 			  background-color:#FFF;  
 			  display:none;  
 			}
-       #loadingImg {
+      #loadingImg {
+       			  left:40%;
+       			  right:40%;
+			 	  top:30%;
 				  position:absolute;
-				  left:45%;
-				  top:50%;
 				  z-index:120;
+				  max-width:30%;
+				  max-height:30%;
 				}
 				
 		 .btn-sm{

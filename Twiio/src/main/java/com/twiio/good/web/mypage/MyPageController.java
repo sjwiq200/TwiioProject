@@ -99,7 +99,7 @@ public class MyPageController {
 	@RequestMapping(value = "/message/listMessage")
 	public String listMessage(@ModelAttribute("search") Search search,
 								HttpSession session,
-								Model model
+								Model model 
 								) throws Exception {
 		System.out.println("/message/listMessage");
 		User user = (User)session.getAttribute("user");

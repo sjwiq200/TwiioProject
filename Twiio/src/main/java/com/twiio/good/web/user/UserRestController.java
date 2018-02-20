@@ -185,35 +185,7 @@ public class UserRestController {
 	}
 
 	
-	@RequestMapping( value="json/addEvalUser")
-	public Map  addEvalUser(	) throws Exception{
-	
-		System.out.println("/user/json/addEvalUser");
-		//Business Logic
-		
-		User evalUser = new User();
-		evalUser.setUserId("user01");
-		
-		UserEval targetUser = new UserEval();
-		
-		User targetNo = userService.getUser("user02");
-		targetUser.setTargetNo(targetNo.getUserNo());
-		targetUser.setAttendanceTnF(1);
-		targetUser.setProfileTnF(0);
-	
-		
-		String scheduleNo = "123";
-		
-		userService.addEvalUser(targetUser, evalUser, scheduleNo); 
-		
-		Map<String , Object> map = new HashMap();
-		map.put("tagetUser", targetUser);
-		map.put("evalUser", evalUser);
-		map.put("scheduleNo", scheduleNo);
-		
-		return map;
-		
-	}
+
 	
 	@RequestMapping( value="json/getEmailVer", method=RequestMethod.POST )
 	public List  getEmailVer(@RequestBody String user	) throws Exception{
@@ -260,13 +232,13 @@ public class UserRestController {
 	
 		
 		@RequestMapping( value="json/deleteUser", method=RequestMethod.POST )
-		public Boolean deleteUser(@ RequestBody User  user) throws Exception{
+		public Map<String, Object> deleteUser(@RequestBody User  user) throws Exception{
 			
 			System.out.println("/user/json/deleteUser");
 			
 			User user2 = userService.getUserInNo(user.getUserNo());
 			
-			if(user2.getUserLeave().equals("Y")) {
+			/*if(user2.getUserLeave().equals("Y")) {
 				
 				return false;
 			}else {
@@ -274,6 +246,15 @@ public class UserRestController {
 			userService.deleteUser(user2);
 			
 			return true;
+			}*/
+			Map<String, Object> map = new HashMap<String, Object>();
+			if(user2.getUserLeave()==null) {
+				userService.deleteUser(user2);
+				map.put("resign", "1");
+				return map;
+			}else {
+				map.put("resign", "0");
+				return map;
 			}
 	}
 }

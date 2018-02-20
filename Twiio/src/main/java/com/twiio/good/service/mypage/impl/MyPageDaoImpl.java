@@ -31,6 +31,7 @@ public class MyPageDaoImpl implements MyPageDao{
 	@Override
 	public void addMessage(Message message) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("messageDaoImpl :: "+message);
 		sqlSession.insert("MyPageMapper.addMessage",message);
 	}
 

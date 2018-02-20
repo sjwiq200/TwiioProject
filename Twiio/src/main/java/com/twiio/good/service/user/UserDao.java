@@ -39,7 +39,9 @@ public interface UserDao {
 	// UPDATE
 	public void findPassword(User user) throws Exception ;	
 	
-	public void addEvalUser(UserEval tagetUser, User evalUser, String scheduleNo) throws Exception;
+	public void addEvalUser(UserEval tagetUser) throws Exception;
+	
+	public int addEvalUserCheck(UserEval userEval) throws Exception;
 	
 	public List getStarEvalHost(User user) throws Exception;
 	
@@ -53,7 +55,7 @@ public interface UserDao {
 	
 	public void  updateSharedPlan(Map<String, Object> map) throws Exception;
 
-	// °Ô½ÃÆÇ Page Ã³¸®¸¦ À§ÇÑ ÀüÃ¼Row(totalCount)  return
+	// ï¿½Ô½ï¿½ï¿½ï¿½ Page Ã³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼Row(totalCount)  return
 	public int getTotalCount(Search search) throws Exception ;
 	
 	public void sendMail(String email, String authNum)throws Exception;

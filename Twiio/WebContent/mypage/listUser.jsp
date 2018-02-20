@@ -26,7 +26,7 @@
    <link href="/resources/css/animate.min.css" rel="stylesheet">
    <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/javascript/bootstrap-dropdownhover.min.js"></script>
+   <script src="/resources//javascript/bootstrap-dropdownhover.min.js"></script>
    <link rel="stylesheet" href="/resources/css/font.css" />
    
    <!-- jQuery UI toolTip 사용 CSS-->
@@ -185,9 +185,10 @@
 		
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(3)" ).on("click" , function() {
-				var userNo = $($('input[name=userss]')[$('td:nth-child(3)').index(this)] ).val(); 
-				 //self.location ="/user/getUser?userNo="+userNo;
-				 $('#getUserProfile').modal('show'); 
+				var userNo = $($('input[name=userss]')[$('td:nth-child(3)').index(this)] ).val();
+				window.open("/user/getProfile2?userNo="+userNo,"getProfile2","width=500, height=650,status=no, scrollbars=no, location=no");
+				//self.location ="/user/getProfile2?userNo="+userNo;
+				 
 			});
 						
 			//==> userId LINK Event End User 에게 보일수 있도록 
@@ -358,7 +359,7 @@
 			  <td align="center">${ i }</td>
 			  <td align="left">
 			  <c:if test="${empty user.userImage}"><img style="width:70px; height:70px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-			  <c:if test="${!empty user.userImage}"><img style="width:70px; height:70px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive"></c:if>
+			  <c:if test="${!empty user.userImage}"><img style="width:70px; height:70px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
 			  </td>
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>
@@ -378,26 +379,6 @@
  	</div>
  	</div>
  	
- 	<div class="modal fade" id="getUserProfile2" role="dialog">
-		<div class="modal-dialog modal-lg">
-			<!-- Modal content-->
-			<div class="modal-content">
-				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
-						<Strong>회원 정보</Strong>
-					</h4>
-					<h7 class="modal-title">TWIIO</h7>
-				</div>
-				<div class="modal-body">
-					<div class="info"></div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				</div>
-			</div>
-		</div>
-	</div>
  	<!--  화면구성 div End /////////////////////////////////////-->
  	<!-- PageNavigation Start... -->
 	<jsp:include page="../common/pageNavigator_new.jsp"/>

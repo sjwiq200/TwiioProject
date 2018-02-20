@@ -46,6 +46,13 @@ public class CommunityDaoImpl implements CommunityDao{
 		// TODO Auto-generated method stub
 		sqlSession.update("CommunityMapper.updateCommunity",community);
 	}
+	
+
+	@Override
+	public void updateThumbnail(Community community) throws Exception {
+		// TODO Auto-generated method stub
+		sqlSession.update("CommunityMapper.updateThumbnail",community);
+	}
 
 	@Override
 	public void deleteCommunity(int communityNo) throws Exception {

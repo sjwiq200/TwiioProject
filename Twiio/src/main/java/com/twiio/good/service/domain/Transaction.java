@@ -5,6 +5,7 @@ import java.sql.Date;
 public class Transaction {
 	
 	private int tranNo;
+	private int productNo;
 	private Product tranPro;
 	private String requirement;
 	private int totalPrice;
@@ -23,7 +24,7 @@ public class Transaction {
 	private double evalHost;
 	private String userName;
 	private String hostName;
-	
+	private String evalReview;
 
 	public Transaction() {
 		// TODO Auto-generated constructor stub
@@ -180,7 +181,22 @@ public class Transaction {
 	public void setHostName(String hostName) {
 		this.hostName = hostName;
 	}
+	
+	public int getProductNo() {
+		return productNo;
+	}
 
+	public void setProductNo(int productNo) {
+		this.productNo = productNo;
+	}
+
+	public String getEvalReview() {
+		return evalReview;
+	}
+
+	public void setEvalReview(String evalReview) {
+		this.evalReview = evalReview;
+	}
 
 	@Override
 	public String toString() {
