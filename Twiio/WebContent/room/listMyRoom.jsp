@@ -60,7 +60,7 @@
 			 })
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			 /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -149,9 +149,22 @@
 
 											for (var i = 0; i < JSONData.length; i++) {
 												var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
-														+ '<div class="thumbnail" name="getPro" style="height:500px;">'
-														+ '<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">'
-														+ '<div class="caption">'
+														+ '<div class="thumbnail" name="getPro" style="height:550px;">'
+														
+														if(JSONData[i].type == '식사'){
+															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+														  }
+														  else if(JSONData[i].type == '체험' ) {
+															  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >';
+														  }
+														  else if(JSONData[i].type == '관람') {
+															  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >';
+														  }
+														  else if(JSONData[i].type == '미정') {
+															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+														  }
+														/* + '<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">' */
+														displayValue += '<div class="caption" style="text-align: center;">'
 														+ '<h3>'
 														+ JSONData[i].roomName
 														+ '</h3>'
@@ -167,25 +180,33 @@
 														+ '<p>'
 														+ JSONData[i].headCount
 														+ '명 </p>'
+														+ '<p style="position: absolute;bottom:10%; right:10%" >'
+														<c:if test="${!empty user}">
+														
 														+ '<a href="#" class=" btn btn-default" role="button">참가'
 														+ '<input type="hidden" id="roomKey" value="'
 														+ JSONData[i].roomKey
 														+ '">'
 														+ '<input type="hidden" id="master" value="'
 														+ JSONData[i].userNo
-														+ '">'
-														
-														<c:if test="${user.userNo == JSONData[i].userNo }">
-									            			+'<a href="#">방 수정<input type="hidden" id="roomKey" value="'
-									            			+ JSONData[i].roomKey
-									            			+'"></a>'
-									            			</c:if>
-									            			+ '</div>'
-
+														+ '"></a>'
+														+ '<a class="btn btn-outlined btn-light btn-sm" id="out">'
+														+ '<input type="hidden" id="roomKey" value="'
+														+ JSONData[i].roomKey
+														+'">나가기</a>'
+														</c:if>
+														displayValue += '</p><p>'
+														var userNo = ${user.userNo};
+														if( userNo == JSONData[i].userNo){
+															displayvalue += '<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:15%">방 수정<input type="hidden" id="roomKey" value="'
+										            			+ JSONData[i].roomKey
+										            			+'"></a>'	
+														}
+									            			displayValue += '</div>'
 												$('.row2').append(displayValue);
-											}
-										}
-									});
+											}//END for Loof
+										}//End success
+									});//End ajax
 							}
 						});
 	});
@@ -370,7 +391,7 @@
 			            나가기
 			            </a>
 		            </c:if>
-		            <p>
+		            </p>
 		            <p>
 		            <c:if test="${user.userNo == room.userNo }">
 		            		<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:15%">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>

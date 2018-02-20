@@ -56,7 +56,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -121,10 +121,24 @@
 												}
 
 												for (var i = 0; i < JSONData.length; i++) {
-													var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
+													if(JSONData[i].open == true) {
+														var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
 															+ '<div class="thumbnail" name="getPro" style="height:500px;">'
-															+ '<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">'
-															+ '<div class="caption">'
+															
+															  if(JSONData[i].type == '식사'){
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '체험' ) {
+																  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '관람') {
+																  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '미정') {
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  }
+															
+															displayValue += '<div class="caption" style="text-align: center;">'
 															+ '<h3>'
 															+ JSONData[i].roomName
 															+ '</h3>'
@@ -140,7 +154,7 @@
 															+ '<p>'
 															+ JSONData[i].headCount
 															+ '명 </p>'
-															+ '<a href="#" class=" btn btn-default" role="button">참가'
+															+ '<a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%" >참가'
 															+ '<input type="hidden" id="roomKey" value="'
 															+ JSONData[i].roomKey
 															+ '">'
@@ -150,9 +164,11 @@
 															+ '</div>'
 
 													$('div.row2').append(displayValue);
-												}
-											}
-										});
+													}//End if
+													
+												}//End for Loof
+											}//End success
+										});//End ajax
 								}
 							});
 		}); 
@@ -221,11 +237,11 @@ h2 {
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<div class="container" style="background: url('/resources/images/room/bg-masthead.jpg') no-repeat center center; background-size:cover;height:600px; width:100%;">
+	<div class="container" style="background: url('/resources/images/room/bg-masthead.jpg') no-repeat center center; background-size:cover; height:600px; width:100%;">
 		
 		<h2 class="text-center" style="color:#FFFFFF; margin-top:5%;"><strong>TwiiChat</strong></h2>
 		<!-- FORM -->
-		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:250px;">
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:250px; ">
 			<form role="form" style="padding:10px;">
 				
 	    			<div class="row">

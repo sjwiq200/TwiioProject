@@ -79,7 +79,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 
-	<div class="jumbotron" style="margin-top:15%;">	
+	<div class="jumbotron" style="margin-top:10%;">	
 
 		<!-- <h1 class="bg-primary text-center">채팅방 생성 </h1> -->
 		<h2 class="text-center" style="color:#08708A; font-size: 5em;"><strong>TwiiChat</strong></h2>

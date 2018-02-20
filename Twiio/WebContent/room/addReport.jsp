@@ -37,7 +37,7 @@
 	
 	<style>
        body {
-            padding-top : 100px;
+            
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -192,7 +192,6 @@
 							<label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">신고 유형</label>
 							<div class="col-xs-4">
 								<select  class="form-control" id="targetUserNo">
-									<option value="0" selected="selected">채팅방 신고</option>
 									<c:forEach var="user" items="${list}">
 										<option value="${user.userNo }">${user.userName }</option>
 									</c:forEach>

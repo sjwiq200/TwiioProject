@@ -171,7 +171,7 @@ public class RoomDaoImpl implements RoomDao {
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
 		query.skip(search.getStartRowNum()-1); //start Num
-		query.limit(search.getEndRowNum()); //end Num
+		query.limit(search.getEndRowNum()+1); //end Num
 		
 		System.out.println("mongotemplate list ==>"+mongoTemplate.find(query, RoomUser.class, "roomUser"));
 		List<RoomUser> list =mongoTemplate.find(query, RoomUser.class, "roomUser"); 

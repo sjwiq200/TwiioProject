@@ -132,12 +132,15 @@
 														+ '</p>'
 														
 														if(scheduleObject.room[i].userNo == ${user.userNo} ){
-														+'<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:10%">일정 수정<input type="hidden" id="roomKey" value="'+scheduleObject.schedule[i].roomKey+'"></a>'
+														+'<a href="#" class=" btn btn-default" style="position: absolute;bottom:5%; right:40%">일정 수정<input type="hidden" id="roomKey" value="'+scheduleObject.schedule[i].roomKey+'"></a>'
 														}	
 														
+													 	displayValue += '<p>'
+													 	+ '<a href="#" class="btn btn-outlined btn-light" style="position: absolute;bottom:5%; right:10%">유저 평가<input type="hidden" id="roomKey" value="'
+													 	+scheduleObject.schedule[i].roomKey
+													 	+'"></a></p>'
 														+ '</div>'
 														console.log("manner makes man ==>" + displayValue);
-
 												$('div.row2').append(displayValue);
 											}
 										}

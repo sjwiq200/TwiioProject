@@ -8,6 +8,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.annotation.CheckForNull;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -16,7 +17,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,11 +57,11 @@ public class DailyPlanController {
 	@Qualifier("userServiceImpl")
 	private UserService userService;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½////////
 	@Value("#{commonProperties['dailyPlanImageFilePath']}")
 	String dailyPlanImageFilePath;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½////////
 	@Value("#{commonProperties['dailyPlanImageFilePathLocal']}")
 	String dailyPlanImageFilePathLocal;
 
@@ -290,16 +293,24 @@ public class DailyPlanController {
 
 	}
 
-	@RequestMapping(value = "addMap")
+	@RequestMapping(value = "addMap", method=RequestMethod.POST)
 	public String addMap(
 			@ModelAttribute("planContent") PlanContent planContent,
+			@RequestBody String aaaaa,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
-			@RequestParam("mainPlanNo") int mainPlanNo,
-			HttpServletRequest request, Model model) throws Exception {
+			@RequestParam("mainPlanNo") int mainPlanNo
+//			HttpServletRequest request, Model model
+			) throws Exception {
+		
+		
 		
 		System.out.println("Controller : addMap <START>");
 		
+		
 		System.out.println("####" + planContent);
+		System.out.println("aaaaa"+ aaaaa);
+		
+		
 		
 		String mapImage = (planContent.getMapAddress()).replaceAll("[(]", "");
 		mapImage =mapImage.replaceAll("[)]","");
@@ -380,7 +391,7 @@ public class DailyPlanController {
 		
 		
 		
-		////////////////////////»çÀÌµå ¹Ù Ãß°¡·Î »ý±ä ºÎºÐ//////////////////////////
+		////////////////////////ï¿½ï¿½ï¿½Ìµï¿½ ï¿½ï¿½ ï¿½ß°ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½//////////////////////////
 		
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
