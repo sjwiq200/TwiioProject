@@ -41,27 +41,51 @@
 	<link href="/resources/css/add,updateRoom.css" rel="stylesheet" type="text/css"/>
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<link rel="stylesheet" href="/resources/css/font.css" />
 
+<style>
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  width:500px;
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #3B3B3B;
+  font-size: 20px;
+  background: transparent;
+   padding: 10px 40px 10px 40px; 
+  border: solid #616161 1px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #616161;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  color:#ffffff;
+}
+</style>
 
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 
 		//============= "가입"  Event 연결 =============
 		 $(function() {
-			$( "button" ).on("click" , function() {
+			$( "#listRoom" ).on("click" , function() {
 				self.location = "/room/listRoom";
 			});
 		});
 
 
 		$(function() {
-			$("a:contains('참여 방목록')").on("click" , function() {
+			$("#myListRoom").on("click" , function() {
 				$(self.location).attr("href","/room/listMyRoom");
 			});
 		});
 
 		$(function() {
-			$( "a:contains('일정 목록')" ).on("click" , function() {
+			$( "#scheduleList" ).on("click" , function() {
 				$(self.location).attr("href","/schedule/listSchedule");
 			});
 		});
@@ -86,14 +110,18 @@
 		<div class="panel-body">
 			<div class="row">
 				<div class="col-md-12 text-center">
-					<button type="button" class="btn btn-outlined btn-light btn-sm" style="width: 50%;" >방 목 록</button>
+					<!-- <button type="button" class="btn btn-outlined btn-light btn-sm" style="width: 50%;" >방 목 록</button> -->
+					<button type="button" class="btn-dy2" id="listRoom" width="30px" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';"/><strong>방 목 록</strong></button>
+						
 				</div>
 				<c:if test="${!empty user}">
 					<div class="col-md-12 text-center">
-						<a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" style="width: 50%; margin-top: 5%;">참여 방목록</a>
+						<button type="button" class="btn-dy2" id="myListRoom" width="30px" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';"/><strong>참여 방목록</strong></button>
+						<!-- <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" style="width: 50%; margin-top: 5%;">참여 방목록</a> -->
 					</div>
 					<div class="col-md-12 text-center">
-						<a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" style="width: 50%; margin-top: 5%;">일정 목록</a>
+						<button type="button" class="btn-dy2" id="scheduleList" width="30px" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';"/><strong>일정 목록</strong></button>
+						<!-- <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" style="width: 50%; margin-top: 5%;">일정 목록</a> -->
 					</div>
 				</c:if>
 			</div>

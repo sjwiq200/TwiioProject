@@ -1357,10 +1357,7 @@ $(function() {
 				<div class="modal-body col-sm-12">
 				
 						<form name="form" enctype="multipart/form-data">
-							<div class="form-group">
-	
-								
-									
+							<div class="form-group">	
 									<div class="filebox bs3-primary preview-image">
 			                            <input class="upload-name col-sm-4 col-sm-offset-3"  value="파일선택" disabled="disabled" style="width: 200px;">
 			                            <label for="input_file" class="col-sm-2 col-offset-4">사진 선택</label> 
