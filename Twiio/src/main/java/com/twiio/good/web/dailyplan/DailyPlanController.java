@@ -290,15 +290,19 @@ public class DailyPlanController {
 
 	}
 
-	@RequestMapping(value = "addMap")
+	@RequestMapping(value = "addMap", method = RequestMethod.POST)
 	public String addMap(
 			@ModelAttribute("planContent") PlanContent planContent,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
 			@RequestParam("mainPlanNo") int mainPlanNo,
+			@RequestParam("mapAddress") String mapAddress,
 			HttpServletRequest request, Model model) throws Exception {
 		
 		System.out.println("Controller : addMap <START>");
 		
+		System.out.println("dailyPlanNo :: "+dailyPlanNo);
+		System.out.println("mainPlanNo :: "+mainPlanNo);
+		System.out.println("mapAddress :: "+mapAddress);
 		System.out.println("####" + planContent);
 		
 		String mapImage = (planContent.getMapAddress()).replaceAll("[(]", "");

@@ -455,7 +455,7 @@ body::-webkit-scrollbar-thumb {
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
-					$("form").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
+					$("form[name=form]").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
 			});
 	});
 	
@@ -687,10 +687,13 @@ $(function() {
 							dailyCountry : target.val()
 						}),
 						success : function(JSONData) {
-							//alert(JSON.stringify(JSONData));				
+							//alert(JSON.stringify(JSONData));
+							//alert(JSON.stringify(JSONData.dailyCountry));
+							$("p.getCountry").empty();
+							$("p.getCountry").append(JSONData.dailyCountry);
 						}
 				});			
-				$("p.getCountry").append(target.val()+"  ");
+				//$("p.getCountry").append(target.val()+"  ");
 				target.hide();
 			});
 			
@@ -710,11 +713,11 @@ $(function() {
 				$("p.getCity").empty();
 				
 				$("#countryButtonGroup").show();
-				$("input.countrySelectButton").show();
+				$("input[name=countrySelectButton]").show();
 				
 			});
 			
-			$("input.SelectButton").on("click",function(){
+			$("input[name=SelectButton]").on("click",function(){
 				alert($(".cityList").index($(".cityList").last()));
 				var cityName="";
 				for(var i=0; i<$(".cityList").index($(".cityList").last())+1; i++){
@@ -726,7 +729,7 @@ $(function() {
 					}
 					
 				}
-				$("input[name='cityList']").val();
+				//$("input[name='cityList']").val();
 				$.ajax( 
 						{
 						url : "/dailyplan/json/selectCity",
@@ -741,10 +744,10 @@ $(function() {
 							//alert(JSON.stringify(JSONData));				
 						}
 				});		
-				
+				$("p.getCity").append(cityName);
 				
 				$("#countryButtonGroup").hide();
-				$("input.countrySelectButton").hide();
+				$("input[name=countrySelectButton]").hide();
 				
 				$.ajax( 
 						{
@@ -785,12 +788,13 @@ $(function() {
 		
 		});
 		
-		$(document).on('change',"input[name='cityList']",function() {
+		/* $(document).on('change',"input[name='cityList']",function() {
 			var target = $( event.target );				
 					
 			$("p.getCity").append(target.val()+"  ");
 			
-		});
+		});	 */	
+		
 
 	var i = 1;
 	$(function() {
@@ -979,10 +983,16 @@ $(function() {
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
-				<h2><strong>Contents</strong></h2><br/><br/>
-				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" style="border-radius: 5%;">
+				<h2><strong>Contents</strong></h2><br/><br/>				 
+				<c:if test="${empty user.userImage}"><img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" height="60px" style="border-radius: 5%;"></c:if>
+				<c:if test="${!empty user.userImage}">
+				<img src="/resources/images/userimages/${user.userImage}" width="60px" height="60px" style="border-radius: 5%;">
+				</c:if>
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
-					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" style="border-radius: 5%;">
+					<c:if test=" ${empty listUser.userImage}"><img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" height="60px" style="border-radius: 5%;"></c:if>
+					<c:if test="${!empty listUser.userImage}">
+					<img src="/resources/images/userimages/${listUser.userImage}" width="60px" height="60px" style="border-radius: 5%;">
+					</c:if>					
 				</c:forEach>
 				<h5> Writer :  ${dailyPlan.user.userName}
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
