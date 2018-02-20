@@ -64,12 +64,14 @@
  	
 	
 	<style>
-       body > div.container{
+      /*  body > div.container{
         	border: 3px solid #D6CDB7;
-            margin-top: 10px;
-        }
+            padding-top : 20px ;
+        } */
         body {
-            padding-top : 50px;
+        	padding-top : 70px ;
+            background-color: #f1eeee;
+			color: #666666 ;
         }
         textarea {
 	  width: 100%;
@@ -78,44 +80,44 @@
 		}
 
  		.button-2{
-  width:140px;
-  height:50px;
-  border:2px solid #34495e;
-  float:left;
-  text-align:center;
-  cursor:pointer;
-  position:relative;
-  box-sizing:border-box;
-  overflow:hidden;
-  margin:0 0 40px 50px;
-}
-.button-2 a{
-  font-family:arial;
-  font-size:16px;
-  color:#34495e;
-  text-decoration:none;
-  line-height:50px;
-  transition:all .5s ease;
-  z-index:2;
-  position:relative;
-}
-.eff-2{
-  width:140px;
-  height:50px;
-  top:-50px;
-  background:#34495e;
-  position:absolute;
-  transition:all .5s ease;
-  z-index:1;
-}
-.button-2:hover .eff-2{
-  top:0;
-}
-.button-2:hover a{
-  color:#fff;
-}
-
-.btn.btn-default:hover, .btn.btn-default:active{
+		  width:140px;
+		  height:50px;
+		  border:2px solid #34495e;
+		  float:left;
+		  text-align:center;
+		  cursor:pointer;
+		  position:relative;
+		  box-sizing:border-box;
+		  overflow:hidden;
+		  margin:0 0 40px 50px;
+		}
+		.button-2 a{
+		  font-family:arial;
+		  font-size:16px;
+		  color:#34495e;
+		  text-decoration:none;
+		  line-height:50px;
+		  transition:all .5s ease;
+		  z-index:2;
+		  position:relative;
+		}
+		.eff-2{
+		  width:140px;
+		  height:50px;
+		  top:-50px;
+		  background:#34495e;
+		  position:absolute;
+		  transition:all .5s ease;
+		  z-index:1;
+		}
+		.button-2:hover .eff-2{
+		  top:0;
+		}
+		.button-2:hover a{
+		  color:#fff;
+		}
+		
+		.btn.btn-default:hover, .btn.btn-default:active{
 			color: #FFF;
 			background: #08708A;
 			border-color: #08708A;
@@ -169,6 +171,25 @@
 		.red{
     	color:red;
    	   }
+   	   .btn-outlined.btn-light:hover,
+			.btn-outlined.btn-light:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    background: #f4f4f4;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			
+			.btn-xs{
+				font-size:11px;
+				line-height:14px;
+				border: 1px solid;
+				padding:5px 10px;
+			}
 
 	</style>
 
@@ -241,6 +262,18 @@ function resetData() {
 								}
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
+											 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+											 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+											'<div class="col-sm-12"><div style="font-size: 0.8em;"><strong style="font-size: 1.2em;">&nbsp;&nbsp;'+
+											JSONData.list[i].userName+'</strong>&nbsp;&nbsp;'+
+											JSONData.list[i].replyRegDate+
+											'</div></div>'+tool+'<div class ="row" name="upcontent"><div class="col-sm-10 col-sm-offset-1">'+
+											(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+'</div></div></div><hr class="col-sm-12" style="border-style:dotted">';
+											
+								
+								
+								/* '<div class="row2">'+
 												 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
 												 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 												 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
@@ -256,7 +289,7 @@ function resetData() {
 					    						   '</div>'+
 					    						   '<div class="col-xs-12">'+
 												   '<hr sytle="border-style:dotted">'+
-								  				   '</div></div>';
+								  				   '</div></div>'; */
 							}
 							}
 							
@@ -264,14 +297,14 @@ function resetData() {
 								 $("#aReply").remove();
 							}
 							var totalcount=
-							'<div class="col-md-2 col-md-offset-1">'+
+								'<div class="col-sm-10 col-sm-offset-1">'+
 								'<strong>댓 글 목 록</strong>'+		
-							'</div>'+
-							'<div class="col-md-2" >'+
-								'댓글수  : '+JSONData.totalCount+				
-							'</div>';
+								'</div>'+
+								'<div class="pull-right" style="font-size: 1em;" >'+
+									'댓글수  : '+JSONData.totalCount+				
+								'</div>';
 	
-							$('.row').html(displayValue);
+							$('#replylist').html(displayValue);
 							$('#totalCount').html(totalcount); 
 						}
 			}); 
@@ -330,8 +363,17 @@ function resetData() {
 	    						   
 	    						   
 								
-							 displayValue += 
-											   '<div class="row2">'+
+							 displayValue += '<div class="row2">'+
+											 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+											 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+											 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+											'<div class="col-sm-12"><div style="font-size: 0.8em;"><strong style="font-size: 1.2em;">&nbsp;&nbsp;'+
+											JSONData.list[i].userName+'</strong>&nbsp;&nbsp;'+
+											JSONData.list[i].replyRegDate+
+											'</div></div>'+tool+'<div class ="row" name="upcontent"><div class="col-sm-10 col-sm-offset-1">'+
+											(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+'</div></div></div><hr class="col-sm-12" style="border-style:dotted">';
+											
+											  /*  '<div class="row2">'+
 											   '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
 											   '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
 											   '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
@@ -348,19 +390,18 @@ function resetData() {
 				    						   '</div>'+
 				    						   '<div class="col-xs-12">'+
 											   '<hr sytle="border-style:dotted">'+
-							  				   '</div></div>';
+							  				   '</div></div>'; */
 							}
 							var totalcount=
-							'<div class="col-md-2 col-md-offset-1">'+
+							'<div class="col-sm-10 col-sm-offset-1">'+
 							'<strong>댓 글 목 록</strong>'+		
 							'</div>'+
-							'<div class="col-md-2" >'+
+							'<div class="pull-right" style="font-size: 1em;" >'+
 								'댓글수  : '+JSONData.totalCount+				
 							'</div>';
 							
-							$('.row div[name=replylist]').html(displayValue); 					   
+							$('#replylist').html(displayValue); 					   
 							$('#totalCount').html(totalcount);
-							window.location.reload();
 						}
 			}); 
 			 } 
@@ -618,18 +659,18 @@ function resetData() {
 	});
 	
 	$(document).ready(function(){ 
-	    $('#characterLeft').text('100 characters left');
+	    $('#characterLeft').text('100 characters left').attr("style","font-size: 1em;");
 	    $('#replyContent').keyup(function () {
 	        var max = 100;
 	        var len = $(this).val().length;
 	        if (len >= max) {
-	            $('#characterLeft').text('You have reached the limit');
+	            $('#characterLeft').text('You have reached the limit').attr("style","font-size: 1em;");
 	            $('#characterLeft').addClass('red');
 	            $('#write').addClass('disabled');            
 	        }
 	        else {
 	            var ch  = max - len;
-	            $('#characterLeft').text(ch + ' characters left');
+	            $('#characterLeft').text(ch + ' characters left').attr("style","font-size: 1em;");
 	            $('#write').removeClass('disabled');
 	            $('#characterLeft').removeClass('red');            
 	        }
@@ -645,80 +686,90 @@ function resetData() {
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	
-   	 <div class="container">
-   	 <div class="col-xs-10 col-xs-offset-1">		
-		<div class="page-header text-info" style="font-family: 'Pacifico', cursive;">
-			<c:if test="${communityType == '0'}">
-				<h2 align="center" style="color:#08708A;"><strong>Question Q&A</strong></h2>
-			</c:if>
-			<c:if test="${communityType == '1'}">
-				<h2 align="center" style="color:#08708A;"><strong>Trip Review</strong></h2>
-			</c:if>
-		</div>
-		
+   <div class="container jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >
+   	 
+   	 <div class="col-xs-10 col-xs-offset-1">
+   	 			
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
+		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
-		<div class="form-group">
-			<div class="pull-left">
-				<h3><strong>
-		    	<c:if test="${community.communityType == 1}"> 	
-		    	
-		    	<c:if test="${community.communitySubTitle == 0}">
-		    		[도시]
-		    	</c:if>
-		    	<c:if test="${community.communitySubTitle == 1}">
-		   	 		[루트]
-		    	</c:if>
-		    	<c:if test="${community.communitySubTitle == 2}">
-		   	 		[교통]
-		    	</c:if>
-		    	<c:if test="${community.communitySubTitle == 3}">
-		    		[숙소]
-		    	</c:if>
-		    	<c:if test="${community.communitySubTitle == 4}">
-		    		[쇼핑]
-		    	</c:if>
-		    	<c:if test="${community.communitySubTitle == 5}">
-		    		[기타]
-		    	</c:if> 
-		       			|	   
-		       	</c:if>${community.communityTitle}
-		   		</strong></h3>
-			 </div>
-			<div class="pull-right"><h4><strong>조회수  :  ${community.viewCount} / 등록일  :  ${community.regDate}</strong></h4></div>
+		<div class="form-group" style="padding-top : 60px;">
+			<div class="row">
+				<div class="col-sm-12">
+						<div class="col-sm-12">
+								<c:if test="${community.communityType == '0'}">
+									<div style="color:#08708A;">&nbsp;&nbsp;[ Question Q&A ]</div>
+								</c:if>
+								<c:if test="${community.communityType == '1'}">
+									<div style="color:#08708A;">&nbsp;&nbsp;[ Trip Review ]</div>
+								</c:if>
+							<strong style="font-size: 2em;">
+					    	<c:if test="${community.communityType == 1}"> 	
+					    	
+					    	<c:if test="${community.communitySubTitle == 0}">
+					    		[도시]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 1}">
+					   	 		[루트]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 2}">
+					   	 		[교통]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 3}">
+					    		[숙소]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 4}">
+					    		[쇼핑]
+					    	</c:if>
+					    	<c:if test="${community.communitySubTitle == 5}">
+					    		[기타]
+					    	</c:if> 
+					       			|	   
+					       	</c:if>${community.communityTitle}
+					   		</strong>
+							<div class="pull-right" style="font-size: 1em; padding-top : 15px;">조회수  :  ${community.viewCount} | 등록일  :  ${community.regDate} | 작성자  :  ${community.userName}</div>
+						</div>
+					</div>
+				</div>
 		</div>
 		
-		<hr sytle="border-style:dotted">
+		<hr>
 	
-		<div class="form-group">
-		    <div class="pull-left"><h4><strong>[  작성자  :  ${community.userName} ]</strong></h4></div>
-		    <c:if test="${empty user.userId}">
-		    </c:if>
-		    <c:if test="${!empty user.userId}">
-		    <div class="pull-right">
-		    	<c:if test="${community.userNo != user.userNo}">
-					<button type="button"  id="addfriendcommunity" class="btn btn-default">친구추가</button>
-				</c:if>
-				<c:if test="${community.userNo == user.userNo}">
-					<button type="button"  id="updatecommunity" class="btn btn-default">수정하기</button>
-				</c:if>
+		<div class="form-group" style="padding-top : 20px; padding-bottom : 20px;">
+			<div class="col-sm-10 col-sm-offset-1">	
+				<div>
+					${community.communityContent}
+				</div>
 			</div>
-		    </c:if>
 		</div>
 		
-		<div class="form-group">			
-			${community.communityContent}
-		</div>
-		<hr sytle="border-style:dotted">
+		
+			<div class="form-group">
+				<div class="col-sm-12">
+				    <c:if test="${empty user.userId}">
+				    </c:if>
+				    <c:if test="${!empty user.userId}">
+				    <div class="pull-right">
+				    	<c:if test="${community.userNo != user.userNo}">
+							<button type="button"  id="addfriendcommunity" class="btn btn-outlined btn-light btn-xs">친구추가</button>
+						</c:if>
+						<c:if test="${community.userNo == user.userNo}">
+							<button type="button"  id="updatecommunity" class="btn btn-outlined btn-light btn-xs">수정하기</button>
+						</c:if>
+					</div>
+				    </c:if>
+				  </div>
+			</div>
+		<hr>
 	
 		
 		<div class="form-group" id="replyinput">
-			<div class="col-md-8 col-md-offset-1">
+			<div class="col-sm-10">
 				<textarea id="replyContent"  name="comment_content" style="resize:none;" row=2 col=50 value=""></textarea>
-				<span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
 			</div>
-			<div class="col-md-1">
-				<button type="button"  id="write" class="btn btn-default">댓글입력</button>
+			<div class="col-sm-2">
+				<button type="button"  id="write" class="btn btn-default" style="margin-top : 20px;">댓글입력</button>
+				<span class="help-block" ><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
 			</div>
 		</div>
 		
@@ -726,27 +777,33 @@ function resetData() {
 		<br/>
 		<br/>
 		<div class="form-group" id = "totalCount">
-			<div class="col-md-2 col-md-offset-1">
+			<div class="col-sm-10 col-sm-offset-1">
 				<strong>댓 글 목 록</strong>		
-			</div>
-			<div class="col-md-2" >
-				댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
-					   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
+			
+				<div class="pull-right" style="font-size: 1em;">
+					댓글수  : <c:if test="${totalCountReply == null}">0</c:if>
+						   <c:if test="${totalCountReply != null}">${totalCountReply}</c:if>				
+				</div>
 			</div>
 		</div>
-		<hr sytle="border-style:dotted"/>
-	
+		
+			<hr>
 
-		<div class="row" name="replylist">
+		<div class="row col-sm-12" id="replylist">
 		<c:forEach var="reply" items="${list}">
 		<div class= "row2">
 			<input type="hidden" name="userNo" 	  	 value="${reply.userNo}"/>
 			<input type="hidden" name="userName" 	 value="${reply.userName}"/>
 			<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
 			<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
-			<div class="col-md-2 col-md-offset-1">
-    			[작성자  : ${reply.userName}]
-    		</div>
+			
+			<div class="col-sm-12">
+				<div style="font-size: 0.8em;">
+	    			<strong style="font-size: 1.2em;">&nbsp;&nbsp;${reply.userName}</strong>&nbsp;&nbsp; ${reply.replyRegDate}
+	    		</div>
+	    	</div>	
+	    		
+	    		
     		<c:if test="${empty user.userId}">
 		    </c:if>
 		    <c:if test="${!empty user.userId}">
@@ -765,18 +822,13 @@ function resetData() {
 			</c:if>
 		
 		<div class ="row" name="upcontent">
-    		<div class="col-md-11 col-md-offset-1">
+    		<div class="col-sm-10 col-sm-offset-1">
     			${reply.replyContent}
     		</div>
     	</div>
-    	<div class ="row" name="upregdate">
-    		<div class="col-md-11 col-md-offset-1">
-    			${reply.replyRegDate}
-    		</div>
-    	</div>
     	
-		<hr sytle="border-style:dotted">
 		</div>
+		<hr class="col-sm-12" style="border-style:dotted">
  		</c:forEach>
  		</div>
  		
@@ -785,9 +837,6 @@ function resetData() {
     		<div class="eff-2"></div>
     		<a href="#" id="addReply"> 댓글 더보기 </a>
   			</div>
-  			<div class="col-xs-12">
-			<hr sytle="border-style:dotted">
-			</div>
 		</div>
 		
 		<div class="modal fade" id="modalreport"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
@@ -903,6 +952,7 @@ function resetData() {
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 		</div>
-	</div>
+		
+		</div>
 </body>
 </html>

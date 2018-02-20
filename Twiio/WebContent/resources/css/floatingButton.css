@@ -3,47 +3,47 @@
 
 
 #floating-button{
-width: 70px;
-height: 70px;
-border-radius: 50%;
-background: #000000;
-position: fixed;
-bottom: 30px;
-right: 7%;
-cursor: pointer;
+  width: 55px;
+  height: 55px;
+  border-radius: 50%;
+  background: #616161;
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  cursor: pointer;
 }
 
 .plus{
-color: white;
-position: absolute;
-top: 20px;
-display: block;
-bottom: 0;
-left: 0;
-right: 0;
-text-align: center;
-padding: 0;
-margin: 0;
-line-height: 55px;
-font-size: 20px;
-font-family: "Pacifico", cursive;
-animation: plus-out 0.3s;
-transition: all 0.3s;
+  color: white;
+  position: absolute;
+  top: 0;
+  display: block;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  padding: 0;
+  margin: 0;
+  line-height: 55px;
+  font-size: 50px;
+  font-family: 'JEJUGOTHIC';
+  animation: plus-out 0.3s;
+  transition: all 0.3s;
 }
 
 #container-floating{
-position: fixed;
-width: 70px;
-height: 70px;
-bottom: 30px;
-right: 30px;
-z-index: 50px;
+  position: fixed;
+  width: 70px;
+  height: 70px;
+  bottom: 30px;
+  right: 30px;
+  z-index: 50px;
 }
 
 #container-floating:hover{
-height: 400px;
-width: 90px;
-padding: 30px;
+  height: 400px;
+  width: 90px;
+  padding: 30px;
 }
 
 #container-floating:hover .plus{
@@ -175,7 +175,7 @@ position: absolute;
 left: 0;
 right: 0;
 margin: 0;
-top: 11px;
+top: 4px;
 bottom: 0;
 text-align: center;
 line-height: 40px;

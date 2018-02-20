@@ -355,7 +355,7 @@ function readURL(input) {
 						</c:forEach>
 							<div class="btn-group"></div>
 							<a class="btn btn-primary btn" href="#" role="button" id="addCountry" name="addCountry"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
-				    		<a class="btn btn-primary btn" href="#" role="button" id="removeCountry" name="removeCountry" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
+				    		<a class="btn btn-primary btn" href="#" role="button" id="removeCountry" name="removeCountry"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>
 				    		</div>							
 						
 						<label for="departureDate" class="col-sm-12 control-label ">출발일을 입력해주세요</label>

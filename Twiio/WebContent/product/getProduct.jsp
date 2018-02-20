@@ -200,13 +200,17 @@
 	$(function() {
 		
 		 $( "button.btn.btn-primary:contains('구매')" ).on("click" , function() {
-			 if(${empty user}){
-				 alert("로그인 후 이용해 주세요");
+			 if(${empty user}){				 
+				 swal("로그인 후 이용해 주세요",{
+					  icon: "warning",
+					});
 				 return
 			 }
 			 
-			if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){
-				alert("날짜와 갯수를 선택해주세요 :: ");	
+			if($( "#tripDate" ).val()==0 || $("select[name='count']").val()==0){				
+				 swal("날짜와 갯수를 선택해주세요 :: ",{
+					  icon: "warning",
+					});
 				return
 			}
 			
@@ -279,8 +283,10 @@
 		});
 		 
 		 $("select[name='count']").on("click",function(){
-			if($( "#tripDate" ).val()==0){
-				alert("날짜를 선택해주세요 :: ");
+			if($( "#tripDate" ).val()==0){				
+				swal("날짜를 선택해주세요 :: ",{
+					  icon: "warning",
+					});
 			} 
 		 });
 	});
@@ -845,7 +851,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	    <div class="container">
 		<hr/>
 		<div class="col-sm-12">		
-		<div class="col-sm-4 col-sm-offset-2">
+		<div class="col-sm-6 ">
 				
 		<div class="row">
 	  		<div class="col-xs-4 "><strong>상품유형</strong></div>
@@ -1006,7 +1012,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		<div class="col-sm-12">
 		<hr/>
 		<div class="row">
-	  		<div class="col-sm-4 col-sm-offset-2"><strong>상품상세정보</strong></div>
+	  		<div class="col-sm-4 "><strong>상품상세정보</strong></div>
 			<div class="col-sm-4">${product.description}</div>
 			<!-- <a href="#" type="button" class="top">Top</a> -->
 		

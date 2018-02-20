@@ -184,12 +184,12 @@ import com.twiio.good.service.user.UserDao;
 				msg.setFrom(new InternetAddress(from, MimeUtility.encodeText(fromName, "UTF-8", "B")));
 
 				InternetAddress[] address1 = { new InternetAddress(to) };
-				msg.setRecipients(Message.RecipientType.TO, address1);// 占쌨는삼옙占�
-				msg.setSubject(subject);// 占쏙옙占쏙옙占쏙옙占쏙옙
-				msg.setSentDate(new Date());// 占쏙옙占쏙옙占쏙옙 占쏙옙짜
-				msg.setContent(content, "text/html;charset=euc-kr");// 占쏙옙占쏙옙 占쏙옙占쏙옙(HTML占쏙옙占쏙옙)
+				msg.setRecipients(Message.RecipientType.TO, address1);// �޴»��
+				msg.setSubject(subject);// ��������
+				msg.setSentDate(new Date());// ������ ��¥
+				msg.setContent(content, "text/html;charset=euc-kr");// ���� ����(HTML����)
 
-				Transport.send(msg);// 占쏙옙占싹븝옙占쏙옙占쏙옙
+				Transport.send(msg);// ���Ϻ�����
 				
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -201,6 +201,7 @@ import com.twiio.good.service.user.UserDao;
  
 			
 		}
+
 		
 	
 	}

@@ -149,7 +149,7 @@ body::-webkit-scrollbar-thumb {
 		$("#resultMap").remove();
 		$("#addMapToPlan").remove();
 		$("#box1").append('<div class="col-xs-12"><div id="resultMapSummary"></div></div>'
-				+'<div class="col-xs-12"><button type="button" class="btn btn-default" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button></div>');
+				+'<div class="col-xs-offset-3 col-xs-6"><button type="button" class="btn btn-default" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button></div>');
 		$("#box2").append('<div id="resultMap"></div>');
 
 		var start = document.getElementById('start').value;
@@ -171,18 +171,19 @@ body::-webkit-scrollbar-thumb {
 								$(".routeDetailResult").remove();
 
 								directionsDisplay.setDirections(response);
-								totalDisplay = '<h2>길찾기 결과</h2></br><strong>총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
-										+ '<strong>출발</strong>:  '+ response.routes[0].legs[0].start_address+ '</br>'
-										+ '<strong>도착</strong>:  '+ response.routes[0].legs[0].end_address+ '</br>'
-										+ '<strong>거리</strong>:  '+ response.routes[0].legs[0].distance.text+ '</br>';
+								totalDisplay = '<h3 style="border: 1px solid black; border-radius: 5%; padding-top:5px; padding-bottom:5px">HOW TO GO</h3></br><div align="left" style="margin-bottom:5px;"><strong>#총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
+										+ '<strong>#출발</strong>:  '+ response.routes[0].legs[0].start_address+ '</br>'
+										+ '<strong>#도착</strong>:  '+ response.routes[0].legs[0].end_address+ '</br>'
+										+ '<strong>#거리</strong>:  '+ response.routes[0].legs[0].distance.text+ '</br></div>';
 
 								$("#resultMapSummary").append("<div align='center' style='font-family:\'JEJUGOTHIC\'; border-bottom: 2px dotted #3B3B3B;>"+ totalDisplay+ "</div>");
-
+								
+								var resultForMobile ="<h3>길찾기 상세정보</h3></br>"
 								var flagRight = true;
-								var resultA = "<tr align='center' style='word-wrap:break-word;word-break:break-all; > <td width='150px'></td> <td width='150px'></td> <td width='150px'></td> <td width='150px'></td> <td width='150px'></td> <td width='150px' align='center'> <img src='/resources/images/icon/plan/downCircle.png' width='30px'></td> </tr>";
-								var resultB = "<tr align='center' style='word-wrap:break-word;word-break:break-all;' align='center'><td width='150px' > <img src='/resources/images/icon/plan/downCircle.png' width='30px'></td><td width='150px'> </td><td width='150px'></td><td width='150px'>  </td> <td width='150px'>  </td></tr>";
+								var resultA = "<tr align='center' style='word-wrap:break-word;word-break:break-all; > <td width='150px' height='40px'></td> <td width='40px' height='40px'></td> <td width='150px' height='40px'></td> <td width='40px' height='40px'></td> <td width='150px' height='40px'></td> <td width='40px' height='40px' align='center'> <img src='/resources/images/icon/plan/downCircle.png' width='30px'></td> </tr>";
+								var resultB = "<tr align='center' style='word-wrap:break-word;word-break:break-all;' align='center'><td width='150px' height='40px'> <img src='/resources/images/icon/plan/downCircle.png' width='30px'></td><td width='40px' height='40px'> </td><td width='150px' height='40px'></td><td width='40px'height='40px'>  </td> <td width='150px' height='40px'>  </td></tr>";
 
-								var resultC = "<tr align='center'>";
+								var resultC = "<tr align='center' style='font-size:0.7em !important;'>";
 								var count = 0;
 								var resultNotYet = "";
 								var num=0;
@@ -208,6 +209,10 @@ body::-webkit-scrollbar-thumb {
 													+ response.routes[0].legs[0].steps[i].duration.text+ ' / '+ response.routes[0].legs[0].steps[i].distance.text+ '</br>'
 													+ response.routes[0].legs[0].steps[i].instructions
 													+ '</br></div>';
+													resultForMobile += '<div align="left" style="font-family:\'JEJUGOTHIC\';"><div>ㅡ</div>'
+														+ response.routes[0].legs[0].steps[i].duration.text+ ' / '+ response.routes[0].legs[0].steps[i].distance.text+ '</br>\n'
+														+ response.routes[0].legs[0].steps[i].instructions
+														+ '</br></div>';
 
 											/*+ '-----------'; */
 										} else {
@@ -230,20 +235,26 @@ body::-webkit-scrollbar-thumb {
 													+ ' <strong>도착장소</strong> :'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name+ '</br>'
 													+ ' <strong>차량이름</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.name+ '</br>'
 													+ ' <strong>차량번호</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.short_name+ '</br></div>';
-
+											resultForMobile +='<div align="left" style="font-family:\'JEJUGOTHIC\';"><div>ㅡ</div>'
+												+ response.routes[0].legs[0].steps[i].duration.text+ ' / '+ response.routes[0].legs[0].steps[i].distance.text+ ' / '
+												+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name+ '</br>'
+												+ ' <div><strong>출발장소</strong> :'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name+ '</div>'
+												+ ' <div><strong>도착장소</strong> :'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name+ '</div>'
+												+ ' <div><strong>차량이름</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.name+ '</div>'
+												+ ' <div><strong>차량번호</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.short_name+ '</div></div>';
 										}
 										resultNotYet += detailedDisplay + "</td>";
 										detailedDisplay = '';
 
 										if (i % 3 == 2) {//choose whether it needs to have a new row or not
 											if (count == response.routes[0].legs[0].steps.length - 1) {//but if it is last, it needs to delete arrow
-												resultC += "<tr align='center'>"+ resultNotYet+ "</tr>";
+												resultC += "<tr align='center' style='font-size:0.7em !important;'>"+ resultNotYet+ "</tr>";
 												flagRight = false;
 												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC+ "</table>");
 												resultC = "";
 												resultNotYet = "";
 											} else {
-												resultC += "<tr align='center'>"+ resultNotYet+ "</tr>";
+												resultC += "<tr align='center' style='font-size:0.7em !important;'>"+ resultNotYet+ "</tr>";
 												flagRight = false;
 												$("#resultMap").append(
 																"<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC+ resultA+ "</table>");
@@ -255,10 +266,10 @@ body::-webkit-scrollbar-thumb {
 											var rest = num%3;
 											if(rest == 1){
 												resultC += resultNotYet;flagRight = false;
-												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center'>"+ resultC+ "<td></td><td></td><td></td><td></td></tr></table>");
+												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center' style='font-size:0.7em !important;'>"+ resultC+ "<td></td><td></td><td></td><td></td></tr></table>");
 											}else if(rest == 2){
 												resultC += resultNotYet;flagRight = false;
-												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center'>"+ resultC+ "<td></td><td></td></tr></table>");
+												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center' style='font-size:0.7em !important;'>"+ resultC+ "<td></td><td></td></tr></table>");
 											}else{
 												resultC += "<tr align='center'>"+ resultNotYet + "</tr>";flagRight = false;
 												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC+ "</table>");
@@ -267,7 +278,7 @@ body::-webkit-scrollbar-thumb {
 											resultNotYet = "";
 										} else {	
 											resultNotYet = resultNotYet
-													+ "<td width='150px' style='word-break:break-all;'><img src='/resources/images/icon/plan/rightCircle.png' width='30px'> </td>";
+													+ "<td width='40px' style='word-break:break-all;'><img src='/resources/images/icon/plan/rightCircle.png' width='30px'> </td>";
 										}
 									} else {//headed to left///////////////////////////////////////////////////
 										num++;
@@ -288,6 +299,10 @@ body::-webkit-scrollbar-thumb {
 													+ response.routes[0].legs[0].steps[i].duration.text+ '</br>'
 													+ response.routes[0].legs[0].steps[i].distance.text+ '</br>'
 													+ response.routes[0].legs[0].steps[i].instructions+ '</br></div>';
+											resultForMobile += '<div align="left" style="font-family:\'JEJUGOTHIC\';"><div>ㅡ</div></br>'
+														+ response.routes[0].legs[0].steps[i].duration.text+ '</br>'
+														+ response.routes[0].legs[0].steps[i].distance.text+ '</br>'
+														+ response.routes[0].legs[0].steps[i].instructions+ '</br></div>';
 											/*+ '-----------'; */
 										} else {
 											if ((response.routes[0].legs[0].steps[i].transit.line.vehicle.name).includes("지하철")) {
@@ -309,20 +324,26 @@ body::-webkit-scrollbar-thumb {
 													+ '<strong>도착장소</strong>:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name+ '</br>'
 													+ '<strong>차량이름</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.name+ '</br>'
 													+ '<strong>차량번호</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.short_name+ '</br></div>';
-
+											resultForMobile += '<div align="left" style="font-family:\'JEJUGOTHIC\';"><div>ㅡ</div>'
+												+ response.routes[0].legs[0].steps[i].duration.text+ ' / '+ response.routes[0].legs[0].steps[i].distance.text+ ' / '
+												+ response.routes[0].legs[0].steps[i].transit.line.vehicle.name+ '</br>'
+												+ '<div><strong>출발장소</strong>:'+ response.routes[0].legs[0].steps[i].transit.departure_stop.name+ '</div>'
+												+ '<div><strong>도착장소</strong>:'+ response.routes[0].legs[0].steps[i].transit.arrival_stop.name+ '</div>'
+												+ '<div><strong>차량이름</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.name+ '</div>'
+												+ '<div><strong>차량번호</strong>:'+ response.routes[0].legs[0].steps[i].transit.line.short_name+ '</div></div>'; 
 										}
 										var a = detailedDisplay + "</td>";
 										resultNotYet = a + resultNotYet;
 										detailedDisplay = '';
 										if (i % 3 == 2) {
 											if (count == response.routes[0].legs[0].steps.length - 1) {//마지막인데 짝수인 경우 
-												resultC += "<tr align='center'>"+ resultNotYet+ "</tr>";
+												resultC += "<tr style='font-size:0.7em !important;' align='center'>"+ resultNotYet+ "</tr>";
 												flagRight = true;
 												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC	+ "</table>");
 												resultC = "";
 												resultNotYet = "";
 											} else {
-												resultC += "<tr align='center'>"+ resultNotYet+ "</tr>";
+												resultC += "<tr style='font-size:0.7em !important;' align='center'>"+ resultNotYet+ "</tr>";
 												flagRight = true;
 												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC+ resultB+ "</table>");
 												resultC = "";
@@ -330,14 +351,13 @@ body::-webkit-scrollbar-thumb {
 											}
 										} else if (count == response.routes[0].legs[0].steps.length - 1) {
 											//$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"	+ resultC+ "</table>");
-											alert("num%3 :: "+num%3);
 											var rest = num%3;
 											if(rest == 1){
 												resultC += resultNotYet;flagRight = true;
-												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center'><td></td><td></td><td></td><td></td>"+ resultC+ "</tr></table>");
+												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center' style='font-size:0.7em !important;'><td></td><td></td><td></td><td></td>"+ resultC+ "</tr></table>");
 											}else if(rest == 2){
 												resultC += resultNotYet;flagRight = true;
-												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center'><td></td><td></td>"+ resultC+ "</tr></table>");
+												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'><tr align='center' style='font-size:0.7em !important;'><td></td><td></td>"+ resultC+ "</tr></table>");
 											}else{
 												resultC += "<tr align='center'>"+ resultNotYet + "</tr>";flagRight = true;
 												$("#resultMap").append("<table id='myTable' width='600px' style='word-wrap:break-word;word-break:break-all;'>"+ resultC+ "</table>");
@@ -345,7 +365,7 @@ body::-webkit-scrollbar-thumb {
 											resultC = "";
 											resultNotYet = "";
 										} else {
-											resultNotYet = "<td width='150px' style='word-break:break-all;'><img src='/resources/images/icon/plan/leftCircle.png' width='30px'></td>"+ resultNotYet;
+											resultNotYet = "<td width='40px' style='word-break:break-all;'><img src='/resources/images/icon/plan/leftCircle.png' width='30px'></td>"+ resultNotYet;
 										}
 
 									}
@@ -355,6 +375,7 @@ body::-webkit-scrollbar-thumb {
 								
 								var resultMap=$("#resultMap").html();
 								var resultMapSummary=$("#resultMapSummary").html();
+								$("#resultForMobile").val(resultForMobile);
 								//alert(resultMapSummary);
 								$("#totalDisplay").val(resultMapSummary);
 								$("#detailedDisplay").val(resultMap);
@@ -441,29 +462,29 @@ body::-webkit-scrollbar-thumb {
 								<div id="map-canvas" align="left"></div>
 							</div>
 							
-							<div class="col-xs-5" align="center">
+							<div class="col-xs-5" align="left">
 								<div id="box1">
-									<h3>
-										출발지 <input type="text" class="form-control input-lg" id="start" name="address" value="카타루냐 광장" />
-									</h3>
+									<h4>
+										출발지 <input type="text" class="form-control input-md" id="start" name="address" value="카타루냐 광장" />
+									</h4>
 									
-									<h3>
-										도착지 <input type="text" class="form-control input-lg" id="end" name="address" value="파리" />
-									</h3>
+									<h4>
+										도착지 <input type="text" class="form-control input-md" id="end" name="address" value="파리" />
+									</h4>
 									
-									<h3>교통수단</h3>
-									<select class="form-control input-lg" id="mode" align="center">
+									<h4>교통수단</h4>
+									<select class="form-control input-md" id="mode" align="center">
 										<option value="DRIVING">자동차</option>
 										<option value="WALKING">도보</option>
 										<option value="BICYCLING">자전거</option>
 										<option value="TRANSIT" selected>대중교통</option>
 									</select>
 									
-									<div class="col-xs-6">
+									<div class="col-xs-12">
 										<div>&nbsp;</div>
 										<button type="button" align="right" class="btn btn-default btn-lg btn-block" onclick="Javascript:calcRoute();">길찾기</button>
 										<div>&nbsp;</div>
-										<div id="resultMapSummary" align="center"></div>
+										<div id="resultMapSummary"></div>
 									</div>
 								</div>
 							</div>
@@ -477,6 +498,7 @@ body::-webkit-scrollbar-thumb {
 									<input type="hidden" name="dailyPlanNo" value="${dailyPlanNo}" />
 									<input type="hidden" name="mainPlanNo" value="${mainPlanNo}" />
 									<input type="hidden" name="totalDisplay" id="totalDisplay" />
+									<input type="hidden" name="resultForMobile" id="resultForMobile" />
 									<input type="hidden" name="detailedDisplay"
 										id="detailedDisplay" /> <input type="hidden" name="type"
 										id="type" />

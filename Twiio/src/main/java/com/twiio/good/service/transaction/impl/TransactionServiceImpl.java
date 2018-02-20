@@ -105,7 +105,7 @@ public class TransactionServiceImpl implements TransactionService {
 		productDao.updateProduct(dbProduct);
 		
 		///////////////////////////////거래 추가///////////////////////////////////
-		//transactionDao.addTransaction(transaction);
+		transactionDao.addTransaction(transaction);
 		
 	}
 
