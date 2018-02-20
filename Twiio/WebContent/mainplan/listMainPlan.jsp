@@ -59,7 +59,7 @@
  <link href="/resources/css/floatingButton.css" rel="stylesheet" type="text/css" />
  
   <!--  ///////////////////////// CSS ////////////////////////// -->
-		<link rel="stylesheet" href="/resources/css/font.css" />
+<link rel="stylesheet" href="/resources/css/font.css" />
 
 <title>MainPlanList</title>
 
@@ -177,6 +177,72 @@ padding: 5px 0;
 border-radius: 2px;
 }
 
+
+
+
+
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #545454;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 12px 25px 12px 25px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy:hover {
+  background: #ededed;
+  text-decoration: none;
+  color:#545454;
+}
+
+/* ///////share button//////// */
+.btn-dy1 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 8px 13px 8px 13px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy1:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+/* ///////mainPlan button//////// */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 14px;
+  background: #ffffff;
+   padding: 8px 16px 8px 16px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #ededed;
+  text-decoration: none;
+  color:#545454;
+}
+
 </style>
 <script>
 
@@ -184,17 +250,10 @@ border-radius: 2px;
 
 <script>
 
-
-	$(function() {
-		$("#addMainPlan").bind("click", function() {
-			$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan.jsp").submit();
-		});
-	});
-	
 	
 	 $(function() {
-			$("button:contains('수정')").bind("click",function() {
-				var index = $("button:contains('수정')").index(this);
+			$("input[name='updateButton']").bind("click",function() {
+				var index = $("input[name='updateButton']").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/updateMainPlanView?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -203,8 +262,8 @@ border-radius: 2px;
 	 
 	 
 	 $(function() {
-			$("button:contains('삭제')").bind("click",function() {
-				var index = $("button:contains('삭제')").index(this);
+			$("input[name='deleteButton']").bind("click",function() {
+				var index = $("input[name='deleteButton']").index(this);
 				var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 				var url = "/mainplan/deleteMainPlan?mainPlanNo="+mainPlanNo;
 				$(location).attr('href', url);
@@ -241,14 +300,14 @@ border-radius: 2px;
 		 })
 	 })
 	  
-
+	
 
 	 /////////////////////////친구와 공유하기 기능///////////////////////////
 	$(function() {
-	
-		$("button:contains('공유')").bind("click",function() {
-			var index = $("button:contains('공유')").index(this);
-			var mainPlanNo = $($("input[name='mainPlanNo']")[index-1]).val();
+		
+		$("input[name='shareButton']").bind("click",function() {
+			var index = $("input[name='shareButton']").index(this);
+			var mainPlanNo = $($("input[name='mainPlanNo']")[index]).val();
 			
 			var friend;
 			var result ="";
@@ -266,9 +325,9 @@ border-radius: 2px;
 			    					
 			    					for(var i=0;i<friend.length;i++){
 			    						
-			    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+friend[i].userImage+'"style="width: 32px; height: 32px;" class="media-photo"></div>'+
+			    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+friend[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'+
 			    									'<div class="col-sm-5 "  style="padding-top: 8px;" >'+friend[i].userName+'</div>'+
-			    									'<button type="button" id="sharePlan'+i+'" class="btn btn-primary btn-sm" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')">공유하기</button><p>&nbsp;</p>';
+			    									'<input type="button" id="sharePlan'+i+'" class="btn-dy1" onclick="sharePlan('+friend[i].userNo+','+i+','+mainPlanNo+')" value="공유하기"><p>&nbsp;</p>';
 			    					}
 			    					
 			    					
@@ -277,6 +336,8 @@ border-radius: 2px;
 		    					}
 				    });
 			});
+		
+		
 		 });
 	 
 	function sharePlan(userNo,i,mainPlanNo) {
@@ -284,8 +345,9 @@ border-radius: 2px;
 	            url:'/dailyplan/json/sharePlan?userNo='+userNo+"&mainPlanNo="+mainPlanNo,
 	            type:'get'
 	         });
+			swal("친구로 등록되었습니다.");
 	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).attr('disabled','true'); 
+	    $("#sharePlan"+i).remove();
 	}
 	
 	
@@ -331,27 +393,17 @@ border-radius: 2px;
 							}
 						});
 
-		if (flag) {
-
-			//$("div[name='planer']").remove();
-			//$("div[name='addThumbnail']").remove();
-			//$("input[name='file']").attr("style", "display:none");
-
-			addPlan += '<input type="hidden" name="planTitle" value="'+planTitle+'">'
-					+ '<input type="hidden" name="departureDate" value="'+datepicker1+'">'
-					+ '<input type="hidden" name="arrivalDate" value="'+datepicker2+'">';
-			//alert(addPlan);
-			$(".form-group.center-block.contentsList").append(addPlan);
-
-			$(".btn-1").attr('value', '여행을 시작해 볼까요?');
-			$("#letsGo").append('<img src="/resources/images/dailyPlanContent/letsGotoTrip.jpg" width="400px">');
-		}
+	
 	}
 
 	$(function() {
 		$("#submit").on("click",function() {
-					$("form").attr("method", "POST").attr("action","/mainplan/addMainPlan").attr("enctype",
-							"multipart/form-data").submit();
+			
+			if( ($("#mainThumbnail").val()!="") || ($("#datepicker2").val()!="")|| ($("#datepicker1").val()!="")|| ($("#planTitle").val()!="") || ($("#country1").val()!="") ){
+				$("form[name='addMainForm']").attr("method", "POST").attr("action","/mainplan/addMainPlan").attr("enctype","multipart/form-data").submit();				
+			}else{
+				swal("모든 값을 입력해주셔야 합니다.");
+			}
 				});
 	});
 
@@ -564,9 +616,7 @@ border-radius: 2px;
 					<p style="font-family:TYPO_JEONGJOL;font-size: 1.5em;	margin-bottom: 70px;" align="center">여행을 맞이하는, 설렘부터  </p>
 			</header>
 			
-			
-			
-			
+
 			
 				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
 				<div class="row" style="font-family:'TYPO_JEONGJOL';">
@@ -593,14 +643,14 @@ border-radius: 2px;
 										<div class="caption" >
 										
 										 <div class="row">
-										 	<div class="col-md-1" id="buttonBox"></div>
-											   <div class="col-md-4 thumbnailClass" style="width: 320px; height: 250px; overflow: hidden">
+										 	<div class="col-md-1" ></div>
+											   <div class="col-md-4 thumbnailClass" style="width: 400px; height: 250px; overflow: hidden">
 												<img src="/resources/images/thumbnail_plan/${mainPlan.mainThumbnail}" style="width: 300px; height: 250px; display: block;border-radius: 2%;" class="img-responsive" alt="Responsive image"/> 
 											   </div>
 											   
 												<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" /> 
 												<div class="col-md-6 textArea">
-													<div class="col-md-8 select">
+													<div class="col-md-10 select">
 													<h2> ${mainPlan.planTitle}</h2>
 													<div style="font-family:'JEJUGOTHIC'">
 													<p> ${mainPlan.departureDate } ~ ${mainPlan.arrivalDate}</p>
@@ -608,10 +658,11 @@ border-radius: 2px;
 													<p><Strong>도시</Strong> ${mainPlan.city}</p>
 													</div>
 													</div>
-													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
-														<button type="button" class="btn btn-default">공유</button><br/>
-														<button type="button" class="btn btn-default">수정</button><br/>
-														<button type="button" class="btn btn-default">삭제</button>
+													<div class="col-md-2" align="center" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
+													<input type="button" class="btn-dy2" name="shareButton" id="shareButton" class="btn btn-default" value="공유" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
+													<input type="button" class="btn-dy2" name="updateButton" id="updateButton" class="btn btn-default" value="수정" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
+													<input type="button" class="btn-dy2" name="deleteButton" id="deleteButton" class="btn btn-default" value="삭제" style="margin-bottom:5px; font-family:\'JEJUGOTHIC\';"/>
+												
 													</div>
 												</div>
 											
@@ -658,9 +709,9 @@ border-radius: 2px;
 			<div class="modal-dialog modal-md">
 				<!-- Modal content-->
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/friendsShare.jpg');">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"align="center" >
+						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
 							<Strong>나의 플랜 북을 친구들과 공유할까요?</Strong>
 						</h4>
 					</div>
@@ -702,7 +753,7 @@ border-radius: 2px;
 						<h4 class="modal-title">Design your twiiBook</h4>
 					</div>
 					<div class="modal-body">-->
-						<form id="addMainForm">
+						<form name="addMainForm">
 				
 							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
 /*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
@@ -710,13 +761,13 @@ border-radius: 2px;
  							border-radius: 3% !important; 
  							border: 1px dashed #3B3B3B;
  							color: #3B3B3B !important;">
-								<div style="font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#3B3B3B;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 									<h1 class="modal-title">
-									Design your TwiiBook
+									<strong>Design your TwiiBook</strong>
 									</h1>
 								</div>
-								<div style="margin-bottom:50px;font-family:TYPO_JEONGJOL;">당신의 트위북을 만들어보세요</div>
+								<div style="font-size:1.5em;margin-bottom:50px;font-family:TYPO_JEONGJOL;color:#3B3B3B; opacity:0.8;">당신의 트위북을 만들어보세요</div>
 								<div class="col-sm-2"></div>
 								<div class="col-sm-8">
 								<div name="addThumbnail">
@@ -755,7 +806,10 @@ border-radius: 2px;
 										name="arrivalDate" placeholder="Your arrival date">
 									<p>&nbsp;</p>
 									
-									<input type="submit" class="btn-1" id="submit" style="margin-bottom:50px;"value="완성">
+									<!-- <input type="submit" class="btn-1" id="submit" style="margin-bottom:50px;"value="완성"> -->
+									<div style="margin-bottom:50px;">
+									<a class="btn-dy" style="margin-bottom:50px;" id="submit">여행을 시작할까요?</a>
+									</div>
 									
 								</div>
 								</div>
