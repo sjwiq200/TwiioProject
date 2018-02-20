@@ -69,7 +69,6 @@
 	                         <li><a href="#">Weather</a></li>
 	                         <li><a href="#">UnsafeRegion</a></li>
 	                         <li><a href="#">nightLife</a></li>
-	                         <li><a href="#">Best10</a></li>
 	                         <li class="divider"></li>
 	                         
 	                     </ul>
@@ -215,10 +214,6 @@
 		
 		$( "a:contains('nightLife')" ).on("click" , function() {
 			$(self.location).attr("href","/information/listNightLife");
-		});
-		
-		$( "a:contains('Best10')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getBest10");
 		});
 		
 		$( "a:contains('UnsafeRegion')" ).on("click" , function() {

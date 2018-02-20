@@ -213,7 +213,7 @@
 									image[i]= '/resources/images/no_img.png';
 								}	
 									list += '<tr><td align="center" valign="middle" id="img"><img src="'+image[i]+
-									'"  style="max-width: 250px; max-height: 200px;"/></td>'+
+									'"  style="width: 250px; height: 200px; max-width:100%; max-height:100%;"/></td>'+
 									'<td align="center" valign="middle" id="con" style="padding-top : 50px; font-family:\'JEJUGOTHIC\' !important; "><a href="#"><input type="hidden" id="info" value="'+url[i]+
 									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									
@@ -307,7 +307,15 @@
 			});
 	});
 		
-		
+	$(function(){
+		$("#city").keydown(function(e) {
+			if (e.keyCode == 13) {
+				
+				$("#search").click();
+			}
+		});			
+
+	});
 			
 	</script>
 	
@@ -364,7 +372,7 @@
 		</div> 
 		
 	<div class="col-sm-12">	
-		<table class="type10 col-sm-12" >
+		<table class="type10 col-sm-12" style="font-family:'TYPO_JEONGJOM';" >
 		
 	        <thead>
 	          <tr>

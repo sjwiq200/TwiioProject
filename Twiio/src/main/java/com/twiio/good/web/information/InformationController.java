@@ -132,7 +132,8 @@ public class InformationController {
 			rain.add(past[i]);
 			i = i+3;
 		}
-			model.addAttribute("list",list ).addAttribute("data",data ).addAttribute("month",month).addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain);
+			model.addAttribute("list",list ).addAttribute("data",data ).addAttribute("month",month).
+			addAttribute("min",min).addAttribute("max",max).addAttribute("rain",rain).addAttribute("cityName",cityName);
 	        return "forward:/information/getHistoryWeather.jsp";
 	}
 	

@@ -710,6 +710,9 @@ public class InformationDaoImpl implements InformationDao {
 	   		 ssn=cols.item(idx).getTextContent();
 	   }
         
+	   if(ssn.contains("img")) {
+		   ssn = ssn.replaceAll("style=\"", "style=\"max-width:100%; max-height:100%; ");
+	   }
         
         result.add(ssn);
         result.add(unsafeImg);

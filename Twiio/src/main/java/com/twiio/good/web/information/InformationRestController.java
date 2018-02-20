@@ -107,61 +107,95 @@ public class InformationRestController {
 	public Map<String,List> searchNowWeather(@RequestParam String cityName) throws Exception {
 		
 		System.out.println("/information/json/searchNowWeather");
-		System.out.println(" cityName : " + cityName);
-       
-		Map<String,List> map = informationService.searchNowWeather(cityName);
 		
-		Map<String,Object> result = new HashMap<String,Object>();
+		String enCodeing = URLDecoder.decode(cityName, "UTF-8");
 		
-		List<String>  dateList = map.get("dateList");
-		List<WeatherMain> mainList = map.get("mainList");
+		System.out.println(" cityName : " + enCodeing);
 		
-		List<String> resultDate = new ArrayList<>();
-		List<Long> resultTemp = new ArrayList<>();
-
-		for(int i =0; i<dateList.size()-1; i++) {
-			String[] str = dateList.get(i).split(" ");
-			resultDate.add(str[0]);
-			i = i+3;
+		Boolean flag = false;
+		
+		List<String> item = informationService.findCity(enCodeing);
+		
+		for(int i = 0; i < item.size() ; i++) {
+			
+			if(item.get(i).equals(enCodeing)) {
+				
+					flag = true;
+					
+					break;
+				}else {
+					
+					flag = false;
+				}
+			
+			}
+		
+		
+		if(!flag) {
+			
+			Map<String,List> none = new HashMap<>();
+			
+			item = new ArrayList<>();
+			none.put("item", item);
+			
+			return none;
+			
+		}else {
+		
+				Map<String,List> map = informationService.searchNowWeather(enCodeing);
+				
+				Map<String,Object> result = new HashMap<String,Object>();
+				
+				List<String>  dateList = map.get("dateList");
+				List<WeatherMain> mainList = map.get("mainList");
+				
+				List<String> resultDate = new ArrayList<>();
+				List<Long> resultTemp = new ArrayList<>();
+		
+				for(int i =0; i<dateList.size()-1; i++) {
+					String[] str = dateList.get(i).split(" ");
+					resultDate.add(str[0]);
+					i = i+3;
+				}
+				System.out.println(resultDate.size());
+				
+				for(int i =0; i<mainList.size()-1; i++) {
+					Double tmp = Double.parseDouble(mainList.get(i).getTemp());
+					System.out.println("tmp"+tmp);
+					resultTemp.add(Math.round(tmp-273));
+					i = i+3;
+				}
+				System.out.println(resultTemp.size());
+				
+				map.put("resultDate", resultDate);
+				map.put("resultTemp", resultTemp);
+				
+				
+				//		String str = (String) map.get("weather");
+		//		
+		//		String[] context =  str.split(",");
+		//		String[] temp  = context[0].split("=");
+		//		String[] pressure = context[1].split("=");
+		//		String[] humidity = context[2].split("=");
+		//		String[] temp_min = context[3].split("=");
+		//		String[] temp_max = context[4].split("=");
+		//		
+		//		if(context.length>5) {
+		//			String[] grnd_level = context[5].split("=");
+		//			String[] sea_level = context[6].split("=");
+		//			
+		//			result.put("grnd_level", grnd_level[1]);
+		//			result.put("sea_level", sea_level[1]);
+		//		
+		//		}
+		//		result.put("temp", temp[1]);
+		//		result.put("pressure", pressure[1]);
+		//		result.put("humidity", humidity[1]);
+		//		result.put("temp_min", temp_min[1]);
+		//		result.put("temp_max", temp_max[1]);
+				
+				return map;
 		}
-		System.out.println(resultDate.size());
-		
-		for(int i =0; i<mainList.size()-1; i++) {
-			Double tmp = Double.parseDouble(mainList.get(i).getTemp());
-			System.out.println("tmp"+tmp);
-			resultTemp.add(Math.round(tmp-273));
-			i = i+3;
-		}
-		System.out.println(resultTemp.size());
-		
-		map.put("resultDate", resultDate);
-		map.put("resultTemp", resultTemp);
-		
-		
-		//		String str = (String) map.get("weather");
-//		
-//		String[] context =  str.split(",");
-//		String[] temp  = context[0].split("=");
-//		String[] pressure = context[1].split("=");
-//		String[] humidity = context[2].split("=");
-//		String[] temp_min = context[3].split("=");
-//		String[] temp_max = context[4].split("=");
-//		
-//		if(context.length>5) {
-//			String[] grnd_level = context[5].split("=");
-//			String[] sea_level = context[6].split("=");
-//			
-//			result.put("grnd_level", grnd_level[1]);
-//			result.put("sea_level", sea_level[1]);
-//		
-//		}
-//		result.put("temp", temp[1]);
-//		result.put("pressure", pressure[1]);
-//		result.put("humidity", humidity[1]);
-//		result.put("temp_min", temp_min[1]);
-//		result.put("temp_max", temp_max[1]);
-		
-		return map;
 	}
 
 	@RequestMapping(value="json/searchHistoryWeather",method=RequestMethod.GET)
@@ -173,53 +207,84 @@ public class InformationRestController {
 		
 		System.out.println("cityName : " + name);
 		
-		Map<Object,String[]> map = informationService.searchHistoryWeather(name);
+		Boolean flag = false;
 		
-		List<String> list = new ArrayList<String>();
-		List<String> data = new ArrayList<String>();
+		List<String> item = informationService.findCity(name);
 		
-		String[] simple = map.get("quickInfo");
-		for(int i = 0; i<simple.length; i++) {
-			String[] str = simple[i].split(" ");
+		for(int i = 0; i < item.size() ; i++) {
+					
+					if(item.get(i).equals(name)) {
+						
+							flag = true;
+							
+							break;
+						}else {
+							
+							flag = false;
+						}
+					
+					}
+		
+		
+		if(!flag) {
 			
-			list.add(str[0]+" "+str[1]);
-			data.add(str[2]+" "+str[3]+" "+str[4]+" "+str[5]);
-		}
+			Map<String,List> none = new HashMap<>();
+			
+			item = new ArrayList<>();
+			none.put("item", item);
+			
+			return none;
+			
+		}else {
 		
-		String[] past = map.get("historyWeather");
-		
-		List<String> month =  new ArrayList<String>();
-		for(int i = 0; i<past.length;i++) {
-			month.add(past[i]);
-			i = i+3;
+				Map<Object,String[]> map = informationService.searchHistoryWeather(name);
+				
+				List<String> list = new ArrayList<String>();
+				List<String> data = new ArrayList<String>();
+				
+				String[] simple = map.get("quickInfo");
+				for(int i = 0; i<simple.length; i++) {
+					String[] str = simple[i].split(" ");
+					
+					list.add(str[0]+" "+str[1]);
+					data.add(str[2]+" "+str[3]+" "+str[4]+" "+str[5]);
+				}
+				
+				String[] past = map.get("historyWeather");
+				
+				List<String> month =  new ArrayList<String>();
+				for(int i = 0; i<past.length;i++) {
+					month.add(past[i]);
+					i = i+3;
+				}
+				List<String> min =  new ArrayList<String>();
+				for(int i = 1; i<past.length;i++) {
+					min.add(past[i]);
+					i = i+3;
+				}
+				List<String> max =  new ArrayList<String>();
+				for(int i = 2; i<past.length;i++) {
+					max.add(past[i]);
+					i = i+3;
+				}
+				List<String> rain =  new ArrayList<String>();
+				for(int i = 3; i<past.length;i++) {
+					rain.add(past[i]);
+					i = i+3;
+				}
+				
+				Map<String,List> last = new HashMap();
+				
+					last.put("list", list);
+					last.put("data", data);
+					last.put("month", month);
+					last.put("min", min);
+					last.put("max", max);
+					last.put("rain", rain);
+				
+			
+				return last;
 		}
-		List<String> min =  new ArrayList<String>();
-		for(int i = 1; i<past.length;i++) {
-			min.add(past[i]);
-			i = i+3;
-		}
-		List<String> max =  new ArrayList<String>();
-		for(int i = 2; i<past.length;i++) {
-			max.add(past[i]);
-			i = i+3;
-		}
-		List<String> rain =  new ArrayList<String>();
-		for(int i = 3; i<past.length;i++) {
-			rain.add(past[i]);
-			i = i+3;
-		}
-		
-		Map<String,List> last = new HashMap();
-		
-			last.put("list", list);
-			last.put("data", data);
-			last.put("month", month);
-			last.put("min", min);
-			last.put("max", max);
-			last.put("rain", rain);
-		
-	
-		return last;
 
 	}
 	
@@ -344,9 +409,9 @@ public class InformationRestController {
 			con.add(list.get(i)+list.get(i+2));
 			loc.add(list.get(i+3));
 			
-			if(list.get(i+5).matches(	".*[ï¿½ï¿½-ï¿½ï¿½ï¿½ï¿½-ï¿½Ó°ï¿½-ï¿½R]+.*")) {
+			if(list.get(i+5).matches(	".*[¤¡-¤¾¤¿-¤Ó°¡-ÆR]+.*")) {
 				
-					System.out.println("ï¿½É·ï¿½ï¿½ï¿½ï¿½ï¿½@@"+list.get(i+5));
+					System.out.println("°É·¯Áö´Ï@@"+list.get(i+5));
 					price.add(list.get(i+4));
 					i=i+4;
 				}else {
@@ -356,7 +421,6 @@ public class InformationRestController {
 				
 		}
 		
-		System.out.println("ï¿½ï¿½ï¿½Ï´ï¿½");
 		
 		Map<String, List> end = new HashMap();
 		
@@ -423,17 +487,27 @@ public class InformationRestController {
 		
 		String[] countryName = decoding.split("=");
 		
-		List<String> list = informationService.getUnsafeRegion(countryName[1]);
-		
-		String img  = list.get(1);
-		String info = list.get(0);
-		
 		Map<String, String> end = new HashMap();
 		
-		end.put("img", img);
-		end.put("info", info);
+		List<String> item = informationService.findCountry(countryName[1]);
 		
-		return end;
+		if(item.isEmpty()) {
+			
+			end.put("noCountry", "noCountry");
+			
+			return end;
+		}else {
+		
+			List<String> list = informationService.getUnsafeRegion(countryName[1]);
+			
+			String img  = list.get(1);
+			String info = list.get(0);
+			
+			end.put("img", img);
+			end.put("info", info);
+			
+			return end;
+		}
 	}
 
 }

@@ -160,8 +160,8 @@
 	<div class="col-sm-12">
 		
 		<div class="profile-userpic ">
-		<c:if test="${empty user.userImage}"><img style="width:70px; height:70px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-		<c:if test="${!empty user.userImage}"><img style="width:70px; height:70px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
+		<c:if test="${empty user.userImage}"><img style="width : 170px; height:170px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
+		<c:if test="${!empty user.userImage}"><img style="width:170px; height:170px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
 		</div>
 		
 		<div class="col-sm-12">
