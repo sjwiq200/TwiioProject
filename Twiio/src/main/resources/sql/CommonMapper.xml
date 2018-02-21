@@ -121,7 +121,18 @@
 	SELECT *
   		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
   						FROM (
-							   SELECT r.*, 
+							   SELECT 
+							   r.user_name as user_name,
+							   r.report_no as report_no,
+							   r.user_no as user_no,
+							   r.report_content as report_content,
+							   r.report_title as report_title,
+							   to_char(r.report_reg_date,'yyyy-mm-dd hh24:mi:ss') as report_reg_date,
+							   r.target_user_no as target_user_no,
+							   r.target_room_key as target_room_key,
+							   r.target_reply_no as target_reply_no,
+							   r.target_community_no as target_community_no,
+							   r.report_state as report_state,
 							   u.USER_NAME as target_user_name, 
 							   u.USER_ID as target_user_id 
 							   FROM report r, users u 
@@ -276,9 +287,9 @@
 	 <update id="updateReport" parameterType="int">
 		UPDATE REPORT
 	   	<set>
-			report_state 	= 'Y'
+			report_state = 'Y'
 	   	</set>
-	   	WHERE report_no = #{reportNo}
+	   	WHERE TARGET_USER_NO = #{userNo}
 	</update>
 	 
 	 

@@ -51,18 +51,22 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-	
+	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
    <style>
-     body {
-            padding-top : 50px;
+    	body {
+            padding-top : 100px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
-        
-        <!-- ##### -->
-         .ct_list_pop {margin-left: 80px;color: blue; float: center;}
-
-        td { cursor: default;}
-
+        h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
         span {color: gray; }
        <!-- ##### -->
        
@@ -84,10 +88,12 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
+    	 if(${resultPage.maxPage}>=currentPage){   	
          $("#currentPage").val(currentPage)
          $("form").attr("method" , "POST").attr("action" , "/product/listHostProduct").submit();
-      }
-     
+      
+    	 }
+   }
    
      
       $(document).ready(function(){ 
@@ -180,15 +186,13 @@
    <!--  화면구성 div Start /////////////////////////////////////-->
    <div class="container col-md-8 col-md-offset-2">
    
-      <div class="page-header text-info">
-          <h3>
-          <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	판매목록조회
-         </h3>
-       </div>
-       
+      <div class="col-md-12">
+   	   <div class="table-responsive">
+       <h1 style="font-family: 'Jeju Gothic', serif;">
+           	나의 판매 목록 :D
+       </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-       <div class="row">
+       
           <div class="pull-left">
              <p class="text-primary">
                 전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
@@ -200,26 +204,27 @@
                           
               <!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
               <input type="hidden" id="currentPage" name="currentPage" value=""/>
-  
+              
             </form>
           </div>
-          
       </div>
+   </div>
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
-      
+      <div class="col-md-12">
+      <div class="panel panel-default">
       <!--  table Start /////////////////////////////////////-->
       <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
       
         <thead>       
           <tr>         
-            <th align="center" width="120" align="">등록일자</th>
-            <th align="center" width="140">상품사진</th>
-            <th align="left" width="250">상품이름</th>
-            <th align="left" width="180">투어일자/판매량</th>
-            <th align="left" width="140">상품판매금액</th>
-            <th align="left" width="100">도시</th>
-      		<th aligh="legt" widht="100">국가</th>    
+            <th align="center">등록일자</th>
+            <th align="center">상품사진</th>
+            <th align="left">상품이름</th>
+            <th align="left">투어일자/판매량</th>
+            <th align="left">상품판매금액</th>
+            <th align="left">도시</th>
+      		<th aligh="legt">국가</th>    
           </tr>
         </thead>       
       <tbody>
@@ -261,22 +266,10 @@
         </tbody>
       </table>
      <!--  table End /////////////////////////////////////-->
-     
-     
-     
-    </div>
-    <div class="col-md-2 col-md-offset-1">
+     </div>
+     </div>
     <jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
-    
-    <!--  화면구성 div End /////////////////////////////////////-->
-    
-    <input type="hidden" id="currentPage" name="currentPage" value="" />
-    <%-- <input type="hidden" id="menu" name="menu" value="${menu}" /> --%> 
-    <%-- //<input type="hidden" id="priceList" name="priceList" value="${search.priceList}">  --%>
-                   
-    <!-- PageNavigation Start... -->
-   	
-   <!-- PageNavigation End... -->
+
 </body>
 </html>

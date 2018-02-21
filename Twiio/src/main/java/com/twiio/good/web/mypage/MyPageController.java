@@ -1,6 +1,8 @@
 package com.twiio.good.web.mypage;
 
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 import javax.websocket.Session;
@@ -20,11 +22,13 @@ import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.community.CommunityService;
 import com.twiio.good.service.domain.Community;
+import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Message;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Report;
 import com.twiio.good.service.domain.User;
 import com.twiio.good.service.mypage.MyPageService;
+import com.twiio.good.service.user.UserService;
 
 
 @Controller
@@ -33,6 +37,14 @@ public class MyPageController {
 	@Autowired
 	@Qualifier("mypageServiceImpl")
 	private MyPageService mypageService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
 		
 	@Value("#{commonProperties['pageUnit']}")
 	// @Value("#{commonProperties['pageUnit'] ?: 3}")
@@ -111,10 +123,24 @@ public class MyPageController {
 		Map<String , Object> map = mypageService.listMessage(search, user.getUserNo());
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
 		
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
+		
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
+		
 		
 		System.out.println("resultPage:::::"+resultPage);
 		
 		// Model °ú View ¿¬°á
+		model.addAttribute("listFriend", listFriend);
 		model.addAttribute("list", map.get("list"));
 		model.addAttribute("resultPage", resultPage);
 		model.addAttribute("search", search);
