@@ -68,6 +68,27 @@
 	  
 	  
 	}
+	.btn-dy2 {
+	  -webkit-border-radius: 23;
+	  -moz-border-radius: 23;
+	  border-radius: 23px;
+	  font-family:JEJUGOTHIC;
+	  color: #545454;
+	  font-size: 12px;
+	  background: #ffffff;
+	  padding: 8px 13px 8px 13px;
+	  border: solid #545454 0.5px;
+	  text-decoration: none;	 
+	}
+	
+	.btn-dy2:hover {
+	  background: #D73A31;
+	  opacity: 0.8;
+	  border: solid #545454 0px;
+	  text-decoration: none;
+	  color:#ffffff;
+	}	
+		
 	.btn {	
 		letter-spacing: 1px;
 		text-decoration: none;
@@ -312,8 +333,8 @@ $(function() {
 		</div>
 		<!-- form Start /////////////////////////////////////-->
 				   
-		    <div class="col-sm-12 text-center" align="center">
-		     <a class="btn btn-default btn" href="#" role="button">취&nbsp;소</a>   
+		    <div class="col-sm-12 text-center" align="center" >
+		     <a class="btn-dy2" href="#" role="button" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';padding-right:20px; padding-left:20px;">취&nbsp;소</a>   
 		    </div> 		  
  	</div>
  	

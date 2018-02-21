@@ -289,9 +289,9 @@ div.caption{
 												displayValue += '</a>'
 													+'<span class="price">&#8361;'+JSONData[i].productPrice+'</span>'
 													+'<div class="property_details">'
-													+'<h1>'
+													+'<h3>'
 													+'<a href="#">'+JSONData[i].productName+'</a>'
-													+'</h1>'
+													+'</h3>'
 													+'<h2><p>';
 													 
 												if(JSONData[i].productType == '1'){
@@ -554,9 +554,9 @@ div.caption{
 					</a>
 					<span class="price">&#8361;${product.productPrice}</span>
 					<div class="property_details">
-						<h1>
+						<h3>
 							<a href="#">${product.productName}</a>
-						</h1>
+						</h3>
 						<h2><p>
 								<c:if test="${product.productType == 1}">명소투어</c:if>
 								<c:if test="${product.productType == 2}">음식투어</c:if>
