@@ -186,6 +186,7 @@
 		}
 		/////////////////////////////////////////////////////////////////////
 		function codeAddress(event) {
+			alert("안녕");
 				if (geocodemarker.length > 0)
 				{
 						servicemarker.setMap(null);
@@ -229,7 +230,7 @@
 			        		    	name = place.name;
 			        		    	website = place.website;
 			        		    	
-			        		    	//$("#resultMap").empty();
+			        		    	$(".testmap").remove();
 			        		    	
 									$("#resultMap")
 			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>["+name+"]</strong></div>")
@@ -255,9 +256,7 @@
 								      '<div><strong> 주소</strong> : ' + place.formatted_address + '<br><p>' +
 								          '<strong>전화번호</strong>: ' + place.formatted_phone_number + '<br><p>' +
 								          '<strong>오픈시간</strong>: ' + place.opening_hours.weekday_text+ '<br><p>' +
-								          '<strong>평점</strong>: ' + place.rating+ '<br><p>' +
 								          '<strong>장소유형</strong>: ' + place.types  + '<br><p>' +
-								          '<strong>URL</strong>: ' + place.url + '<br><p>' +
 								          '<strong>웹사이트 주소</strong>: ' + place.website는  + '<br><p>' );
 								        infowindow.open(map, this);
 								      });
@@ -308,7 +307,6 @@
 			$("button[name='addMapToPlan']").on("click",function(){
 				$("#mapImage").val(mapImage);
 				$("form[name='modalMap']").attr("method", "POST").attr("action","/dailyplan/addMap").submit();
-
 			});
 		});
 		
@@ -318,7 +316,6 @@
 					codeAddress(e);
 				}
 			});			
-
 		});
 		
 

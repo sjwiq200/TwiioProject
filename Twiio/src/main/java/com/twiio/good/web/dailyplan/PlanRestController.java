@@ -85,10 +85,12 @@ public class PlanRestController {
 		}
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		if(mainPlan.getCity()!=null) {
 		String city = mainPlan.getCity();
 		String[] cityList = city.split(",");
 		
 		map.put("cityList", cityList);	
+		}
 		map.put("list", list);
 		
 		System.out.println("RestController : json/listDailyPlan <END>");

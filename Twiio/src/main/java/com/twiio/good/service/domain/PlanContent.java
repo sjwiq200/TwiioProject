@@ -213,14 +213,16 @@ public class PlanContent {
 
 	@Override
 	public String toString() {
-		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan.getDailyPlanNo() + ", scrap=" + scrap + ", route="
+		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan + ", scrap=" + scrap + ", route="
 				+ route + ", mapUrl=" + mapUrl + ", mapAddress=" + mapAddress + ", mapPhone=" + mapPhone
 				+ ", mapWebsite=" + mapWebsite + ", mapName=" + mapName + ", mapImage=" + mapImage + ", mapType="
 				+ mapType + ", departureLocation=" + departureLocation + ", arrivalLocation=" + arrivalLocation
 				+ ", estimatedTime=" + estimatedTime + ", routeType=" + routeType + ", routeDescription="
 				+ routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText + ", contentImage="
-				+ contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType + "]";
+				+ contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType + ", resultForMobile="
+				+ resultForMobile + "]";
 	}
+
 
 
 	

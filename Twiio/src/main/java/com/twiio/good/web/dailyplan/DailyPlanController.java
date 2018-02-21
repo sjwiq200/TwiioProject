@@ -78,12 +78,14 @@ public class DailyPlanController {
 		}
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		if(mainPlan.getCity()!=null) {
 		String city = mainPlan.getCity();
 		String[] cityList = city.split(",");
+		model.addAttribute("cityList",cityList);
+		}
 		
 		System.out.println("Controller : listMainPlan <END>");
 		
-		model.addAttribute("cityList",cityList);
 		model.addAttribute("list", list);
 		
 		return "forward:/dailyplan/listDailyPlan.jsp";
@@ -119,7 +121,8 @@ public class DailyPlanController {
 	
 
 	@RequestMapping(value = "getDailyPlan")
-	public String getDailyPlan(@RequestParam("dailyPlanNo") int dailyPlanNo, @RequestParam("mainPlanNo") int mainPlanNo,  Model model, HttpSession session)
+	public String getDailyPlan(@RequestParam("dailyPlanNo") int dailyPlanNo, 
+			@RequestParam("mainPlanNo") int mainPlanNo,  Model model, HttpSession session)
 			throws Exception {
 
 		System.out.println("Controller : getDailyPlan <START>");
