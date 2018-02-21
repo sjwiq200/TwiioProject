@@ -9,7 +9,9 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.DecimalFormat;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -29,6 +31,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
+import com.twiio.good.service.common.CommonService;
+import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Refund;
 import com.twiio.good.service.domain.Transaction;
@@ -54,6 +58,11 @@ public class TransactionController {
 	@Autowired
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
+	
+	///Field
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -562,9 +571,21 @@ public class TransactionController {
 		Map<String, Object> dbmap=transactionService.listTransaction(search, user);
 				
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)dbmap.get("totalCount")).intValue(), pageUnit, pageSize);
-		//System.out.println(resultPage);
+		List<Friend> list = commonService.listFriendOnly(user.getUserNo());
+
+		
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
 		
 		// Model °ú View ¿¬°á
+		map.put("listFriend", listFriend);
 		map.put("list", dbmap.get("list"));
 		map.put("resultPage", resultPage);
 				

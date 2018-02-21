@@ -337,25 +337,25 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
    	
-   	<!---------------------------------------사이드바--------------------------------------------------------->
+   <!---------------------------------------사이드바--------------------------------------------------------->
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			
 			<div class="col-xs-12" align="center" style="margin-bottom: 2em; ">
 			
 				<c:if test="${empty user.userImage}">
-					<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" height="80px" style="border-radius: 5%;">
+					<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" height="80px" style="border-radius: 5%;">
 				</c:if>
 				<c:if test="${!empty user.userImage}">
-					<img src="/resources/images/userimages/${user.userImage}" style="width: 100px; height: 100px;">										  		 	 
+					<img name="ffriend" src="/resources/images/userimages/${user.userImage}" style="width: 100px; height: 100px;">										  		 	 
 				</c:if>
 								
 			</div>
-			<div class="col-xs-9 col-xs-offset-2" align="left">
+			<div class="col-xs-12" align="center">
 				[ 이	   름  :  ${user.userName } ]
 			</div>
 			
-			<div class="col-xs-9 col-xs-offset-2" align="left" >
+			<div class="col-xs-12" align="center" >
 				<c:if test="${user.userType == 1}">
 					[  유    형  :  회원  ]
 				</c:if>
@@ -366,8 +366,8 @@
 					[  유    형  :  관리자  ]
 				</c:if>
 			</div>
-			<div class="col-xs-9 col-xs-offset-2" align="left"style="margin-bottom: 4em; ">
-				[ 핸드폰  :  ${user.userPhone } ]
+			<div class="col-xs-12" align="center"style="margin-bottom: 4em; ">
+				[ 핸드폰  : ${user.userPhone } ]
 			</div>
 			<div class="col-xs-12" style="background:transparent;">
 			
@@ -393,10 +393,10 @@
 						<td align="pull-right">${ i }</td>
 						<td align="left">
 							<c:if test="${empty friend.userImage}">
-								<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+								<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
 							<c:if test="${!empty friend.userImage}">
-								<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+								<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 							</c:if>
 						</td>
 						<td align="left">
