@@ -190,7 +190,7 @@ public class User {
 		this.regDate = regDate;
 	}
 
-	public String isProfilePublic() {
+	public String getProfilePublic() {
 		return profilePublic;
 	}
 

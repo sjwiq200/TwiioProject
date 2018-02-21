@@ -61,7 +61,8 @@
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	
- 	
+ 	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
 	<style>
       /*  body > div.container{
@@ -403,14 +404,95 @@ function resetData() {
 							$('#replylist').html(displayValue); 					   
 							$('#totalCount').html(totalcount);
 						}
-			}); 
+				 }); 
 			 } 
-		});
-		 
+		}); 
 	});
+	///////////////////////////////////////////////////ajax 리스트만 뿌려주기//////////////////////////////////////////
+	function listReplyajax(){
+				$.ajax( 
+				{
+				url : "/common/json/listReply",
+				method : "POST" ,
+				dataType : "json" ,
+				contentType:"application/json;charset=UTF-8",
+				data : JSON.stringify({
+					"communityNo":"${community.communityNo}",
+					"currentPage" : page
+				}),
+				
+				success : function(JSONData) {
+					//alert(JSON.stringify(JSONData));
+					
+					var displayValue='';
+					
+					for(var i=0;i<JSONData.list.length;i++){
+						var tool="";
+						if(${empty user.userId}){
+							tool='';
+						}else{
+							tool='<div class="btn-group pull-right">'+
+							'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+							' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+							'</button>'+
+							'<ul class="dropdown-menu slidedown">'+
+							'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+							'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+							'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+							' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+							' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+							'</ul>'+
+						   '</div>';	
+						}
+						   
+						   
+						
+					 displayValue += '<div class="row2">'+
+									 '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+									 '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+									 '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+									'<div class="col-sm-12"><div style="font-size: 0.8em;"><strong style="font-size: 1.2em;">&nbsp;&nbsp;'+
+									JSONData.list[i].userName+'</strong>&nbsp;&nbsp;'+
+									JSONData.list[i].replyRegDate+
+									'</div></div>'+tool+'<div class ="row" name="upcontent"><div class="col-sm-10 col-sm-offset-1">'+
+									(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+'</div></div></div><hr class="col-sm-12" style="border-style:dotted">';
+									
+									  /*  '<div class="row2">'+
+									   '<input type="hidden" name="userNo" value="'+JSONData.list[i].userNo+'"/>'+
+									   '<input type="hidden" name="replyNo" value="'+JSONData.list[i].replyNo+'"/>'+
+									   '<input type="hidden" name="userName" value="'+JSONData.list[i].userName+'"/>'+
+									   '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'/>'+
+									   '<div class="col-md-2 col-md-offset-1">'+
+									   '[ 작성자  : '+JSONData.list[i].userName+' ]'+
+		    						   '</div>'+
+		    						   tool+
+		    						   '<div class="col-md-10 col-md-offset-1">'+
+		    						   (JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+		    						   '</div>'+
+		    						   '<div class="col-md-10 col-md-offset-1">'+
+		    						   JSONData.list[i].replyRegDate+
+		    						   '</div>'+
+		    						   '<div class="col-xs-12">'+
+									   '<hr sytle="border-style:dotted">'+
+					  				   '</div></div>'; */
+					}
+					var totalcount=
+					'<div class="col-sm-10 col-sm-offset-1">'+
+					'<strong>댓 글 목 록</strong>'+		
+					'</div>'+
+					'<div class="pull-right" style="font-size: 1em;" >'+
+						'댓글수  : '+JSONData.totalCount+				
+					'</div>';
+					
+					$('#replylist').html(displayValue); 					   
+					$('#totalCount').html(totalcount);
+				}
+		 });
+	}
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
-	///////////////////////////////////////////////////addfriendcommunity/////////////////////////////////////
+	///////////////////////////////////////////////////addfriendcommunity 해결/////////////////////////////////////
 		 $(document).on("click", '#addfriendcommunity', function(){
 
 			 $('#modalfriend').modal('show');
@@ -425,22 +507,51 @@ function resetData() {
 				 alert('자기 자신을 친구 추가할수 없습니다.');
 				 $('#modalfriend').modal('toggle');
 			 }else{
-			  $.ajax( 
-						{
+				 $.ajax({
 						url : "/common/json/addFriend",
 						method : "POST" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
 						data : JSON.stringify({
 							"userNo":"${user.userNo}",
-							"friendNo":"${community.userNo}",
+							"friendNo":addfrienduserno,
 						}),
 						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							$('#modalfriend').modal('toggle');
-						}
-					}); 
-			 	}
+							if(JSONData.no == 0){
+								swal("이미 친구 등록이 되었습니다.", {
+								      icon: "warning",
+								});
+							}else{
+							swal({title: "친구를 추가 하시겠습니까?",
+								  icon: "warning",
+								  buttons: true,
+								  dangerMode: true,
+								})
+							.then((willDelete) => {
+							    if (willDelete) {
+							      swal("친구 등록이 되었습니다.", {
+							      icon: "success",
+							    }).then((next) => {
+							   	$.ajax({
+									url : "/common/json/addFriend",
+									method : "POST" ,
+									dataType : "json" ,
+									contentType:"application/json;charset=UTF-8",
+									data : JSON.stringify({
+										"userNo":"${user.userNo}",
+										"friendNo":addfrienduserno,
+									}),
+									success : function(JSONData) {
+										alert(JSON.stringify(JSONData));				
+									}
+							    });
+							  });
+							  }  
+							});			
+							}			
+				 		}
+				 	}); 
+			 }
 			 }
 			 });
 		});
@@ -452,53 +563,55 @@ function resetData() {
 		 var reportuserno = $($('input[name=userNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportusername = $($('input[name=userName]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
-		 var reportbody = 
-			        '<h3>Report<h3>'+
-					'<input type="text" class="form-control" id="reportuser" row="6" col="50" value="'+reportusername+'" readonly/>'+
-					'<input type="text" class="form-control" id="reporttitle" row="6" col="50" placeholder="신고 제목 작성" value=""/>'+
-					'<textarea id="reportcontent"  name="reportcontent" row="6" col="50" value="" placeholder="신고 내용"></textarea>';
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }else if(${user.userNo} == reportuserno){
 			 alert('자기자신은 신고 못합니다.');
 	 	 }else{
-	 		$('#reportbody').html(reportbody);
+			$('#reportuser').val(reportusername);
+			$('#reportuserno').val(reportuserno);
+			$('#reportreplyno').val(reportreplyno); 
 	 		$('#modalreport').modal('show');
 	 	 }
-	
-	
-		$(document).on('click','#addreportcommunity',function(){
-			 	var reportcontent = $('#reportcontent').val();
-			 	var reporttitle = $('#reporttitle').val();
-			 	if(reportcontent==''| reporttitle==''){
-					 alert('내용과 제목을 입력하세요.');			 
-				}
-				else{
-			 	 $.ajax( 
-						{
-						url : "/common/json/addReport",
-						method : "POST" ,
-						dataType : "json" ,
-						contentType:"application/json;charset=UTF-8",
-						data : JSON.stringify({
-							"userNo":"${user.userNo}",
-							"reportContent":reportcontent,
-							"reportTitle":reporttitle,
-							"targetUserNo":reportuserno,
-							"targetReplyNo":reportreplyno,
-							"targetCommunityNo" :${community.communityNo}
-						}),
-						
-						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							$('#modalreport').modal('toggle');	
-					}
-				});
-			 }
-		});
 	});
-	///////////////////////////////////////////////addfriend///////////////////////////////////////////////////
+	
+	$(document).on('click','#addreportcommunity',function(){
+		 	var reportcontent = $('#reportcontent').val();
+		 	var reporttitle = $('#reporttitle').val();
+		 	var reportuserno = $('#reportuserno').val();
+		 	var reportreplyno = $('#reportreplyno').val();
+		 	
+		 	if(reportcontent==''| reporttitle==''){
+				 alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+		 	 $.ajax( 
+					{
+					url : "/common/json/addReport",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"reportContent":reportcontent,
+						"reportTitle":reporttitle,
+						"targetUserNo":reportuserno,
+						"targetReplyNo":reportreplyno,
+						"targetCommunityNo" :"${community.communityNo}"
+					}),
+					
+					success : function(JSONData) {
+						 swal("신고 접수가 완료 되었습니다.", {
+						      icon: "success",
+						 });
+						 listReplyajax();
+						$('#modalreport').modal('toggle');
+				}
+			});
+		 }
+	});
+		///////////////////////////////////////////////addfriend 해결///////////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addfriend]', function() {
 		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
 		 if(${empty user.userId}){
@@ -507,43 +620,65 @@ function resetData() {
 		 else if(${user.userNo}== addfrienduserno){
 			 alert('자기 자신을 친구 추가할수 없습니다.');
 		 }else{
-		 	$('#modalfriend').modal('show');
-		 }
-		
-			$(document).on('click','#addmodalfriend',function(){
-			  $.ajax({
-						url : "/common/json/addFriend",
-						method : "POST" ,
-						dataType : "json" ,
-						contentType:"application/json;charset=UTF-8",
-						data : JSON.stringify({
-							"userNo":"${user.userNo}",
-							"friendNo":addfrienduserno,
-						}),
-						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							$('#modalfriend').modal('toggle');					
-						}
-				}); 
-			});
+			 $.ajax({
+					url : "/common/json/addFriend",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"friendNo":addfrienduserno,
+					}),
+					success : function(JSONData) {
+						if(JSONData.no == 0){
+							swal("이미 친구 등록이 되었습니다.", {
+							      icon: "warning",
+							});
+						}else{
+						swal({title: "친구를 추가 하시겠습니까?",
+							  icon: "warning",
+							  buttons: true,
+							  dangerMode: true,
+							})
+						.then((willDelete) => {
+						    if (willDelete) {
+						      swal("친구 등록이 되었습니다.", {
+						      icon: "success",
+						    }).then((next) => {
+						   	$.ajax({
+								url : "/common/json/addFriend",
+								method : "POST" ,
+								dataType : "json" ,
+								contentType:"application/json;charset=UTF-8",
+								data : JSON.stringify({
+									"userNo":"${user.userNo}",
+									"friendNo":addfrienduserno,
+								}),
+								success : function(JSONData) {
+									listReplyajax();			
+								}
+						    });
+						  });
+						  }  
+						});			
+						}			
+			 		}
+			 	});
+		 	}
 		});
 	
 	/////////////////////////////////////////////////addmessage////////////////////////////////////////////////////
 	$(document).on('click','.row2 a[name=addmessage]', function() {
 		 var msguserno = $($('input[name=userNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
-		 var inmsg =
-			'<input type="hidden" class="form-control" id="msguserno" row="6" col="50" value="'+msguserno+'"/>'+
-			'<input type="text" class="form-control" id="msgtitle" row="6" col="50" placeholder="제목 작성" value=""/>'+
-			'<input type="text" class="form-control" id="msgusername" row="6" col="50"  value="'+msgusername+'" readonly/>'+
-			'<textarea id="msgcontent"  name="msgcontent" row="6" col="50" value="" placeholder="내용 작성"></textarea>';
 		 
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }else if(${user.userNo }== msguserno){
 			 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
-		 }else{ 
-			$('#msg').html(inmsg);
+		 }else{
+			$('#msgusername').val(msgusername);
+			$('#msguserno').val(msguserno);
 		 	$('#modalmessage').modal('show');
 		 }
 	});
@@ -574,7 +709,11 @@ function resetData() {
 						"userName":"${user.userName}"
 					}),
 					success : function(JSONData) {
-						alert("메시지가 보내기 성공.!!");
+						 swal("메시지를 보냈습니다.", {
+						      icon: "success",
+						    });
+						 
+						 listReplyajax();
 						$('#modalmessage').modal('toggle');
 				    } 
 			   });
@@ -591,14 +730,17 @@ function resetData() {
 		 if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }else if(${user.userNo } == deleteuserno){
-			 
-			 $('#deletemodalreply').modal('show');
-		 }else{
-		 	alert('자신의 댓글을 선택하여 지우세요.');
-		 }
-		
-		$(document).on('click','#deletereplym',function(){
-			  $.ajax({
+			 swal({title: "댓글을 삭제 하시겠습니까?",
+				  icon: "warning",
+				  buttons: true,
+				  dangerMode: true,
+				})
+			.then((willDelete) => {
+			    if (willDelete) {
+			      swal("삭제 되었습니다.", {
+			      icon: "success",
+			    }).then((next) => {
+			    	$.ajax({
 						url : "/common/json/deleteReply",
 						method : "POST" ,
 						dataType : "json" ,
@@ -610,47 +752,56 @@ function resetData() {
 						success : function(JSONData) {
 							//alert(JSON.stringify(JSONData));
 							alert('success');
-							$('#deletemodalreply').modal('toggle');		
-							window.location.reload();
+							listReplyajax();
 						}
-				}); 
-			});
-		});
+					}); 
+			  	});
+			  	}  
+			});	 
+		 }else{
+		 	alert('자신의 댓글을 선택하여 지우세요.');
+		 }		  
+	});
 	
 	//////////////////////////////////////updatereply//////////////////////////////////////////
 	$(document).on('click','.row2 a[name=updatereply]', function() {
 		var updateuserno = $($('input[name=userNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
 		var updatereplyno = $($('input[name=replyNo]')[$('.row2 a[name=updatereply]').index(this)]).val();
 		var updatecontent = $($('input[name=replyContent]')[$('.row2 a[name=updatereply]').index(this)]).val();
-		var uprel ='<textarea id="updatecontent"  name="updatecontent" row="5" col="40" value="" placeholder="내용 작성">'+updatecontent+'</textarea>';
-		alert($('.row2 a[name=updatereply]').index(this));
+		
 		if(${empty user.userId}){
 			 alert('로그인후 사용하여주세요');	 
 		 }else if(${user.userNo } == updateuserno){
-			 $('#upreply').html(uprel);
+			 $('#updatereplyno').val(updatereplyno);
+			 $('#updatecontent').val(updatecontent);
 			 $('#updatemodalreply').modal('show');
 		 }else{
 		 	alert('자신의 댓글을 선택하여 지우세요.');
 		 }
-		
-		$(document).on('click','#updatereplym',function(){
-			 $.ajax({
-					url : "/common/json/updateReply",
-					method : "POST" ,
-					dataType : "json" ,
-					contentType:"application/json;charset=UTF-8",
-					data : JSON.stringify({
-						"replyNo":updatereplyno,
-						"replyContent":$('#updatecontent').val()
-					}),
-						success : function(JSONData) {
-							alert(JSON.stringify(JSONData));
-							 $('#updatemodalreply').modal('toggle');		
-							window.location.reload();
-					}
-			}); 
-		});
 	});
+	
+	$(document).on('click','#updatereplym',function(){
+		 var updatereplyno = $('#updatereplyno').val();
+		
+		 $.ajax({
+				url : "/common/json/updateReply",
+				method : "POST" ,
+				dataType : "json" ,
+				contentType:"application/json;charset=UTF-8",
+				data : JSON.stringify({
+					"replyNo":updatereplyno,
+					"replyContent":$('#updatecontent').val()
+				}),
+					success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#updatereplyno').val("");
+						$('#updatecontent').val("");
+						listReplyajax();
+						$('#updatemodalreply').modal('toggle');		
+				}
+		}); 
+	});
+	
 	
 	//////////////////////////////////////////////updateCommunity//////////////////////////////////////////////////
 	
@@ -839,98 +990,11 @@ function resetData() {
   			</div>
 		</div>
 		
-		<div class="modal fade" id="modalreport"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">
-					<Strong>REPORT</Strong>
-				</h4>
-				<h7 class="modal-title"></h7>
-			</div>
-			<div class="modal-body">
-			
-				<div id="reportbody"></div>
-			
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
-			</div>
-		</div>
-		</div>
-		</div>
 		
 		
-		<div class="modal fade" id="modalfriend"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+		<!-- <div class="modal fade" id="updatemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
 			<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>친구추가</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-				<h4><Strong>친구 추가를 하시겠습니까 ????</Strong></h4>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="addmodalfriend">예</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
-			</div>
-		</div>
-		</div>
-		</div>
-		
-		<div class="modal fade" id="modalmessage"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-			<!-- Modal content-->
-			<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>쪽지</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-				<div id="msg">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="upmessage">보내기</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
-			</div>
-		</div>
-		</div>
-		</div>
-		
-		<div class="modal fade" id="deletemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-			 	<h3 class="modal-title">
-					<Strong>댓글삭제</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-				<h4><Strong>댓글을 삭제하시겠습니까??</Strong></h4>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="deletereplym">예</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
-			</div>
-		</div>
-		</div>
-		</div>
-		
-		<div class="modal fade" id="updatemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-			<!-- Modal content-->
+			Modal content
 			<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -948,11 +1012,150 @@ function resetData() {
 			</div>
 		</div>
 		</div>
-		</div>
+		</div> -->
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 		</div>
-		
 		</div>
+		
+		<!------------------------------------------------report---------------------------------------------------------->
+		<div id="modalreport" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REPORT</strong>
+									</h1>
+								</div>
+								
+								<input type="hidden" id="reportuserno" name="reportuserno" value=""/>
+					      		<input type="hidden" id="reportreplyno" name="reportreplyno" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									<label for="targetReportUser" class="col-md-12 control-label">신고 대상</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="reportuser" name="reportuser" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">신고 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="reporttitle" name="reporttitle" placeholder="신고 제목 " >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">신고 내용</label> 
+									<textarea  class="form-control contents" id="reportcontent"  name="reportcontent" style="position: absoloute" row="5" col="50" value="" placeholder="신고 내용"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
+			</div>
+			<!------------------------------------------------report---------------------------------------------------------->
+			
+			<!------------------------------------------------message---------------------------------------------------------->
+		<div id="modalmessage" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>MESSAGE</strong>
+									</h1>
+								</div>
+			
+								<input type="hidden" id="msguserno" name="msguserno" value=""/>
+					      		<input type="hidden" id="reportreplyno" name="reportreplyno" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									<label for="targetReportUser" class="col-md-12 control-label">보낼 사람</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="msgusername" name="msgusername" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">쪽지 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="msgtitle" name="msgtitle" placeholder="제목 작성" >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">쪽지 내용</label> 
+									<textarea  class="form-control contents" id="msgcontent"  name="msgcontent" style="position: absoloute" row="5" col="50" value="" placeholder="내용 작성"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="upmessage">보내기</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+						</form>
+					</div>
+			</div>
+			<!------------------------------------------------message---------------------------------------------------------->
+			
+			<!------------------------------------------------updateReply---------------------------------------------------------->
+		<div id="updatemodalreply" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REPLY MODIFY</strong>
+									</h1>
+								</div>			
+								<input type="hidden" id="updatereplyno" name="updatereplyno" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">							
+									<label for="departureDate" class="col-sm-12 control-label ">댓글 내용</label> 
+									<textarea  class="form-control contents" id="updatecontent"  name="updatecontent" style="position: absoloute" row="5" col="50" value="" placeholder="내용 작성"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="updatereplym">수  정</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
+									</div>
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+						</form>
+					</div>
+			</div>
+			<!------------------------------------------------updateReply---------------------------------------------------------->
 </body>
 </html>

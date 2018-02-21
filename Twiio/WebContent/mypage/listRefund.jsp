@@ -7,7 +7,7 @@
 
 <html lang="ko">
 <head>
-<title>판매목록조회</title>
+<title>refund</title>
 
 <meta charset="UTF-8">
 	
@@ -58,13 +58,24 @@
 		
 		<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	<link rel="stylesheet" href="/resources/css/font.css" />
    <style>
      body {
-            padding-top : 50px;
+            padding-top : 100px ;
+            background-color: #f4f4f4;
+			color: #666666 ;
+			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
+        h1 {
+			text-align: center;
+		}
+		.panel {
+			border: 1px solid #ddd;
+			background-color: #fcfcfc;
+		}
         
         <!-- ##### -->
-         .ct_list_pop {margin-left: 80px;color: blue; float: center;}
+        .ct_list_pop {margin-left: 80px;color: blue; float: center;}
 
         td { cursor: default;}
 
@@ -85,19 +96,22 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
-         $("#currentPage").val(currentPage)
-         $("form").attr("method" , "POST").attr("action" , "/mypage/listRefund").submit();
+    	  if(${resultPage.maxPage}>=currentPage){
+         $("#currentPage").val(currentPage);
+         $("form").attr("method" , "POST").attr("action" , "/transaction/listRefund").submit();
+      	}
       }
-   
+   	
      
-      ////////////////////////환불 처리 모달/////////////////////////////////////////////
+ 
+     ////////////////////////환불 처리 모달/////////////////////////////////////////////
      $(function(){
-      $('td:nth-child(7)').on('click',function(){
-    	  var refundno = $($('input[name=refundNo]')[$('td:nth-child(7)').index(this)]).val();
-    	  var tranno = $($('input[name=tranNo]')[$('td:nth-child(7)').index(this)]).val();
-    	  var confirmDate = $($('input[name=confirmDate]')[$('td:nth-child(7)').index(this)]).val();
+      $('#btnRefund').on('click',function(){
     	  
-    	  if(confirmDate != null){
+    	  var refundno = $($('input[name=refundNo]')[$('#btnRefund').index(this)]).val();
+    	  var tranno = $($('input[name=tranNo]')[$('#btnRefund').index(this)]).val();
+    	  var confirmDate = $($('input[name=confirmDate]')[$('#btnRefund').index(this)]).val();
+    	  if(confirmDate != ''){
     	  }else{
     	  swal({
 			  title: "환불을 해드리겠습니까??",
@@ -123,9 +137,8 @@
 								location.reload();
 						 }
 			    	 });
-			    });
-			  }
-			  
+			      });
+			    }			  
 			});
     	  }
       	}); 
@@ -146,25 +159,26 @@
    <!--  화면구성 div Start /////////////////////////////////////-->
    
    <div class="container col-md-8 col-md-offset-2">
-       <div class="page-header text-info">
-          <h3>
+   	   <div class="col-md-12">
+   	   <div class="table-responsive">
+          <h1 style="font-family: 'Jeju Gothic', serif;">
           <%-- ${requestScope.menu == 'search' ? "상품목록조회" : "상품관리"} --%>
-          	환불목록조회
-         </h3>
+          	REFUND
+         </h1>
        </div>
        
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
-       <div class="row">
-          <div class="pull-left">
-             <p class="text-primary">
-                	전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
-             </p>
-          </div>
+      
+       <div class="pull-left">
+          <p class="text-primary">
+                         전체  ${resultPage.totalCount } 건수, 현재 ${resultPage.currentPage}  페이지
+          </p>
+       </div>
                   
            <div class="pull-right">
 			    <form class="form-inline" name="detailForm"> 
-				  <div class="form-group">
-				  <%--   <select class="form-control" name="searchCondition" id="searchCondition">
+				  <%--<div class="form-group">
+				     <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>작성자</option>
 						<option value="1"  ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>상품이름</option>
 					</select>
@@ -190,24 +204,26 @@
       
       
       <!--  table Start /////////////////////////////////////-->
+        <div class="col-md-12">
+        <div class="panel panel-default">
         <table class="table table-hover " style="margin-left: auto; margin-right: auto; text-align: center;">
       
         <thead>       
           <tr>         
-            <th align="center" width="100" align="">등록일</th>
-            <th align="center" width="80">환불회원이름</th>
-            <th align="left" width="100">환불은행</th>
-            <th align="left" width="140">환불계좌번호</th>
-            <th align="left" width="100">환불가격</th>
-            <th align="left" width="100">환불처리날짜</th>           
-            <th align="left" width="100">환불처리</th>
+            <th class="col-md-2" align="center">등록일</th>
+            <th class="col-md-1" align="center">환불회원이름</th>
+            <th class="col-md-1" align="left">환불은행</th>
+            <th class="col-md-2" align="left">환불계좌번호</th>
+            <th class="col-md-1" align="left">환불가격</th>
+            <th class="col-md-2" align="left">환불처리날짜</th>           
+            <th class="col-md-1" align="left">환불처리</th>
           </tr>
         </thead>       
       <tbody>
         <c:set var="i" value="0" />
         <c:forEach var="refund" items="${list}">
          <c:set var="i" value="${ i+1 }" />
-         <input type="hidden" name="refundNo" value="${refund.refundNo}"/>
+          <input type="hidden" name="refundNo" value="${refund.refundNo}"/>
      	  <input type="hidden" name="tranNo" value="${refund.tranNo}"/>
      	  <input type="hidden" name="confirmDate" value="${refund.confirmDate}"/>
          <tr class="ct_list_pop">  	   
@@ -215,11 +231,11 @@
            <td align="left">${refund.userName}</td>
            <td align="left">${refund.refundBank}</td>
            <td align="left">${refund.refundAccount}</td>
-           <td align="left">${refund.refundPrice}</td>
+           <td align="left">${refund.refundPrice}원</td>
            <td align="left">${refund.confirmDate}</td>
            <td align="left">
            <c:if test="${refund.confirmDate == null}">
-           	환불처리
+           <button type="button" class="btn btn-default" id="btnRefund" name="btnRefund">환불</button>
            </c:if>
            <c:if test="${refund.confirmDate != null}">
            	환불완료
@@ -236,11 +252,11 @@
       </table>
      <!--  table End /////////////////////////////////////-->  
     </div>
-
-    <div class="col-md-2 col-md-offset-1">
-    <jsp:include page="../common/pageNavigator_new.jsp"/>
+	</div>
+    <div class="row">
+    	<jsp:include page="../common/pageNavigator_new.jsp"/>
     </div>
-
+	</div>
 
 </body>
 </html>
