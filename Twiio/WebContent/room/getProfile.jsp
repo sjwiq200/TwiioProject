@@ -76,7 +76,7 @@
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/main_img.jpg");
+			/* background-image: url("/resources/images/main_img.jpg"); */
     		background-size: cover;
         }
         
@@ -85,7 +85,7 @@
 				background-color: rgba(255, 255, 255, 0.7);
 				padding-left : 30px;
 				padding-right : 30px;
-				padding-top : 20px !important;
+				padding-top : 0px !important;
 			}
 		h2{
 				color : #FFF; 
@@ -212,7 +212,7 @@
 
 
 	<div class="container">
-		<div class="jumbotron">
+		<div class="jumbotron" style="padding-bottom:0;margin-bottom:0;">
 			<div class="jumbotron" id="mainJum" style="font-family: 'Noto Sans KR', sans-serif !important; color :#000000; ">
 	
 			<h2 class="text-center" id="titleRoom">프로필 보기</h2>
@@ -287,7 +287,7 @@
 							  
 							  <div class="form-group">
 							    <div class="col-sm-offset-4  col-sm-4 text-center">
-							    	<c:if test="${!flag }">
+							    	<c:if test="${user.userNo != profile.userNo }">
 							      <button type="button" class="btn btn-outlined btn-light btn-sm" id ="go"  >친구추가</button>
 						      	</c:if>
 								  <a class="btn btn-outlined btn-light btn-sm" href="#" role="button" id="cancel">취&nbsp;소</a>

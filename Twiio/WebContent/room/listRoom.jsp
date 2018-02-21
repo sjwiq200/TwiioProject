@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 
@@ -135,19 +134,19 @@
 														/* var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >' */
 														var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
 															/* + '<div class="thumbnail" name="getPro" style="height:500px;">' */
-															+'<div class="thumbnail" name="getPro" style="max-height:450px;">'
+															+'<div class="thumbnail" name="getPro" style="max-height:550px;">'
 															
 															  if(JSONData[i].type == '식사'){
-																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '체험' ) {
-																  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >';
+																  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '관람') {
-																  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >';
+																  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '미정') {
-																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															
 															/* displayValue += '<div class="caption" style="text-align: center;">' */
@@ -423,21 +422,21 @@ h2 {
 		    <!-- <div class="col-sm-3 "  style="padding-top : 2%"> -->
 		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
 		      <!-- <div class="thumbnail" name="getPro" style="height:500px;"> -->
-		      <div class="thumbnail" name="getPro" style="max-height:450px;">
+		      <div class="thumbnail" name="getPro" style="max-height:550px;">
 		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
 				  <c:if test="${room.type == '식사'}">
-		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  <c:if test="${room.type == '체험' }">
-				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '관람' }">
-				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '미정' }">
-				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  <div class="col-sm-12">
                		<div class="col-sm-12">

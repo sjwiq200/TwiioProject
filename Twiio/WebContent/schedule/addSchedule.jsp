@@ -396,7 +396,7 @@ h3{
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		<div class="jumbotron">
-			<h3 align="center"><ins><strong>약속을 정해요 ㅎㅎ끼꾹</strong></ins></h3>
+			<h3 align="center"><ins><strong>약속을 정해요!</strong></ins></h3>
 	
 			<div class="panel-body">
 				<div class="row">
