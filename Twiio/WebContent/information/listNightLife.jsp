@@ -50,7 +50,6 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -174,7 +173,7 @@
 			#head{
 		  		background-image: url("/resources/images/night.png");
 		  		font-family: "Pacifico", cursive;
-		  		height : 200px;
+		  		height : 250px;
 		  }
 		 a {
 			    color: rgba(0, 0, 0, 1);
@@ -346,7 +345,7 @@
 	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
       <div class="container" id="container">
       
-      <h2 align="center"><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT NIGHTLIFE</ins></strong></h2>
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT NIGHTLIFE</ins></strong></h2>
 	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">여행의 꽃, 원하는 곳을 찾아보세요 :D</h4>
       
       </div>
