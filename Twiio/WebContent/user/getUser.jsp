@@ -26,6 +26,7 @@
    <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
 	<link rel="stylesheet" href="/resources/css/font.css" />
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	
 	<style>
  		body {
             padding-top : 100px;
@@ -41,7 +42,7 @@
 			border: 1px solid #ddd;
 			background-color: #fcfcfc;
 		}
-        .profile-userpic img {
+         img {
 		  float: none;
 		  margin: 0 auto;
 		  width: 80%;
@@ -133,7 +134,85 @@
 				border: 1px solid;
 				padding:5px 10px;
 			}
+			#back{
+         	 border-radius: 23px;
+          	 border: dashed rgba(85, 176, 190, 1) 2px;
+         	}
+         	
+         	/* 사이드바 <START> */
 
+	
+			.sidenav::-webkit-scrollbar {
+  			width: 0.7em;
+  			background: transparent;
+			}
+			
+			.sidenav::-webkit-scrollbar-thumb {
+ 	 		background: transparent;
+			}
+
+			.sidenav {
+			margin-top: 53px;
+    		height: 100%;
+		    width: 0;
+		    position: fixed;
+		    z-index: 1;
+		    top: 0;
+   		    left: 0;
+		    overflow-x: hidden;
+		    transition: 0.6s;
+		    padding-top: 60px;
+		    background-color: #ffffff;
+		    border-right: solid 0.8px #C2C2C2;
+			}
+
+			.sidenav a {
+		    padding: 8px 8px 8px 32px;
+		    text-decoration: none;
+	    	font-size: 25px;
+	  		color: #818181;
+		    display: block;
+		    transition: 0.3s;
+			}
+
+			.sidenav a:hover {
+			    color: #f1f1f1;
+			}
+			
+			.sidenav .closebtn {
+			    position: absolute;
+			    top: 0;
+			    right: 25px;
+			    font-size: 36px;
+			    margin-left: 50px;
+			}
+			
+			#main {
+			    transition: margin-left .5s;
+			    padding: 5px;
+			}
+			
+			@media screen and (max-height: 450px) {
+			  .sidenav {padding-top: 15px;}
+			  .sidenav a {font-size: 18px;}
+			}
+			
+			#contentsBox {
+				height: 6em;
+				border-bottom: dashed 0.5px #C2C2C2;
+			}
+			
+			/* 사이드바 <END> */
+			
+			.table-filter tr td:first-child {
+			}
+			.sideBarIcon{
+				cursor : pointer;
+				margin-left : 10px;
+			}
+			.sideBarIcon:hover {
+			    color: #f1f1f1;
+			}
 	        
      </style>
     
@@ -148,6 +227,106 @@
 			 });
 		});
 		
+//////////////////////////////////사이드바///////////////////////////////////////
+			function openNav() {
+				document.getElementById("mySidenav").style.width = "300px";
+				document.getElementById("main").style.marginLeft = "300px";
+				document.body.style.backgroundColor = "#f4f4f4";
+				
+			}
+
+			function closeNav() {
+				document.getElementById("mySidenav").style.width = "0";
+				document.getElementById("main").style.marginLeft = "0";
+				document.body.style.backgroundColor = "#f4f4f4";
+			}
+			
+			$(function() {
+				$("div[name=contentsBox]").hover(function() {
+					var index = $("div[name=contentsBox]").index(this);
+	 				$($("div[name=contentsBox]")[index]).attr("style","background-color:#A6A0A5; color:white;");
+	 					}, function(){
+	 						var index = $("div[name=contentsBox]").index(this);
+	 						$($("div[name=contentsBox]")[index]).attr("style","background-color:#ffffff;");
+	 					
+	 			});
+	 		});
+////////////////////////////////////////사이드바////////////////////////////////////
+////////////////////////////////////////삭제///////////////////////////////////////
+	$(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
+ 			var friendNo = $($('input[name=friendNo]')[$('td:nth-child(4) span[name="friendDelete"]').index(this)]).val();
+ 			$.ajax({
+ 				url : "/common/json/deleteFriend/"+friendNo,
+ 				method:"GET",
+ 				dataType:"json",
+ 				headers :{
+ 					"Accept" : "application/json",
+ 					"Content-Type" : "application/json"
+ 				},		
+ 				success : function(JSONData) {
+ 						swal("삭제되었습니다.", {
+ 					      icon: "success",
+ 					    });
+ 						alert("삭제 성공");
+ 						window.location.reload();
+ 			    },error : function(request,error){
+ 			    	alert(에러);
+ 			    }
+ 		  }); 
+ 		});
+////////////////////////////////////////////////////////////////////////////////////  		
+////////////////////////////////////////////friendMessage///////////////////////////
+  		$(document).on("click",'td:nth-child(4) span[name="friendMessage"]', function(){
+  			var userNo = $($('input[name=userNo]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
+  			var userName = $($('input[name=userName]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
+  			$('#targetNo2').val(userNo);
+  			$('#toUsern2').val(userName);
+  			$("#modalwrite2").modal('show');
+  		});
+
+  		$(document).on('click','#addMess2',function(){
+  			var targetNo = $('#targetNo2').val();
+  			var toUsern = $('#toUsern2').val();
+  			var modalMessageTitle = $('#modalMessageTitle2').val();
+  			var modalMessageContent = $('#modalMessageContent2').val();
+  			//modalmessage
+
+  			if(modalMessageTitle==''| modalMessageContent==''){
+  				alert('내용과 제목을 입력하세요.');			 
+  			}
+  			else{
+  			  	$.ajax({
+  					url : "/mypage/json/addMessage",
+  					method : "POST" ,
+  					dataType : "json" ,
+  					contentType:"application/json;charset=UTF-8",
+  					data : JSON.stringify({
+  						"toUserNo":targetNo,
+  						"fromUserNo":"${user.userNo}",
+  						"messageContent":modalMessageContent,
+  						"messageType":"2",
+  						"messageTitle":modalMessageTitle,
+  						"targetUserName":toUsern,
+  						"userName":"${user.userName}"
+  					}),
+  					success : function(JSONData) {
+  						alert("메시지가 보내기 성공.!!");
+  						$('#modalwrite2').modal('toggle');
+  				    } 
+  			   });
+  			}
+  		});
+  		
+  		$(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "td:nth-child(2)" ).on("click" , function() {
+				var userNo = $($('input[name=userNo]')[$('td:nth-child(2)').index(this)] ).val();
+				window.open("/user/getProfile2?userNo="+userNo,"getProfile2","width=500, height=650,status=no, scrollbars=no, location=no");
+				//self.location ="/user/getProfile2?userNo="+userNo; 
+			});
+		});
+//////////////////////////////////////////////////////////////////////////////////////////////
+		
 	</script>
 	
 </head>
@@ -157,20 +336,114 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
+   	
+   	<!---------------------------------------사이드바--------------------------------------------------------->
+	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
+		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+			
+			<div class="col-xs-12" align="center" style="margin-bottom: 2em; ">
+			
+				<c:if test="${empty user.userImage}">
+					<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" height="80px" style="border-radius: 5%;">
+				</c:if>
+				<c:if test="${!empty user.userImage}">
+					<img src="/resources/images/userimages/${user.userImage}" style="width: 100px; height: 100px;">										  		 	 
+				</c:if>
+								
+			</div>
+			<div class="col-xs-9 col-xs-offset-2" align="left">
+				[ 이	   름  :  ${user.userName } ]
+			</div>
+			
+			<div class="col-xs-9 col-xs-offset-2" align="left" >
+				<c:if test="${user.userType == 1}">
+					[  유    형  :  회원  ]
+				</c:if>
+				<c:if test="${user.userType == 2}">
+					[  유    형  :  호스트  ]
+				</c:if>
+				<c:if test="${user.userType == 3}">
+					[  유    형  :  관리자  ]
+				</c:if>
+			</div>
+			<div class="col-xs-9 col-xs-offset-2" align="left"style="margin-bottom: 4em; ">
+				[ 핸드폰  :  ${user.userPhone } ]
+			</div>
+			<div class="col-xs-12" style="background:transparent;">
+			
+			<table class="table table-filter" style="align-content: center;">
+				<thead>
+				<h3 align = "center">친  구</h3>
+					<tr data-status="pagado">
+					    <th align="center" >No</th>
+					    <th align="left" >사진</th>
+					    <th align="left" >Friend</th>
+					    <th align="left" >쪽지/삭제</th>
+					</tr>
+					</thead>					
+					<tbody>
+					<c:set var="i" value="0" />
+					<c:forEach var="friend" items="${listFriend}">								    
+						<c:set var="i" value="${ i+1 }"/>
+						<input type="hidden" id="friendNo" name="friendNo" value="${friend.profilePublic}"/>
+						<input type="hidden" id="userNo" name="userNo" value="${friend.userNo}"/>
+						<input type="hidden" id="userName" name="userName" value="${friend.userName}"/>
+						<tr data-status="pagado">
+						<div class="media-body">
+						<td align="pull-right">${ i }</td>
+						<td align="left">
+							<c:if test="${empty friend.userImage}">
+								<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+							</c:if>
+							<c:if test="${!empty friend.userImage}">
+								<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+							</c:if>
+						</td>
+						<td align="left">
+							${friend.userName}
+						</td>
+						<td align="left" class="row">
+								<!-- <div href="#" role="button" name="friendMessage" style="max-width : 40%;" ><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+								<div href="#"  role="button" name="friendDelete" style="max-width : 40%;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div> -->
+							<span class="glyphicon glyphicon-envelope sideBarIcon" name="friendMessage" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-remove sideBarIcon" name="friendDelete" aria-hidden="true"></span>
+						
+						</td>
+						</div>
+						</tr>
+					</c:forEach>
+				</tbody>							
+				</table>
+				
+		    </div>
+	</div>
 	
+	<div id="main" style="position:fixed; z-index:1000;">
+
+	
+		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()" >&#9776;
+		OPEN
+		</span>
+	</div>
+   	
+	<!---------------------------------------사이드바--------------------------------------------------------->
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-		<div class="page-header">
-	       <h1 style="font-family: 'Jeju Gothic', serif; ">회원상세정보</h1>
-	    </div>
-	
-	
-		<div class="panel panel-default">	
+		
+
+		<div class="panel panel-default" id="back">	
 		<div class="col-md-10 col-md-offset-1">
+		<div class="page-header">
+			<div class="row">
+	       <h1 style="font-family: 'Jeju Gothic', serif; ">회원상세정보</h1>
+	       </div>
+	       <div class="row" align="center">
+	       <h5 class="text-muted"  style="font-family: 'Jeju Gothic', serif;">내 정보를 <strong class="text-danger"  style="font-family: 'Jeju Gothic', serif;" >최신정보로 관리</strong>해 주세요.</h5>
+	    	</div>
+	    </div>
 		<div class="profile-userpic ">
-		<c:if test="${empty user.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-		<c:if test="${!empty user.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
+		<c:if test="${empty user.userImage}"><img style="width:200px; height:200px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
+		<c:if test="${!empty user.userImage}"><img style="width:200px; height:200px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive"></c:if>
 		</div>
 		
 		<div class="col-sm-12">
@@ -277,16 +550,67 @@
 			<br/>
 			
 			<div class="row"></div>				
-				<div class="row">
-			  		<div class="col-sm-12 text-center ">
-			  			<button type="button" class="btn btn-outlined btn-theme btn-sm" id="updateuser">회원정보수정</button>
-			  		</div>
+			<div class="row">
+				<div class="col-sm-12 text-center ">
+			  		<button type="button" class="btn btn-outlined btn-theme btn-sm" id="updateuser">회원정보수정</button>
 				</div>
 			</div>
+			
+			<div class="row">&nbsp;</div>	
+			<div class="row">&nbsp;</div>
+			<div class="row">&nbsp;</div>
+			</div>
+				
+			
 		<br/> 
 		
 		</div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
+ 	
+ 	<div class="modal fade" id="modaldelete" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+      <div class="modal-dialog">
+    	<div class="modal-content">
+          <div class="modal-header">
+          <input type="hidden" id="mesgNo" name="mesgNo" val=""/>
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        <h4 class="modal-title custom_align" id="Heading">Delete this entry</h4>
+      	</div>
+          <div class="modal-body">
+       	  	<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div> 
+      	  </div>
+          <div class="modal-footer ">
+            <button type="button" class="btn btn-success" id="modalDeleteMessage" name="modalDeleteMessage"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+      	  </div>
+        </div>
+  	  </div>
+     </div>
+
+		<div class="modal fade" id="modalwrite2" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+          		<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        			<h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+      			</div>
+          	<div class="modal-body">
+          			<input class="hidden" name="targetNo2" id="targetNo2" type="text" value="">
+          		<div class="form-group">
+       				<input class="form-control" name="toUsern2" id="toUsern2" type="text" value="" readonly>
+        		</div>
+        		<div class="form-group"> 
+        			<input class="form-control" name="modalMessageTitle2" id="modalMessageTitle2" type="text" value="" placeholder="제목을 작성하여 주세요.">
+        		</div>
+        		<div class="form-group">
+        			<textarea rows="4" class="form-control" name="modalMessageContent2" id="modalMessageContent2" value="" placeholder="내용을 작성하여 주세요."></textarea>
+        		</div>
+        	</div>
+         	<div class="modal-footer ">
+        		<button type="button" class="btn2 btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> SEND</button>
+      		</div>
+        	</div>
+  	   </div>
+	   </div>
 
 </body>
 </html>

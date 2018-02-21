@@ -84,7 +84,16 @@ body {
    	   	}
    	   	
    	   	/* 사이드바 <START> */
-
+			img {
+		  float: none;
+		  margin: 0 auto;
+		  width: 80%;
+		  height: 80%;
+		  -webkit-border-radius: 50% !important;
+		  -moz-border-radius: 50% !important;
+		  border-radius: 50% !important;
+		  border: 3px solid;
+		}
 	
 			.sidenav::-webkit-scrollbar {
   			width: 0.7em;
@@ -181,8 +190,8 @@ body {
 
 //////////////////////////쪽지보내기/////////////////////////////
 $(document).on('click','#writemesg',function(){
-	var toUserName = $($('input[name=toUserName]')[$('button[id=writemesg]').index(this)]).val();
-	var fromUserNo = $($('input[name=fromUserNo]')[$('button[id=writemesg]').index(this)]).val();
+	var toUserName = $($('input[name=toUserName]')[$('span[id=writemesg]').index(this)]).val();
+	var fromUserNo = $($('input[name=fromUserNo]')[$('span[id=writemesg]').index(this)]).val();
 	
 	$('#targetNo').val(fromUserNo);
 	$('#toUsern').val(toUserName);
@@ -224,7 +233,7 @@ $(document).on('click','#addMess',function(){
 ///////////////////////////////////////////////////////////
 /////////////////////////삭제//////////////////////////////
 $(document).on('click','#deletemesg',function(){
-	var messageNo = $($('input[name=messageNo]')[$('button[id=deletemesg]').index(this)]).val();
+	var messageNo = $($('input[name=messageNo]')[$('span[id=deletemesg]').index(this)]).val();
 	$('#mesgNo').val(messageNo);
 	$("#modaldelete").modal('show');
 });
@@ -250,9 +259,8 @@ $(document).on('click','#modalDeleteMessage',function(){
 /////////////////////////////////////////////////////////////////
 /////////////////////////////상세보기//////////////////////////////
 	
-	$(document).on('click','td:nth-child(4) td[name=title]',function(){
-	var mesgNo = $($('input:hidden[name="messageNo"]')[$('td:nth-child(4) td[name=title]').index(this)]).val();
-	//alert();
+	$(document).on('click','td:nth-child(4)[id="title"]',function(){
+	var mesgNo = $($('input:hidden[name="messageNo"]')[$('td:nth-child(4)[id="title"]').index(this)]).val();
 	 alert(mesgNo);
 	 $.ajax({
 		url : "/mypage/json/getMessage",
@@ -267,13 +275,14 @@ $(document).on('click','#modalDeleteMessage',function(){
 			$('#targetNo').val(JSONData.fromUserNo);
 			$('#toUsern1').val(JSONData.userName);
 			$('#modalmessageRegDate').val(JSONData.messageRegDate);
-			$('#modalMessageTitle2').val(JSONData.messageTitle);
+			$('#modaldetailMessageTitle').val(JSONData.messageTitle);
 			$('#modaldetailMessageContent').text(JSONData.messageContent);
 			$("#modaldetail").modal('show');
 	    } 
-  }); 
-});
-
+  });
+  });
+///////////////////////////////////////////////////////////////////////
+///////////////////////////여러개 삭제///////////////////////////////////
 
 	$(function(){
 		$("#deletemesgselect").on("click", function(){
@@ -320,6 +329,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 		});
 	}
 	///////////////////////////////////////////////////////////////////
+	///////////////////////////////삭제/////////////////////////////////
 	$(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
  			var friendNo = $($('input[name=friendNo]')[$('td:nth-child(4) span[name="friendDelete"]').index(this)]).val();
  			$.ajax({
@@ -342,7 +352,7 @@ $(document).on('click','#modalDeleteMessage',function(){
  		  }); 
  		});
   		
-
+		////////////////////////////////////////////friendMessage///////////////////////////////////////////////
   		$(document).on("click",'td:nth-child(4) span[name="friendMessage"]', function(){
   			var userNo = $($('input[name=userNo]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
   			var userName = $($('input[name=userName]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
@@ -439,7 +449,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 					<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" height="80px" style="border-radius: 5%;">
 				</c:if>
 				<c:if test="${!empty user.userImage}">
-					<img src="/resources/images/userimages/${user.userImage}" width="100px" height="100px" style="border-radius: 5%;">										  		 	 
+					<img src="/resources/images/userimages/${user.userImage}" style="width: 100px; height: 100px;" style="border-radius: 5%;">										  		 	 
 				</c:if>
 								
 			</div>
@@ -478,8 +488,8 @@ $(document).on('click','#modalDeleteMessage',function(){
 						<input type="hidden" id="userName" name="userName" value="${friend.userName}"/>
 						<tr data-status="pagado">
 						<div class="media-body">
-							<td align="pull-right">${ i }</td>
-							<td align="left">
+						<td align="pull-right">${ i }</td>
+						<td align="left">
 							<c:if test="${empty friend.userImage}">
 								<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
@@ -573,11 +583,12 @@ $(document).on('click','#modalDeleteMessage',function(){
     		 	  <c:if test="${message.messageType == '1'}">상품</c:if>
     			  <c:if test="${message.messageType == '2'}">개인 </c:if>
     			  <c:if test="${message.messageType == '3'}">채팅방</c:if>
+    			  <c:if test="${message.messageType == '4'}">신고</c:if>
     			  </td>
-    		  	<td align="left" id="title" name="title">${message.messageTitle}</td>
+    		  	<td align="left" id="title">${message.messageTitle}</td>
     		  	<td align="left">${message.messageRegDate}</td>
-    		  	<td align="left"><button class="btn btn-primary btn-xs" id="writemesg"><span class="glyphicon glyphicon-pencil"></span></button></td>
-    		  	<td align="left"><button class="btn btn-danger btn-xs" id="deletemesg"><span class="glyphicon glyphicon-trash"></span></button></td>
+    		  	<td align="left"><span class="glyphicon glyphicon-envelope sideBarIcon" id="writemesg"></span></td>
+    		  	<td align="left"><span class="glyphicon glyphicon-remove sideBarIcon" id="deletemesg"></span></td>
   
     		  </tr>
     		  </c:forEach>
@@ -612,7 +623,7 @@ $(document).on('click','#modalDeleteMessage',function(){
         		</div>
         	</div>
          	<div class="modal-footer ">
-        		<button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
+        		<button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> SEND</button>
       		</div>
         	</div>
   	   </div>
@@ -639,7 +650,36 @@ $(document).on('click','#modalDeleteMessage',function(){
   	  </div>
      </div>
      
-     		<div class="modal fade" id="modaldetail" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">	
+     		
+				
+		<div class="modal fade" id="modalwrite2" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+          		<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        			<h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+      			</div>
+          	<div class="modal-body">
+          			<input class="hidden" name="targetNo2" id="targetNo2" type="text" value="">
+          		<div class="form-group">
+       				<input class="form-control" name="toUsern2" id="toUsern2" type="text" value="" readonly>
+        		</div>
+        		<div class="form-group"> 
+        			<input class="form-control" name="modalMessageTitle2" id="modalMessageTitle2" type="text" value="" placeholder="제목을 작성하여 주세요.">
+        		</div>
+        		<div class="form-group">
+        			<textarea rows="2" class="form-control" name="modalMessageContent2" id="modalMessageContent2" value="" placeholder="내용을 작성하여 주세요."></textarea>
+        		</div>
+        	</div>
+         	<div class="modal-footer ">
+        		<button type="button" class="btn btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> SEND</button>
+      		</div>
+        	</div>
+  	   </div>
+	   </div>
+	   
+	   <!----------------------------------------------------------message-------------------------------------------------------------------->
+	   <!-- <div class="modal fade" id="modaldetail" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">	
     			<div class="modal-dialog">
     				<div class="modal-content">
           				<div class="modal-header">
@@ -664,37 +704,63 @@ $(document).on('click','#modalDeleteMessage',function(){
         			</div>
          			<div class="modal-footer ">
          				<button type="button" class="btn btn-default" data-dismiss="modal"></span>확인</button>
-        				<!-- <button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button> -->
+        				<button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
       				</div>
         			</div>
   	  			</div>
-				</div> 
+				</div>  -->
 				
-		<div class="modal fade" id="modalwrite2" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-    	<div class="modal-dialog">
-    		<div class="modal-content">
-          		<div class="modal-header">
-          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        			<h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
-      			</div>
-          	<div class="modal-body">
-          			<input class="hidden" name="targetNo2" id="targetNo2" type="text" value="">
-          		<div class="form-group">
-       				<input class="form-control" name="toUsern2" id="toUsern2" type="text" value="" readonly>
-        		</div>
-        		<div class="form-group"> 
-        			<input class="form-control" name="modalMessageTitle2" id="modalMessageTitle2" type="text" value="" placeholder="제목을 작성하여 주세요.">
-        		</div>
-        		<div class="form-group">
-        			<textarea rows="2" class="form-control" name="modalMessageContent2" id="modalMessageContent2" value="" placeholder="내용을 작성하여 주세요."></textarea>
-        		</div>
-        	</div>
-         	<div class="modal-footer ">
-        		<button type="button" class="btn btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button>
-      		</div>
-        	</div>
-  	   </div>
-	</div>
+				
+	   <div id="modaldetail" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>MESSAGE</strong>
+									</h1>
+								</div>
+
+					      		<input class="hidden" name="targetNo" id="targetNo" type="text" value="">
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									
+									<label for="reportuser" class="col-md-12 control-label">보낸 사람</label> 
+									<input type="text" class="form-control contents text-center" style="position: absoloute" id="toUsern1" name="toUsern1" value="" readonly>
+									<p>&nbsp;</p>
+									
+									<label for="targetReportUser" class="col-md-12 control-label">도착 시간</label> 
+									<input type="text" class="form-control contents text-center" style="position: absoloute" id="modalmessageRegDate" name="modalmessageRegDate" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">제목</label>
+									<input type="text" class="form-control contents text-center" style="position: absoloute" id="modaldetailMessageTitle" name="modaldetailMessageTitle" value="" readonly >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">내용</label> 
+									<textarea  class="form-control contents" id="modaldetailMessageContent"  name="modaldetailMessageContent" style="position: absoloute; row=5; col=50;" value="" readonly></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
+			</div>
         	
 </body>
 </html>

@@ -190,8 +190,8 @@
 	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
 	  					FROM		(	SELECT r.tran_no as tran_no,
 											   r.refund_no as refund_no,
-											   r.refund_reg_date as refund_reg_date,
-											   r.refund_confirm_date as refund_confirm_date,
+											   to_char(r.refund_reg_date,'yyyy-mm-dd hh24:mi:ss') as refund_reg_date,
+											   to_char(r.refund_confirm_date,'yyyy-mm-dd hh24:mi:ss') as refund_confirm_date,
 											   r.refund_price as refund_price,
 											   r.refund_account as refund_account,
 											   r.refund_bank as refund_bank,

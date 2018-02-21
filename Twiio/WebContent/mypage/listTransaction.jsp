@@ -347,20 +347,41 @@
          
          
 	/////////////////////////////////리뷰 작성하기///////////////////////////////////////
-      $(document).on('click','#eval', function() {
-  		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		var evalreview = $($('input[name=evalReview]')[$('.ct_list_pop #eval').index(this)]).val();
-  		var tripdate = $($('input[name=tripDate]')[$('.ct_list_pop #eval').index(this)]).val();
+	  /* $(document).on('click','td:nth-child(7) ', function() {
+  		 var evalreview = $($('input[name=evalReview]')[$('td:nth-child(7) button[name="btnEval"]').index(this)]).val();
+  		 if(evalreview == '1'){ 
+  			swal("평가가 이미 완료 되었습니다.", {
+			      icon: "success"
+			    });
+  		 }
+      }); 
+	
+      $(document).on('click','td:nth-child(7) button[name="btnEval"]', function() {
+  		var tranno = $($('input[name=tranNo]')[$('td:nth-child(7) button[name="btnEval"]').index(this)]).val();
+  		var evalreview = $($('input[name=evalReview]')[$('td:nth-child(7) button[name="btnEval"]').index(this)]).val();
+  		var tripdate = $($('input[name=tripDate]')[$('td:nth-child(7) button[name="btnEval"]').index(this)]).val();
+  		*/
+  		$(document).on('click','td:nth-child(7)', function() {
+  	  	var tranno = $($('input[name=tranNo]')[$('td:nth-child(7)').index(this)]).val();
+  	  	var evalreview = $($('input[name=evalReview]')[$('td:nth-child(7)').index(this)]).val();
+  	  	var tripdate = $($('input[name=tripDate]')[$('td:nth-child(7)').index(this)]).val();
+  	  	var refundCode = $($('input[name=refundCode]')[$('td:nth-child(7)').index(this)]).val();
   		var date = new Date();
   		var date2 = new Date(tripdate);
- 		 
+  		
+		if(refundCode == '1'){ 	
   		 if(${empty user.userId}){	 	 
   		 }else if(evalreview == '1'){ 
-  		 }else if(date<=date2){ 
+  			swal("평가가 이미 완료 되었습니다.", {
+			      icon: "success"
+			});
+  		 }else if(date<=date2){
       	 }else{
   			 $('#modalTranNo').val(tranno);
   			 $('#addReivew').modal('show');
   		 }
+		}
+  		 
       });
       
       $(document).on('click','#btnSubmit',function(){
@@ -372,14 +393,12 @@
    	   if(index == null){
    		   index=0;
    	   }
-		   var hostcontent=$('#message').val();
-		   var productcontent=$('#message2').val();
-		   var tranNo = $('#modalTranNo').val();
-		   
-		   
-		   
-		   
-		   
+   	   
+		var hostcontent=$('#message').val();
+		var productcontent=$('#message2').val();
+		var tranNo = $('#modalTranNo').val();
+		alert(tranNo);
+		alert(index+","+index2+","+hostcontent+","+productcontent+","+tranNo);
 		   $.ajax({
 					url : "/transaction/json/updateTransactionEval",
 					method : "POST" ,
@@ -399,19 +418,19 @@
 					}
 		  });
 		   
-      });
+      	});
   		/////////////////////////////////////////////////////////////////////
       
       ///////////////////////////환불하기 버튼//////////////////////////////
-       $(document).on('click','#refund', function() {
-    	   var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var productno = $($('input[name=productNo]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var totalprice = $($('input[name=totalPrice]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var productname = $($('input[name=productName]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var thumbnail = $($('input[name=thumbnail]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var regdate = $($('input[name=regDate]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var refundcode = $($('input[name=refundCode]')[$('.ct_list_pop #refund').index(this)]).val();
-    	   var tripdate = $($('input[name=tripDate]')[$('.ct_list_pop #refund').index(this)]).val();
+       $(document).on('click','td:nth-child(8) button[name="btnAddRefund"]', function() {
+    	   var tranno = $($('input[name=tranNo]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var productno = $($('input[name=productNo]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var totalprice = $($('input[name=totalPrice]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var productname = $($('input[name=productName]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var thumbnail = $($('input[name=thumbnail]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var regdate = $($('input[name=regDate]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var refundcode = $($('input[name=refundCode]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
+    	   var tripdate = $($('input[name=tripDate]')[$('td:nth-child(8) button[name="btnAddRefund"]').index(this)]).val();
     	   var date = new Date();
      	   var date2 = new Date(tripdate);
      	   
@@ -420,7 +439,22 @@
     	   	 if(${empty user.userId}){
     			 alert('로그인후 사용하여주세요');	     			 
     		 }else if(date>(date2-2)){
-    			 
+    			 $("#modalThumbNail").val(thumbnail);
+    			 $("#modalProductNo").val(productno);
+    			 $("#modalTranNo").val(tranno);
+    			 $("#modalProductName").val(productname);
+    			 $("#modalTotalPrice").val(totalprice);
+    			 $("#modalRegDate").val(regdate);
+    			 $("#modalrefundCode").val(refundcode);
+    
+			 	var img ='';
+			 	if(thumbnail == ''){
+			 		img = '<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="100" width="100" />';
+			 	}else{
+			 		img = '<img src="/resources/images/productThumbnail/'+thumbnail+'" height="100" width="100" />';
+			 	}
+    			 $('#thum').html(img);
+    			 $('#addRefundModal').modal('show');
     		 }else{
     			 $("#modalThumbNail").val(thumbnail);
     			 $("#modalProductNo").val(productno);
@@ -458,7 +492,7 @@
 				
 				swal({
 					  title: "환불을 신청 하시겠습니까?"+
-							  "(정보 수정은 불가능합니다.)",
+							"(정보 수정은 불가능합니다.)",
 					  icon: "warning",
 					  buttons: true,
 					  dangerMode: true,
@@ -466,7 +500,7 @@
 					.then((willDelete) => {
 					  if (willDelete) {
 					    swal("환불 신청 완료되었습니다..", {
-					      icon: "success",
+					      icon: "success"
 					    }).then((next) => {
 					    	$.ajax({
 					    		url : "/transaction/json/addRefund",
@@ -506,7 +540,7 @@
    	   <div class="col-md-12">
    	   <div class="table-responsive">
        <h1 style="font-family: 'Jeju Gothic', serif;">
-           	Transaction
+           	나의 구매 목록 :D
        </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
        
@@ -580,7 +614,10 @@
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
            <c:if test="${(trip<now)}">
-           <c:if test="${transaction.evalReview == null}">평가하기</c:if> 
+           <c:if test="${transaction.evalReview == null}">
+           	<button type="button" class="btn btn-default" id="btnEval" name="btnEval">평가</button>
+           </c:if>
+           <c:if test="${transaction.evalReview != null}">평가완료</c:if> 
            </c:if>
            </a></td>
            
@@ -588,7 +625,9 @@
            <c:if test="${transaction.refundCode == '1'}">
            <fmt:parseNumber value="${today.time/(1000*60*60*24)}" integerOnly="true" var="now"/>
            <fmt:parseNumber value="${transaction.tripDate.time / (1000*60*60*24)}" integerOnly="true" var="trip"/>
-           <c:if test="${(trip-now > 2)||(trip>now)}">환불하기</c:if>
+           <c:if test="${(trip-now > 2)||(trip>now)}">
+           	<button type="button" class="btn btn-default" id="btnAddRefund" name="btnAddRefund">환불</button>
+           </c:if>
            <c:if test="${(trip-now < 2)||(trip<now)}">구매완료</c:if>
            </c:if>
            <c:if test="${transaction.refundCode == '2'}">
@@ -615,127 +654,142 @@
      </div>
     
     </div>
-     
-    
-    	<div class="modal fade" id="addReivew"  role="dialog">
-		<div class="modal-dialog modal-eval">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>	
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>평 가</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-				<div class="form-group">
-			호스트 별점
-			</br>
-			<span class="star-input">
-  			<span class="input">
-    			<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
-    			<input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
-    			<input type="radio" name="star-input" id="p3" value="1.5"><label for="p3">1.5</label>
-    			<input type="radio" name="star-input" id="p4" value="1"><label for="p4">2</label>
-    			<input type="radio" name="star-input" id="p5" value="2.5"><label for="p5">2.5</label>
-    			<input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
-   				<input type="radio" name="star-input" id="p7" value="3.5"><label for="p7">3.5</label>
-    			<input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
-   				<input type="radio" name="star-input" id="p9" value="4.5"><label for="p9">4.5</label>
-   				<input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
-  				</span>
-				</span>
-			
-				</br>
-				</br>
-                              호스트 리뷰
-            	</br>
-                <textarea class="form-control input-sm " type="textarea" id="message" style="resize:none;" placeholder="Message" maxlength="60" rows="1"></textarea>
-                <span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
-				</div>
-				<hr>	
-				<div class="form-group">
-				상품 별점
-				</br>
-				<span class="star-input2">
-  				<span class="input2">
-    			<input type="radio" name="star-input2" id="p12" value="0.5"><label for="p12">0.5</label>
-    			<input type="radio" name="star-input2" id="p22" value="1"><label for="p22">1</label>
-    			<input type="radio" name="star-input2" id="p32" value="1.5"><label for="p32">1.5</label>
-    			<input type="radio" name="star-input2" id="p42" value="1"><label for="p42">2</label>
-    			<input type="radio" name="star-input2" id="p52" value="2.5"><label for="p52">2.5</label>
-    			<input type="radio" name="star-input2" id="p62" value="3"><label for="p62">3</label>
-   				<input type="radio" name="star-input2" id="p72" value="3.5"><label for="p72">3.5</label>
-    			<input type="radio" name="star-input2" id="p82" value="4"><label for="p82">4</label>
-   				<input type="radio" name="star-input2" id="p92" value="4.5"><label for="p92">4.5</label>
-   				<input type="radio" name="star-input2" id="p102" value="5"><label for="p102">5</label>
-  				</span>
-				</span>
-				</br>
-				</br>
+		 <div id="addReivew" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
 				
-				상품 리뷰
-                <textarea class="form-control input-sm " type="textarea" id="message2" style="resize:none;" placeholder="Message2" maxlength="60" rows="1"></textarea>
-                <span class="help-block"><p id="characterLeft2" class="help-block ">You have reached the limit</p></span>
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>PRODCUT REVIEW</strong>
+									</h1>
+								</div>
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+								<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>
+								<div name="planer">
+									
+									<label for="reportuser" class="col-md-12 control-label">HOST STAR REVIEW</label> 
+									<span class="star-input text-center">
+  									<span class="input">
+    									<input type="radio" name="star-input" id="p1" value="0.5"><label for="p1">0.5</label>
+						    			<input type="radio" name="star-input" id="p2" value="1"><label for="p2">1</label>
+						    			<input type="radio" name="star-input" id="p3" value="1.5"><label for="p3">1.5</label>
+						    			<input type="radio" name="star-input" id="p4" value="1"><label for="p4">2</label>
+						    			<input type="radio" name="star-input" id="p5" value="2.5"><label for="p5">2.5</label>
+						    			<input type="radio" name="star-input" id="p6" value="3"><label for="p6">3</label>
+						   				<input type="radio" name="star-input" id="p7" value="3.5"><label for="p7">3.5</label>
+						    			<input type="radio" name="star-input" id="p8" value="4"><label for="p8">4</label>
+						   				<input type="radio" name="star-input" id="p9" value="4.5"><label for="p9">4.5</label>
+						   				<input type="radio" name="star-input" id="p10" value="5"><label for="p10">5</label>
+						  			</span>
+									</span>
+									<p>&nbsp;</p>
+									
+									<label for="host" class="col-md-12 control-label">HOST REVIEW</label> 
+									<textarea class="form-control input-sm " type="textarea" id="message" style="resize:none; position: absoloute;" placeholder="HOST REVIEW" maxlength="60" rows="1"></textarea>
+                					<span class="help-block"><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
+									<p>&nbsp;</p>
+				
+									<label for="product" class="col-md-12 control-label">PRODUCT STAR REVIEW</label>
+										<span class="star-input2">
+						  				<span class="input2">
+							    			<input type="radio" name="star-input2" id="p12" value="0.5"><label for="p12">0.5</label>
+							    			<input type="radio" name="star-input2" id="p22" value="1"><label for="p22">1</label>
+							    			<input type="radio" name="star-input2" id="p32" value="1.5"><label for="p32">1.5</label>
+							    			<input type="radio" name="star-input2" id="p42" value="1"><label for="p42">2</label>
+							    			<input type="radio" name="star-input2" id="p52" value="2.5"><label for="p52">2.5</label>
+							    			<input type="radio" name="star-input2" id="p62" value="3"><label for="p62">3</label>
+							   				<input type="radio" name="star-input2" id="p72" value="3.5"><label for="p72">3.5</label>
+							    			<input type="radio" name="star-input2" id="p82" value="4"><label for="p82">4</label>
+							   				<input type="radio" name="star-input2" id="p92" value="4.5"><label for="p92">4.5</label>
+							   				<input type="radio" name="star-input2" id="p102" value="5"><label for="p102">5</label>
+						  				</span>
+										</span>
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">PRODUCT REVIEW</label> 
+									<textarea class="form-control input-sm " type="textarea" id="message2" style="resize:none; position: absoloute;" placeholder="PRODUCT REVIEW" maxlength="60" rows="1"></textarea>
+                					<span class="help-block"><p id="characterLeft2" class="help-block ">You have reached the limit</p></span>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">확인</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>	
+					</form>
 				</div>
 			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">확인</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-			</div>
-		</div>
-		</div>
-		</div>
-		
-				
-		
-		<div class="modal fade" id="addRefundModal"  role="dialog">
-			<div class="modal-dialog modal-refund">
-		<!-- Modal content-->
-				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h3 class="modal-title">
-							<Strong>환불</Strong>
-						</h3>
-					</div>
-					<div class="modal-body col-sm-12">
-						<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>
-         				<input type="hidden" id="modalProductNo" name="modalProductNo" value=""/>
-         				<input type="hidden" id="modalThumbNail" name="modalThumnail" value=""/>
-         				<input type="hidden" id="modalrefundCode" name="modalrefundCode" value=""/>
-						<div class="thum col-sm-8 col-sm-offset-4" id="thum">
 
-						</div>
-           			 	<br/>
-           			 	<br/>
-                			
-           			 	상품이름
-           			 	<input type="text" class="form-control" id="modalProductName" name="modalProductName" value="" readonly>
-           			 	<br/>
-           			 	상품가격
-           			 	<input type="text" class="form-control" id="modalTotalPrice"  name="modalTotalPrice" value="" readonly>
-           			 	<br/>
-           			 	구매일자
-           			 	<input type="text" class="form-control" id="modalRegDate"  name="modalRegDate" value="" readonly>
-           			 	<br/>
-           			 	은행명
-           			 	<input type="text" class="form-control" id="modalRefundAccount"  name="modalRefundAccount" value="">
-           			 	<br/>
-           			 	계좌번호
-           			 	<input type="text" class="form-control" id="modalRefundBank"  name="modalRefundBank" value="" placeholder=" -  생략">	
-           			 	
+		<div id="addRefundModal" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REFUND</strong>
+									</h1>
+								</div>
+								
+								<input type="hidden" id="modalTranNo" name="modalTranNo" value=""/>
+         						<input type="hidden" id="modalProductNo" name="modalProductNo" value=""/>
+         						<input type="hidden" id="modalThumbNail" name="modalThumnail" value=""/>
+         						<input type="hidden" id="modalrefundCode" name="modalrefundCode" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									
+									<label for="reportuser" class="col-md-12 control-label">상 품 이 름</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="modalProductName" name="modalProductName" value="" readonly>
+									<p>&nbsp;</p>
+									
+									<label for="targetReportUser" class="col-md-12 control-label">상 품 가 격</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="modalTotalPrice" name="modalTotalPrice" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">구 매 일 자</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="modalRegDate" name="modalRegDate" value="" readonly >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">은  행  명</label> 
+									<input type="text"  class="form-control contents" id="modalRefundBank"  name="modalRefundBank" style="position: absoloute; " value="">
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">계 좌 번 호</label> 
+									<input type="text"  class="form-control contents" id="modalRefundAccount"  name="modalRefundAccount" style="position: absoloute;" value="" >
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="modalrefund">환불신청</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
 					</div>
-					<div class="modal-footer">						
-						<button type="button" class="btn btn-default" id="modalrefund">환불신청</button>
-						<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
-					</div>
-				</div>
 			</div>
-		</div>
-	
-		
 		
     <!--  화면구성 div End /////////////////////////////////////-->
     

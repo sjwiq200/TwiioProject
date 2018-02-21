@@ -287,9 +287,9 @@
 	 <update id="updateReport" parameterType="int">
 		UPDATE REPORT
 	   	<set>
-			report_state 	= 'Y'
+			report_state = 'Y'
 	   	</set>
-	   	WHERE report_no = #{reportNo}
+	   	WHERE TARGET_USER_NO = #{userNo}
 	</update>
 	 
 	 

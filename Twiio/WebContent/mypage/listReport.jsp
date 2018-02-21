@@ -56,6 +56,7 @@
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
+
    <style>
       body {
             padding-top : 100px ;
@@ -83,7 +84,10 @@
     	color:red;
    	   }
    	   
-
+	
+	#viewReport {
+  		overflow: auto;
+	}
 
             
     </style>
@@ -112,15 +116,15 @@
   	});
      
      $(function(){
-      $('td:nth-child(5)').on('click',function(){
+      $('td:nth-child(3)').on('click',function(){
     		
-    	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(5)').index(this)]).val();
-    	  var reportState = $($('input[name=reportState]')[$('td:nth-child(5)').index(this)]).val();
+    	  var reportinfo = $($('input[name=reportNo]')[$('td:nth-child(3)').index(this)]).val();
+    	  var reportState = $($('input[name=reportState]')[$('td:nth-child(3)').index(this)]).val();
     	  
     	  if(reportState == 'Y'){
     		  alert('신고처리완료');
     	  }else{
-    				$.ajax({
+    			$.ajax({
     	  			url : "/common/json/getReport",
     	  			method : "POST" ,
     	  			dataType : "json" ,
@@ -130,61 +134,24 @@
     	  			}),
     	  			success : function(JSONData) {			
     	  					alert(JSON.stringify(JSONData));
-    	  					var info =
-    	  	    				'<input type="hidden" id="delete" name="delete" value="'+JSONData.targetUserNo+'">'+
-    	  	    				'<input type="hidden" id="deleteReportNo" name="deleteReportNo" value="'+JSONData.reportNo+'">'+
-    	  						'<div class="row">'+
-    	  	    				'신 고 자   <input type="text" class="form-control" id="reportUsername" value="'+JSONData.userName+'" readonly/></div>'+
-    	  	    				'<br/><div class="row">'+
-    	  	    				'신고대상   <input type="text" class="form-control" id="reporttargetuser" value="'+JSONData.targetUserName+'" readonly/>'+
-    	  	    				'</div>'+
-    	  	    				'<br/><div class="row">'+
-								'제  목'+    	  	    				
-    	  	    				'</div>'+
-    	  	    				'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="reportuser" value="'+JSONData.reportTitle+'" readonly/>'+
-    	  	    				'</div>'+
-    	  	    				'<br/><div class="row">'+
-								'내  용'+    	  	    				
-	  	    					'</div>'+
-	  	    					'<div class="row">'+
-    	  	    				'<input type="text" class="form-control" id="reportcontent" value="'+JSONData.reportContent+'" readonly/>'+	
-    	  	    				'</div>';
-    	  	    			$('#reportview').html(info);
+    	  					$('#delete').val(JSONData.targetUserNo);
+    	  					$('#deleteReportNo').val(JSONData.reportNo);
+    	  					$('#reportUsername').val(JSONData.userName);
+    	  					$('#reporttargetuser').val(JSONData.targetUserName);
+    	  					$('#detailreporttitle').val(JSONData.reportTitle);
+    	  					$('#detailreportcontent').val(JSONData.reportContent);
+    	  					$('#targetUserName').val(JSONData.targetUserName);
+    	  					$('#targetUserNo').val(JSONData.targetUserNo);
     	  	    			$('#viewReport').modal('show');	
     	  	    			
     	  			 }
     	  		});
-    	      }
-      	   });
+    	     }
+      	 });
      });
      
 
-      $(document).on('click','#eval', function() {
-  		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		
-  		 
-  		
-  		/* $(document).on('click','#updatereplym',function(){
-  			 $.ajax({
-  					url : "/common/json/updateReply",
-  					method : "POST" ,
-  					dataType : "json" ,
-  					contentType:"application/json;charset=UTF-8",
-  					data : JSON.stringify({
-  						"replyNo":updatereplyno,
-  						"replyContent":$('#updatecontent').val()
-  					}),
-  						success : function(JSONData) {
-  							alert(JSON.stringify(JSONData));
-  							 $('#updatemodalreply').modal('toggle');		
-  							window.location.reload();
-  					}
-  			}); 
-  		}); */
-  		
-  		
-  		});
+     
 
        
       $(function() {
@@ -220,7 +187,6 @@
 		    	  	   	  		                	}else{
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
 		    	  	   	  		                	}
-		    	  	   	  		                	
 		    	  	   	  		                	location.reload();
 		
 		    	  	   	  		                },error : function(request,status,error) {
@@ -230,11 +196,62 @@
 		    	  	   	  		            });
 		    	  	   	  	    	}
 		    	  	   	  		});
-		    	  	   	  			
-    	  	   	  			
-    	  	   	  			});
+    	  	   	  	});
 	  	});
-		
+////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////쪽지보내기/////////////////////////////
+/* $(document).on('click','#messageWrite',function(){
+	/* var toUserName = $($('input[name=targetUserName]')[$('button[id=messageWrite]').index(this)]).val();
+	var fromUserNo = $($('input[name=targetUserNo]')[$('button[id=messageWrite]').index(this)]).val();
+	targetNo
+	$('#targetNo').val(fromUserNo);
+	$('#toUsern').val(toUserName); 
+	$("#modalwrite").modal('show');
+}); */
+
+$(document).on('click','#messageWrite',function(){
+	
+
+	/* var targetNo = $('#targetNo').val();
+	var toUsern = $('#toUsern').val();
+	var modalMessageTitle = $('#modalMessageTitle').val();
+	var modalMessageContent = $('#modalMessageContent').val(); */
+	////////////////////////수정해야할 부분/////////////////////////
+	
+	var targetNo = $('#targetUserNo').val();
+	var toUsern = $('#targetUserName').val();
+	var modalMessageTitle = toUsern + "님이름으로 신고가 접수 되었습니다";
+	var modalMessageContent = toUsern+"이름으로 신고가 접수되었습니다. 앞으로 주의 하여 주시기 랍니다.";
+	//modalmessage
+
+	if(modalMessageTitle==''| modalMessageContent==''){
+		alert('내용과 제목을 입력하세요.');			 
+	}
+	else{
+		 alert(targetNo+","+toUsern+","+modalMessageTitle+","+modalMessageContent);
+	
+	   $.ajax({
+			url : "/mypage/json/addMessage",
+			method : "POST" ,
+			dataType : "json" ,
+			contentType:"application/json;charset=UTF-8",
+			data : JSON.stringify({
+				"toUserNo":targetNo,
+				"fromUserNo":"${user.userNo}",
+				"messageContent":modalMessageContent,
+				"messageType":"4",
+				"messageTitle":modalMessageTitle,
+				"targetUserName":toUsern,
+				"userName":"${user.userName}"
+			}),
+			success : function(JSONData) {
+				alert("메시지가 보내기 성공.!!");
+				/* $('#modalwrite').modal('toggle'); */
+		    } 
+	   });
+	}
+});
+///////////////////////////////////////////////////////////
    
    </script>
    
@@ -285,11 +302,9 @@
 				</form>
 	    	</div>
       	</div>
-      
-     
-	
       <!-- table 위쪽 검색 Start /////////////////////////////////////-->
       
+      							
       
       <!--  table Start /////////////////////////////////////-->
       <div class="col-md-12">
@@ -311,10 +326,10 @@
         <c:set var="i" value="0" />
         <c:forEach var="report" items="${list}">
          <c:set var="i" value="${ i+1 }" />
-         <tr class="ct_list_pop">
-         	
-     	   <input type="hidden" name="reportNo" id="reportNo" value="${report.reportNo}"/>
+           <input type="hidden" name="reportNo" id="reportNo" value="${report.reportNo}"/>
      	   <input type="hidden" name="reportState" value="${report.reportState}"/>
+
+         <tr class="ct_list_pop">
            <td align="left">${report.userName}</td>
            <td align="left">
            		${report.targetUserName}
@@ -334,7 +349,11 @@
            	 댓글
            </c:if>
            </td>
-           <td align="center">${report.reportState}</td>
+           <td align="center">
+           		<c:if test="${report.reportState == 'Y'}">
+           			처리 완료
+           		</c:if>
+           </td>
 
          </tr>
           </c:forEach>
@@ -354,26 +373,90 @@
      	<jsp:include page="../common/pageNavigator_new.jsp"/>
      </div>
     </div>
-    
+ 
+			<div id="viewReport" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REPORT DETAIL</strong>
+									</h1>
+								</div>
+								
+								<input type="hidden" id="reportuserno" name="reportuserno" value=""/>
+					      		<input type="hidden" id="reportreplyno" name="reportreplyno" value=""/>
+					      		<input type="hidden" name="targetUserName" id="targetUserName" value=""/>
+     	   						<input type="hidden" name="targetUserNo" id="targetUserNo" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									
+									<label for="reportuser" class="col-md-12 control-label">신  고  자</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="reportUsername" name="reportUsername" value="" readonly>
+									<p>&nbsp;</p>
+									
+									<label for="targetReportUser" class="col-md-12 control-label">신고 대상</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="reporttargetuser" name="reporttargetuser" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">신고 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="detailreporttitle" name="detailreporttitle" value="" readonly >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">신고 내용</label> 
+									<textarea  class="form-control contents" id="detailreportcontent"  name="detailreportcontent" style="position: absoloute; row=5; col=50;" value="" readonly></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="messageWrite" name="messageWrite">메시지</button>
+										<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
+			</div>
 		
-		
-		<div class="modal fade" id="viewReport" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-    				<div class="modal-content">
-          				<div class="modal-header">
-          				<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
-        					<h4 class="modal-title custom_align" id="Heading">REPORT</h4>
-      					</div>
-          			<div class="modal-body">
-          				<div id="reportview"></div>
-        			</div>
-         			<div class="modal-footer ">
-         				<button type="button" class="btn btn-default" id="btnSubmit" name="btnSubmit">탈퇴시키기</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-        				<!-- <button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Update</button> -->
-      				</div>
-        			</div>
-  	  			</div>
-				</div> 
+		<!-------------------------------------------------------------message------------------------------------------------------------------------->	
+		<!-- <div class="modal fade" id="modalwrite" role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
+    	<div class="modal-dialog">
+    		<div class="modal-content">
+          		<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+        			<h4 class="modal-title custom_align" id="Heading">Edit Your Detail</h4>
+      			</div>
+          	<div class="modal-body">
+          			<input class="hidden" name="targetNo" id="targetNo" type="text" value="">
+          		<div class="form-group">
+       				<input class="form-control" name="toUsern" id="toUsern" type="text" value="" readonly>
+        		</div>
+        		<div class="form-group"> 
+        			<input class="form-control" name="modalMessageTitle" id="modalMessageTitle" type="text" value="" placeholder="제목을 작성하여 주세요.">
+        		</div>
+        		<div class="form-group">
+        			<textarea rows="2" class="form-control" name="modalMessageContent" id="modalMessageContent" value="" placeholder="내용을 작성하여 주세요."></textarea>
+        		</div>
+        	</div>
+         	<div class="modal-footer ">
+        		<button type="button" class="btn btn-warning btn-lg" id="addMess" name="addMess" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> Send</button>
+      		</div>
+        	</div>
+  	   </div>
+	   </div> -->
+	
 </body>
 </html>

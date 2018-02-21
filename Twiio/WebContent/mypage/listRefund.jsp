@@ -101,15 +101,16 @@
          $("form").attr("method" , "POST").attr("action" , "/transaction/listRefund").submit();
       	}
       }
-   
+   	
      
-      ////////////////////////환불 처리 모달/////////////////////////////////////////////
+ 
+     ////////////////////////환불 처리 모달/////////////////////////////////////////////
      $(function(){
-      $('td:nth-child(7)').on('click',function(){
+      $('#btnRefund').on('click',function(){
     	  
-    	  var refundno = $($('input[name=refundNo]')[$('td:nth-child(7)').index(this)]).val();
-    	  var tranno = $($('input[name=tranNo]')[$('td:nth-child(7)').index(this)]).val();
-    	  var confirmDate = $($('input[name=confirmDate]')[$('td:nth-child(7)').index(this)]).val();
+    	  var refundno = $($('input[name=refundNo]')[$('#btnRefund').index(this)]).val();
+    	  var tranno = $($('input[name=tranNo]')[$('#btnRefund').index(this)]).val();
+    	  var confirmDate = $($('input[name=confirmDate]')[$('#btnRefund').index(this)]).val();
     	  if(confirmDate != ''){
     	  }else{
     	  swal({
@@ -234,7 +235,7 @@
            <td align="left">${refund.confirmDate}</td>
            <td align="left">
            <c:if test="${refund.confirmDate == null}">
-           	환불처리
+           <button type="button" class="btn btn-default" id="btnRefund" name="btnRefund">환불</button>
            </c:if>
            <c:if test="${refund.confirmDate != null}">
            	환불완료

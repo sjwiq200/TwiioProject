@@ -189,7 +189,7 @@
       <div class="col-md-12">
    	   <div class="table-responsive">
        <h1 style="font-family: 'Jeju Gothic', serif;">
-           	HostProduct
+           	나의 판매 목록 :D
        </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
        
