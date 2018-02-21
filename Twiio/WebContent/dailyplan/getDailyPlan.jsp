@@ -326,9 +326,9 @@ body::-webkit-scrollbar-thumb {
   border-radius: 23px;
   font-family:JEJUGOTHIC;
   color: #545454;
-  font-size: 15px;
+  font-size: 12px;
   background: #ffffff;
-  padding: 10px 15px 10px 15px;
+  padding: 8px 13px 8px 13px;
   border: solid #545454 0.5px;
   text-decoration: none;
 }
@@ -362,8 +362,6 @@ body::-webkit-scrollbar-thumb {
   text-decoration: none;
   color:#ffffff;
 }
-
-
 
 </style>
 
@@ -720,6 +718,7 @@ $(function() {
 			});
 			
 			$("input[name=SelectButton]").on("click",function(){
+				alert($(".cityList").index($(".cityList").last()));
 				var cityName="";
 				for(var i=0; i<$(".cityList").index($(".cityList").last())+1; i++){
 					
@@ -909,6 +908,7 @@ $(function() {
 	$(function() {
 		
 		$("#papa").on("click",function(){
+			alert($("#translate").val());
 			$.ajax({
 				url : "/dailyplan/json/papagoTranslate",
 				method : "POST",
@@ -943,6 +943,7 @@ $(function() {
 		
 		 var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
 		 var compare = $("#resultPapago").attr('value');
+		 alert(dailyPlanNo);
 		 
 			$.ajax({
 				url : "/dailyplan/json/addTextContentPapago",
@@ -1051,11 +1052,10 @@ $(function() {
 								
 					<!-- -------------TOP<START>--------------- -->
 					
-						<div style="margin-top:30px;">
-							<input type="button" id="friendRecButton" name="friendRecButton" class="btn-dy2" value=" 친구 찾기 " /> 
-							<input type="button" id="service" name="service" class="btn-dy2" value="환율 & 번역" /> 
-						</div>
-						
+					
+						<input type="button" id="service" name="service" class="btn-dy2" value="나를 위한 맞춤정보" /> 
+						<input type="button" id="friendRecButton" name="friendRecButton" class="btn-dy2" value="같이 갈 친구 찾기" /> 
+					
 						<!-- <input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p> -->
 						<p></p>
 						<p></p>
@@ -1131,6 +1131,18 @@ $(function() {
 								value="${planContent.contentNo}" />
 
 							<div id="contentsBoxNo${i}" class="realContents">
+
+								<%-- <p class="contents">콘텐츠 번호 : ${planContent.contentNo}</p>
+								<p class="contents">데일리플랜번호 : ${dailyPlan.dailyPlanNo}</p>
+								<p class="contents">콘텐츠타입 : ${planContent.contentType}</p> --%>
+
+							<%-- 	<c:if test="${!empty planContent.orderNo}">
+									<p class="contents">순서 : ${planContent.orderNo}</p>
+								</c:if> --%>
+<%-- 
+								<c:if test="${!empty scrap.scrapNo }">
+									<p class="contents">스크랩번호 : ${scrap.scrapNo }</p>
+								</c:if> --%>
 								
 								<c:if test="${!empty planContent.route}">
 									<div class="col-sm-offset-3 col-sm-6" style="margin-top:10px;margin-bottom:10px;"><p class="contentsDelete"> ${planContent.route}</p></div>
@@ -1154,6 +1166,11 @@ $(function() {
 									<p class="contents">소요시간 : ${planContent.estimatedTime}</p>
 								</c:if>
 
+							<%-- 	<c:if test="${!empty planContent.routeType}">
+									<p class="contents">이동방법 : ${planContent.routeType}</p>
+								</c:if> --%>
+
+								
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
@@ -1186,12 +1203,12 @@ $(function() {
 								<c:if test="${!empty planContent.mapWebsite}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">WEBSITE: ${planContent.mapWebsite}</p>
 								</c:if>
-<%-- 
+
 								<c:if test="${!empty planContent.mapType}">
 									<p class="contents" style="font-size:0.9em !important; font-color: #C2C2C2 !important;">TYPE : ${planContent.mapType}</p>
 									</div>
 								<div class="col-xs-12"  style="height: 30px" align="center"></div>
-								</c:if> --%>
+								</c:if>
 								<!-- ---------------------지도정보 <END>-------------------- -->
 								
 								<!--  채팅 일정 픽스 사진  -->
@@ -1291,6 +1308,7 @@ $(function() {
 					<h4 class="modal-title">
 						<Strong>지도</Strong>
 					</h4>
+					<h7 class="modal-title">TWIIO</h7>
 				</div>
 				<div class="modal-body" align="center">
 					<jsp:include page="/dailyplan/addMap.jsp" flush="false">
@@ -1314,6 +1332,7 @@ $(function() {
 					<h4 class="modal-title">
 						<Strong>글</Strong>
 					</h4>
+					<h7 class="modal-title">TWIIO</h7>
 				</div>
 				<div class="modal-body">
 					<jsp:include page="/dailyplan/addText.jsp" flush="true">
@@ -1342,6 +1361,7 @@ $(function() {
 					<h4 class="modal-title">
 						<Strong>사진</Strong>
 					</h4>
+					<h7 class="modal-title">TWIIO</h7>
 				</div>
 
 				<div class="modal-body col-sm-12">
@@ -1407,7 +1427,7 @@ $(function() {
 
 	<!---------- FriendRec Dialog <END>------------->
 	
-		<!---------- customized Dialog <START>------------->
+		<!---------- Service Dialog <START>------------->
 
 		<div class="modal fade" id="serviceModal" role="dialog" style="font-family: 'Jeju Gothic', serif;">
 		<div class="modal-dialog modal-lg">
@@ -1574,7 +1594,7 @@ $(function() {
 	</div>
 	
 
-	<!---------- customized Dialog <END>------------->
+	<!---------- FriendRec Dialog <END>------------->
 	
 </body>
 
