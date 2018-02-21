@@ -38,7 +38,7 @@
 	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
-	                         <span >TwiiChat</span>
+	                         <span>TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
 
@@ -168,8 +168,8 @@
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			/* $(self.location).attr("href","/room/listRoom"); */
-			$(self.location).attr("href","/room/mainRoom.jsp");
+			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/mainRoom.jsp"); */
 			
 		});
 		
@@ -290,8 +290,8 @@
 	</script>  
 	
 	
-	<style>
-				
+	<style>	
+			
 			.navbar, .dropdown-menu{
 			background:rgba(215, 58, 49, 0.8);
 			border: none;

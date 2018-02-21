@@ -224,23 +224,26 @@ border-radius: 2px;
 }
 
 /* ///////mainPlan button//////// */
+/* Button-dy css - listFriendRecommendation */
 .btn-dy2 {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
   border-radius: 23px;
   font-family:JEJUGOTHIC;
   color: #545454;
-  font-size: 14px;
+  font-size: 12px;
   background: #ffffff;
-   padding: 8px 16px 8px 16px;
+  padding: 8px 13px 8px 13px;
   border: solid #545454 0.5px;
   text-decoration: none;
 }
 
 .btn-dy2:hover {
-  background: #ededed;
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
   text-decoration: none;
-  color:#545454;
+  color:#ffffff;
 }
 
 </style>
@@ -659,9 +662,9 @@ border-radius: 2px;
 													</div>
 													</div>
 													<div class="col-md-2" align="center" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
-													<input type="button" class="btn-dy2" name="shareButton" id="shareButton" class="btn btn-default" value="공유" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
-													<input type="button" class="btn-dy2" name="updateButton" id="updateButton" class="btn btn-default" value="수정" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
-													<input type="button" class="btn-dy2" name="deleteButton" id="deleteButton" class="btn btn-default" value="삭제" style="margin-bottom:5px; font-family:\'JEJUGOTHIC\';"/>
+													<input type="button" class="btn-dy2" name="shareButton" id="shareButton"  value="공유" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
+													<input type="button" class="btn-dy2" name="updateButton" id="updateButton" value="수정" style="margin-bottom:5px;font-family:\'JEJUGOTHIC\';"/>
+													<input type="button" class="btn-dy2" name="deleteButton" id="deleteButton"  value="삭제" style="margin-bottom:5px; font-family:\'JEJUGOTHIC\';"/>
 												
 													</div>
 												</div>

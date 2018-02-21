@@ -37,11 +37,10 @@
 	
    
    <!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" /> 
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" /> 
    <!--  ///////////////////////// 추가 ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -100,29 +99,29 @@
 			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
+			    background: #f4f4f4 !important;
+			    color: #08708A !important;
+				border-color: #08708A !important;
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #FFF;
-			    color: #08708A;
-				border-color: #08708A;
+				color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
 			}
+
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
-			    color: #FFF;
-			    background: #D73A31;
-			    border-color: #D73A31;
-			}
-			
-			.btn-outlined.btn-light {
 			    background: #f4f4f4;
 			    color: #D73A31;
 				border-color: #D73A31;
 			}
 			
+			.btn-outlined.btn-light {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
 			.btn-xs{
 				font-size:11px;
 				line-height:14px;
@@ -161,6 +160,24 @@
 			table {
 		    margin-left: auto;
 		    margin-right: auto;
+		  }
+		  #head{
+		  		background-image: url("/resources/images/hotel.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		 	 }
+		  a {
+			    color: #FFF;
+			    text-decoration: none;
+			}
+		a:hover,
+		a:active {
+			    color: #D73A31;
+			    text-decoration: none;
+			}
+		.panel{
+		  	border-radius: 23px;
+		 	border: dashed rgba(85, 176, 190, 1) 2px;
 		  }
     </style>
     
@@ -320,14 +337,17 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .3); ">
+      <div class="container" id="container">
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT HOTELS</ins></strong></h2>
+      <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">나만의 딱 맞는 호텔을 찾아보세요 :D</h4>
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-	
-	<h2 align="center"><strong><ins>ABOUT HOTELS</ins></strong></h2>
-			
 		<form role="form">
-				
 				
 			<div class="row centered-form">
 				 <div class="mainbox col-md-12">

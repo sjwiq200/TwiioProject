@@ -88,7 +88,7 @@
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/main_img.jpg");
+			/* background-image: url("/resources/images/main_img.jpg"); */
     		background-size: cover;
         }
         
@@ -227,34 +227,7 @@
 		<!-- form Start /////////////////////////////////////-->
 		
 		</c:forEach>
-		
-		  <!-- <div class="form-group">
-			<input type="hidden" id="userNo" name = "userNo" value="">		  	
-		    <label for="userName" class="col-xs-offset-1 col-xs-3 control-label">*유저 이름 </label>
-		    <div class="col-xs-4">
-		      <input type="text" class="form-control" id="userName" name="userName" value="" readonly>
-		    </div>
-		  </div>
-		  
-		  <div class="form-group">
-		  	<label for="attendanceTnF" class="col-xs-offset-1 col-xs-3 control-label" >참석 여부 </label>
-		  	<div class ="col-xs-4" style="text-align:center">
-		        		<label for="attendanceTnF" class="chk_radio on">참석&nbsp;&nbsp;<input type="radio" name="attendanceTnF"    checked="checked" value="true" /></label>
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="attendanceTnF" class="chk_radio ">불참석&nbsp;&nbsp;<input type="radio" name="attendanceTnF"  value="false" /></label>
-		  	</div>
-		</div>
-		
-		<div class="form-group">
-		  	<label for="profileTnF" class="col-xs-offset-1 col-xs-3 control-label">프로필 진위 여부 </label>
-		  	<div class ="col-xs-4" style="text-align:center">
-		        		<label for="profileTnF" class="chk_radio on">일치&nbsp;&nbsp;<input type="radio" name="profileTnF"    checked="checked" value="true" /></label>
-		        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="profileTnF" class="chk_radio ">불일치&nbsp;&nbsp;<input type="radio" name="profileTnF"  value="false" /></label>
-		  	</div>
-		</div> -->
-	
-		  
+
 		  <br/>
 		  
 		  <div class="form-group">

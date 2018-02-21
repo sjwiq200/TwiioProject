@@ -379,42 +379,6 @@ body::-webkit-scrollbar-thumb {
 								//alert(resultMapSummary);
 								$("#totalDisplay").val(resultMapSummary);
 								$("#detailedDisplay").val(resultMap);
-/* 
-								$.ajax({
-											url : "/dailyplan/json/getRouteResult/",
-											method : "POST",
-											data : {
-												"totalDisplay" : totalDisplay,
-												"detailedDisplay" : detailedDisplay
-											},
-											headers : {
-												"Accept" : "application/json",
-												"Content-Type" : "application/json"
-											},
-											success : function(JSONData, status) {
-												mainResultEnd = JSONData.mainResultEnd;
-												detailResultFinal = JSONData.detailResultFinal;
-
-												$("#resultMap").append("<div class='col-xs-12 innerMain'align='center'></div>");
-
-												for (var i = 0; i < mainResultEnd.length; i++) {
-													$("#resultMap").append("<div class=\"routeMainResult\"  align=\"center\"><strong></strong>"+ mainResultEnd[i]+ "</div>");
-												}
-
-												for (var i = 0; i < detailResultFinal.length; i++) {
-													$("#resultMap4Detail").append("<div class=\"routeDetailResult\"  align=\"center\">"+ detailResultFinal[i]+ "</div>");
-												}
-
-												var resultMapSummary = $("#resultMapSummary").html();
-												var resultMap = $("#resultMap").html();
-												alert("resultMap : " + resultMap)
-												$("#totalDisplay").val(resultMapSummary);
-												$("#detailedDisplay").val(resultMap);
-												$("#type").val(mode);
-												
-											}
-
-										}); */
 
 							} else {
 								alert('값을 불러올 수 없습니다. 재입력 부탁드립니다. [비행기 정보 출력되지 않습니다.]');

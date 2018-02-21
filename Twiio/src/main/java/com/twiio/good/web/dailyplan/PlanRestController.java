@@ -82,8 +82,8 @@ public class PlanRestController {
 	String dailyPlanImageFilePathLocal;
 	
 	public PlanRestController() {
-	}
-	
+	}	
+
 
 	@RequestMapping(value = "json/listDailyPlan/{mainPlanNo}", method = RequestMethod.GET)
 	public Map<String, Object> listDailyPlan(@PathVariable int mainPlanNo) throws Exception {
@@ -98,10 +98,12 @@ public class PlanRestController {
 		}
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
+		if(mainPlan.getCity()!=null) {
 		String city = mainPlan.getCity();
 		String[] cityList = city.split(",");
 		
 		map.put("cityList", cityList);	
+		}
 		map.put("list", list);
 		
 		System.out.println("RestController : json/listDailyPlan <END>");
@@ -111,44 +113,44 @@ public class PlanRestController {
 	}	
 
 
-//	@RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
-//	public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
-//		
-//		System.out.println("RestController : json/getDailyPlanFromMain <START>");
-//		System.out.println("mainPlanNo : " + mainPlanNo);
-//		
-//		Map<String, Object> map = new HashMap<String, Object>();
-//		List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
-//		DailyPlan dailyPlan = listMain.get(0);
-//		dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
-//		int dailyPlanNo = dailyPlan.getDailyPlanNo();
+//   @RequestMapping(value = "json/getDailyPlanFromMain/{mainPlanNo}", method = RequestMethod.GET)
+//   public Map<String, Object> getDailyPlanFromMain(@PathVariable int mainPlanNo) throws Exception {
+//      
+//      System.out.println("RestController : json/getDailyPlanFromMain <START>");
+//      System.out.println("mainPlanNo : " + mainPlanNo);
+//      
+//      Map<String, Object> map = new HashMap<String, Object>();
+//      List<DailyPlan> listMain = dailyPlanService.getDailyPlanList(mainPlanNo);
+//      DailyPlan dailyPlan = listMain.get(0);
+//      dailyPlan.setMainPlan(mainPlanService.getMainPlan(mainPlanNo));
+//      int dailyPlanNo = dailyPlan.getDailyPlanNo();
 //
-//		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
-//			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
-//			List<PlanContent> list = new ArrayList<PlanContent>();
-//			for(PlanContent listPlanContent : listBefore) {
-//				listPlanContent.setDailyPlan(dailyPlan);
-//				list.add(listPlanContent);
-//			}
-//			map.put("list", list);
-//			System.out.println("##debug : " + list);
-//		}
-//		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
-//		
-//		map.put("dailyPlan", dailyPlan);		
-//		
-//		System.out.println("RestController : json/getDailyPlanFromMain <END>");
-//		
-//		return map;
-//		
-//	}
-//	
-	@RequestMapping(value = "json/getDailyPlan/{dailyPlanNo}", method = RequestMethod.GET)
-	public Map<String, Object> getDailyPlan(@PathVariable int dailyPlanNo) throws Exception {
+//      if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+//         List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+//         List<PlanContent> list = new ArrayList<PlanContent>();
+//         for(PlanContent listPlanContent : listBefore) {
+//            listPlanContent.setDailyPlan(dailyPlan);
+//            list.add(listPlanContent);
+//         }
+//         map.put("list", list);
+//         System.out.println("##debug : " + list);
+//      }
+//      dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+//      
+//      map.put("dailyPlan", dailyPlan);      
+//      
+//      System.out.println("RestController : json/getDailyPlanFromMain <END>");
+//      
+//      return map;
+//      
+//   }
+//   
+   @RequestMapping(value = "json/getDailyPlan/{dailyPlanNo}", method = RequestMethod.GET)
+   public Map<String, Object> getDailyPlan(@PathVariable int dailyPlanNo) throws Exception {
 
-		System.out.println("Controller : getDailyPlan <START>");
+      System.out.println("Controller : getDailyPlan <START>");
 
-		Map<String, Object> map = new HashMap<String, Object>();
+      Map<String, Object> map = new HashMap<String, Object>();
 
 		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
 			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
@@ -207,30 +209,27 @@ public class PlanRestController {
 		planContent.setOrderNo(a + 1);
 		dailyPlanService.addPlanContent(planContent);
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		
-		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
-		List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
-		List<PlanContent> list = new ArrayList<PlanContent>();
-		for(PlanContent listPlanContent : listBefore) {
-		listPlanContent.setDailyPlan(dailyPlan);
-		list.add(listPlanContent);
-		}
-		map.put("list", list);
-		System.out.println("##debug : " + list);
-		}
-		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
-		map.put("dailyPlan", dailyPlan);		
-		
-		System.out.println("Controller : addText <END>");
-		
-		System.out.println("what is the result? " + map.get("dailyPlan") + " : " + map.get("list"));
-		
-		System.out.println("RestController : addImage <END>");
-		
-		return map;
-	}
-
+		Map<String, Object> map = new HashMap<String, Object>();				
+	
+      if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+         List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+         List<PlanContent> list = new ArrayList<PlanContent>();
+         for(PlanContent listPlanContent : listBefore) {
+            listPlanContent.setDailyPlan(dailyPlanService.getDailyPlan(dailyPlanNo));
+            list.add(listPlanContent);
+         }
+         map.put("list", list);
+         System.out.println("##debug : " + list);
+      }
+      
+      dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+      
+      map.put("dailyPlan", dailyPlan);      
+      
+      System.out.println("RestController : json/getDailyPlan <END>");
+      
+      return map;
+   }
 	
 	@RequestMapping(value = "json/selectCity", method = RequestMethod.POST)
 	public void selectCity(
@@ -487,7 +486,7 @@ public class PlanRestController {
 		standardCountryEnc = URLDecoder.decode(standardCountryEnc,"UTF-8");
 		compareCountryEnc = URLDecoder.decode(compareCountryEnc,"UTF-8");
 		
-		String contentText = "<img src=\"/resources/images/money-bag.png\" width=\"50px\"/><p><strong>환율 정보</strong></p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
+		String contentText = "<img src=\"/resources/images/money-bag.png\" width=\"50px\"/><p><strong>환율 검색 결과</strong></p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
 				+"<p>"+resultCurrency+"  "+compareCountryEnc+"</p>";
 		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
 		PlanContent planContent = new PlanContent();
@@ -508,7 +507,7 @@ public class PlanRestController {
 		int dailyPlanNo = papago.getDailyPlanNo();
 		String contentText
 		= "<img src=\"/resources/images/translate.png\" width=\"50px\"/>"
-		+"<p><strong>번역 정보</strong></p>"
+		+"<p><strong>번역 검색 결과 </strong></p>"
 		+"<p>"+papago.getPapagoMyCountry() + " : " + papago.getTranslate() + "</p>"
 		+"<p>"+papago.getPapagoCompareCountry() + " : " + papago.getCompare() + "</p>";
 		
@@ -616,7 +615,7 @@ public class PlanRestController {
 		}
 		
 		for(String detailResultFinal : detailResult) {
-			if((detailResultFinal.indexOf("占싱듸옙") != -1)) {
+			if((detailResultFinal.indexOf("") != -1)) {
 //				detailResultEnd.add("<img src=\"/resources/images/icon/lines/line9.png\" id=\"detailResultLine\" width=\"200px\">");
 			}
 			detailResultEnd.add(detailResultFinal);
@@ -695,8 +694,9 @@ public class PlanRestController {
 	@RequestMapping(value="/json/papagoTranslate")
 	public Papago papagoTranslate(@RequestBody Papago papago) {
 		System.out.println("papago/json/papagoTranslate");
-		String clientId = "bYH9noOTsKVGcSDuoNRk";//애플리케이션 클라이언트 아이디값";
-        String clientSecret = "nMDSi1NS_h";//애플리케이션 클라이언트 시크릿값";
+		String clientId = "bYH9noOTsKVGcSDuoNRk";
+        String clientSecret = "nMDSi1NS_h";
+
         
         System.out.println(papago.getTranslate());
         System.out.println("####"+papago.getPapagoCompareCountry());
@@ -706,7 +706,7 @@ public class PlanRestController {
 
         try {
             
-        	String text = URLEncoder.encode(papago.getTranslate(), "UTF-8");
+           String text = URLEncoder.encode(papago.getTranslate(), "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
             URL url = new URL(apiURL);
             HttpURLConnection con = (HttpURLConnection)url.openConnection();
@@ -722,16 +722,15 @@ public class PlanRestController {
             wr.close();
             int responseCode = con.getResponseCode();
             BufferedReader br;
-            if(responseCode==200) { // 정상 호출
+            if(responseCode==200) { 
                 br = new BufferedReader(new InputStreamReader(con.getInputStream()));
                 jsonobj = (JSONObject)JSONValue.parse(br);
                 System.out.println("jsonobj==>"+jsonobj);
                 ObjectMapper objectMapper = new ObjectMapper();
                 papago = objectMapper.readValue(jsonobj.toString(), Papago.class);
                 System.out.println(papago);
-                System.out.println("결과값만 추출 : "+papago.getMessage().getResult().getTranslatedText());
                 
-            } else {  // 에러 발생
+            } else {  
                 br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
             }
             
@@ -743,7 +742,7 @@ public class PlanRestController {
         }
          
         return papago;
-	}
+   }
 
-	
+   
 }

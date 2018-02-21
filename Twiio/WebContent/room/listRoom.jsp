@@ -1,3 +1,4 @@
+
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 
@@ -64,7 +65,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -76,6 +77,7 @@
 		 function fncGetRoomList(currentPage){
 	            $("#currentPage").val(currentPage);
 	            $("form").attr("method","POST").attr("action","/room/listRoom").submit();
+	            $( '.row' ).scrollIntoView(true);
 	        };
 		 
 	 });//end of function()
@@ -231,7 +233,7 @@ body {
 h2 {
 	/* color : #dedede; */
 	color :#474747;
-    font-size: 6em;
+    font-size: 6vw;
     /* padding: 0 0.5em 0.25em 0.5em; */
     font-weight: 500;
     font-family: "Pacifico", cursive;
@@ -293,17 +295,15 @@ h2 {
    border: solid #ffffff 0px !important;
   font-family:JEJUGOTHIC;
   color: #ffffff;
-  font-size: 15px;
-  /* background: #D73A31; */
-  background: #08708A;
+  font-size: 1vw;
+  background: #D73A31;
   opacity: 0.9;
   padding: 10px 25x 10px 25px;
   text-decoration: none;
 }
 
 .btn-dy3:hover {
-  /* background: #D73A31; */
-  background: #08708A;
+  background: #D73A31;
   opacity: 0.5;
   border: solid #ffffff 0px;
   text-decoration: none;
@@ -343,12 +343,12 @@ h2 {
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<div class="container" style="background: url('/resources/images/room/twiichatMain1.jpg') no-repeat center center; background-size:cover; height:800px; width:100%;">
+	<div class="container" style="background: url('/resources/images/room/twiichatMain1.jpg') no-repeat center center; background-size:cover; height:90vh; width:100%;">
 		
 		<h2 class="text-center" style="color:#3B3B3B; margin-top:10%;"><strong>TwiiChat</strong></h2>
 		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>여행의 설렘, 새로운 만남의 설렘, 트위챗</strong></h3>
 		<!-- FORM -->
-		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:150px;margin-left:10%;margin-right:10%;min-width:350px;">
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:150px;margin-left:10%;margin-right:10%;min-width:300px;">
 			<form role="form" style="padding:10px;">
 				
 	    			<div class="row">
@@ -383,7 +383,7 @@ h2 {
 		</div>
 		
 		<c:if test="${!empty user }">
-		<div class="col-sm-12" align="center" style="margin-top:20px;">
+		<div class="col-sm-12" align="center" style="margin-top:15px;">
            <button id="myListRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 방목록</button>
            <button id="scheduleList" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 &nbsp;일정</button>
         </div>         
@@ -403,24 +403,11 @@ h2 {
 	       <h3>메신저 방목록 조회 </h3>
 	    </div> -->
 	    
-	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
+	    
 	    <div class="row">
-		
-			 <%-- <div class="col-md-2 text-left">
-			    	<p class="text-primary">
-			    		전체  ${resultPage.totalCount } 건수
-			    	</p>
-		    </div> 
-		    
-		    
-	    		<div class="col-md-10 text-right">
-			    
-	    		</div>
-	    </div> --%>
 	    <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
               <h4>지금 진행되고 있는 방 ${resultPage.totalCount} 개</h4>
           </div> 
-
        </div>
 	    
 	    
@@ -504,5 +491,4 @@ h2 {
  	
 	
 </body>
-
 </html>

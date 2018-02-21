@@ -334,7 +334,7 @@
 											<fieldset>
 											  		<input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
 												  <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
-												  <div class="spacing"><a href="#"><small> Forgot Id / Password?</small></a><br/></div>
+												  <div class="spacing"><!-- <a href="#"><small> Forgot Id / Password?</small></a> --><br/></div>
 												 
 												 <div class="col-sm-offset-1">
 													 <button type="button" class="btn btn-outlined btn-theme btn-sm" id="userLogin" >로그인</button>

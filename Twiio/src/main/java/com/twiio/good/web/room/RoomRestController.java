@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mongodb.util.JSON;
@@ -60,6 +61,12 @@ public class RoomRestController {
 		
 	}
 	
+	@RequestMapping(value="/json/addRoomUser", method=RequestMethod.POST)
+	public void addRoomUser(@RequestBody RoomUser roomUser) throws Exception {
+		System.out.println("/room/json/addRoomUser/ : Android" + roomUser);
+		roomService.addRoomUser(roomUser.getRoomKey(), roomUser.getUserNo());
+	}
+	
 	@RequestMapping("/json/addRoomFriend/")
 	public boolean addRoomFriend(@RequestBody String data, HttpSession session) throws Exception {
 		System.out.println("room/json/addRoomFriend/");
@@ -68,7 +75,7 @@ public class RoomRestController {
 		String[] json = data.split("&");
 		String userNo =  json[0].split("=")[1];
 		String roomKey = json[1].split("=")[1];
-		
+		System.out.println("addRoomFriend == >" + userNo);
 		User user = (User)session.getAttribute("user");
 		Room room = roomService.getRoom(roomKey);
 		List<RoomUser> list = roomService.listRoomUser(roomKey);
@@ -122,7 +129,7 @@ public class RoomRestController {
 	
 	@RequestMapping("/json/listRoom")
 	public List<Room> listRoom(@RequestBody Search search) throws Exception{
-		System.out.println("/room/json/listRoom : ");
+		System.out.println("/room/json/listRoom : " +search);
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
