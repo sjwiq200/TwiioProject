@@ -53,7 +53,6 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -157,7 +156,7 @@
 			 #head{
 		  		background-image: url("/resources/images/unsafe.png");
 		  		font-family: "Pacifico", cursive;
-		  		height : 200px;
+		  		height : 250px;
 		  		margin-bottom : 20px;
 		  }
     </style>
@@ -216,7 +215,7 @@
 														img = "/resources/images/no_info2.png";
 														
 														$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 400px; max-width:100%; max-height:100%;"/></div>');
-														$("#jumbotron").attr("style","wheight: 500px; max-width:100%; max-height:100%; align-content: center; background-color: #f4f4f4; ");
+														$("#jumbotron").attr("style","wheight: 500px; max-width:100%; max-height:100%; align-content: center; background-color: #f4f4f4; border: dashed #f4f4f4 2px;");
 														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
 														$("#dangerIcon").hide();
 													}else{
@@ -368,7 +367,7 @@
 	<div class="jumbotron"  id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
       <div class="container" id="container">
       
-      <h2 align="center"><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT UNSAFEREGION</ins></strong></h2>
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT UNSAFEREGION</ins></strong></h2>
 	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">전세계 안전 정보를 확인해 보세요 :D</h4>
       
       </div>

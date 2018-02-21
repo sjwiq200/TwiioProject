@@ -55,12 +55,75 @@
   <!-- jQuery UI toolTip 사용 JS-->
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
+	<link href="/resources/css/font.css" rel="stylesheet" type="text/css"/>
 	<style>
+		body{
+		 padding-top : 100px;
+		 background-color : #F4F4F4;
+		
+		}
+	
+	
        body > div.container{
-        	border: 3px solid #D6CDB7;
+        	border-radius: 23px;
+		 	border: dashed rgba(85, 176, 190, 1) 2px;
             margin-top: 10px;
+            background-color : #FFF;
+            padding : 30px;
         }
+        
+			.communityButton {
+				font-size:12px;
+				line-height:16px;
+				border: 2px solid;
+				padding:8px 15px;
+				letter-spacing: 1px;
+				text-decoration: none;
+				background: none;
+			    -moz-user-select: none;
+			    background-image: none;
+			    border: 1px solid transparent;
+			    border-radius: 0;
+			    cursor: pointer;
+			    display: inline-block;
+			    margin-bottom: 0;
+			    vertical-align: middle;
+			    white-space: nowrap;
+				font-size:14px;
+				line-height:20px;
+				font-weight:700;
+				text-transform:uppercase;
+				border: 3px solid;
+				padding:8px 20px;
+			}
+			.communityButton.go:hover,
+			.communityButton.go:active {
+			    color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
+			}
+			
+			.communityButton.go {
+			    background: #f4f4f4 !important;
+			    color: #08708A !important;
+				border-color: #08708A !important;
+			}
+
+			.communityButton.cancel:hover,
+			.communityButton.cancel:active {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
+			}
+			
+			.communityButton.cancel {
+			    background: #f4f4f4;
+			    color: #D73A31;
+				border-color: #D73A31;
+			}
+			h2{
+				font-family: "Pacifico", cursive;
+			}
 	</style>
 
 <script type="text/javascript">
@@ -157,7 +220,6 @@ $(document).ready(function() {
 				$('#blah').attr('src', e.target.result).attr('width', '300px');
 			}
 			reader.readAsDataURL(input.files[0]);
-			alert($('#file').val());
 			/* alert(e.target.result); */
 		}
 	}
@@ -173,67 +235,72 @@ $(document).ready(function() {
    	
    	
    	 <div class="container">
-		<div class="page-header text-info">
+		<div class="page-header text-info" style="margin-bottom : 30px; padding-bottom : 30px;">
 			<c:if test="${communityType == '0'}">
-				<h2 align="center" style="color:#08708A;"><strong>Question Q&A</strong></h2>
+				<h2 align="center" style="color:#08708A; font-size : 5em !important; "><strong>Question Q&A</strong></h2>
 			</c:if>
 			<c:if test="${communityType == '1'}">
-				<h2 align="center" style="color:#08708A;"><strong>Trip Review</strong></h2>
+				<h2 align="center" style="color:#08708A; font-size : 5em !important;"><strong>Trip Review</strong></h2>
 			</c:if>
 		</div>
 		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
-		<div class="form-group">
-			<c:if test="${communityType=='1'}">
-		    	<div class="col-xs-6 col-sm-4">
-		      		<select class="form-control" name="communitySubTitle" id="communitySubTitle">
-		      			<option value="">말머리를 선택해 주세요</option>
-				  		<option value="0">도시</option>
-						<option value="1">루트</option>
-						<option value="2">교통</option>
-						<option value="3">숙소</option>
-						<option value="4">쇼핑</option>  
-						<option value="5">기타</option>
-					</select>
-		    	</div>
-		    	
-			</c:if>
-			<c:if test="${communityType=='1'}">
-		    <div class="col-xs-8">
-		    	<div class="input-group">
-		    		<span class="input-group-addon">제목</span>
-		      		<input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
-		    	</div>     
-		    </div>
-		    <br/>
-		    </c:if>
-		    <c:if test="${communityType==0}">
-		    <div class="col-xs-12">
-		    	<div class="input-group">
-		    		<span class="input-group-addon">제목</span>
-		      		<input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
-		    	</div>     
-		    </div>
-		    </c:if>
-		    <div class="input-group col-xs-offset-3">		
-			  	<span class="input-group-addon">썸네일 이미지</span>	    	     	    			    
-			    <input type="file" id="file" name="file" value="${community.thumbnail }">
-			    <img id="blah" style="width:300px; height:200px;"/>
-			</div>			   
-		</div>
-		
-		<div class="form-group">
-			<textarea id="summernote" name="communityContent"></textarea>		
-		</div>
+	<div class="col-sm-12">	
+				
+				<div class="form-group">
+					<c:if test="${communityType=='1'}">
+				    	<div class="col-sm-3">
+				      		<select class="form-control" name="communitySubTitle" id="communitySubTitle">
+				      			<option value="">말머리를 선택해 주세요</option>
+						  		<option value="0">도시</option>
+								<option value="1">루트</option>
+								<option value="2">교통</option>
+								<option value="3">숙소</option>
+								<option value="4">쇼핑</option>  
+								<option value="5">기타</option>
+							</select>
+				    	</div>
+				    	
+					</c:if>
+					<c:if test="${communityType=='1'}">
+				    <div class="col-sm-9">
+				    	<div class="input-group">
+				    		<span class="input-group-addon">제목</span>
+				      		<input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
+				    	</div>     
+				    </div>
+				    <br/>
+				    </c:if>
+				    <c:if test="${communityType==0}">
+				    <div class="col-sm-12">
+				    	<div class="input-group">
+				    		<span class="input-group-addon">제목</span>
+				      		<input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
+				    	</div>     
+				    </div>
+				    </c:if>
+				</div>
+				
+				
+			<div class="form-group">
+				<textarea id="summernote" name="communityContent"></textarea>		
+			</div>
 		<div id="cndThumbnail"></div>
+		
+		<div class="col-sm-6 col-sm-offset-3 text-center">		
+					  	<span class="input-group-addon">썸네일 이미지</span>	    	     	    			    
+					    <input  class="col-sm-8 col-sm-offset-2" type="file" id="file" name="file" value="${community.thumbnail }"/>
+					     <img id="blah" style="width:300px; height:200px;"/> 
+		</div>
 	<div class="form-group">
-		    <div class="col-sm-offset-4  col-sm-4 text-center">
-		      <button type="button" name="save" class="btn btn-outlined btn-theme btn-sm" id="reviewWrite">작 성</button>
-			  <a class="btn btn-outlined btn-light btn-sm" href="#" role="button">취&nbsp;소</a>
+		    <div class="col-sm-offset-4  col-sm-4 text-center"  style="margin-top : 30px;">
+		      <button type="button" name="save" class="communityButton go" id="reviewWrite">작 성</button>
+			  <a class="communityButton cancel" href="#" role="button">취&nbsp;소</a>
 		    </div>
 	</div>
    <!-- ToolBar End /////////////////////////////////////-->
+   </div>
 </form>
 </div>
 </body>

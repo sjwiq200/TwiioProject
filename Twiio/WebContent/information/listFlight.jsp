@@ -53,7 +53,6 @@
   	
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -183,7 +182,11 @@
 		#head{
 		  		background-image: url("/resources/images/airport.png");
 		  		font-family: "Pacifico", cursive;
-		  		height : 200px;
+		  		height : 250px;
+		  }
+		  .panel{
+		  	border-radius: 23px;
+		 	border: dashed rgba(85, 176, 190, 1) 2px;
 		  }
 		  
     </style>
@@ -381,7 +384,7 @@
 	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .3); ">
       <div class="container" id="container">
       
-      <h2 align="center"><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT FLIGHTS</ins></strong></h2>
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT FLIGHTS</ins></strong></h2>
 	  <h4 align="center" style=" color : #FFF; margin-top : 20px;">전세계 모든 비행기를 확인해 보세요 :D</h4>
       
       </div>

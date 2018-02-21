@@ -513,7 +513,7 @@
 				    	  	   	  					"userNo":userNo
 				    	  	   	  				}),
 		    	  	   	  		                success: function (JSONData) {
-		    	  	   	  		                	alert(JSON.stringify(JSONData));		    	  	   	  		                	
+		    	  	   	  		             		$(self.location).attr("href","/user/logout");  	  		                	
 		
 		    	  	   	  		                },error : function(request,status,error) {
 													alert('에러다.');
@@ -524,7 +524,6 @@
 		    	  	   	  		});
     	  	   	  	});
 	  	});
-		
 		
 	</script>
 	

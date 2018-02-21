@@ -42,10 +42,31 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
+		
+		<!-- ---------font ------------ -->
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />   
 		<!-- 다이얼로그  -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
 
+  <link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
+
+<style type="text/css">
+
+
+
+	 #head{
+		  		background-image: url("/resources/images/comm.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		  }
+	.thumbnail{
+			border-radius: 23px;
+		 	border: dashed rgba(102, 102, 102, 1) 1.3px;
+		}
+
+
+
+</style>
 <script type="text/javascript">
 	var page = 1;
 	var flag = 0;
@@ -111,6 +132,9 @@
 								thumbnail='<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>';							
 							}
 							var report = '';
+							/* if(${user.userNo} != JSONData[i].userNo){
+								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
+							} */
 							if(${user.userNo} != JSONData[i].userNo){
 								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
 							}
@@ -165,57 +189,61 @@
 		self.location="/community/getCommunity?communityNo="+$($('input[name=communityNo]')[$('a[id=getButton]').index(this)]).val();
 	});	
 	
-	$(document).on('click' ,'#reportButton', function() {
-		var reportcommunityno=$($('input[name=communityNo]')[$('a[id=reportButton]').index(this)]).val();
-		var reportcommunityuserno=$($('input[name=communityNouserNo]')[$('a[id=reportButton]').index(this)]).val();
-		var reportusername = $($('input[name=communityUserName]')[$('a[id=reportButton]').index(this)]).val();
-		var reportbody = 
-	        '<h3>Report<h3>'+
-	        '<input type="hidden" class="form-control" id="reportcommunityno" row="7" col="50" value="'+reportcommunityno+'" readonly/>'+
-			'<input type="text" class="form-control" id="reportuser" row="7" col="50" value="'+reportusername+'" readonly/>'+
-			'<input type="text" class="form-control" id="reporttitle" row="7" col="50" placeholder="신고 제목 작성" value=""/>'+
-			'<textarea id="reportcontent"  name="reportcontent" row="7" col="50" value="" placeholder="신고 내용"></textarea>';
- 
- 		if(${empty user.userId}){
-	 		alert('로그인후 사용하여주세요');	 
- 		}else if(${user.userNo == reportcommunityuserno}){
-	 		alert('자기자신은 신고 못합니다.');
-	 	}else{
-		$('#reportbody').html(reportbody);
-		$('#modalreport').modal('show');
-		}
-	});	
 	
+	///////////////////////////////////////////////////addreport////////////////////////////////////////
+ 		$(document).on('click','#reportButton', function() {
+ 			var reportcommunityno=$($('input[name=communityNo]')[$('a[id=reportButton]').index(this)]).val();
+ 			var reportcommunityuserno=$($('input[name=communityUserNo]')[$('a[id=reportButton]').index(this)]).val();
+ 			var reportusername = $($('input[name=communityUserName]')[$('a[id=reportButton]').index(this)]).val();
+ 			 
+ 			
+ 			
+ 			 if(${empty user.userId}){
+ 				 alert('로그인후 사용하여주세요');	 
+ 			 }else if(${user.userNo} == reportcommunityuserno){
+ 				 alert('자기자신은 신고 못합니다.');
+ 		 	 }else{
+ 				$('#reportuser').val(reportusername);
+ 				$('#reportuserno').val(reportcommunityuserno);
+ 				$('#reportcommunityno').val(reportcommunityno); 
+ 		 		$('#modalreport').modal('show');
+ 		 	 }
+ 		});
+ 		
  		$(document).on('click','#addreportcommunity',function(){
-		 	var reportcontent = $('#reportcontent').val();
-		 	var reporttitle = $('#reporttitle').val();
-		 	var reportcommunityno = $('#reportcommunityno').val();
-		 	if(reportcontent==''| reporttitle==''){
-				 alert('내용과 제목을 입력하세요.');			 
-			}
-			else{
-		 	 $.ajax( 
-					{
-					url : "/common/json/addReport",
-					method : "POST" ,
-					dataType : "json" ,
-					contentType:"application/json;charset=UTF-8",
-					data : JSON.stringify({
-						"userNo":"${user.userNo}",
-						"reportContent":reportcontent,
-						"reportTitle":reporttitle,
-						"targetUserNo":reportcommunityuserno,
-						"targetCommunityNo":reportcommunityno
-					}),
-					success : function(JSONData) {
-						alert(JSON.stringify(JSONData));
-						$('#modalreport').modal('toggle');	
-					}
-				});
-		 	 }
-		});
-	
-	
+ 			 	var reportcontent = $('#reportcontent').val();
+ 			 	var reporttitle = $('#reporttitle').val();
+ 			 	var reportuserno = $('#reportuserno').val();
+ 			 	var reportcommunityno = $('#reportcommunityno').val();
+ 			 	
+ 			 	if(reportcontent==''| reporttitle==''){
+ 					 alert('내용과 제목을 입력하세요.');			 
+ 				}
+ 				else{
+ 			 	 $.ajax( 
+ 						{
+ 						url : "/common/json/addReport",
+ 						method : "POST" ,
+ 						dataType : "json" ,
+ 						contentType:"application/json;charset=UTF-8",
+ 						data : JSON.stringify({
+ 							"userNo":"${user.userNo}",
+ 							"reportContent":reportcontent,
+ 							"reportTitle":reporttitle,
+ 							"targetUserNo":reportuserno,
+ 							"targetCommunityNo" : reportcommunityno
+ 						}),
+ 						
+ 						success : function(JSONData) {
+ 							 swal("신고 접수가 완료 되었습니다.", {
+ 							      icon: "success",
+ 							 });
+ 							$('#modalreport').modal('toggle');
+ 					}
+ 				});
+ 			 }
+ 		});
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////	
 
 	function fncGetCommunityList(currentPage) {
 		//document.getElementById("currentPage").value = currentPage;
@@ -250,15 +278,25 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
+   	
+   	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      <c:if test="${communityType == '0'}">
+     	 <h3 align="center"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;"><ins>Question Q&A</ins></strong></h3>
+	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">궁금하신 모든 것을 물어보세요:D</h4>
+      </c:if>
+      <c:if test="${communityType == '1'}">
+     	 <h3 align="center"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;"><ins>Trip Review</ins></strong></h3>
+	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">여러분들의 이야기를 들려주세요 :D</h4>
+	  </c:if>
+      </div>
+    </div>
   	
  <div class="container"> 
 
  	<div class="page-header text-info" style="font-family: 'Pacifico', cursive;">
-		<c:if test="${communityType == '0'}">
-		<h2 align="center" style="color:#08708A;"><strong>Question Q&A</strong></h2>
-		</c:if>
 		<c:if test="${communityType == '1'}">
-		<h2 align="center" style="color:#08708A;"><strong>Trip Review</strong></h2>
+			<h2 align="center" style="color:#08708A;"><strong>BLABLA</strong></h2>
 		</c:if>
 	</div>
 
@@ -307,18 +345,18 @@
 	
 	<div class="row2">
 	<c:set var="i" value="${resultPage.totalCount }" />
-		<c:forEach var="community" items="${list}">
+	<c:forEach var="community" items="${list}">
 		
     <div class="col-md-3">
       <div class="thumbnail" style="height:370px">
         <input type="hidden" name="communityNo" value="${community.communityNo}"/>
-		<input type="hidden" name="communityNouserNo" value="${community.userNo}"/>
+		<input type="hidden" name="communityUserNo" value="${community.userNo}"/>
 		<input type="hidden" name="communityUserName" value="${community.userName}"/>
 		<c:if test="${! empty community.thumbnail}">
-			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px; border-radius: 23px;" alt="" title="" class="property_img"/>							
 		</c:if> 
 		<c:if test="${empty community.thumbnail}">
-			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px; border-radius: 23px;" alt="" title="" class="property_img"/>							
 		</c:if>
           <div class="caption">
           <p>[게시판번호  : ${i}]</p>
@@ -331,9 +369,10 @@
           <p>[작성자 : ${community.userName }]</p>
           <p>[등록일 : ${community.regDate }]</p>
           <p>[조회수 : ${community.viewCount }]</p>     
-            <p><a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>
+            <p>
+            	<a class="btn btn-outlined btn-theme btn-sm" id="getButton">상세보기</a>
             <c:if test="${user.userNo != community.userNo}">
-               <a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a>
+                <a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a>
             </c:if>
             </p>
           </div>
@@ -345,27 +384,56 @@
  	
 </div>
 	
- 		<div class="modal fade" id="modalreport"  role="dialog">
-		<div class="modal-dialog modal-lg">
-		<!-- Modal content-->
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h4 class="modal-title">
-					<Strong>REPORT</Strong>
-				</h4>
-				<h7 class="modal-title">TWIIO</h7>
+		
+			<!------------------------------------------------report---------------------------------------------------------->
+			<div id="modalreport" class="modal fade" role="dialog" style="background-color: transparent;" >
+				<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REPORT</strong>
+									</h1>
+								</div>
+								
+								<input type="hidden" id="reportcommunityno" name="reportcommunityno" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									<label for="targetReportUser" class="col-md-12 control-label">신고 대상</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="reportuser" name="reportuser" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">신고 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="reporttitle" name="reporttitle" placeholder="신고 제목 " >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">신고 내용</label> 
+									<textarea  class="form-control contents" id="reportcontent"  name="reportcontent" style="position: absoloute" row="5" col="50" value="" placeholder="신고 내용"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
 			</div>
-			<div class="modal-body">
-				<div id="reportbody"></div>			
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">나가기</button>
-			</div>
-		</div>
-		</div>
-		</div>
+			<!------------------------------------------------report---------------------------------------------------------->
   
 </body>
 </html>
