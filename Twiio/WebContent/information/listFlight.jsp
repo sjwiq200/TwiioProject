@@ -49,7 +49,7 @@
 
    
    <!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />      
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />        
   	
 	<style>
 		body {
@@ -107,15 +107,15 @@
 			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
-			}
-			
-			.btn-outlined.btn-theme {
 			    background: #FFF;
 			    color: #08708A;
 				border-color: #08708A;
+			}
+			
+			.btn-outlined.btn-theme {
+				color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
 			}
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
@@ -173,13 +173,18 @@
 		    margin-right: auto;
 		  }
 		  h4 {
-				font-size: 1em;
-				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
+				font-family:'TYPO_JEONGJOM';
 			}
 		 h2 {
 			text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
 			color : #08708A;
 			}
+			
+		#head{
+		  		background-image: url("/resources/images/airport.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 200px;
+		  }
 		  
     </style>
     
@@ -238,7 +243,7 @@
 											'</td>'+'<td align="center" valign="middle" id="type" style="padding-top : 50px;">'+type[i]+
 											'</td>'+'<td align="center" valign="middle" id="price" style="padding-top : 50px;">'+price[i]+
 											'<td align="center"  valign="middle" id="new">'+
-											'<button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick" style="margin-top : 40px;">선&nbsp;택</button></td></tr>';
+											'<button type="button" class="btn btn-outlined btn-theme btn-sm" id="newpick" style="margin-top : 25px;">선&nbsp;택</button></td></tr>';
 										}
 									$("#listTbody").html(list);
 			    							    							    						
@@ -372,11 +377,17 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .3); ">
+      <div class="container" id="container">
+      
+      <h2 align="center"><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT FLIGHTS</ins></strong></h2>
+	  <h4 align="center" style=" color : #FFF; margin-top : 20px;">전세계 모든 비행기를 확인해 보세요 :D</h4>
+      
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-	 <h2 align="center"><strong><ins>ABOUT FLIGHTS</ins></strong></h2>
-	
 	
 		<form role="form">
 		<input type="hidden" id="clickNum" name="clickNum" value=""/>
@@ -464,7 +475,6 @@
 		
 		</form>
 		
-		<br/>
 		<br/>
 		
 		<div class="col-sm-offset-10  col-sm-2 text-center">

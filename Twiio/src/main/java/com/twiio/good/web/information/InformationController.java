@@ -166,7 +166,7 @@ public class InformationController {
 			List<String> type = new ArrayList<>();
 			
 			for(int i = 0; i<list.size()-5; i++) {
-				info.add((list.get(i))+"<p>"+(list.get(i+1))+"<p>"+(list.get(i+2))+"<p>"+(list.get(i+3)));
+				info.add((list.get(i))+"<p>"+(list.get(i+1))+"<p>"+(list.get(i+2))+(list.get(i+3)));
 				
 				if(!(list.get(i+4).contains(":"))) {	
 						price.add(list.get(i+4));
@@ -175,7 +175,7 @@ public class InformationController {
 					}else{
 						price.add("상세정보 확인");
 						type.add("상세정보 확인");
-						i=i+5;
+						i=i+3;
 				}
 			}
 			

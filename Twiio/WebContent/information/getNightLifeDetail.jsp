@@ -158,7 +158,8 @@
 	        	
 	       }
 	       .jumbotron {
-	        	border: 3px solid #FFF;
+	       		border-radius: 23px;
+	        	border: 3px dashed #FFF;
 	       }
 	       
 	       

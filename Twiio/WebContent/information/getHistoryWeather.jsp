@@ -46,7 +46,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
   	
   	  	<!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />
   	
   	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>      
@@ -175,6 +175,13 @@
 			    margin-right: auto;
 			  }
 			.ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
+			
+			 #head{
+		  		background-image: url("/resources/images/weather2.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 200px;
+		  		margin-bottom : 20px;
+		  }
 </style>
 
 <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -462,11 +469,18 @@
 	<jsp:include page="/layout/toolbar.jsp" />
 	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron"  id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      
+      <h2 align="center"><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT WEATHER</ins></strong></h2>
+	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">원하시는 도시의 지난 1년 날씨를 알아보세요 :D</h4>
+      
+      </div>
+    </div>
  	<!--  화면구성 div Start /////////////////////////////////////-->
 
 	<div class="container">
-		<h2 align="center"><strong><ins>ABOUT WEATHER</ins></strong></h2>
-		<h3 align="center" style="font-family:'TYPO_JEONGJOM';">원하시는 도시의 지난 1년 날씨를 알아보세요 :D</h3>
 
 		<form class="form-horizontal">
 		  <div class="form-group">

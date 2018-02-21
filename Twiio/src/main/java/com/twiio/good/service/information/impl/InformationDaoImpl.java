@@ -389,6 +389,9 @@ public class InformationDaoImpl implements InformationDao {
 			driver.get(decoding);
 			
 			WebElement searchField = (new WebDriverWait(driver, 150))
+					.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("a[href*='#route-happy']")));
+			
+			searchField = (new WebDriverWait(driver, 150))
 					 .until(ExpectedConditions.presenceOfElementLocated(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")));
 			
 			 driver.findElement(By.xpath("//span[contains(text(), '결과 "+number+"')]/parent::span/parent::button")).click();//첫번째 가는편 선택
