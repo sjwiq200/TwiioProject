@@ -128,7 +128,7 @@
     					+'</div>'
     					+'</div>'
     					+'<input type="hidden" id="totalCount" value="'+JSONData.length+'">'
-			    					
+			    		+'<input type="hidden" id="hiddenRoomKey" value="'+roomKey+'">'			
 	    				 $('#shareWithFriendList').html(result);
 	    				 $('#shareWithFriend').modal('show');  
     					}//END success
@@ -137,13 +137,14 @@
   		
   		$(document).on("click","#go",function(){
   			/* alert("aslfjakldfjkjdsf"); */
+  			/* alert($("#hiddenRoomKey").val()); */
 			for(var i = 0; i< $("#totalCount").val() ; i++){
-				/* 
-				alert( $("#userNo"+i).val() );
+				
+				/* alert( $("#userNo"+i).val() );
 				alert( $("input[name=attendanceTnF"+i+"]:checked").val() );
 				alert( $("input[name=profileTnF"+i+"]:checked").val() ); */
 				$.ajax({
-					url: "/schedule/json/addEvalUser/${roomKey}",
+					url: "/schedule/json/addEvalUser/"+$("#hiddenRoomKey").val(),
 					method: "POST",
 					data : JSON.stringify({
 						targetNo : $("#userNo"+i).val(),
@@ -403,7 +404,8 @@ h2 {
   font-family:JEJUGOTHIC;
   color: #ffffff;
   font-size: 15px;
-  background: transparent;
+  /* background: transparent; */
+  background: #D73A31;
   padding: 5px 18x 5px 18px;
   border: solid #ffffff 2px;
   text-decoration: none;

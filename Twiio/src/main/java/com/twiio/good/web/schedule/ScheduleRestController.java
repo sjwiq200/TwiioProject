@@ -248,8 +248,11 @@ public class ScheduleRestController {
 		userEval.setScheduleNo(roomKey);
 		System.out.println("ShimJaewoo ==> " + userEval.toString());
 		
+		if(userService.addEvalUserCheck(userEval) == 0) {
+			System.out.println("userEval Please");
+			userService.addEvalUser(userEval);
+		}
 		
-		userService.addEvalUser(userEval);
 		
 		return "/schedule/listSchedule";
 	}
