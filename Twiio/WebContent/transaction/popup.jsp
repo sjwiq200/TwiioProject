@@ -87,6 +87,27 @@
 			font-family: "lato-regular", Helvetica, Arial, sans-serif;
 		}
 		
+		.btn-dy2 {
+		  -webkit-border-radius: 23;
+		  -moz-border-radius: 23;
+		  border-radius: 23px;
+		  font-family:JEJUGOTHIC;
+		  color: #545454;
+		  font-size: 12px;
+		  background: #ffffff;
+		  padding: 8px 13px 8px 13px;
+		  border: solid #545454 0.5px;
+		  text-decoration: none;	 
+		}
+		
+		.btn-dy2:hover {
+		  background: #D73A31;
+		  opacity: 0.8;
+		  border: solid #545454 0px;
+		  text-decoration: none;
+		  color:#ffffff;
+		}	
+		
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -141,8 +162,8 @@
 			  <div class="form-group">
 		    <div class="col-sm-offset-2  col-sm-8 text-center">
 		    <!-- disabled="disabled"  -->
-		      <button type="button" id="main" class="btn btn-primary"  >확인</button>
-		      <button type="button" id="mypage" class="btn btn-primary"  >myPage</button>
+		      <button type="button"  id="main" class="btn btn-primary">확인</button>
+		      <button type="button"  id="mypage" class="btn btn-primary" >myPage</button>
 			  
 		    </div>
 		  </div>

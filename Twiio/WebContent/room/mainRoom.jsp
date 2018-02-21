@@ -103,11 +103,11 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 
-	<div class="jumbotron">	
+	<div class="jumbotron" style="margin-top:10%;">	
 
 		<!-- <h1 class="bg-primary text-center">채팅방 생성 </h1> -->
-		<h2 align="center" style="color:#08708A;"><strong>TwiiChat</strong></h2>
-		<div class="panel-body">
+		<h2 class="text-center" style="color:#08708A; font-size: 5em;"><strong>TwiiChat</strong></h2>
+		<div class="panel-body" >
 			<div class="row">
 				<div class="col-md-12 text-center">
 					<!-- <button type="button" class="btn btn-outlined btn-light btn-sm" style="width: 50%;" >방 목 록</button> -->

@@ -158,43 +158,43 @@ public class ScheduleController {
 		
 		
 	}
-	@RequestMapping(value = "/addEvalUser/{roomKey}", method=RequestMethod.GET)
-	public String addEvalUser(@PathVariable String roomKey, HttpSession session, HttpServletRequest request) throws Exception {
-		System.out.println("/schedule/addEvalUser() : GET");
-		Schedule schedule = scheduleService.getSchedule(roomKey);
-		List<Integer> list =schedule.getUserNo();
-		
-		User user = (User)session.getAttribute("user");
-		int userNo = user.getUserNo();
-		
-		for(int i = 0 ; i< list.size(); i++) {
-			if(list.get(i) == userNo) {
-				list.remove(i);
-			}
-		}
-		
-		List<User> listUser = new Vector();
-		for (Integer integer : list) {
-			listUser.add(userService.getUserInNo(integer));
-		}
-		UserEval userEval = new UserEval();
-		userEval.setScheduleNo(roomKey);
-		userEval.setUserNo(userNo);
-		System.out.println("userEval ==>" +userEval);
-		
-		if(userService.addEvalUserCheck(userEval) != 0) {
-			return "forward:/schedule/listSchedule";
-		}else {
-			System.out.println("hello==>" + listUser);
-			request.setAttribute("roomKey", roomKey);
-			request.setAttribute("list", listUser);
-			request.setAttribute("totalCount", listUser.size());
-		
-			return "forward:/schedule/addEvalUser.jsp";
-			
-		}
-		
-	}
+//	@RequestMapping(value = "/addEvalUser/{roomKey}", method=RequestMethod.GET)
+//	public String addEvalUser(@PathVariable String roomKey, HttpSession session, HttpServletRequest request) throws Exception {
+//		System.out.println("/schedule/addEvalUser() : GET");
+//		Schedule schedule = scheduleService.getSchedule(roomKey);
+//		List<Integer> list =schedule.getUserNo();
+//		
+//		User user = (User)session.getAttribute("user");
+//		int userNo = user.getUserNo();
+//		
+//		for(int i = 0 ; i< list.size(); i++) {
+//			if(list.get(i) == userNo) {
+//				list.remove(i);
+//			}
+//		}
+//		
+//		List<User> listUser = new Vector();
+//		for (Integer integer : list) {
+//			listUser.add(userService.getUserInNo(integer));
+//		}
+//		UserEval userEval = new UserEval();
+//		userEval.setScheduleNo(roomKey);
+//		userEval.setUserNo(userNo);
+//		System.out.println("userEval ==>" +userEval);
+//		
+//		if(userService.addEvalUserCheck(userEval) != 0) {
+//			return "forward:/schedule/listSchedule";
+//		}else {
+//			System.out.println("hello==>" + listUser);
+//			request.setAttribute("roomKey", roomKey);
+//			request.setAttribute("list", listUser);
+//			request.setAttribute("totalCount", listUser.size());
+//		
+//			return "forward:/schedule/addEvalUser.jsp";
+//			
+//		}
+//		
+//	}
 	
 	
 	

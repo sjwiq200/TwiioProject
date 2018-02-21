@@ -51,7 +51,6 @@
 	
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -104,27 +103,27 @@
 			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
-			}
-			
-			.btn-outlined.btn-theme {
 			    background: #f4f4f4;
 			    color: #08708A;
 				border-color: #08708A;
 			}
+			
+			.btn-outlined.btn-theme {
+			    color: #FFF;
+			    background: #08708A;
+			    border-color: #08708A;
+			}
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
-			    color: #FFF;
-			    background: #D73A31;
-			    border-color: #D73A31;
-			}
-			
-			.btn-outlined.btn-light {
 			    background: #f4f4f4;
 			    color: #D73A31;
 				border-color: #D73A31;
+			}
+			
+			.btn-outlined.btn-light {
+			    color: #FFF;
+			    background: #D73A31;
+			    border-color: #D73A31;
 			}
 			
 			.btn-xs{
@@ -191,6 +190,11 @@
 				font-size: 1em;
 				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 				}
+			#head{
+		  		background-image: url("/resources/images/airport.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		 	 }
 		  
     </style>
     
@@ -311,11 +315,15 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .3); ">
+      <div class="container" id="container">
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT FLIGHTS</ins></strong></h2>
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-	<h2 align="center"><strong><ins>ABOUT FLIGHTS</ins></strong></h2>
-	    
 	<div class="get-in-touch col-md-12  col-md-offset-2" style="font-family: 'Hanna', serif;">
 		<div class="mainbox">    
 		  <form>  
@@ -379,14 +387,9 @@
 		</form>
 	</div> 
 </div>
-		<br/><br/>
-		<br/><br/>
-		<br/><br/>
-		<br/><br/>
-		<br/><br/>
-		<br/><br/>
 		
-		<div class="col-sm-offset-10  col-sm-2 text-center">
+		
+		<div class="col-sm-offset-10  col-sm-2 text-center" style="padding-top : 20px; padding-bootom : 20px;">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
 		</div>
 		
@@ -413,11 +416,11 @@
 		  <c:forEach  items="${info}" varStatus="status">
 		  	<c:set var="i" value="${ i+1 }" />
 					<tr>
-					 <td align="center" valign="middle" style="padding-top : 20px;">${i}</td>
+					 <td align="center" valign="middle" style="padding-top : 30px;">${i}</td>
 					 <td align="center"  valign="middle" id="info" style="padding-top : 10px;">${info[status.index]}</td>
-					 <td align="center" valign="middle" id="type" style="padding-top : 20px;">${type[status.index]}</td>
-					 <td align="center" valign="middle" id="price" style="padding-top : 20px;">${price[status.index]}</td>
-					 <td align="center" valign="middle" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick">선&nbsp;택</button></td>
+					 <td align="center" valign="middle" id="type" style="padding-top : 30px;">${type[status.index]}</td>
+					 <td align="center" valign="middle" id="price" style="padding-top : 30px;">${price[status.index]}</td>
+					 <td align="center" valign="middle" id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="newpick" style="margin-top : 25px;">선&nbsp;택</button></td>
 					</tr>
 		   </c:forEach>
 	      </tbody> 

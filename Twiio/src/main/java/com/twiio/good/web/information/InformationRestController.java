@@ -326,7 +326,7 @@ public class InformationRestController {
 			List<String> type = new ArrayList<>();
 		
 		for(int i = 0; i<list.size()-5; i++) {
-			info.add((list.get(i))+"<p>"+(list.get(i+1))+"<p>"+(list.get(i+2))+"<p>"+(list.get(i+3)));
+			info.add((list.get(i))+"<p>"+(list.get(i+1))+"<p>"+(list.get(i+2))+(list.get(i+3)));
 			
 			price.add(list.get(i+4));
 			type.add(list.get(i+5));

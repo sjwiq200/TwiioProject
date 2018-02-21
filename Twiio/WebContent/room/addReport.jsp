@@ -37,11 +37,12 @@
 	
 	<style>
        body {
-            padding-top : 100px;
+            
+            padding-top : 30px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/main_img.jpg");
+			
     		background-size: cover;
         }
         
@@ -190,9 +191,8 @@
 					<div class="col-xs-18">	
 						<div class="form-group" >
 							<label for="roomname" class="col-xs-offset-1 col-xs-3 control-label">신고 유형</label>
-							<div class="col-xs-4">
+							<div class="col-xs-6">
 								<select  class="form-control" id="targetUserNo">
-									<option value="0" selected="selected">채팅방 신고</option>
 									<c:forEach var="user" items="${list}">
 										<option value="${user.userNo }">${user.userName }</option>
 									</c:forEach>
@@ -204,14 +204,14 @@
 					  
 					  <div class="form-group">
 					    <label for="reportTitle" class="col-xs-offset-1 col-xs-3 control-label">신고 제목</label>
-					    <div class="col-xs-4">
+					    <div class="col-xs-6">
 					      <input type="text" class="form-control" id="reportTitle" name="reportTitle" placeholder="채팅방 이름 ">
 					    </div>
 					  </div>
 					  
 					  <div class="form-group">
 					    <label for="reportContent" class="col-xs-offset-1 col-xs-3 control-label"> 신고 내용</label>
-					    <div class="col-xs-4">
+					    <div class="col-xs-6">
 					      <!-- <input type="" class="form-control" id="country" name="country" value=""> -->
 					      <textarea class="form-control" id="reportContent" name="reportContent" rows="3"></textarea>
 					    </div>
@@ -219,7 +219,7 @@
 					 
 					 <br/>
 					  <div class="form-group">
-					    <div class="col-xs-offset-4  col-xs-4 text-center">
+					    <div class="col-xs-offset-3  col-xs-6 text-center">
 					      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go">보&nbsp;내&nbsp;기</button>
 						   <button type="button" class="btn btn-outlined btn-theme btn-sm" id="cancel">취&nbsp;소</button>
 					    </div>

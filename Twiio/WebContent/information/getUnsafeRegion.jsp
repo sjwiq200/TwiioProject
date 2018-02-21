@@ -45,7 +45,7 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
    <!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />  
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />  
   	
   	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
@@ -53,7 +53,6 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -105,16 +104,17 @@
 			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
+			    background: #f4f4f4 !important;
+			    color: #08708A !important;
+				border-color: #08708A !important;
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #f4f4f4;
-			    color: #08708A;
-				border-color: #08708A;
+				color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
 			}
+
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
 			    color: #FFF;
@@ -135,7 +135,8 @@
 				padding:5px 10px;
 			}
 			 #info
-			{
+			{	
+				  border-radius: 23px;
 				  border: 3px solid #FFF;
 				  background: rgba(255, 255, 255, 0.5);
 			} 
@@ -145,6 +146,19 @@
 				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 			}
 			.ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
+			
+			 #jumbotron{
+				 	border-radius: 23px;
+				 	border: dashed rgba(85, 176, 190, 1) 2px;
+				 	
+				  }
+			
+			 #head{
+		  		background-image: url("/resources/images/unsafe.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		  		margin-bottom : 20px;
+		  }
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -201,7 +215,7 @@
 														img = "/resources/images/no_info2.png";
 														
 														$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 400px; max-width:100%; max-height:100%;"/></div>');
-														$("#jumbotron").attr("style","wheight: 500px; max-width:100%; max-height:100%; align-content: center; background-color: #f4f4f4; ");
+														$("#jumbotron").attr("style","wheight: 500px; max-width:100%; max-height:100%; align-content: center; background-color: #f4f4f4; border: dashed #f4f4f4 2px;");
 														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
 														$("#dangerIcon").hide();
 													}else{
@@ -349,12 +363,17 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron"  id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT UNSAFEREGION</ins></strong></h2>
+	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">전세계 안전 정보를 확인해 보세요 :D</h4>
+      
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
-	
-	<h2 align="center"><strong><ins>ABOUT UNSAFEREGION</ins></strong></h2>
-	<h3 align="center" style="font-family:'TYPO_JEONGJOM';">전세계 안전 정보를 확인해 보세요 :D</h3>
 	
 	<form class="form-horizontal">
 		  <div class="form-group" align="center">
@@ -372,7 +391,7 @@
 	</form>
 	
 		<div class="col-sm-12">
-			<div class="jumbotron col-sm-10 col-sm-offset-1" id="jumbotron" style="height: 500px; max-height:100%; align-content: center; background-color: rgba(86, 177, 191, 0.5);" >	
+			<div class="jumbotron col-sm-10 col-sm-offset-1" id="jumbotron" style="height: 500px; max-height:100%; align-content: center; background-color: rgba(86, 177, 191, 0.6);" >	
 				<div class="image" id="image">	
 				<br/> 
 					<div class="col-sm-12" align="center">

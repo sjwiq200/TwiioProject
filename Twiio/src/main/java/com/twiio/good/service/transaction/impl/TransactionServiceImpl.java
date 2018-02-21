@@ -161,7 +161,7 @@ public class TransactionServiceImpl implements TransactionService {
 				planContent.setContentImage(transaction.getTranPro().getThumbnail());
 				
 				planContent.setContentText(contentText);
-				planContent.setContentType(6); //schedule content			
+				planContent.setContentType(7); //product content			
 				dailyPlanDao.addPlanContent(planContent);
 			}
 		}

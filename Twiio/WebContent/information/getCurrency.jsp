@@ -38,12 +38,11 @@
   	
   	
   	<!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />   
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />   
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px ;
             background-color: #f4f4f4;
 			color: #666666 ;
 			font-family: "Source Sans Pro", Helvetica, sans-serif ;
@@ -79,15 +78,15 @@
 			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF !important;
-			    background: #08708A !important;
-			    border-color: #08708A !important;
-			}
-			
-			.btn-outlined.btn-theme {
 			    background: #f4f4f4 !important;
 			    color: #08708A !important;
 				border-color: #08708A !important;
+			}
+			
+			.btn-outlined.btn-theme {
+				color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
 			}
 
 			.btn-xs{
@@ -132,6 +131,16 @@
 			table {
 		    margin-left: auto;
 		    margin-right: auto;
+		  }
+		  #jumbotron{
+		 	border-radius: 23px;
+		 	border: dashed rgba(85, 176, 190, 1) 2px;
+		 	
+		  }
+		  #head{
+		  		background-image: url("/resources/images/currency2.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
 		  }
 						
     </style>
@@ -293,23 +302,26 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-	
+	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT CURRENCY</ins></strong></h2>
+	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">원하시는 국가의 환율을 계산해 보세요 :D</h4>
+      
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
 	
-	 <h2 align="center"><strong><ins>ABOUT CURRENCY</ins></strong></h2>
-	 <h3 align="center" style="font-family:'TYPO_JEONGJOM';">원하시는 국가의 환율을 계산해 보세요 :D</h3>
-	    
-	
 		<div class="col-sm-12">
-			<div class="jumbotron col-sm-8 col-sm-offset-2 " id="jumbotron" style="align-content: center; background-color: rgba(86, 177, 191, 0.3); padding-bottom: 20px;" >		
+			<div class="jumbotron col-sm-6 col-sm-offset-3 " id="jumbotron" style="align-content: center; background-color: rgba(85, 176, 190, 0.2); padding-bottom: 20px;" >		
 				<form class="form-horizontal">
 				<div class="col-sm-12">
 					<div class="form-group">
 						<div class="col-sm-8 col-sm-offset-2" id="standardCountry">
 							    <select class="form-control" id="standardCountryValue" >
-							    <!-- <option value="0">나라를 선택해주세요</option> -->
+							     <option value="0">나라를 선택해주세요 :D</option>
 									<c:set var="i" value="0" />
 					 				 <c:forEach var="currency" items="${returnList}">
 					 				 <option value="${currency.cur_nm}" >
@@ -321,7 +333,7 @@
 							<div class="col-sm-4 col-sm-offset-4">
 					    	</div>
 					    <div class="col-sm-8 col-sm-offset-2">
-					      <input type="text" class="form-control" id="standard" name="standard"  >
+					      <input type="text" class="form-control" id="standard" name="standard" placeholder="금액을 입력해 주세요." >
 					    </div>
 					 </div>
 					 
@@ -334,7 +346,7 @@
 					 <div class="form-group">
 					    <div class="col-sm-8 col-sm-offset-2" id="compareCountry">
 							    <select class="form-control"  id="compareCountryValue" >
-							   <!-- <option value="0">나라를 선택해주세요</option> -->
+							    <option value="0">나라를 선택해주세요 :D</option>
 									<c:set var="i" value="0" />
 					 				 <c:forEach var="currency" items="${returnList}">
 					 				 <option value="${currency.cur_nm}">

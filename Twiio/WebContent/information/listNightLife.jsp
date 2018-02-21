@@ -45,12 +45,11 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
     <!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" /> 
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" /> 
   	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		body {
-            padding-top : 50px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
@@ -100,19 +99,19 @@
 				border: 3px solid;
 				padding:8px 20px;
 			}
-			
 			.btn-outlined.btn-theme:hover,
 			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
+			    background: #f4f4f4 !important;
+			    color: #08708A !important;
+				border-color: #08708A !important;
 			}
 			
 			.btn-outlined.btn-theme {
-			    background: #f4f4f4;
-			    color: #08708A;
-				border-color: #08708A;
+				color: #FFF !important;
+			    background: #08708A !important;
+			    border-color: #08708A !important;
 			}
+
 			.btn-outlined.btn-light:hover,
 			.btn-outlined.btn-light:active {
 			    color: #FFF;
@@ -170,6 +169,21 @@
 				font-size: 1em;
 				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 			}
+			
+			#head{
+		  		background-image: url("/resources/images/night.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		  }
+		 a {
+			    color: rgba(0, 0, 0, 1);
+			    text-decoration: none;
+			}
+		a:hover,
+		a:active {
+			    color: rgba(0, 0, 0, 1);
+			    text-decoration: none;
+			}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -215,7 +229,7 @@
 									list += '<tr><td align="center" valign="middle" id="img"><img src="'+image[i]+
 									'"  style="width: 250px; height: 200px; max-width:100%; max-height:100%;"/></td>'+
 									'<td align="center" valign="middle" id="con" style="padding-top : 50px; font-family:\'JEJUGOTHIC\' !important; "><a href="#"><input type="hidden" id="info" value="'+url[i]+
-									'" /><strong>'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
+									'" /><strong style="font-size : 1em;">'+no[i]+'</strong><br><h3>'+name[i]+'</h3><br>'+type[i]+'</a></td></tr>'; 
 									
 								}
 							$("#listTbody").html(list);
@@ -327,12 +341,18 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	<div id="mask"></div>
+	
+	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      
+      <h2 align="center"  style=" margin-top : 50px;" ><strong style="color : #fff;  font-size: 1.5em; margin-bottom : 15px;"><ins>ABOUT NIGHTLIFE</ins></strong></h2>
+	  <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">여행의 꽃, 원하는 곳을 찾아보세요 :D</h4>
+      
+      </div>
+    </div>
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-	
-		<h2 align="center"><strong><ins>ABOUT NIGHTLIFE</ins></strong></h2>
-		
 		  <!-- <div class="form-group">
 		    <label for="city" class="col-sm-offset-1 col-sm-3 control-label">도시명</label>
 		    <div class="col-sm-4">
@@ -364,8 +384,6 @@
 		  </div>
 		</form>
 			
-		<br/>
-		<br/> 
 		
 		<div class="col-sm-offset-10  col-sm-2 text-center">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
