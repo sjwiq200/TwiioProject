@@ -222,10 +222,8 @@
 								},
 								success : function(JSONData , status) {
 	
-									alert(status);
-									alert("JSONData : \n"+JSONData);
-									//Debug...									
-									//alert(displayValue);
+									//alert(status);
+									//alert("JSONData : \n"+JSONData);
 									$( "#compare" ).val(JSONData);
 								},
 								error : function(JSONData , status) {
@@ -301,6 +299,7 @@
 	
 	
 	 <h2 align="center"><strong><ins>ABOUT CURRENCY</ins></strong></h2>
+	 <h3 align="center" style="font-family:'TYPO_JEONGJOM';">원하시는 국가의 환율을 계산해 보세요 :D</h3>
 	    
 	
 		<div class="col-sm-12">

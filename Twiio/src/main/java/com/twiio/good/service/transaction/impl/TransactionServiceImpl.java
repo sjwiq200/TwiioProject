@@ -21,6 +21,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import com.twiio.good.common.Search;
+import com.twiio.good.service.dailyplan.DailyPlanDao;
+import com.twiio.good.service.domain.DailyPlan;
+import com.twiio.good.service.domain.PlanContent;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Refund;
 import com.twiio.good.service.domain.Transaction;
@@ -46,6 +49,13 @@ public class TransactionServiceImpl implements TransactionService {
 	public void setProductDao(ProductDao productDao) {
 		this.productDao = productDao;
 	}
+	
+	@Autowired
+	@Qualifier("dailyPlanDaoImpl")
+	private DailyPlanDao dailyPlanDao;
+	public void setDailyPlanDao(DailyPlanDao dailyPlanDao) {
+		this.dailyPlanDao = dailyPlanDao;
+	}
 
 	public TransactionServiceImpl() {
 		System.out.println(this.getClass());
@@ -54,7 +64,7 @@ public class TransactionServiceImpl implements TransactionService {
 	@Override
 	public void addTransaction(Transaction transaction) throws Exception {
 		
-		/////////////////////////////입금날짜 계산/////////////////////////////		
+		/////////////////////////////calculate date of wiring money to host/////////////////////////////		
 		Date tripDate = transaction.getTripDate();
 		System.out.println("tripDate :: "+tripDate.toString());
 		Calendar calendar = Calendar.getInstance();
@@ -69,7 +79,7 @@ public class TransactionServiceImpl implements TransactionService {
 		transaction.setPayToHostDate(tripDate02);
 		//String tripDateToString = simpleDateFormat.format(tripDate);
 		
-		////////////////////////////재고정리////////////////////////
+		////////////////////////////counting stuff left////////////////////////
 		int count = transaction.getCount();
 		String[] str = productDao.getProduct(transaction.getTranPro().getProductNo()).getTripDate().split(",");
 		String proTripDate="";
@@ -104,8 +114,57 @@ public class TransactionServiceImpl implements TransactionService {
 		dbProduct.setTripDate(proTripDate);
 		productDao.updateProduct(dbProduct);
 		
-		///////////////////////////////거래 추가///////////////////////////////////
+		///////////////////////////////add transaction///////////////////////////////////
 		transactionDao.addTransaction(transaction);
+		
+		/////////////////////////////add productContent to dailyplan/////////////////
+		DailyPlan dailyPlan = new DailyPlan();
+		dailyPlan.setDailyCountry(transaction.getTranPro().getCountry());
+		dailyPlan.setDailyDate(transaction.getTripDate());
+				
+		List<DailyPlan> listDailyPlan = dailyPlanDao.listPlanForFixedSchedule(dailyPlan);		
+		
+		if(listDailyPlan.size()!=0) {
+			
+			String contentText = "참여한 DailyTour :: "+transaction.getTranPro().getProductName()+"\n";
+			
+			switch (Integer.parseInt(transaction.getTranPro().getProductType())) {
+			case 1:
+				contentText += "투어유형 :: 명소투어  \n";
+				break;
+			case 2:
+				contentText += "투어유형 :: 음식투어  \n";
+				break;
+			case 3:
+				contentText += "투어유형 :: 트래킹  \n";
+				break;
+			case 4:
+				contentText += "투어유형 :: 액티비티  \n";
+				break;
+			case 5:
+				contentText += "투어유형 :: night투어  \n";
+				break;
+			default:
+				break;
+			}
+			
+			contentText += transaction.getTranPro().getDescription();
+						
+			for(DailyPlan dailyPlanEach : listDailyPlan) {
+				
+				int dailyPlanNo = dailyPlanEach.getDailyPlanNo();
+				int countForOrder = dailyPlanDao.getPlanContentCount(dailyPlanNo);
+				
+				PlanContent planContent = new PlanContent();
+				planContent.setDailyPlan(dailyPlanEach);
+				planContent.setOrderNo(countForOrder+1);
+				planContent.setContentImage(transaction.getTranPro().getThumbnail());
+				
+				planContent.setContentText(contentText);
+				planContent.setContentType(6); //schedule content			
+				dailyPlanDao.addPlanContent(planContent);
+			}
+		}
 		
 	}
 

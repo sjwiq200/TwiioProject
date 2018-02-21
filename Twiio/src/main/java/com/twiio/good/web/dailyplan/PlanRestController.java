@@ -174,7 +174,7 @@ public class PlanRestController {
 		String[] city = dailyPlan.getDailyCity().split(",");
 		String city02="";
 		
-		//if(dailyPlanDB.getDailyCity()==null) {
+		if(dailyPlan.getDailyCity()!=null && dailyPlan.getDailyCity()!="") {
 			for(int i =0; i<city.length; i++) {
 				if(i==city.length-1) {
 					city02 += city[i].trim();
@@ -183,15 +183,35 @@ public class PlanRestController {
 				}
 			}
 			dailyPlanDB.setDailyCity(city02);
-		//}lse{
+		}
 		dailyPlanService.updateDailyPlan(dailyPlanDB);
-		
+		System.out.println("mainCity START ::");
+		System.out.println("city02 ::"+city02);
 		//////////////////dailyPlan City Information for MainPlanDisplay<START>///////////////////
 		DailyPlan dailyPlanFinal = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
-		MainPlan mainPlan = mainPlanService.getMainPlan(dailyPlanFinal.getMainPlan().getMainPlanNo());
+		String[] dailyCityList = dailyPlanFinal.getDailyCity().split(",");
+		MainPlan mainPlan = mainPlanService.getMainPlan(dailyPlanFinal.getMainPlan().getMainPlanNo());	
+				
 		if(mainPlan.getCity()!=null) {
-		mainPlan.setCity(mainPlan.getCity()+","+city02);
+			String[] mainCityList = mainPlan.getCity().split(",");
+			System.out.println("city not null ::");
+			for(int i=0; i<dailyCityList.length; i++) {
+				Boolean flag = true;
+				for(int j=0; j<mainCityList.length; j++) {
+					System.out.println("dailyCity"+i+" :: "+dailyCityList[i]);
+					System.out.println("mainCity"+j+" :: "+mainCityList[j]);
+					
+					if(dailyCityList[i].equals(mainCityList[j])) {
+						flag=false;						
+					}
+				}
+				if(flag) {
+					mainPlan.setCity(mainPlan.getCity()+","+dailyCityList[i]);
+				}
+			}
+		
 		} else {
+			System.out.println("city null ::");
 			mainPlan.setCity(city02);
 		}
 		mainPlanService.updateMainPlan(mainPlan);
@@ -202,25 +222,27 @@ public class PlanRestController {
 	}
 	
 	@RequestMapping(value = "json/selectCountryNew", method = RequestMethod.POST)
-	public void selectCountryNew(@RequestBody DailyPlan dailyPlan ) throws Exception {
+	public DailyPlan selectCountryNew(@RequestBody DailyPlan dailyPlan ) throws Exception {
 		
 		System.out.println("RestController : json/selectCountryNew <START>");
 		
 		//String countryKor = URLDecoder.decode(countryName,"UTF-8");
 		DailyPlan dailyPlanDB = dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
-		String country=dailyPlan.getDailyCountry();
+		String country="";
 		
 		if(dailyPlanDB.getDailyCountry()==null) {
-			dailyPlanDB.setDailyCountry(country);
+			dailyPlanDB.setDailyCountry(dailyPlan.getDailyCountry());
 		} else {
-			country = dailyPlanDB.getDailyCountry();
-			country = country+","+country;
-			dailyPlan.setDailyCountry(country);
+			country += dailyPlanDB.getDailyCountry();
+			country += ","+dailyPlan.getDailyCountry();
+			dailyPlanDB.setDailyCountry(country);
 		}
 		dailyPlanService.updateDailyPlan(dailyPlanDB);
+		dailyPlan=dailyPlanService.getDailyPlan(dailyPlan.getDailyPlanNo());
 		
 		System.out.println("RestController : json/selectCountryNew <END>");
 		
+		return dailyPlan;
 	}
 	
 	@RequestMapping(value = "json/resetCountry", method = RequestMethod.GET)
