@@ -117,8 +117,7 @@ public class UserRestController {
 		user.setFile(file);
 		String faceto =""; 
 		Map<String, Object> map= userService.detectFace(user);
-		
-		
+
 		return map;
 	}
 	

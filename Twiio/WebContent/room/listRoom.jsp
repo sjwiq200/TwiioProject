@@ -34,14 +34,19 @@
   <link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
   
-  	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<link rel="stylesheet" href="/resources/css/font.css" />
-	
   
   <script>
   	$(function() {
+  		
+  		$("#myListRoom").on("click" , function() {
+			$(self.location).attr("href","/room/listMyRoom");
+		}); //END Myroom Event
+		
+		$( "#scheduleList" ).on("click" , function() {
+			$(self.location).attr("href","/schedule/listSchedule");
+		});
 		 
-		 $("a:contains('참가')").on("click",function(){
+		 $("button:contains('J O I N')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
@@ -59,7 +64,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -125,8 +130,10 @@
 
 												for (var i = 0; i < JSONData.length; i++) {
 													if(JSONData[i].open == true) {
-														var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
-															+ '<div class="thumbnail" name="getPro" style="height:500px;">'
+														/* var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >' */
+														var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
+															/* + '<div class="thumbnail" name="getPro" style="height:500px;">' */
+															+'<div class="thumbnail" name="getPro" style="max-height:450px;">'
 															
 															  if(JSONData[i].type == '식사'){
 																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
@@ -141,30 +148,37 @@
 																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
 															  }
 															
-															displayValue += '<div class="caption" style="text-align: center;">'
+															/* displayValue += '<div class="caption" style="text-align: center;">' */
+															
+																displayValue += '<div class="col-sm-12">'
+										               		+'<div class="col-sm-12">'
+										               		+'<div class="caption" style="margin-top:5px;text-align: left;">'
 															+ '<h3>'
 															+ JSONData[i].roomName
 															+ '</h3>'
-															+ '<p> Date : '
-															+ JSONData[i].date
-															+ '</p>'
-															+ '<p> country : '
+															+ '<p><strong>국가</strong> : '
 															+ JSONData[i].country
 															+ '</p>'
-															+ '<p> city : '
+															+ '<p> <strong>도시</strong> : '
 															+ JSONData[i].city
 															+ '</p>'
-															+ '<p>'
+															+ '<p> <strong>날짜</strong> : '
+															+ JSONData[i].date
+															+ '</p>'
+															+ '<p> <strong>인원</strong> : '
 															+ JSONData[i].headCount
 															+ '명 </p>'
-															+ '<a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%" >참가'
-															+ '<input type="hidden" id="roomKey" value="'
+															/* + '<a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%" >참가' */
+															<c:if test="${!empty user}">
+															+'<div align="center">'
+			            										+'<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:JEJUGOTHIC;"> J O I N<input type="hidden" id="roomKey" value="'
 															+ JSONData[i].roomKey
 															+ '">'
 															+ '<input type="hidden" id="master" value="'
 															+ JSONData[i].userNo
-															+ '">'
-															+ '</div>'
+															+ '"></button></div>'
+															</c:if>
+															displayValue += '</div></div></div>'
 
 													$('div.row2').append(displayValue);
 													}//End if
@@ -190,12 +204,8 @@
 	<style>
 body {
     padding-top : 50px;
-    background: #f4f4f4;
 }
-
-.contents {
-	font-family:"JEJUGOTHIC";
-}      
+/*       
 .btn.btn-default:hover, .btn.btn-default:active{
 	color: #FFF;
 	background: #08708A;
@@ -217,18 +227,19 @@ body {
     background: #FFF;
     color: #08708A;
 	border-color: #08708A;
-}
+} */
 h2 {
 	/* color : #dedede; */
 	color :#474747;
     font-size: 6em;
     /* padding: 0 0.5em 0.25em 0.5em; */
+    font-weight: 500;
     font-family: "Pacifico", cursive;
     text-transform: none;
     letter-spacing: 10;
     font-style: Pacifico;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
 }
-
 /* /////////////////dayoung////////////////// */
 /* Button-dy css  */
 .btn-dy {
@@ -283,14 +294,16 @@ h2 {
   font-family:JEJUGOTHIC;
   color: #ffffff;
   font-size: 15px;
-  background: #D73A31;
+  /* background: #D73A31; */
+  background: #08708A;
   opacity: 0.9;
   padding: 10px 25x 10px 25px;
   text-decoration: none;
 }
 
 .btn-dy3:hover {
-  background: #D73A31;
+  /* background: #D73A31; */
+  background: #08708A;
   opacity: 0.5;
   border: solid #ffffff 0px;
   text-decoration: none;
@@ -298,24 +311,24 @@ h2 {
 }
 
 
-/* ///////////Dayoung - Border/////////////	 */		
+/* ///////////Dayoung - Border/////////////    */      
 
 #innerMain {
-	font-size: 6em;
-	margin-top: 1.5em;
+   font-size: 6em;
+   margin-top: 1.5em;
 }
 
 #thumbnailMainBox {
-	font-family:'JEJUMYEONGJO';
-	border-color: #000000;
-	display: inline-block;
-	text-decoration: none;
+   font-family:'JEJUMYEONGJO';
+   border-color: #000000;
+   display: inline-block;
+   text-decoration: none;
 }
 
 #thumbnailMainThumbBox {
-	background: #fff;
-	display: inline-block;
-	border-radius: 6px;
+   background: #fff;
+   display: inline-block;
+   border-radius: 6px;
 }
 
     </style>
@@ -330,11 +343,11 @@ h2 {
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 
-	<div class="container" style="background: url('/resources/images/room/twiichatMain1.jpg') no-repeat center center; background-size:cover;height:800px; width:100%;">
+	<div class="container" style="background: url('/resources/images/room/twiichatMain1.jpg') no-repeat center center; background-size:cover; height:800px; width:100%;">
 		
 		<h2 class="text-center" style="color:#3B3B3B; margin-top:10%;"><strong>TwiiChat</strong></h2>
 		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>여행의 설렘, 새로운 만남의 설렘, 트위챗</strong></h3>
-		<!— FORM —>
+		<!-- FORM -->
 		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:150px;margin-left:10%;margin-right:10%;min-width:350px;">
 			<form role="form" style="padding:10px;">
 				
@@ -342,7 +355,7 @@ h2 {
 	    				<div class="col-sm-2" >
 						<div class="form-group">
 						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;">
-		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" } >제목</option>
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
 		                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>나라</option>
 		                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시</option>
 							</select>
@@ -352,103 +365,79 @@ h2 {
 	  				<div class="col-sm-9">
 					  <div class="form-group">
 					    <label class="sr-only" for="searchKeyword" >어떤 친구를 만나게 될까요?</label>
-					    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="SEARCH"
+					    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
 					    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
 					  	</div>
-					</div>
-					
-					<div class="col-sm-1" align="center">
-					    <input type="hidden" id="currentPage" name="currentPage" value=""/>
-		    				<!--  	<button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> -->
-		    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"/>SEARCH</button>
-					</div>
+					  </div>
 					 
-		    	</div><!— End row —>
-		    		
+		    			
+		    			
+	    				<div class="col-sm-1" align="center">
+	    					<input type="hidden" id="currentPage" name="currentPage" value=""/>
+	    				 	<!-- <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> -->
+	    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
+	    				</div>	
+				</div><!-- End row -->
 			</form>
-			<!— FORM —>
-			
+			<!-- FORM -->
 		</div>
+		
+		<c:if test="${!empty user }">
 		<div class="col-sm-12" align="center" style="margin-top:20px;">
-	        <button class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 방목록</button>
-	  		<button class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 &nbsp;일정</button>
-		 </div>			
+           <button id="myListRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 방목록</button>
+           <button id="scheduleList" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 &nbsp;일정</button>
+        </div>         
+		</c:if>
+						
 	</div>
-	<!—  Carousel End /////////////////////////////////////—>
 	
-	<!—  화면구성 div Start /////////////////////////////////////—>
+	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container contents">
 	
-	<div class="col-xs-12 inner" id="thumbnailMainBox">
-				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
-				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
-					<div class="col-xs-12" >
+		<div class="col-xs-12 inner" id="thumbnailMainBox">
+            <div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
+            <div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+               <div class="col-xs-12" >
 	
-		
+		<!-- <div class="page-header text-info">
+	       <h3>메신저 방목록 조회 </h3>
+	    </div> -->
 	    
-	    
-	    
-	    <!— table 위쪽 검색 Start /////////////////////////////////////—>
+	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
-			 <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
-			     <h4>지금 진행되고 있는 방 ${resultPage.totalCount} 개</h4>
+		
+			 <%-- <div class="col-md-2 text-left">
+			    	<p class="text-primary">
+			    		전체  ${resultPage.totalCount } 건수
+			    	</p>
 		    </div> 
-
-	    </div>
-	    
-	    
-	    
-	    <!— 위쪾 검색 END —>
-	    
-	    <div class="row2">
-
-		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
-		      <div class="thumbnail" name="getPro" style="max-height:450px;">
-			
-		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
-<!-- 			
-				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >
-				
-				  	
-		
-				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >
-			
-				  	
-	
-				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" > -->
-				<div class="col-sm-12">
-					<div class="col-sm-12">
-			          <div class="caption" style="margin-top:5px;text-align: left;">
-			            <p><strong>국가</strong> : dfdsf</p>
-			            <p><strong>도시</strong> :dsfdsf </p>
-			            <p><strong>날짜</strong> :dsfdsfsd</p>
-			            <p><strong>인원</strong> :sdfsdfdsf </p>
-			     		 <input type="hidden" id="roomKey" value="${room.roomKey}">
-				         <input type="hidden" id="master" value="${room.userNo }">
-				         <div align="center">
-				         <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/> J O I N </button>
-				        </div>
-				        
-				       </div>
-			       </div>
+		    
+		    
+	    		<div class="col-md-10 text-right">
 			    
-		       	 </div>
-		      </div>
-		    </div>
-		
-		    </div>
-		    
-		    
-		    
-		    
-	 <%--    
+	    		</div>
+	    </div> --%>
+	    <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
+              <h4>지금 진행되고 있는 방 ${resultPage.totalCount} 개</h4>
+          </div> 
+
+       </div>
+	    
+	    
+	    
+	    <!-- 위쪾 검색 END -->
+	    
 	    <div class="row2">
           
           <c:set var="i" value="0" />
 		  <c:forEach var="room" items="${list}">
+			<!-- <div class="row"> -->
 			<c:if test="${room.open }">
-		    <div class="col-sm-3 "  style="padding-top : 2%">
-		      <div class="thumbnail" name="getPro" style="height:500px;">
+		    <!-- <div class="col-sm-3 "  style="padding-top : 2%"> -->
+		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
+		      <!-- <div class="thumbnail" name="getPro" style="height:500px;"> -->
+		      <div class="thumbnail" name="getPro" style="max-height:450px;">
+		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
 				  <c:if test="${room.type == '식사'}">
 		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
 				  </c:if>
@@ -463,50 +452,57 @@ h2 {
 				  <c:if test="${room.type == '미정' }">
 				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
 				  </c:if>
-		          <div class="caption" style="text-align: center;">
+				  <div class="col-sm-12">
+               		<div class="col-sm-12">
+               		<div class="caption" style="margin-top:5px;text-align: left;">
+		          <!-- <div class="caption" style="text-align: center;"> -->
 		          	
 		            <h3>${room.roomName} </h3>		            
-		            <p>국가 : ${room.country}</p>
-		            <p>도시 : ${room.city}</p>
-		            <p>날짜 : ${room.date}</p>
-		            <p>인원 : ${room.headCount}명</p>
+		            <p><strong>국가</strong> : ${room.country}</p>
+		            <p><strong>도시</strong> : ${room.city}</p>
+		            <p><strong>날짜</strong> : ${room.date}</p>
+		            <p><strong>인원</strong> : ${room.headCount}명</p>
 		            <c:if test="${!empty user}" >
-			            <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
-			            참가
+			            <!-- <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
+			            참가 -->
+			            <div align="center">
+			            <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"> J O I N 
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
-			            </a>
+			            </button>
+			            <!-- </a> -->
+			            </div>
 		            </c:if>
-		            
+		            </div>
 		        </div>
 		      </div>
 		    </div>
+		    </div>
+		    
+		    
 		    </c:if>
 		    </c:forEach>
 		    </div>
-		     --%>
-		    
-		    	</div>
-				</div>
-				<div align="right" class="col-xs-1">&nbsp;</div>
-			</div>
-			
-		    
+		    </div>
+		    </div>
+		    <div align="right" class="col-xs-1">&nbsp;</div>
+		    </div>
         </div>
-        <!—  화면구성 div End /////////////////////////////////////—>
+        <!--  화면구성 div End /////////////////////////////////////-->
 	  
 	  <c:if test="${ !empty user }">
-<!-- 	  <!—-  Floating Button <START> -—> -->
+	  <!--  Floating Button <START> -->
 		<div id="container-floating">
 			<button id="floating-button" type="submit" data-toggle="tooltip" data-original-title="Create" title="방 생성">
 				<p class="letter" id="addRoom">+</p>
 			<button>
 		</div>
-<!-- 	  <!—-  Floating Button <END> -—> -->
+	  <!--  Floating Button <END> -->
 	  </c:if>
 	  
  	
  	
 	
 </body>
+
 </html>

@@ -45,7 +45,10 @@
   	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
    <!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />   
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />  
+  	
+  	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -141,6 +144,7 @@
 				font-size: 1em;
 				font-family: "Source Sans Pro", Helvetica, sans-serif !important;
 			}
+			.ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -150,7 +154,18 @@
 			
 		 $("button#search").on("click" , function() {
 			var city = $("#city").val();
-			event.preventDefault();
+			if(city.match(/[0-9]|[a-z]|[A-Z]/)){
+				swal({
+					  title: "한글 국가명만 입력 가능합니다 :D",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+			
+					$("#city").val("");
+			}else{
+			
+				event.preventDefault();
 			 $.ajax(
 	    				{
 	    					url:"/information/json/getUnsafeRegion",
@@ -167,30 +182,42 @@
 
 	    					success:function(JSONData){
 	    						
-	    						var img = JSONData.img;
-								var info = JSONData.info;
-								
-								if(img=='none'){
-									
-									img = "/resources/images/no_info2.png";
-									
-									$("#image").html('<div class="col-sm-12 col-sm-offset-1" align="center"><img src="'+img+'" style="width: 700px; height: 400px;"/></div>');
-									$("#jumbotron").attr("style","width: 600px; height: 500px; align-content: center; background-color: #f4f4f4; ");
-									$("#jumbotron").attr("class","jumbotron col-sm-12 col-xs-offset-1");
-									$("#dangerIcon").hide();
-								}else{
-									$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px;"/></div>');
-									$("#dangerIcon").show();
-									$("#jumbotron").attr("style","width: 800px; height: 700px; align-content: center; background-color: rgba(86, 177, 191, 0.5);");
-									$("#jumbotron").attr("class","jumbotron col-sm-12 col-xs-offset-2");
-									
-								}
-								
-							$("#info").html(info+"<br/><br/><br/><br/>");
+	    						if(JSONData.noCountry=='noCountry'){
+	    							swal({
+	    								  title: "일치하는 국가정보가 없습니다. 다시 입력해 주세요:D",
+	    								  icon: "warning",
+	    								  buttons: true,
+	    								  dangerMode: true,
+	    								})
+	    								
+	    								$("#city").val("");
+	    						}else{
 	    						
+						    						var img = JSONData.img;
+													var info = JSONData.info;
+													
+													if(img=='none'){
+														
+														img = "/resources/images/no_info2.png";
+														
+														$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 400px; max-width:100%; max-height:100%;"/></div>');
+														$("#jumbotron").attr("style","wheight: 500px; max-width:100%; max-height:100%; align-content: center; background-color: #f4f4f4; ");
+														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
+														$("#dangerIcon").hide();
+													}else{
+														$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px; max-width:100%; max-height:100%;"/></div>');
+														$("#dangerIcon").show();
+														$("#jumbotron").attr("style","height: 700px; max-width:100%; max-height:100%; align-content: center; background-color: rgba(86, 177, 191, 0.5);");
+														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
+														
+													}
+													
+												$("#info").html(info+"<br/><br/><br/><br/>");
+	    								}	
 			    					}
 			    				}
 			    			);
+		 				}	
 				    });
 		 
 		 
@@ -259,7 +286,7 @@
 				        doc.addImage(imgData,'JPEG', 0, 0, imgWidth, imgHeight);
 				        heightLeft -= pageHeight;
 				
-				        doc.save('test.pdf');
+				        doc.save('file.pdf');
 				
 				    }
 				
@@ -301,6 +328,16 @@
 			});
 	});
 		
+	
+	$(function(){
+		$("#city").keydown(function(e) {
+			if (e.keyCode == 13) {
+				
+				$("#search").click();
+			}
+		});			
+
+	});
 			
 	</script>
 	
@@ -317,6 +354,7 @@
 	
 	
 	<h2 align="center"><strong><ins>ABOUT UNSAFEREGION</ins></strong></h2>
+	<h3 align="center" style="font-family:'TYPO_JEONGJOM';">전세계 안전 정보를 확인해 보세요 :D</h3>
 	
 	<form class="form-horizontal">
 		  <div class="form-group" align="center">
@@ -333,45 +371,47 @@
 		  </div>
 	</form>
 	
-	
-	<div class="jumbotron" id="jumbotron" style="width: 1140px; height: 500px; align-content: center; background-color: rgba(86, 177, 191, 0.5);" >	
-		<div class="image" id="image">	
-		<br/> 
-			<div class="col-sm-12" align="center">
-				<img src="http://www.0404.go.kr/images/main/img_map.png"  style="width: 700px; height: 300px;"/>
+		<div class="col-sm-12">
+			<div class="jumbotron col-sm-10 col-sm-offset-1" id="jumbotron" style="height: 500px; max-height:100%; align-content: center; background-color: rgba(86, 177, 191, 0.5);" >	
+				<div class="image" id="image">	
+				<br/> 
+					<div class="col-sm-12" align="center">
+						<img src="http://www.0404.go.kr/images/main/img_map.png"  style="width: 700px; max-width:100%; height: 300px; max-height:100%;"/>
+					</div>
 			</div>
-	</div>
+					
+				<div align="center" id="dangerIcon" style="max-width:100%; max-height:100%;">
+					<br/> 
+					<img src="/resources/images/img_blue.png" style="max-width:100%; max-height:100%;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="/resources/images/img_yellow.png" style="max-width:100%;  max-height:100%;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="/resources/images/img_red.png" style="max-width:100%;  max-height:100%;"/>&nbsp;&nbsp;&nbsp;&nbsp;
+					<img src="/resources/images/img_black.png" style="max-width:100%; max-height:100%;"/>&nbsp;&nbsp;
+					<img src="/resources/images/img_lock_red.png" style="max-width:100%; max-height:100%;"/>&nbsp;&nbsp;
+					<img src="/resources/images/img_lock_black.png" style="max-width:100%; max-height:100%;"/>
+				</div>
+			</div>	
 			
-		<div class="col-sm-12" align="center" id="dangerIcon">
-			<br/> 
-			<img src="/resources/images/img_blue.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			<img src="/resources/images/img_yellow.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			<img src="/resources/images/img_red.png"/>&nbsp;&nbsp;&nbsp;&nbsp;
-			<img src="/resources/images/img_black.png"/>&nbsp;&nbsp;
-			<img src="/resources/images/img_lock_red.png"/>&nbsp;&nbsp;
-			<img src="/resources/images/img_lock_black.png"/>
-		</div>
-	</div>	
-	
-	
-	
-	<div class="col-sm-offset-10  col-sm-2 text-center">
-		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
-	</div>	
-	
-	<br/><br/>
-	<br/><br/>
-	<br/>
-	
-	
-	<div class="col-sm-12" id="info" style="padding-left : 130px; padding-top : 50px; "></div>
-		<br/>    
- 		</div>
- 		
-	<!--  화면구성 div Start /////////////////////////////////////-->
- 		<br/><br/>
-		<br/><br/>
-		<br/> 
+			
+			
+			<div class="col-sm-offset-10  col-sm-2 text-center">
+				      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+			</div>	
+			
+			<br/><br/>
+			<br/><br/>
+			<br/>
+			
+			
+			<div class="col-sm-12" id="info" style="padding : 50px; margin-top : 10px; font-family:'TYPO_JEONGJOM'; "></div>
+				<br/>    
+		 		</div>
+		 
+		 </div>
+		 		
+			<!--  화면구성 div Start /////////////////////////////////////-->
+		 		<br/><br/>
+				<br/><br/>
+				<br/> 
 	</body>
 
 </html>

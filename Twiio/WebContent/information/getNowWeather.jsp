@@ -41,7 +41,10 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 	  	
 	  	<!-- ---------font ------------ -->
-  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />      
+  	<link href="/resources/css/imformation.css" rel="stylesheet" type="text/css" />  
+  	
+  	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>     
   	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
@@ -97,6 +100,8 @@
 				text-transform:uppercase;
 				border: 3px solid;
 				padding:8px 20px;
+				max-width : 100%;
+				max-height : 50%;
 			}
 			
 			.btn-outlined.btn-theme:hover,
@@ -141,6 +146,7 @@
 			.jumbotron {
 	        	border: 2px solid rgba(215, 58, 49, 0.8);
 	       }
+	       .ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
 </style>
 
 
@@ -237,88 +243,113 @@
 		$( "#search"  ).on("click" , function() {
 			
 			var cityName = $("#keyword").val();
+			if(!(cityName.match(/[a-z]|[A-Z]/))){
+				swal({
+					  title: "영문 도시명만 입력 가능합니다 :D",
+					  icon: "warning",
+					  buttons: true,
+					  dangerMode: true,
+					})
+			
+					$("#keyword").val("");
+			}else{
+			
 			$.ajax( 
 					{
 						url : "/information/json/searchNowWeather?cityName="
-								+ cityName,
+								+ escape(encodeURIComponent(cityName)),
 						method : "GET",
 						dataType : "json",
 						headers : {
 							"Accept" : "application/json",
-							"Content-Type" : "application/json"
+							"Content-Type" : "application/json "
 						},
 
 						success : function(JSONData, status) {
 							
-							var resultTemp = JSONData.resultTemp;
-							var resultDate = JSONData.resultDate;
+							if(JSONData.item==""){
+								swal({
+  								  title: "일치하는 도시정보가 없습니다. 다시 입력해 주세요:D",
+  								  icon: "warning",
+  								  buttons: true,
+  								  dangerMode: true,
+  								})
+  								$("#keyword").val("");
+								
+							}else{
 							
-							var weatherData = {
-									  labels: [
-										   resultDate[0]+" 최저기온", resultDate[1]+" 최고기온", resultDate[2]+" 최저기온", resultDate[3]+" 최고기온", resultDate[4]+" 최저기온", resultDate[5]+" 최고기온", 
-										  resultDate[6]+" 최저기온", resultDate[7]+" 최고기온", resultDate[8]+" 최저기온", resultDate[9]+" 최고기온"
-									  ],
-									  datasets: [{
-									    label: "temperature",
-									    data: resultTemp,
-									    lineTension: 0,
-									    fill: true,
-									    fillColor: 'rgba(215, 58, 49, 0.8)' ,
-									    borderColor: '#D73A31',
-									    backgroundColor: 'transparent',
-									    pointBorderColor: '#D73A31',
-									    pointBackgroundColor: 'rgba(215, 58, 49, 0.8)',
-									    borderDash: [5, 5],
-									    pointRadius: 5,
-									    pointHoverRadius: 10,
-									    pointHitRadius: 30,
-									    pointBorderWidth: 2,
-									    pointStyle: 'rectRounded'
-									  }]
-									};
-							
-							var chartOptions = {
-									  legend: {
-									    display: true,
-									    position: 'top',
-									    labels: {
-									      boxWidth: 80,
-									      fontColor: 'black'
-									    }
-									  },
-									  scales: {
-									    xAxes: [{
-									      gridLines: {
-									        display: false,
-									        color: "black"
-									      },
-									      scaleLabel: {
-									        display: true,
-									        fontColor: "red"
-									      }
-									    }],
-									    yAxes: [{
-									      gridLines: {
-									        color: "rgba(0, 0, 0, 0.31)",
-									        borderDash: [2, 5],
-									      },
-									      scaleLabel: {
-									        display: true,
-									        fontColor: "green"
-									      }
-									    }],
-									    scales: { yAxes: [{ ticks: { beginAtZero:true } }] }
-									  }
-									};
-							var lineChart = new Chart(popChart, {
-								  type: 'line',
-								  data: weatherData,
-								  options: chartOptions
-								});
-							
+									var resultTemp = JSONData.resultTemp;
+									var resultDate = JSONData.resultDate;
+									
+									var weatherData = {
+											  labels: [
+												   resultDate[0]+" 최저기온", resultDate[1]+" 최고기온", resultDate[2]+" 최저기온", resultDate[3]+" 최고기온", resultDate[4]+" 최저기온", resultDate[5]+" 최고기온", 
+												  resultDate[6]+" 최저기온", resultDate[7]+" 최고기온", resultDate[8]+" 최저기온", resultDate[9]+" 최고기온"
+											  ],
+											  datasets: [{
+											    label: "temperature",
+											    data: resultTemp,
+											    lineTension: 0,
+											    fill: true,
+											    fillColor: 'rgba(215, 58, 49, 0.8)' ,
+											    borderColor: '#D73A31',
+											    backgroundColor: 'transparent',
+											    pointBorderColor: '#D73A31',
+											    pointBackgroundColor: 'rgba(215, 58, 49, 0.8)',
+											    borderDash: [5, 5],
+											    pointRadius: 5,
+											    pointHoverRadius: 10,
+											    pointHitRadius: 30,
+											    pointBorderWidth: 2,
+											    pointStyle: 'rectRounded'
+											  }]
+											};
+									
+									var chartOptions = {
+											  legend: {
+											    display: true,
+											    position: 'top',
+											    labels: {
+											      boxWidth: 80,
+											      fontColor: 'black'
+											    }
+											  },
+											  scales: {
+											    xAxes: [{
+											      gridLines: {
+											        display: false,
+											        color: "black"
+											      },
+											      scaleLabel: {
+											        display: true,
+											        fontColor: "red"
+											      }
+											    }],
+											    yAxes: [{
+											      gridLines: {
+											        color: "rgba(0, 0, 0, 0.31)",
+											        borderDash: [2, 5],
+											      },
+											      scaleLabel: {
+											        display: true,
+											        fontColor: "green"
+											      }
+											    }],
+											    scales: { yAxes: [{ ticks: { beginAtZero:true } }] }
+											  }
+											};
+									var lineChart = new Chart(popChart, {
+										  type: 'line',
+										  data: weatherData,
+										  options: chartOptions
+										});
+									
+							}
 							
 						}
 					});
+			
+			}
 		
 		});
 		
@@ -376,6 +407,15 @@
 		
 			});
 	
+	$(function(){
+		$("#keyword").keydown(function(e) {
+			if (e.keyCode == 13) {
+				
+				$("#search").click();
+			}
+		});			
+
+	});
 	
 	
 	//////////////////////////////////////////////////////////////////////////////////////////////////
@@ -396,24 +436,25 @@
 	<div class="container">
 
 		<h2 align="center"><strong><ins>ABOUT WEATHER</ins></strong></h2>
+		<h3 align="center" style="font-family:'TYPO_JEONGJOM';">원하시는 도시의 현재 날씨를 알아보세요 :D</h3>
 		
 	
-	<form class="form-horizontal">
+	<form class="col-sm-12">
 		  <div class="form-group">
-		    <div class="col-sm-4 col-sm-offset-3 text-center">
+		    <div class="col-sm-4 col-sm-offset-4 text-center" style="margin-bottom : 20px;">
 		      <input type="text" class="form-control" id="keyword" name="keyword" value="Seoul">
 		    </div>
-		  </div>
-		    
+		 </div> 
+		   
 		  <div class="form-group">
-		    <div class="col-sm-offset-3  col-sm-4 text-center">
+		    <div class="col-sm-offset-4  col-sm-4 text-center" style="margin-bottom : 20px;">
 		      <button type="button" class="btn btn-outlined btn-theme btn-sm" id="search"  >검 &nbsp;색</button>
 		    </div>
 		  </div>
 	</form>	
 
-		<div class="jumbotron col-sm-12" id="jumbotron" style="align-content: center; background-color: rgba(247, 243, 243, 0.3);" >		
-			<div class="chart-container" style="position: relative; width:70vw; padding-right: 100px;">		
+		<div class="jumbotron col-sm-12 text-center" id="jumbotron" style="align-content: center; background-color: rgba(247, 243, 243, 0.3);" >		
+			<div style="position: relative;">		
 				<canvas id="popChart"></canvas>
 			</div>
 		</div>
@@ -448,19 +489,20 @@
 			</tr>
         </tbody>
       </table>	 --%>
-      
-      <div class="col-sm-offset-10  col-sm-2 text-center">
-		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
-		</div>
-			
-			
-		<div class="col-xs-8 col-xs-offset-5">	
-			
-			<button type="button" class="btn btn-outlined btn-light btn-sm" aria-label="Left Align">
-				이전 날씨 검색 하러가기
-			</button>
-		
-		</div>
+      		<div class="col-sm-12">
+		     	 <div class="col-sm-offset-10  col-sm-2 text-center" style="margin-bottom : 20px;" >
+				      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
+				</div>
+					
+					
+				<div class="col-sm-offset-4 col-sm-4 text-center">	
+					
+					<button type="button" class="btn btn-outlined btn-light btn-sm" aria-label="Left Align">
+						이전 날씨 검색 하러가기
+					</button>
+				
+				</div>
+			</div>
 		
 		<br/>
 		<br/>

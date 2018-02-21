@@ -94,6 +94,8 @@
 				text-transform:uppercase;
 				border: 3px solid;
 				padding:8px 20px;
+				max-width:100%; 
+				max-height:100%;
 			}
 			
 			.btn-outlined.btn-theme:hover,
@@ -136,7 +138,6 @@
 			    margin: 20px 10px;
 			}
 			table.type10 thead th {
-			    width: 150px;
 			    padding: 10px;
 			    font-weight: bold;
 			    vertical-align: top;
@@ -146,12 +147,10 @@
 			    border: 1px solid #60b6c3;
 			}
 			table.type10 tbody th {
-			    width: 150px;
 			    padding: 10px;
 			    border: 1px solid #9fc7d1;
 			}
 			table.type10 td {
-			    width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
 			    border: 1px solid #9fc7d1;
@@ -214,12 +213,13 @@
 								
 								for(var i = 0 ; i<con.length; i++){
 									
-									list += '<tr><td align="center" valign="middle" style="padding-top : 50px;">'+(i+1)+'</td>'+
-									'<td align="center" id="img"><img src="'+img[i]+'"  style="max-width: 100%; max-height: 100%;"/></td>'+
-									'<td align="center" valign="middle" id="con" style="padding-top : 50px;">'+con[i]+'</td>'+
-									'<td align="center" valign="middle" id="loc" style="padding-top : 50px;">'+loc[i]+'</td>'+
-									'<td align="center" valign="middle" id="price" style="padding-top : 50px;">'+price[i]+'</td>'+
-									'<td align="center" valign="middle"  id="choice"><button type="button" class="btn btn-outlined btn-light btn-sm" id="pick" style="margin-top : 45px;"><a href="'+
+									list += '<tr><td align="center" valign="middle" style="width:50px; padding-top : 50px;">'+(i+1)+'</td>'+
+									'<td align="center" id="img" style="max-width: 100%; max-height : 100%; width: 300px;"><img src="'+img[i]+'" style="max-width : 100%; max-height : 100%;"/></td>'+
+									'<td align="center" valign="middle" id="con" style="padding-top : 50px; max-width : 70%; width: 300px;">'+con[i]+'</td>'+
+									'<td align="center" valign="middle" id="loc" style="padding-top : 50px; max-width : 70%; ">'+loc[i]+'</td>'+
+									'<td align="center" valign="middle" id="price" style="padding-top : 50px; max-width : 70%; ">'+price[i]+'</td>'+
+									'<td align="center" valign="middle"  id="choice" style="max-width : 70%; max-height : 100%;"><button type="button"' +
+									'class="btn btn-outlined btn-light btn-sm" id="pick" style="margin-top : 30px;  max-width : 100%; "><a href="'+
 									url[i]+'" target="_blank" >º±&nbsp;≈√</a></button></td></tr>';
 								}
 							$("#listTbody").html(list);
@@ -416,12 +416,12 @@
 			
 				<tbody id="listTbody">
 					<tr>
-					 <td valign="middle"></td>
-					 <td id="img"></td>
-					 <td valign="middle" id="con"></td>
-					 <td valign="middle" id="loc"></td>
-					 <td valign="middle" id="price"></td>
-					 <td valign="middle" id="choice"></td>
+					 <td valign="middle" style="width:100px;"></td>
+					 <td id="img" style="width:450px;"></td>
+					 <td valign="middle" id="con" style=" width:400px;"></td>
+					 <td valign="middle" id="loc" style=" width:400px;"></td>
+					 <td valign="middle" id="price" style="width:400px;"></td>
+					 <td valign="middle" id="choice" style="width:400px;"></td>
 					</tr>
 		        </tbody>
 	      
