@@ -7,6 +7,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <html>
+
 <head>
 <meta charset="UTF-8">
 
@@ -45,6 +46,9 @@
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <link rel="stylesheet" href="/resources/css/font.css" />
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
+
+<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 
@@ -280,9 +284,6 @@ body::-webkit-scrollbar-thumb {
 
 
 
-
-/////////
-
 /*///////////////////// map_modal_size ///////////////////*/ 
 .modal-dialog.modal-map {
   width: 55%;
@@ -294,6 +295,72 @@ body::-webkit-scrollbar-thumb {
   vertical-align: middle; 
     left: 20%;
 
+}
+
+
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #545454;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 6px 20px 6px 20px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy:hover {
+  background: #ededed;
+  text-decoration: none;
+  color:#545454;
+}
+
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 8px 13px 8px 13px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy3 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 12px;
+  background: #ffffff;
+  padding: 8px 13px 8px 13px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy3:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
 }
 
 </style>
@@ -388,7 +455,7 @@ body::-webkit-scrollbar-thumb {
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
-					$("form").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
+					$("form[name=form]").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
 			});
 	});
 	
@@ -411,13 +478,10 @@ body::-webkit-scrollbar-thumb {
 	    				success:function(JSONData){
 	    					user = JSONData.userList;
 		    					for(var i=0;i<user.length;i++){
-		    						result +='<p> [USER NO] : '+user[i].userNo+ '</p>'
-		    								+'<span>  [아이디] : '+user[i].userId+'</span>'
-		    								+'<span>  [이름] : '+user[i].userName+'</span>'
-		    								+'<span>  [성별] : '+user[i].userGender+'</span>'
-		    								+'<span>  [사진] : '+user[i].userImage+'</span>'
-		    								+'<span>&nbsp;</span>'
-		    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn btn-success btn-sm" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
+		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+user[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'
+    								+'<div class="col-sm-3 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'
+    								+'<div class="col-sm-2 "  style="padding-top: 8px;" >'+user[i].userGender+'</div>'
+    								+'<button type="button" id="addToMyFriendList'+i+'" class="btn-dy2" onclick="addFriend('+user[i].userNo+','+i+')">친구추가</button><p>&nbsp;</p>';
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
@@ -435,7 +499,13 @@ body::-webkit-scrollbar-thumb {
 	    $("#addToMyFriendList"+i).attr('disabled','true'); 
 	}
 	
-
+/////////////////////////서비스 기능 구현///////////////////////////
+	$(function() {
+		$("#service").on("click",function() {
+			$("#serviceModal").modal('show'); 
+		});
+	});
+	
 	
 	
 	/////////////////////////수정 및 삭제를 위한 hover기능 구현///////////////////////////
@@ -477,16 +547,17 @@ body::-webkit-scrollbar-thumb {
 		 $("#PlanContentList").remove();
 	 }
 	 
-	 </script>
-<script>
+
 	$(function() {
 		$("#addRouteButton").on("click",function() {
 			var url = "/dailyplan/addRouteBefore?dailyPlanNo="+${dailyPlan.dailyPlanNo}+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
 			$(location).attr('href', url);
 				});
 	});
+	
+	
 	/////////////////////////맞춤 여행 정보 기능 구현///////////////////////////
-	$(function() {
+/* 	$(function() {
 		$("#customizedPlanInfo").on("click",function() {
 			
 			var dailyPlanNo = $("#idDailyPlanNo").val();
@@ -498,7 +569,7 @@ body::-webkit-scrollbar-thumb {
 			$(location).attr('href', url); 
 		});
 	});
-	
+	 */
 	
 	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
 /* 	$(function() {
@@ -597,18 +668,12 @@ $(function() {
 		$(function() {
 			$("#select").on("click",function(){
 				$("#select").hide();				
-				//alert('${dailyPlan.mainPlan.mainPlanNo}');
-								
 				$("#countryButtonGroup").show();
 				$("input.countrySelectButton").show();
-								
 				
 			});
 			
-			 
-			
 			$("input[name='countrySelectButton']").on('click',function() {
-				//alert($("input[name='countrySelectButton']").index(this));
 				var target = $( event.target );	
 				
 				$.ajax( 
@@ -622,13 +687,13 @@ $(function() {
 							dailyCountry : target.val()
 						}),
 						success : function(JSONData) {
-							//alert(JSON.stringify(JSONData));				
-							
+							//alert(JSON.stringify(JSONData));
+							//alert(JSON.stringify(JSONData.dailyCountry));
+							$("p.getCountry").empty();
+							$("p.getCountry").append(JSONData.dailyCountry);
 						}
 				});			
-				
-				$("p.getCountry").append(target.val()+"  ");
-				
+				//$("p.getCountry").append(target.val()+"  ");
 				target.hide();
 			});
 			
@@ -640,13 +705,7 @@ $(function() {
 						method : "GET" ,
 						dataType : "json" ,
 						contentType:"application/json;charset=UTF-8",
-						data : {
-							dailyPlanNo : ${dailyPlan.dailyPlanNo}							
-						},
-						
-						success : function(JSONData) {
-							//alert(JSON.stringify(JSONData));							
-							
+						data : { dailyPlanNo : ${dailyPlan.dailyPlanNo}	},success : function(JSONData) {
 						}
 				});	
 			
@@ -654,11 +713,11 @@ $(function() {
 				$("p.getCity").empty();
 				
 				$("#countryButtonGroup").show();
-				$("input.countrySelectButton").show();
+				$("input[name=countrySelectButton]").show();
 				
 			});
 			
-			$("input.SelectButton").on("click",function(){
+			$("input[name=SelectButton]").on("click",function(){
 				alert($(".cityList").index($(".cityList").last()));
 				var cityName="";
 				for(var i=0; i<$(".cityList").index($(".cityList").last())+1; i++){
@@ -670,8 +729,7 @@ $(function() {
 					}
 					
 				}
-				$("input[name='cityList']").val();
-				//var standardCityName= encodeURI(encodeURIComponent(cityName));
+				//$("input[name='cityList']").val();
 				$.ajax( 
 						{
 						url : "/dailyplan/json/selectCity",
@@ -680,18 +738,16 @@ $(function() {
 						contentType:"application/json;charset=UTF-8",
 						data : JSON.stringify({
 							"dailyPlanNo" : ${dailyPlan.dailyPlanNo},
-							
 							"dailyCity" : cityName
 						}),
 						success : function(JSONData) {
 							//alert(JSON.stringify(JSONData));				
-							
 						}
 				});		
-				
+				$("p.getCity").append(cityName);
 				
 				$("#countryButtonGroup").hide();
-				$("input.countrySelectButton").hide();
+				$("input[name=countrySelectButton]").hide();
 				
 				$.ajax( 
 						{
@@ -707,14 +763,9 @@ $(function() {
 							if(JSONData){
 								$("#select").show();
 							}
-							
 						}
 				});	
-				
 			});
-			
-			
-			
 		});
 		
 		$(function(){
@@ -732,18 +783,18 @@ $(function() {
 						if(JSONData){
 							$("#select").show();
 						}
-						
 					}
 			});				
 		
 		});
 		
-		$(document).on('change',"input[name='cityList']",function() {
+		/* $(document).on('change',"input[name='cityList']",function() {
 			var target = $( event.target );				
 					
 			$("p.getCity").append(target.val()+"  ");
 			
-		});
+		});	 */	
+		
 
 	var i = 1;
 	$(function() {
@@ -752,7 +803,7 @@ $(function() {
 			
 			if (i == 1) {$("#removeCity").attr("disabled", false);
 			i++;		
-			$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+			$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" class="cityList form-control input-md contents" >'));
 			}
 			else if (i > 4) {//alert("2");
 			$("#addCity").attr("disabled", true);
@@ -760,12 +811,12 @@ $(function() {
 			else if(i==4){
 				i++;
 				$("#addCity").attr("disabled", true);
-				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" class="cityList form-control input-md contents" >'));
 			}
 			else{
 				i++;
 				$("#removeCity").attr("disabled", false);
-				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="cityList form-control input-md contents" >'));
+				$("div[name=addCity]").append($('<input  type="text" id="city'+i+'" name="cityList" style="position: absoloute" class="cityList form-control input-md contents" >'));
 			}
 			
 		});
@@ -791,6 +842,134 @@ $(function() {
 	
 	
 	
+
+	$(function() {	
+				
+		 $("#search").on("click" , function() {
+				
+				var standardCountry = $("#standardCountryValue").val();
+				var compareCountry = $("#compareCountryValue").val();
+				var inputPrice = $("#standard").val();
+				event.preventDefault();
+				
+					$.ajax( 
+							{
+								url : "/information/json/getCurrency/" ,
+								method : "POST" ,
+								data : {
+									"standardCountry" : standardCountry,
+									"compareCountry" : compareCountry,
+									"inputPrice" : inputPrice
+								},
+								headers : {
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData , status) {
+	
+									$( "#compare" ).val(JSONData);
+								},
+								error : function(JSONData , status) {
+									swal("에러가 발생했습니다. 다시 시도해주시기 바랍니다.");
+								}
+				});
+			
+			}); 
+	 
+	});	
+	
+	
+///////////////////////////CURRENCY///////////////////////////////////////////////////////
+$(function() {
+	
+	 $("#currencyToMyPlan").on("click",function(){
+		
+		var resultCurrency= $("#compare").val();
+		var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
+		var standardCountry = $("#standardCountryValue").val();
+		var compareCountry = $("#compareCountryValue").val();
+		var inputPrice = $("#standard").val();
+		
+		var standardCountryEnc= encodeURI(encodeURIComponent(standardCountry));
+		var compareCountryEnc= encodeURI(encodeURIComponent(compareCountry));
+		 
+		 $.ajax({
+	            url:'/dailyplan/json/addTextContent?standardCountryEnc='+standardCountryEnc+'&compareCountryEnc='+compareCountryEnc+"&inputPrice="+inputPrice+"&resultCurrency="+resultCurrency+"&dailyPlanNo="+dailyPlanNo,
+	            type:'get'
+	         });
+			
+		 swal("Good job!", "환율 등록 완료!", "success");
+		 
+		 });
+	});	
+
+///////////////////////////TRANSLATION//////////////////////////////////////////////////////
+
+	$(function() {
+		
+		$("#papa").on("click",function(){
+			alert($("#translate").val());
+			$.ajax({
+				url : "/dailyplan/json/papagoTranslate",
+				method : "POST",
+				data : JSON.stringify({
+					translate : $("#translate").val(),
+					papagoCompareCountry : $("#papagoCompareCountry").val(),
+					papagoMyCountry : $("#papagoMyCountry").val()
+				}),
+				
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json;charset=UTF-8",
+					"Content-Type" : "application/json;charset=UTF-8"
+				},
+				success : function(JSONData,status){
+					
+					var displayValue = JSONData.message.result.translatedText;
+					
+					$("#result").val(displayValue);
+					$("#resultPapago").val(displayValue);
+					
+				}
+			})
+		});
+	});
+	
+	
+$(function() {
+	
+	 $("#translationToMyPlan").on("click",function(){
+		
+		 var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
+		 var compare = $("#resultPapago").attr('value');
+		 alert(dailyPlanNo);
+		 
+			$.ajax({
+				url : "/dailyplan/json/addTextContentPapago",
+				method : "POST",
+				data : JSON.stringify({
+					translate : $("#translate").val(),
+					papagoCompareCountry : $("#papagoCompareCountry").val(),
+					papagoMyCountry : $("#papagoMyCountry").val(),
+					compare : compare,
+					dailyPlanNo : dailyPlanNo
+				}),		
+				contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+				dataType : "json",
+				headers : {
+					"Accept" : "application/json;charset=UTF-8",
+					"Content-Type" : "application/json;charset=UTF-8"
+				}
+			})
+	  
+		 swal("Good job!", "번역 등록 완료!", "success");
+		 
+		 });
+	});		
+
+	
+	
 </script>
 
 </head>
@@ -804,10 +983,16 @@ $(function() {
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
-				<h2><strong>Contents</strong></h2><br/><br/>
-				<img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" style="border-radius: 5%;">
+				<h2><strong>Contents</strong></h2><br/><br/>				 
+				<c:if test="${empty user.userImage}"><img src="/resources/images/dailyPlanContent/seojun.jpg" width="60px" height="60px" style="border-radius: 5%;"></c:if>
+				<c:if test="${!empty user.userImage}">
+				<img src="/resources/images/userimages/${user.userImage}" width="60px" height="60px" style="border-radius: 5%;">
+				</c:if>
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
-					<img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" style="border-radius: 5%;">
+					<c:if test=" ${empty listUser.userImage}"><img src="/resources/images/dailyPlanContent/yumi.jpg" width="60px" height="60px" style="border-radius: 5%;"></c:if>
+					<c:if test="${!empty listUser.userImage}">
+					<img src="/resources/images/userimages/${listUser.userImage}" width="60px" height="60px" style="border-radius: 5%;">
+					</c:if>					
 				</c:forEach>
 				<h5> Writer :  ${dailyPlan.user.userName}
 				<c:forEach var="listUser" items="${listForMainPlanShared}">
@@ -868,11 +1053,11 @@ $(function() {
 					<!-- -------------TOP<START>--------------- -->
 					
 					
-						<input type="button" id="customizedPlanInfo" name="customizedPlanInfo" class="btn btn-default" value="나를 위한 맞춤정보" /> 
-						<input type="button" id="friendRecButton" name="friendRecButton" class="btn btn-default" value="같이 갈 친구 찾기" />
-						<input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p>
+						<input type="button" id="service" name="service" class="btn-dy2" value="나를 위한 맞춤정보" /> 
+						<input type="button" id="friendRecButton" name="friendRecButton" class="btn-dy2" value="같이 갈 친구 찾기" /> 
+					
+						<!-- <input type="button" id="saveAsPDF" name="saveAsPDF" class="btn btn-default" value="PDF로 저장하기" /></p> -->
 						<p></p>
-						<!-- <img src="/resources/images/icon/plan/editbutton2.png" id="fixedbtn" width="50px"> -->
 						<p></p>
 						<div class="col-xs-12 innerMain" id="innerMain" align="center">
 						<p>DAY ${dailyPlan.day}</p>
@@ -885,27 +1070,33 @@ $(function() {
 						</div>					
 						</div>
 						<%-- <c:if test="${empty dailyPlan.dailyCountry }"> --%>
-						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important; display:none"><p>나라와 도시를 선택해주세요!!</p></div>
+						<div id="select" style="font-family:'JEJUGOTHIC' !important; font-size:1.1em !important; display:none"><p>여행할 국가와 도시를 선택해주세요</p></div>
 						<%-- </c:if> --%>
 						<div style="display:none"; class="btn-group" role="group" id="countryButtonGroup">
 						<c:set var="i" value="0" />
+						<div><label class="control-label" for="textinput">여행하고 싶은 국가를 입력해주세요</label> </div>
 						<c:forEach var="countryList" items="${countryList}">
 						<c:set var="i" value="${i+1}" />
-						<input type="button" class="countrySelectButton" name="countrySelectButton" id="country${i}" class="btn btn-default" value="${countryList}" style="font-family:\'JEJUGOTHIC\';"/>
-						</c:forEach>
-						<input type="button" class="SelectButton" name="SelectButton" class="btn btn-default" value="확인" style="font-family:\'JEJUGOTHIC\';"/>
+<%-- 						<a class="btn-dy" name="countrySelectButton" id="country${i}" style="font-family:\'JEJUGOTHIC\';" >${countryList}</a>
+ --%>					<input type="button" class="btn-dy" name="countrySelectButton" id="country${i}" class="btn btn-default" value="${countryList}" style="font-family:\'JEJUGOTHIC\';"/>
+					</c:forEach>
 						
-						<div name="addCity">
+						<div name="addCity" style="">
+							
 							<label class="control-label" for="textinput">여행하고 싶은 도시를 입력해주세요</label> 
-							<input type="text" id="city1" name="cityList" style="position: absoloute" placeholder="아직 정하지 못했어요." class="cityList form-control input-md contents">
-													
-						<div class="btn-group">
 							<a class="btn btn-default btn" href="#" role="button" id="addCity" name="addCity">
 							<span class="glyphicon glyphicon-plus" aria-hidden="true" style="color:#A6A0A5;"></span></a> 
 							<a class="btn btn-default btn" href="#" role="button" id="removeCity" name="removeCity" disabled="true">
 							<span class="glyphicon glyphicon-minus" aria-hidden="true" style="color:#A6A0A5;"></span></a>
+							<input type="text" id="city1" name="cityList" style="position: absoloute" class="cityList form-control input-md contents">
+													
+						
+							
+						
 						</div>
-						</div>
+						
+						<input type="button" class="btn-dy" name="SelectButton" class="btn btn-default" value="확인" style="margin-top:10px;font-family:\'JEJUGOTHIC\';"/>
+						
 						
 						</div>
 						<div class="col-xs-12" style="margin-top:130px" align="center">
@@ -953,16 +1144,16 @@ $(function() {
 									<p class="contents">스크랩번호 : ${scrap.scrapNo }</p>
 								</c:if> --%>
 								
+								<c:if test="${!empty planContent.route}">
+									<div class="col-sm-offset-3 col-sm-6" style="margin-top:10px;margin-bottom:10px;"><p class="contentsDelete"> ${planContent.route}</p></div>
+								</c:if>
+								
 								<c:if test="${!empty planContent.routeDescription}">
 									<p class="contents" align="center" 
-									style="font-size:1.1em !important; font-color: #C2C2C2 !important;">
+									style="font-size:0.7em !important; font-color: #C2C2C2 !important;">
 									${planContent.routeDescription}</p>
 								</c:if>
 								
-								<c:if test="${!empty planContent.route}">
-									<p class="contentsDelete">루트 : ${planContent.route}</p>
-								</c:if>
-
 								<c:if test="${!empty planContent.departureLocation}">
 									<p class="contents">출발지 : ${planContent.departureLocation}</p>
 								</c:if>
@@ -1092,7 +1283,7 @@ $(function() {
 	  </div>
 	
 	  <div id="floating-button" data-toggle="tooltip" data-placement="left" data-original-title="Create" onclick="newmail()">
-	    <p class="plus"><strong>+</strong></p>
+	    <p class="plus">+</p>
 	  </div>
 	
 	</div>
@@ -1176,10 +1367,7 @@ $(function() {
 				<div class="modal-body col-sm-12">
 				
 						<form name="form" enctype="multipart/form-data">
-							<div class="form-group">
-	
-								
-									
+							<div class="form-group">	
 									<div class="filebox bs3-primary preview-image">
 			                            <input class="upload-name col-sm-4 col-sm-offset-3"  value="파일선택" disabled="disabled" style="width: 200px;">
 			                            <label for="input_file" class="col-sm-2 col-offset-4">사진 선택</label> 
@@ -1207,11 +1395,11 @@ $(function() {
 		<div class="modal-dialog modal-md">
 				<!-- Modal content-->
 				<div class="modal-content">
-					<div class="modal-header">
+					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/bf2.jpg'); opcity:0.8;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title"align="center" >
-						<Strong>나와 같은 장소, <p>날짜에 여행가는 친구들을 찾아볼까요?</Strong>
-					</h4>
+						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
+							<Strong>나와 같은 곳, 같은 날짜에 </br> 떠나는 친구들을 만나보면 어떨까요?</Strong>
+						</h4>
 				</div>
 				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
 							<table class="table table-filter" style="align-content: center;">
@@ -1238,6 +1426,176 @@ $(function() {
 	
 
 	<!---------- FriendRec Dialog <END>------------->
+	
+		<!---------- Service Dialog <START>------------->
+
+		<div class="modal fade" id="serviceModal" role="dialog" style="font-family: 'Jeju Gothic', serif;">
+		<div class="modal-dialog modal-lg">
+				<!-- Modal content-->
+				<div class="modal-content">
+					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/currency.jpg'); opcity:0.8; ">
+						<button type="button" class="close" data-dismiss="modal">&times;</button>
+						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
+							<Strong>환율 & 번역</Strong>
+						</h4>
+				</div>
+				<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
+							<table class="table table-filter" style="align-content: center;">
+								<tbody>
+										<tr data-status="pagado">
+										  <div class="media-body">
+										 
+				<form class="form-horizontal">
+				<div class="col-sm-12">
+					<div class="form-group">
+						<div class="col-sm-8 col-sm-offset-2" style="margin-top:10px;margin-bottom:10px;" align="center">
+								<img src="/resources/images/money-bag.png" width="50px"/><h3>환율 검색</h3>
+						</div>
+						<div class="col-sm-8 col-sm-offset-2" id="standardCountry">
+								
+							    <select class="form-control" id="standardCountryValue" >
+							    <!-- <option value="0">나라를 선택해주세요</option> -->
+									<c:set var="i" value="0" />
+					 				 <c:forEach var="currency" items="${returnList}">
+					 				 <option value="${currency.cur_nm}" >
+					 				 ${currency.cur_nm}
+					 				  </option>
+					 				 </c:forEach>
+								</select>
+								
+							</div>
+							<div class="col-sm-4 col-sm-offset-4">
+					    	</div>
+					    <div class="col-sm-8 col-sm-offset-2">
+					      <input type="text" class="form-control" id="standard" name="standard"  >
+					    </div>
+					 </div>
+					 
+						<div class="form-group">
+							     <div class="col-sm-offset-4  col-sm-4 text-center">
+							      <button class="btn btn-default" id="search" >계 &nbsp;산</button>
+							  	</div>
+						</div>
+					  
+					 <div class="form-group">
+					    <div class="col-sm-8 col-sm-offset-2" id="compareCountry">
+							    <select class="form-control"  id="compareCountryValue" >
+							   <!-- <option value="0">나라를 선택해주세요</option> -->
+									<c:set var="i" value="0" />
+					 				 <c:forEach var="currency" items="${returnList}">
+					 				 <option value="${currency.cur_nm}">
+					 				 ${currency.cur_nm}
+					 				  </option>
+					 				 </c:forEach>
+								</select>
+							</div>
+							<div class="col-sm-4 col-sm-offset-4">
+					    	</div>
+					    <div class="col-sm-8 col-sm-offset-2">
+					      <input type="text" class="form-control" id="compare" name="compare" readOnly="true">
+					    </div>
+					    
+					    <div class="col-sm-8 col-sm-offset-2" style="margin-top:10px;margin-bottom:10px;">
+								<a type="button" id="currencyToMyPlan" class="btn-dy3">내 플랜에 저장</a>
+						 </div>
+							
+					 </div>
+					
+					</div>
+				</form>
+
+
+
+
+									<form>
+										<div class="col-sm-8 col-sm-offset-2" style="margin-top: 10px; margin-bottom: 10px;" align="center">
+											<img src="/resources/images/translate.png" width="50px" />
+											<h3>번역 검색</h3>
+										</div>
+
+										<div class="col-sm-8 col-sm-offset-2">
+											<select class="form-control" name="papagoMyCountry" id="papagoMyCountry">
+												<!-- 1.ko : 한국어
+												2.en : 영어
+												3.zh-CN : 중국어 간체
+												4.zh-TW : 중국어 번체
+												5.es : 스페인어
+												6.fr : 프랑스어
+												7.vi : 베트남어
+												8.th : 태국어
+												9.id : 인도네시아어 -->
+											<option value="ko">한국어</option>
+												<option value="en">영어</option>
+												<option value="zh-CN">중국어 간체</option>
+												<option value="zh-TW">중국어 번체</option>
+												<option value="es">스페인어</option>
+												<option value="fr">프랑스어</option>
+												<option value="vi">베트남어</option>
+												<option value="th">태국어</option>
+												<option value="id">인도네시아어</option>	
+											</select>
+										</div>
+										
+										<div class="col-sm-8 col-sm-offset-2" style="margin-bottom:20px;">
+											<input type="text" class="form-control" id="translate" name="translate">
+										</div>
+
+									
+
+										<div class="col-sm-8 col-sm-offset-2" style="margin-bottom:10px;">
+										    <a type="button" id="papa" class="btn btn-default">번&nbsp;역</a>
+									   </div>
+
+										
+							
+										
+										<div class="col-sm-8 col-sm-offset-2">
+											<select class="form-control" name="papagoCompareCountry" id="papagoCompareCountry">
+									
+												<option value="ko">한국어</option>
+												<option value="en" selected>영어</option>
+												<option value="zh-CN">중국어 간체</option>
+												<option value="zh-TW">중국어 번체</option>
+												<option value="es">스페인어</option>
+												<option value="fr">프랑스어</option>
+												<option value="vi">베트남어</option>
+												<option value="th">태국어</option>
+												<option value="id">인도네시아어</option>		
+											</select>
+										</div>
+										
+										<div class="col-sm-8 col-sm-offset-2" >
+											<input type="text" class="form-control" name="result" id="result" value="" readonly>
+											<input type="hidden" id="resultPapago" value="a">
+										</div>
+										
+										  <div class="col-sm-8 col-sm-offset-2" style="margin-top:10px;margin-bottom:10px;">
+												<a type="button" id="translationToMyPlan" class="btn-dy3">내 플랜에 저장</a>
+										 </div>
+						 
+									</form>
+
+
+
+
+
+
+								</div>
+										</tr>
+								</tbody>
+							</table>
+						
+					</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+
+	<!---------- FriendRec Dialog <END>------------->
+	
 </body>
 
 

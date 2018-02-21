@@ -33,10 +33,20 @@
   <!-- ---------Floating Button------------ -->
   <link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  
+  
   <script>
   	$(function() {
+  		
+  		$("#myListRoom").on("click" , function() {
+			$(self.location).attr("href","/room/listMyRoom");
+		}); //END Myroom Event
+		
+		$( "#scheduleList" ).on("click" , function() {
+			$(self.location).attr("href","/schedule/listSchedule");
+		});
 		 
-		 $("a:contains('참가')").on("click",function(){
+		 $("button:contains('J O I N')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
@@ -54,7 +64,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.73:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -119,38 +129,63 @@
 												}
 
 												for (var i = 0; i < JSONData.length; i++) {
-													var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >'
-															+ '<div class="thumbnail" name="getPro" style="height:500px;">'
-															+ '<img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded">'
-															+ '<div class="caption">'
+													if(JSONData[i].open == true) {
+														/* var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >' */
+														var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
+															/* + '<div class="thumbnail" name="getPro" style="height:500px;">' */
+															+'<div class="thumbnail" name="getPro" style="max-height:450px;">'
+															
+															  if(JSONData[i].type == '식사'){
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '체험' ) {
+																  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '관람') {
+																  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >';
+															  }
+															  else if(JSONData[i].type == '미정') {
+																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  }
+															
+															/* displayValue += '<div class="caption" style="text-align: center;">' */
+															
+																displayValue += '<div class="col-sm-12">'
+										               		+'<div class="col-sm-12">'
+										               		+'<div class="caption" style="margin-top:5px;text-align: left;">'
 															+ '<h3>'
 															+ JSONData[i].roomName
 															+ '</h3>'
-															+ '<p> Date : '
-															+ JSONData[i].date
-															+ '</p>'
-															+ '<p> country : '
+															+ '<p><strong>국가</strong> : '
 															+ JSONData[i].country
 															+ '</p>'
-															+ '<p> city : '
+															+ '<p> <strong>도시</strong> : '
 															+ JSONData[i].city
 															+ '</p>'
-															+ '<p>'
+															+ '<p> <strong>날짜</strong> : '
+															+ JSONData[i].date
+															+ '</p>'
+															+ '<p> <strong>인원</strong> : '
 															+ JSONData[i].headCount
 															+ '명 </p>'
-															+ '<a href="#" class=" btn btn-default" role="button">참가'
-															+ '<input type="hidden" id="roomKey" value="'
+															/* + '<a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%" >참가' */
+															<c:if test="${!empty user}">
+															+'<div align="center">'
+			            										+'<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:JEJUGOTHIC;"> J O I N<input type="hidden" id="roomKey" value="'
 															+ JSONData[i].roomKey
 															+ '">'
 															+ '<input type="hidden" id="master" value="'
 															+ JSONData[i].userNo
-															+ '">'
-															+ '</div>'
+															+ '"></button></div>'
+															</c:if>
+															displayValue += '</div></div></div>'
 
 													$('div.row2').append(displayValue);
-												}
-											}
-										});
+													}//End if
+													
+												}//End for Loof
+											}//End success
+										});//End ajax
 								}
 							});
 		}); 
@@ -167,33 +202,135 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-	  body {
-            padding-top : 50px;
-        }
-        
-      .btn.btn-default:hover, .btn.btn-default:active{
-		color: #FFF;
-		background: #08708A;
-		border-color: #08708A;
-	   }
+body {
+    padding-top : 50px;
+}
+/*       
+.btn.btn-default:hover, .btn.btn-default:active{
+	color: #FFF;
+	background: #08708A;
+	border-color: #08708A;
+  }
 
-		.btn.btn-default{
-			background: #f4f4f4;
-			color: #08708A;
-			border-color: #08708A;
-		}
-		.btn-outlined.btn-theme:hover,
-			.btn-outlined.btn-theme:active {
-			    color: #FFF;
-			    background: #08708A;
-			    border-color: #08708A;
-			}
-			
-			.btn-outlined.btn-theme {
-			    background: #FFF;
-			    color: #08708A;
-				border-color: #08708A;
-			}
+.btn.btn-default{
+	background: #f4f4f4;
+	color: #08708A;
+	border-color: #08708A;
+}
+.btn-outlined.btn-theme:hover,.btn-outlined.btn-theme:active {
+    color: #FFF;
+    background: #08708A;
+    border-color: #08708A;
+}
+	
+.btn-outlined.btn-theme {
+    background: #FFF;
+    color: #08708A;
+	border-color: #08708A;
+} */
+h2 {
+	/* color : #dedede; */
+	color :#474747;
+    font-size: 6em;
+    /* padding: 0 0.5em 0.25em 0.5em; */
+    font-weight: 500;
+    font-family: "Pacifico", cursive;
+    text-transform: none;
+    letter-spacing: 10;
+    font-style: Pacifico;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+}
+/* /////////////////dayoung////////////////// */
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #545454;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 6px 20px 6px 20px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy:hover {
+  background: #D73A31;
+  text-decoration: none;
+  color:#ffffff;
+  opacity: 0.8;
+}
+
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 10px;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 15px;
+  background: transparent;
+  padding: 5px 18x 5px 18px;
+  border: solid #ffffff 2px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+/* Button-dy css - listRoom */
+.btn-dy3 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 10px;
+   border: solid #ffffff 0px !important;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 15px;
+  /* background: #D73A31; */
+  background: #08708A;
+  opacity: 0.9;
+  padding: 10px 25x 10px 25px;
+  text-decoration: none;
+}
+
+.btn-dy3:hover {
+  /* background: #D73A31; */
+  background: #08708A;
+  opacity: 0.5;
+  border: solid #ffffff 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+
+/* ///////////Dayoung - Border/////////////    */      
+
+#innerMain {
+   font-size: 6em;
+   margin-top: 1.5em;
+}
+
+#thumbnailMainBox {
+   font-family:'JEJUMYEONGJO';
+   border-color: #000000;
+   display: inline-block;
+   text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+   background: #fff;
+   display: inline-block;
+   border-radius: 6px;
+}
+
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -205,80 +342,71 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
-   	
-   	<!--  Carousel Start /////////////////////////////////////-->
-	<div class="container">
-		<div id="carousel" class="carousel slide carousel-fade" data-ride="carousel" >
-			
-			<!-- Carousel items -->
-			<div class="carousel-inner carousel-zoom">
-				<div class="active item">
-					<img class="img-responsive"
-						src="https://images.unsplash.com/photo-1419064642531-e575728395f2?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
-					<div class="carousel-caption" style="top:0;">
-					<h2>TwiiChat</h2>
-					</div>
-					<div class="carousel-caption">
-						<!-- FORM -->
-		<form role="form" >
-			<div class="row centered-form" >
-				 <div class="mainbox col-md-12" >
-					<div class="panel" style="background: rgba(255, 255, 255, 0.3);">
-			 			<div class="panel-body" >
-				    			<div class="row">
-				    				<div class="col-md-2" >
-									<div class="form-group">
-									    <select class="form-control" id="searchCondition" name="searchCondition" >
-					                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>방제목</option>
-					                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>국가명</option>
-					                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시명</option>
-										</select>
-				  					</div>
-			  					</div>
-			  					
-				  				<div class="col-md-10">
-								  <div class="form-group">
-								    <label class="sr-only" for="searchKeyword">검색어</label>
-								    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
-								    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
-								  	</div>
-								  </div>
-								 
-					    			</div>
-					    			<div class="row">
-					    			<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">	
-					    				<input type="hidden" id="currentPage" name="currentPage" value=""/>
-					    				 <button class="col-xs-12 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button>
-					    			</div>
-					    	</div>
-			    		</div>
-					</div>
-				</div>
-			</div>
+
+	<div class="container" style="background: url('/resources/images/room/twiichatMain1.jpg') no-repeat center center; background-size:cover; height:800px; width:100%;">
 		
-		</form>
-						<!-- FORM -->
-					</div>
-				</div>
-			</div>
-			
+		<h2 class="text-center" style="color:#3B3B3B; margin-top:10%;"><strong>TwiiChat</strong></h2>
+		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>여행의 설렘, 새로운 만남의 설렘, 트위챗</strong></h3>
+		<!-- FORM -->
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:150px;margin-left:10%;margin-right:10%;min-width:350px;">
+			<form role="form" style="padding:10px;">
+				
+	    			<div class="row">
+	    				<div class="col-sm-2" >
+						<div class="form-group">
+						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;">
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
+		                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>나라</option>
+		                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시</option>
+							</select>
+	  					</div>
+	 					</div>
+	 					
+	  				<div class="col-sm-9">
+					  <div class="form-group">
+					    <label class="sr-only" for="searchKeyword" >어떤 친구를 만나게 될까요?</label>
+					    <input type="text" class="form-control" id="searchKeyword" name="searchKeyword"  placeholder="검색어"
+					    			 value="${! empty search.searchKeyword ? search.searchKeyword : '' }" >
+					  	</div>
+					  </div>
+					 
+		    			
+		    			
+	    				<div class="col-sm-1" align="center">
+	    					<input type="hidden" id="currentPage" name="currentPage" value=""/>
+	    				 	<!-- <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> -->
+	    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
+	    				</div>	
+				</div><!-- End row -->
+			</form>
+			<!-- FORM -->
 		</div>
+		
+		<c:if test="${!empty user }">
+		<div class="col-sm-12" align="center" style="margin-top:20px;">
+           <button id="myListRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 방목록</button>
+           <button id="scheduleList" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\'; background: #D73A31;"/>나의 &nbsp;일정</button>
+        </div>         
+		</c:if>
+						
 	</div>
-	<!--  Carousel End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class="container contents">
 	
-		
+		<div class="col-xs-12 inner" id="thumbnailMainBox">
+            <div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
+            <div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+               <div class="col-xs-12" >
 	
-		<div class="page-header text-info">
+		<!-- <div class="page-header text-info">
 	       <h3>메신저 방목록 조회 </h3>
-	    </div>
+	    </div> -->
 	    
 	    <!-- table 위쪽 검색 Start /////////////////////////////////////-->
 	    <div class="row">
 		
-			 <div class="col-md-2 text-left">
+			 <%-- <div class="col-md-2 text-left">
 			    	<p class="text-primary">
 			    		전체  ${resultPage.totalCount } 건수
 			    	</p>
@@ -288,7 +416,12 @@
 	    		<div class="col-md-10 text-right">
 			    
 	    		</div>
-	    </div>
+	    </div> --%>
+	    <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
+              <h4>지금 진행되고 있는 방 ${resultPage.totalCount} 개</h4>
+          </div> 
+
+       </div>
 	    
 	    
 	    
@@ -300,8 +433,10 @@
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 			<c:if test="${room.open }">
-		    <div class="col-sm-3 "  style="padding-top : 2%">
-		      <div class="thumbnail" name="getPro" style="height:500px;">
+		    <!-- <div class="col-sm-3 "  style="padding-top : 2%"> -->
+		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
+		      <!-- <div class="thumbnail" name="getPro" style="height:500px;"> -->
+		      <div class="thumbnail" name="getPro" style="max-height:450px;">
 		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
 				  <c:if test="${room.type == '식사'}">
 		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
@@ -317,26 +452,40 @@
 				  <c:if test="${room.type == '미정' }">
 				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
 				  </c:if>
-		          <div class="caption" style="text-align: center;">
+				  <div class="col-sm-12">
+               		<div class="col-sm-12">
+               		<div class="caption" style="margin-top:5px;text-align: left;">
+		          <!-- <div class="caption" style="text-align: center;"> -->
 		          	
 		            <h3>${room.roomName} </h3>		            
-		            <p>국가 : ${room.country}</p>
-		            <p>도시 : ${room.city}</p>
-		            <p>날짜 : ${room.date}</p>
-		            <p>인원 : ${room.headCount}명</p>
+		            <p><strong>국가</strong> : ${room.country}</p>
+		            <p><strong>도시</strong> : ${room.city}</p>
+		            <p><strong>날짜</strong> : ${room.date}</p>
+		            <p><strong>인원</strong> : ${room.headCount}명</p>
 		            <c:if test="${!empty user}" >
-			            <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
-			            참가
+			            <!-- <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
+			            참가 -->
+			            <div align="center">
+			            <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"> J O I N 
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
-			            </a>
+			            </button>
+			            <!-- </a> -->
+			            </div>
 		            </c:if>
-		            
+		            </div>
 		        </div>
 		      </div>
 		    </div>
+		    </div>
+		    
+		    
 		    </c:if>
 		    </c:forEach>
+		    </div>
+		    </div>
+		    </div>
+		    <div align="right" class="col-xs-1">&nbsp;</div>
 		    </div>
         </div>
         <!--  화면구성 div End /////////////////////////////////////-->
@@ -355,4 +504,5 @@
  	
 	
 </body>
+
 </html>

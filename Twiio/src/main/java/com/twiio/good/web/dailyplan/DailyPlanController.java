@@ -156,6 +156,13 @@ public class DailyPlanController {
 		
 		System.out.println("Controller : getDailyPlan <END>");
 		
+		List<Currency> returnList= new ArrayList<Currency>();
+		returnList = informationService.addCurrency();
+	        
+	    model.addAttribute("returnList", returnList);
+	    System.out.println("###returnList : " + returnList);
+	        
+		
 		return "forward:/dailyplan/getDailyPlan.jsp";
 	}
 	
@@ -208,6 +215,12 @@ public class DailyPlanController {
 		List<DailyPlan> listDailyPlan = dailyPlanService.getDailyPlanList(mainPlanNo);
 		model.addAttribute("listDailyPlan", listDailyPlan);
 		System.out.println("Controller : getDailyPlanFromMain <END>");
+		
+		List<Currency> returnList= new ArrayList<Currency>();
+		returnList = informationService.addCurrency();
+	        
+	    model.addAttribute("returnList", returnList);
+	    System.out.println("###returnList : " + returnList);
 		
 		return "forward:/dailyplan/getDailyPlan.jsp";
 	}
@@ -277,15 +290,19 @@ public class DailyPlanController {
 
 	}
 
-	@RequestMapping(value = "addMap")
+	@RequestMapping(value = "addMap", method = RequestMethod.POST)
 	public String addMap(
 			@ModelAttribute("planContent") PlanContent planContent,
 			@RequestParam("dailyPlanNo") int dailyPlanNo, 
 			@RequestParam("mainPlanNo") int mainPlanNo,
+			@RequestParam("mapAddress") String mapAddress,
 			HttpServletRequest request, Model model) throws Exception {
 		
 		System.out.println("Controller : addMap <START>");
 		
+		System.out.println("dailyPlanNo :: "+dailyPlanNo);
+		System.out.println("mainPlanNo :: "+mainPlanNo);
+		System.out.println("mapAddress :: "+mapAddress);
 		System.out.println("####" + planContent);
 		
 		String mapImage = (planContent.getMapAddress()).replaceAll("[(]", "");
@@ -329,12 +346,16 @@ public class DailyPlanController {
 	public String addRoute(@RequestParam("dailyPlanNo") int dailyPlanNo, 
 							@RequestParam String totalDisplay, 
 							@RequestParam("mainPlanNo") int mainPlanNo, 
-							@RequestParam("detailedDisplay") String detailedDisplay, @RequestParam("type") String type, Model model)
+							@RequestParam("detailedDisplay") String detailedDisplay,
+							@RequestParam("resultForMobile") String resultForMobile,
+							@RequestParam("type") String type, 
+							Model model)
 			throws Exception {
 
 		System.out.println("Controller : addRoute <START>");
 		System.out.println(dailyPlanNo + " : " + totalDisplay + " : " + detailedDisplay+" : " + type);
 		
+		System.out.println("#resultForMobile : " + resultForMobile);
 		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
 		PlanContent planContent = new PlanContent();
 		planContent.setRoute(totalDisplay);
@@ -342,6 +363,7 @@ public class DailyPlanController {
 		planContent.setRouteType("4");
 		planContent.setContentType(4);
 		planContent.setDailyPlan(dailyPlan);
+		planContent.setResultForMobile(resultForMobile);
 		int a = dailyPlanService.getPlanContentCount(dailyPlanNo);
 		planContent.setOrderNo(a + 1);
 		dailyPlanService.addPlanContent(planContent);
