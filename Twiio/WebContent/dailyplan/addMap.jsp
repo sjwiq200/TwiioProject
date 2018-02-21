@@ -346,14 +346,14 @@
 
 			<form name="modalMap">
 				<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
-				<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" /> <input
-					type="hidden" name="mapUrl" id="mapUrl" value="기본값" /> <input
-					type="hidden" name="mapAddress" id="mapAddress" value="기본값" /> <input
-					type="hidden" name="mapName" id="mapName" value="기본값" /> <input
-					type="hidden" name="mapPhone" id="mapPhone" value="기본값" /> <input
-					type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" /> <input
-					type="hidden" name="mapType" id="mapType" value="" />
-				 <input type="hidden" name="mapImage" id="mapImage" value="" />
+				<input type="hidden" name="mainPlanNo" value="<%=mainPlanNo%>" /> 
+				<input type="hidden" name="mapUrl" id="mapUrl" value="기본값" /> 
+				<input type="hidden" name="mapAddress" id="mapAddress" value="기본값" /> 
+				<input type="hidden" name="mapName" id="mapName" value="기본값" /> 
+				<input type="hidden" name="mapPhone" id="mapPhone" value="기본값" /> 
+				<input type="hidden" name="mapWebsite" id="mapWebsite" value="기본값" /> 
+				<input type="hidden" name="mapType" id="mapType" value="" />
+				<input type="hidden" name="mapImage" id="mapImage" value="" />
 			</form>
 		</div>
 		<div class="col-sm-12">&nbsp;</div>

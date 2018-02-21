@@ -26,7 +26,7 @@ import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
 
 
-//==> È¸¿ø°ü¸® Controller
+//==> È¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Controller
 @RestController
 @RequestMapping("/product/*")
 public class ProductRestController {
@@ -35,7 +35,7 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
-	//setter Method ±¸Çö ¾ÊÀ½
+	//setter Method ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -45,8 +45,8 @@ public class ProductRestController {
 		System.out.println(this.getClass());
 	}
 	
-	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml ÂüÁ¶ ÇÒ°Í
-	//==> ¾Æ·¡ÀÇ µÎ°³¸¦ ÁÖ¼®À» Ç®¾î ÀÇ¹Ì¸¦ È®ÀÎ ÇÒ°Í
+	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml ï¿½ï¿½ï¿½ï¿½ ï¿½Ò°ï¿½
+	//==> ï¿½Æ·ï¿½ï¿½ï¿½ ï¿½Î°ï¿½ï¿½ï¿½ ï¿½Ö¼ï¿½ï¿½ï¿½ Ç®ï¿½ï¿½ ï¿½Ç¹Ì¸ï¿½ È®ï¿½ï¿½ ï¿½Ò°ï¿½
 	@Value("#{commonProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -146,7 +146,7 @@ public class ProductRestController {
 		System.out.println("hostNo :: "+hostNo);
 		System.out.println("search :: "+search);
 		
-		// Business logic ¼öÇà
+		// Business logic ï¿½ï¿½ï¿½ï¿½
 		Map<String , Object> map=userService.listStarEvalHost(search, hostNo);
 		
 //		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -167,7 +167,7 @@ public class ProductRestController {
 		String tripDate = URLDecoder.decode(product.split("[=&]")[1],"UTF-8");
 		System.out.println("tripDate :: "+tripDate);
 		int num=0;
-		// Business logic ¼öÇà
+		// Business logic ï¿½ï¿½ï¿½ï¿½
 		Product dbProduct=productService.getProduct(productNo);
 		String[] str=dbProduct.getTripDate().split("[,]");
 		for(int i=0; i<str.length; i++) {
@@ -195,7 +195,7 @@ public class ProductRestController {
 		}
 		search.setPageSize(10);
 		
-		// Business logic ¼öÇà
+		// Business logic ï¿½ï¿½ï¿½ï¿½
 		Map<String , Object> map=productService.listProduct(search);
 		
 //		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -222,7 +222,7 @@ public class ProductRestController {
 		return list02;
 	}	
 	
-	@RequestMapping(value="/json/listProduct")///°Ë»öÁ¶°Ç Ãß°¡
+	@RequestMapping(value="/json/listProduct")///ï¿½Ë»ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 	public List<Product> listProduct(@RequestBody Search search) throws Exception {
 		
 		System.out.println("/product/json/listProduct ");
@@ -230,7 +230,7 @@ public class ProductRestController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(12);//12°³¾¿ ´õº¸±â·Î
+		search.setPageSize(12);//12ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 				
 		Map<String, Object> productMap = productService.listProduct(search);
 		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());

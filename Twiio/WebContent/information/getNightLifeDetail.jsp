@@ -127,7 +127,6 @@
 			    margin: 20px 10px;
 			}
 			table.type10 thead th {
-			 	max-width: 150px;
 			    padding: 10px;
 			    font-weight: bold;
 			    vertical-align: top;
@@ -137,12 +136,10 @@
 			    border: 3px solid rgba(215, 58, 49, 0.8);
 			}
 			table.type10 tbody th {
-			    max-width: 150px;
 			    padding: 10px;
 			    border: 3px solid rgba(215, 58, 49, 0.8);
 			}
 			table.type10 td {
-			    max-width: 350px;
 			    padding: 10px;
 			    vertical-align: top;
 			    border: 3px solid rgba(215, 58, 49, 0.8);
@@ -161,7 +158,8 @@
 	        	
 	       }
 	       .jumbotron {
-	        	border: 3px solid #FFF;
+	       		border-radius: 23px;
+	        	border: 3px dashed #FFF;
 	       }
 	       
 	       
@@ -252,12 +250,12 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	<div class="jumbotron col-xs-18" id="jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >	
+	<div class="jumbotron col-sm-12" id="jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >	
 	
 		<div class="row" align="center">
-	  		<div class="col-xs-12" id="info1" style="height: 100px;" ><ins><h2 style=" color : #212121;"><strong>${context[0]}</strong></h2></ins></div>
+	  		<div class="col-sm-12" id="info1" style="max-width:100%; max-height:100%;" ><ins><h2 style=" color : #212121;"><strong>${context[0]}</strong></h2></ins></div>
 	  		<c:forEach  items="${context}" varStatus="status">
-				<div class="col-xs-12" style=" color : #212121; height: 30px;"><h3>${context[status.index+1]}</h3></div>
+				<div class="col-sm-12" style=" color : #212121; height: 30px;"><h3>${context[status.index+1]}</h3></div>
 			</c:forEach>
 		</div>
 		<hr/>
@@ -266,39 +264,38 @@
 		<div class="row">
 		<c:if test="${image != null}">
 			<c:if test="${image.size()==2}">
-				<div class="col-md-12"><a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="max-width: 700px; max-height: 450px;"/></a>
-				<div class="col-md-3"><img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
-									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
-									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
+				<div class="col-sm-12" align="center">
+				
+				<div class="col-sm-9"><a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="width: 700px; height: 450px; max-width:100%; max-height:100%;"/></a></div>
+				<div class="col-sm-3"><img src="/resources/images/no_img3.png" style="width: 300px; height: 150px;max-width:100%; max-height:100%;"/>
+									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; max-width:100%; max-height:100%;"/>
+									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; max-width:100%; max-height:100%;"/>
 					</div>
 				</div>
 			</c:if>
 			
 			<c:if test="${image.size()>2}">
-				<div class="col-md-12">
-						<div class="col-md-3">
+				<div class="col-sm-12" align="center">
 							<c:set var="i" value="0" />
 								<c:forEach  items="${image}" varStatus="status" end="2">
 									<c:set var="i" value="${ i+1 }" />	
-									<a href="${image[i]}" target="_blank"><img src="${image[i]}"  style="width: 300px; height: 150px; padding-left: 70px; "/></a>
+									<a href="${image[i]}" target="_blank"><img src="${image[i]}"  style="width: 300px; height: 150px; max-width:100%; max-height:100%;"/></a>
 								</c:forEach>	
-						</div>
-					<a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="width: 700px; height: 450px;" /></a>
+						<a href="${image[0]}" target="_blank"><img src="${image[0]}"  style="width: 900px; height: 450px; max-width:100%; max-height:100%;" /></a>
 				</div>
 			</c:if>
 		</c:if>
 		<c:if test="${image == null}">
-			<div class="col-md-12"><img src="/resources/images/no_img2.png" style="width: 700px; height: 450px;"/>
-				<div class="col-md-3"><img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
+			<div class="col-sm-12"><img src="/resources/images/no_img2.png" style="width: 700px; height: 450px;"/>
+				<div class="col-sm-3"><img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
 									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
 									<img src="/resources/images/no_img3.png" style="width: 300px; height: 150px; padding-left: 70px; "/>
 				</div>
 			</div>
 		</c:if>
 		
-		<div class="col-md-12">
-			<div class="col-md-10 col-md-offset-2">			
-				<table class="type10"style="width: 600px;" >
+		<div class="col-sm-12" align="center">
+				<table class="type10"style=" max-width:100%; max-height:100%;" >
 		
 			        <thead>
 			          <tr>
@@ -316,7 +313,6 @@
 			        </tbody>
 	      
 	      		</table>			
-			</div>
 			<%--  <div class="col-xs-8 col-md-4">	
 			 	<c:forEach  items="${image}" varStatus="status">
 			 		<img src="${image[status.index]}"  style="width: 150px; height: 150px;"/>

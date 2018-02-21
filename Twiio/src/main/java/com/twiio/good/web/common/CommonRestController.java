@@ -93,6 +93,35 @@ public class CommonRestController {
 		return map2;
 	}
 	
+	@RequestMapping(value = "json/listReply", method = RequestMethod.POST )
+	public Map<String,Object> listReply(@RequestBody Reply reply, Search search
+			) throws Exception {
+		
+		System.out.println("/common/json/listReply : POST");
+
+		search.setPageSize((pageSize * reply.getCurrentPage()));
+		search.setCurrentPage(1);
+
+		int targetNo = 0;
+		if (reply.getCommunityNo() == 0) {
+			reply.setTargetType("0");
+			targetNo = reply.getProductNo();
+		} else if (reply.getProductNo() == 0) {
+			reply.setTargetType("1");
+			targetNo = reply.getCommunityNo();
+		}
+
+		// System.out.println("(pageSize*reply.getCurrentPage())"+search.getPageSize());
+		// System.out.println("search.setCurrentPage(1)"+search.getCurrentPage());
+		Map<String, Object> map = commonService.listReply(search, reply.getTargetType(), targetNo);
+		Map<String, Object> map2 = new HashMap<String, Object>();
+		int totalCount = commonService.getTotalCountReply(reply.getTargetType(), targetNo);
+		map2.put("list", (List) map.get("list"));
+		map2.put("totalCount", totalCount);
+
+		return map2;
+	}
+	
 	@RequestMapping(value = "json/addReport",method = RequestMethod.POST)
 	public Report addReport(@RequestBody Report report,HttpSession httpSession
 			) throws Exception {

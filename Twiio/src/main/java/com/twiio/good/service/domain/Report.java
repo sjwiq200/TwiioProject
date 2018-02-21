@@ -1,7 +1,5 @@
 package com.twiio.good.service.domain;
 
-import java.sql.Date;
-
 import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown=true)
@@ -12,7 +10,7 @@ public class Report
   private String userName;
   private String reportContent;
   private String reportTitle;
-  private Date reportRegDate;
+  private String reportRegDate;
   private int targetUserNo;
   private String targetRoomKey;
   private int targetReplyNo;
@@ -63,11 +61,11 @@ public void setReportTitle(String reportTitle) {
 	this.reportTitle = reportTitle;
 }
 
-public Date getReportRegDate() {
+public String getReportRegDate() {
 	return reportRegDate;
 }
 
-public void setReportRegDate(Date reportRegDate) {
+public void setReportRegDate(String reportRegDate) {
 	this.reportRegDate = reportRegDate;
 }
 

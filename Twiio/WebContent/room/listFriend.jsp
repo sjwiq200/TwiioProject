@@ -78,7 +78,6 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 	  body {
-            padding-top : 150px ;
             background-color: #f4f4f4;
 			color: #666666 ;
 			font-family: "Source Sans Pro", Helvetica, sans-serif ;
@@ -142,10 +141,6 @@
 </head>
 <body>
 	
-	<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
@@ -166,6 +161,7 @@
 					          <tr data-status="pagado">
 					          	<th align="center">No</th>
 					            <th align="center" style="padding-left: 40px;">Friend</th>
+					            <th align="center">FriendName</th>
 					            <th align="center"></th>
 					          </tr>
 					        </thead>
@@ -181,16 +177,16 @@
 										  <td align="center">${ i }</td>
 										  <td align="left" vailgn="middle">
 										  
-										  
 										<div class="col-sm-12">  
-										  <div class="row" >
-										 	 <div class="col-sm-3 col-sm-offset-1" ><img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" 
-										 	 style="width: 32px; height: 32px;" class="media-photo"></div>
-										  
-										 	 <div class="col-sm-5 "  style="padding-top: 8px;" >${friend.userName}</div>
-										  </div>
+										 	 <div class="col-sm-3 col-sm-offset-1" >
+										 	 <img src="/resources/images/userimages/${friend.userId }.jpg" onerror="javascript:this.src='/resources/images/room/default.jpeg'" style="width: 32px; height: 32px;" class="media-photo">
+										 	 <!-- <img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 32px; height: 32px;" class="media-photo"> -->
+										 	 </div>
 										 </div> 
+										  </td>
 										  
+										  <td>
+										  	<div class="col-sm-5 "  style="padding-top: 8px;" >${friend.userName}</div>
 										  </td>
 											  <td align="right" style="padding-left: 40px;">
 											  <button type="button" class="btn btn-outlined btn-light btn-sm" id="invite" >친구초대 +<input type="hidden" id="userNo" value="${friend.userNo}"/></button>

@@ -77,8 +77,8 @@
 		    background-image:url('/resources/images/icon.png');
 		    text-align:center;
 		    line-height:30px;
-		    left : 625px;
-		    top: 120px;
+		    left : 55%;
+		    top: 15%;
 		}
 		.file_input input {
 		    position:absolute;
@@ -151,7 +151,10 @@
 			#addHost{
 				cursor: pointer;
 			}
-			
+			#back{
+         	 border-radius: 23px;
+          	 border: dashed rgba(85, 176, 190, 1) 2px;
+         	}
 			
 
 	        
@@ -192,7 +195,6 @@
 					if(flag){
 						var phonenum = $("#userPhone").val();
 						var phonesplit = phonenum.split('-');
-						
 						
 						if(phonenum == ''){
 							
@@ -464,6 +466,7 @@
 					success : function(result) {
 						//alert("success");
 						//alert(result.face);
+						alert(result.flag);
 						$('#userImage').val(result.face);
 						//alert($('#userImage').val());
 						if(result.flag == '0'){
@@ -484,6 +487,45 @@
 		
 		
 		
+		$(function() {
+	  		$("#deleteUser" ).on("click" , function() {
+	 		 //$(document).on("click","#btnSubmit" , function(){	
+		    	  	   	  			var userNo = $("#userNo").val();
+		    	  	   	  			$.ajax({
+		    	  	   	  			url : "/user/json/deleteUser",
+		    	  	   	  			method : "POST" ,
+		    	  	   	  			dataType : "json" ,
+		    	  	   	  			contentType:"application/json;charset=UTF-8",
+		    	  	   	  			data : JSON.stringify({
+		    	  	   	  				"userNo":userNo
+		    	  	   	  			}),
+		    	  	   	  			success : function(JSONData, state) {
+		    	  	   	  				
+										if(JSONData==false){
+												alert("이미 탈퇴된 회원입니다.");
+										}
+		    	  	   	  					 $.ajax({
+		    	  	   	  		                url: "/common/json/updateReport",
+		    	  	   	  		       			 method : "POST" ,
+				    	  	   	  				dataType : "json" ,
+				    	  	   	  				contentType:"application/json;charset=UTF-8",
+				    	  	   	  				data : JSON.stringify({
+				    	  	   	  					"userNo":userNo
+				    	  	   	  				}),
+		    	  	   	  		                success: function (JSONData) {
+		    	  	   	  		                	alert(JSON.stringify(JSONData));		    	  	   	  		                	
+		
+		    	  	   	  		                },error : function(request,status,error) {
+													alert('에러다.');
+													
+		    		    	  	   	  	    	}
+		    	  	   	  		            });
+		    	  	   	  	    		}
+		    	  	   	  		});
+    	  	   	  	});
+	  	});
+		
+		
 	</script>
 	
 </head>
@@ -496,225 +538,230 @@
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
-	
+		<div class="col-sm-10 col-sm-offset-1" id="back" style="background-color : rgba(255,255,255,0.7); margin-top:50px; padding-top:20px; padding-bottom:50px;">	
+			<div class="page-header"> 
+				<div class="row" align="center">
+			       <h1 style="font-family: 'Jeju Gothic', serif; ">회원정보수정</h1>
+			       </div>
+			       <div class="row" align="center">
+			       <h5 class="text-muted"  style="font-family: 'Jeju Gothic', serif;">내 정보를 <strong class="text-danger"  style="font-family: 'Jeju Gothic', serif;" >최신정보로 관리</strong>해 주세요.</h5>
+			    	</div> 
+			  </div>   
+			<form id="updateUserForm">	
 		
-		<div class="page-header">
-	       <h3 class=" text-info">회원 정보 수정</h3>
-	    </div>
-	    
-	<form id="updateUserForm">	
-
-		<input type="hidden"  id="userType" name="userType" value="${user.userType }"/>
-		<input type="hidden"  id="userNo" name="userNo" value="${user.userNo }"/>
-		<div class="col-sm-12">
-			
-			<div class="profile-userpic ">
-				<input type="hidden" id="userImage" name="userImage" value="${user.userImage}"/>
-				<%-- <c:if test="${empty user.userImage}">
-					<img id="blah" style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive">
-				</c:if> --%>
-				<%-- <c:if test="${!empty user.userImage}"> --%>
-					<img id="blah" style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive">
-				<%-- </c:if> --%>
-				<label class="file_input">
-			        <input type="file" id="file" class="file">
-			    </label>
-			    <span id="imgHelpBlock" class="help-block" type="hidden">
-					 <strong  id="text2" class="text-danger col-sm-12 col-sm-offset-5" style="color: #f9d431;">이미지를 등록해 주세요.</strong>
-				</span>
-			</div>
-			
-			
-			<div class="col-sm-12">
-					<br/><br/><br/>
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userName" class="col-sm-2 col-sm-offset-4 control-label">이름</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userName" name="userName" value="${user.userName}">
-										<span id="nameHelpBlock" class="help-block" type="hidden">
-											 <strong  id="nameText" class="text-danger" style="color: #f9d431;">이름을 입력해 주세요.</strong>
-										</span>
-								</div>
-						</div>
+				<input type="hidden"  id="userType" name="userType" value="${user.userType }"/>
+				<input type="hidden"  id="userNo" name="userNo" value="${user.userNo }"/>
+				<div class="col-sm-12">
+					
+					<div class="profile-userpic ">
+						<input type="hidden" id="userImage" name="userImage" value="${user.userImage}"/>
+						<c:if test="${empty user.userImage}">
+							<img id="blah" style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive">
+						</c:if>
+						<c:if test="${!empty user.userImage}">
+							<img id="blah" style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive">
+						</c:if> 
+							<label class="file_input">
+					        	<input type="file" id="file" class="file">
+					   	 	</label>
+					    <span id="imgHelpBlock" class="help-block" type="hidden">
+							 <strong  id="text2" class="text-danger col-sm-12 col-sm-offset-5" style="color: #f9d431;">이미지를 등록해 주세요.</strong>
+						</span>
 					</div>
+				</div>	
 					
-					<br/>
 					
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userPhone" class="col-sm-2 col-sm-offset-4 control-label">휴대전화번호</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userPhone" name="userPhone" value="${user.userPhone}" maxlength="13" placeholder="xxx-xxxx-xxxx">
-									<span id="phoneHelpBlock" class="help-block" type="hidden">
-											 <strong  id="phoneText" class="text-danger" style="color: #f9d431;">휴대전화번호를 입력해 주세요.</strong>
-										</span>
+					<div class="col-sm-12">
+							<br/><br/><br/>
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userName" class="col-sm-3 col-sm-offset-3 control-label">이름</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userName" name="userName" value="${user.userName}">
+												<span id="nameHelpBlock" class="help-block" type="hidden">
+													 <strong  id="nameText" class="text-danger" style="color: #f9d431;">이름을 입력해 주세요.</strong>
+												</span>
+										</div>
 								</div>
-						</div>
-					</div>
-					
-					<br/>
-					
-					<div class="row">	
-						<div class="form-group">
-					  		<label for="userEmail" class="col-sm-2 col-sm-offset-4 control-label">이 메 일</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userEmail" name="userEmail" value="${user.userEmail}" readonly="readonly">
+							</div>
+							
+							<br/>
+							
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userPhone" class="col-sm-3 col-sm-offset-3 control-label">휴대전화번호</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userPhone" name="userPhone" value="${user.userPhone}" maxlength="13" placeholder="xxx-xxxx-xxxx">
+											<span id="phoneHelpBlock" class="help-block" type="hidden">
+													 <strong  id="phoneText" class="text-danger" style="color: #f9d431;">휴대전화번호를 입력해 주세요.</strong>
+												</span>
+										</div>
 								</div>
-						</div>
-					</div>
-					
-					<br/>
-					
-					<div class="row">	
-						<div class="form-group">
-							 <label for="password"  class="col-sm-2 col-sm-offset-4 control-label">*비밀번호</label>
-								<div class="col-sm-3">
-									 <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+							</div>
+							
+							<br/>
+							
+							<div class="row">	
+								<div class="form-group">
+							  		<label for="userEmail" class="col-sm-3 col-sm-offset-3 control-label">이 메 일</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userEmail" name="userEmail" value="${user.userEmail}" readonly="readonly">
+										</div>
 								</div>
-						 </div>
-					</div>
-					
-					<br/>
-					
-					<div class="row">						  
-						<div class="form-group">
-							 <label for="password2" class="col-sm-2 col-sm-offset-4 control-label">*비밀번호 확인</label>
-								<div class="col-sm-3">
-								 <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
-										<span id="helpBlock" class="help-block" type="hidden">
-											 <strong  id="text2" class="text-danger" style="color: #f9d431;">비밀번호가 일치하지 않습니다.</strong>
-										</span>
+							</div>
+							
+							<br/>
+							
+							<div class="row">	
+								<div class="form-group">
+									 <label for="password"  class="col-sm-3 col-sm-offset-3 control-label">*비밀번호</label>
+										<div class="col-sm-4">
+											 <input type="password" class="form-control" id="password" name="password" placeholder="비밀번호">
+										</div>
+								 </div>
+							</div>
+							
+							<br/>
+							
+							<div class="row">						  
+								<div class="form-group">
+									 <label for="password2" class="col-sm-3 col-sm-offset-3 control-label">*비밀번호 확인</label>
+										<div class="col-sm-4">
+										 <input type="password" class="form-control" id="password2" name="password2" placeholder="비밀번호 확인">
+												<span id="helpBlock" class="help-block" type="hidden">
+													 <strong  id="text2" class="text-danger" style="color: #f9d431;">비밀번호가 일치하지 않습니다.</strong>
+												</span>
+										</div>
+								 </div>
+							</div>
+							
+							<br/>
+							
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userBank"class="col-sm-3 col-sm-offset-3 control-label">은행명</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userBank" name="userBank" value="${user.userBank}">
+											<span id="banknameHelpBlock" class="help-block" type="hidden">
+													 <strong  id="bankText" class="text-danger" style="color: #f9d431;">은행명을 입력해주세요.</strong>
+												</span>
+										</div>
 								</div>
-						 </div>
-					</div>
-					
-					<br/>
-					
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userBank"class="col-sm-2 col-sm-offset-4 control-label">은행명</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userBank" name="userBank" value="${user.userBank}">
-									<span id="banknameHelpBlock" class="help-block" type="hidden">
-											 <strong  id="bankText" class="text-danger" style="color: #f9d431;">은행명을 입력해주세요.</strong>
-										</span>
+							</div>
+							
+							<br/>
+								 
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userAccount"class="col-sm-3 col-sm-offset-3 control-label">계좌번호</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userAccount" name="userAccount" value="${user.userAccount}">
+											<span id="accountHelpBlock" class="help-block" type="hidden">
+													 <strong  id="accountText" class="text-danger" style="color: #f9d431;">계좌번호를 입력해주세요.</strong>
+												</span>
+										</div>
 								</div>
-						</div>
-					</div>
-					
-					<br/>
-						 
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userAccount"class="col-sm-2 col-sm-offset-4 control-label">계좌번호</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userAccount" name="userAccount" value="${user.userAccount}">
-									<span id="accountHelpBlock" class="help-block" type="hidden">
-											 <strong  id="accountText" class="text-danger" style="color: #f9d431;">계좌번호를 입력해주세요.</strong>
-										</span>
+							</div>
+							
+							<br/>
+														
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userBirthday"class="col-sm-3 col-sm-offset-3 control-label">생년월일</label>
+							  			<div class="col-sm-4">
+											<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="눌러주세요.">
+											<span id="birthHelpBlock" class="help-block" type="hidden">
+													 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
+											</span>
+										</div>
 								</div>
-						</div>
-					</div>
-					
-					<br/>
-												
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userBirthday"class="col-sm-2 col-sm-offset-4 control-label">생년월일</label>
-					  			<div class="col-sm-3">
-									<input type="text" class="form-control" id="userBirthday" name="userBirthday" value="${user.userBirthday}"  placeholder="눌러주세요.">
-									<span id="birthHelpBlock" class="help-block" type="hidden">
-											 <strong  id="birthText" class="text-danger" style="color: #f9d431;">생년월일을 입력해주세요.</strong>
-									</span>
+							</div>
+							
+							<br/>
+							
+							
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userGender" class="col-sm-3 col-sm-offset-3 control-label">성별</label>
+							  			<div class="col-sm-4">
+								  			<c:if test = "${user.userGender=='W'}"> 
+												<label for="female" class="chk_radio on"><input type="radio" name="userGender"   checked="checked" value="W" />여자</label>
+												<label for="male" class="chk_radio "><input type="radio" name="userGender"  value="M" />남자</label>
+											 </c:if> 
+											
+											&nbsp;&nbsp;
+											 <c:if test = "${user.userGender=='M'}">
+												<label for="female" class="chk_radio on"><input type="radio" name="userGender"   value="W" />여자</label>
+												<label for="male" class="chk_radio "><input type="radio" name="userGender"   value="M" checked="checked"/>남자</label>
+											</c:if>
+											<span id="genderHelpBlock" class="help-block" type="hidden">
+													 <strong  id="genderText" class="text-danger" style="color: #f9d431;">성별을 선택 해주세요.</strong>
+											</span> 
+										</div>
 								</div>
-						</div>
-					</div>
-					
-					<br/>
-					
-					
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userGender" class="col-sm-2 col-sm-offset-4 control-label">성별</label>
-					  			<div class="col-sm-3">
-						  			<c:if test = "${user.userGender=='W'}"> 
-										<label for="female" class="chk_radio on"><input type="radio" name="userGender"   checked="checked" value="W" />여자</label>
-										<label for="male" class="chk_radio "><input type="radio" name="userGender"  value="M" />남자</label>
-									 </c:if> 
-									
-									&nbsp;&nbsp;
-									 <c:if test = "${user.userGender=='M'}">
-										<label for="female" class="chk_radio on"><input type="radio" name="userGender"   value="W" />여자</label>
-										<label for="male" class="chk_radio "><input type="radio" name="userGender"   value="M" checked="checked"/>남자</label>
-									</c:if>
-									<span id="genderHelpBlock" class="help-block" type="hidden">
-											 <strong  id="genderText" class="text-danger" style="color: #f9d431;">성별을 선택 해주세요.</strong>
-									</span> 
-								</div>
-						</div>
-					</div>
-					
-					<br/>
-					
-					<div class="row">
-						<div class="form-group">
-					  		<label for="userType" class="col-sm-2 col-sm-offset-4 control-label">HOST등록여부</label>
-					  			<div class="col-sm-3">
-					  								  			
-					  			<c:if test="${user.userType == 1}">
-									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="회원" readonly>
-								</c:if>
-								<c:if test="${user.userType == 2}">
-									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="호스트" readonly>
-								</c:if>
-								<c:if test="${user.userType == 3}">
-									<input type="text" class="form-control" id="userTypeView" name="userTypex" value="Admin" readonly>
-								</c:if>
-								
-									<!-- <img src="/resources/images/addhost.png" id="addHost" style="width: 70px; height: 30px;"/> -->
-									<button class="btn btn-outlined btn-light btn-xs" type="button" id="addHost" >HOST등록</button>
-								</div>
-						</div>
-					</div>
-					<br/>
-					
-					<%-- <div class="row">
-						<div class="form-group">
-					  		<label for="userRegisterType" class="col-sm-2 col-sm-offset-4 control-label">공개설정</label>
-					  			<div class="col-sm-3">
-						  			<c:if test = "${user.profilePublic == 0}"> 
-										<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic"   checked="checked" value="0" />비공개</label>
-										<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"  value="1" />공개</label>
-									 </c:if> 
-									 
-									&nbsp;&nbsp;
-									 <c:if test = "${user.profilePublic == 1}">
-										<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic" value="0" />비공개</label>
-										<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"   	value="1" checked="checked"/>공개</label>
-									</c:if>
-								</div>
-						</div>
-					</div> --%>
-
-					
+							</div>
+							
+							<br/>
+							
+							<div class="row">
+								<div class="form-group">
+							  		<label for="userType" class="col-sm-3 col-sm-offset-3 control-label">HOST등록여부</label>
+							  			<div class="col-sm-4">
+							  								  			
+							  			<c:if test="${user.userType == 1}">
+											<input type="text" class="form-control" id="userTypeView" name="userTypex" value="회원" readonly>
+										</c:if>
+										<c:if test="${user.userType == 2}">
+											<input type="text" class="form-control" id="userTypeView" name="userTypex" value="호스트" readonly>
+										</c:if>
+										<c:if test="${user.userType == 3}">
+											<input type="text" class="form-control" id="userTypeView" name="userTypex" value="Admin" readonly>
+										</c:if>
 										
-				</div>
-			</div>
-			
-			 <br/>
-			 <br/>
-										  
-				 <div class="form-group">
-					 <div class="col-sm-offset-2 col-sm-8 text-center">
-							 <button type="button" class="btn btn-outlined btn-light btn-sm"  id="updateUser">수 &nbsp;정</button> &nbsp; &nbsp;
-							 <button class="btn btn-outlined btn-theme btn-sm" type="button" id="cancel">취&nbsp;소</button>
-					</div>
+											<!-- <img src="/resources/images/addhost.png" id="addHost" style="width: 70px; height: 30px;"/> -->
+											<button class="btn btn-outlined btn-light btn-xs" type="button" id="addHost" >HOST등록</button>
+										</div>
+								</div>
+							</div>
+							<br/>
+							
+							<%-- <div class="row">
+								<div class="form-group">
+							  		<label for="userRegisterType" class="col-sm-2 col-sm-offset-4 control-label">공개설정</label>
+							  			<div class="col-sm-3">
+								  			<c:if test = "${user.profilePublic == 0}"> 
+												<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic"   checked="checked" value="0" />비공개</label>
+												<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"  value="1" />공개</label>
+											 </c:if> 
+											 
+											&nbsp;&nbsp;
+											 <c:if test = "${user.profilePublic == 1}">
+												<label for="noPublic" class="chk_radio2 on"><input type="radio" name="profilePublic" value="0" />비공개</label>
+												<label for="Public" class="chk_radio2 "><input type="radio" name="profilePublic"   	value="1" checked="checked"/>공개</label>
+											</c:if>
+										</div>
+								</div>
+							</div> --%>
+		
+							
+												
+						</div>
 					
-				 </div>
-				 
-		</form>	
- 		</div>
+					 <br/>
+					 <br/>
+												  
+						 <div class="form-group">
+							 <div class="col-sm-offset-2 col-sm-8 text-center">
+							 		<button type="button" class="btn btn-outlined btn-light btn-sm"  id="deleteUser">탈 &nbsp;퇴</button> &nbsp; &nbsp;
+									 <button type="button" class="btn btn-outlined btn-light btn-sm"  id="updateUser">수 &nbsp;정</button> &nbsp; &nbsp;
+									 <button class="btn btn-outlined btn-theme btn-sm" type="button" id="cancel">취&nbsp;소</button>
+							</div>
+							
+						 </div>
+						 
+					</form>	
+				</div>
+			</div>	
  		<br/><br/>
 		<br/><br/>
  	<!--  화면구성 div Start /////////////////////////////////////-->

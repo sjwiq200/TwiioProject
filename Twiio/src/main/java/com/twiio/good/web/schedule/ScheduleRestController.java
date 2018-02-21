@@ -5,8 +5,16 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.codehaus.jackson.map.ObjectMapper;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,6 +65,21 @@ public class ScheduleRestController {
 	@RequestMapping("/json/addSchedule/")
 	public boolean addSchedule(@RequestBody Schedule schedule) throws Exception {
 		System.out.println("/schedule/json/addSchedule : POST");
+		
+		HttpClient httpClient = new DefaultHttpClient();
+        HttpPost httpPost = new HttpPost("http://192.168.0.33:8282/v1/requestFCM");
+        httpPost.setHeader("Accept", "application/json");
+        httpPost.setHeader("Content-Type", "application/json");
+        
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String jsonValue = objectMapper.writeValueAsString(schedule);
+        HttpEntity httpEntity = new StringEntity(jsonValue,"utf-8");
+
+        httpPost.setEntity(httpEntity);
+        httpClient.execute(httpPost);
+        
+		
 		
 		String roomKey = schedule.getRoomKey();
 		String userNoString = "";
@@ -173,6 +196,48 @@ public class ScheduleRestController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/json/addEvalUser/{roomKey}", method=RequestMethod.GET)
+	public List<User> addEvalUser(@PathVariable String roomKey, HttpSession session, HttpServletRequest request) throws Exception {
+		System.out.println("/schedule/addEvalUser() : GET");
+		Schedule schedule = scheduleService.getSchedule(roomKey);
+		List<Integer> list =schedule.getUserNo();
+		
+		User user = (User)session.getAttribute("user");
+		int userNo = user.getUserNo();
+		
+		for(int i = 0 ; i< list.size(); i++) {
+			if(list.get(i) == userNo) {
+				list.remove(i);
+			}
+		}
+		
+		List<User> listUser = new Vector();
+		for (Integer integer : list) {
+			listUser.add(userService.getUserInNo(integer));
+		}
+		UserEval userEval = new UserEval();
+		userEval.setScheduleNo(roomKey);
+		userEval.setUserNo(userNo);
+		System.out.println("userEval ==>" +userEval);
+		
+		if(userService.addEvalUserCheck(userEval) != 0) {
+//			return "forward:/schedule/listSchedule";
+			return listUser;
+		}else {
+			System.out.println("hello==>" + listUser);
+			request.setAttribute("roomKey", roomKey);
+//			request.setAttribute("list", listUser);
+//			request.setAttribute("totalCount", listUser.size());
+		
+//			return "forward:/schedule/addEvalUser.jsp";
+			return listUser;
+			
+		}
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/json/addEvalUser/{roomKey}", method=RequestMethod.POST)
 	public String addEvalUser(@RequestBody UserEval userEval,@PathVariable String roomKey, HttpSession session) throws Exception {

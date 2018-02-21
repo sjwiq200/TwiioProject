@@ -228,8 +228,15 @@
 							
 							<div class="col-sm-12">
 								<div class="profile-userpic ">
-									<c:if test="${empty profile.userImage}"><img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-									<c:if test="${!empty profile.userImage}"><img style="width:150px; height:150px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive"></c:if>
+									<%-- <c:if test="${empty profile.userImage}">
+									<!-- <img style="width:150px; height:150px; alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"> -->
+									<img style="width:150px; height:150px; alt="" src="/resources/images/room/default.jpeg" class="img-responsive">
+									</c:if>
+									<c:if test="${!empty profile.userImage}">
+									<img style="width:150px; height:150px; alt="" src="/resources/images/userThumbnail/${user.userImage}" class="img-responsive">
+									<img style="width:150px; height:150px; alt="" src="/resources/images/userimages/${profile.userId}.jpg" class="img-responsive">
+									</c:if> --%>
+									<img style="width:150px; height:150px;" src="/resources/images/userimages/${profile.userId}.jpg"  onerror="javascript:this.src='/resources/images/room/default.jpeg'" class="img-responsive">
 								</div>
 							</div>
 							</br>

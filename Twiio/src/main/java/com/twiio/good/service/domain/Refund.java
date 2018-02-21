@@ -6,8 +6,8 @@ public class Refund {
 	
 	private int refundNo;
 	private int tranNo;
-	private Date regDate;
-	private Date confirmDate;
+	private String regDate;
+	private String confirmDate;
 	private int refundPrice;
 	private String refundAccount;
 	private String refundBank;
@@ -38,19 +38,19 @@ public class Refund {
 		this.tranNo = tranNo;
 	}
 
-	public Date getRegDate() {
+	public String getRegDate() {
 		return regDate;
 	}
 
-	public void setRegDate(Date regDate) {
+	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
 
-	public Date getConfirmDate() {
+	public String getConfirmDate() {
 		return confirmDate;
 	}
 
-	public void setConfirmDate(Date confirmDate) {
+	public void setConfirmDate(String confirmDate) {
 		this.confirmDate = confirmDate;
 	}
 

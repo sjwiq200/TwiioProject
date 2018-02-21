@@ -38,7 +38,7 @@
 	              	<li class="dropdown">
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
-	                         <span >TwiiChat</span>
+	                         <span>TwiiChat</span>
 	                         <span class="caret"></span>
 	                     </a>
 
@@ -69,7 +69,6 @@
 	                         <li><a href="#">Weather</a></li>
 	                         <li><a href="#">UnsafeRegion</a></li>
 	                         <li><a href="#">nightLife</a></li>
-	                         <li><a href="#">Best10</a></li>
 	                         <li class="divider"></li>
 	                         
 	                     </ul>
@@ -169,8 +168,8 @@
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			/* $(self.location).attr("href","/room/listRoom"); */
-			$(self.location).attr("href","/room/mainRoom.jsp");
+			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/mainRoom.jsp"); */
 			
 		});
 		
@@ -215,10 +214,6 @@
 		
 		$( "a:contains('nightLife')" ).on("click" , function() {
 			$(self.location).attr("href","/information/listNightLife");
-		});
-		
-		$( "a:contains('Best10')" ).on("click" , function() {
-			$(self.location).attr("href","/information/getBest10");
 		});
 		
 		$( "a:contains('UnsafeRegion')" ).on("click" , function() {
@@ -295,8 +290,8 @@
 	</script>  
 	
 	
-	<style>
-				
+	<style>	
+			
 			.navbar, .dropdown-menu{
 			background:rgba(215, 58, 49, 0.8);
 			border: none;
