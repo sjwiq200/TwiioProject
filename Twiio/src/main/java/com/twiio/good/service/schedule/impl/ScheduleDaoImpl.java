@@ -72,6 +72,24 @@ public class ScheduleDaoImpl implements ScheduleDao {
 		System.out.println("userNo"+userNo);
 		Query query = new Query();
 		query.addCriteria(Criteria.where("userNo").all(userNo));
+		
+		if(search.getSearchCondition() == null) {
+			System.out.println("this is null");
+		}else if(search.getSearchCondition().equals("0")) {
+			System.out.println("SearchCondition 0");
+			query.addCriteria(Criteria.where("scheduleDate").regex(search.getSearchKeyword(),"i"));
+			
+		}else if(search.getSearchCondition().equals("1")) {
+			System.out.println("SearchCondition 1");
+			query.addCriteria(Criteria.where("country").regex(search.getSearchKeyword(),"i"));
+			
+		}else if(search.getSearchCondition().equals("2")) {
+			System.out.println("SearchCondition 2");
+			query.addCriteria(Criteria.where("city").regex(search.getSearchKeyword(),"i"));
+			
+		}
+		
+		
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
 		query.skip(search.getStartRowNum()-1);

@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Vector;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.apache.http.HttpEntity;
@@ -195,6 +196,48 @@ public class ScheduleRestController {
 		
 		return map;
 	}
+	
+	@RequestMapping(value = "/json/addEvalUser/{roomKey}", method=RequestMethod.GET)
+	public List<User> addEvalUser(@PathVariable String roomKey, HttpSession session, HttpServletRequest request) throws Exception {
+		System.out.println("/schedule/addEvalUser() : GET");
+		Schedule schedule = scheduleService.getSchedule(roomKey);
+		List<Integer> list =schedule.getUserNo();
+		
+		User user = (User)session.getAttribute("user");
+		int userNo = user.getUserNo();
+		
+		for(int i = 0 ; i< list.size(); i++) {
+			if(list.get(i) == userNo) {
+				list.remove(i);
+			}
+		}
+		
+		List<User> listUser = new Vector();
+		for (Integer integer : list) {
+			listUser.add(userService.getUserInNo(integer));
+		}
+		UserEval userEval = new UserEval();
+		userEval.setScheduleNo(roomKey);
+		userEval.setUserNo(userNo);
+		System.out.println("userEval ==>" +userEval);
+		
+		if(userService.addEvalUserCheck(userEval) != 0) {
+//			return "forward:/schedule/listSchedule";
+			return listUser;
+		}else {
+			System.out.println("hello==>" + listUser);
+			request.setAttribute("roomKey", roomKey);
+//			request.setAttribute("list", listUser);
+//			request.setAttribute("totalCount", listUser.size());
+		
+//			return "forward:/schedule/addEvalUser.jsp";
+			return listUser;
+			
+		}
+		
+	}
+	
+	
 	
 	@RequestMapping(value = "/json/addEvalUser/{roomKey}", method=RequestMethod.POST)
 	public String addEvalUser(@RequestBody UserEval userEval,@PathVariable String roomKey, HttpSession session) throws Exception {

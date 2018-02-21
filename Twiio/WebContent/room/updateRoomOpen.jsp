@@ -26,14 +26,13 @@
 	
 	<link rel="stylesheet" href="/resources/css/imformation.css" />
 	<style>
-        body {
-            padding-top : 100px;
+body {
+            padding-top : 30px;
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/main_img.jpg");
-    		background-size: cover;
-        }
+    			background-size: cover;
+}
         
         .jumbotron
 			{

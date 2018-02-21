@@ -75,7 +75,7 @@ public class RoomRestController {
 		String[] json = data.split("&");
 		String userNo =  json[0].split("=")[1];
 		String roomKey = json[1].split("=")[1];
-		
+		System.out.println("addRoomFriend == >" + userNo);
 		User user = (User)session.getAttribute("user");
 		Room room = roomService.getRoom(roomKey);
 		List<RoomUser> list = roomService.listRoomUser(roomKey);

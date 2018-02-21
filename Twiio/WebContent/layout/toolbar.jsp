@@ -169,8 +169,8 @@
 		/* Messenger*/
 			
 		$( "a:contains('TwiiChat')" ).on("click" , function() {
-			/* $(self.location).attr("href","/room/listRoom"); */
-			$(self.location).attr("href","/room/mainRoom.jsp");
+			$(self.location).attr("href","/room/listRoom");
+			/* $(self.location).attr("href","/room/mainRoom.jsp"); */
 			
 		});
 		

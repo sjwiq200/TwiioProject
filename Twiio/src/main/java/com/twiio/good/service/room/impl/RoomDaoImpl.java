@@ -140,6 +140,8 @@ public class RoomDaoImpl implements RoomDao {
 		Query query = new Query(criteria);
 
 		List<RoomUser> list = mongoTemplate.find(query, RoomUser.class,"roomUser");
+		
+		System.out.println("roomUser List =============>  "+ list);
 
 
 		for (RoomUser roomUserList : list) {
@@ -149,6 +151,9 @@ public class RoomDaoImpl implements RoomDao {
 				break;
 			}
 		}
+		
+		System.out.println("flag ==> "+ flag);
+		System.out.println("roomUser WHAT ==> " + roomUser);
 
 		if(!flag) {
 			mongoTemplate.insert(roomUser,"roomUser");

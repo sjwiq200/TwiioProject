@@ -301,7 +301,7 @@
 	padding-right : 30px;
       }
     body {
-    		padding-top : 10% ;
+    		/* padding-top : 10% ; */
     		font-family: "Source Sans Pro", Helvetica, sans-serif;
     }
  	.jumbotron {
@@ -393,11 +393,6 @@ h3{
 </head>
 
 <body>
-
-<!-- ToolBar Start /////////////////////////////////////-->
-	<jsp:include page="/layout/toolbar.jsp" />
-   	<!-- ToolBar End /////////////////////////////////////-->
-
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		<div class="jumbotron">
