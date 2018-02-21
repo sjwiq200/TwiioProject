@@ -31,9 +31,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
 <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-    
+ 
 <!-- Bootstrap Dropdown Hover CSS -->
 <link href="/resources/css/animate.min.css" rel="stylesheet">
 <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
@@ -176,9 +175,6 @@ border: 2px solid #ccc;
 padding: 5px 0;
 border-radius: 2px;
 }
-
-
-
 
 
 /* Button-dy css  */
@@ -605,10 +601,8 @@ border-radius: 2px;
 	<form>
 		
 		<div class="container">
-		
-		
-
-
+			
+			
 			
 			<header id="header" class="alt">
 				<div class="row">
@@ -619,12 +613,9 @@ border-radius: 2px;
 					<p style="font-family:TYPO_JEONGJOL;font-size: 1.5em;	margin-bottom: 70px;" align="center">여행을 맞이하는, 설렘부터  </p>
 			</header>
 			
-
 			
-				<!-- <h4 style="font-family:NANUMSQUAREROUNDB;" align="right">여행을 맞이하는, 설렘부터  </h4> -->
 				<div class="row" style="font-family:'TYPO_JEONGJOL';">
-							<div  class="col-xs-offset-8 col-xs-4" align="left">
-								<!-- 	<button type="button" class="btn" id="listScrap" ><Strong>Scrap</Strong></button>  -->
+							<div  class="col-md-offset-4 col-md-4" align="center">
 								<button type="button" class="btn" id="listSharedPlan">
 									<Strong>친구와 공유하고 있는 트위북보기</Strong>
 								</button>
@@ -679,6 +670,20 @@ border-radius: 2px;
 							</div>
 
 						</c:forEach>
+						
+						
+
+						<!--  Floating Button <START> -->
+						<div id="container-floating">
+							<div id="floating-button" data-toggle="tooltip"
+								data-placement="center" data-original-title="Create">
+								<p class="letter" id="addMain"
+									style="margin-top: 5px; font-family: 'TYPO_JEONGJOL'; font-size: 20px;">Write</p>
+							</div>
+						</div>
+						<!--  Floating Button <END> -->
+						
+						
 					</div>
 					<div align="right" class="col-xs-1">&nbsp;</div>
 				</div><!-- 섬네일 전체 박스 부분 -->
@@ -687,19 +692,6 @@ border-radius: 2px;
 
 
 
-
-
-
-		
-		<!--  Floating Button <START> -->
-		<div id="container-floating">
-			<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="Create">
-				<p class="letter" id="addMain" style="margin-top: 5px;font-family: 'TYPO_JEONGJOL'; font-size:20px;">Write</p>
-			</div>
-		</div>
-		<!--  Floating Button <END> -->
-<!-- 					<button type="button" class="btn btn-info btn-lg" id="addMain">Open Modal</button>
- -->	
 	</form>
 
 

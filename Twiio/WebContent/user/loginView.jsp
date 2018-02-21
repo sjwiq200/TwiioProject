@@ -35,7 +35,7 @@
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/holiday.jpg");
+			background-image: url("/resources/images/young-people.jpg");
     		background-size: cover;
         }
          .btn-sm{
@@ -95,6 +95,7 @@
 				background-color: rgba(255, 255, 255, 0.8);
 				padding-left : 30px;
 				padding-right : 30px;
+				opacity:0.9;
 			} 
 			h2 {
 				color :#474747;
@@ -302,9 +303,10 @@
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 				
-		 	 	<div class="jumbotron">	
+		 	 	<div class="jumbotron" style="font-family:'JEJUGOTHIC';">	
 		 	 		
-		 	 		<h2 align="center"><ins><strong>TWIIO LOGIN</strong></ins></h2>
+		 	 		<h1 align="center" ><strong>LOGIN</strong></h1>
+		 	 		<h3 align="center" style="font-family: 'Pacifico', cursive !important;"><strong>Twiio</strong></h3>
 		 	 		
 			        <div class="panel-body">
 						  
@@ -332,11 +334,13 @@
 										 <input type="hidden" value="" name="userName"/>
 										 <input type="hidden" value="" name="multi"/>
 											<fieldset>
-											  		<input type="text" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
+											  		<input type="text" style="margin-top:10px;" class="form-control" name="userId" id="userId"  placeholder="아이디" ><br/>
 												  <input type="password" class="form-control" name="password" id="password" placeholder="패스워드" >
+
 												  <div class="spacing"><!-- <a href="#"><small> Forgot Id / Password?</small></a> --><br/></div>
 												 
 												 <div class="col-sm-offset-1">
+
 													 <button type="button" class="btn btn-outlined btn-theme btn-sm" id="userLogin" >로그인</button>
 													 <button type="button" class="btn btn-outlined btn-light btn-sm" id="addUser">회원가입</button>
 												 </div>
