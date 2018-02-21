@@ -903,7 +903,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 					
 		<input type="hidden" name="userNo" value="${user.userNo }"/>
 		<input type="hidden" name="userName" value="${user.userName }"/>
-		<div class="row"> 
+		<!-- <div class="row">  -->
 	      <div class="col-sm-12" >
 			<div class="text-info" style="margin-top:80px;margin-bottom:80px;color:#474747;">
 				<h2>
@@ -912,21 +912,8 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 			</div>
 			<b class="pull-right">조회수 ${product.viewCount }</b>
 			</div>
-	       <!-- <h5 class="text-muted">상품을 <strong class="text-danger">최신정보로 관리</strong>해 주세요.</h5> -->
-	   </div>
 	       
-		
-		<div class="col-xs-12"> 
-		
-		
-		
-		<%-- <button type="button" id="showPro" class="btn btn-default">목록보기</button>
-	       <c:if test="${user.userNo == product.hostNo }">
-	       <button type="button" class="btn btn-default">수정</button>
-	       <button type="button" class="btn btn-default">삭제</button>
-	       </c:if> --%>
-	       
-	       </div>
+	  <!--  </div> -->	
 	   </div>    
 
 		<div class="col-sm-12">		
@@ -990,14 +977,15 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		
 		<br/>		
 		</div>
-	
+		
+		<div class="row">
 		  <div class="col-sm-6">
 		  
-		  <div class="row col-xs-12">
-		   <div class="col-xs-6" align="center">
+		  <!-- <div class="row col-xs-12"> -->
+		   <div class="col-xs-6">
 		   
 			<div class="row">
-				<div name="hostInfo" class="col-xs-12" align="right">	  		
+				<div name="hostInfo" class="col-xs-12" >	  		
 					<c:if test="${empty product.hostImage}"><img style="width:160px; height:160px;border-radius: 99%;" alt="" src="/resources/images/userImage/seojun.jpg" class="rounded-circle"></c:if>
 					<c:if test="${!empty product.hostImage}"><img style="width:160px; height:160px;border-radius: 99%;" alt="" src="/resources/images/userimages/${product.hostImage}" class="rounded-circle"></c:if>
 				
@@ -1013,9 +1001,10 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 	<!-- 		<input type="button" name="sendQuestion" class="btn-dy2" value="1:1 문의" />  -->
 			<button type="button" class="btn-dy2" name="sendQuestion"  width="30px" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';"/>1:1 문의</button>
 			<!-- <button type="button" class="btn btn-primary btn-responsive" name="sendQuestion">1:1 문의</button> -->
-			</div>
-			<br/>
-			</div>
+			</div>			
+			<br/>			
+			<!-- </div> -->
+			
 			<!-- Modal -->
 			<div class="modal fade" id="modalmessage"  role="dialog">
 			<div class="modal-dialog modal-lg">
@@ -1084,20 +1073,22 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 			</div>
 		</form>
 		
-		
+		</div>
 		</div>
 		</div>
 	
 		
 		
-		<!-- <div class="row">
+		<div class="row">
+		<div class="col-sm-12">
 		<hr/>
-		</div> -->
+		</div>
+		</div>
 		
 		<div class="row">
 		
 		<div class="col-sm-12">
-		<hr/>
+		<!-- <hr/>  -->
 		<div class="row">
 	  		<div class="col-sm-12" style="margin-bottom:20px;"><strong>상품상세정보</strong></div>
 			<div class="col-sm-12" style="margin-bottom:20px;">${product.description}</div>

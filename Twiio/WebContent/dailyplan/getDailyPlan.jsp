@@ -1225,6 +1225,19 @@ $(function() {
 									</c:if>
 								</c:if>
 								
+								<c:if test="${planContent.contentType eq 7}">
+									<c:if test="${!empty planContent.mapUrl}">
+											<div class="col-xs-12" align="center" style="margin-bottom:20px;font-family:'JEJUMYEONGJO';">
+											<h3>Your dailyTour</h3>
+											</div>
+											<div>
+											<p class="contents">
+												<img src="/resources/images/productThumbnail/${planContent.contentImage}" name="mapImg" class="contentsDelete" width="300px" style="border-color:#C2C2C2;border-style: solid;border-width: 3px;border-radius: 99%;"/>
+											</p>
+											</div>											
+									</c:if>
+								</c:if>
+								
 								<c:if test="${!empty planContent.contentText}">
 									<p>
 										<div class="col-xs-12" align="center" style="margin-top:20px;font-size:1.1em !important;font-color: #C2C2C2 !important;">
