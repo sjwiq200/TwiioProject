@@ -2,6 +2,8 @@ package com.twiio.good.web.dailyplan;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
+import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -22,6 +24,7 @@ import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,7 +32,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.google.api.client.util.Sleeper;
 import com.twiio.good.service.common.CommonService;
 import com.twiio.good.service.dailyplan.DailyPlanService;
 import com.twiio.good.service.domain.DailyPlan;
@@ -47,30 +52,38 @@ import com.twiio.good.service.user.UserService;
 @RestController
 @RequestMapping({"/dailyplan/*"})
 public class PlanRestController {
-   
-   @Autowired
-   @Qualifier("mainPlanServiceImpl")
-   private MainPlanService mainPlanService;
-   
-   @Autowired
-   @Qualifier("dailyPlanServiceImpl")
-   private DailyPlanService dailyPlanService;
-   
-   @Autowired
-   @Qualifier("userServiceImpl")
-   private UserService userService;
-   
-   @Autowired
-   @Qualifier("commonServiceImpl")
-   private CommonService commonService;
-   
-   @Autowired
-   @Qualifier("informationServiceImpl")
-   private InformationService informationService;
-   
-   public PlanRestController() {
-   }
-   
+	
+	@Autowired
+	@Qualifier("mainPlanServiceImpl")
+	private MainPlanService mainPlanService;
+	
+	@Autowired
+	@Qualifier("dailyPlanServiceImpl")
+	private DailyPlanService dailyPlanService;
+	
+	@Autowired
+	@Qualifier("userServiceImpl")
+	private UserService userService;
+	
+	@Autowired
+	@Qualifier("commonServiceImpl")
+	private CommonService commonService;
+	
+	@Autowired
+	@Qualifier("informationServiceImpl")
+	private InformationService informationService;
+	
+	////////사진 업로드////////
+	@Value("#{commonProperties['dailyPlanImageFilePath']}")
+	String dailyPlanImageFilePath;
+	
+	////////사진 업로드////////
+	@Value("#{commonProperties['dailyPlanImageFilePathLocal']}")
+	String dailyPlanImageFilePathLocal;
+	
+	public PlanRestController() {
+	}	
+
 
 	@RequestMapping(value = "json/listDailyPlan/{mainPlanNo}", method = RequestMethod.GET)
 	public Map<String, Object> listDailyPlan(@PathVariable int mainPlanNo) throws Exception {
@@ -139,6 +152,65 @@ public class PlanRestController {
 
       Map<String, Object> map = new HashMap<String, Object>();
 
+		if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
+			List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
+			List<PlanContent> list = new ArrayList<PlanContent>();
+			for(PlanContent listPlanContent : listBefore) {
+				listPlanContent.setDailyPlan(dailyPlanService.getDailyPlan(dailyPlanNo));
+				list.add(listPlanContent);
+			}
+			map.put("list", list);
+			System.out.println("##debug : " + list);
+		}
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
+		
+		map.put("dailyPlan", dailyPlan);		
+		
+		System.out.println("RestController : json/getDailyPlan <END>");
+		
+		return map;
+	}
+	
+	@RequestMapping(value = "json/uploadImage", method = RequestMethod.POST)
+	public void addImage( @RequestBody MultipartFile file) throws Exception {
+		
+		System.out.println("RestController : uploadImage <START>");
+		System.out.println("file :: "+file.getOriginalFilename());
+		
+		try {
+			File file01 = new File(dailyPlanImageFilePath, file.getOriginalFilename());
+			file.transferTo(file01);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		try {
+			File file02 = new File(dailyPlanImageFilePathLocal, file.getOriginalFilename());
+			file.transferTo(file02);			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		Thread.sleep(3500);
+		System.out.println("RestController : uploadImage <END>");
+		
+	}
+	
+	@RequestMapping(value = "json/addImage", method = RequestMethod.POST)
+	public Map<String, Object> addImage( @RequestBody PlanContent planContent) throws Exception {
+		
+		System.out.println("RestController : addImage <START>");
+		System.out.println("planContent :: "+planContent);
+		
+		int dailyPlanNo = planContent.getDailyPlan().getDailyPlanNo();
+		DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+		
+		int a = dailyPlanService.getPlanContentCount(planContent.getDailyPlan().getDailyPlanNo());
+		planContent.setOrderNo(a + 1);
+		dailyPlanService.addPlanContent(planContent);
+		
+		Map<String, Object> map = new HashMap<String, Object>();				
+	
       if (dailyPlanService.getPlanContentList(dailyPlanNo) != null) {
          List<PlanContent> listBefore = dailyPlanService.getPlanContentList(dailyPlanNo);
          List<PlanContent> list = new ArrayList<PlanContent>();
@@ -149,7 +221,7 @@ public class PlanRestController {
          map.put("list", list);
          System.out.println("##debug : " + list);
       }
-      DailyPlan dailyPlan = dailyPlanService.getDailyPlan(dailyPlanNo);
+      
       dailyPlan.setUser(userService.getUserInNo(dailyPlan.getUser().getUserNo()));
       
       map.put("dailyPlan", dailyPlan);      

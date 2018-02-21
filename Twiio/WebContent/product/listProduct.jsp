@@ -43,78 +43,75 @@
   	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />
   			
 	<!-- listProduct -->
-	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/reset.css">
-	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/responsive.css">
+	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/reset.css"/>
+	<link rel="stylesheet" type="text/css" href="/resources/listProduct/css/responsive.css"/>
 	
 
 <!--  ///////////////////////// CSS ////////////////////////// -->
 <style>
 
 body {
-	padding-top: 70px;
+	padding-top: 50px;
 	font-family:'JEJUGOTHIC';
 	background: #f4f4f4;
 }
 
-/*
-	inspired from http://codepen.io/Rowno/pen/Afykb
-	& https://jsfiddle.net/q0rgL8ws/
-	*/
-.carousel-fade .carousel-inner .item {
-	opacity: 0;
-	transition-property: opacity;
-	overflow: hidden;
+h1 {
+	/* color : #dedede; */
+	color :#474747;
+    font-size: 6vw;
+    /* padding: 0 0.5em 0.25em 0.5em; */
+    font-weight: 500;
+    font-family: "Pacifico", cursive;
+    text-transform: none;
+    letter-spacing: 10;
+    font-style: Pacifico;
+    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+}
+/* /////////////////dayoung////////////////// */
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #D73A31;
+  font-size: 16px;
+  background: #f4f4f4;
+  padding: 6px 20px 6px 20px;
+  border: solid #D73A31 2px;
+  text-decoration: none;
+  margin-top: 3%;
 }
 
-.item.active img {
-	transition: transform 5000ms linear 0s;
-	/* This should be based on your carousel setting. For bs, it should be 5second*/
-	transform: scale(1.05, 1.05);
+.btn-dy:hover {
+  background: #D73A31;
+  text-decoration: none;
+  border: solid #f4f4f4 0.5px;
+  color:#f4f4f4;
+  opacity: 0.8;
 }
 
-.carousel-fade .carousel-inner .active {
-	opacity: 1;
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 10px;
+  font-family: "JEJUGOTHIC";
+  color: #f4f4f4;
+  font-size: 15px;
+  background: transparent;
+  padding: 5px 18x 5px 18px;
+  border: solid #f4f4f4 2px;
+  text-decoration: none;
 }
 
-.carousel-fade .carousel-inner .active.left, .carousel-fade .carousel-inner .active.right
-	{
-	left: 0;
-	opacity: 0;
-	z-index: 1;
-}
-
-.carousel-fade .carousel-inner .next.left, .carousel-fade .carousel-inner .prev.right
-	{
-	opacity: 1;
-}
-
-.carousel-fade .carousel-control {
-	z-index: 2;
-}
-
-/*
-	WHAT IS NEW IN 3.3: "Added transforms to improve carousel performance in modern browsers."
-	now override the 3.3 new styles for modern browsers & apply opacity
-	*/
-@media all and (transform-3d) , ( -webkit-transform-3d ) {
-	.carousel-fade .carousel-inner>.item.next, .carousel-fade .carousel-inner>.item.active.right
-		{
-		opacity: 0;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
-	.carousel-fade .carousel-inner>.item.prev, .carousel-fade .carousel-inner>.item.active.left
-		{
-		opacity: 0;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
-	.carousel-fade .carousel-inner>.item.next.left, .carousel-fade .carousel-inner>.item.prev.right,
-		.carousel-fade .carousel-inner>.item.active {
-		opacity: 1;
-		-webkit-transform: translate3d(0, 0, 0);
-		transform: translate3d(0, 0, 0);
-	}
+.btn-dy2:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;  
+  color:#ffffff;  
 }
 
 
@@ -193,13 +190,13 @@ div.caption{
 			self.location = "/product/addProduct";
 		});
 
-		$("button.btn.btn-default:contains('검색')").bind("click", function() {
-			fncGetUserList(1);
+		$("#search").bind("click", function() {
+			fncGetUserList(1,'${search.priceCondition}','${search.prodSearchType}');
 		});
 
 		$("#searchKeyword").keydown(function(e) {
 			if (e.keyCode == 13) {
-				fncGetUserList(1);
+				fncGetUserList(1,'${search.priceCondition}','${search.prodSearchType}');
 			}
 		});
 
@@ -262,7 +259,7 @@ div.caption{
 										data : JSON.stringify({
 											"currentPage" : page,
 											"searchCondition" : $('#searchCondition').val(),
-											"searchKeyword" : $('#searchKeword').val(),
+											"searchKeyword" : $('#searchKeyword').val(),
 											"prodSearchType" :  $('#prodSearchType').val()
 										}),
 										headers : {
@@ -292,9 +289,9 @@ div.caption{
 												displayValue += '</a>'
 													+'<span class="price">&#8361;'+JSONData[i].productPrice+'</span>'
 													+'<div class="property_details">'
-													+'<h1>'
+													+'<h3>'
 													+'<a href="#">'+JSONData[i].productName+'</a>'
-													+'</h1>'
+													+'</h3>'
 													+'<h2><p>';
 													 
 												if(JSONData[i].productType == '1'){
@@ -367,7 +364,7 @@ div.caption{
 			}
 		});
 
-		$("font[name='up']").bind(
+		/* $("font[name='up']").bind(
 				"click",
 				function() {
 					//alert($("input[name='prodNo']").val());
@@ -375,7 +372,7 @@ div.caption{
 							+ $(this).html().split("value=")[1].split("\"")[1]
 							+ "&menu=${param.menu}";
 
-				});
+				}); */
 
 		$("font[name='high']").bind("click", function() {
 			//alert("???");
@@ -414,12 +411,14 @@ div.caption{
 	
 	$(function() {
 		
-		$("#best10").bind("click", function() {
-			$(self.location).attr("href","/product/listBestProduct");
+		$("#high").bind("click", function() {
+			//$(self.location).attr("href","/product/listBestProduct");
+			fncGetUserList('${resultPage.currentPage }', 'high','${search.prodSearchType}');
 		});
 		
-		$("#host10").bind("click", function() {
-			$(self.location).attr("href","/product/listBestHost");
+		$("#low").bind("click", function() {
+			//$(self.location).attr("href","/product/listBestHost");
+			fncGetUserList('${resultPage.currentPage }', 'low','${search.prodSearchType}');
 		});
 		
 		$("#attraction").bind("click", function() {
@@ -452,126 +451,72 @@ div.caption{
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  Carousel Start /////////////////////////////////////-->
-	<div class="container">
-		<div id="carousel" class="carousel slide carousel-fade"
-			data-ride="carousel">
-			<ol class="carousel-indicators">
-				<li data-target="#carousel" data-slide-to="0" class="active"></li>
-				<li data-target="#carousel" data-slide-to="1"></li>
-				<li data-target="#carousel" data-slide-to="2"></li>
-			</ol>
-			<!-- Carousel items -->
-			<div class="carousel-inner carousel-zoom">
-				<div class="active item">
-					<img class="img-responsive"
-						src="https://images.unsplash.com/photo-1419064642531-e575728395f2?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
-						<div class="carousel-caption" style="top:0;">
-						<h2>DailyTour</h2>
-						</div>
-					<div class="carousel-caption">
-						<!-- <h2>DailyTour</h2> -->
-						<!-- <p>Description</p> -->
-						
-				<form name="detailForm">
-				<div class="row centered-form" >	
-				 <div class="mainbox col-md-12" >	
-				 <div class="panel" style="background: rgba(255, 255, 255, 0.3);">	
-				 <div class="panel-body" >	
-				 <div class="row">
-				 <div class="col-md-3" >
-					<div class="form-group">
-						<select class="form-control" name="searchCondition"
-							id="searchCondition">
-							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>국가</option>
-							<option value="1"
-								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>도시</option>
-							<option value="2"
-								${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>투어명</option>
-							<option value="3"
-								${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>호스트</option>
-
-						</select>
-						</div>
-					</div>
-					
-					<div class="col-md-9">
-					<div class="form-group">
-						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
-							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-					</div>
-					</div>
-					
-					</div>
-
-					<div class="row">
-					<div class="col-xs-8 col-sm-8 col-md-8 col-sm-offset-2">
-					<button type="button" class="btn btn-default">검색</button>
-
-					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-					<input type="hidden" id="currentPage" name="currentPage" value="" />
-					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
-					<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
-					<p>
-						<font name="high">가격높은순</font>
-						<font name="low">가격낮은순</font>
-						<!-- <font color="blue" name="star">별점순</font>
-						<font color="blue" name="view">조회순</font> -->
-					</p>
-					<p></p>
-					
-					</div>
-					</div>
-					
-					</div>
-					</div>
-					</div>
-					</div>
-				</form>
-
-			
-					</div>
-				</div>
-				<!-- <div class="item">
-					<img class="img-responsive"
-						src="https://images.unsplash.com/photo-1445280471656-618bf9abcfe0?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
-					<div class="carousel-caption">
-						<h2>DailyTour</h2>
-						<p>Description</p>
-					</div>
-				</div>
-				<div class="item">
-					<img class="img-responsive"
-						src="https://images.unsplash.com/photo-1445462657202-a0893228a1e1?crop=entropy&fit=crop&fm=jpg&h=400&ixjsv=2.1.0&ixlib=rb-0.3.5&q=80&w=1200">
-					<div class="carousel-caption">
-						<h2>DailyTour</h2>
-						<p>Description</p>
-					</div>
-				</div> -->
-			</div>
-			<!-- Carousel nav -->
-			<a class="carousel-control left" href="#carousel" data-slide="prev">‹</a>
-			<a class="carousel-control right" href="#carousel" data-slide="next">›</a>
+	<div class="container" style="background: url('/resources/images/productIcons/trolley-tours-of-key-west.jpg') no-repeat center center;background-size:cover; height:500px; width:100%;">
+		
+		<h1 class="text-center" style="color:#FFF; margin-top:2%;"><strong>Daily Tour</strong></h1>
+		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>현지인이 제공하는 이색체험을 경험하세요</strong></h3>
+		<!-- <!— FORM —> -->
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:130px;margin-left:20%;margin-right:20%;">
+			<form role="form" style="padding:10px;" name="detailForm">
+				
+	    			<div class="row">
+	    				<div class="col-sm-offset-1 col-sm-2" >
+						<div class="form-group">
+						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;">
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>국가</option>
+								<option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>도시</option>
+								<option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>투어명</option>
+								<option value="3" ${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>호스트</option>
+							</select>
+	  					</div>
+	 					</div>
+	 					
+	  				<div class="col-sm-7">
+					  <div class="form-group">					   
+					    <label class="sr-only" for="searchKeyword">검색어</label> 
+					    	<input type="text" class="form-control" id="searchKeyword" name="searchKeyword" placeholder="검색어" value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
+					  	</div>
+					  </div>
+					 
+		    			
+		    			
+	    				<div class="col-sm-1" align="center">
+	    					<input type="hidden" id="currentPage" name="currentPage" value="" />
+							<input type="hidden" id="priceCondition" name="priceCondition" value="${! empty search.priceCondition ? search.priceCondition : '' }" />
+							<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
+	    				 	<!-- <!— <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> —> -->
+	    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
+	    				</div>	
+	    				
+	    				<div class="col-sm-offset-1"></div>
+				</div><!-- <!— End row —> -->
+			</form>
+			<!-- <!— FORM —> -->
 		</div>
-	</div>
-	<!--  Carousel End /////////////////////////////////////-->
+		
+		<%-- <c:if test="${!empty user }">
+		<div class="col-sm-12" align="center" style="margin-top:10px;">
+           <button id="listRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';">모든 방목록</button>
+           <button id="scheduleList" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';">나의 &nbsp;일정</button>
+        </div>         
+		</c:if> --%>
+						
+	</div>	
 
 	<!--  ButtonGroup Start /////////////////////////////////////-->
 	<div class="container">
 		<!-- <div class="page-header text-info"></div>	 -->		
 		<div class="row col-sm-offset-2 col-sm-10 text-center">
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="best10">best10</button>
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="host10">host10</button>
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="attraction">명소투어</button>
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="food">푸드투어</button>
+			<button class="row col-sm-2 btn-dy" id="high" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격높은순</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="low" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격낮은순</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="attraction" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">명소투어</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="food" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">푸드투어</button>
 		</div>
 
 		<div class="row col-sm-offset-3 col-sm-9 text-center">
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="tracking">트래킹</button>
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="activity">액티비티</button>
-			<button class="row col-xs-2 btn btn-outlined btn-theme btn-xs" id="night">night투어</button>
+			<button class="row col-sm-2 btn-dy" id="tracking" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">트래킹</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="activity" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">액티비티</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="night" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">night투어</button>
 		</div>
 	</div>
 	<!--  ButtonGroup End /////////////////////////////////////-->
@@ -586,48 +531,7 @@ div.caption{
 
 			<div class="col-md-6 text-left">				
 				<p class="text-primary">전체 ${totalCount } 건수</p>
-			</div>
-
-			<%-- <div class="col-md-6 text-right">
-				<form class="form-inline" name="detailForm">				
-					<div class="form-group">
-						<select class="form-control" name="searchCondition"
-							id="searchCondition">
-							<option value="0"
-								${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>국가</option>
-							<option value="1"
-								${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>도시</option>
-							<option value="2"
-								${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : "" }>투어명</option>
-							<option value="3"
-								${ ! empty search.searchCondition && search.searchCondition==3 ? "selected" : "" }>호스트</option>
-
-						</select>
-					</div>
-
-					<div class="form-group">
-						<label class="sr-only" for="searchKeyword">검색어</label> <input
-							type="text" class="form-control" id="searchKeyword"
-							name="searchKeyword" placeholder="검색어"
-							value="${! empty search.searchKeyword ? search.searchKeyword : '' }">
-					</div>
-
-					<button type="button" class="btn btn-default">검색</button>
-
-					<!-- PageNavigation 선택 페이지 값을 보내는 부분 -->
-					<input type="hidden" id="currentPage" name="currentPage" value="" />
-					<input type="hidden" id="priceCondition" name="priceCondition" value="" />
-					<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
-					<p>
-						<font name="high">가격높은순</font>
-						<font name="low">가격낮은순</font>
-						<!-- <font color="blue" name="star">별점순</font>
-						<font color="blue" name="view">조회순</font> -->
-					</p>
-					<p></p>
-				</form>
-
-			</div> --%>
+			</div>			
 
 		</div>
 		<!-- table 위쪽 검색 Start /////////////////////////////////////-->
@@ -650,9 +554,9 @@ div.caption{
 					</a>
 					<span class="price">&#8361;${product.productPrice}</span>
 					<div class="property_details">
-						<h1>
+						<h3>
 							<a href="#">${product.productName}</a>
-						</h1>
+						</h3>
 						<h2><p>
 								<c:if test="${product.productType == 1}">명소투어</c:if>
 								<c:if test="${product.productType == 2}">음식투어</c:if>

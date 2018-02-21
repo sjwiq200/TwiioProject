@@ -42,10 +42,28 @@
   <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
+		
+		<!-- ---------font ------------ -->
+  	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />   
 		<!-- 다이얼로그  -->
   <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
 	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
+<style type="text/css">
 
+
+	 #head{
+		  		background-image: url("/resources/images/comm.png");
+		  		font-family: "Pacifico", cursive;
+		  		height : 250px;
+		  }
+	.thumbnail{
+			border-radius: 23px;
+		 	border: dashed rgba(102, 102, 102, 1) 1.3px;
+		}
+
+
+
+</style>
 <script type="text/javascript">
 	var page = 1;
 	var flag = 0;
@@ -111,6 +129,9 @@
 								thumbnail='<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>';							
 							}
 							var report = '';
+							/* if(${user.userNo} != JSONData[i].userNo){
+								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
+							} */
 							if(${user.userNo} != JSONData[i].userNo){
 								report='<a class="btn btn-outlined btn-light btn-sm" id="reportButton">신고하기</a></p>';
 							}
@@ -250,17 +271,22 @@
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
+   	
+   	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+      <div class="container" id="container">
+      <c:if test="${communityType == '0'}">
+     	 <h3 align="center"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;"><ins>Question Q&A</ins></strong></h3>
+	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">궁금하신 모든 것을 물어보세요:D</h4>
+      </c:if>
+      <c:if test="${communityType == '1'}">
+     	 <h3 align="center"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;"><ins>Trip Review</ins></strong></h3>
+	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">여러분들의 이야기를 들려주세요 :D</h4>
+	  </c:if>
+      </div>
+    </div>
   	
  <div class="container"> 
 
- 	<div class="page-header text-info" style="font-family: 'Pacifico', cursive;">
-		<c:if test="${communityType == '0'}">
-		<h2 align="center" style="color:#08708A;"><strong>Question Q&A</strong></h2>
-		</c:if>
-		<c:if test="${communityType == '1'}">
-		<h2 align="center" style="color:#08708A;"><strong>Trip Review</strong></h2>
-		</c:if>
-	</div>
 
  
  	<form name="detailForm" action="/community/listCommunity" method="post"></form>
@@ -315,10 +341,10 @@
 		<input type="hidden" name="communityNouserNo" value="${community.userNo}"/>
 		<input type="hidden" name="communityUserName" value="${community.userName}"/>
 		<c:if test="${! empty community.thumbnail}">
-			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+			<img src="/resources/images/communitythumbnail/${community.thumbnail}" style="width:300px; height:150px; border-radius: 23px;" alt="" title="" class="property_img"/>							
 		</c:if> 
 		<c:if test="${empty community.thumbnail}">
-			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px;" alt="" title="" class="property_img"/>							
+			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px; border-radius: 23px;" alt="" title="" class="property_img"/>							
 		</c:if>
           <div class="caption">
           <p>[게시판번호  : ${i}]</p>
