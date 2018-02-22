@@ -85,11 +85,14 @@ public class RoomRestController {
 				break;
 			}
 		}
+		
+		System.out.println("what is flag ==> "+ flag);
 		if(flag) {
 			
 		}else {
 			//채팅 초대 메시지 전송
 			Message message = new Message();
+			message.setMessageType("3");
 			message.setFromUserNo(user.getUserNo());
 			message.setToUserNo(Integer.parseInt(userNo));
 			message.setMessageTitle("채팅방 초대");

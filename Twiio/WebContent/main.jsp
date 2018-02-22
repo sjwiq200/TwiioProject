@@ -222,7 +222,7 @@
 					 <span class="slideanim"><img src="/resources/images/icon/logo.png" width="120px" style="margin-top:50px;margin-bottom:50px;"></span>
 					<p>전 세계의 약속 현황<br />
 					
-					<div id="map">maps error</div>
+					<div id="map">LOADING</div>
 						
 						<p>여행의 설렘, 새로운 만남의 설렘<br />
 						Twiio팀은 지금까지는 없었던 새로운 여행플랫폼을 만들었습니다. <br />

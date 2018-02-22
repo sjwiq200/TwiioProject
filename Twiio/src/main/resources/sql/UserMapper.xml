@@ -222,7 +222,7 @@
 	</insert>
 	
 	<select id="addEvalUserCheck" parameterType="userEval" resultType="int">
-		select COUNT(*) from usereval where user_no = #{userNo} AND schedule_no = #{scheduleNo}
+		select COUNT(*) from usereval where user_no = #{userNo} AND schedule_no = #{scheduleNo} AND target_no = #{targetNo}
 	</select>
 	
 	<select 	id="getEvalUser"	parameterType="int"	resultMap="userSelectMap">

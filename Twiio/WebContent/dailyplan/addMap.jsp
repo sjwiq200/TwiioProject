@@ -186,7 +186,6 @@
 		}
 		/////////////////////////////////////////////////////////////////////
 		function codeAddress(event) {
-			alert("안녕");
 				if (geocodemarker.length > 0)
 				{
 						servicemarker.setMap(null);
@@ -237,7 +236,6 @@
 			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶주소 : </strong>"+address+"</div>")
 			        		    	.append("<div class=\"testmap col-sm-7\" align=\"left\"><strong>▶전화번호 : </strong>"+phone+"</div>")
 			        		    	.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶웹사이트 : </strong>"+website+"</div>")
-									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶URL : </strong>"+url+"</div>")
 									.append("<div class=\"testmap col-sm-7\"  align=\"left\"><strong>▶유형 : </strong>"+types+"</div>");
 									
 									$("#mapName").val(name);
@@ -342,7 +340,7 @@
 		<div class="col-sm-12" id="map" style="font-family: 'JEJUGOTHIC';"
 			align="center"></div>
 
-		<div id="resultMap" class="col-sm-12" style="margin-left: 50px;">
+		<div id="resultMap" class="col-sm-12" style="margin-top: 10px;margin-left: 5px;">
 
 			<form name="modalMap">
 				<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
