@@ -162,7 +162,7 @@
 		    margin-right: auto;
 		  }
 		  #head{
-		  		background-image: url("/resources/images/hotel.png");
+		  		background-image: url("/resources/images/listHotel.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		 	 }
