@@ -55,7 +55,7 @@
 
 
 	 #head{
-		  		background-image: url("/resources/images/comm.png");
+		  		background-image: url("/resources/images/community.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  }

@@ -171,7 +171,7 @@
 			}
 			
 			#head{
-		  		background-image: url("/resources/images/night.png");
+		  		background-image: url("/resources/images/listNight.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  }
