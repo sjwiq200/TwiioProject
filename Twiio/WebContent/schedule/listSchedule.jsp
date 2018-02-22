@@ -475,8 +475,9 @@ h2 {
    	
    	<div class="container" style="background-size:cover; height:200px; width:100%;">
 		
-		<h2 class="text-center" style="color:#3B3B3B; margin-top:2%;"><strong>나의 일정</strong></h2>
-		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>나만의 설렘, 나만의 트위챗</strong></h3>
+		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;"><strong>My Schedule</strong></h2>
+		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL' ! imporatant;color:#3B3B3B; margin-top:4%;"><strong>나의 트위챗 일정 목록</strong></h3>
+		
 		<!-- FORM -->
 		
 		

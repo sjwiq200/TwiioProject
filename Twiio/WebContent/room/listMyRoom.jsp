@@ -346,10 +346,10 @@ h2 {
    	<!-- ToolBar End /////////////////////////////////////-->
    	<div class="container" style="background-size:cover; height:500px; width:100%;">
 		
-		<h2 class="text-center" style="color:#3B3B3B; margin-top:2%;"><strong>My Room</strong></h2>
-		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>나만의 설렘, 나만의 트위챗</strong></h3>
+		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;"><strong>My Room</strong></h2>
+		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL' ! imporatant;color:#3B3B3B; margin-top:4%;"><strong>나의 설렘, 나의 트위챗</strong></h3>
 		<!-- FORM -->
-		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:150px;margin-left:10%;margin-right:10%;min-width:300px;">
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:30px;margin-left:10%;margin-right:10%;min-width:300px;">
 			<form role="form" style="padding:10px;">
 				
 	    			<div class="row">
