@@ -194,6 +194,7 @@
 	   	})
 	   	/* image sliding following by scroll <START> */
 	   	
+	   
     </script>
     
    	
@@ -221,7 +222,7 @@
 					 <span class="slideanim"><img src="/resources/images/icon/logo.png" width="120px" style="margin-top:50px;margin-bottom:50px;"></span>
 					<p>전 세계의 약속 현황<br />
 					
-					<div id="map">maps error</div>
+					<div id="map">LOADING</div>
 						
 						<p>여행의 설렘, 새로운 만남의 설렘<br />
 						Twiio팀은 지금까지는 없었던 새로운 여행플랫폼을 만들었습니다. <br />
@@ -305,7 +306,7 @@
 					<section class="main items">
 						<article class="item slideanim">
 							<header>
-								<a href="#"><img src="/resources/images/bf3.jpg" alt="" /></a>
+								<a href="/room/listRoom" id="TWIICHAT"><img src="/resources/images/bf3.jpg" alt="" /></a>
 								<h3>TWIICHAT : 트위챗</h3>
 							</header>
 							<p>	나홀로 여행을 떠난 어느 저녁, 왠지 모를 외로움.. 같이 맥주 한 잔 할 친구가 필요한가요?  
@@ -317,7 +318,12 @@
 						</article>
 						<article class="item slideanim">
 							<header>
-								<a href="#"><img src="/resources/images/planner.jpg" alt="" /></a>
+								<c:if test="${sessionScope.user == null}">
+									<a href="/user/login"><img src="/resources/images/planner.jpg" alt="" /></a>
+								</c:if>
+								<c:if test="${sessionScope.user != null}">
+									<a href="/mainplan/listMainPlan"><img src="/resources/images/planner.jpg" alt="" /></a>
+								</c:if>
 								<h3>TWIIBOOK : 트위북</h3>
 							</header>
 							<p>여행에 필요한 모든 정보를 트위북에 적어보세요. 
@@ -327,7 +333,7 @@
 						</article>
 						<article class="item slideanim">
 							<header>
-								<a href="#"><img src="/resources/images/carhand.jpg" alt="" /></a>
+								<a href="/information/getFlightList"><img src="/resources/images/carhand.jpg" alt="" /></a>
 								<h3>ALL ABOUT TRIP : 올어바웃트립</h3>
 							</header>
 							<p>여행가기 전 필요한 모든 정보, 여기서 확인하세요. 전세계 모든 비행기, 호텔과 여행에 필요한 위험지역정보, 환율, 날씨
@@ -336,7 +342,7 @@
 						</article>
 						<article class="item slideanim">
 							<header>
-								<a href="#"><img src="/resources/images/backpackers.jpg" alt="" /></a>
+								<a href="/product/listProduct"><img src="/resources/images/backpackers.jpg" alt="" /></a>
 								<h3>DAILY TOUR : 데일리투어</h3>
 							</header>
 							<p>뻔한 여행 코스에 지치셨나요? 그렇다면 트위오에서 제공하는 데일리투어를 이용해보세요. 
@@ -349,7 +355,7 @@
 						
 						<article class="item slideanim">
 							<header>
-								<a href="#"><img src="/resources/images/twiichat.jpg" alt="" /></a>
+								<a href="/community/listCommunity?communityType=1"><img src="/resources/images/twiichat.jpg" alt="" /></a>
 								<h3>BLAH BLAH : 블라블라</h3>
 							</header>
 							<p>여행하고 난 뒤, 나만 알기 아까운 곳이 있으셨나요? 그렇다면 블라블라 게시판에 글을 남겨 많은 친구들이 그 곳을 알 수 있도록 해보세요!
