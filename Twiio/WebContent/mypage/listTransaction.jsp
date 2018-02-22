@@ -422,14 +422,14 @@
       
       //////////////////////////////////////상품 정보보기/////////////////////////////////////
       $(function(){
-          $('td:nth-child(2)').on('click',function(){
-        	  var productno = $($('input[name=productNo]')[$('td:nth-child(2)').index(this)]).val();
+          $('td:nth-child(2) div[name="productget"]').on('click',function(){
+        	  var productno = $($('input[name=productNo]')[$('td:nth-child(2) div[name="productget"]').index(this)]).val();
         	  self.location = "/product/getProduct?productNo="+productno;
           });
          });
          $(function(){
-             $('td:nth-child(3)').on('click',function(){
-           	  var productno = $($('input[name=productNo]')[$('td:nth-child(3)').index(this)]).val();
+             $('td:nth-child(3) div[name="productget"]').on('click',function(){
+           	  var productno = $($('input[name=productNo]')[$('td:nth-child(3) div[name="productget"]').index(this)]).val();
            	  self.location = "/product/getProduct?productNo="+productno;
            });
          });
@@ -777,7 +777,7 @@
 						<tr data-status="pagado">
 						<div class="media-body">
 						<td align="pull-right">${ i }</td>
-						<td align="left">
+						<td align="left" name="productget">
 							<c:if test="${empty friend.userImage}">
 								<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
@@ -785,7 +785,7 @@
 								<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 							</c:if>
 						</td>
-						<td align="left">
+						<td align="left" name="productget">
 							${friend.userName}
 						</td>
 						<td align="left" class="row">
@@ -877,15 +877,16 @@
          	
          <tr class="ct_list_pop">
            <td align="left">${transaction.regDate}</td>
-           <td align="left">
+           <td align="left"><div name="productget">
            <c:if test="${empty transaction.tranPro.thumbnail}">
                <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="100" width="80" />
            </c:if> 
            <c:if test="${!empty transaction.tranPro.thumbnail}">
                <img src="/resources/images/productThumbnail/${transaction.tranPro.thumbnail}" height="100" width="80" />
            </c:if>
+           </div>
            </td>
-           <td class="col-md-3" align="left">${transaction.tranPro.productName}</td>
+           <td class="col-md-3" align="left"><div name="productget">${transaction.tranPro.productName}</div></td>
            <td align="left">${transaction.tripDate}</td>
            <td align="left">${transaction.count}</td>
            <td align="left">${transaction.totalPrice}원</td>
@@ -1091,8 +1092,8 @@
        	  	<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div> 
       	  </div>
           <div class="modal-footer ">
-            <button type="button" class="btn btn-success" id="modalDeleteMessage" name="modalDeleteMessage"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            <button type="button" class="btn btn-success" id="modalDeleteMessage" name="modalDeleteMessage"><span class="glyphicon glyphicon-ok-sign"></span>?Yes</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>?No</button>
       	  </div>
         </div>
   	  </div>
@@ -1118,7 +1119,7 @@
         		</div>
         	</div>
          	<div class="modal-footer ">
-        		<button type="button" class="btn2 btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> SEND</button>
+        		<button type="button" class="btn2 btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>?SEND</button>
       		</div>
         	</div>
   	   </div>

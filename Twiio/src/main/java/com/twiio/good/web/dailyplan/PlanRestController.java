@@ -73,11 +73,11 @@ public class PlanRestController {
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
 	
-	////////���� ���ε�////////
+	////////占쏙옙占쏙옙 占쏙옙占싸듸옙////////
 	@Value("#{commonProperties['dailyPlanImageFilePath']}")
 	String dailyPlanImageFilePath;
 	
-	////////���� ���ε�////////
+	////////占쏙옙占쏙옙 占쏙옙占싸듸옙////////
 	@Value("#{commonProperties['dailyPlanImageFilePathLocal']}")
 	String dailyPlanImageFilePathLocal;
 	

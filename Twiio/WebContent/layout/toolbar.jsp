@@ -39,7 +39,7 @@
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
 	                         <span>TwiiChat</span>
-	                         <span class="caret"></span>
+	                        
 	                     </a>
 
 	                 </li> 
@@ -86,14 +86,9 @@
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		                         <span >Blabla</span>
-		                         <span class="caret"></span>
+		                        
 		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">Question Q&A</a></li>
-		                         <li><a href="#">Trip Review</a></li>
-		                         <li class="divider"></li>
-		                         
-		                     </ul>
+	
 		                </li>
 	                 
 	             </ul>
