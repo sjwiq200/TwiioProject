@@ -79,4 +79,6 @@ public interface TransactionDao {
 	public void updateTransactionEval(Transaction transaction) throws Exception;
 
 	public int getTransactionCount(Transaction transaction) throws Exception;
+	
+	public List listTransactionUser(int productNo) throws Exception;
 }

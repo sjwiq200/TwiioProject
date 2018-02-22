@@ -27,15 +27,15 @@
 	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
 	<!-- ///////////////////////summnernote/////////////////////////// -->
 	
-	<link href="/resources/css/summernote.css" rel="stylesheet">
-    <script src="/resources/javascript/summernote.min.js"></script> 
-    
+	<!-- <link href="/resources/css/summernote.css" rel="stylesheet">
+    <script src="/resources/javascript/summernote.min.js"></script>  -->
     <link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> 
     <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
     <link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-
+ 
+    
 	<!--  ///////////////////////// Bootstrap, jQuery CDN ////////////////////////// -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" >
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" >
@@ -44,18 +44,21 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
     
 	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/resources/css/animate.min.css" rel="stylesheet">
-   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+   	<link href="/resources/css/animate.min.css" rel="stylesheet">
+   	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
     <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
-   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
-   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
-   <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+  	<script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> 
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" ></script>
+    <!-- jQuery UI toolTip 사용 CSS-->
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+    <!-- jQuery UI toolTip 사용 JS-->
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	<!--  ///////////////////////// CSS ////////////////////////// -->
-	<link href="/resources/css/font.css" rel="stylesheet" type="text/css"/>
+    <link href="/resources/css/font.css" rel="stylesheet" type="text/css"/>
+  	<!-- summernote -->
+  	
+    
 	<style>
 		body{
 		 padding-top : 100px;
@@ -182,19 +185,22 @@ function deleteFile(file) {
 
 $(document).ready(function() {
     $('#summernote').summernote({
-    	 toolbar: [
-    		    // [groupName, [list of button]]
-    		    ['style', ['bold', 'italic', 'underline', 'clear']],
-                ['fontsize', ['fontsize']],
-                ['color', ['color']],
-                ['para', ['ul', 'ol', 'paragraph']],
-                ['height', ['height']],
-                ['insert', ['picture']]
-    		  ],   	        	
-    	height: 500,                 // set editor height
-    	/* minHeight: null,             // set minimum height of editor
-    	maxHeight: null,             // set maximum height of editor
-    	placeholder: 'write here...', */
+    	toolbar: [
+  		   // [groupName, [list of button]]
+  		   ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+  		   ['font', ['font family', 'strikethrough', 'superscript', 'subscript']],
+  		   ['fontsize', ['fontsize']],
+  		   ['color', ['color']],
+  		   ['para', ['ul', 'ol', 'paragraph']],
+  		   ['height', ['height']],
+  		   ['insert', ['table', 'picture']],
+  		   ['misc', ['undo', 'redo', 'codeview', 'help']]
+  		 ],       	
+     	lang: 'ko-KR', // default: 'en-US'
+     	height: 500,                 // set editor height
+     	minHeight: null,             // set minimum height of editor
+     	maxHeight: null,             // set maximum height of editor
+     	focus: false,                  // set focus to editable area after initializing summernote
     	callbacks: {
     		onImageUpload: function(files, editor, welEditable) {
 		    	for(i=0;i<files.length;i++){
@@ -236,11 +242,8 @@ $(document).ready(function() {
    	
    	 <div class="container">
 		<div class="page-header text-info" style="margin-bottom : 30px; padding-bottom : 30px;">
-			<c:if test="${communityType == '0'}">
-				<h2 align="center" style="color:#08708A; font-size : 5em !important; "><strong>Question Q&A</strong></h2>
-			</c:if>
 			<c:if test="${communityType == '1'}">
-				<h2 align="center" style="color:#08708A; font-size : 5em !important;"><strong>Trip Review</strong></h2>
+				<h2 align="center" style="color:#08708A; font-size : 5em !important;"><strong>BLABLA</strong></h2>
 			</c:if>
 		</div>
 		
@@ -252,7 +255,7 @@ $(document).ready(function() {
 					<c:if test="${communityType=='1'}">
 				    	<div class="col-sm-3">
 				      		<select class="form-control" name="communitySubTitle" id="communitySubTitle">
-				      			<option value="">말머리를 선택해 주세요</option>
+				      			<option value="5">말머리를 선택해 주세요</option>
 						  		<option value="0">도시</option>
 								<option value="1">루트</option>
 								<option value="2">교통</option>
@@ -271,14 +274,6 @@ $(document).ready(function() {
 				    	</div>     
 				    </div>
 				    <br/>
-				    </c:if>
-				    <c:if test="${communityType==0}">
-				    <div class="col-sm-12">
-				    	<div class="input-group">
-				    		<span class="input-group-addon">제목</span>
-				      		<input type="text" class="form-control" id="communityTitle" name="communityTitle" placeholder="제목을 입력 해주세요.">
-				    	</div>     
-				    </div>
 				    </c:if>
 				</div>
 				

@@ -9,6 +9,8 @@ import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.sql.Date;
 import java.text.DecimalFormat;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -127,6 +129,20 @@ public class TransactionRestController {
 		transactionService.updateTransactionEval(transaction);
 		System.out.println("finish");
 		return true;
+	}
+	
+	@RequestMapping(value="json/listTransactionUser/{productNo}", method=RequestMethod.GET)
+	public Map listTransactionUser(@PathVariable int productNo) throws Exception {
+		
+		System.out.println("/transaction/updateTransactionEval : POST");
+		System.out.println("transaction :: "+productNo);
+
+		List list = transactionService.listTransactionUser(productNo);
+		
+		Map map = new HashMap();
+		map.put("listProductUser", list);
+		System.out.println("finish");
+		return map;
 	}
 
 }

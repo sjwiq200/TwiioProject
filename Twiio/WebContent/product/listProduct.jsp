@@ -453,10 +453,10 @@ div.caption{
 	<!--  Carousel Start /////////////////////////////////////-->
 	<div class="container" style="background: url('/resources/images/productIcons/trolley-tours-of-key-west.jpg') no-repeat center center;background-size:cover; height:500px; width:100%;">
 		
-		<h1 class="text-center" style="color:#FFF; margin-top:2%;"><strong>Daily Tour</strong></h1>
+		<h1 class="text-center" style="color:#FFF; margin-top:5%;">Daily Tour</h1>
 		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL';color:#3B3B3B; margin-top:3%;"><strong>현지인이 제공하는 이색체험을 경험하세요</strong></h3>
 		<!-- <!— FORM —> -->
-		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:130px;margin-left:20%;margin-right:20%;">
+		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:40px;margin-left:20%;margin-right:20%;">
 			<form role="form" style="padding:10px;" name="detailForm">
 				
 	    			<div class="row">

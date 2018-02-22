@@ -69,7 +69,7 @@
 		 });
 		 
 		 $("button#search").on("click",function(){
-			 alert("hello")
+			 
  			fncGetRoomList(1);
  		});
 		 

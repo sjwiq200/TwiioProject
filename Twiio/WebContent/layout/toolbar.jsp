@@ -39,7 +39,7 @@
 	                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 
 	                         <span>TwiiChat</span>
-	                         <span class="caret"></span>
+	                        
 	                     </a>
 
 	                 </li> 
@@ -86,14 +86,9 @@
 		              <li class="dropdown">
 		                     <a  href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
 		                         <span >Blabla</span>
-		                         <span class="caret"></span>
+		                        
 		                     </a>
-		                     <ul class="dropdown-menu">
-		                         <li><a href="#">Question Q&A</a></li>
-		                         <li><a href="#">Trip Review</a></li>
-		                         <li class="divider"></li>
-		                         
-		                     </ul>
+	
 		                </li>
 	                 
 	             </ul>
@@ -109,21 +104,21 @@
 	                         <span class="caret"></span>
 	                     </a>
 	                     <ul class="dropdown-menu">
-	                     	 <li><a href="#">USERINFO</a></li>	                     	 
-	                         <li><a href="#">MESSAGE</a></li>
+	                     	 <li><a href="#" align="center">USERINFO</a></li>	                     	 
+	                         <li><a href="#" align="center">MESSAGE</a></li>
 	                         <!-- <li><a href="#">FRIEND</a></li> -->
 	                         <c:if test="${sessionScope.user.userType != '3'}">
-	                         	<li><a href="#">TRANSACTION</a></li>
+	                         	<li><a href="#" align="center">TRANSACTION</a></li>
 	                         </c:if>
 	                         <c:if test="${sessionScope.user.userType == '2'}">   
-	                        	<li><a href="#">PRODUCT</a></li>
+	                        	<li><a href="#" align="center">PRODUCT</a></li>
 	                         </c:if>
 	                         <c:if test="${sessionScope.user.userType == '3'}">
-	                         	<li><a href="#">USERLIST</a></li>
-	                         	<li><a href="#">REPORT</a></li>
-	                         	<li><a href="#">REFUND</a></li>
+	                         	<li><a href="#" align="center">USERLIST</a></li>
+	                         	<li><a href="#" align="center">REPORT</a></li>
+	                         	<li><a href="#" align="center">REFUND</a></li>
 	                         </c:if>
-	                         <li><a href="#">Logout</a></li>
+	                         <li><a href="#" align="center">Logout</a></li>
 	                         <!--<li><a href="#">일정목록조회</a></li>
 	                         <li><a href="#">친구목록조회</a></li> -->
 	                         <li class="divider"></li>
@@ -252,7 +247,7 @@
 			$(self.location).attr("href","/mypage/myPageMain");
 		}); */
 		
-		$( "a:contains('Message')" ).on("click" , function() {
+		$( "a:contains('MESSAGE')" ).on("click" , function() {
 			$(self.location).attr("href","/mypage/message/listMessage");
 		});
 		

@@ -194,7 +194,7 @@ public class CommunityController {
 
 		Community community = communityService.getCommunity(communityNo);
 		model.addAttribute("community",community);
-		  
+		System.out.println("updatecommunity :: "+community);  
 		return "forward:/community/updateCommunityView.jsp";
 	}
 	

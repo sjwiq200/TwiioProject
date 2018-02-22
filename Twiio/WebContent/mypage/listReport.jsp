@@ -101,10 +101,10 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetUserList(currentPage) {
-    	  if(${resultPage.maxPage}>=currentPage){
+    	 if(${resultPage.maxPage}>=currentPage){
          $("#currentPage").val(currentPage);
-         $("form").attr("method" , "POST").attr("action" , "/common/listReport").submit();
-      }
+         $("form[name='detailForm']").attr("method" , "POST").attr("action" , "/common/listReport").submit();
+      	}
       }
    
       $(function() {
@@ -187,11 +187,11 @@
 		    	  	   	  		                	}else{
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
 		    	  	   	  		                	}
-		    	  	   	  		                	location.reload();
+		    	  	   	  		                	//location.reload();
 		
 		    	  	   	  		                },error : function(request,status,error) {
 													alert('에러다.');
-													location.reload();
+													//location.reload();
 		    		    	  	   	  	    	}
 		    	  	   	  		            });
 		    	  	   	  	    	}
@@ -336,7 +336,7 @@ $(document).on('click','#messageWrite',function(){
            </td>
            <td align="left">${report.reportTitle}</td>
            <td align="left"> 
-           ${report.reportRegDate} 
+           		${report.reportRegDate} 
            </td>
            <td align="left">
            <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0}">	
@@ -372,6 +372,8 @@ $(document).on('click','#messageWrite',function(){
     <div class="row">
      	<jsp:include page="../common/pageNavigator_new.jsp"/>
      </div>
+     
+     
     </div>
  
 			<div id="viewReport" class="modal fade" role="dialog" style="background-color: transparent;" >
@@ -402,19 +404,19 @@ $(document).on('click','#messageWrite',function(){
 								<div name="planer">
 									
 									<label for="reportuser" class="col-md-12 control-label">신  고  자</label> 
-									<input type="text" class="form-control contents" style="position: absoloute" id="reportUsername" name="reportUsername" value="" readonly>
+									<input type="text"  class="form-control contents text-center" style="position: absoloute" id="reportUsername" name="reportUsername" value="" readonly>
 									<p>&nbsp;</p>
 									
 									<label for="targetReportUser" class="col-md-12 control-label">신고 대상</label> 
-									<input type="text" class="form-control contents" style="position: absoloute" id="reporttargetuser" name="reporttargetuser" value="" readonly>
+									<input type="text" class="form-control contents text-center" style="position: absoloute" id="reporttargetuser" name="reporttargetuser" value="" readonly>
 									<p>&nbsp;</p>
 				
 									<label for="targetReportTitle" class="col-md-12 control-label">신고 제목</label>
-									<input type="text" class="form-control contents" style="position: absoloute" id="detailreporttitle" name="detailreporttitle" value="" readonly >
+									<input type="text" class="form-control contents text-center" style="position: absoloute" id="detailreporttitle" name="detailreporttitle" value="" readonly >
 									<p>&nbsp;</p>
 									
 									<label for="departureDate" class="col-sm-12 control-label ">신고 내용</label> 
-									<textarea  class="form-control contents" id="detailreportcontent"  name="detailreportcontent" style="position: absoloute; row=5; col=50;" value="" readonly></textarea>
+									<textarea  class="form-control contents text-center" id="detailreportcontent"  name="detailreportcontent" style="position: absoloute; row=5; col=50;" value="" readonly></textarea>
 									<p>&nbsp;</p>
 									<div style="margin-bottom:50px;"  align="center">
 										<button type="button" class="btn btn-default" id="messageWrite" name="messageWrite">메시지</button>
