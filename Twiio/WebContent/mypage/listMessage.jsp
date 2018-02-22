@@ -261,7 +261,6 @@ $(document).on('click','#modalDeleteMessage',function(){
 	
 	$(document).on('click','td:nth-child(4)[id="title"]',function(){
 	var mesgNo = $($('input:hidden[name="messageNo"]')[$('td:nth-child(4)[id="title"]').index(this)]).val();
-	 alert(mesgNo);
 	 $.ajax({
 		url : "/mypage/json/getMessage",
 		method : "POST" ,
@@ -391,7 +390,7 @@ $(document).on('click','#modalDeleteMessage',function(){
   					}),
   					success : function(JSONData) {
   						alert("메시지가 보내기 성공.!!");
-  						$('#modalwrite').modal('toggle');
+  						$('#modalwrite2').modal('toggle');
   				    } 
   			   });
   			}
