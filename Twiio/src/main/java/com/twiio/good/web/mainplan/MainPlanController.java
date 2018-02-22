@@ -40,9 +40,12 @@ public class MainPlanController {
 	@Qualifier("dailyPlanServiceImpl")
 	private DailyPlanService dailyPlanService;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Îµï¿½////////
 	@Value("#{commonProperties['mainPlanFilePath']}")
 	String mainPlanFilePath;
+	
+	@Value("#{commonProperties['mainPlanFilePathLocal']}")
+	String mainPlanFilePathLocal;
 	
 	///Constructor
 	public MainPlanController() {
@@ -82,16 +85,17 @@ public class MainPlanController {
 		System.out.println("fileName :: "+fileName);
 		mainPlan.setMainThumbnail(fileName);
 		System.out.println("######debug : " + mainPlan);
-		File file = new File(mainPlanFilePath, fileName);
+		File file = new File(mainPlanFilePathLocal, fileName);
+		File fileMeta = new File(mainPlanFilePath,fileName);
 		mainPlan.getFile().transferTo(file);
+		mainPlan.getFile().transferTo(fileMeta);
 		
 		mainPlanService.addMainPlan(mainPlan);
 
-
-	      System.out.println("ÇÃ·£Á¦¸ñ : " + mainPlan.getPlanTitle());
-	      System.out.println("Ãâ¹ßÀÏ : "+ mainPlan.getDepartureDate());
-	      System.out.println("µµÂøÀÏ : " + mainPlan.getArrivalDate());
-	      //System.out.println("¿©ÇàÁö : " + mainPlan.getCity());
+	      System.out.println("ï¿½Ã·ï¿½ï¿½ï¿½ï¿½ï¿½ : " + mainPlan.getPlanTitle());
+	      System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ : "+ mainPlan.getDepartureDate());
+	      System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : " + mainPlan.getArrivalDate());
+	      //System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : " + mainPlan.getCity());
 	      
 	      DailyPlan dailyPlan = new DailyPlan();
 	      dailyPlan.setMainPlan(mainPlan);
@@ -119,7 +123,7 @@ public class MainPlanController {
 	             
 	             dailyPlanService.addDailyPlan(dailyPlan); 
 	             
-	              Calendar calendar = Calendar.getInstance();//+1À§ÇØ CalendarÇü½ÄÀ¸·Î º¯È¯
+	              Calendar calendar = Calendar.getInstance();//+1ï¿½ï¿½ï¿½ï¿½ Calendarï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 	              calendar.setTime(dailyDate);
 	              calendar.add(Calendar.DATE,1);
 	              java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
@@ -127,7 +131,7 @@ public class MainPlanController {
 	      
 	              final String FORMAT = "yyyy-MM-dd";
 	              SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
-	              String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String°ª
+	              String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//Stringï¿½ï¿½
 	              dailyDate=Date.valueOf(dailyDateFormat);
 	           }
 	      } else {
@@ -191,7 +195,7 @@ public class MainPlanController {
 						}
 				}
 			}else {
-				int mainPlanNo = Integer.valueOf(user.getMainPlanNoShared());//°øÀ¯µÇ¾î ÀÖ´Â ÇÃ·£ÀÌ ÇÏ³ª¹Û¿¡ ¾øÀ» ¶§ ','°¡ ¾øÀ¸¹Ç·Î.
+				int mainPlanNo = Integer.valueOf(user.getMainPlanNoShared());//ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ ï¿½Ö´ï¿½ ï¿½Ã·ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½Û¿ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ','ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç·ï¿½.
 				MainPlan mainPlanResult = mainPlanService.getMainPlan(mainPlanNo);
 				mainPlanResult.setUser(user);
 				mainPlanResult.setEndClick(100);
@@ -212,7 +216,7 @@ public class MainPlanController {
 	@RequestMapping(value = "updateMainPlanView")
 	public String updateMainPlanView(@RequestParam("mainPlanNo") int mainPlanNo, Model model, HttpSession session) throws Exception {
 		
-		System.out.println("Controller : updateMainPlanView <START>" + "Param°ª : " + mainPlanNo);
+		System.out.println("Controller : updateMainPlanView <START>" + "Paramï¿½ï¿½ : " + mainPlanNo);
 		
 		MainPlan mainPlan = mainPlanService.getMainPlan(mainPlanNo);
 		String[] country = (mainPlan.getCountry().split(","));
@@ -278,29 +282,29 @@ public class MainPlanController {
 		System.out.println("?????");
 		mainPlanService.updateMainPlan(mainPlan);
 		
-		////Case1 : ÀÏÁ¤º¯°æ¾øÀÌ city¸¸ º¯°æµÈ °æ¿ì => dailyPlan city ÃÊ±âÈ­ÇÏ±â 
+		////Case1 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ cityï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ => dailyPlan city ï¿½Ê±ï¿½È­ï¿½Ï±ï¿½ 
 //		if(!(cityCompared) && departureCompared) {
 //			DailyPlan dailyPlan4City = new DailyPlan();
 //			dailyPlan4City.setMainPlan(mainPlan);
 //			List<DailyPlan> list4City = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
-//			System.out.println("debug: " + "ÀÏÁ¤º¯°æ¾øÀÌ city¸¸ º¯°æµÈ °æ¿ì" );
+//			System.out.println("debug: " + "ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ cityï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½" );
 //			System.out.println("debug: " + list4City );
 //			for(int i = 0 ; i<list4City.size() ; i++) {
 //			
 //				list4City.get(i).setDailyCity(cityResult);
 //				list4City.get(i).setDailyCountry("");
-//				dailyPlanService.updateDailyPlan(list4City.get(i)); // º¯°æµÈ µµ½Ã¸íÀ¸·Î daily_plan¾÷µ¥ÀÌÆ®
+//				dailyPlanService.updateDailyPlan(list4City.get(i)); // ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¸ï¿½ï¿½ï¿½ï¿½ï¿½ daily_planï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
 //			}
 //		}
 		
 		
-		////Case2 : ÀÏÁ¤ÀÌ º¯°æµÈ °æ¿ì => day¼ö¿Í dailyDateº¯°æ & dailyPlan city±îÁö ÃÊ±âÈ­ÇÏ±â!
+		////Case2 : ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ => dayï¿½ï¿½ï¿½ï¿½ dailyDateï¿½ï¿½ï¿½ï¿½ & dailyPlan cityï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­ï¿½Ï±ï¿½!
 		if(!(departureCompared)) {
-			System.out.println("ÀÏÁ¤ÀÌ º¯°æµÇ¾ú½À´Ï´Ù.");
+			System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
 			
 			long diffDays = 0;
 			System.out.println("debug5: " + diffDaysDB + " : "+ diffDays);
-			if(departureDate != arrivalDate) { // »õ·Î ÀÔ·ÂÇÑ ³¯Â¥°¡ DAY1 ÀÌ»óÀÏ °æ¿ì
+			if(departureDate != arrivalDate) { // ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ ï¿½ï¿½Â¥ï¿½ï¿½ DAY1 ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
 				java.util.Date departureDateUtil = departureDate;
 				java.util.Date arrivalDateUtil = arrivalDate;
 				long diff = arrivalDateUtil.getTime() - departureDateUtil.getTime();
@@ -309,7 +313,7 @@ public class MainPlanController {
 		        
 		        
 		    	if(diffDaysDB>=diffDays) {
-					//±âÁ¸ DAY¼ö°¡ ´õ Å¬¶§
+					//ï¿½ï¿½ï¿½ï¿½ DAYï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½
 					DailyPlan dailyPlan = new DailyPlan();
 					dailyPlan.setMainPlan(mainPlanDB);
 					List<DailyPlan> list = dailyPlanService.getDailyPlanList(mainPlan.getMainPlanNo());
@@ -331,23 +335,23 @@ public class MainPlanController {
 							dailyPlanCheck.setDailyDate(dailyDate);
 							dailyPlanService.updateDailyPlan(dailyPlanCheck);
 							
-					        Calendar calendar = Calendar.getInstance();//+1À§ÇØ CalendarÇü½ÄÀ¸·Î º¯È¯
+					        Calendar calendar = Calendar.getInstance();//+1ï¿½ï¿½ï¿½ï¿½ Calendarï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 					        calendar.setTime(dailyDate);
 					        calendar.add(Calendar.DATE,1);
 					        java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
 					        
 					        final String FORMAT = "yyyy-MM-dd";
 					        SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
-					        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String°ª
+					        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//Stringï¿½ï¿½
 					        dailyDate=Date.valueOf(dailyDateFormat);
 					        
 						}
 					}
 					
 				}else {
-					//»õ·Î¿î DAY¼ö°¡ ´õ Å¬¶§ 
+					//ï¿½ï¿½ï¿½Î¿ï¿½ DAYï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ Å¬ï¿½ï¿½ 
 					
-					System.out.println("»õ·Î ÀÔ·ÂÇÑ DAY¼ö°¡ ±âÁ¸ ÀÔ·Â DAY¼ö º¸´Ù Å®´Ï´Ù.");
+					System.out.println("ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ DAYï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½ DAYï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Å®ï¿½Ï´ï¿½.");
 					Date dailyDate = mainPlan.getDepartureDate();
 					
 					//User user = (User) session.getAttribute("user");
@@ -362,16 +366,16 @@ public class MainPlanController {
 						
 						System.out.println("==>"+list.size());
 						
-						if(i<(diffDaysDB)+1) { //±âÁ¸¿¡ ÀÖ´ø µ¥ÀÌÅÍµé 1-5
+						if(i<(diffDaysDB)+1) { //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ 1-5
 							DailyPlan dailyPlanCheck = list.get(i);
 							dailyPlanCheck.setDay(i+1);
 							dailyPlanCheck.setDailyDate(dailyDate);
 							dailyPlanCheck.setDailyCity("");
 							dailyPlanCheck.setDailyCountry("");
 							dailyPlanService.updateDailyPlan(dailyPlanCheck);
-							System.out.println("±¹°¡&µµ½Ã ¹ÌÇ¥±â Ã³¸® µÈ dailyPlan Á¤º¸ : " + dailyPlanCheck);
+							System.out.println("ï¿½ï¿½ï¿½ï¿½&ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ç¥ï¿½ï¿½ Ã³ï¿½ï¿½ ï¿½ï¿½ dailyPlan ï¿½ï¿½ï¿½ï¿½ : " + dailyPlanCheck);
 						
-						}else { //Ãß°¡µÇ¾ß ÇÒ µ¥ÀÌÅÍµé 5-10
+						}else { //ï¿½ß°ï¿½ï¿½Ç¾ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Íµï¿½ 5-10
 					        	dailyPlan.setDailyCity("");
 							    dailyPlan.setDailyCountry("");
 							    dailyPlan.setDay(i+1);
@@ -379,14 +383,14 @@ public class MainPlanController {
 							    dailyPlanService.addDailyPlan(dailyPlan); 
 						}
 						
-						Calendar calendar = Calendar.getInstance();//+1À§ÇØ CalendarÇü½ÄÀ¸·Î º¯È¯
+						Calendar calendar = Calendar.getInstance();//+1ï¿½ï¿½ï¿½ï¿½ Calendarï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
 				        calendar.setTime(dailyDate);
 				        calendar.add(Calendar.DATE,1);
 				        java.util.Date calDailyDate = calendar.getTime();//Fri Jan 05 00:00:00 KST 2018
 				        
 				        final String FORMAT = "yyyy-MM-dd";
 				        SimpleDateFormat simpleDateFormatString = new SimpleDateFormat(FORMAT);
-				        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//String°ª
+				        String dailyDateFormat = simpleDateFormatString.format(calDailyDate);//Stringï¿½ï¿½
 				        dailyDate=Date.valueOf(dailyDateFormat);
 				        
 					}}}}
@@ -408,10 +412,10 @@ public class MainPlanController {
 		
 		for(DailyPlan deleteList : list) {
 			int dailyPlanNo = deleteList.getDailyPlanNo();
-			dailyPlanService.deletePlanContent(dailyPlanNo); // µ¥ÀÏ¸®ÇÃ·£ ¹øÈ£·Î ¿¬°áµÈ ÄÜÅÙÃ÷ »èÁ¦ 
+			dailyPlanService.deletePlanContent(dailyPlanNo); // ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ã·ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		}
 		
-		dailyPlanService.deleteDailyPlan(mainPlanNo); // ¸ÞÀÎÇÃ·£ ¹øÈ£·Î ¿¬°áµÈ µ¥ÀÏ¸® ÇÃ·£ »èÁ¦ 
+		dailyPlanService.deleteDailyPlan(mainPlanNo); // ï¿½ï¿½ï¿½ï¿½ï¿½Ã·ï¿½ ï¿½ï¿½È£ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½Ã·ï¿½ ï¿½ï¿½ï¿½ï¿½ 
 		
 		mainPlanService.deleteMainPlan(mainPlanNo); 
 		
