@@ -53,6 +53,9 @@ public class ProductController {
 	
 	@Value("#{commonProperties['productFilePath']}")
 	String productFilePath;
+	
+	@Value("#{commonProperties['productFileMetaPath']}")
+	String productFileMetaPath;
 //	@Autowired
 //	@Qualifier("transactionServiceImpl")
 //	private TransactionService transactionService;
@@ -107,7 +110,10 @@ public class ProductController {
 		if(!product.getFile().isEmpty()) {			
 			String thumbnail = user.getUserNo()+"="+product.getFile().getOriginalFilename();
 			File file = new File(productFilePath, thumbnail);
+			File fileMeta = new File(productFileMetaPath, thumbnail);
+			
 			product.getFile().transferTo(file);
+			product.getFile().transferTo(fileMeta);
 			
 			product.setThumbnail(thumbnail);
 			System.out.println(product);
@@ -198,7 +204,10 @@ public class ProductController {
 		if(!product.getFile().isEmpty()) {			
 			String thumbnail = product.getHostNo()+"="+product.getFile().getOriginalFilename();
 			File file = new File(productFilePath, thumbnail);
+			File fileMeta = new File(productFileMetaPath, thumbnail);
+			
 			product.getFile().transferTo(file);
+			product.getFile().transferTo(fileMeta);
 			
 			product.setThumbnail(thumbnail);
 			System.out.println(product);

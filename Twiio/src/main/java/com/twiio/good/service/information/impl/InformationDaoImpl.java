@@ -81,8 +81,11 @@ public class InformationDaoImpl implements InformationDao {
 
 	@Override
 	public List<Currency> addCurrency() throws Exception {
+
 		String req = "https://www.koreaexim.go.kr/site/program/financial/exchangeJSON?authkey="+currencyKey+"&searchdate=20180221&data=AP01";
-		
+
+		//String key = "4RKuUFR6wEpqdppFDxmGS1RkUztGUN9W";
+
 		URL url = new URL(req);
 		HttpURLConnection con = (HttpURLConnection)url.openConnection();
         con.setRequestMethod("GET");

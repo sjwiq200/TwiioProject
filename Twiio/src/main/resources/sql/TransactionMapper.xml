@@ -394,4 +394,31 @@
 	 FROM(SELECT * from refund)
 	 countTable	 	
 	 </select>
+	 
+	 <select  id="listTransactionUser"  parameterType="int"	resultMap="transactionSelectMap">
+				SELECT 
+				t.tran_no as tran_no, 
+				t.tran_date as tran_date, 
+				t.trip_date as trip_date, 
+				t.requirement as requirement, 
+				t.pay_type as pay_type, 
+				t.product_no as product_no,
+				t.host_no as host_no, 
+			 	t.tran_count as tran_count, 
+			  	t.product_price as product_price, 
+			  	t.user_no as user_no, 
+			  	t.tran_price as tran_price, 
+			  	t.refund_code as refund_code,
+			  	t.product_star_eval as product_star_eval,
+			  	t.eval_review as eval_review,
+			  	u.user_profile as thumbnail,
+			  	u.user_name as user_name
+			  	FROM transaction t, users u
+			  	WHERE t.user_no = u.user_no
+			  	AND t.product_no = #{productNo}
+			 	AND refund_code = '1'
+			  	ORDER BY trip_date				
+	 </select>
+	 
+	 
 </mapper>

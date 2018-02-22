@@ -153,4 +153,11 @@ public class TransactionDaoImpl implements TransactionDao {
 		return sqlsession.selectOne("TransactionMapper.getTotalCountRefund",search);
 	}
 
+	@Override
+	public List listTransactionUser(int productNo) throws Exception {
+		// TODO Auto-generated method stub
+		return sqlsession.selectList("TransactionMapper.listTransactionUser", productNo);
+	}
+	
+	
 }

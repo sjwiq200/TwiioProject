@@ -262,7 +262,11 @@ public class TransactionServiceImpl implements TransactionService {
 		// TODO Auto-generated method stub
 		return transactionDao.getTransactionCount(transaction);
 	}
-	
 
+	@Override
+	public List listTransactionUser(int productNo) throws Exception {
+		// TODO Auto-generated method stub
+		return transactionDao.listTransactionUser(productNo);
+	}
 
 }

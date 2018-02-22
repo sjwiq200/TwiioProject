@@ -112,9 +112,10 @@ public class TransactionController {
 		Product dbProduct =productService.getProduct(productNo);
 		transaction.setTranPro(dbProduct);
 		transaction.setTotalPrice(dbProduct.getProductPrice()*transaction.getCount());
-		
 		///////원-->USD//////
 		Double USDprice = informationService.getCurrency("standardCountry=한국 원&compareCountry=미국 달러&inputPrice="+transaction.getTotalPrice());
+		System.out.println("환전::"+USDprice);
+		
 		USDprice = Double.parseDouble(String.format("%.2f",USDprice));
 		
 		map.put("transaction", transaction);

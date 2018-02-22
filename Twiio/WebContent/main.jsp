@@ -41,9 +41,7 @@
 	
 	
 	
-	<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE&callback=initMap">
-    </script>
+	
 	
 	<!--  CSS 추가 : 툴바에 화면 가리는 현상 해결 :  주석처리 전, 후 확인-->
 	<style>
@@ -104,6 +102,8 @@
    	</style>
    	
    	
+   	
+   	
    	<script type="text/javascript">
    	
    	var geocoder;
@@ -131,10 +131,11 @@
         });
         
         geocoder = new google.maps.Geocoder();
+        
         for (i = 0; i < address.length; i++) {
           codeAddress(geocoder, map,address[i]);
         }
-        google.maps.event.addDomListener(window, "load", initMap);
+        //google.maps.event.addDomListener(window, "load", initMap);
 	}
 	   	
 	   	function codeAddress(geocoder, map, hello) {
@@ -215,7 +216,9 @@
 
 		<!— Wrapper —>
 			<div id="wrapper" style="font-family:JEJUGOTHIC !important;">
-
+				<script async defer
+    			src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmTcIdw0uowsiJrs4YNA0lhjLnN8PigjE&callback=initMap">
+    			</script>
 				<!— Banner —>
 					
 					<section id="intro" class="main">

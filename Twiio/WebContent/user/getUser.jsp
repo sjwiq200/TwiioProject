@@ -472,7 +472,7 @@
 				
 				<div class="row">
 			  		<div class="col-sm-4 col-sm-offset-2"><strong>이 메 일</strong></div>
-					<div class="col-sm-4">${user.email}</div>
+					<div class="col-sm-4">${user.userEmail}</div>
 				</div>
 				
 				<hr/>

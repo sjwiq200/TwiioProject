@@ -493,69 +493,113 @@ function resetData() {
 	
 	
 	///////////////////////////////////////////////////addfriendcommunity 해결/////////////////////////////////////
-		 $(document).on("click", '#addfriendcommunity', function(){
-
-			 $('#modalfriend').modal('show');
-			 
-			 $(document).on('click','#addmodalfriend',function(){
-			 if(${empty user.userId}){
-				 alert('로그인후 사용하여주세요');
-				 $('#modalfriend').modal('toggle');
-			 }
-			 else{
-			 if(${user.userNo eq community.userNo}){
-				 alert('자기 자신을 친구 추가할수 없습니다.');
-				 $('#modalfriend').modal('toggle');
-			 }else{
-				 $.ajax({
-						url : "/common/json/addFriend",
-						method : "POST" ,
-						dataType : "json" ,
-						contentType:"application/json;charset=UTF-8",
-						data : JSON.stringify({
-							"userNo":"${user.userNo}",
-							"friendNo":addfrienduserno,
-						}),
-						success : function(JSONData) {
-							if(JSONData.no == 0){
-								swal("이미 친구 등록이 되었습니다.", {
-								      icon: "warning",
-								});
-							}else{
-							swal({title: "친구를 추가 하시겠습니까?",
-								  icon: "warning",
-								  buttons: true,
-								  dangerMode: true,
-								})
-							.then((willDelete) => {
-							    if (willDelete) {
-							      swal("친구 등록이 되었습니다.", {
-							      icon: "success",
-							    }).then((next) => {
-							   	$.ajax({
-									url : "/common/json/addFriend",
-									method : "POST" ,
-									dataType : "json" ,
-									contentType:"application/json;charset=UTF-8",
-									data : JSON.stringify({
-										"userNo":"${user.userNo}",
-										"friendNo":addfrienduserno,
-									}),
-									success : function(JSONData) {
-										alert(JSON.stringify(JSONData));				
-									}
-							    });
-							  });
-							  }  
-							});			
-							}			
-				 		}
-				 	}); 
-			 }
-			 }
-			 });
-		});
+		 	$(document).on("click", '#addfriendcommunity', function(){
+		 		var addfrienduserno = $('input[name=communityUserNo]').val();
+				 if(${empty user.userId}){
+					 alert('로그인후 사용하여주세요');	 
+				 }
+				 else if(${user.userNo}== addfrienduserno){
+					 alert('자기 자신을 친구 추가할수 없습니다.');
+				 }else{
+					 $.ajax({
+							url : "/common/json/addFriend",
+							method : "POST" ,
+							dataType : "json" ,
+							contentType:"application/json;charset=UTF-8",
+							data : JSON.stringify({
+								"userNo":"${user.userNo}",
+								"friendNo":addfrienduserno,
+							}),
+							success : function(JSONData) {
+								if(JSONData.no == 0){
+									swal("이미 친구 등록이 되었습니다.", {
+									      icon: "warning",
+									});
+								}else{
+								swal({title: "친구를 추가 하시겠습니까?",
+									  icon: "warning",
+									  buttons: true,
+									  dangerMode: true,
+									})
+								.then((willDelete) => {
+								    if (willDelete) {
+								      swal("친구 등록이 되었습니다.", {
+								      icon: "success",
+								    }).then((next) => {
+								   	$.ajax({
+										url : "/common/json/addFriend",
+										method : "POST" ,
+										dataType : "json" ,
+										contentType:"application/json;charset=UTF-8",
+										data : JSON.stringify({
+											"userNo":"${user.userNo}",
+											"friendNo":addfrienduserno,
+										}),
+										success : function(JSONData) {
+											listReplyajax();			
+										}
+								    });
+								  });
+								  }  
+								});			
+								}			
+					 		}
+					 	});
+				 	}
+		 	});
 	
+	//////////////////////////////////////////////reportcommunity///////////////////////////////////////
+	
+	$(document).on('click','#reportcommunity', function() {
+		 var reportuserno = $('input[name=communityUserNo]').val();
+		 var reportusername = $('input[name=communityUserName]').val();
+		 
+		 if(${empty user.userId}){
+			 alert('로그인후 사용하여주세요');	 
+		 }else if(${user.userNo} == reportuserno){
+			 alert('자기자신은 신고 못합니다.');
+	 	 }else{
+			$('#reportuser2').val(reportusername);
+			$('#reportuserno2').val(reportuserno);
+	 		$('#modalreport2').modal('show');
+	 	 }
+	});
+	
+	$(document).on('click','#addreportcommunity2',function(){
+		 	var reportcontent = $('#reportcontent2').val();
+		 	var reporttitle = $('#reporttitle2').val();
+		 	
+		 	if(reportcontent==''| reporttitle==''){
+				 alert('내용과 제목을 입력하세요.');			 
+			}
+			else{
+		 	 $.ajax( 
+					{
+					url : "/common/json/addReport",
+					method : "POST" ,
+					dataType : "json" ,
+					contentType:"application/json;charset=UTF-8",
+					data : JSON.stringify({
+						"userNo":"${user.userNo}",
+						"reportContent":reportcontent,
+						"reportTitle":reporttitle,
+						"targetUserNo":"${community.userNo}",
+						"targetCommunityNo" :"${community.communityNo}"
+					}),
+					
+					success : function(JSONData) {
+						
+						 swal("신고 접수가 완료 되었습니다.", {
+						      icon: "success",
+						 });
+						 $('#modalreport2').modal('toggle');
+						 $('#reportcontent2').val('');
+						 $('#reporttitle2').val('');
+				}
+			});
+		 }
+	});
+	////////////////////////////////////////////////////////////////////////////////////////////////////
 	
 	
 	///////////////////////////////////////////////////addreport////////////////////////////////////////
@@ -606,6 +650,10 @@ function resetData() {
 						      icon: "success",
 						 });
 						 listReplyajax();
+						 $('#reportcontent').val('');
+						 $('#reporttitle').val('');
+						 $('#reportuserno').val('');
+						 $('#reportreplyno').val('');
 						$('#modalreport').modal('toggle');
 				}
 			});
@@ -714,6 +762,10 @@ function resetData() {
 						    });
 						 
 						 listReplyajax();
+						$('#msguserno').val('');
+						$('#msgcontent').val('');
+						$('#msgtitle').val('');
+						$('#msgusername').val('');
 						$('#modalmessage').modal('toggle');
 				    } 
 			   });
@@ -842,7 +894,8 @@ function resetData() {
    	 <div class="col-xs-10 col-xs-offset-1">
    	 			
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
-		
+		<input type="hidden" name = "communityUserNo" id = "communityUserNo" value="${community.userNo}"/>
+		<input type="hidden" name = "communityUserName" id = "communityUserName" value="${community.userName}"/>
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<div class="form-group" style="padding-top : 60px;">
 			<div class="row">
@@ -903,9 +956,10 @@ function resetData() {
 				    <div class="pull-right">
 				    	<c:if test="${community.userNo != user.userNo}">
 							<button type="button"  id="addfriendcommunity" class="btn btn-outlined btn-light btn-xs">친구추가</button>
+							<button type="button"  id="reportcommunity" class="btn btn-outlined btn-light btn-xs">신&nbsp;고</button>
 						</c:if>
 						<c:if test="${community.userNo == user.userNo}">
-							<button type="button"  id="updatecommunity" class="btn btn-outlined btn-light btn-xs">수정하기</button>
+							<button type="button"  id="updatecommunity" class="btn btn-outlined btn-light btn-xs">수&nbsp;정</button>
 						</c:if>
 					</div>
 				    </c:if>
@@ -990,29 +1044,6 @@ function resetData() {
   			</div>
 		</div>
 		
-		
-		
-		<!-- <div class="modal fade" id="updatemodalreply"  role="dialog" tabindex="-1" aria-labelledby="edit" aria-hidden="true">
-			<div class="modal-dialog">
-			Modal content
-			<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal">&times;</button>
-				<h3 class="modal-title">
-					<Strong>댓글 수정</Strong>
-				</h3>
-			</div>
-			<div class="modal-body">
-				<div id="upreply">
-				</div>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" id="updatereplym">수  정</button>
-				<button type="button" class="btn btn-default" data-dismiss="modal">아니오</button>
-			</div>
-		</div>
-		</div>
-		</div> -->
    <!-- ToolBar End /////////////////////////////////////-->
 		</form>
 		</div>
@@ -1056,6 +1087,56 @@ function resetData() {
 									<p>&nbsp;</p>
 									<div style="margin-bottom:50px;"  align="center">
 										<button type="button" class="btn btn-default" id="addreportcommunity">신고등록</button>
+										<button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+							
+						</form>
+					</div>
+			</div>
+			
+			
+			
+			<div id="modalreport2" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>REPORT</strong>
+									</h1>
+								</div>
+								
+								<input type="hidden" id="reportuserno2" name="reportuserno2" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									<label for="targetReportUser" class="col-md-12 control-label">신고 대상</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="reportuser2" name="reportuser2" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">신고 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="reporttitle2" name="reporttitle2" placeholder="신고 제목 " >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">신고 내용</label> 
+									<textarea  class="form-control contents" id="reportcontent2"  name="reportcontent2" style="position: absoloute" row="5" col="50" value="" placeholder="신고 내용"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" id="addreportcommunity2">신고등록</button>
 										<button type="button" class="btn btn-default" data-dismiss="modal">취  소</button>
 									</div>
 									
