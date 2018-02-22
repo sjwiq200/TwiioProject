@@ -52,7 +52,7 @@
 			$(self.location).attr("href","/schedule/listSchedule");
 		});
 		 
-		 $("a:contains('참가')").on("click",function(){
+		 $("button:contains('J O I N')").on("click",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
@@ -161,19 +161,19 @@
 
 											for (var i = 0; i < JSONData.length; i++) {
 												var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
-														+'<div class="thumbnail" name="getPro" style="max-height:500px;">'
+														+'<div class="thumbnail" name="getPro" style="max-height:600px;">'
 														
 														if(JSONData[i].type == '식사'){
-															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
 														  }
 														  else if(JSONData[i].type == '체험' ) {
-															  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >';
+															  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">';
 														  }
 														  else if(JSONData[i].type == '관람') {
-															  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >';
+															  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">';
 														  }
 														  else if(JSONData[i].type == '미정') {
-															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >';
+															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
 														  }
 														
 														displayValue += '<div class="col-sm-12">'
@@ -197,20 +197,20 @@
 														+ '<p>'
 														<c:if test="${!empty user}">
 														displayValue += '<div align="center">'
-														+ '<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> J O I N<input type="hidden" id="roomKey" value="'
+														+ '<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> J O I N<input type="hidden" id="roomKey" value="'
 														+ JSONData[i].roomKey
 														+ '">'
 														+ '<input type="hidden" id="master" value="'
 														+ JSONData[i].userNo
 														+'"></button>'
-														+'<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> O U T<input type="hidden" id="roomKey" value="'
+														+'<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> O U T<input type="hidden" id="roomKey" value="'
 											            +JSONData[i].roomKey
 											            +'">'
 											            +'</button>'
 														</c:if>
 														var userNo = ${user.userNo};
 														if( userNo == JSONData[i].userNo){
-										            			displayValue += '<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> E D I T'
+										            			displayValue += '<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> E D I T'
 										            			+ '<input type="hidden" id="roomKey" value="'
 										            			+ JSONData[i].roomKey
 										            			+ '">'
@@ -275,7 +275,8 @@ h2 {
   font-family:JEJUGOTHIC;
   color: #ffffff;
   font-size: 15px;
-  background: transparent;
+  /* background: transparent; */
+  background: #D73A31;
   padding: 5px 18x 5px 18px;
   border: solid #ffffff 2px;
   text-decoration: none;
@@ -408,20 +409,20 @@ h2 {
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
-		      <div class="thumbnail" name="getPro" style="max-height:500px;">
+		      <div class="thumbnail" name="getPro" style="max-height:600px;">
 		        <c:if test="${room.type == '식사'}">
-		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  <c:if test="${room.type == '체험' }">
-				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '관람' }">
-				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '미정' }">
-				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" >
+				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 		          <div class="col-sm-12">
                		<div class="col-sm-12">
@@ -444,12 +445,12 @@ h2 {
 			            </a> --%>
 			            
 			            <div align="center">
-			            <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"> J O I N
+			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> J O I N
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
 			            </button>
 			            
-			            <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"> O U T
+			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> O U T
 			            <!-- <a class="btn btn-outlined btn-light btn-sm" id="out"> -->
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <!-- 나가기 -->
@@ -458,7 +459,7 @@ h2 {
 		            </c:if>
 		            <c:if test="${user.userNo == room.userNo }">
 		            		<%-- <a href="#" class=" btn btn-default">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a> --%>
-		            		<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"> E D I T
+		            		<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> E D I T
 		            		<input type="hidden" id="roomKey" value="${room.roomKey}">
 		            		</button>
 		            </c:if>
@@ -471,7 +472,7 @@ h2 {
 		      </div>
 		    </div>
 		    </c:forEach>
-		    </div>
+		    
         
         
 	  <!--  table End /////////////////////////////////////-->

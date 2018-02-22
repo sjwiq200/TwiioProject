@@ -620,7 +620,7 @@
 						 
 						 listReplyajax();
 						$('#modalmessage').modal('toggle');
-				    } 
+				    }
 			   });
 			}			
 	});
@@ -1032,7 +1032,13 @@ $(document).on('click','#updatereplym',function(){
 				
 		<div class="row">
 	  		<div class="col-xs-6" align="right"><strong>상품유형</strong></div>
-			<div class="col-xs-offset-1 col-xs-5" align="left">${product.productType }</div>
+			<div class="col-xs-offset-1 col-xs-5" align="left">
+				<c:if test="${product.productType == 1}">명소투어</c:if>
+				<c:if test="${product.productType == 2}">음식투어</c:if>
+				<c:if test="${product.productType == 3}">트래킹</c:if>
+				<c:if test="${product.productType == 4}">액티비티</c:if>
+				<c:if test="${product.productType == 5}">night투어</c:if>
+			</div>
 		</div>
 				
 		<!-- <hr/> -->

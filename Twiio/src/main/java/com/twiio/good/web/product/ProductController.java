@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 import javax.servlet.http.HttpSession;
 
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.twiio.good.common.Page;
 import com.twiio.good.common.Search;
 import com.twiio.good.service.common.CommonService;
+import com.twiio.good.service.domain.Friend;
 import com.twiio.good.service.domain.Product;
 import com.twiio.good.service.domain.Reply;
 import com.twiio.good.service.domain.Transaction;
@@ -116,7 +118,7 @@ public class ProductController {
 		}
 		
 		
-		return "forward:/product/listProduct";
+		return "redirect:/product/listProduct";
 	}
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
@@ -297,6 +299,21 @@ public class ProductController {
 		
 		Page resultPage = new Page( search.getCurrentPage(), ((Integer)productMap.get("totalCount")).intValue(), pageUnit, search.getPageSize());		
 		System.out.println("resultPage:: "+resultPage);
+		List<Friend> list3 = commonService.listFriendOnly(user.getUserNo());
+
+		
+		List<User> listFriend = new Vector<>();
+		for (Friend friend : list3) {
+			User user2 = userService.getUserInNo(friend.getFriendNo());
+
+			user2.setProfilePublic(Integer.toString(friend.getNo()));
+			listFriend.add(user2);
+		}
+		
+		System.out.println("list :: "+listFriend);
+		
+		// Model °ú View ¿¬°á
+		map.put("listFriend", listFriend);
 				
 		System.out.println("map :: "+map);
 		map.put("list", list2);

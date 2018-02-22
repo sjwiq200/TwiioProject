@@ -452,26 +452,44 @@
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			
-			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
+			<div class="col-xs-12" align="center" style="margin-bottom: 2em; ">
 			
 				<c:if test="${empty user.userImage}">
-					<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" style="border-radius: 5%;">
+					<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" width="80px" height="80px" style="border-radius: 5%;">
 				</c:if>
 				<c:if test="${!empty user.userImage}">
-					<img src="/resources/images/userimages/${user.userImage}" width="80px" style="border-radius: 5%;">										  		 	 
+					<img name="ffriend" src="/resources/images/userimages/${user.userImage}" style="width: 100px; height: 100px;">										  		 	 
 				</c:if>
 								
 			</div>
+			<div class="col-xs-12" align="center">
+				[ 이	   름  :  ${user.userName } ]
+			</div>
 			
+			<div class="col-xs-12" align="center" >
+				<c:if test="${user.userType == 1}">
+					[  유    형  :  회원  ]
+				</c:if>
+				<c:if test="${user.userType == 2}">
+					[  유    형  :  호스트  ]
+				</c:if>
+				<c:if test="${user.userType == 3}">
+					[  유    형  :  관리자  ]
+				</c:if>
+			</div>
+			<div class="col-xs-12" align="center"style="margin-bottom: 4em; ">
+				[ 핸드폰  : ${user.userPhone } ]
+			</div>
 			<div class="col-xs-12" style="background:transparent;">
 			
 			<table class="table table-filter" style="align-content: center;">
 				<thead>
+				<h3 align = "center">친  구</h3>
 					<tr data-status="pagado">
-					    <th align="center" class="col-md-1">No</th>
-					    <th align="center" class="col-md-2">사진</th>
-					    <th align="center" class="col-md-3">Friend</th>
-					    <th align="right" class="col-md-3"></th>
+					    <th align="center" >No</th>
+					    <th align="left" >사진</th>
+					    <th align="left" >Friend</th>
+					    <th align="left" >쪽지/삭제</th>
 					</tr>
 					</thead>					
 					<tbody>
@@ -483,22 +501,24 @@
 						<input type="hidden" id="userName" name="userName" value="${friend.userName}"/>
 						<tr data-status="pagado">
 						<div class="media-body">
-							<td align="pull-right">${ i }</td>
-							<td align="left">
+						<td align="pull-right">${ i }</td>
+						<td align="left">
 							<c:if test="${empty friend.userImage}">
-								<img src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+								<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
 							<c:if test="${!empty friend.userImage}">
-								<img src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+								<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 							</c:if>
 						</td>
 						<td align="left">
 							${friend.userName}
 						</td>
-						<td align="right">
-							<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" name="friendMessage"><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></a>
-
-							<a class="btn btn-outlined btn-light btn-sm" href="#" role="button" name="friendDelete"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+						<td align="left" class="row">
+								<!-- <div href="#" role="button" name="friendMessage" style="max-width : 40%;" ><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+								<div href="#"  role="button" name="friendDelete" style="max-width : 40%;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div> -->
+							<span class="glyphicon glyphicon-envelope sideBarIcon" name="friendMessage" aria-hidden="true"></span>
+							<span class="glyphicon glyphicon-remove sideBarIcon" name="friendDelete" aria-hidden="true"></span>
+						
 						</td>
 						</div>
 						</tr>
@@ -508,17 +528,15 @@
 				
 		    </div>
 	</div>
+	
+	<div id="main" style="position:fixed; z-index:1000;">
 
-	<div id="main" style="position:fixed; z-index:1000;" id="openSideBar">
-
-		<h2>&nbsp;</h2>
-		<p>&nbsp;</p>
+	
 		<span style="font-size: 20px; font-family:'JEJUMYEONGJO'; cursor: pointer" onclick="openNav()" >&#9776;
 		OPEN
 		</span>
 	</div>
-	
-	
+   	
 	<!---------------------------------------사이드바--------------------------------------------------------->
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
