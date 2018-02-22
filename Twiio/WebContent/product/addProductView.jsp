@@ -37,19 +37,7 @@
   	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" />  
   	
   	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
-<<<<<<< HEAD
-	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
-  			
-  	<!-- summernote -->
-  	<link href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css" rel="stylesheet">
-  	<!-- <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script> -->
-  	<!-- <script src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script> -->
-  	<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
-  	<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>   	
-  	   
-=======
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
->>>>>>> refs/remotes/origin/master
 
 <style>
        body > div.container{
@@ -280,7 +268,8 @@ $( function() {
     		    	}
         		}
         	} 
-        });       
+        });
+        $('.dropdown-toggle').dropdown();
         
         
        //  $("button[name=save]").on("click",function(){
