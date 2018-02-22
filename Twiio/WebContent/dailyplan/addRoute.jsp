@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
@@ -116,6 +117,31 @@ body::-webkit-scrollbar-thumb {
 <script src="https://code.jquery.com/jquery-1.10.2.js"></script>
 <link rel="stylesheet" href="/resources/css/plan-getDailyPlan.css" />
 
+<style>
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy2 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #545454;
+  font-size: 15px;
+  background: #ffffff;
+  padding: 10px 15px 10px 15px;
+  border: solid #545454 0.5px;
+  text-decoration: none;
+}
+
+.btn-dy2:hover {
+  background: #D73A31;
+  opacity: 0.8;
+  border: solid #545454 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+</style>
 
 
 <script>
@@ -148,8 +174,8 @@ body::-webkit-scrollbar-thumb {
 		$("#resultMap").remove();
 		$("#resultMap").remove();
 		$("#addMapToPlan").remove();
-		$("#box1").append('<div class="col-xs-12"><div id="resultMapSummary"></div></div>'
-				+'<div class="col-xs-offset-3 col-xs-6"><button type="button" class="btn btn-default" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button></div>');
+		$("#box1").append('<div class="col-sm-12"><div id="resultMapSummary"></div></div>'
+				+'<div class="col-sm-offset-3 col-sm-6"><button type="button" class="btn btn-default" name="addMapToPlan" id="addMapToPlan">내 플랜에 추가하기</button></div>');
 		$("#box2").append('<div id="resultMap"></div>');
 
 		var start = document.getElementById('start').value;
@@ -171,7 +197,7 @@ body::-webkit-scrollbar-thumb {
 								$(".routeDetailResult").remove();
 
 								directionsDisplay.setDirections(response);
-								totalDisplay = '<h3 style="border: 1px solid black; border-radius: 5%; padding-top:5px; padding-bottom:5px">HOW TO GO</h3></br><div align="left" style="margin-bottom:5px;"><strong>#총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
+								totalDisplay = '<h3 style="border: 1px dashed #3B3B3B; border-radius: 5%; padding-top:5px; padding-bottom:5px">HOW TO GO</h3></br><div align="left" style="margin-bottom:5px;"><strong>#총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
 										+ '<strong>#출발</strong>:  '+ response.routes[0].legs[0].start_address+ '</br>'
 										+ '<strong>#도착</strong>:  '+ response.routes[0].legs[0].end_address+ '</br>'
 										+ '<strong>#거리</strong>:  '+ response.routes[0].legs[0].distance.text+ '</br></div>';
@@ -381,7 +407,7 @@ body::-webkit-scrollbar-thumb {
 								$("#detailedDisplay").val(resultMap);
 
 							} else {
-								alert('값을 불러올 수 없습니다. 재입력 부탁드립니다. [비행기 정보 출력되지 않습니다.]');
+								swal('값을 불러올 수 없습니다. 재입력 부탁드립니다. [비행기 정보 출력되지 않습니다.]');
 							}
 						});
 	}
@@ -399,34 +425,41 @@ body::-webkit-scrollbar-thumb {
 		$("form").attr("method", "POST").attr("action","/dailyplan/addRoute").submit();
 	});
 	
+	$(function() {
+		$("#goToPlan").on("click",function() {
+			alert("안녕");
+			history.go(-1);
+				});
+	});
+	
 </script>
 <body id="mainBody">
 <div><jsp:include page="/layout/toolbar.jsp" /></div>
 
 	<div class="container">
-		<div class="col-xs-12 inner" id="thumbnailMainBox">
-			<div align="center" class="col-xs-1">&nbsp;</div>
+		<div class="col-sm-12 inner" id="thumbnailMainBox">
+			<div align="center" class="col-sm-1">&nbsp;</div>
 			<!-- 그라디언트 보이게 해주려고 한 부분 -->
-			<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
-				<div class="col-xs-12">
+			<div class="col-sm-12 inner" id="thumbnailMainThumbBox" align="center">
+				<div class="col-sm-12">
 
 					<div align="center">
-						<div class="col-xs-12" align="left" style="margin:100px;font-size: 4em !important; font-family: 'Pacifico', cursive;">
-							<h2>Save your route</h2>
+						<div class="col-sm-12" align="left" style="color:#3B3B3B !important;margin:100px;font-size: 4em !important; font-family:JEJUGOTHIC !important;">
+							<h2>ROUTE</h2>
 						</div>
-
+						<div class="col-sm-12" align="right"><input type="button" id="goToPlan" name="goToPlan" class="btn-dy2" value="내 플랜으로 이동" /></div>
 						<div class="row" id="routeQuery">
 						</div>
 
-						<div class="col-xs-12">&nbsp;</div>
+						<div class="col-sm-12">&nbsp;</div>
 
-						<div class="col-xs-12" style="font-family: 'JEJUGOTHIC';">
+						<div class="col-sm-12" style="font-family: 'JEJUGOTHIC';">
 
-							<div class="col-xs-7">
+							<div class="col-sm-7">
 								<div id="map-canvas" align="left"></div>
 							</div>
 							
-							<div class="col-xs-5" align="left">
+							<div class="col-sm-5" align="left">
 								<div id="box1">
 									<h4>
 										출발지 <input type="text" class="form-control input-md" id="start" name="address" value="카타루냐 광장" />
@@ -443,18 +476,20 @@ body::-webkit-scrollbar-thumb {
 										<option value="BICYCLING">자전거</option>
 										<option value="TRANSIT" selected>대중교통</option>
 									</select>
-									
-									<div class="col-xs-12">
-										<div>&nbsp;</div>
-										<button type="button" align="right" class="btn btn-default btn-lg btn-block" onclick="Javascript:calcRoute();">길찾기</button>
-										<div>&nbsp;</div>
-										<div id="resultMapSummary"></div>
-									</div>
 								</div>
 							</div>
 							
-							<div class="col-xs-12" style="border-top: 2px solid #C2C2C2;">
+							<div class="col-sm-12" style="border-top: 2px solid #C2C2C2;">
+							
+								
+									<div class="col-sm-12">
+										<div>&nbsp;</div>
+										<button type="button" align="right" class="btn btn-default btn-lg btn-block" onclick="Javascript:calcRoute();">길찾기</button>
+										<div>&nbsp;</div>
+									</div>
+									
 								<div id="box2">
+									<div id="resultMapSummary"></div>
 									<div id="resultMap"></div>
 									<div id="resultMap4Detail"></div>
 								</div>
@@ -473,8 +508,9 @@ body::-webkit-scrollbar-thumb {
 
 					</div>
 				</div>
-				<div align="right" class="col-xs-1">&nbsp;</div>
+				<div align="right" class="col-sm-1">&nbsp;</div>
 			</div>
+		</div>
 		</div>
 </body>
 

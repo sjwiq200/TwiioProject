@@ -44,6 +44,10 @@
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
 	<link rel="stylesheet" href="/resources/css/plan.css" />
+	
+		<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script> 
+	
 	<style>
        body {
             padding-top : 100px;
@@ -279,14 +283,23 @@
 				 
 				 if(inputNum==authNum){
 					 
-					 alert("인증번호가 확인되었습니다.");
+					 swal({
+							  title: "인증번호가 일치합니다:D",
+							  icon: "success",
+							  buttons: true,
+							})
 					 
 					 $("button#emailVer").replaceWith('<button class="mdl-button mdl-js-button mdl-button--raised" id="emailVer" disabled="disabled" >이메일 인증</button>');
 					 $("input#userEmail").replaceWith('<input type="text" class="form-control" id="userEmail" name="userEmail" placeholder="이메일" value='+email+' readOnly="true" >');
 					 $("#inputEmailAuth").modal("hide");
 				 }else{
 					 
-					 alert("인증번호가 다름니다. 다시입력해주세요.");
+					 swal({
+						  title: "인증번호가 일치하지 않습니다 :D",
+						  icon: "warning",
+						  buttons: true,
+						  dangerMode: true,
+						})
 				 }
 				 
 				 

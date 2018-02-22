@@ -28,8 +28,25 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
-	<link rel="stylesheet" href="/resources/css/plan.css" />
+	
 	<style>
+	
+	@import url("https://fonts.googleapis.com/css?family=Pacifico|Source+Sans+Pro:200,400");
+	@import url(http://fonts.googleapis.com/earlyaccess/hanna.css);
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothiccoding.css);
+	@import url(http://fonts.googleapis.com/earlyaccess/jejugothic.css);
+	@import url(http://fonts.googleapis.com/earlyaccess/nanumgothic.css);
+	@import url(http://fonts.googleapis.com/earlyaccess/notosanskr.css);
+	@font-face {font-family:'NanumGothic'; src: url('images/NanumGothic.eot');} 
+	@font-face {font-family:'YETHANGUL'; src: url('images/NANUMBARUNGOTHIC-YETHANGUL.TTF');} 
+	@font-face {font-family:'NANUMMYEONGJO'; src: url('images/NANUMMYEONGJO.TTF');} 
+	@font-face {font-family:'TYPO_JEONGJOM'; src: url('images/TYPO_JEONGJOM.TTF');} 
+	@font-face {font-family:'TYPO_JEONGJOL'; src: url('images/TYPO_JEONGJOL.TTF');} 
+	@font-face {font-family:'JEJUGOTHIC'; src: url('images/JEJUGOTHIC.TTF');} 
+	@font-face {font-family:'JEJUMYEONGJO'; src: url('images/JEJUMYEONGJO.TTF');} 
+
+
+	
     	body {
             padding-top : 200px;
             background-color: #f4f4f4;

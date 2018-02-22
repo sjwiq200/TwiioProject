@@ -70,21 +70,24 @@ public class UserController {
 		
 		System.out.println(user);
 		user.setUserRegisterType("T");
-		/*if(user.getFile()!=null) {
-			if(userService.detectFace(user)) {
-				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
-				userService.addUser(user);
-				model.addAttribute("user",user);
-				System.out.println(":: Twiio 자제 회원가입 완료/사진 업로드  ::");	
-			}else {
-				System.out.println(":: 회원가입 실패 =====> 얼굴을 명확히 인식할 수 있는 사진으로 다시 업로드 바람  ::");
-			}			
-		}else {
+
+//		if(user.getFile()!=null) {
+//			if(userService.detectFace(user)) {
+//				user.setUserImage(user.getUserId()+"="+user.getFile().getOriginalFilename());
+//				userService.addUser(user);
+//				model.addAttribute("user",user);
+//				System.out.println(":: Twiio 자제 회원가입 완료/사진 업로드  ::");	
+//			}else {
+//				System.out.println(":: 회원가입 실패 =====> 얼굴을 명확히 인식할 수 있는 사진으로 다시 업로드 바람  ::");
+//			}			
+//		}else {
+
 			//Business Logic
 			userService.addUser(user);
 			model.addAttribute("user",user);
 			System.out.println(":: Twiio 자제 회원가입 완료 ::");
-		}*/
+
+//		}
 		
 		return "redirect:/user/loginView.jsp";
 	}

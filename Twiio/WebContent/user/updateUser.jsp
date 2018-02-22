@@ -683,6 +683,11 @@
 								<div class="form-group">
 							  		<label for="userGender" class="col-sm-3 col-sm-offset-3 control-label">성별</label>
 							  			<div class="col-sm-4">
+							  			
+							  				<c:if test = "${user.userGender==null}"> 
+												<label for="female" class="chk_radio on"><input type="radio" name="userGender"   checked="checked" value="W" />여자</label>
+												<label for="male" class="chk_radio "><input type="radio" name="userGender"  value="M" />남자</label>
+											 </c:if> 
 								  			<c:if test = "${user.userGender=='W'}"> 
 												<label for="female" class="chk_radio on"><input type="radio" name="userGender"   checked="checked" value="W" />여자</label>
 												<label for="male" class="chk_radio "><input type="radio" name="userGender"  value="M" />남자</label>
