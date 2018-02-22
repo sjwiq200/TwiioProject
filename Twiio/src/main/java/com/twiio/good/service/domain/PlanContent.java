@@ -1,7 +1,9 @@
 package com.twiio.good.service.domain;
 
+import org.codehaus.jackson.annotate.JsonIgnoreProperties;
 import org.springframework.web.multipart.MultipartFile;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class PlanContent {
 
 	public PlanContent() {
@@ -210,21 +212,6 @@ public class PlanContent {
 	public void setResultForMobile(String resultForMobile) {
 		this.resultForMobile = resultForMobile;
 	}
-
-	@Override
-	public String toString() {
-		return "PlanContent [contentNo=" + contentNo + ", dailyPlan=" + dailyPlan + ", scrap=" + scrap + ", route="
-				+ route + ", mapUrl=" + mapUrl + ", mapAddress=" + mapAddress + ", mapPhone=" + mapPhone
-				+ ", mapWebsite=" + mapWebsite + ", mapName=" + mapName + ", mapImage=" + mapImage + ", mapType="
-				+ mapType + ", departureLocation=" + departureLocation + ", arrivalLocation=" + arrivalLocation
-				+ ", estimatedTime=" + estimatedTime + ", routeType=" + routeType + ", routeDescription="
-				+ routeDescription + ", orderNo=" + orderNo + ", contentText=" + contentText + ", contentImage="
-				+ contentImage + ", uploadFile=" + uploadFile + ", contentType=" + contentType + ", resultForMobile="
-				+ resultForMobile + "]";
-	}
-
-	
-
 
 
 	
