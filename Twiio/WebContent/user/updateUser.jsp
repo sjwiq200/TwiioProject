@@ -253,7 +253,7 @@
 				   }
 			   	}else{
 			   		
-			   		alert($("#updateUserForm").serialize());
+			   		//alert($("#updateUserForm").serialize());
 			   		$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 			   }
 			   }else{
@@ -349,7 +349,7 @@
 			//document.getElementsByName([Input필드의 name값])[0].value = "";
 			///////////////////googlevision////////////////////////
 			$('#file').ready('click',function(){
-				alert("바뀌었니??");
+				//alert("바뀌었니??");
 				/*   */
 			});
 		
@@ -371,42 +371,42 @@
 					 					 
 					 if(userImage==""){
 						 $("#imgHelpBlock").show();
-						 alert("이미지를 등록 해주세요");
+						 //alert("이미지를 등록 해주세요");
 						 flag = false;
 					 }
 					 if(userName==""){
 						 $("#nameHelpBlock").show();
-						 alert("이름을 등록 해주세요");
+						 //alert("이름을 등록 해주세요");
 						 flag = false;
 					 }
 					 if(userPhone==""){
 						 $("#phoneHelpBlock").show();
-						 alert("휴대폰 번호를 등록 해주세요");
+						 //alert("휴대폰 번호를 등록 해주세요");
 						 flag = false;
 					 }
 					 if(userBank==""){
 						 $("#banknameHelpBlock").show();
-						 alert("은행명을 등록 해주세요");
+						 //alert("은행명을 등록 해주세요");
 						 flag = false;
 					}
 					if(userAccount==""){
 						 $("#accountHelpBlock").show();
-						 alert("은행명을 입력해주세요");
+						 //alert("은행명을 입력해주세요");
 						 flag = false;
 					}
 					if(userAccount==""){
 						 $("#accountHelpBlock").show();
-						 alert("계좌를 등록 해주세요");
+						 //alert("계좌를 등록 해주세요");
 						 flag = false;
 					}
 					if(userBirthday==""){
 						 $("#birthHelpBlock").show();
-						 alert("생년월일을 등록 해주세요");
+						 //alert("생년월일을 등록 해주세요");
 						 flag = false;
 					}
 					if(userGender==""){
 						 $("#genderHelpBlock").show();
-						 alert("성별을 등록 해주세요");
+						 //alert("성별을 등록 해주세요");
 						 flag = false;
 					}
 					 
@@ -466,7 +466,7 @@
 					success : function(result) {
 						//alert("success");
 						//alert(result.face);
-						alert(result.flag);
+						//alert(result.flag);
 						$('#userImage').val(result.face);
 						//alert($('#userImage').val());
 						if(result.flag == '0'){

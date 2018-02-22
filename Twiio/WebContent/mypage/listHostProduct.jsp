@@ -226,42 +226,38 @@
   	});
       
      $(function(){
-      $('td:nth-child(3)').on('click',function(){
-    	  var productno = $($('input[name=productNo]')[$('td:nth-child(3)').index(this)]).val();
+      $('td:nth-child(2) div[name=productget]').on('click',function(){
+    	  var productno = $($('input[name=productNo]')[$('td:nth-child(2) div[name=productget]').index(this)]).val();
     	  self.location = "/product/getProduct?productNo="+productno;
       });
      });
      $(function(){
-         $('td:nth-child(4)').on('click',function(){
-       	  var productno = $($('input[name=productNo]')[$('td:nth-child(4)').index(this)]).val();
+         $('td:nth-child(3) div[name=productget]').on('click',function(){
+       	  var productno = $($('input[name=productNo]')[$('td:nth-child(3) div[name=productget]').index(this)]).val();
        	  self.location = "/product/getProduct?productNo="+productno;
        });
      });
 
-      $(document).on('click','#eval', function() {
-  		var tranno = $($('input[name=tranNo]')[$('.ct_list_pop #eval').index(this)]).val();
-  		alert()
-  		$('#addReivew').modal('show');
-  		 
-  		
-  		/* $(document).on('click','#updatereplym',function(){
-  			 $.ajax({
-  					url : "/common/json/updateReply",
-  					method : "POST" ,
-  					dataType : "json" ,
-  					contentType:"application/json;charset=UTF-8",
-  					data : JSON.stringify({
-  						"replyNo":updatereplyno,
-  						"replyContent":$('#updatecontent').val()
-  					}),
-  						success : function(JSONData) {
-  							alert(JSON.stringify(JSONData));
-  							 $('#updatemodalreply').modal('toggle');		
-  							window.location.reload();
-  					}
-  			}); 
-  		}); */
-  		});
+    /*  $(document).on("click",'td:nth-child(4) div[name="tripday"]', function(){
+			
+			var productNo = $($('input[name=productNo]')[$('td:nth-child(4) div[name="tripday"]').index(this)]).val();
+			alert(productNo);
+			$.ajax({
+				url : "/transaction/json/listTransactionUser/"+productNo,
+				method:"GET",
+				dataType:"json",
+				headers :{
+					"Accept" : "application/json",
+					"Content-Type" : "application/json"
+				},		
+				success : function(JSONData) {
+						alert(JSON.stringify(JSONData));
+						$('#productUserDetail').modal('show');
+			    },error : function(request,error){
+			    	alert(에러);
+			    }
+		  }); 
+		}); */
       
 //////////////////////////////////사이드바///////////////////////////////////////
 		function openNav() {
@@ -287,6 +283,7 @@
 					
 			});
 		});
+		
 ////////////////////////////////////////사이드바////////////////////////////////////
 ////////////////////////////////////////삭제///////////////////////////////////////
 $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
@@ -303,7 +300,6 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 					swal("삭제되었습니다.", {
 				      icon: "success",
 				    });
-					alert("삭제 성공");
 					window.location.reload();
 		    },error : function(request,error){
 		    	alert(에러);
@@ -317,7 +313,7 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 		var userName = $($('input[name=userName]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
 		$('#targetNo2').val(userNo);
 		$('#toUsern2').val(userName);
-		$("#modalwrite2").modal('show');
+		C
 	});
 
 	$(document).on('click','#addMess2',function(){
@@ -355,8 +351,8 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 	
 	$(function() {
 		//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
-		$( "td:nth-child(2)" ).on("click" , function() {
-			var userNo = $($('input[name=userNo]')[$('td:nth-child(2)').index(this)] ).val();
+		$( "td:nth-child(2) div[name='userprofile']" ).on("click" , function() {
+			var userNo = $($('input[name=userNo]')[$("td:nth-child(2) div[name='userprofile']").index(this)] ).val();
 			window.open("/user/getProfile2?userNo="+userNo,"getProfile2","width=500, height=650,status=no, scrollbars=no, location=no");
 			//self.location ="/user/getProfile2?userNo="+userNo; 
 		});
@@ -429,12 +425,14 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 						<div class="media-body">
 						<td align="pull-right">${ i }</td>
 						<td align="left">
+						<div name="userprofile">
 							<c:if test="${empty friend.userImage}">
 								<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
 							<c:if test="${!empty friend.userImage}">
 								<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 							</c:if>
+						</div>
 						</td>
 						<td align="left">
 							${friend.userName}
@@ -517,28 +515,29 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
         <c:set var="i" value="0" />
         <c:forEach var="product" items="${list}">
          <c:set var="i" value="${ i+1 }" />
+         <input type="hidden" name="productNo" value="${product.productNo}"/>
          <tr class="ct_list_pop">
-         	
-     	   <input type="hidden" name="productNo" value="${product.productNo}"/>
            <td align="left">${product.regDate}</td>
            <td align="left">
-           <c:if test="${empty product.thumbnail}">
+           	<div name="productget">
+           			<c:if test="${empty product.thumbnail}">
                         <img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" height="80" width="80" />
                      </c:if> 
                      <c:if test="${!empty product.thumbnail}">
                         <img src="/resources/images/productThumbnail/${product.thumbnail}" height="80" width="80" />
                      </c:if>
+            </div>
            </td>
-           <td align="left">${product.productName}</td>
+           <td align="left" ><div name="productget">${product.productName}</div></td>
            <td align="left">
-
+           <div name="tripday">
 		   <c:set var="date" value="${product.tripDate}"></c:set>
 		   <c:set var="date_array" value="${fn:split(date,'[,]')}"></c:set>
 		   <c:forEach var="tdate" items="${date_array}">
 		   ${tdate}
 		   <br/>
 		   </c:forEach>                  
-           
+           </div>
            </td>
            <td align="left">${product.productPrice}</td>
            <td align="left">${product.city}</td>
@@ -609,6 +608,85 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
         	</div>
   	   </div>
 	   </div>
+	   
+	   <%-- <div id="productUserDetail" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>USERDETAIL</strong>
+									</h1>
+								</div>
+
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									
+									<!-- <label for="reportuser" class="col-md-12 control-label"></label> 
+									<p>&nbsp;</p> -->
+									
+									
+									
+									<thead>
+									<h3 align = "center">TRANSACTION USER</h3>
+									<tr data-status="pagado">
+									    <th align="center" >PICTURE</th>
+									    <th align="left" >NAME</th>
+									    <th align="left" >REQUIREMENT</th>
+									    <th align="left" >COUNT</th>
+									</tr>
+									</thead>					
+									<tbody>
+									<c:set var="i" value="0" />
+									<c:forEach var="friend" items="${listFriend}">								    
+										<c:set var="i" value="${ i+1 }"/>
+										<tr data-status="pagado">
+										<div class="media-body">
+										<td >
+											<c:if test="${empty friend.userImage}">
+												<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
+											</c:if>
+											<c:if test="${!empty friend.userImage}">
+												<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
+											</c:if>
+
+										</td>
+										<td align="left">
+											${friend.userName}
+										</td>
+										<td align="left" class="row">
+												<!-- <div href="#" role="button" name="friendMessage" style="max-width : 40%;" ><span class="glyphicon glyphicon-envelope" aria-hidden="true"></span></div>
+												<div href="#"  role="button" name="friendDelete" style="max-width : 40%;"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></div> -->
+											<span class="glyphicon glyphicon-envelope sideBarIcon" name="friendMessage" aria-hidden="true"></span>
+											<span class="glyphicon glyphicon-remove sideBarIcon" name="friendDelete" aria-hidden="true"></span>
+										
+										</td>
+										</div>
+										</tr>
+									</c:forEach>
+									
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn btn-default" data-dismiss="modal">확인</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div> --%>
+							
+						</form>
+					</div>
+			</div>
 
 </body>
 </html>

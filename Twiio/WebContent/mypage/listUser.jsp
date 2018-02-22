@@ -81,7 +81,7 @@
             background-color: #f4f4f4;
 			color: #666666;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
-			background-image: url("/resources/images/main_img.jpg");
+			
     		background-size: cover;
         }
         

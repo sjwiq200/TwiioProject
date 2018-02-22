@@ -98,7 +98,7 @@
       function fncGetUserList(currentPage) {
     	  if(${resultPage.maxPage}>=currentPage){
          $("#currentPage").val(currentPage);
-         $("form").attr("method" , "POST").attr("action" , "/transaction/listRefund").submit();
+         $("form[name=detailform]").attr("method" , "POST").attr("action" , "/transaction/listRefund").submit();
       	}
       }
    	
