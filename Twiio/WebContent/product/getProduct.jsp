@@ -620,7 +620,7 @@
 						 
 						 listReplyajax();
 						$('#modalmessage').modal('toggle');
-				    } 
+				    }
 			   });
 			}			
 	});

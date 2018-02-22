@@ -118,7 +118,7 @@ public class ProductController {
 		}
 		
 		
-		return "forward:/product/listProduct";
+		return "redirect:/product/listProduct";
 	}
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
