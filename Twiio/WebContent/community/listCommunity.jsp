@@ -54,7 +54,7 @@
 
 
 	 #head{
-		  		background-image: url("/resources/images/comm.png");
+		  		background-image: url("/resources/images/community.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  }
@@ -292,10 +292,10 @@
 		</c:if>
           <div class="caption" >
           <p>[ 게시판번호  : ${i} ]</p>
-          <c:if test="${fn:length(community.communityTitle) > 12}">
-          <p>[ 제&nbsp;&nbsp;목  : <c:out value="${fn:substring(community.communityTitle,0,11)}"/>... ]</p>
+          <c:if test="${fn:length(community.communityTitle) > 13}">
+          <p>[ 제&nbsp;&nbsp;목  : <c:out value="${fn:substring(community.communityTitle,0,12)}"/>... ]</p>
           </c:if>
-          <c:if test="${fn:length(community.communityTitle) <= 12 }">
+          <c:if test="${fn:length(community.communityTitle) <= 13}">
           <p>[ 제&nbsp;&nbsp;목  : ${community.communityTitle } ]</p>
           </c:if>
           <p>[ 작   성   자 : ${community.userName } ]</p>

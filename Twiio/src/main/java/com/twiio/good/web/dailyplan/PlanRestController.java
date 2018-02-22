@@ -73,11 +73,11 @@ public class PlanRestController {
 	@Qualifier("informationServiceImpl")
 	private InformationService informationService;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™////////
 	@Value("#{commonProperties['dailyPlanImageFilePath']}")
 	String dailyPlanImageFilePath;
 	
-	////////»çÁø ¾÷·Îµå////////
+	////////å ì™ì˜™å ì™ì˜™ å ì™ì˜™å ì‹¸ë“¸ì˜™////////
 	@Value("#{commonProperties['dailyPlanImageFilePathLocal']}")
 	String dailyPlanImageFilePathLocal;
 	
@@ -486,7 +486,7 @@ public class PlanRestController {
 		standardCountryEnc = URLDecoder.decode(standardCountryEnc,"UTF-8");
 		compareCountryEnc = URLDecoder.decode(compareCountryEnc,"UTF-8");
 		
-		String contentText = "<img src=\"/resources/images/money-bag.png\" width=\"50px\"/><p><strong>È¯À² °Ë»ö °á°ú</strong></p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
+		String contentText = "<img src=\"/resources/images/money-bag.png\" width=\"50px\"/><p><strong>í™˜ìœ¨ ê²€ìƒ‰ ê²°ê³¼</strong></p><p>"+inputPrice+"  " +standardCountryEnc+"</p>"
 				+"<p>"+resultCurrency+"  "+compareCountryEnc+"</p>";
 		System.out.println("daily"+ dailyPlanNo + ": " + contentText);
 		PlanContent planContent = new PlanContent();
@@ -507,7 +507,7 @@ public class PlanRestController {
 		int dailyPlanNo = papago.getDailyPlanNo();
 		String contentText
 		= "<img src=\"/resources/images/translate.png\" width=\"50px\"/>"
-		+"<p><strong>¹ø¿ª °Ë»ö °á°ú </strong></p>"
+		+"<p><strong> ë²ˆì—­ ê²€ìƒ‰ ê²°ê³¼ </strong></p>"
 		+"<p>"+papago.getPapagoMyCountry() + " : " + papago.getTranslate() + "</p>"
 		+"<p>"+papago.getPapagoCompareCountry() + " : " + papago.getCompare() + "</p>";
 		

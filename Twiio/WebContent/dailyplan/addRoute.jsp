@@ -427,7 +427,6 @@ body::-webkit-scrollbar-thumb {
 	
 	$(function() {
 		$("#goToPlan").on("click",function() {
-			alert("안녕");
 			history.go(-1);
 				});
 	});

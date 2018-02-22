@@ -154,7 +154,7 @@
 				  }
 			
 			 #head{
-		  		background-image: url("/resources/images/unsafe.png");
+		  		background-image: url("/resources/images/unsafeRe.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  		margin-bottom : 20px;

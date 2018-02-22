@@ -1209,6 +1209,21 @@ $(function() {
 									</c:if>
 								</c:if>
 								
+								<!--  채팅 일정 픽스 사진  -->
+								<c:if test="${planContent.contentType eq 7}">
+
+											<div class="col-xs-12" align="center" style="margin-bottom:20px;font-family:'JEJUMYEONGJO';margin-bottom:15px;">
+											<h3>Your Tour Reservation</h3>
+											</div>
+											<div>
+											<p class="contents">
+												<img src="/resources/images/productThumbnail/${planContent.contentImage}" class="contentsDelete" width="300px" height="300px"
+												style="border-color:#3B3B3B;border-style: solid;border-width: 3px;border-radius: 50%;"
+													/></p>
+											</div>
+
+								</c:if>
+								
 								<c:if test="${!empty planContent.contentText}">
 									<p>
 										<div class="col-xs-12" align="center" style="margin-top:20px;font-size:1.1em !important;font-color: #C2C2C2 !important;">
@@ -1219,10 +1234,12 @@ $(function() {
 								</c:if>
 
 								<c:if test="${!empty planContent.contentImage}">
+									<c:if test="${! (planContent.contentType eq 7)}">
 									<p class="contentsThis">
 										<img src="/resources/images/dailyPlanContent/${planContent.contentImage}"
 											class="contentsDelete" width="400px" style="border-radius: 5%;"/>
 									</p>
+									</c:if>
 								</c:if>
 
 								<div id="buttonForDelete${i}"></div>

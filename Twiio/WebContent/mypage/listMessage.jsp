@@ -763,6 +763,5 @@ $(document).on('click','#modalDeleteMessage',function(){
 						</form>
 					</div>
 			</div>
-        	
 </body>
 </html>

@@ -134,7 +134,7 @@ public class ScheduleRestController {
 		
 		for(DailyPlan dailyPlanEach : listDailyPlan) {//sameSchedule
 			System.out.println("##Debug : " + dailyPlanEach);
-			String contentText = address + "/" + schedule.getUserNoString();
+			String contentText = address;
 			
 			int dailyPlanNo = dailyPlanEach.getDailyPlanNo();
 			int countForOrder = dailyPlanService.getPlanContentCount(dailyPlanNo);

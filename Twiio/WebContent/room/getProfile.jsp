@@ -165,27 +165,31 @@
 				if(${user.userNo}== $("#userNo").val()){
 					alert('자기 자신 입니다.');
 				}else{
-					alert("ok");
-					$.ajax({
-						url : "/common/json/addFriend",
-						method:"POST",
-						data : JSON.stringify({
-							userNo : ${user.userNo},
-							friendNo : $("#userNo").val()
-						}),
-						dataType : "json",
-						headers :{
-							"Accept" : "application/json",
-							"Content-Type" : "application/json"
-						},
-						success : function(JSONData, status){
-							
-							console.log(status);
-							if(status == 'success'){
-								window.close();
-							}
-						}//end success
-					});//end ajax	
+					swal("친구 추가 완료!","","success").then((next) => {
+						if(next){
+							$.ajax({
+								url : "/common/json/addFriend",
+								method:"POST",
+								data : JSON.stringify({
+									userNo : ${user.userNo},
+									friendNo : $("#userNo").val()
+								}),
+								dataType : "json",
+								headers :{
+									"Accept" : "application/json",
+									"Content-Type" : "application/json"
+								},
+								success : function(JSONData, status){
+									
+									console.log(status);
+									if(status == 'success'){
+										window.close();
+									}
+								}//end success
+							});//end ajax
+						}
+					}
+						
 				}//end else
 				
 			});

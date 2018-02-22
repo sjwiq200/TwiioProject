@@ -1092,8 +1092,8 @@
        	  	<div class="alert alert-danger"><span class="glyphicon glyphicon-warning-sign"></span> Are you sure you want to delete this Record?</div> 
       	  </div>
           <div class="modal-footer ">
-            <button type="button" class="btn btn-success" id="modalDeleteMessage" name="modalDeleteMessage"><span class="glyphicon glyphicon-ok-sign"></span> Yes</button>
-        	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span> No</button>
+            <button type="button" class="btn btn-success" id="modalDeleteMessage" name="modalDeleteMessage"><span class="glyphicon glyphicon-ok-sign"></span>?Yes</button>
+        	<button type="button" class="btn btn-default" data-dismiss="modal"><span class="glyphicon glyphicon-remove"></span>?No</button>
       	  </div>
         </div>
   	  </div>
@@ -1119,7 +1119,7 @@
         		</div>
         	</div>
          	<div class="modal-footer ">
-        		<button type="button" class="btn2 btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span> SEND</button>
+        		<button type="button" class="btn2 btn-warning btn-lg" id="addMess2" name="addMess2" style="width: 100%;"><span class="glyphicon glyphicon-ok-sign"></span>?SEND</button>
       		</div>
         	</div>
   	   </div>

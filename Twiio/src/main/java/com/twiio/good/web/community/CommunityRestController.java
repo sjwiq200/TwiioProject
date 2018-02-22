@@ -138,7 +138,7 @@ public class CommunityRestController {
 		jobj.put("relativeUrl", filePath);
 		System.out.println("들어오니6");
 		try {
-		Thread.sleep(3500);
+		Thread.sleep(5000);
 		}catch(InterruptedException e) {
 		
 		}
