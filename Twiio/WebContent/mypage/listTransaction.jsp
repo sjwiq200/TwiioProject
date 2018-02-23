@@ -502,9 +502,19 @@
 						"tranNo":tranNo
 					}),
 					success : function(JSONData) {
-						alert("완료");
-						$('#addReivew').modal('toggle');
-						location.reload();
+	
+						swal("완료!!", {
+						      icon: "success",
+						 }).then((willDelete)=>{
+	
+							 $('#message').val('');
+							 $('#message2').val('');
+							 $('input[type=radio][name=star-input]:checked').val('');
+						   	 $('input[type=radio][name=star-input2]:checked').val('');
+						   	 $('#addReivew').modal('toggle');
+								location.reload();
+						});
+						
 					}
 		  });
 		   
@@ -605,8 +615,12 @@
 									"userNo":"${user.userNo}"
 								}),
 								success : function(JSONData) {
-									$('#addRefundModal').modal('toggle');
-									window.location.reload();
+									swal("완료!!", {
+									      icon: "success",
+									 }).then((willDelete)=>{
+										 $('#addRefundModal').modal('toggle');
+											window.location.reload();
+									});
 								}
 					    	 });
 					    });
@@ -652,11 +666,11 @@
  					"Content-Type" : "application/json"
  				},		
  				success : function(JSONData) {
- 						swal("삭제되었습니다.", {
- 					      icon: "success",
- 					    });
- 						alert("삭제 성공");
- 						window.location.reload();
+ 					swal("친구가 삭제되었습니다.", {
+					      icon: "warning",
+					}).then((willDelete)=>{
+						location.reload();
+					});
  			    },error : function(request,error){
  			    	alert(에러);
  			    }
@@ -698,8 +712,15 @@
   						"userName":"${user.userName}"
   					}),
   					success : function(JSONData) {
-  						alert("메시지가 보내기 성공.!!");
-  						$('#modalwrite2').modal('toggle');
+  						swal("메세지 보내기 성공 !!", {
+     					    icon: "success",
+     					}).then((willDelete)=>{
+     						$('#targetNo2').val('');
+     	  			  		$('#toUsern2').val('');
+     	  			  		$('#modalMessageTitle2').val('');
+     	  			  		$('#modalMessageContent2').val('');
+     	  					$('#modalwrite2').modal('toggle');
+     					});
   				    } 
   			   });
   			}
