@@ -302,20 +302,20 @@ body::-webkit-scrollbar-thumb {
 .btn-dy {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
-  border-radius: 23px;
+  border-radius: 10%;
   font-family:TYPO_JEONGJOL;
   color: #545454;
   font-size: 16px;
   background: #ffffff;
   padding: 6px 20px 6px 20px;
-  border: solid #545454 0.5px;
   text-decoration: none;
 }
 
 .btn-dy:hover {
-  background: #ededed;
+  background: #545454;
   text-decoration: none;
-  color:#545454;
+  color:#ffffff;
+  opacity:0.8;
 }
 
 
@@ -351,19 +351,131 @@ body::-webkit-scrollbar-thumb {
   font-size: 12px;
   background: #ffffff;
   padding: 8px 13px 8px 13px;
-  border: solid #545454 0.5px;
+  border: solid #545454 0px;
   text-decoration: none;
+  opacity:0.9;
 }
 
 .btn-dy3:hover {
   background: #D73A31;
-  opacity: 0.8;
+  opacity: 0.7;
   border: solid #545454 0px;
   text-decoration: none;
   color:#ffffff;
 }
 
+/* Button-dy css - listFriendRecommendation */
+.btn-dy4 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 12px;
+  background: #56B1BF;
+  padding: 8px 13px 8px 13px;
+  border: solid #56B1BF 0px;
+  text-decoration: none;
+}
 
+.btn-dy4:hover {
+  background: #56B1BF;
+  opacity: 0.8;
+  border: solid #56B1BF 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
+/* floating top button<START>  */
+   		.top {
+        position: fixed;
+        left: 75%;
+        bottom: 50px;
+   	   	background: transparent;
+      	color:transparent;
+      }
+      
+        button.top2 {
+        position: fixed;
+        left: 36.63%;
+        bottom: 50px;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: #D73A31;
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 5px;
+        display: none;
+        opacity:0.8;
+      }
+      
+           
+        button.top3 {
+        position: fixed;
+        left: 42.03%;
+        bottom: 50px;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: #D73A31;
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 5px;
+        display: none;
+        opacity:0.8;
+      }
+      
+           
+        button.top4 {
+        position: fixed;
+        left: 47.43%;
+        bottom: 50px;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: #D73A31;
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 5px;
+        display: none;
+        opacity:0.8;
+      }
+      
+           
+        button.top5 {
+        position: fixed;
+        left: 52.83%;
+        bottom: 50px;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: #D73A31;
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 5px;
+        display: none;
+        opacity:0.8;
+        min-width: 3vw;
+        min-height:1vw;
+      }
+           
+        button.top6 {
+        position: fixed;
+        left: 58.23%;
+        bottom: 50px;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: #D73A31;
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 5px;
+        display: none;
+        opacity:0.8;
+        text-align: center;
+        vertical-align: middle;
+        min-width: 3vw;
+        min-height:1vw;
+        
+      }
+      
+/* floating top button<END>  */      
 
 </style>
 
@@ -967,6 +1079,33 @@ $(function() {
 		 });
 	});		
 
+
+$( function() {
+    $( window ).scroll( function() {
+      if ( $( this ).scrollTop() > -1 ) {
+        $( '.top' ).fadeIn();
+        $( '.top2' ).fadeIn();
+        $( '.top3' ).fadeIn();
+        $( '.top4' ).fadeIn();
+        $( '.top5' ).fadeIn();
+        $( '.top6' ).fadeIn();
+        
+      } else {
+        $( '.top' ).fadeOut();
+        $( '.top2' ).fadeOut();
+        $( '.top3' ).fadeOut();
+        $( '.top4' ).fadeOut();
+        $( '.top5' ).fadeOut();
+        $( '.top6' ).fadeOut();
+      }
+    } );
+    $( '.top' ).click( function() {
+      $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+      return false;
+    } );
+    
+  } );
+  
 	
 	
 </script>
@@ -1038,7 +1177,9 @@ $(function() {
 	<!-- ----------------------------------- -->
 
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
-
+	
+	
+	
 	<form class="form-horizontal">
 		<div class="container">
 			<div class="col-xs-12 inner" id="thumbnailMainBox">
@@ -1154,7 +1295,7 @@ $(function() {
 								<c:if test="${!empty planContent.estimatedTime}">
 									<p class="contents">소요시간 : ${planContent.estimatedTime}</p>
 								</c:if>
-
+								
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
@@ -1251,8 +1392,17 @@ $(function() {
 							</div>
 
 						</c:forEach>
-						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
 						
+						
+						<div class="top"><img src="/resources/images/go-to-the-top.png" width="50px"></div>
+						<button class="top2 btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">TEXT</button>
+						<button class="top3 btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">IMAGE</button>
+						<button class="top4 btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">MAP</button>
+						<button class="top5 btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">ROUTE</button>
+						<button class="top6 btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">EDIT</button>
+						
+						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
+							
 						</div>
 					</div>
 				</div>

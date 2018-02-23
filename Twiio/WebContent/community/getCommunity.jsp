@@ -248,18 +248,33 @@ function resetData() {
 								if(${empty user.userId}){
 									tool='';
 								}else{
-									tool='<div class="btn-group pull-right">'+
-									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
-									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-									'</button>'+
-									'<ul class="dropdown-menu slidedown">'+
-									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-									'</ul>'+
-								   '</div>';	
+									if(${user.userNo != JSONData.list[i].userNo}){
+										tool='<div class="btn-group pull-right">'+
+										'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+										' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+										'</button>'+
+										'<ul class="dropdown-menu slidedown">'+
+										'<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+										'<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+										'<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+										'<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+										'<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+										'</ul>'+
+									    '</div>';
+									}else{							
+										tool='<div class="btn-group pull-right">'+
+										'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+										' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+										'</button>'+
+										'<ul class="dropdown-menu slidedown">'+
+										'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+										'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+										'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+										'<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+										'<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+										'</ul>'+
+									    '</div>';
+									}
 								}
 							if(JSONData.list[i]!=1){
 							displayValue += '<div class="row2">'+
@@ -317,7 +332,7 @@ function resetData() {
 	/////////////////////////////////////////////////writereply//////////////////////////////////////////////
 	$(function() {
 		 $("#write").on("click" , function() {
-			alert('들어오니??');
+			//alert('들어오니??');
 			if(${empty user.userId}){
 				 alert('로그인후 사용하여주세요');	 
 			 }
@@ -348,18 +363,33 @@ function resetData() {
 								if(${empty user.userId}){
 									tool='';
 								}else{
-									tool='<div class="btn-group pull-right">'+
-									'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
-									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-									'</button>'+
-									'<ul class="dropdown-menu slidedown">'+
-									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-									'</ul>'+
-								   '</div>';	
+									if(${user.userNo != JSONData.list[i].userNo}){
+										tool='<div class="btn-group pull-right">'+
+										'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+										' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+										'</button>'+
+										'<ul class="dropdown-menu slidedown">'+
+										'<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+										'<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+										'<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+										'<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+										'<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+										'</ul>'+
+									    '</div>';
+									}else{							
+										tool='<div class="btn-group pull-right">'+
+										'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+										' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+										'</button>'+
+										'<ul class="dropdown-menu slidedown">'+
+										'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+										'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+										'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+										'<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+										'<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+										'</ul>'+
+									    '</div>';
+									}	
 								}
 	    						   
 	    						   
@@ -401,6 +431,7 @@ function resetData() {
 								'댓글수  : '+JSONData.totalCount+				
 							'</div>';
 							
+							$('#replyContent').val('');
 							$('#replylist').html(displayValue); 					   
 							$('#totalCount').html(totalcount);
 						}
@@ -429,20 +460,35 @@ function resetData() {
 					for(var i=0;i<JSONData.list.length;i++){
 						var tool="";
 						if(${empty user.userId}){
-							tool='';
+							tool="";
 						}else{
-							tool='<div class="btn-group pull-right">'+
-							'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
-							' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-							'</button>'+
-							'<ul class="dropdown-menu slidedown">'+
-							'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-							'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-							'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-							' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-							' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-							'</ul>'+
-						   '</div>';	
+							if(${user.userNo != JSONData.list[i].userNo}){
+								tool='<div class="btn-group pull-right">'+
+								'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+								' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+								'</button>'+
+								'<ul class="dropdown-menu slidedown">'+
+								'<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+								'<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+								'<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+								'<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+								'<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+								'</ul>'+
+							    '</div>';
+							}else{							
+								tool='<div class="btn-group pull-right">'+
+								'<button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+								' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+								'</button>'+
+								'<ul class="dropdown-menu slidedown">'+
+								'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+								'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+								'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+								'<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+								'<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+								'</ul>'+
+							    '</div>';
+							}
 						}
 						   
 						   
@@ -627,7 +673,9 @@ function resetData() {
 		 	var reportreplyno = $('#reportreplyno').val();
 		 	
 		 	if(reportcontent==''| reporttitle==''){
-				 alert('내용과 제목을 입력하세요.');			 
+		 		swal("제목과 내용을 입력하여 주세요.", {
+				      icon: "warning",
+				    })			 
 			}
 			else{
 		 	 $.ajax( 
@@ -803,7 +851,7 @@ function resetData() {
 						}),
 						success : function(JSONData) {
 							//alert(JSON.stringify(JSONData));
-							alert('success');
+							//alert('success');
 							listReplyajax();
 						}
 					}); 
@@ -811,7 +859,7 @@ function resetData() {
 			  	}  
 			});	 
 		 }else{
-		 	alert('자신의 댓글을 선택하여 지우세요.');
+		 	//alert('자신의 댓글을 선택하여 지우세요.');
 		 }		  
 	});
 	
@@ -845,7 +893,7 @@ function resetData() {
 					"replyContent":$('#updatecontent').val()
 				}),
 					success : function(JSONData) {
-						alert(JSON.stringify(JSONData));
+						//alert(JSON.stringify(JSONData));
 						$('#updatereplyno').val("");
 						$('#updatecontent').val("");
 						listReplyajax();
@@ -974,7 +1022,7 @@ function resetData() {
 			</div>
 			<div class="col-sm-2">
 				<button type="button"  id="write" class="btn btn-default" style="margin-top : 20px;">댓글입력</button>
-				<span class="help-block" ><p id="characterLeft" class="help-block ">You have reached the limit</p></span>
+				<span class="help-block" ><p id="characterLeft" class="help-block " style="font-size: 1em;">You have reached the limit</p></span>
 			</div>
 		</div>
 		
@@ -1016,12 +1064,21 @@ function resetData() {
                   <button type="button" class="btn btn-default btn-xs dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">
                   		<span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
                   </button>
-                  <ul class="dropdown-menu slidedown">                    	
+                  <ul class="dropdown-menu slidedown">
+                  		<c:if test="${user.userNo != reply.userNo}">                    	
 						    <li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
 					        <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
 					        <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+					        <li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+					        <li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+					    </c:if>
+					    <c:if test="${user.userNo == reply.userNo}">                    	
+						    <li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
+					        <li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
+					        <li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
 					        <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
 					        <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+					    </c:if>
                    </ul>
              </div>				
 			</c:if>
@@ -1175,7 +1232,7 @@ function resetData() {
 								<div class="col-sm-8">					      
 
 								<div name="planer">
-									<label for="targetReportUser" class="col-md-12 control-label">보낼 사람</label> 
+									<label for="targetReportUser" class="col-md-12 control-label">받는 사람</label> 
 									<input type="text" class="form-control contents" style="position: absoloute" id="msgusername" name="msgusername" value="" readonly>
 									<p>&nbsp;</p>
 				
