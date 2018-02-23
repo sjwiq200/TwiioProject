@@ -67,7 +67,6 @@
 		 });
   		
   		$("button:contains('유저 평가')").on("click",function(){
-  			alert("hello");
   			var roomKey = $(this).html().split('value="')[1].split('"')[0];
   			/* self.location = "/schedule/addEvalUser/"+roomKey */
   			
@@ -94,7 +93,7 @@
     						+'<input type="hidden" id="userNo'+i+'" name = "userNo'+i+'" value="'+JSONData[i].userNo+'">'
     						+'<label for="userName" class="col-xs-offset-1 col-xs-3 control-label">*유저 이름 </label>'
     						+'<div class="col-xs-6">'
-    						+'<input type="text" class="form-control" id="userName'+i+'" name="userName'+i+'" value="'+JSONData[i].userName+'" readonly>'
+    						+'<input type="text" class="form-control" id="userName'+i+'" name="userName'+i+'" value="'+JSONData[i].userName+'" style="text-align-last:center;" readonly>'
     						+'</div>'
     						+'</div>'
     						+'<div class="form-group">'
@@ -364,14 +363,14 @@
 h2 {
 	/* color : #dedede; */
 	color :#474747;
-    font-size: 6vw;
+    font-size: 5vw;
     /* padding: 0 0.5em 0.25em 0.5em; */
-    font-weight: 500;
+    /* font-weight: 500; */
     font-family: "Pacifico", cursive;
     text-transform: none;
     letter-spacing: 10;
     font-style: Pacifico;
-    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+    /* text-shadow: 0 5px 5px rgba(0, 0, 0, .5); */
 }
 /* /////////////////dayoung////////////////// */
 /* Button-dy css  */
@@ -475,7 +474,7 @@ h2 {
    	
    	<div class="container" style="background-size:cover; height:200px; width:100%;">
 		
-		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;"><strong>My Schedule</strong></h2>
+		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;">My Schedule</h2>
 		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL' ! imporatant;color:#3B3B3B; margin-top:4%;"><strong>나의 트위챗 일정 목록</strong></h3>
 		
 		<!-- FORM -->
@@ -610,10 +609,10 @@ h2 {
 			<div class="modal-dialog modal-md">
 				<!-- Modal content-->
 				<div class="modal-content">
-					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/friendsShare.jpg');">
+					<div class="modal-header" style="background-image: url('/resources/images/room/userEval.png');">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
 						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
-							<Strong>나의 플랜 북을 친구들과 공유할까요?</Strong>
+							<Strong>이번 동행은 어떠셨나요?</Strong>
 						</h4>
 					</div>
 					<div class="modal-body col-sm-12" align="center" style="padding-top: 10px;">
@@ -633,7 +632,7 @@ h2 {
 						
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> -->
 					</div>
 				</div>
 			</div>

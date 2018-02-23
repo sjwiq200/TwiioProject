@@ -262,7 +262,7 @@
 		  <div class="form-group">
 		    <label for="headCount" class="col-xs-offset-1 col-xs-3 control-label"> 인원 </label>
 		    <div class="col-xs-4">
-		      <input type="text" class="form-control" id="headCount" name="headCount" value="">
+		      <input type="number" class="form-control" id="headCount" name="headCount" value="0">
 		    </div>
 		  </div>
 		  

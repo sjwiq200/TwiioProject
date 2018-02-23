@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -46,7 +47,8 @@
 			$(self.location).attr("href","/schedule/listSchedule");
 		});
 		 
-		 $("button:contains('J O I N')").on("click",function(){
+		 /* $("button:contains('J O I N')").on("click",function(){ */
+		 $(document).on("click","button:contains('J O I N')",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
@@ -134,7 +136,7 @@
 														/* var displayValue = '<div class="col-sm-3 " style="padding-top : 2%" >' */
 														var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
 															/* + '<div class="thumbnail" name="getPro" style="height:500px;">' */
-															+'<div class="thumbnail" name="getPro" style="max-height:550px;">'
+															+'<div class="thumbnail" name="getPro" style="height:400px; margin-bottom:0; border:none;">'
 															
 															  if(JSONData[i].type == '식사'){
 																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
@@ -155,8 +157,13 @@
 										               		+'<div class="col-sm-12">'
 										               		+'<div class="caption" style="margin-top:5px;text-align: left;">'
 															+ '<h3>'
-															+ JSONData[i].roomName
-															+ '</h3>'
+															if(JSONData[i].roomName.length > 30){
+																displayValue += JSONData[i].roomName.substring(0,30)
+															}else{
+																displayValue += JSONData[i].roomName
+															}
+															/* + JSONData[i].roomName */
+															displayValue += '</h3>'
 															+ '<p><strong>국가</strong> : '
 															+ JSONData[i].country
 															+ '</p>'
@@ -170,16 +177,17 @@
 															+ JSONData[i].headCount
 															+ '명 </p>'
 															/* + '<a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%" >참가' */
+															+'</div></div></div></div>'
 															<c:if test="${!empty user}">
-															+'<div align="center">'
-			            										+'<button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:JEJUGOTHIC;"> J O I N<input type="hidden" id="roomKey" value="'
+															+'<div align="center" style="margin-top:5px;margin-bottom:5px;">'
+			            										+'<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;font-family:JEJUGOTHIC;"> J O I N<input type="hidden" id="roomKey" value="'
 															+ JSONData[i].roomKey
 															+ '">'
 															+ '<input type="hidden" id="master" value="'
 															+ JSONData[i].userNo
 															+ '"></button></div>'
 															</c:if>
-															displayValue += '</div></div></div>'
+															displayValue +='</div>' 
 
 													$('div.row2').append(displayValue);
 													}//End if
@@ -354,9 +362,9 @@ h2 {
 	    				<div class="col-sm-2" >
 						<div class="form-group">
 						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;">
-		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
 		                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>나라</option>
 		                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시</option>
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
 							</select>
 	  					</div>
 	 					</div>
@@ -422,7 +430,7 @@ h2 {
 		    <!-- <div class="col-sm-3 "  style="padding-top : 2%"> -->
 		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
 		      <!-- <div class="thumbnail" name="getPro" style="height:500px;"> -->
-		      <div class="thumbnail" name="getPro" style="max-height:550px;">
+		      <div class="thumbnail" name="getPro" style="height:400px; margin-bottom:0; border:none;">
 		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
 				  <c:if test="${room.type == '식사'}">
 		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
@@ -442,27 +450,31 @@ h2 {
                		<div class="col-sm-12">
                		<div class="caption" style="margin-top:5px;text-align: left;">
 		          <!-- <div class="caption" style="text-align: center;"> -->
-		          	
-		            <h3>${room.roomName} </h3>		            
+		          	<c:if test="${fn:length(room.roomName) > 30}">
+		            <%-- <h4>${room.roomName} </h4> --%>
+		            <h4><c:out value="${fn:substring(room.roomName,0,30)}"/>...</h4>
+		            </c:if>
+		            <c:if test="${fn:length(room.roomName) <= 30 }">
+			          <h4>${room.roomName} </h4>
+		            </c:if>
 		            <p><strong>국가</strong> : ${room.country}</p>
 		            <p><strong>도시</strong> : ${room.city}</p>
 		            <p><strong>날짜</strong> : ${room.date}</p>
 		            <p><strong>인원</strong> : ${room.headCount}명</p>
-		            <c:if test="${!empty user}" >
-			            <!-- <a href="#" class=" btn btn-default" role="button" style="position: absolute;bottom:8%; right:10%">
-			            참가 -->
-			            <div align="center">
-			            <button class="btn-dy3" style="padding-top:6px;padding-bottom:6px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"> J O I N 
-			            <input type="hidden" id="roomKey" value="${room.roomKey}">
-			            <input type="hidden" id="master" value="${room.userNo }">
-			            </button>
-			            <!-- </a> -->
-			            </div>
-		            </c:if>
+		            
 		            </div>
 		        </div>
 		      </div>
+		            
 		    </div>
+		    <c:if test="${!empty user}" >
+			            <div align="center" style="margin-top:5px;margin-bottom:5px;">
+				            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"> J O I N 
+				            <input type="hidden" id="roomKey" value="${room.roomKey}">
+				            <input type="hidden" id="master" value="${room.userNo }">
+				            </button>
+			            </div>
+		            </c:if>
 		    </div>
 		    
 		    

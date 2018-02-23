@@ -3,6 +3,7 @@
 
 <!--  ///////////////////////// JSTL  ////////////////////////// -->
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -52,7 +53,8 @@
 			$(self.location).attr("href","/schedule/listSchedule");
 		});
 		 
-		 $("button:contains('J O I N')").on("click",function(){
+		 /* $("button:contains('J O I N')").on("click",function(){ */
+			 $(document).on("click","button:contains('J O I N')",function(){
 			 
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 var master = $(this).html().split('id="master" value="')[1].split('"')[0];
@@ -76,7 +78,8 @@
 			 /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
-		 $("button:contains('O U T')").on("click",function(){
+		 /* $("button:contains('O U T')").on("click",function(){ */
+			 $(document).on("click","button:contains('O U T')",function(){
 			 var roomKey = $(this).html().split('value="')[1].split('"')[0];
 			 swal({
 				  title: "채팅방을 나가시겠습니까?",
@@ -96,7 +99,6 @@
 		 })
 		 
 		 $("#search").on("click",function(){
-			 alert("hello")
  			fncGetRoomList(1);
  		});
 		 
@@ -161,7 +163,7 @@
 
 											for (var i = 0; i < JSONData.length; i++) {
 												var displayValue = '<div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">'
-														+'<div class="thumbnail" name="getPro" style="max-height:600px;">'
+														+'<div class="thumbnail" name="getPro" style="height:450px; border:none;">'
 														
 														if(JSONData[i].type == '식사'){
 															  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
@@ -195,6 +197,8 @@
 														+ JSONData[i].headCount
 														+ '명 </p>'
 														+ '<p>'
+														+ '</div></div></div></div>'
+														+ '<div>'
 														<c:if test="${!empty user}">
 														displayValue += '<div align="center">'
 														+ '<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> J O I N<input type="hidden" id="roomKey" value="'
@@ -207,6 +211,7 @@
 											            +JSONData[i].roomKey
 											            +'">'
 											            +'</button>'
+											            
 														</c:if>
 														var userNo = ${user.userNo};
 														if( userNo == JSONData[i].userNo){
@@ -215,6 +220,7 @@
 										            			+ JSONData[i].roomKey
 										            			+ '">'
 										            			+ '</button>'
+										            			+ '</div>'
 														}
 									            			displayValue += '</p></div></div>'
 												$('.row2').append(displayValue);
@@ -235,14 +241,14 @@
 h2 {
 	/* color : #dedede; */
 	color :#474747;
-    font-size: 6vw;
+    font-size: 5vw;
     /* padding: 0 0.5em 0.25em 0.5em; */
-    font-weight: 500;
+    /* font-weight: 500; */
     font-family: "Pacifico", cursive;
     text-transform: none;
     letter-spacing: 10;
     font-style: Pacifico;
-    text-shadow: 0 5px 5px rgba(0, 0, 0, .5);
+    /* text-shadow: 0 5px 5px rgba(0, 0, 0, .5); */
 }
 /* /////////////////dayoung////////////////// */
 /* Button-dy css  */
@@ -346,7 +352,7 @@ h2 {
    	<!-- ToolBar End /////////////////////////////////////-->
    	<div class="container" style="background-size:cover; height:500px; width:100%;">
 		
-		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;"><strong>My Room</strong></h2>
+		<h2 class="text-center" style="color:#3B3B3B; margin-top:6%;">My Room</h2>
 		<h3 class="text-center" style="font-family:'TYPO_JEONGJOL' ! imporatant;color:#3B3B3B; margin-top:4%;"><strong>나의 설렘, 나의 트위챗</strong></h3>
 		<!-- FORM -->
 		<div class="text-center" style="background: rgba(255, 255, 255, 0.3); margin-top:30px;margin-left:10%;margin-right:10%;min-width:300px;">
@@ -356,9 +362,9 @@ h2 {
 	    				<div class="col-sm-2" >
 						<div class="form-group">
 						    <select class="form-control" id="searchCondition" name="searchCondition" style="text-align-last:center;" onchange="dynaminInput()">
-		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
 		                        <option value="1" ${ ! empty search.searchCondition && search.searchCondition==1 ? "selected" : "" }>나라</option>
 		                        <option value="2" ${ ! empty search.searchCondition && search.searchCondition==2 ? "selected" : ""}>도시</option>
+		                        <option value="0" ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
 							</select>
 	  					</div>
 	 					</div>
@@ -409,7 +415,7 @@ h2 {
 		  <c:forEach var="room" items="${list}">
 			<!-- <div class="row"> -->
 		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
-		      <div class="thumbnail" name="getPro" style="max-height:600px;">
+		      <div class="thumbnail" name="getPro" style="height:450px; border:none;">
 		        <c:if test="${room.type == '식사'}">
 		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
@@ -428,33 +434,38 @@ h2 {
                		<div class="col-sm-12">
                		<div class="caption" style="margin-top:5px;text-align: left;">
                		
-		            <h3>${room.roomName} </h3>		            
+		            <%-- <h3 >${room.roomName} </h3> --%>
+		            
+		            <c:if test="${fn:length(room.roomName) > 30}">
+		            <h4><c:out value="${fn:substring(room.roomName,0,30)}"/>...</h4>
+		            </c:if>
+		            <c:if test="${fn:length(room.roomName) <= 30 }">
+			          <h4>${room.roomName} </h4>
+		            </c:if>
 		            
 		            <p><strong>국가</strong> : ${room.country}</p>
 		            <p><strong>도시</strong> : ${room.city}</p>
 		            <p><strong>날짜</strong> : ${room.date}</p>
 		            <p><strong>인원</strong> : ${room.headCount}명</p>
+		            
+		            </div>
+		            </div>
+		            </div>
+		            
+		        </div>
+		        
+		        <div>
 		            <p>
 		            <c:if test="${!empty user}">
 		            
-		            
-			            <%-- <a href="#" class=" btn btn-default" role="button">
-			            참가
-			            <input type="hidden" id="roomKey" value="${room.roomKey}">
-			            <input type="hidden" id="master" value="${room.userNo }">
-			            </a> --%>
-			            
-			            <div align="center">
+			            <div align="center" >
 			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> J O I N
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
 			            </button>
 			            
 			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> O U T
-			            <!-- <a class="btn btn-outlined btn-light btn-sm" id="out"> -->
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
-			            <!-- 나가기 -->
-			            <!-- </a> -->
 			            </button>
 		            </c:if>
 		            <c:if test="${user.userNo == room.userNo }">
@@ -465,10 +476,6 @@ h2 {
 		            </c:if>
 		            </p>
 		            </div>
-		            </div>
-		            </div>
-		            
-		        </div>
 		      </div>
 		    </div>
 		    </c:forEach>

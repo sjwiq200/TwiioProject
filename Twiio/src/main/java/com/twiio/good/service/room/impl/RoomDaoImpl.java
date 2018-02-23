@@ -176,7 +176,9 @@ public class RoomDaoImpl implements RoomDao {
 		query.with(new Sort(Sort.Direction.DESC,"_id"));
 		
 		query.skip(search.getStartRowNum()-1); //start Num
-		query.limit(search.getEndRowNum()+1); //end Num
+		query.limit(search.getEndRowNum()); //end Num
+		
+		
 		
 		System.out.println("mongotemplate list ==>"+mongoTemplate.find(query, RoomUser.class, "roomUser"));
 		List<RoomUser> list =mongoTemplate.find(query, RoomUser.class, "roomUser"); 
@@ -190,6 +192,9 @@ public class RoomDaoImpl implements RoomDao {
 			innerCriteria.is(roomUser.getRoomKey());
 
 			Query innerQuery = new Query(innerCriteria);
+			
+//			innerQuery.skip(search.getStartRowNum()); //start Num
+//			innerQuery.limit(search.getEndRowNum()); //end Num
 
 			listRoom.add(mongoTemplate.findOne(innerQuery, Room.class, "rooms"));
 		}
@@ -221,6 +226,8 @@ public class RoomDaoImpl implements RoomDao {
 		}else {
 			totalCount = searchRoom.size();
 		}
+		
+		System.out.println("Search Result == > "+searchRoom.size());
 		
 ////////////////////////////////
 		map.put("list", searchRoom);

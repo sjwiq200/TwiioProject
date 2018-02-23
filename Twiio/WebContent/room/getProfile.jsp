@@ -32,6 +32,9 @@
 	
 	<link rel="stylesheet" href="/resources/css/font.css" />
 	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
 		input {
@@ -188,8 +191,7 @@
 								}//end success
 							});//end ajax
 						}
-					}
-						
+					});//end swal
 				}//end else
 				
 			});
