@@ -138,7 +138,7 @@
 		 	
 		  }
 		  #head{
-		  		background-image: url("/resources/images/currency2.png");
+		  		background-image: url("/resources/images/listCurrency.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  }

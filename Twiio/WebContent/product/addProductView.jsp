@@ -268,7 +268,8 @@ $( function() {
     		    	}
         		}
         	} 
-        });       
+        });
+        $('.dropdown-toggle').dropdown();
         
         
        //  $("button[name=save]").on("click",function(){
