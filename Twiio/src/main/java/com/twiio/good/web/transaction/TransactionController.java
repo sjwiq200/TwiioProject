@@ -124,110 +124,110 @@ public class TransactionController {
 		return "forward:/transaction/addTransaction.jsp";
 	}
 	
-//	@RequestMapping(value="kakaoPayPopUpReady/{tripDate}/{count}/{totalPrice}/{buyerNo}/{requirement}/{productNo}", method=RequestMethod.GET)//@RequestParam("buyerNo") int buyerNo,
-//	public String kakaoPayPopUpReady(@PathVariable Date tripDate, @PathVariable int count, @PathVariable int totalPrice, @PathVariable int buyerNo, @PathVariable String requirement, @PathVariable int productNo, Transaction transaction) throws Exception{
-//		System.out.println("/transaction/kakaoPayPopUpReady : GET");
-//		
-//		Product dbproduct = productService.getProduct(productNo);		
-//		transaction.setTranPro(dbproduct);
-//		
-//		transaction.setTripDate(tripDate);
-//		transaction.setCount(count);
-//		transaction.setTotalPrice(totalPrice);
-//		transaction.setBuyerNo(buyerNo);
-//		transaction.setRequirement(requirement);
-//				
-//		transactiondb = transaction;
-//		/////////////////////////////////////////////////////////////////////////
-//		
-//		partner_user_id = String.valueOf(transaction.getBuyerNo());
-//		String item_name = transaction.getTranPro().getProductName();
-//		//System.out.println("요기");
-//		String item_code = String.valueOf(transaction.getTranPro().getProductNo());
-//		int quantity = transaction.getCount();
-//		int total_amount = transaction.getTotalPrice();
-//		int tax_free_amount = 0;
-//		//System.out.println("여기 ::::::::::::::");
-//		String approval_url = "http://192.168.0.35:8080/transaction/kakaoApproval";
-//		String cancel_url = "http://192.168.0.35:8080/transaction/kakaoCancel";
-//		String fail_url = "http://192.168.0.35:8080/transaction/kakaoFail";
-//		String readyPayURL = "https://kapi.kakao.com/v1/payment/ready";
-//		
-//		//System.out.println("여기2 ::::::::::::::::::");
-//		URL url = new URL(readyPayURL);
-//		HttpURLConnection con = (HttpURLConnection) url.openConnection();
-//		con.setRequestMethod("POST");
-//		con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
-//		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
-//
-//		con.setDoOutput(true);
-//		con.setDoInput(true);
-//		//System.out.println("33333333333333333333");
-//		StringBuffer sb = new StringBuffer("cid=" + cid);
-//		sb.append("&partner_order_id=" + partner_order_id);
-//		//System.out.println(partner_user_id);
-//		sb.append("&partner_user_id=" + partner_user_id);
-//		//System.out.println("33333333333333333333");
-//		sb.append("&item_name=" + URLEncoder.encode(item_name, "UTF-8"));
-//		sb.append("&item_code=" + item_code);
-//		sb.append("&quantity=" + quantity);
-//		sb.append("&total_amount=" + total_amount);
-//		sb.append("&tax_free_amount=" + tax_free_amount);
-//		sb.append("&approval_url=" + approval_url);
-//		sb.append("&cancel_url=" + cancel_url);
-//		sb.append("&fail_url=" + fail_url);
-//		
-//		////////////////////////////////////////////////////////
-//		
-//		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
-//		out.write(sb.toString());
-//		out.flush();
-//		out.close();
-//		System.out.println("44444444444444444444");
-//		// Response Code GET
-//		int responseCode = con.getResponseCode();
-//		System.out.println("responseCode==" + responseCode);
-//
-//		BufferedReader br = null;
-//
-//		if (responseCode == 200/* HttpURLConnection.HTTP_OK */) {
-//			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-//		} else {
-//
-//			// System.out.println(con.getErrorStream());
-//			System.out.println(con.getResponseMessage());
-//			br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
-//			System.out.println(br);
-//			transactiondb = null;
-//		}
-//
-//		// JSON Data 읽기
-//		String jsonData = "";
-//		StringBuffer response = new StringBuffer();
-//
-//		while ((jsonData = br.readLine()) != null) {
-//			response.append(jsonData);
-//		}
-//
-//		br.close();
-//
-//		System.out.println("HTTP 응답 코드 : " + responseCode);
-//		System.out.println("HTTP body : " + response.toString());
-//
-//		JSONObject jsonobj = (JSONObject) JSONValue.parse(response.toString());
-//		System.out.println(jsonobj);
-//
-//		tid = jsonobj.get("tid").toString();// server에 값저장
-//		System.out.println(jsonobj.get("tid"));
-//		String redirectPCURL = jsonobj.get("next_redirect_pc_url").toString();
-//		System.out.println(redirectPCURL);
-//		// Business Logic
-//		// purchaseService.addPurchase(purchase);
-//
-//		// map.put("purchase", purchase);
-//
-//		return "redirect:" + redirectPCURL;
-//	}
+	@RequestMapping(value="kakaoPayPopUpReady/{tripDate}/{count}/{totalPrice}/{buyerNo}/{requirement}/{productNo}", method=RequestMethod.GET)//@RequestParam("buyerNo") int buyerNo,
+	public String kakaoPayPopUpReady(@PathVariable Date tripDate, @PathVariable int count, @PathVariable int totalPrice, @PathVariable int buyerNo, @PathVariable String requirement, @PathVariable int productNo, Transaction transaction) throws Exception{
+		System.out.println("/transaction/kakaoPayPopUpReady : GET");
+		
+		Product dbproduct = productService.getProduct(productNo);		
+		transaction.setTranPro(dbproduct);
+		
+		transaction.setTripDate(tripDate);
+		transaction.setCount(count);
+		transaction.setTotalPrice(totalPrice);
+		transaction.setBuyerNo(buyerNo);
+		transaction.setRequirement(requirement);
+				
+		transactiondb = transaction;
+		/////////////////////////////////////////////////////////////////////////
+		
+		partner_user_id = String.valueOf(transaction.getBuyerNo());
+		String item_name = transaction.getTranPro().getProductName();
+		//System.out.println("요기");
+		String item_code = String.valueOf(transaction.getTranPro().getProductNo());
+		int quantity = transaction.getCount();
+		int total_amount = transaction.getTotalPrice();
+		int tax_free_amount = 0;
+		//System.out.println("여기 ::::::::::::::");
+		String approval_url = "http://192.168.0.35:8080/transaction/kakaoApproval";
+		String cancel_url = "http://192.168.0.35:8080/transaction/kakaoCancel";
+		String fail_url = "http://192.168.0.35:8080/transaction/kakaoFail";
+		String readyPayURL = "https://kapi.kakao.com/v1/payment/ready";
+		
+		//System.out.println("여기2 ::::::::::::::::::");
+		URL url = new URL(readyPayURL);
+		HttpURLConnection con = (HttpURLConnection) url.openConnection();
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Authorization", "KakaoAK a869cdaa9ef0e13b679fe56d980bcacf");
+		con.setRequestProperty("Content-type", "application/x-www-form-urlencoded;charset=utf-8");
+
+		con.setDoOutput(true);
+		con.setDoInput(true);
+		//System.out.println("33333333333333333333");
+		StringBuffer sb = new StringBuffer("cid=" + cid);
+		sb.append("&partner_order_id=" + partner_order_id);
+		//System.out.println(partner_user_id);
+		sb.append("&partner_user_id=" + partner_user_id);
+		//System.out.println("33333333333333333333");
+		sb.append("&item_name=" + URLEncoder.encode(item_name, "UTF-8"));
+		sb.append("&item_code=" + item_code);
+		sb.append("&quantity=" + quantity);
+		sb.append("&total_amount=" + total_amount);
+		sb.append("&tax_free_amount=" + tax_free_amount);
+		sb.append("&approval_url=" + approval_url);
+		sb.append("&cancel_url=" + cancel_url);
+		sb.append("&fail_url=" + fail_url);
+		
+		////////////////////////////////////////////////////////
+		
+		OutputStreamWriter out = new OutputStreamWriter(con.getOutputStream(), "UTF-8");
+		out.write(sb.toString());
+		out.flush();
+		out.close();
+		System.out.println("44444444444444444444");
+		// Response Code GET
+		int responseCode = con.getResponseCode();
+		System.out.println("responseCode==" + responseCode);
+
+		BufferedReader br = null;
+
+		if (responseCode == 200/* HttpURLConnection.HTTP_OK */) {
+			br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+		} else {
+
+			// System.out.println(con.getErrorStream());
+			System.out.println(con.getResponseMessage());
+			br = new BufferedReader(new InputStreamReader(con.getErrorStream()));
+			System.out.println(br);
+			transactiondb = null;
+		}
+
+		// JSON Data 읽기
+		String jsonData = "";
+		StringBuffer response = new StringBuffer();
+
+		while ((jsonData = br.readLine()) != null) {
+			response.append(jsonData);
+		}
+
+		br.close();
+
+		System.out.println("HTTP 응답 코드 : " + responseCode);
+		System.out.println("HTTP body : " + response.toString());
+
+		JSONObject jsonobj = (JSONObject) JSONValue.parse(response.toString());
+		System.out.println(jsonobj);
+
+		tid = jsonobj.get("tid").toString();// server에 값저장
+		System.out.println(jsonobj.get("tid"));
+		String redirectPCURL = jsonobj.get("next_redirect_pc_url").toString();
+		System.out.println(redirectPCURL);
+		// Business Logic
+		// purchaseService.addPurchase(purchase);
+
+		// map.put("purchase", purchase);
+
+		return "redirect:" + redirectPCURL;
+	}
 		
 	
 	@RequestMapping(value="kakaoPayReady", method=RequestMethod.POST)//@RequestParam("buyerNo") int buyerNo,

@@ -413,6 +413,11 @@ div.caption{
 	
 	$(function() {
 		
+		$("#totalList").bind("click", function() {
+			//$(self.location).attr("href","/product/listBestProduct");
+			fncGetUserList('1');
+		});
+		
 		$("#high").bind("click", function() {
 			//$(self.location).attr("href","/product/listBestProduct");
 			fncGetUserList('${resultPage.currentPage }', 'high','${search.prodSearchType}');
@@ -517,8 +522,8 @@ div.caption{
 
 		<div class="row col-sm-offset-2 col-sm-10 text-center">
 			<button class="row col-sm-2 btn-dy" id="night" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">night투어</button>
-			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="high" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격높은순</button>
-			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="low" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격낮은순</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="high" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격 ↑</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="low" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격 ↓</button>
 			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="totalList" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">전체목록</button>
 		
 		</div>

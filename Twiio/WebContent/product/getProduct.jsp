@@ -176,7 +176,10 @@
 }
 img { max-width: 100%; height: auto; }
 
-
+div[name='hostInfo']:hover {
+   opacity: 0.7;
+   transition-duration: 0.5s;
+}
 
 /* Button-dy css  */
 	</style>
