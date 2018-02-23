@@ -51,6 +51,7 @@
 	<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<script src="http://code.jquery.com/jquery-latest.min.js"></script>
 	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	<link rel="stylesheet" href="/resources/css/font.css" />
 		<!--  ///////////////////////// CSS ////////////////////////// -->
    <style>
@@ -297,10 +298,11 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 				"Content-Type" : "application/json"
 			},		
 			success : function(JSONData) {
-					swal("삭제되었습니다.", {
-				      icon: "success",
-				    });
-					window.location.reload();
+				swal("친구가 삭제되었습니다.", {
+				      icon: "warning",
+				}).then((willDelete)=>{
+					location.reload();
+				});
 		    },error : function(request,error){
 		    	alert(에러);
 		    }
@@ -309,11 +311,12 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 ////////////////////////////////////////////////////////////////////////////////////	
 ////////////////////////////////////////////friendMessage///////////////////////////
 	$(document).on("click",'td:nth-child(4) span[name="friendMessage"]', function(){
+		
 		var userNo = $($('input[name=userNo]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
 		var userName = $($('input[name=userName]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
 		$('#targetNo2').val(userNo);
 		$('#toUsern2').val(userName);
-		C
+		$("#modalwrite2").modal('show');
 	});
 
 	$(document).on('click','#addMess2',function(){
@@ -324,7 +327,9 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 		//modalmessage
 
 		if(modalMessageTitle==''| modalMessageContent==''){
-			alert('내용과 제목을 입력하세요.');			 
+			swal("내용과 제목을 적어주세요.", {
+			      icon: "warning",
+			   });				 
 		}
 		else{
 		  	$.ajax({
@@ -342,8 +347,15 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
 					"userName":"${user.userName}"
 				}),
 				success : function(JSONData) {
-					alert("메시지가 보내기 성공.!!");
-					$('#modalwrite2').modal('toggle');
+					swal("메세지 보내기 성공 !!", {
+ 					      icon: "success",
+ 						}).then((willDelete)=>{
+ 							$('#targetNo2').val('');
+ 	  			  			$('#toUsern2').val('');
+ 	  			  			$('#modalMessageTitle2').val('');
+ 	  			  			$('#modalMessageContent2').val('');
+ 	  						$('#modalwrite2').modal('toggle');
+ 						});
 			    } 
 		   });
 		}

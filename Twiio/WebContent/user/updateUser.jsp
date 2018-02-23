@@ -77,8 +77,8 @@
 		    background-image:url('/resources/images/icon.png');
 		    text-align:center;
 		    line-height:30px;
-		    left : 55%;
-		    top: 15%;
+		    left : 59%;
+		    top: 80%;
 		}
 		.file_input input {
 		    position:absolute;
@@ -223,7 +223,7 @@
 					   $('#password').val("${user.password}");
 				   }
 				   
-				   alert("수정");
+				   //alert("수정");
 				   
 			   	   if($('#userType').val() == 2){
 				   var username=$('#userName').val();
@@ -257,7 +257,9 @@
 			   		$("form").attr("method" , "POST").attr("action" , "/user/updateUser").submit();
 			   }
 			   }else{
-				   alert("틀린부분을 수정하세요.");
+				   swal("틀린 부분을 수정하세요.", {
+						 icon: "warning",
+					});
 			   }
 		 });  
 			

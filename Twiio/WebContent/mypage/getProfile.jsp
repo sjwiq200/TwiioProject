@@ -163,7 +163,9 @@
 		 $(function() {
 			$( "#go" ).on("click" , function() {
 				if(${user.userNo}== $("#userNo").val()){
-					alert('자기 자신 입니다.');
+					swal("자기 자신입니다.", {
+					      icon: "warning",
+					    });	
 				}else{
 					alert("ok");
 					$.ajax({

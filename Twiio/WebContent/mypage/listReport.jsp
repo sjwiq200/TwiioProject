@@ -133,7 +133,6 @@
     	  				"reportNo":reportinfo
     	  			}),
     	  			success : function(JSONData) {			
-    	  					alert(JSON.stringify(JSONData));
     	  					$('#delete').val(JSONData.targetUserNo);
     	  					$('#deleteReportNo').val(JSONData.reportNo);
     	  					$('#reportUsername').val(JSONData.userName);
@@ -143,7 +142,6 @@
     	  					$('#targetUserName').val(JSONData.targetUserName);
     	  					$('#targetUserNo').val(JSONData.targetUserNo);
     	  	    			$('#viewReport').modal('show');	
-    	  	    			
     	  			 }
     	  		});
     	     }
@@ -170,7 +168,9 @@
 		    	  	   	  			success : function(JSONData, state) {
 		    	  	   	  				
 										if(JSONData==false){
-												alert("이미 탈퇴된 회원입니다.");
+												swal("탈퇴 회원입니다.", {
+													 icon: "success",
+												});
 										}
 		    	  	   	  					 $.ajax({
 		    	  	   	  		                url: "/common/json/updateReport",
@@ -181,10 +181,20 @@
 				    	  	   	  					"reportNo":reportNo
 				    	  	   	  				}),
 		    	  	   	  		                success: function (JSONData) {
-		    	  	   	  		                	alert(JSON.stringify(JSONData));		    	  	   	  		                	
+    	  	   	  		                	
 		    	  	   	  		                	if(JSONData.resign == '1'){
-		    	  	   	  		                		alert("신고 처리가 완료되었습니다.");
+		    	  	   	  		                	swal("신고처리가 완료되었습니다..", {
+	    	  	   	  						 			icon: "success",
+	    	  	   	  								}).then((willDelete)=>{
+	    	  	   	  									location.reload();
+	    	  	   	  								});
 		    	  	   	  		                	}else{
+		    	  	   	  		                	swal("이미 신고 처리가 완료된 신고입니다..", {
+	    	  	   	  						 			icon: "warning",
+	    	  	   	  								}).then((willDelete)=>{
+	    	  	   	  									location.reload();
+	    	  	   	  								});
+		    	  	   	  		                	}
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
 		    	  	   	  		                	}
 		    	  	   	  		                	//location.reload();
@@ -225,7 +235,9 @@ $(document).on('click','#messageWrite',function(){
 	//modalmessage
 
 	if(modalMessageTitle==''| modalMessageContent==''){
-		alert('내용과 제목을 입력하세요.');			 
+		swal("내용과 제목을 입력하세요.", {
+			 icon: "warning",
+		});			 
 	}
 	else{
 		 alert(targetNo+","+toUsern+","+modalMessageTitle+","+modalMessageContent);
@@ -245,7 +257,13 @@ $(document).on('click','#messageWrite',function(){
 				"userName":"${user.userName}"
 			}),
 			success : function(JSONData) {
-				alert("메시지가 보내기 성공.!!");
+
+				swal("메시지가 전송 완되었습니다.", {
+					 icon: "success",
+				}).then((willDelete)=>{
+					location.reload();
+				});
+				
 				/* $('#modalwrite').modal('toggle'); */
 		    } 
 	   });

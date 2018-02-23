@@ -206,7 +206,9 @@ $(document).on('click','#addMess',function(){
 	//modalmessage
 
 	if(modalMessageTitle==''| modalMessageContent==''){
-		alert('내용과 제목을 입력하세요.');			 
+		swal("제목과 내용을 적어주세요.", {
+		      icon: "warning",
+		    });			 
 	}
 	else{
 	  	$.ajax({
@@ -224,8 +226,15 @@ $(document).on('click','#addMess',function(){
 				"userName":"${user.userName}"
 			}),
 			success : function(JSONData) {
-				alert("메시지가 보내기 성공.!!");
-				$('#modalwrite').modal('toggle');
+				swal("메시지가  보내기 성공!!", {
+				      icon: "success",
+				 }).then((willDelete)=>{
+					 $('#targetNo').val('');
+					 $('#toUsern').val('');
+					 $('#modalMessageTitle').val('');
+					 $('#modalMessageContent').val('');
+					 $('#modalwrite').modal('toggle');
+				});
 		    } 
 	   });
 	}
@@ -248,13 +257,15 @@ $(document).on('click','#modalDeleteMessage',function(){
 		data : JSON.stringify({
 			"messageNo":mesgNo
 		}),
-		success : function(JSONData) {
-			alert("메시지가 삭제되었습니다. !!");
-			$("#modaldelete").modal('toggle');
-			location.reload();
+		success : function(JSONData) {			
+			swal("메시지가 삭제되었습니다.", {
+				 icon: "success",
+			}).then((willDelete)=>{
+				$("#modaldelete").modal('toggle');
+				location.reload();
+			});
 	    } 
-   }); 
-	
+   }); 	
 }); 
 /////////////////////////////////////////////////////////////////
 /////////////////////////////상세보기//////////////////////////////
@@ -270,7 +281,6 @@ $(document).on('click','#modalDeleteMessage',function(){
 			"messageNo":mesgNo
 		}),
 		success : function(JSONData) {
-			alert(JSON.stringify(JSONData));
 			$('#targetNo').val(JSONData.fromUserNo);
 			$('#toUsern1').val(JSONData.userName);
 			$('#modalmessageRegDate').val(JSONData.messageRegDate);
@@ -291,7 +301,9 @@ $(document).on('click','#modalDeleteMessage',function(){
 			//var array = new Array();
 			
 			if(checkedMessageCount < 1){
-				alert("메세지를 선택해주세요.");
+				swal("메시지를 선택 하여주세요.", {
+				      icon: "warning",
+				    });
 			}else{
 			for (var i = 0; i < checkedMessageCount; i++) {
 				if(i != checkedMessageCount-1){
@@ -321,8 +333,12 @@ $(document).on('click','#modalDeleteMessage',function(){
 			},						
 			success: function(returnData){
 				var count = returnData.count;
-				alert(count+"개의 메시지가 삭제되었습니다");
-				window.location.reload();
+				swal("선택하신 메시지가 삭제되었습니다.", {
+				      icon: "warning",
+				}).then((willDelete)=>{
+					location.reload();
+				});
+								
 			}
 			
 		});
@@ -340,11 +356,11 @@ $(document).on('click','#modalDeleteMessage',function(){
  					"Content-Type" : "application/json"
  				},		
  				success : function(JSONData) {
- 						swal("삭제되었습니다.", {
- 					      icon: "success",
- 					    });
- 						alert("삭제 성공");
- 						window.location.reload();
+ 					swal("친구가 삭제되었습니다.", {
+ 					      icon: "warning",
+ 					}).then((willDelete)=>{
+ 						location.reload();
+ 					});
  			    },error : function(request,error){
  			    	alert(에러);
  			    }
@@ -356,8 +372,6 @@ $(document).on('click','#modalDeleteMessage',function(){
   			var userNo = $($('input[name=userNo]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
   			var userName = $($('input[name=userName]')[$('td:nth-child(4) span[name="friendMessage"]').index(this)]).val();
   			
-  			alert(userNo);
-  			alert(userName);
   			$('#targetNo2').val(userNo);
   			$('#toUsern2').val(userName);
   			$("#modalwrite2").modal('show');
@@ -371,7 +385,9 @@ $(document).on('click','#modalDeleteMessage',function(){
   			//modalmessage
 
   			if(modalMessageTitle==''| modalMessageContent==''){
-  				alert('내용과 제목을 입력하세요.');			 
+  				swal("내용과 제목을 적어주세요.", {
+				      icon: "warning",
+				    });			 
   			}
   			else{
   			  	$.ajax({
@@ -389,8 +405,15 @@ $(document).on('click','#modalDeleteMessage',function(){
   						"userName":"${user.userName}"
   					}),
   					success : function(JSONData) {
-  						alert("메시지가 보내기 성공.!!");
-  						$('#modalwrite2').modal('toggle');
+  						swal("메세지 보내기 성공 !!", {
+   					      icon: "success",
+   						}).then((willDelete)=>{
+   							$('#targetNo2').val('');
+   	  			  			$('#toUsern2').val('');
+   	  			  			$('#modalMessageTitle2').val('');
+   	  			  			$('#modalMessageContent2').val('');
+   	  						$('#modalwrite2').modal('toggle');
+   						});
   				    } 
   			   });
   			}
@@ -438,6 +461,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
    	
+   	<c:if test="${user.userType != '3' }">
    	<!---------------------------------------사이드바--------------------------------------------------------->
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
@@ -452,11 +476,11 @@ $(document).on('click','#modalDeleteMessage',function(){
 				</c:if>
 								
 			</div>
-			<div class="col-xs-9 col-xs-offset-2" align="left">
+			<div class="col-xs-12" align="center">
 				[ 이	   름  :  ${user.userName } ]
 			</div>
 			
-			<div class="col-xs-9 col-xs-offset-2" align="left" >
+			<div class="col-xs-12" align="center" >
 				<c:if test="${user.userType == 1}">
 					[  유    형  :  회원  ]
 				</c:if>
@@ -467,8 +491,8 @@ $(document).on('click','#modalDeleteMessage',function(){
 					[  유    형  :  관리자  ]
 				</c:if>
 			</div>
-			<div class="col-xs-9 col-xs-offset-2" align="left"style="margin-bottom: 4em; ">
-				[ 핸드폰  :  ${user.userPhone } ]
+			<div class="col-xs-12" align="center"style="margin-bottom: 4em; ">
+				[ 핸드폰  : ${user.userPhone } ]
 			</div>
 			<div class="col-xs-12" style="background:transparent;">
 			
@@ -492,7 +516,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 						<tr data-status="pagado">
 						<div class="media-body">
 						<td align="pull-right">${ i }</td>
-						<td align="left">
+						<td align="left" name="productget">
 							<c:if test="${empty friend.userImage}">
 								<img name="ffriend" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" style="width: 40px; height: 40px;" class="img-responsive">
 							</c:if>
@@ -500,7 +524,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 								<img name="ffriend" src="/resources/images/userimages/${friend.userImage}" class="img-responsive" style="width: 40px; height: 40px;">										  		 	 
 							</c:if>
 						</td>
-						<td align="left">
+						<td align="left" name="productget">
 							${friend.userName}
 						</td>
 						<td align="left" class="row">
@@ -518,7 +542,6 @@ $(document).on('click','#modalDeleteMessage',function(){
 				
 		    </div>
 	</div>
-	
 	<div id="main" style="position:fixed; z-index:1000;">
 
 	
@@ -526,7 +549,7 @@ $(document).on('click','#modalDeleteMessage',function(){
 		OPEN
 		</span>
 	</div>
-   	
+   	</c:if>
 	<!---------------------------------------사이드바--------------------------------------------------------->
    	
    	
