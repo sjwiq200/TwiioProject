@@ -174,6 +174,8 @@
   text-decoration: none;
   color:#ffffff;
 }
+img { max-width: 100%; height: auto; }
+
 
 
 /* Button-dy css  */
