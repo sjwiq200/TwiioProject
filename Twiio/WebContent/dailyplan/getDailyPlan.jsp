@@ -302,20 +302,20 @@ body::-webkit-scrollbar-thumb {
 .btn-dy {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
-  border-radius: 23px;
+  border-radius: 10%;
   font-family:TYPO_JEONGJOL;
   color: #545454;
   font-size: 16px;
   background: #ffffff;
   padding: 6px 20px 6px 20px;
-  border: solid #545454 0.5px;
   text-decoration: none;
 }
 
 .btn-dy:hover {
-  background: #ededed;
+  background: #545454;
   text-decoration: none;
-  color:#545454;
+  color:#ffffff;
+  opacity:0.8;
 }
 
 
@@ -347,23 +347,129 @@ body::-webkit-scrollbar-thumb {
   -moz-border-radius: 23;
   border-radius: 23px;
   font-family:JEJUGOTHIC;
-  color: #545454;
-  font-size: 12px;
-  background: #ffffff;
+  color: #ffffff;
+  font-size: 0.7vw;
+  background: #C2C2C2;
   padding: 8px 13px 8px 13px;
-  border: solid #545454 0.5px;
   text-decoration: none;
 }
 
 .btn-dy3:hover {
-  background: #D73A31;
+  background: rgba(255, 0, 0, 0.4);
+  opacity: 0.7;
+  text-decoration: none;
+  color:#3B3B3B;
+}
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy4 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 12px;
+  background: #56B1BF;
+  padding: 8px 13px 8px 13px;
+  border: solid #56B1BF 0px;
+  text-decoration: none;
+}
+
+.btn-dy4:hover {
+  background: #56B1BF;
   opacity: 0.8;
-  border: solid #545454 0px;
+  border: solid #56B1BF 0px;
   text-decoration: none;
   color:#ffffff;
 }
 
-
+/* floating top button<START>  */
+   		.top {
+        position: fixed;
+        left: 75%;
+        bottom: 3%;
+   	   	background: transparent;
+      	color:transparent;
+      }
+      
+        div.top2 {
+        position: fixed;
+        left: 36.63%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: rgba(255, 0, 0, 0.6);
+  		color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+      	 min-width: 70px;
+        min-height:30px;
+      	
+      }
+      
+           
+        div.top3 {
+        position: fixed;
+        left: 42.03%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   background: rgba(255, 0, 0, 0.6);
+  		color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+      	 min-width: 70px;
+        min-height:30px;
+      }
+      
+           
+        div.top4 {
+        position: fixed;
+        left: 47.43%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   background: rgba(255, 0, 0, 0.6);
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+      	 min-width: 70px;
+        min-height:30px;
+      }
+      
+           
+        div.top5 {
+        position: fixed;
+        left: 52.83%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: rgba(255, 0, 0, 0.6);
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+         min-width: 70px;
+        min-height:30px;
+      }
+           
+        div.top6 {
+        position: fixed;
+        left: 58.23%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background:rgba(255, 0, 0, 0.6);
+      	color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+        text-align: center;
+        vertical-align: middle;
+        min-width: 70px;
+        min-height:30px;
+        
+      }
+      
+/* floating top button<END>  */      
 
 </style>
 
@@ -371,7 +477,7 @@ body::-webkit-scrollbar-thumb {
 
 <!-- 스크립트 -->
 <script type="text/javascript">
-		
+/* 		
 			$(document).ready(function(){
 				var topBar = $("#topBar").offset();
 				$(window).scroll(function(){
@@ -387,7 +493,7 @@ body::-webkit-scrollbar-thumb {
 					}
 				});
 			})
-			
+			 */
 			
 			 
 	 $(function() {
@@ -512,8 +618,9 @@ body::-webkit-scrollbar-thumb {
 	
 	/////////////////////////수정 및 삭제를 위한 hover기능 구현///////////////////////////
 	
+	
 	$(function() {
-		$("#fixedbtn").on("click",function() {
+		$("div[name=editedit]").on("click",function() {
 			if($("#deleteAllAll").val() == 'flag'){
 				$(".deleteButtons").remove();
 				$(".deleteButtons2").remove();
@@ -556,22 +663,6 @@ body::-webkit-scrollbar-thumb {
 			$(location).attr('href', url);
 				});
 	});
-	
-	
-	/////////////////////////맞춤 여행 정보 기능 구현///////////////////////////
-/* 	$(function() {
-		$("#customizedPlanInfo").on("click",function() {
-			
-			var dailyPlanNo = $("#idDailyPlanNo").val();
-			var dailyCity=$("#idDailyCity").val();
-			var dailyDate=$("#idDailyDate").val();
-			dailyCity = encodeURI(encodeURIComponent(dailyCity));
-			var url = "/dailyplan/customizedPlanInfo?dailyPlanNo="+dailyPlanNo+"&dailyCity="+dailyCity
-			 												+"&dailyDate="+dailyDate+"&mainPlanNo="+${dailyPlan.mainPlan.mainPlanNo};
-			$(location).attr('href', url); 
-		});
-	});
-	 */
 	
 	/////////////////////////글씨 크기 조절 기능 구현///////////////////////////
 /* 	$(function() {
@@ -967,6 +1058,33 @@ $(function() {
 		 });
 	});		
 
+
+$( function() {
+    $( window ).scroll( function() {
+      if ( $( this ).scrollTop() > -1 ) {
+        $( '.top' ).fadeIn();
+        $( '.top2' ).fadeIn();
+        $( '.top3' ).fadeIn();
+        $( '.top4' ).fadeIn();
+        $( '.top5' ).fadeIn();
+        $( '.top6' ).fadeIn();
+        
+      } else {
+        $( '.top' ).fadeOut();
+        $( '.top2' ).fadeOut();
+        $( '.top3' ).fadeOut();
+        $( '.top4' ).fadeOut();
+        $( '.top5' ).fadeOut();
+        $( '.top6' ).fadeOut();
+      }
+    } );
+    $( '.top' ).click( function() {
+      $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+      return false;
+    } );
+    
+  } );
+  
 	
 	
 </script>
@@ -1038,7 +1156,9 @@ $(function() {
 	<!-- ----------------------------------- -->
 
 	<div><jsp:include page="/layout/toolbar.jsp" /></div>
-
+	
+	
+	
 	<form class="form-horizontal">
 		<div class="container">
 			<div class="col-xs-12 inner" id="thumbnailMainBox">
@@ -1154,7 +1274,7 @@ $(function() {
 								<c:if test="${!empty planContent.estimatedTime}">
 									<p class="contents">소요시간 : ${planContent.estimatedTime}</p>
 								</c:if>
-
+								
 								<!-- ---------------------지도정보 <START>-------------------- -->
 
 								<c:if test="${!empty planContent.mapImage}">
@@ -1251,8 +1371,29 @@ $(function() {
 							</div>
 
 						</c:forEach>
-						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
 						
+						
+						<div class="top"><img src="/resources/images/go-to-the-top.png" width="50px"></div>
+						
+						<div class="top2 btn-dy3" data-toggle="modal" data-target="#addText" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+						<img src="/resources/images/icon/edit_icon.png" width="20px">&nbsp;문장</div>
+						
+						<div class="top3 btn-dy3" data-toggle="modal" data-target="#addImage" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+						<img src="/resources/images/icon/image.png" width="20px">&nbsp;사진</div>
+						
+						<div class="top4 btn-dy3" data-toggle="modal" data-target="#addMap" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+						<img src="/resources/images/icon/pin.png" width="20px">&nbsp;지도</div>
+						
+						<div class="top5 btn-dy3" id="addRouteButton" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+						<img src="/resources/images/icon/route-Icon.png" width="20px">&nbsp;길찾기</div>
+						
+					
+						<div class="top6 btn-dy3" name="editedit" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+						<img src="/resources/images/icon/eraser.png" width="20px">&nbsp;편집</div>
+						
+						
+						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
+							
 						</div>
 					</div>
 				</div>
@@ -1262,9 +1403,9 @@ $(function() {
 			
 			
 			
-			<!-- -------Floating Button<START>----------- -->
+		<!-- -------Floating Button<START>----------- -->
 
-	<div id="container-floating" style="font-family:'JEJUGOTHIC'; ">
+<!-- 	<div id="container-floating" style="font-family:'JEJUGOTHIC'; ">
 	
 	  <div class="nd6 nds" class="btn" id="fixedbtn"  >
 	  <p class="letter">&nbsp;&nbsp;&nbsp;&nbsp;<strong>편집</strong></p>
@@ -1287,10 +1428,9 @@ $(function() {
 	    <p class="plus">+</p>
 	  </div>
 	
-	</div>
+	</div> -->
 
-	<!-- -------Floating Button<END>----------- -->
-	
+	<!-- -------Floating Button<END>----------- -->	
 
 	</form>
 

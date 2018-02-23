@@ -346,7 +346,8 @@ border-radius: 2px;
 	         });
 			swal("친구로 등록되었습니다.");
 	   var a = "#sharePlan" + i;
-	    $("#sharePlan"+i).remove();
+	    $("#sharePlan"+i).attr("disabled","disabled");
+	    $("#sharePlan"+i).attr("style","background-color:gray;");
 	}
 	
 	
@@ -563,7 +564,8 @@ border-radius: 2px;
 		if (input.files && input.files[0]) {
 			var reader = new FileReader();
 			reader.onload = function(e) {
-				$('#blah').attr('src', e.target.result).attr('width', '50px');
+				$('#blah').attr('src', e.target.result).attr('width', '100px').attr("style","border-radius : 25px").attr('height', '100px');
+				$('#photoButton').remove();
 			}
 			reader.readAsDataURL(input.files[0]);
 		}
@@ -766,8 +768,9 @@ border-radius: 2px;
 								<div class="col-sm-2"></div>
 								<div class="col-sm-8">
 								<div name="addThumbnail">
-									<label for="mainThumbnail" class="col-sm-12 control-label">표지</label> <img id="blah" /> 
-									<img src="/resources/images/icon/plan/imageInput.png" width="20px" style="position: absoloute" id="fileUpload" name="fileUpload">
+									<label for="mainThumbnail" class="col-sm-12 control-label">표지</label> <div id="fileUpload" name="fileUpload"><img id="blah" /> 
+									<img src="/resources/images/icon/plan/imageInput.png" id="photoButton" width="20px" style="position: absoloute">
+									</div>
 <!-- 									<input type="button" class="form-control contents" style="position: absoloute" id="fileUpload" name="fileUpload">
  -->									<p>&nbsp;</p>
 								</div>

@@ -9,7 +9,6 @@ public class TotalSearch {
 	private Weather weather;
 	private Product product;
 	private NightLife nightlife;
-	private UnsafeRegion unsafeRegion;
 	private Currency currency;
 	
 	
@@ -116,19 +115,6 @@ public class TotalSearch {
 
 
 
-	public UnsafeRegion getUnsafeRegion() {
-		return unsafeRegion;
-	}
-
-
-
-
-
-	public void setUnsafeRegion(UnsafeRegion unsafeRegion) {
-		this.unsafeRegion = unsafeRegion;
-	}
-
-
 
 
 
@@ -152,7 +138,7 @@ public class TotalSearch {
 	public String toString() {
 		// TODO Auto-generated method stub
 		return "TotalSearch [keyword=" + keyword + ", room=" + room + ", community=" + community + ", weather="
-				+ weather + ", product=" + product + ", nightlife=" + nightlife + ", unsafeRegion=" + unsafeRegion
+				+ weather + ", product=" + product + ", nightlife=" + nightlife 
 				+ ", currency=" + currency+" ]";
 	}
 	
