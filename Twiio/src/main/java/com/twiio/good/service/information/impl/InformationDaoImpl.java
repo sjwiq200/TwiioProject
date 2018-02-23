@@ -350,7 +350,7 @@ public class InformationDaoImpl implements InformationDao {
 		 
 			if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
 					||s.contains("선택")||s.contains("비행")||s.contains("공항")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("대기")||s.contains("직항")
-					||s.contains("예약했")||s.equals("")) {
+					||s.contains("예약했")||s.equals("")||s.contains("수하물")) {
 				iter.remove();
 			}
 		}
@@ -428,7 +428,7 @@ public class InformationDaoImpl implements InformationDao {
 					 
 						if (s.contains("wifi")||s.contains("엔터테인먼트")||s.contains("power")||s.contains("정보")||s.contains("비행")||s.contains("익스피디아에서")||s.contains("가격")
 								||s.contains("선택")||s.contains("비행")||s.contains("공항")||s.contains("검색")||s.contains("운항")||s.contains("경유")||s.contains("대기")||s.contains("직항")
-								||s.contains("예약했")||s.equals("")) {
+								||s.contains("예약했")||s.equals("")||s.contains("수하물")) {
 							iter.remove();
 						}
 					}

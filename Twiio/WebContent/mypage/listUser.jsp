@@ -324,7 +324,7 @@
 								var displayValue = "<h6>"
 													+"아이디 : "+JSONData.userId+"<br/>"
 													+"이  름 : "+JSONData.userName+"<br/>"
-													+"이메일 : "+JSONData.email+"<br/>"
+													+"이메일 : "+JSONData.userEmail+"<br/>"
 													+"등록일 : "+JSONData.regDate+"<br/>"
 													+"</h6>";
 								//Debug...									
@@ -613,7 +613,7 @@
 			  </td>
 			  <td align="left"  title="Click : 회원정보 확인">${user.userId}</td>
 			  <td align="left">${user.userName}</td>
-			  <td align="left">${user.email}</td>
+			  <td align="left">${user.userEmail}</td>
 			  <td align="left">
 			  	<i class="glyphicon glyphicon-ok" id="${user.userNo}"></i>
 			  	<input type="hidden" name="userss" value="${user.userNo}">

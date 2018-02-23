@@ -219,7 +219,7 @@
 														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
 														$("#dangerIcon").hide();
 													}else{
-														$("#image").html('<div class="col-sm-12" align="center"><img src="'+img+'" style="width: 600px; height: 500px; max-width:100%; max-height:100%;"/></div>');
+														$("#image").html('<div class="col-sm-12" align="center" style="margin-bottom:20px;"><img src="'+img+'" style="width: 600px; height: 500px; max-width:100%; max-height:100%;"/></div>');
 														$("#dangerIcon").show();
 														$("#jumbotron").attr("style","height: 700px; max-width:100%; max-height:100%; align-content: center; background-color: rgba(86, 177, 191, 0.5);");
 														$("#jumbotron").attr("class","jumbotron col-sm-10 col-sm-offset-1");
@@ -399,7 +399,7 @@
 					</div>
 			</div>
 					
-				<div align="center" id="dangerIcon" style="max-width:100%; max-height:100%;">
+				<div align="center" id="dangerIcon" style="max-width:100%; max-height:100%; margin-top:20px;">
 					<br/> 
 					<img src="/resources/images/img_blue.png" style="max-width:100%; max-height:100%;"/>&nbsp;&nbsp;&nbsp;&nbsp;
 					<img src="/resources/images/img_yellow.png" style="max-width:100%;  max-height:100%;"/>&nbsp;&nbsp;&nbsp;&nbsp;
