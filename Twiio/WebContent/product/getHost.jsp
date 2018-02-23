@@ -300,7 +300,7 @@
 				<!-- SIDEBAR USERPIC -->
 				<div class="profile-userpic">
 					<c:if test="${empty host.userImage}"><img style="width:100px; height:100px;" alt="" src="http://download.seaicons.com/download/i93784/custom-icon-design/silky-line-user/custom-icon-design-silky-line-user-user.ico" class="img-responsive"></c:if>
-					<c:if test="${!empty host.userImage}"><img style="width:100px; height:100px;" alt="" src="/resources/images/userThumbnail/${host.userImage}" class="img-responsive"></c:if>
+					<c:if test="${!empty host.userImage}"><img style="width:100px; height:100px;" alt="" src="/resources/images/userimages/${host.userImage}" class="img-responsive"></c:if>
 					<!-- <img src="http://keenthemes.com/preview/metronic/theme/assets/admin/pages/media/profile/profile_user.jpg" class="img-responsive" alt=""> -->
 				</div>
 				<!-- END SIDEBAR USERPIC -->

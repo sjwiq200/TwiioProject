@@ -174,7 +174,12 @@
   text-decoration: none;
   color:#ffffff;
 }
+img { max-width: 100%; height: auto; }
 
+div[name='hostInfo']:hover {
+   opacity: 0.7;
+   transition-duration: 0.5s;
+}
 
 /* Button-dy css  */
 	</style>
@@ -385,18 +390,33 @@
 								if(${empty user.userId}){
 									tool='';
 								}else{
-									tool='<div class="btn-group pull-right">'+
-									'<button type="button" class="btn-dy2" data-toggle="dropdown" style="margin-right: 50px;">'+
-									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-									'</button>'+
-									'<ul class="dropdown-menu slidedown">'+
-									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-									'</ul>'+
-								   '</div>';	
+									if(${user.userNo != JSONData.list[i].userNo}){
+				                        tool='<div class="btn-group pull-right">'+
+				                        '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+				                        ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+				                        '</button>'+
+				                        '<ul class="dropdown-menu slidedown">'+
+				                        '<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+				                        '<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+				                        '<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+				                        '</ul>'+
+				                         '</div>';
+				                     }else{                     
+				                        tool='<div class="btn-group pull-right">'+
+				                        '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+				                        ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+				                        '</button>'+
+				                        '<ul class="dropdown-menu slidedown">'+
+				                        '<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+				                        '<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+				                        '<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+				                        '</ul>'+
+				                         '</div>';
+				                     }	
 								}
 								
 							//alert(JSONData.length);							
@@ -486,23 +506,38 @@
 								if(${empty user.userId}){
 									tool='';
 								}else{
-									tool='<div class="btn-group pull-right">'+
-									'<button type="button" class="btn-dy2" data-toggle="dropdown" style="margin-right: 50px;">'+
-									' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
-									'</button>'+
-									'<ul class="dropdown-menu slidedown">'+
-									'<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
-									'<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
-									'<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
-									' <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
-									' <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
-									'</ul>'+
-								   '</div>';	
+									if(${user.userNo != JSONData.list[i].userNo}){
+				                        tool='<div class="btn-group pull-right">'+
+				                        '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+				                        ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+				                        '</button>'+
+				                        '<ul class="dropdown-menu slidedown">'+
+				                        '<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+				                        '<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+				                        '<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+				                        '</ul>'+
+				                         '</div>';
+				                     }else{                     
+				                        tool='<div class="btn-group pull-right">'+
+				                        '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+				                        ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+				                        '</button>'+
+				                        '<ul class="dropdown-menu slidedown">'+
+				                        '<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+				                        '<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+				                        '<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+				                        '<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+				                        '</ul>'+
+				                         '</div>';
+				                     }		
 								}
 								
 							 displayValue += '<div class="row2">'+
 											 '<input type="hidden" name="userReplyNo"	 value="'+JSONData.list[i].userNo+'"/>'+
-											 '<input type="hidden" name="userName" 	 value="'+JSONData.list[i].userName+'"/>'+
+											 '<input type="hidden" name="userReplyName" 	 value="'+JSONData.list[i].userName+'"/>'+
 											 '<input type="hidden" name="replyNo" 	 value="'+JSONData.list[i].replyNo+'"/>'+
 											 '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'"/>'+		   
 											   
@@ -753,7 +788,7 @@ $(document).on('click','.row2 a[name=addfriend]', function() {
 /////////////////////////////////////////////////addmessage////////////////////////////////////////////////////	
 $(document).on('click','.row2 a[name=addmessage]', function() {
 	 var msguserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addmessage]').index(this)]).val();
-	 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
+	 var msgusername = $($('input[name=userReplyName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 	 
 	 if(${empty user.userId}){
 		// alert('로그인후 사용하여주세요');	 
@@ -859,6 +894,99 @@ $(document).on('click','.row2 a[name=deletereply]', function() {
 			});
 	 }		  
 });
+
+function listReplyajax(){
+    $.ajax( 
+    {
+    url : "/common/json/listReply",
+    method : "POST" ,
+    dataType : "json" ,
+    contentType:"application/json;charset=UTF-8",
+    data : JSON.stringify({
+       "productNo":"${product.productNo}",
+       "currentPage" : page
+    }),
+    
+    success : function(JSONData) {
+       //alert(JSON.stringify(JSONData));
+       
+       var displayValue='';
+       
+       for(var i=0;i<JSONData.list.length;i++){
+          var tool="";
+          if(${empty user.userId}){
+             tool="";
+          }else{
+        	  if(${user.userNo != JSONData.list[i].userNo}){
+                  tool='<div class="btn-group pull-right">'+
+                  '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+                  ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+                  '</button>'+
+                  '<ul class="dropdown-menu slidedown">'+
+                  '<li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+                  '<li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+                  '<li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+                  '<li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+                  '<li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+                  '</ul>'+
+                   '</div>';
+               }else{                     
+                  tool='<div class="btn-group pull-right">'+
+                  '<button type="button" class="btn-dy2 dropdown-toggle" data-toggle="dropdown" style="margin-right: 50px;">'+
+                  ' <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>'+
+                  '</button>'+
+                  '<ul class="dropdown-menu slidedown">'+
+                  '<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>'+
+                  '<li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>'+
+                  '<li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>'+
+                  '<li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>'+
+                  '<li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>'+
+                  '</ul>'+
+                   '</div>';
+               }		
+          }
+             
+             
+          
+          displayValue += '<div class="row2">'+
+			 '<input type="hidden" name="userReplyNo"	 value="'+JSONData.list[i].userNo+'"/>'+
+			 '<input type="hidden" name="userReplyName" 	 value="'+JSONData.list[i].userName+'"/>'+
+			 '<input type="hidden" name="replyNo" 	 value="'+JSONData.list[i].replyNo+'"/>'+
+			 '<input type="hidden" name="replyContent" value="'+JSONData.list[i].replyContent+'"/>'+		   
+			   
+				'<div class="col-sm-2 col-sm-offset-1"  style="padding-top: 10px;">'+
+				'<strong>'+JSONData.list[i].userName+'</strong>'+
+			   '</div>'+
+			   tool+
+			   '</div>'+
+			   '<div class ="row" name="upcontent" style="padding-top: 10px;">'+
+	    		'<div class="col-sm-3">'+
+	    		(JSONData.list[i].replyContent == null?'':JSONData.list[i].replyContent)+
+	    		'</div>'+
+				'<div class="pull-right" style="padding-right: 100px;">'+
+				JSONData.list[i].replyRegDate+
+			   '</div></div>'+
+			   
+			   '<div class ="row">'+
+	    		'<div class="col-xs-12">'+
+				'<hr sytle="border-style:dotted">'+
+				'</div>'+
+				'</div>';
+		}
+		//alert(displayValue);
+		var totalcount=
+		'<div class="col-md-2">'+
+		'<strong>댓 글 목 록</strong>'+		
+		'</div>'+
+		'<div class="col-md-2" >'+
+		'댓글수  : '+JSONData.totalCount+				
+		'</div>';
+       
+		$('div[name="row"]').html(displayValue);                   
+       $('#totalCount').html(totalcount);
+    }
+});
+}
 
 //////////////////////////////////////updatereply//////////////////////////////////////////
 $(document).on('click','.row2 a[name=updatereply]', function() {
@@ -1304,7 +1432,7 @@ $(document).on('click','#updatereplym',function(){
 							<c:forEach var="reply" items="${list}">
 							<div class= "row2">
 								<input type="hidden" name="userReplyNo"	 value="${reply.userNo}"/>
-								<input type="hidden" name="userName" 	 value="${reply.userName}"/>
+								<input type="hidden" name="userReplyName" 	 value="${reply.userName}"/>
 								<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
 								<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
 								
@@ -1322,15 +1450,20 @@ $(document).on('click','#updatereplym',function(){
 					                                <span class="glyphicon glyphicon-cog" style="margin-right: 0px;"></span>
 					                            </button>
 					                            <ul class="dropdown-menu slidedown">
-					                           		<%-- <c:if test="${user.userNo != reply.userNo}"> --%>
-					                            	<li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                            	
-					                                <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
-					                                <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
-					                                <%-- </c:if> --%>
-					                                <%-- <c:if test="${user.userNo == reply.userNo}"> --%>
-					                                <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
-					                                <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
-					                                <%-- </c:if> --%>
+					                           		<c:if test="${user.userNo != reply.userNo}">                       
+								                      <li><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                               
+								                       <li><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
+								                       <li><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+								                       <li style="display: none;"><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+								                       <li style="display: none;"><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+								                   </c:if>
+								                   <c:if test="${user.userNo == reply.userNo}">                       
+								                      <li style="display: none;"><a href="#" name="addmessage"><span class="glyphicon glyphicon-pencil"></span>&nbsp;Message</a></li>                               
+								                       <li style="display: none;"><a href="#" name="addreport"><span class="glyphicon glyphicon-alert"></span>&nbsp;Report</a></li>                                
+								                       <li style="display: none;"><a href="#" name="addfriend"><span class="glyphicon glyphicon-user"></span>&nbsp;AddFriend</a></li>
+								                       <li><a href="#" name="deletereply"><span class="glyphicon glyphicon-trash"></span>&nbsp;Delete</a></li>
+								                       <li><a href="#" name="updatereply"><span class="glyphicon glyphicon-scissors"></span>&nbsp;Update</a></li>
+								                   </c:if>
 					                            </ul>
 					             </div>				
 								</c:if>
@@ -1505,8 +1638,7 @@ $(document).on('click','#updatereplym',function(){
 						</form>
 					</div>
 			</div>
-			<!------------------------------------------------updateReply---------------------------------------------------------->
-		
+			<!------------------------------------------------updateReply---------------------------------------------------------->			
 		
 		<!-- ///////////////////////dayoung///////////////////////// -->
 				</div>

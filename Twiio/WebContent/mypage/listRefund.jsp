@@ -133,8 +133,8 @@
 							"refundNo":refundno,
 							"tranNo":tranno
 						}),
-						success : function(JSONData) {			
-								location.reload();
+						success : function(JSONData) {
+							location.reload();
 						 }
 			    	 });
 			      });

@@ -26,36 +26,35 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
     <script src="/resources/lang/summernote-ko-KR.js"></script>
 	
-	<link href="/resources/css/summernote.css" rel="stylesheet">
-    <script src="/resources/javascript/summernote.min.js"></script> 
+    <link href="/resources/css/summernote.css" rel="stylesheet">
+  	<script src="/resources/javascript/summernote.min.js"></script> 
 	
-	<!-- Bootstrap Dropdown Hover CSS -->
-   <link href="/resources/css/animate.min.css" rel="stylesheet">
-   <link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
-    <!-- Bootstrap Dropdown Hover JS -->
-   <script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
+  	<!-- Bootstrap Dropdown Hover CSS -->
+  	<link href="/resources/css/animate.min.css" rel="stylesheet">
+  	<link href="/resources/css/bootstrap-dropdownhover.min.css" rel="stylesheet">
+  	<!-- Bootstrap Dropdown Hover JS -->
+  	<script src="/resources/javascript/bootstrap-dropdownhover.min.js"></script>
    
    
-   <!-- jQuery UI toolTip 사용 CSS-->
-  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  <!-- jQuery UI toolTip 사용 JS-->
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+   	<!-- jQuery UI toolTip 사용 CSS-->
+  	<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  	<!-- jQuery UI toolTip 사용 JS-->
+  	<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 	
 		<!--  ///////////////////////// CSS ////////////////////////// -->
 		
 		<!-- ---------font ------------ -->
   	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />   
 		<!-- 다이얼로그  -->
-  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
-
-  <link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
-
+  	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
+  	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
+  	<link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 
 
 
 	 #head{
-		  		background-image: url("/resources/images/comm.png");
+		  		background-image: url("/resources/images/community.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  }
@@ -244,11 +243,11 @@
 	
 	<div class="col-md-6 text-right">
 			    <form class="form-inline" name="detailForm">
-			    <c:if test="${empty user.userNo}">
+			    <%-- <c:if test="${empty user.userNo}">
 			    </c:if>
 			    <c:if test="${!empty user.userNo}">
 			      <button type="button" id="write" class="btn btn-outlined btn-light btn-xs" style="border: 3px solid;">글 쓰 기</button>
-				</c:if>  
+				</c:if>  --%> 
 				  <div class="form-group">
 				    <select class="form-control" name="searchCondition" id="searchCondition">
 						<option value="0"  ${ ! empty search.searchCondition && search.searchCondition==0 ? "selected" : "" }>제목</option>
@@ -293,10 +292,10 @@
 		</c:if>
           <div class="caption" >
           <p>[ 게시판번호  : ${i} ]</p>
-          <c:if test="${fn:length(community.communityTitle) > 12}">
-          <p>[ 제&nbsp;&nbsp;목  : <c:out value="${fn:substring(community.communityTitle,0,11)}"/>... ]</p>
+          <c:if test="${fn:length(community.communityTitle) > 13}">
+          <p>[ 제&nbsp;&nbsp;목  : <c:out value="${fn:substring(community.communityTitle,0,12)}"/>... ]</p>
           </c:if>
-          <c:if test="${fn:length(community.communityTitle) <= 12 }">
+          <c:if test="${fn:length(community.communityTitle) <= 13}">
           <p>[ 제&nbsp;&nbsp;목  : ${community.communityTitle } ]</p>
           </c:if>
           <p>[ 작   성   자 : ${community.userName } ]</p>
@@ -310,5 +309,14 @@
  	</c:forEach>
  	</div>
 </div>
+
+<c:if test="${!empty user.userNo}">
+<div id="container-floating">
+	<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="write" title="커뮤니티등록">
+		<p class="letter" id="write">+</p>
+	</div>
+</div>
+</c:if>
+			
 </body>
 </html>
