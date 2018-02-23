@@ -176,7 +176,7 @@
 			.ui-autocomplete { max-height: 200px; overflow-y: scroll; overflow-x: hidden;}
 			
 			 #head{
-		  		background-image: url("/resources/images/listWeather.png");
+		  		background-image: url("/resources/images/hisWeather.png");
 		  		font-family: "Pacifico", cursive;
 		  		height : 250px;
 		  		margin-bottom : 20px;
