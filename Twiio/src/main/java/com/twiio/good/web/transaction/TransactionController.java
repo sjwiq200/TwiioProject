@@ -320,6 +320,7 @@ public class TransactionController {
 		tid = jsonobj.get("tid").toString();// server에 값저장
 		System.out.println(jsonobj.get("tid"));
 		String redirectPCURL = jsonobj.get("next_redirect_pc_url").toString();
+
 		System.out.println(redirectPCURL);
 		// Business Logic
 		// purchaseService.addPurchase(purchase);
@@ -550,7 +551,7 @@ public class TransactionController {
 		System.out.println(transaction);
 		transactionService.addTransaction(transaction);
 		
-		return "forward:/transaction/popup.jsp"; 
+		return "forward:/transaction/popupPaypal.jsp"; 
 	}	
 	
 	//@RequestMapping("/getPurchase.do")

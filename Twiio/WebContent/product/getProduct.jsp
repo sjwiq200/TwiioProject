@@ -615,17 +615,17 @@ div[name='hostInfo']:hover {
 				  icon: "warning",
 				});
 		 }else{
-			$('#msgusername').val(msgusername);
-			$('#msguserno').val(msguserno);
-		 	$('#modalmessage').modal('show');
+			$('#questionusername').val(msgusername);
+			$('#questionuserno').val(msguserno);
+		 	$('#modalquestion').modal('show');
 		 }
 	});
 
-	$(document).on('click','#upmessage',function(){
-			var msguserno = $('#msguserno').val();
-			var msgcontent = $('#msgcontent').val();
-			var msgtitle = $('#msgtitle').val();
-			var msgusername = $('#msgusername').val();
+	$(document).on('click','#upquestion',function(){
+			var msguserno = $('#questionuserno').val();
+			var msgcontent = $('#questioncontent').val();
+			var msgtitle = $('#questiontitle').val();
+			var msgusername = $('#questionusername').val();
 			//modalmessage
 
 			if(msgcontent==''| msgtitle==''){
@@ -641,8 +641,8 @@ div[name='hostInfo']:hover {
 					dataType : "json" ,
 					contentType:"application/json;charset=UTF-8",
 					data : JSON.stringify({
-						"toUserNo":"${user.userNo}",
-						"fromUserNo":msguserno,
+						"toUserNo":msguserno,
+						"fromUserNo":"${user.userNo}",
 						"messageContent":msgcontent,
 						"messageType":"1",
 						"messageTitle":msgtitle,
@@ -654,7 +654,7 @@ div[name='hostInfo']:hover {
 						    });
 						 
 						 listReplyajax();
-						$('#modalmessage').modal('toggle');
+						$('#modalquestion').modal('toggle');
 				    }
 			   });
 			}			
@@ -841,6 +841,7 @@ $(document).on('click','#upmessage',function(){
 					 
 					 listReplyajax();
 					$('#modalmessage').modal('toggle');
+					
 			    } 
 		   });
 		}			
@@ -1551,7 +1552,7 @@ $(document).on('click','#updatereplym',function(){
 			</div>
 			<!------------------------------------------------report---------------------------------------------------------->
 			
-			<!------------------------------------------------message---------------------------------------------------------->
+			<!------------------------------------------------message from reply---------------------------------------------------------->
 		<div id="modalmessage" class="modal fade" role="dialog" style="background-color: transparent;" >
 			<div class="modal-dialog" align="center" style="background-color: black;">
 						<form name="addMainForm">
@@ -1599,7 +1600,57 @@ $(document).on('click','#updatereplym',function(){
 						</form>
 					</div>
 			</div>
-			<!------------------------------------------------message---------------------------------------------------------->
+			<!------------------------------------------------message from reply---------------------------------------------------------->
+			
+			<!------------------------------------------------message from 1:1 question---------------------------------------------------------->
+		<div id="modalquestion" class="modal fade" role="dialog" style="background-color: transparent;" >
+			<div class="modal-dialog" align="center" style="background-color: black;">
+						<form name="addMainForm">
+				
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
+/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
+ */ 							background-color: #ffffff;
+ 							border-radius: 3% !important; 
+ 							border: 1px dashed #3B3B3B;
+ 							color: #3B3B3B !important;">
+								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
+									<button type="button" class="close btn-dy2" data-dismiss="modal">&times;</button>
+									<h1 class="modal-title">
+									<strong>MESSAGE</strong>
+									</h1>
+								</div>
+			
+								<input type="hidden" id="questionuserno" name="questionuserno" value=""/>
+					      		<input type="hidden" id="reportreplyno" name="reportreplyno" value=""/>
+					      		
+								<div class="col-sm-2"></div>
+								<div class="col-sm-8">					      
+
+								<div name="planer">
+									<label for="targetReportUser" class="col-md-12 control-label">보낼 사람</label> 
+									<input type="text" class="form-control contents" style="position: absoloute" id="questionusername" name="questionusername" value="" readonly>
+									<p>&nbsp;</p>
+				
+									<label for="targetReportTitle" class="col-md-12 control-label">쪽지 제목</label>
+									<input type="text" class="form-control contents" style="position: absoloute" id="questiontitle" name="questiontitle" placeholder="제목 작성" >
+									<p>&nbsp;</p>
+									
+									<label for="departureDate" class="col-sm-12 control-label ">쪽지 내용</label> 
+									<textarea  class="form-control contents" id="questioncontent"  name="questioncontent" style="position: absoloute" row="5" col="50" value="" placeholder="내용 작성"></textarea>
+									<p>&nbsp;</p>
+									<div style="margin-bottom:50px;"  align="center">
+										<button type="button" class="btn-dy2" id="upquestion">보내기</button>
+										<button type="button" class="btn-dy2" data-dismiss="modal">취  소</button>
+									</div>
+									
+								</div>
+								</div>
+								<div class="col-sm-2"></div>
+							</div>
+						</form>
+					</div>
+			</div>
+			<!------------------------------------------------message 1:1 question---------------------------------------------------------->
 			
 			<!------------------------------------------------updateReply---------------------------------------------------------->
 		<div id="updatemodalreply" class="modal fade" role="dialog" style="background-color: transparent;" >

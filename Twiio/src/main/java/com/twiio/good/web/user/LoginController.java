@@ -67,7 +67,7 @@ public class LoginController {
 	}
 	
 	@RequestMapping( value="login", method=RequestMethod.POST )
-	public String login(@ModelAttribute("user") User user , HttpSession session ) throws Exception{
+	public String login(@ModelAttribute("user") User user , HttpSession session, HttpServletRequest request ) throws Exception{
 		
 		System.out.println("/user/login : POST");
 		//Business Logic

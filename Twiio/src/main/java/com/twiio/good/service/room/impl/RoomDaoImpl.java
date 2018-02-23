@@ -312,10 +312,11 @@ public class RoomDaoImpl implements RoomDao {
 	public void deleteRoomUser(String roomKey,int userNo) throws Exception {
 		// TODO Auto-generated method stub
 		System.out.println(this.getClass()+".deleteRoomUser()");
+		System.out.println("roomKey ==>" + roomKey+" :: userNo ==> " + userNo);
 		
-		Criteria criteria = new Criteria("roomKey");
-		criteria.is(roomKey);
-		Query query = new Query(criteria);
+//		Criteria criteria = new Criteria("roomKey");
+//		criteria.is(roomKey);
+		Query query = new Query();
 		
 		query.addCriteria(Criteria.where("roomKey").is(roomKey).where("userNo").is(userNo));
 		

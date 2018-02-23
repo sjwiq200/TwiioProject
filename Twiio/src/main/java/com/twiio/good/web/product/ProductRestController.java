@@ -26,7 +26,7 @@ import com.twiio.good.service.product.ProductService;
 import com.twiio.good.service.user.UserService;
 
 
-//==> ȸ������ Controller
+//==> 회占쏙옙占쏙옙占쏙옙 Controller
 @RestController
 @RequestMapping("/product/*")
 public class ProductRestController {
@@ -35,7 +35,7 @@ public class ProductRestController {
 	@Autowired
 	@Qualifier("productServiceImpl")
 	private ProductService productService;
-	//setter Method ���� ����
+	//setter Method 占쏙옙占쏙옙 占쏙옙占쏙옙
 	
 	@Autowired
 	@Qualifier("userServiceImpl")
@@ -45,8 +45,8 @@ public class ProductRestController {
 		System.out.println(this.getClass());
 	}
 	
-	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml ���� �Ұ�
-	//==> �Ʒ��� �ΰ��� �ּ��� Ǯ�� �ǹ̸� Ȯ�� �Ұ�
+	//==> classpath:config/common.properties  ,  classpath:config/commonservice.xml 占쏙옙占쏙옙 占쌀곤옙
+	//==> 占싣뤄옙占쏙옙 占싸곤옙占쏙옙 占쌍쇽옙占쏙옙 풀占쏙옙 占실미몌옙 확占쏙옙 占쌀곤옙
 	@Value("#{commonProperties['pageUnit']}")
 	//@Value("#{commonProperties['pageUnit'] ?: 3}")
 	int pageUnit;
@@ -66,12 +66,12 @@ public class ProductRestController {
 	    String uploadPath = productContentImagesPath;
 		String fileName =  System.currentTimeMillis()+product.getFile().getOriginalFilename();
 		
-		System.out.println("������");
+		System.out.println("들어오니");
 		try {
-			System.out.println("������1");
+			System.out.println("들어오니1");
 			File file = new File(productContentImagesPath, fileName);
 			product.getFile().transferTo(file);
-			System.out.println("������5");
+			System.out.println("들어오니5");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -81,9 +81,10 @@ public class ProductRestController {
 		String filePath = "/resources/images/productContentImages/"+fileName;
 		jobj.put("url", uploadPath);
 		jobj.put("relativeUrl", filePath);
-		System.out.println("������6");
+		System.out.println("들어오니6");
 		try {
-		Thread.sleep(3500);
+//		Thread.sleep(3500);
+		Thread.sleep(5500);
 		}catch(InterruptedException e) {
 		
 		}
@@ -146,7 +147,7 @@ public class ProductRestController {
 		System.out.println("hostNo :: "+hostNo);
 		System.out.println("search :: "+search);
 		
-		// Business logic ����
+		// Business logic 占쏙옙占쏙옙
 		Map<String , Object> map=userService.listStarEvalHost(search, hostNo);
 		
 //		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -167,7 +168,7 @@ public class ProductRestController {
 		String tripDate = URLDecoder.decode(product.split("[=&]")[1],"UTF-8");
 		System.out.println("tripDate :: "+tripDate);
 		int num=0;
-		// Business logic ����
+		// Business logic 占쏙옙占쏙옙
 		Product dbProduct=productService.getProduct(productNo);
 		String[] str=dbProduct.getTripDate().split("[,]");
 		for(int i=0; i<str.length; i++) {
@@ -195,7 +196,7 @@ public class ProductRestController {
 		}
 		search.setPageSize(10);
 		
-		// Business logic ����
+		// Business logic 占쏙옙占쏙옙
 		Map<String , Object> map=productService.listProduct(search);
 		
 //		Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, pageSize);
@@ -222,7 +223,7 @@ public class ProductRestController {
 		return list02;
 	}	
 	
-	@RequestMapping(value="/json/listProduct")///�˻����� �߰�
+	@RequestMapping(value="/json/listProduct")///占싯삼옙占쏙옙占쏙옙 占쌩곤옙
 	public List<Product> listProduct(@RequestBody Search search) throws Exception {
 		
 		System.out.println("/product/json/listProduct ");
@@ -230,7 +231,7 @@ public class ProductRestController {
 		if(search.getCurrentPage() == 0) {
 			search.setCurrentPage(1);
 		}
-		search.setPageSize(12);//12���� �������
+		search.setPageSize(12);//12占쏙옙占쏙옙 占쏙옙占쏙옙占쏙옙占�
 				
 		Map<String, Object> productMap = productService.listProduct(search);
 		//Page resultPage = new Page( search.getCurrentPage(), ((Integer)map.get("totalCount")).intValue(), pageUnit, search.getPageSize());

@@ -210,7 +210,7 @@
 				flag = false;
 			}
 			if(!($('#emailVer').attr("disabled"))) {
-				alert("이메일 인증을 해주세요");
+				swal("이메일 인증을 해주세요","","info");
 				flag = false;
 			}
 			
@@ -220,9 +220,10 @@
 				
 				$.post( '/user/addUser', $('#addUserForm').serialize())
 				  .done(function( data ) {
+					  swal("회원가입이 완료되었습니다!","","success");
 					  $(location).attr('href', '/user/loginView.jsp');
 				  }).fail(function( data ) {
-					  alert("회원가입에 실패하셨습니다. 다시 시도 해주세요.");
+					  swal("회원가입에 실패하셨습니다. 다시 시도 해주세요.","","error");
 				  });
 			}
 			

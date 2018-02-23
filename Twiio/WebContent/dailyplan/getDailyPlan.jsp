@@ -52,7 +52,6 @@
 
 
 
-
 <title>getDailyPlan</title>
 
 <style type="text/css">
@@ -563,7 +562,7 @@ body::-webkit-scrollbar-thumb {
 
 	$(function() {
 		$("button[name=add]").on("click",function() {
-					$("form[name=form]").attr("method", "POST").attr("action",	"/dailyplan/addImage").submit();
+					$("form[name=form]").attr("method", "POST").attr("enctype","multipart/form-data").attr("action",	"/dailyplan/addImage").submit();
 			});
 	});
 	
@@ -649,11 +648,19 @@ body::-webkit-scrollbar-thumb {
 	 function deleteAllButton(){
 		 
 		 var dailyPlanNo = $("#idDailyPlanNo").val();
-		 $.ajax({
-	            url:'/dailyplan/json/deleteAllContent?dailyPlanNo='+dailyPlanNo,
-	            type:'get'
-	         });
-		 $("#PlanContentList").remove();
+		 swal({
+			 title: "전체삭제 하시겠습니까?",
+			 icon: "warning",
+			 buttons: true,
+			 dangerMode: true,
+		 }).then( (willDelete) => {
+			 $.ajax({
+		            url:'/dailyplan/json/deleteAllContent?dailyPlanNo='+dailyPlanNo,
+		            type:'get'
+		         });
+			 $("#PlanContentList").remove();	 
+		 });//END swal
+		 
 	 }
 	 
 
@@ -1372,24 +1379,7 @@ $( function() {
 
 						</c:forEach>
 						
-						
-						<div class="top"><img src="/resources/images/go-to-the-top.png" width="50px"></div>
-						
-						<div class="top2 btn-dy3" data-toggle="modal" data-target="#addText" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
-						<img src="/resources/images/icon/edit_icon.png" width="20px">&nbsp;문장</div>
-						
-						<div class="top3 btn-dy3" data-toggle="modal" data-target="#addImage" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
-						<img src="/resources/images/icon/image.png" width="20px">&nbsp;사진</div>
-						
-						<div class="top4 btn-dy3" data-toggle="modal" data-target="#addMap" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
-						<img src="/resources/images/icon/pin.png" width="20px">&nbsp;지도</div>
-						
-						<div class="top5 btn-dy3" id="addRouteButton" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
-						<img src="/resources/images/icon/route-Icon.png" width="20px">&nbsp;길찾기</div>
-						
-					
-						<div class="top6 btn-dy3" name="editedit" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
-						<img src="/resources/images/icon/eraser.png" width="20px">&nbsp;편집</div>
+				
 						
 						
 						<div class="col-xs-12" style="margin-top:100px" align="center"></div>
@@ -1401,7 +1391,23 @@ $( function() {
 			</div>
 			<!-- 섬네일 전체 박스 부분 -->
 			
+			<div class="top"><img src="/resources/images/go-to-the-top.png" width="50px"></div>
+						
+			<div class="top2 btn-dy3" data-toggle="modal" data-target="#addText" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+			<img src="/resources/images/icon/edit_icon.png" width="20px">&nbsp;문장</div>
 			
+			<div class="top3 btn-dy3" data-toggle="modal" data-target="#addImage" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+			<img src="/resources/images/icon/image.png" width="20px">&nbsp;사진</div>
+			
+			<div class="top4 btn-dy3" data-toggle="modal" data-target="#addMap" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+			<img src="/resources/images/icon/pin.png" width="20px">&nbsp;지도</div>
+			
+			<div class="top5 btn-dy3" id="addRouteButton" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+			<img src="/resources/images/icon/route-Icon.png" width="20px">&nbsp;길찾기</div>
+			
+		
+			<div class="top6 btn-dy3" name="editedit" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">
+			<img src="/resources/images/icon/eraser.png" width="20px">&nbsp;편집</div>
 			
 		<!-- -------Floating Button<START>----------- -->
 
@@ -1725,7 +1731,7 @@ $( function() {
 						
 					</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal" onclick="javascript:window.location.reload()">Close</button>
 				</div>
 			</div>
 		</div>

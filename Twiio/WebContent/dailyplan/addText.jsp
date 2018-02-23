@@ -1,12 +1,12 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ page pageEncoding="UTF-8"%>
 
-
+<!-- 
 <!DOCTYPE html>
 
 <html>
 <head>
-<title>addText</title>
+<title>addText</title> -->
 <%
 	String dailyPlanNo = (String) request.getParameter("data");
 	String mainPlanNo = (String) request.getParameter("mainPlanNo");
@@ -20,18 +20,15 @@
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
 <script
 	src="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.js"></script>
-<link
-	href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css"
-	rel="stylesheet">
-<script
-	src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
-
-<link href="summernote.css" rel="stylesheet">
-<script src="summernote.min.js"></script>
+<link href="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.css" rel="stylesheet">
+<script src="http://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote.js"></script>
+<!-- <link href="summernote.css" rel="stylesheet">
+<script src="summernote.min.js"></script> -->
 
 <script>
 	var content;
-	$(function() {
+	/* $(function() { */
+	$(document).ready(function() {
 
 		$('#summernote')
 				.summernote(
@@ -61,11 +58,11 @@
 	});
 </script>
 
-</head>
+<!-- </head>
 
 <body>
-
-
+ -->
+<div>
 	<form name="form">
 		<textarea id="summernote" name="contentText"></textarea>
 		<input type="hidden" name="dailyPlanNo" value="<%=dailyPlanNo%>" />
@@ -77,9 +74,10 @@
 		<div align="center" >
 		<input type="submit" class="btn btn-primary btn-sm" value="ADD" />
 		</div>
-
+</div>
+<!-- 
 	</form>
 </body>
 
 
-</html>
+</html> -->

@@ -64,8 +64,11 @@ public class MyPageRestController {
 		System.out.println("/message/addMessage : POST");
 		System.out.println("들어오니??");
 		System.out.println(message);
+		message.setUserName(userService.getUserInNo(message.getFromUserNo()).getUserName());
 		message.setTargetUserName(userService.getUserInNo(message.getToUserNo()).getUserName());
+		System.out.println("what is the message ==> " + message);
 		mypageService.addMessage(message);
+		
 		System.out.println("저장되었ㄴ미??");
 		return message;
 	}

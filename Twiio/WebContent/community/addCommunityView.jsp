@@ -58,6 +58,9 @@
     <link href="/resources/css/font.css" rel="stylesheet" type="text/css"/>
   	<!-- summernote -->
   	
+  	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  	
     
 	<style>
 		body{
@@ -136,7 +139,13 @@ $(function() {
 	//==> 1 과 3 방법 조합 : $("tagName.className:filter함수") 사용함.
 	 $("#reviewWrite").on("click",function(){
     	$("textarea").val($("#summernote").summernote("code"));
-    	$("form").attr("method" , "POST").attr("action" , "/community/addCommunity").submit();
+    	if($("#communityTitle").val() ==''){
+    		swal("제목은 필수로 입력해주세요!","","warning");
+    		
+    	}else{
+    		$("form").attr("method" , "POST").attr("action" , "/community/addCommunity").submit();	
+    	}
+    	
     });
 /* 	 $("button.btn.btn-primary").bind("click" , function() {
 		 $("form").attr("method" , "POST").attr("action" , "/community/listCommunity").submit();

@@ -61,7 +61,7 @@ public class UserRestController {
 	}
 	
 	@RequestMapping( value="json/login", method=RequestMethod.POST )
-	public Boolean login(@RequestBody String str , HttpSession session ) throws Exception{
+	public String login(@RequestBody String str , HttpSession session ) throws Exception{
 		
 		System.out.println("/user/json/login : POST");
 		
@@ -78,19 +78,21 @@ public class UserRestController {
 		User dbUser=userService.getUser(user.getUserId());
 		
 		if(dbUser==null) {
-			return false;
+			return "false";
 		}
 		
 		if(dbUser.getUserLeave()!=null) {
 			
-			return false;
+			return "false";
 		}
 		
 		if( user.getPassword().equals(dbUser.getPassword())){
 			session.setAttribute("user", dbUser);
+		}else {
+			return "password";
 		}
 		
-		return true;
+		return "true";
 	}
 	
 	@RequestMapping( value="json/getUser/{userNo}", method=RequestMethod.GET )

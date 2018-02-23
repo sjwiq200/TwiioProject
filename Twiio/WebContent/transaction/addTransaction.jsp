@@ -136,7 +136,9 @@
 
 function fncKakaoPay() {
 	//document.addPurchase.submit();
-	$("form").attr("method" , "POST").attr("action" , "/transaction/kakaoPayReady").submit();
+	
+	var popupKakao = window.open("about:blank",'KakaoPopup','location=no,menubar=no,width=500,height=500,resizable=no,status=no,right=0');
+	$("form").attr("method" , "POST").attr("action" , "/transaction/kakaoPayReady").attr("target","KakaoPopup").submit();
 }
 
 function fncPayPal() {
@@ -259,7 +261,7 @@ $(function() {
 		
 		<div class="jumbotron col-md-8 col-md-offset-2">
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" name="detailForm">
+		<form class="form-horizontal" name="detailForm" target="popupKakao">
 			<input type="hidden" name="productNo" value="${transaction.tranPro.productNo}" />
 		 <!-- <div class="row">
 		 <div class="col-md-12"> -->			  

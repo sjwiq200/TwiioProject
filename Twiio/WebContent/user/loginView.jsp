@@ -25,6 +25,9 @@
 	<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width"/> 
 	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 	
+	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+	
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
@@ -263,6 +266,12 @@
 		
 		//============= "로그인"  Event 연결 =============
 		$(function() {
+			
+			/* var loginCheck = '';
+				loginCheck = ${loginCheck}
+			if(loginCheck == false && loginCheck != ''){
+				alert("로그인에 실패하였습니다.");
+			} */
 	
 			//$("#userId").focus();
 	
@@ -274,13 +283,14 @@
 						var pw = $("input:password").val();
 	
 						if (id == null || id.length < 1) {
-							alert('ID 를 입력하지 않으셨습니다.');
+							swal("ID 를 입력하지 않으셨습니다.","","warning");
+							
 							$("#userId").focus();
 							return;
 						}
 	
 						if (pw == null || pw.length < 1) {
-							alert('패스워드를 입력하지 않으셨습니다.');
+							swal("패스워드를 입력하지 않으셨습니다.","","warning");
 							$("#password").focus();
 							return;
 						}
@@ -289,11 +299,15 @@
 								//"/user/login").attr("target", "_parent").submit();
 						$.post( '/user/json/login', $('#loginForm').serialize())
 						  .done(function( data ) {
-							  if(data==true){
+							  if(data=='true'){
 								  
 								  $(location).attr('href', '/main.jsp');
-							  }else{
-								  alert("탈퇴한 아이디 혹은 없는 아이디 입니다.");
+							  }else if(data=='password'){
+								  swal("비밀번호가 틀렸습니다!","","error");
+							  }
+							  else{
+								  swal("탈퇴한 아이디 혹은 없는 아이디 입니다.","","warning");
+								  
 							  }
 						  }).fail(function( data ) {
 						  });

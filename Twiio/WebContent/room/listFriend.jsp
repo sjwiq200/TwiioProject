@@ -38,6 +38,7 @@
 	
 	<link rel="stylesheet" href="/resources/css/font.css" />
   <script>
+  
   	$(function() {
   		
 		 

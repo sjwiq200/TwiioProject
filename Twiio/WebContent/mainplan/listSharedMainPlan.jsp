@@ -194,9 +194,9 @@ html, body {
 													<p><Strong>도시</Strong>: ${mainPlan.city}</p>
 													</div>
 													<div class="col-md-4" align="right" style="margin-top: 35px; font-family:'JEJUGOTHIC'">
-														<button type="button" class="btn btn-default">공유</button><br/>
+														<!-- <button type="button" class="btn btn-default">공유</button><br/>
 														<button type="button" class="btn btn-default">수정</button><br/>
-														<button type="button" class="btn btn-default">삭제</button>
+														<button type="button" class="btn btn-default">삭제</button> -->
 														</div>
 												</div>
 											<div class="col-md-1" id="buttonBox" align="right">

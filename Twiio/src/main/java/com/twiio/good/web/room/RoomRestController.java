@@ -90,16 +90,19 @@ public class RoomRestController {
 		if(flag) {
 			
 		}else {
-			//채팅 초대 메시지 전송
+			//梨꾪똿 珥덈� 硫붿떆吏� �쟾�넚
 			Message message = new Message();
 			message.setMessageType("3");
 			message.setFromUserNo(user.getUserNo());
+			message.setUserName(user.getUserName());
 			message.setToUserNo(Integer.parseInt(userNo));
-			message.setMessageTitle("채팅방 초대");
-			message.setMessageContent(user.getUserName()+"님이 " +room.getRoomName() +"채팅방에 초대하였습니다.");
+			message.setTargetUserName(userService.getUserInNo( Integer.parseInt(userNo) ).getUserName());
+			message.setMessageTitle("채팅방 초대&"+roomKey);
+			message.setMessageContent(user.getUserName()+"님이 " +room.getRoomName() +" 채팅방에 초대하셨습니다.");
 			
 			mypageService.addMessage(message);
-			roomService.addRoomUser(roomKey, Integer.parseInt(userNo));
+//			roomService.addRoomUser(roomKey, Integer.parseInt(userNo));
+			
 		}
 		
 		

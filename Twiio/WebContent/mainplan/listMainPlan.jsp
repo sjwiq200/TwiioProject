@@ -399,7 +399,7 @@ border-radius: 2px;
 	$(function() {
 		$("#submit").on("click",function() {
 			
-			if( ($("#mainThumbnail").val()!="") || ($("#datepicker2").val()!="")|| ($("#datepicker1").val()!="")|| ($("#planTitle").val()!="") || ($("#country1").val()!="") ){
+			if( ($("#mainThumbnail").val()!="") && ($("#datepicker2").val()!="") && ($("#datepicker1").val()!="") && ($("#planTitle").val()!="") && ($("#country1").val()!="") ){
 				$("form[name='addMainForm']").attr("method", "POST").attr("action","/mainplan/addMainPlan").attr("enctype","multipart/form-data").submit();				
 			}else{
 				swal("모든 값을 입력해주셔야 합니다.");

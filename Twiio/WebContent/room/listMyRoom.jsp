@@ -74,7 +74,7 @@
 			 })
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.33:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			 /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -215,12 +215,12 @@
 														</c:if>
 														var userNo = ${user.userNo};
 														if( userNo == JSONData[i].userNo){
-										            			displayValue += '<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> E D I T'
+										            			/* displayValue += '<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;margin:1px;font-family:\'JEJUGOTHIC\'; text-decoration: none;"> E D I T'
 										            			+ '<input type="hidden" id="roomKey" value="'
 										            			+ JSONData[i].roomKey
 										            			+ '">'
-										            			+ '</button>'
-										            			+ '</div>'
+										            			+ '</button>' */
+										            			displayValue += '</div>'
 														}
 									            			displayValue += '</p></div></div>'
 												$('.row2').append(displayValue);
@@ -468,12 +468,12 @@ h2 {
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            </button>
 		            </c:if>
-		            <c:if test="${user.userNo == room.userNo }">
-		            		<%-- <a href="#" class=" btn btn-default">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a> --%>
+		            <%-- <c:if test="${user.userNo == room.userNo }">
+		            		<a href="#" class=" btn btn-default">방 수정<input type="hidden" id="roomKey" value="${room.roomKey}"></a>
 		            		<button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> E D I T
 		            		<input type="hidden" id="roomKey" value="${room.roomKey}">
 		            		</button>
-		            </c:if>
+		            </c:if> --%>
 		            </p>
 		            </div>
 		      </div>

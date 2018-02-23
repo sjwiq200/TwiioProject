@@ -9,7 +9,7 @@ public class Papago {
 	private MessagePapago messagePapago;
 	private String translate;
 	private String papagoCompareCountry;
-	private String papagoMyCountry;
+	private String papagoMyCountry; 
 	private String compare;
 	private int dailyPlanNo;
 
