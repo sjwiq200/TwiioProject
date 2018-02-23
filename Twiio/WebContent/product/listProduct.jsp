@@ -75,44 +75,46 @@ h1 {
   -moz-border-radius: 23;
   border-radius: 23px;
   font-family:TYPO_JEONGJOL;
-  color: #D73A31;
+  color: #ffffff;
   font-size: 16px;
-  background: #f4f4f4;
+  background: #D73A31;
   padding: 6px 20px 6px 20px;
   border: solid #D73A31 2px;
   text-decoration: none;
   margin-top: 3%;
+   opacity: 0.9;
 }
 
 .btn-dy:hover {
   background: #D73A31;
   text-decoration: none;
-  border: solid #f4f4f4 0.5px;
-  color:#f4f4f4;
-  opacity: 0.8;
+  color:#ffffff;
+  opacity: 0.7;
 }
 
 /* Button-dy css - listFriendRecommendation */
 .btn-dy2 {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
-  border-radius: 10px;
-  font-family: "JEJUGOTHIC";
-  color: #f4f4f4;
-  font-size: 15px;
-  background: transparent;
-  padding: 5px 18x 5px 18px;
-  border: solid #f4f4f4 2px;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #D73A31;
+  font-size: 16px;
+  background: #ffffff;
+  padding: 6px 20px 6px 20px;
+  border: solid #D73A31 2px;
   text-decoration: none;
+  margin-top: 3%;
+   opacity: 0.9;
 }
 
 .btn-dy2:hover {
   background: #D73A31;
-  opacity: 0.8;
-  border: solid #545454 0px;
-  text-decoration: none;  
-  color:#ffffff;  
+  text-decoration: none;
+  color:#ffffff;
+  opacity: 0.7;
 }
+
 
 
 .btn {	
@@ -485,7 +487,7 @@ div.caption{
 							<input type="hidden" id="priceCondition" name="priceCondition" value="${! empty search.priceCondition ? search.priceCondition : '' }" />
 							<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
 	    				 	<!-- <!— <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> —> -->
-	    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
+	    				 	<button class="btn-dy" id="search" align="left" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
 	    				</div>	
 	    				
 	    				<div class="col-sm-offset-1"></div>
@@ -507,16 +509,18 @@ div.caption{
 	<div class="container">
 		<!-- <div class="page-header text-info"></div>	 -->		
 		<div class="row col-sm-offset-2 col-sm-10 text-center">
-			<button class="row col-sm-2 btn-dy" id="high" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격높은순</button>
-			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="low" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격낮은순</button>
+			<button class="row col-sm-2 btn-dy" id="tracking" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">트래킹</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="activity" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">액티비티</button>
 			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="attraction" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">명소투어</button>
 			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="food" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">푸드투어</button>
 		</div>
 
-		<div class="row col-sm-offset-3 col-sm-9 text-center">
-			<button class="row col-sm-2 btn-dy" id="tracking" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">트래킹</button>
-			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="activity" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">액티비티</button>
-			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="night" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">night투어</button>
+		<div class="row col-sm-offset-2 col-sm-10 text-center">
+			<button class="row col-sm-2 btn-dy" id="night" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">night투어</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="high" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격높은순</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="low" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">가격낮은순</button>
+			<button class="row col-sm-2 col-xs-offset-1 btn-dy" id="totalList" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:'JEJUGOTHIC';">전체목록</button>
+		
 		</div>
 	</div>
 	<!--  ButtonGroup End /////////////////////////////////////-->
@@ -530,7 +534,7 @@ div.caption{
 		<div class="row">
 
 			<div class="col-md-6 text-left">				
-				<p class="text-primary">전체 ${totalCount } 건수</p>
+				<p class="text-primary">상품 ${totalCount }개</p>
 			</div>			
 
 		</div>
