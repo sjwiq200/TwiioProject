@@ -3,6 +3,7 @@ encoding//src/main/java/com/twiio/good/common/web/LogonCheckInterceptor.java=UTF
 encoding//src/main/java/com/twiio/good/service/user/impl/UserDaoImpl.java=UTF-8
 encoding//src/main/java/com/twiio/good/web/dailyplan/PlanRestController.java=UTF-8
 encoding//src/main/java/com/twiio/good/web/product/ProductRestController.java=UTF-8
+encoding//src/main/java/com/twiio/good/web/room/RoomController.java=UTF-8
 encoding//src/main/java/com/twiio/good/web/room/RoomRestController.java=UTF-8
 encoding//src/main/java/com/twiio/good/web/user/UserController.java=UTF-8
 encoding/<project>=ms949

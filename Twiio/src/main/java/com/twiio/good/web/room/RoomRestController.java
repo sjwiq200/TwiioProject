@@ -114,12 +114,17 @@ public class RoomRestController {
 	public boolean addReport(@RequestBody Report report, HttpSession session) throws Exception{
 		System.out.println("/room/json/addReport : ");
 		User user = (User)session.getAttribute("user");
+		
+		System.out.println("report111111 ==>"+report);
+		System.out.println("user ==> "+user);
+		
 		report.setUserNo(user.getUserNo());
-		if(report.getTargetUserNo() == 0) {
-		}else {
-			report.setTargetRoomKey(null);
-		}
-		System.out.println("report ==>"+report);
+		report.setUserName(user.getUserName());
+//		if(report.getTargetUserNo() == 0) {
+//		}else {
+//			report.setTargetRoomKey(null);
+//		}
+		System.out.println("report222222 ==>"+report);
 		commonService.addReport(report);
 		return true;
 	}

@@ -121,10 +121,10 @@
 		<if test="search.searchCondition != null">
 			<if test="search.searchKeyword != null">
 				<if test="(search.searchCondition eq '0'.toString()) and search.searchKeyword !='' ">
-	 				AND country= #{search.searchKeyword}
+	 				AND country LIKE '%${search.searchKeyword}%'
 				</if>
 				<if test="(search.searchCondition eq '1'.toString()) and search.searchKeyword !='' ">
-	 				AND city = #{search.searchKeyword}
+	 				AND city LIKE '%${search.searchKeyword}%'
 				</if>
 				<if test="(search.searchCondition eq '2'.toString()) and search.searchKeyword !='' ">
 	 				AND product_title LIKE '%${search.searchKeyword}%'

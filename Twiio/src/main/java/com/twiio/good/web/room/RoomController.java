@@ -165,7 +165,7 @@ public class RoomController {
 		System.out.println("friend Check ==>" + friendCheck);
 		
 		if(friendCheck != null) {
-			request.setAttribute("flag", true); //이미 친구
+			request.setAttribute("flag", true); //�씠誘� 移쒓뎄
 		}else {
 			request.setAttribute("flag", false);
 		}
@@ -243,7 +243,10 @@ public class RoomController {
 	@RequestMapping(value = "/updateRoomOpen/{roomKey}", method=RequestMethod.GET)
 	public String updateRoomOpen(@PathVariable String roomKey, HttpServletRequest request ) throws Exception{
 		System.out.println("/room/updateRoomOpen/{roomKey}");
-		request.setAttribute("roomKey", roomKey);
+		
+		Room room = roomService.getRoom(roomKey);
+		request.setAttribute("room", room);
+		
 		return "forward:/room/updateRoomOpen.jsp";
 	}
 	

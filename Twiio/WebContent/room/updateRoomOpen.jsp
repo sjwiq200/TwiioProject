@@ -1,7 +1,7 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page pageEncoding="UTF-8"%>
 
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 
 <html lang="ko">
@@ -179,11 +179,30 @@ body {
 		
 		
 			<div class="form-group">
-				<input type="hidden" id="roomKey" name="roomKey" value="${roomKey}">
+				<input type="hidden" id="roomKey" name="roomKey" value="${room.roomKey}">
 			    <div class="col-sm-6  col-sm-offset-3 text-center" style="font-size:20px; padding-top: 50px; padding-bottom: 50px;">
-			        <label for="open" class="chk_radio on">공개&nbsp;&nbsp;<input type="radio" name="open"   checked="checked" value="true" /></label>
+			        <input type="hidden" id= "hello" value="${room.open }">
+			        <c:if test="${room.open== 'true'}">
+			        <label for="open" class="chk_radio on">공개&nbsp;&nbsp;
+			        		<input type="radio" name="open"   checked="checked" value="true" />
+			        		
+			        </label>
 			        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-					<label for="open" class="chk_radio ">비공개&nbsp;&nbsp;<input type="radio" name="open"  value="false" /></label>
+					<label for="open" class="chk_radio ">비공개&nbsp;&nbsp;
+						<input type="radio" name="open"  value="false" />
+					</label>
+					</c:if>
+					
+					<c:if test="${room.open=='false'}">
+					<label for="open" class="chk_radio on">공개&nbsp;&nbsp;
+			        		<input type="radio" name="open" value="true" />
+			        		
+			        </label>
+			        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					<label for="open" class="chk_radio ">비공개&nbsp;&nbsp;
+						<input type="radio" name="open"  value="false" checked="checked"/>
+					</label>
+					</c:if>
 			    </div>
 			  </div>
 			  

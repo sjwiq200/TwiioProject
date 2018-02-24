@@ -664,8 +664,9 @@ div[name='hostInfo']:hover {
 
 $(document).on('click','.row2 a[name=addreport]', function() {
 	 var reportuserno = $($('input[name=userReplyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
-	 //alert(reportuserno);
-	 var reportusername = $($('input[name=userName]')[$('.row2 a[name=addreport]').index(this)]).val();
+	 alert(reportuserno);
+	 alert($($('input[name=userReplyName]')[$('.row2 a[name=addreport]').index(this)]).val());
+	 var reportusername = $($('input[name=userReplyName]')[$('.row2 a[name=addreport]').index(this)]).val();
 	 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 	 
 	 if(${empty user.userId}){

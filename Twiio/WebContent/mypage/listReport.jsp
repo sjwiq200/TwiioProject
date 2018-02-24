@@ -171,7 +171,7 @@
 												swal("탈퇴 회원입니다.", {
 													 icon: "success",
 												});
-										}
+										}//END if
 		    	  	   	  					 $.ajax({
 		    	  	   	  		                url: "/common/json/updateReport",
 		    	  	   	  		       			 method : "POST" ,
@@ -196,12 +196,12 @@
 	    	  	   	  								});
 		    	  	   	  		                	}
 		    	  	   	  		                		alert("이미 신고 처리가 완료된 신고입니다.");
-		    	  	   	  		                	}
+		    	  	   	  		                	}//END success
 		    	  	   	  		                	//location.reload();
-		
-		    	  	   	  		                },error : function(request,status,error) {
+		    	  	   	  					 ,error : function(request,status,error) {
 													alert('에러다.');
 													//location.reload();
+													
 		    		    	  	   	  	    	}
 		    	  	   	  		            });
 		    	  	   	  	    	}
@@ -357,19 +357,22 @@ $(document).on('click','#messageWrite',function(){
            		${report.reportRegDate} 
            </td>
            <td align="left">
-           <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0}">	
+           <c:if test="${!empty report.targetCommunityNo && report.targetReplyNo == 0 && empty report.targetRoomKey}">	
            	 커뮤니티
            </c:if>
            <c:if test="${!empty report.targetRoomKey}">
            	 채팅방
            </c:if>
-           <c:if test="${report.targetReplyNo != 0 && !empty report.targetCommunityNo}">  
+           <c:if test="${report.targetReplyNo != 0 && !empty report.targetCommunityNo && empty report.targetRoomKey}">  
            	 댓글
            </c:if>
            </td>
            <td align="center">
            		<c:if test="${report.reportState == 'Y'}">
            			처리 완료
+           		</c:if>
+           		<c:if test="${report.reportState != 'Y' }">
+           			처리 중
            		</c:if>
            </td>
 

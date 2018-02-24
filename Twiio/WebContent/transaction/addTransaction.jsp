@@ -143,6 +143,7 @@ function fncKakaoPay() {
 
 function fncPayPal() {
 	//document.addPurchase.submit();
+	alert("paypal")
 	$("form").attr("method" , "POST").attr("action" , "/transaction/payPal").submit();
 }
 
@@ -261,7 +262,7 @@ $(function() {
 		
 		<div class="jumbotron col-md-8 col-md-offset-2">
 		<!-- form Start /////////////////////////////////////-->
-		<form class="form-horizontal" name="detailForm" target="popupKakao">
+		<form class="form-horizontal" name="detailForm">
 			<input type="hidden" name="productNo" value="${transaction.tranPro.productNo}" />
 		 <!-- <div class="row">
 		 <div class="col-md-12"> -->			  

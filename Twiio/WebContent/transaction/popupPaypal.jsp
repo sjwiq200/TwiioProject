@@ -236,13 +236,13 @@
 
 			$( "#main" ).on("click" , function() {
 
-				self.location="/main.jsp";
+				self.location="/product/listProduct";
 
 			});
 
 			$( "#mypage" ).on("click" , function() {
 
-				self.location="/mypage/listTransaction";
+				self.location="/transaction/listTransaction";
 
 			});
 
