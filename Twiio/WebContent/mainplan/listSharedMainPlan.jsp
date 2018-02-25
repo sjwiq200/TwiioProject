@@ -141,7 +141,15 @@ html, body {
 			 $(location).attr('href', url);
 		 })
 	 })
+	 
+	 $(function(){
+		 $("#listMainPlan").bind("click",function(){
+			 var url = "/mainplan/listMainPlan";
+			 $(location).attr('href', url);
+		 })
+	 })
 
+	 
 	
 	 
 </script>
@@ -164,7 +172,15 @@ html, body {
 				style="font-family: TYPO_JEONGJOL; color:white; font-size: 1.5em; margin-bottom: 70px;"
 				align="center">친구와 함께라면 어디든 좋아</p>
 			</header>
-
+			
+				<div class="row" style="font-family:'TYPO_JEONGJOL';">
+							<div  class="col-md-offset-4 col-md-4" align="center">
+								<button type="button" class="btn" id="listMainPlan">
+									<Strong>나의 트위북으로 돌아가기</Strong>
+								</button>
+							</div>
+				</div>
+				
 			<div class="row" style="font-family: 'TYPO_JEONGJOL';">
 				<div class="col-xs-12 inner" id="thumbnailMainBox">
 					<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->

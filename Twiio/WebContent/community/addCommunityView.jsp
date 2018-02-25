@@ -249,7 +249,7 @@ $(document).ready(function() {
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	
-   	 <div class="container">
+   	 <div class="container" style="font-family:'JEJUGOTHIC' !important;">
 		<div class="page-header text-info" style="margin-bottom : 30px; padding-bottom : 30px;">
 			<c:if test="${communityType == '1'}">
 				<h2 align="center" style="color:#08708A; font-size : 5em !important;"><strong>BLABLA</strong></h2>
@@ -258,7 +258,7 @@ $(document).ready(function() {
 		
 		<form name="detailForm" class="form-horizontal" enctype="multipart/form-data">
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
-	<div class="col-sm-12">	
+	<div class="col-sm-12" style="font-family:'JEJUGOTHIC' !important;">	
 				
 				<div class="form-group">
 					<c:if test="${communityType=='1'}">
@@ -297,7 +297,7 @@ $(document).ready(function() {
 					    <input  class="col-sm-8 col-sm-offset-2" type="file" id="file" name="file" value="${community.thumbnail }"/>
 					     <img id="blah" style="width:300px; height:200px;"/> 
 		</div>
-	<div class="form-group">
+	<div class="form-group" style="font-family:'JEJUGOTHIC' !important;">
 		    <div class="col-sm-offset-4  col-sm-4 text-center"  style="margin-top : 30px;">
 		      <button type="button" name="save" class="communityButton go" id="reviewWrite">작 성</button>
 			  <a class="communityButton cancel" href="#" role="button">취&nbsp;소</a>

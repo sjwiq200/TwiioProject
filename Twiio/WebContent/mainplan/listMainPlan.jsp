@@ -279,12 +279,6 @@ border-radius: 2px;
 			});
 	 })
 	 
-	 $(function(){
-		 $("#listScrap").bind("click",function(){
-			 var url = "/mainplan/listScrap";
-			 $(location).attr('href', url);
-		 })
-	 })
  
 	 $(function(){
 		 $("#listSharedPlan").bind("click",function(){
@@ -513,7 +507,7 @@ border-radius: 2px;
 							if (i == 2) {$("#removeCountry").attr("disabled", false);}
 							if (i > 19) {$("#addCountry").attr("disabled", true);}
 
-							$("div[name=addCountry]").append($('<input  type="text" id="country'+i+'" name="countryList" style="position: absoloute" placeholder="아직 정하지 못했어요."class="form-control input-md contents" >'));
+							$("div[name=addCountry]").append($('<input  type="text" id="country'+i+'" name="countryList" style="position: absoloute" class="form-control input-md contents" >'));
 							$(document).find("input[name='countryList']").removeClass('ui-autocomplete-input')
 									.each(function(index) {
 										$($("input[name='countryList']")[index]).autocomplete(	{source : function(request,response) {

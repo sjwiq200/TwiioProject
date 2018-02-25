@@ -49,6 +49,11 @@
   	<link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css">
   	<link href="/resources/css/community.css" rel="stylesheet" type="text/css"/>	
   	<link href="/resources/css/floatingButtonRoom.css" rel="stylesheet" type="text/css" />
+  	
+  	  <!--  ///////////////////////// CSS ////////////////////////// -->
+<link rel="stylesheet" href="/resources/css/font.css" />
+
+
 <style type="text/css">
 
 
@@ -61,6 +66,7 @@
 	.thumbnail{
 			border-radius: 23px;
 		 	border: dashed rgba(102, 102, 102, 1) 1.3px;
+		 	font-family:JEJUGOTHIC !important;
 		}
 
 
@@ -221,16 +227,16 @@
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
    	
-   	<div class="jumbotron" id="head" style="align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
+   	<div class="jumbotron" id="head" style="font-family:'JEJUGOTHIC' !important; align-content: center; padding-bottom: 20px; text-shadow: 0 5px 5px rgba(0, 0, 0, .1); ">
       <div class="container" id="container">
       <c:if test="${communityType == '1'}">
-     	 <h3 align="center"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;"><ins>BLABLA</ins></strong></h3>
-	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOM'; color : #FFF; margin-top : 20px;">여러분들의 이야기를 들려주세요 :D</h4>
+     	 <h3 align="center" style="margin-top:3.3vw;font-family:Pacifico;"><strong style="color : #fff;  font-size: 2em !important; margin-bottom : 15px;">BLABLA</strong></h3>
+	 	 <h4 align="center" style="font-family:'TYPO_JEONGJOL'; color : #FFF; margin-top : 20px;">여러분들의 이야기를 들려주세요</h4>
 	  </c:if>
       </div>
     </div>
   	
- <div class="container"> 
+ <div class="container" style="font-family:'JEJUGOTHIC' !important;"> 
  
  	<form name="detailForm" action="/community/listCommunity" method="post"></form>
 	 
@@ -291,12 +297,11 @@
 			<img src="http://www.fada.org/wp-content/themes/fada/img/placeholder.jpg" style="width:300px; height:150px; border-radius: 23px;" alt="" title="" class="property_img"/>							
 		</c:if>
           <div class="caption" >
-          <p>[ 게시판번호  : ${i} ]</p>
           <c:if test="${fn:length(community.communityTitle) > 13}">
-          <p>[ 제&nbsp;&nbsp;목  : <c:out value="${fn:substring(community.communityTitle,0,12)}"/>... ]</p>
+          <h4> <c:out value="${fn:substring(community.communityTitle,0,12)}"/>... </h4>
           </c:if>
           <c:if test="${fn:length(community.communityTitle) <= 13}">
-          <p>[ 제&nbsp;&nbsp;목  : ${community.communityTitle } ]</p>
+          <h4>${community.communityTitle }</h4>
           </c:if>
           <p>[ 작   성   자 : ${community.userName } ]</p>
           <p>[ 등   록   일 : ${community.regDate }]</p>

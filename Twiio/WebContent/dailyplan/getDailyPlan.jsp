@@ -476,24 +476,6 @@ body::-webkit-scrollbar-thumb {
 
 <!-- 스크립트 -->
 <script type="text/javascript">
-/* 		
-			$(document).ready(function(){
-				var topBar = $("#topBar").offset();
-				$(window).scroll(function(){
-					var docScrollY = $(document).scrollTop()
-					var barThis = $("#topBar")
-					var fixNext = $("#fixNextTag")
-					if( docScrollY > 1 ) {
-						barThis.addClass("top_bar_fix");
-						fixNext.addClass("pd_top_50");
-					}else{
-						barThis.removeClass("top_bar_fix");
-						fixNext.removeClass("pd_top_50");
-					}
-				});
-			})
-			 */
-			
 			 
 	 $(function() {
 			$(".dayClick:contains('DAY')").bind("click",function() {
@@ -573,7 +555,6 @@ body::-webkit-scrollbar-thumb {
 			var dailyPlanNo = "${dailyPlan.dailyPlanNo}";
 			var user;
 			var result ="";
-
 			 $.ajax({
 	    				url:"/dailyplan/json/listFriendRec?dailyPlanNo="+dailyPlanNo,
 	    				method:"GET",	    					
@@ -583,6 +564,8 @@ body::-webkit-scrollbar-thumb {
 								"Content-Type" : "application/json"
 							},
 	    				success:function(JSONData){
+	    					alert("안");
+
 	    					user = JSONData.userList;
 		    					for(var i=0;i<user.length;i++){
 		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+user[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'
@@ -592,7 +575,10 @@ body::-webkit-scrollbar-thumb {
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
-	    					}
+	    					},error: function(){
+	    					    swal("선택하신 날짜에 같은 나라로 떠나는 친구들이 없네요. \n그래도 슬퍼하지 말아요\n 트위챗에서는 찾을 수 있지 않을까요? \n\nGOOD LUCK!");
+	    					  }
+	    					
 			    });
 		});
 	 });
@@ -1133,12 +1119,12 @@ $( function() {
 			<c:set var="i" value="${ i+1 }" />
 			<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
 			<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-			<div class="col-xs-12 contentsBox" id="contentsBox" name="contentsBox" style="border-radius: 10%;">
+			<div class="col-xs-12 contentsBox dayClick" id="contentsBox" name="contentsBox" style="border-radius: 10%;">
 				
-				<div class="col-xs-4 contents dayClick" name="contents" align="left">
+				<div class="col-xs-4 contents " name="contents" align="left">
 					<h4>DAY${ i }</h4>
 				</div>
-				<div class="col-xs-8 contents dayClick" name="contents" align="center">
+				<div class="col-xs-8 contents " name="contents" align="center">
 					<h6>${dailyPlan.dailyDate}</h6>
 					<h6>${dailyPlan.dailyCountry}</h6>
 					<h6>${dailyPlan.dailyCity}</h6>

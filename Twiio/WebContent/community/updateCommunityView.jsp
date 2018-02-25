@@ -230,7 +230,7 @@ $(document).ready(function() {
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	
-   	 <div class="container">
+   	 <div class="container" style="font-family:'JEJUGOTHIC' !important;">
 		<div class="page-header text-info" style="margin-bottom : 30px; padding-bottom : 30px;">
 		
 			<c:if test="${community.communityType == '1'}">

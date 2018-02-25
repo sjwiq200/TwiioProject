@@ -351,7 +351,7 @@
 			//document.getElementsByName([Input필드의 name값])[0].value = "";
 			///////////////////googlevision////////////////////////
 			$('#file').ready('click',function(){
-				//alert("바뀌었니??");
+				alert("바뀌었니??");
 				/*   */
 			});
 		
@@ -443,6 +443,7 @@
 		
 		$(function() {
 			$("#file").on('change', function() {
+				
 				readURL(this);
 			});
 		});

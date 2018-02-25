@@ -730,7 +730,7 @@
 			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
 			$( "td:nth-child(2)" ).on("click" , function() {
 				var userNo = $($('input[name=userNo]')[$('td:nth-child(2)').index(this)] ).val();
-				window.open("/user/getProfile2?userNo="+userNo,"getProfile2","width=500, height=650,status=no, scrollbars=no, location=no");
+				/* window.open("/user/getProfile2?userNo="+userNo,"getProfile2","width=500, height=650,status=no, scrollbars=no, location=no"); */
 				//self.location ="/user/getProfile2?userNo="+userNo; 
 			});
 		});

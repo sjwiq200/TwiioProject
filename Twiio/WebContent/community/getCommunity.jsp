@@ -192,6 +192,62 @@
 				padding:5px 10px;
 			}
 
+/* dayoung add */
+
+/* Button-dy css - listFriendRecommendation */
+.btn-dy3 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 0.9vw;
+  background: #08708A;
+  padding: 4px 6px 3px 6px;
+  text-decoration: none;
+}
+
+.btn-dy3:hover {
+  background: rgba(255, 0, 0, 0.4);
+  opacity: 0.7;
+  text-decoration: none;
+  color:#3B3B3B;
+}
+
+        div.top2 {
+        position: fixed;
+        left: 82%;
+        bottom: 1%;
+        width: 5vw;
+   	   	height: 2vw;
+   	   	background: rgba(255, 0, 0, 0.6);
+  		color: #ffffff;
+      	text-align: center;
+      	border-radius: 23px;
+      	 min-width: 70px;
+        min-height:30px;
+      	
+      }
+
+#thumbnailMainBox {
+	min-height: 1500px;
+	font-family:'JEJUMYEONGJO';
+	background: linear-gradient(-45deg, #08708A, transparent),linear-gradient(45deg, #ffffff, transparent);
+	border-radius: 8px;
+	border-color: #000000;
+	border-width: 10px;
+	display: inline-block;
+	padding: 1px;
+	text-decoration: none;
+}
+
+#thumbnailMainThumbBox {
+	min-height: 1500px;
+	background: #fff;
+	display: inline-block;
+	border-radius: 6px;
+}
+
 	</style>
 
 <script type="text/javascript">
@@ -928,6 +984,28 @@ function resetData() {
 	    });    
 	});
 	
+	/////////////////dayoung-add///////////////////
+	$(document).on('click','#listCommunity', function(){
+		 window.history.back()
+	});
+	
+	$( function() {
+	    $( window ).scroll( function() {
+	      if ( $( this ).scrollTop() > -1 ) {
+	        $( '.top2' ).fadeIn();
+	        
+	      } else {
+	        $( '.top2' ).fadeOut();
+	      }
+	    } );
+	    $( '.top' ).click( function() {
+	      $( 'html, body' ).animate( { scrollTop : 0 }, 400 );
+	      return false;
+	    } );
+	    
+	  } );
+	
+	
 </script>
 </head>
 
@@ -937,9 +1015,21 @@ function resetData() {
    	<!-- ToolBar End /////////////////////////////////////-->
    	
    	
-   <div class="container jumbotron" style=" align-content: center; background-color: rgba(255, 255, 255, 0.5); padding-top: 30px; "  >
+   <div class="container" style=" font-family:'JEJUGOTHIC' !important;align-content: center; padding-top: 30px; "  >
+   	 
+   	 
+   	 <div class="col-xs-12 inner" id="thumbnailMainBox">
+				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
+				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
+					<div class="col-xs-12" >
+   	 
+   	 
    	 
    	 <div class="col-xs-10 col-xs-offset-1">
+   	 
+   	 <div class="top2 btn-dy3" id="listCommunity" style="font-family:'JEJUGOTHIC';">
+			돌아가기</div>
+			
    	 			
 		<input type="hidden" name = "communityType" id = "communityType" value="${communityType}"/>
 		<input type="hidden" name = "communityUserNo" id = "communityUserNo" value="${community.userNo}"/>
@@ -1021,7 +1111,7 @@ function resetData() {
 				<textarea id="replyContent"  name="comment_content" style="resize:none;" row=2 col=50 value=""></textarea>
 			</div>
 			<div class="col-sm-2">
-				<button type="button"  id="write" class="btn btn-default" style="margin-top : 20px;">댓글입력</button>
+				<button type="button"  id="write" class="btn btn-outlined btn-light btn-xs" style="margin-top : 20px;">댓글입력</button>
 				<span class="help-block" ><p id="characterLeft" class="help-block " style="font-size: 1em;">You have reached the limit</p></span>
 			</div>
 		</div>
@@ -1050,7 +1140,7 @@ function resetData() {
 			<input type="hidden" name="replyNo" 	 value="${reply.replyNo}"/>
 			<input type="hidden" name="replyContent" value="${reply.replyContent}"/>
 			
-			<div class="col-sm-12">
+			<div class="col-sm-12" align="left">
 				<div style="font-size: 0.8em;">
 	    			<strong style="font-size: 1.2em;">&nbsp;&nbsp;${reply.userName}</strong>&nbsp;&nbsp; ${reply.replyRegDate}
 	    		</div>
@@ -1084,7 +1174,7 @@ function resetData() {
 			</c:if>
 		
 		<div class ="row" name="upcontent">
-    		<div class="col-sm-10 col-sm-offset-1">
+    		<div class="col-sm-10 col-sm-offset-1" align="left" style="margin-left:3vw;">
     			${reply.replyContent}
     		</div>
     	</div>
@@ -1295,5 +1385,10 @@ function resetData() {
 					</div>
 			</div>
 			<!------------------------------------------------updateReply---------------------------------------------------------->
+					</div>
+				</div>
+				<div align="right" class="col-xs-1">&nbsp;</div>
+			</div>
+			</div>
 </body>
 </html>

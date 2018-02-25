@@ -197,7 +197,7 @@ body::-webkit-scrollbar-thumb {
 								$(".routeDetailResult").remove();
 
 								directionsDisplay.setDirections(response);
-								totalDisplay = '<h3 style="border: 1px dashed #3B3B3B; border-radius: 5%; padding-top:5px; padding-bottom:5px">HOW TO GO</h3></br><div align="left" style="margin-bottom:5px;"><strong>#총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
+								totalDisplay = '<h3><img src="/resources/images/icon/plan/routeroute.png" style="width:15%;height:auto;"></br></br>HOW TO GO</h3></br><div align="left" style="margin-bottom:5px;"><strong>#총 이동 소요시간</strong>:  '+ response.routes[0].legs[0].duration.text+ '</br>'
 										+ '<strong>#출발</strong>:  '+ response.routes[0].legs[0].start_address+ '</br>'
 										+ '<strong>#도착</strong>:  '+ response.routes[0].legs[0].end_address+ '</br>'
 										+ '<strong>#거리</strong>:  '+ response.routes[0].legs[0].distance.text+ '</br></div>';
@@ -475,17 +475,24 @@ body::-webkit-scrollbar-thumb {
 										<option value="BICYCLING">자전거</option>
 										<option value="TRANSIT" selected>대중교통</option>
 									</select>
-								</div>
-							</div>
-							
-							<div class="col-sm-12" style="border-top: 2px solid #C2C2C2;">
-							
-								
+									
 									<div class="col-sm-12">
 										<div>&nbsp;</div>
 										<button type="button" align="right" class="btn btn-default btn-lg btn-block" onclick="Javascript:calcRoute();">길찾기</button>
 										<div>&nbsp;</div>
-									</div>
+								</div>
+								</div>
+								
+								
+									
+							</div>
+							
+							
+							
+							<div class="col-sm-12" style="border-top: 2px solid #C2C2C2;">
+							
+								
+									
 									
 								<div id="box2">
 									<div id="resultMapSummary"></div>
