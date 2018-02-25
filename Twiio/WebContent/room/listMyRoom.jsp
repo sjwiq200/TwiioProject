@@ -236,6 +236,7 @@
 		<style>
  body {
     padding-top : 50px;
+    background: #f4f4f4;
 }
 
 h2 {
@@ -304,7 +305,7 @@ h2 {
   border: solid #ffffff 0px !important;
   font-family:JEJUGOTHIC;
   color: #ffffff;
-  font-size: 1vw;
+  font-size: 0.8vw;
   background: #D73A31;
   opacity: 0.9;
   padding: 10px 25x 10px 25px;
@@ -318,6 +319,30 @@ h2 {
   text-decoration: none;
   color:#ffffff;
 }
+
+/* Button-dy css - listRoom */
+.btn-dy4 {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 10px;
+   border: solid #ffffff 0px !important;
+  font-family:JEJUGOTHIC;
+  color: #ffffff;
+  font-size: 0.7vw;
+  background: #3B3B3B;
+  opacity: 0.9;
+  padding: 10px 25x 10px 25px;
+  text-decoration: none;
+}
+
+.btn-dy4:hover {
+  background: #3B3B3B;
+  opacity: 0.5;
+  border: solid #ffffff 0px;
+  text-decoration: none;
+  color:#ffffff;
+}
+
 
 
 /* ///////////Dayoung - Border/////////////    */      
@@ -380,7 +405,7 @@ h2 {
 	    				<div class="col-sm-1" align="center">
 	    					<input type="hidden" id="currentPage" name="currentPage" value=""/>
 	    				 	<!-- <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> -->
-	    				 	<button class="btn-dy2" id="search" align="left" style="padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"/>SEARCH</button>
+	    				 	<button class="btn-dy3" id="search" align="left" style="padding-top:5px;padding-bottom:5px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"/>SEARCH</button>
 	    				</div>	
 				</div><!-- End row -->
 			</form>
@@ -389,8 +414,8 @@ h2 {
 		
 		<c:if test="${!empty user }">
 		<div class="col-sm-12" align="center" style="margin-top:10px;">
-           <button id="listRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>모든 방목록</button>
-           <button id="scheduleList" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 &nbsp;일정</button>
+           <button id="listRoom" class="btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>모든 방목록</button>
+           <button id="scheduleList" class="btn-dy3" style="padding-top:7px;padding-bottom:7px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 &nbsp;일정</button>
         </div>         
 		</c:if>
 						
@@ -403,7 +428,7 @@ h2 {
             <div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
             		<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
                		<div class="col-xs-12" >
-	    					<div class="row">
+	    					<div class="row" style="margin-top:3vw;">
 	    						<div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
               					<h4>나의 방 ${resultPage.totalCount} 개</h4>
           					</div> 
@@ -459,12 +484,12 @@ h2 {
 		            <c:if test="${!empty user}">
 		            
 			            <div align="center" >
-			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> J O I N
+			            <button class="btn-dy4" style="padding-top:5px;padding-bottom:5px;padding-left:8px;padding-right:8px;font-family:\'JEJUGOTHIC\';"> J O I N
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            <input type="hidden" id="master" value="${room.userNo }">
 			            </button>
 			            
-			            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:5px;padding-right:5px;font-family:\'JEJUGOTHIC\';"> O U T
+			            <button class="btn-dy4" style="padding-top:5px;padding-bottom:5px;padding-left:8px;padding-right:8px;font-family:\'JEJUGOTHIC\';"> O U T
 			            <input type="hidden" id="roomKey" value="${room.roomKey}">
 			            </button>
 		            </c:if>

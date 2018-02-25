@@ -108,6 +108,35 @@
 		  color:#ffffff;
 		}	
 		
+		/* /////////////////dayoung////////////////// */
+		/* Button-dy css  */
+		.btn-dy {
+		  -webkit-border-radius: 23;
+		  -moz-border-radius: 23;
+		  border-radius: 23px;
+		  color: #ffffff;
+		  font-size: 16px;
+		  background: #D73A31;
+		  padding: 6px 20px 6px 20px;
+		  border: solid #D73A31 2px;
+		  text-decoration: none;
+		  margin-top: 3%;
+		   opacity: 0.9;
+		}
+		
+		.btn-dy:hover {
+		  background: #D73A31;
+		  text-decoration: none;
+		  color:#ffffff;
+		  opacity: 0.7;
+		}
+		
+		.jumbotron {
+			border-radius: 23px;
+		 	border: dashed rgba(255, 0, 0, 0.6) 2px;
+		}
+		
+		
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -143,14 +172,16 @@
 <body>
 
 	
-	<div class="container-fluid">
+	<jsp:include page="/layout/toolbar.jsp" />
+	
+	<div class="container-fluid" align="center">
 	
 		
-		<h1>Daily Tour</h1>
+		<h1 style="margin-top:10vw; margin-bottom:5vw;">Daily Tour</h1>
 		
 		
 		
-		<div class="jumbotron col-md-8 col-md-offset-2">
+		<div class="jumbotron col-md-8 col-md-offset-2" style="background-color:#ffffff;">
 		<!-- form Start /////////////////////////////////////-->
 		
 			
@@ -159,7 +190,7 @@
 			  
 			  <div class="form-group">
 			   <div class="col-sm-offset-2  col-sm-8 text-center">
-			    결제를 성공적으로 완료하셨습니다.<br/>
+			    결제를 성공적으로 마치셨습니다.<br/>
 			    구매 상세내역은 MyPage에서 확인할 수 있습니다.
 			    </div>
 			  </div>
@@ -167,8 +198,8 @@
 			  <div class="form-group">
 		    <div class="col-sm-offset-2  col-sm-8 text-center">
 		    <!-- disabled="disabled"  -->
-		      <button type="button"  id="main" class="btn btn-primary">확인</button>
-		      <button type="button"  id="mypage" class="btn btn-primary" >myPage</button>
+		      <button type="button"  id="main" class="btn-dy">확인</button>
+		      <button type="button"  id="mypage" class="btn-dy" >마이페이지</button>
 			  
 		    </div>
 		  </div>

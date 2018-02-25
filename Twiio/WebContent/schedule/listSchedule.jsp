@@ -323,6 +323,7 @@
 	<style>
 	  body {
             padding-top : 50px;
+            background: #f4f4f4;
         }
         
         .btn.btn-default:hover, .btn.btn-default:active{
@@ -341,7 +342,7 @@
     color: #dedede;
     background: #08708A;
     border-color: #08708A;
-}
+} 
 
 .btn-outlined.btn-theme {
     background: #dedede;
@@ -497,7 +498,7 @@ h2 {
             		<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
                		<div class="col-xs-12" >
 	    					<div class="row">
-	    						<div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
+	    						<div class="col-md-12 text-right" style="margin-top:30px;background: #ededed; border-radius: 23px;">
               					<h4>나의 방 ${resultPage.totalCount} 개</h4>
           					</div> 
 				       </div>

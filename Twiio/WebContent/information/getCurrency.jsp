@@ -39,6 +39,12 @@
   	
   	<!-- ---------font ------------ -->
   	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" />   
+  	
+  	<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+  	
+  	
    
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
@@ -214,6 +220,10 @@
 				var standardCountry = $("#standardCountryValue").val();
 				var compareCountry = $("#compareCountryValue").val();
 				var inputPrice = $("#standard").val();
+				
+				if(inputPrice==""){
+					swal("값을 입력해주시기 바랍니다.");
+				}else{
 				event.preventDefault();
 				
 					$.ajax( 
@@ -237,9 +247,10 @@
 								},
 								error : function(JSONData , status) {
 	
-									alert("에러?"+status);
+									swal("에러가 발생하였습니다. ");
 								}
 				});
+				}
 			
 			}); 
 				

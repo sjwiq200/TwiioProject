@@ -564,9 +564,10 @@ body::-webkit-scrollbar-thumb {
 								"Content-Type" : "application/json"
 							},
 	    				success:function(JSONData){
-	    					alert("안");
-
 	    					user = JSONData.userList;
+	    					if(user== ""){
+	    						swal("선택하신 날짜에 같은 나라로 떠나는 친구들이 없네요. \n그래도 슬퍼하지 말아요\n 트위챗에서는 찾을 수 있지 않을까요? \n\nGOOD LUCK!");
+	    					}else{
 		    					for(var i=0;i<user.length;i++){
 		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+user[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'
     								+'<div class="col-sm-3 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'
@@ -575,8 +576,9 @@ body::-webkit-scrollbar-thumb {
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
+	    				}
 	    					},error: function(){
-	    					    swal("선택하신 날짜에 같은 나라로 떠나는 친구들이 없네요. \n그래도 슬퍼하지 말아요\n 트위챗에서는 찾을 수 있지 않을까요? \n\nGOOD LUCK!");
+	    					    swal("국가와 도시를 먼저 설정해주시기 바랍니다.");
 	    					  }
 	    					
 			    });

@@ -449,7 +449,7 @@
 
 
 	<!---------------------------------------사이드바--------------------------------------------------------->
-	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
+	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';" align="left">
 		<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 			
 			<div class="col-xs-12" align="center" style="margin-bottom: 2em; ">
@@ -477,28 +477,36 @@
 					[  유    형  :  관리자  ]
 				</c:if>
 			</div>
-			<div class="col-xs-12" align="center"style="margin-bottom: 4em; ">
+			<div class="col-xs-12" align="center" style="margin-bottom: 4em; ">
 				[ 핸드폰  : ${user.userPhone } ]
 			</div>
-			<div class="col-xs-12" style="background:transparent;">
-			<h3 align = "center">관 리 목 록</h3>
+			<div class="col-xs-12" style="background:transparent;margin-left:6vw;">
+			<h3>관 리 목 록</h3>
 			<hr>
 			</div>
-			<div class="col-xs-12" style="background:transparent;">
+			<div class="col-xs-12" style="background:transparent;margin-left:5vw;">
 			<a href="#"><h5>MESSAGE</h5></a>
 			<!-- <div align="center" id="adminMessage">MESSAGE</div> -->
 			<hr>
 			</div>
-			<div class="col-xs-12" style="background:transparent;">
+			<div class="col-xs-12" style="background:transparent;margin-left:5vw;">
 			<a href="#"><h5>USERLIST</h5></a>
 			<hr>
 			</div>
-			<div class="col-xs-12" style="background:transparent;">
+			<div class="col-xs-12" style="background:transparent;margin-left:5vw;">
 			<a href="#"><h5>REPORT</h5></a>                       	
 			<hr>
 			</div>
-			<div class="col-xs-12" style="background:transparent;">
+			<div class="col-xs-12" style="background:transparent;margin-left:5vw;">
 			<a href="#"><h5>REFUND</h5></a>	    	
+		    </div>
+		    
+		    <div class="col-xs-12" style="background:transparent;">
+			<a href="#"><h5>&nbsp;</h5></a>	    	
+		    </div>
+		    
+		    <div class="col-xs-12" style="background:transparent;">
+			<a href="#"><h5>&nbsp;</h5></a>	    	
 		    </div>
 	</div>
 	
@@ -518,7 +526,7 @@
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 	
-		<div class="page-header text-info">
+		<div class="text-info text-center" style="margin-top:10vw;margin-bottom:10vw;">
 	       <h3>회원목록조회</h3>
 	    </div>
 	    

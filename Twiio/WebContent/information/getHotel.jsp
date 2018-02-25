@@ -38,6 +38,11 @@
    
    <!-- ---------font ------------ -->
   	<link href="/resources/css/font.css" rel="stylesheet" type="text/css" /> 
+  	
+  	<!-- Sweet Alert -->
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  	
+  	
    <!--  ///////////////////////// 추가 ////////////////////////// -->
 	<style>
 		body {
@@ -244,7 +249,7 @@
 			    					},
 			    					error:function(JSONData){
 			    					
-			    						alert("에러");
+			    						swal("값을 확인 후 다시 시도해주시기 바랍니다.");
 					    							    							    						
 					    			}
 			    					

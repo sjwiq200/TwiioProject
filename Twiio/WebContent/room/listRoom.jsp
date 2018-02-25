@@ -213,6 +213,7 @@
 	<style>
 body {
     padding-top : 50px;
+    background :#f4f4f4;
 }
 /*       
 .btn.btn-default:hover, .btn.btn-default:active{
@@ -302,15 +303,15 @@ h2 {
    border: solid #ffffff 0px !important;
   font-family:JEJUGOTHIC;
   color: #ffffff;
-  font-size: 1vw;
-  background: #D73A31;
+  font-size: 0.7vw;
+  background: #3B3B3B;
   opacity: 0.9;
   padding: 10px 25x 10px 25px;
   text-decoration: none;
 }
 
 .btn-dy3:hover {
-  background: #D73A31;
+  background: #3B3B3B;
   opacity: 0.5;
   border: solid #ffffff 0px;
   text-decoration: none;
@@ -338,6 +339,12 @@ h2 {
    border-radius: 6px;
 }
 
+
+
+.thumbnailBox:hover{
+	opacity:0.75;
+
+}
     </style>
     
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
@@ -412,7 +419,7 @@ h2 {
 	    
 	    
 	    <div class="row">
-	    <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px;">
+	    <div class="col-md-12 text-right" style=" background: #ededed; border-radius: 23px; margin-top:3vw;">
               <h4>지금 진행되고 있는 방 ${resultPage.totalCount} 개</h4>
           </div> 
        </div>
@@ -428,10 +435,11 @@ h2 {
 			<!-- <div class="row"> -->
 			<c:if test="${room.open }">
 		    <!-- <div class="col-sm-3 "  style="padding-top : 2%"> -->
-		    <div class="col-sm-4 "  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
+		    <div class="col-sm-4"  style="border-radius: 23px;margin-top:20px;padding-top : 2%;border: dashed #5b5b5b 0.5px;">
 		      <!-- <div class="thumbnail" name="getPro" style="height:500px;"> -->
 		      <div class="thumbnail" name="getPro" style="height:400px; margin-bottom:0; border:none;">
 		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
+				  <div class="thumbnailBox">
 				  <c:if test="${room.type == '식사'}">
 		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
@@ -446,6 +454,8 @@ h2 {
 				  <c:if test="${room.type == '미정' }">
 				  	<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
+				  
+				  </div>
 				  <div class="col-sm-12">
                		<div class="col-sm-12">
                		<div class="caption" style="margin-top:5px;text-align: left;">
@@ -469,7 +479,7 @@ h2 {
 		    </div>
 		    <c:if test="${!empty user}" >
 			            <div align="center" style="margin-top:5px;margin-bottom:5px;">
-				            <button class="btn-dy3" style="padding-top:3px;padding-bottom:3px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';"> J O I N 
+				            <button class="btn-dy3" style="padding-top:5px;padding-bottom:5px;padding-left:15px;padding-right:15px;font-family:\'JEJUGOTHIC\';"> J O I N 
 				            <input type="hidden" id="roomKey" value="${room.roomKey}">
 				            <input type="hidden" id="master" value="${room.userNo }">
 				            </button>

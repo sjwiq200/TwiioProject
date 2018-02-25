@@ -125,6 +125,9 @@
             padding-top : 30px;
             padding-bottom : 20px;
             margin-bottom: 10px;
+            border-radius: 23px;
+		 	border: dashed rgba(102, 102, 102, 1) 1.3px;
+		 	font-family:JEJUGOTHIC !important;
          } 
     a img:hover{
     	opacity:0.75;
@@ -239,7 +242,9 @@ $(function() {
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container-fluid">
 	
-		<h1 class="text-center" style="font-family: 'Pacifico', 'cursive';">ready to go?<br/></h1>
+		<h5 align="center" style="margin-top:5vw;">결제페이지 </h5	>
+		<h1 class="text-center" style="font-family: 'Pacifico', 'cursive';color:#D73A31;margin-bottom:1vw;opacity:0.8;">ready to go?<br/></h1>
+		
 		<input type="hidden" name="USDprice" value="" />
 		<center>
 		<div class="image" style="position:relative;">
@@ -322,23 +327,21 @@ $(function() {
 			  </div>
 			  
 			  <br/>
-			  <div class="form-group text-center">
-			   <div class="pay col-sm-offset-1  col-sm-5 text-center">	
-			  <a id="kakaoPay-btn" role="button"><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/>
-			</a>
-			</div>
-			
-			<div class="pay col-sm-2 text-center" >
-			  <a id="paypal-button"></a>
+	
+		    
+		    <div class="col-sm-12">
+		    	<div class="col-sm-offset-3 col-sm-3" ><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/></div>
+		    	<div class="col-sm-3 pay"><a id="paypal-button"></a></div>
+		    	<div class="col-sm-3"></div>
 		    </div>
-		  </div>
+		 
 
 		</form>
 		</div>
 		<!-- form Start /////////////////////////////////////-->
 				   
-		    <div class="col-sm-12 text-center" align="center" >
-		     <a class="btn-dy2" href="#" role="button" style="margin-top:30px;margin-left:30px;font-family:\'JEJUGOTHIC\';padding-right:20px; padding-left:20px;">취&nbsp;소</a>   
+		    <div class="col-sm-12 text-center" align="center" style="margin-top:3vw;margin-bottom:5vw;">
+		     <a class="btn-dy2" href="#" role="button" style="margin-top:30px;font-family:\'JEJUGOTHIC\';padding-right:20px; padding-left:20px;">취&nbsp;소</a>   
 		    </div> 		  
  	</div>
  	

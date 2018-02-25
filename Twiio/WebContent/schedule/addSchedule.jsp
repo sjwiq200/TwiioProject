@@ -26,6 +26,9 @@
 	src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCwwqenPL4wZOiFh9Ljfohh2vadO29GeFM&libraries=places&callback=initialize&sensor=true">
 </script>
 
+  <!--  ///////////////////////// CSS ////////////////////////// -->
+<link rel="stylesheet" href="/resources/css/font.css" />
+
 
 <script type = "text/javascript">
 
@@ -229,7 +232,6 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
-    
      <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
@@ -302,7 +304,8 @@
       }
     body {
     		/* padding-top : 10% ; */
-    		font-family: "Source Sans Pro", Helvetica, sans-serif;
+    		  font-family:JEJUGOTHIC;
+    		  	background: #f4f4f4;
     }
  	.jumbotron {
 
@@ -379,13 +382,34 @@ h3{
 	color :#474747;
     font-size: 3em;
     padding: 0 0.5em 0.25em 0.5em;
-    font-weight: 500;
     
     
     text-transform: none;
     letter-spacing: 10;
-    font-style: Pacifico;
-    text-shadow: 0 5px 5px rgba(0, 0, 0, .1);
+}
+
+/* /////////////////dayoung////////////////// */
+/* Button-dy css  */
+.btn-dy {
+  -webkit-border-radius: 23;
+  -moz-border-radius: 23;
+  border-radius: 23px;
+  font-family:TYPO_JEONGJOL;
+  color: #ffffff;
+  font-size: 14px;
+  background: #D73A31;
+  padding: 4px 20px 4px 20px;
+  border: solid #D73A31 2px;
+  text-decoration: none;
+  margin-top: 3%;
+   opacity: 0.8;
+}
+
+.btn-dy:hover {
+  background: #D73A31;
+  text-decoration: none;
+  color:#ffffff;
+  opacity: 0.5;
 }
     		
     </style>
@@ -396,7 +420,8 @@ h3{
 	<!--  화면구성 div Start /////////////////////////////////////-->
 	<div class="container">
 		<div class="jumbotron">
-			<h3 align="center"><ins><strong>약속을 정해요!</strong></ins></h3>
+			<h3 align="center"><strong>FIX YOUR SCHEDULE</strong></h3>
+			<h6 align="center">만나는 일정을 정하여 친구들에게 알려주세요</h6>
 	
 			<div class="panel-body">
 				<div class="row">
@@ -422,19 +447,21 @@ h3{
 							  
 							  <div class="form-group">
 							  	<label for="scheduleAddress" class="col-sm-offset-1 col-sm-3 control-label">일정 주소 </label>
-								<input type="text" id="addr1" name="scheduleAddress" value="" />
-								<span> &nbsp; </span>
-								<button name="submit" value="okay" onclick='codeAddress(); return false;'>♥</button>
+							  	 <div class="col-sm-3">
+								<input type="text" class="form-control" id="addr1" name="scheduleAddress" value="" />
+								</div>
+								<div class="col-sm-1">
+								<button name="submit" class="btn-dy" value="okay" onclick='codeAddress(); return false;' style="font-family:JEJUGOTHIC !important;">SEARCH</button></div>
 							  </div>
 								<div> &nbsp; </div>
-								<div id="map"></div>
-								
-								<input type="hidden" name="mapImg"  id="mapImg" value=""  />
-							  
-							  <div class="form-group">
+								<div id="map" align="center" class="col-xs-offset-3"></div>
+								<div class="col-xs-offset-3">
+								<input type="hidden" name="mapImg"  id="mapImg" value=""  style="margin-left:10vw"align="center"/>
+							  	</div>
+							  <div class="form-group" style="margin-top:3vh;" style="  font-family:JEJUGOTHIC !important;">
 							    <div class="col-sm-offset-4  col-sm-4 text-center">
-							      <button type="button" class="btn btn-outlined btn-light btn-sm" id="go" >확 &nbsp;정</button>
-								  <a class="btn btn-outlined btn-theme btn-sm" href="#" role="button" id="cancel">취&nbsp;소</a>
+							      <button type="button" class="btn-dy" id="go" style="font-family:JEJUGOTHIC !important;">확 &nbsp;정</button>
+								  <a class="btn-dy" href="#" role="button" id="cancel" style="font-family:JEJUGOTHIC !important;">취&nbsp;소</a>
 							    </div>
 							  </div>
 							</form>

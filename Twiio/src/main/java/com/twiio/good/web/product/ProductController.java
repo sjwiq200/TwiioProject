@@ -85,6 +85,8 @@ public class ProductController {
 
 		System.out.println("/product/addProduct : POST");
 		//System.out.println("date :: "+product.getTripDate());
+		
+		
 		String[] str = product.getTripDate().split(",");
 		//System.out.println("length :: "+str.length);
 		product.setProductCount(product.getTourHeadCount()*str.length);
@@ -128,12 +130,12 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value="getProduct", method=RequestMethod.GET)
-	public String getProduct( @RequestParam("productNo") int productNo, @ModelAttribute("search") Search search, Map<String, Object> map) throws Exception {
+	public String getProduct( @RequestParam("productNo") int productNo, @ModelAttribute("search") Search search, Map<String, Object> map, HttpSession session) throws Exception {
 		
 		System.out.println("/product/getProduct : GET");
 		Product product = productService.getProduct(productNo);
 		Transaction transaction = productService.getEvalProduct(productNo);
-		
+	
 		////////////////////////review////////////////////
 		//Search search = new Search();
 		if(search.getCurrentPage()==0) {

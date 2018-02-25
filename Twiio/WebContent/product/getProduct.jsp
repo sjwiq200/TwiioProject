@@ -51,6 +51,8 @@
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>   
 
 	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<link rel="stylesheet" href="/resources/css/font.css" />
+
 	<style>
 	
 	body {
@@ -61,24 +63,13 @@
 		}
 		
 	#thumbnailMainBox {
-	min-height: 1500px;
-	font-family:'JEJUGOTHIC';
-	background: linear-gradient(-45deg, #56B1BF, transparent),
-		linear-gradient(45deg, #D73A31, transparent);
-	border-radius: 8px;
-	border-color: #000000;
-	border-width: 10px;
-	display: inline-block;
-	padding: 1px;
-	text-decoration: none;
+	border-radius: 23px;
+		 	  border-radius: 23px;
+		 	border: dashed rgba(102, 102, 102, 1) 1.3px;
+		 	font-family:JEJUGOTHIC !important;
 }
 
-#thumbnailMainThumbBox {
-	min-height: 1500px;
-	background: #fff;
-	display: inline-block;
-	border-radius: 6px;
-}
+
 
 		textarea {
 			width: 100%;
@@ -609,7 +600,7 @@ div[name='hostInfo']:hover {
 			 swal("로그인 후 이용해 주세요",{
 				  icon: "warning",
 				});
-		 }else if(${user.userNo }''== msguserno){
+		 }else if(${user.userNo }== msguserno){
 			 //alert('자기 자신에게 쪽지를 보낼수 없습니다.');
 			 swal("자기 자신에게 쪽지를 보낼수 없습니다.",{
 				  icon: "warning",
@@ -674,7 +665,7 @@ $(document).on('click','.row2 a[name=addreport]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo}'' == reportuserno){
+	 }else if(${user.userNo} == reportuserno){
 		 //alert('자기자신은 신고 못합니다.');
 		 swal("자기자신은 신고 못합니다.",{
 			  icon: "warning",
@@ -734,7 +725,7 @@ $(document).on('click','.row2 a[name=addfriend]', function() {
 			  icon: "warning",
 			});
 	 }
-	 else if(${user.userNo}''== addfrienduserno){
+	 else if(${user.userNo}== addfrienduserno){
 		 //alert('자기 자신을 친구 추가할수 없습니다.');
 		 swal("자기 자신을 친구 추가할수 없습니다.",{
 			  icon: "warning",
@@ -796,7 +787,7 @@ $(document).on('click','.row2 a[name=addmessage]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }''== msguserno){
+	 }else if(${user.userNo }== msguserno){
 		 //alert('자기 자신에게 쪽지를 보낼수 없습니다.');
 		 swal("자기 자신에게 쪽지를 보낼수 없습니다.",{
 			  icon: "warning",
@@ -860,7 +851,7 @@ $(document).on('click','.row2 a[name=deletereply]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }'' == deleteuserno){
+	 }else if(${user.userNo } == deleteuserno){
 		 swal({title: "댓글을 삭제 하시겠습니까?",
 			  icon: "warning",
 			  buttons: true,
@@ -1001,7 +992,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }'' == updateuserno){
+	 }else if(${user.userNo } == updateuserno){
 		 $('#updatereplyno').val(updatereplyno);
 		 $('#updatecontent').val(updatecontent);
 		 $('#updatemodalreply').modal('show');
@@ -1121,20 +1112,20 @@ $(document).on('click','#updatereplym',function(){
 
 </head>
 
-<body>
+<body style="font-family:'JEJUGOTHIC'; !important">
 
 	<!-- ToolBar Start /////////////////////////////////////-->
 	<jsp:include page="/layout/toolbar.jsp" />
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="row">
-	<div class="container">
+	<div class="row" style="font-family:'JEJUGOTHIC'; !important">
+	<div class="container" style="font-family:'JEJUGOTHIC'; !important">
 	
 	
 	
 	<!-- ///////////////dayoung//////////////////// -->
-	<div class="col-xs-12 inner" id="thumbnailMainBox">
+	<div class="col-xs-12 inner" id="thumbnailMainBox" style="font-family:'JEJUGOTHIC'; !important">
 				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
 				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
 					<div class="col-xs-12" >
@@ -1147,9 +1138,11 @@ $(document).on('click','#updatereplym',function(){
 		<!-- <div class="row">  -->
 	      <div class="col-sm-12" >
 			<div class="text-info" style="margin-top:80px;margin-bottom:80px;color:#474747;">
-				<h2>
+				<h5>상품상세페이지</h5>
+				<h2 style="color:#D73A31;opacity:0.8;">
 				${product.productName}
 				</h2>
+				
 			</div>
 			<b class="pull-right">조회수 ${product.viewCount }</b>
 			</div>
@@ -1182,7 +1175,7 @@ $(document).on('click','#updatereplym',function(){
 		<!-- <hr/> -->
 		<br/>
 		
-		<div class="row">
+		<div class="row" style="font-family:'JEJUGOTHIC'; !important">
 	  		<div class="col-xs-6" align="right"><strong>도시</strong></div>
 			<div class="col-xs-offset-1 col-xs-5" align="left">${product.city }</div>
 		</div>
@@ -1190,7 +1183,7 @@ $(document).on('click','#updatereplym',function(){
 		<!-- <hr/> -->
 		<br/>
 		
-		<div class="row">
+		<div class="row" style="font-family:'JEJUGOTHIC'; !important">
 	  		<div class="col-xs-6" align="right"><strong>1일 투어 인원</strong></div>
 			<div class="col-xs-offset-1 col-xs-5" align="left">${product.tourHeadCount}</div>
 		</div>
@@ -1340,11 +1333,11 @@ $(document).on('click','#updatereplym',function(){
 		</c:if>
 		<div class="nd1 nds" data-toggle="tooltip" data-placement="left"
 			data-original-title="listProduct" title="목록">
-			<img class="reminder" src="/resources/images/productIcons/list.png" style="width: 35px; height: 35px;">
+			<p class="letter" id="addProduct" style="padding-bottom:5px;font-family:JEJUGOTHIC !important;font-size:15px !important; ">BACK</p>
 		</div>
 
-		<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="top" title="top">				
-				<p class="letter" id="addProduct">TOP</p>
+		<div id="floating-button" data-toggle="tooltip" data-placement="center" data-original-title="top" title="top" style="opacity:0.8;">				
+				<p class="letter" id="addProduct" style="margin-top:5px;font-family:JEJUGOTHIC !important;">TOP</p>
 			</div>
 		</div>
  	

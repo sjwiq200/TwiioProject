@@ -48,8 +48,7 @@
 	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 	
-	  <!--  ///////////////////////// CSS ////////////////////////// -->
-<link rel="stylesheet" href="/resources/css/font.css" />
+	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
  		body {
             padding-top : 50px;
@@ -352,7 +351,7 @@
 			//document.getElementsByName([Input필드의 name값])[0].value = "";
 			///////////////////googlevision////////////////////////
 			$('#file').ready('click',function(){
-				//alert("바뀌었니??");
+				alert("바뀌었니??");
 				/*   */
 			});
 		
@@ -422,7 +421,7 @@
 						userTypeView.value=2; */
 						$("#userType").val("2");
 						$("#userTypeView").val("호스트");
-						swal("호스트로 등록되었습니다.");
+						alert('호스트등록완료');
 					}
 					
 				  });
@@ -444,6 +443,7 @@
 		
 		$(function() {
 			$("#file").on('change', function() {
+				
 				readURL(this);
 			});
 		});
@@ -539,7 +539,7 @@
    	<!-- ToolBar End /////////////////////////////////////-->
 	
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container" style="  font-family:JEJUGOTHIC;">
+	<div class="container">
 		<div class="col-sm-10 col-sm-offset-1" id="back" style="background-color : rgba(255,255,255,0.7); margin-top:50px; padding-top:20px; padding-bottom:50px;">	
 			<div class="page-header"> 
 				<div class="row" align="center">
@@ -563,24 +563,18 @@
 						<c:if test="${!empty user.userImage}">
 							<img id="blah" style="width:150px; height:150px; alt="" src="/resources/images/userimages/${user.userImage}" class="img-responsive">
 						</c:if> 
-						
 							<label class="file_input">
 					        	<input type="file" id="file" class="file">
 					   	 	</label>
-					   	 	
-					   	 	
 					    <span id="imgHelpBlock" class="help-block" type="hidden">
 							 <strong  id="text2" class="text-danger col-sm-12 col-sm-offset-5" style="color: #f9d431;">이미지를 등록해 주세요.</strong>
 						</span>
-						
 					</div>
 				</div>	
 					
 					
 					<div class="col-sm-12">
-							<br/>
-							<div class="text-muted" style="font-size:0.5vw !important;" align="center">프로필 사진은 반드시 얼굴이 정면으로 찍힌 사진으로 등록해주시기 바랍니다.</div>
-							<br/><br/>
+							<br/><br/><br/>
 							<div class="row">
 								<div class="form-group">
 							  		<label for="userName" class="col-sm-3 col-sm-offset-3 control-label">이름</label>

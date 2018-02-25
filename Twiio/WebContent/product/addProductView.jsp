@@ -39,6 +39,9 @@
   	<!-- ///////////////////////// Sweet Alert ////////////////////////// -->
 	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>    
 
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<link rel="stylesheet" href="/resources/css/font.css" />
+	
 <style>
        body > div.container{
         	/* border: 3px solid #D6CDB7; */
@@ -358,7 +361,7 @@ $( function() {
    	<!-- ToolBar End /////////////////////////////////////-->
 
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class="container" >
 				
 		<h1 >DailyTour</h1>
 		<br/>
@@ -369,7 +372,7 @@ $( function() {
 		<form class="form-horizontal" name="detailForm">
 		
 		<div class="row">
-  <div class="col-sm-12">
+  <div class="col-sm-12" style="font-family:'JEJUGOTHIC'; !important">
   
    <div class="row">
       <div class="col-sm-5">
@@ -413,7 +416,7 @@ $( function() {
 			      <div class="input-group" name="addDate">
 			    <span class="input-group-addon">투어날짜</span>		      
 			      <input type="text" class="form-control" id="datepicker1" name="tripDate" readonly="readonly" placeholder="투어날짜 Click">	
-			           
+			       
 			     </div>
 			     
 			     <!-- </div> -->
@@ -421,7 +424,7 @@ $( function() {
 			    <!--  <div class="col-sm-3"> -->
 			  
 			     
-			     <div class="btn-group" role="group" aria-label="...">
+			     <div class="btn-group" role="group" aria-label="..." align="right">
 				    <a class="btn btn-primary btn" href="#" role="button" id="addTripDate" name="addTripDate"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>		    
 				    <a class="btn btn-primary btn" href="#" role="button" id="removeTripDate" name="removeTripDate" disabled="true"><span class="glyphicon glyphicon-minus" aria-hidden="true"></span></a>	
 			    </div>
