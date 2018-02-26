@@ -418,9 +418,9 @@ h3{
 
 <body>
 	<!--  화면구성 div Start /////////////////////////////////////-->
-	<div class="container">
+	<div class="container" style="background:#f4f4f4">
 		<div class="jumbotron">
-			<h3 align="center"><strong>FIX YOUR SCHEDULE</strong></h3>
+			<h3 align="center" style="background:#ffffff;padding-top:30px;padding-bottom:30px;border-radius: 23px;border: 1px dashed #D73A31;"><strong><ans>FIX YOUR SCHEDULE<ans></strong></h3>
 			<h6 align="center">만나는 일정을 정하여 친구들에게 알려주세요</h6>
 	
 			<div class="panel-body">
@@ -454,14 +454,13 @@ h3{
 								<button name="submit" class="btn-dy" value="okay" onclick='codeAddress(); return false;' style="font-family:JEJUGOTHIC !important;">SEARCH</button></div>
 							  </div>
 								<div> &nbsp; </div>
-								<div id="map" align="center" class="col-xs-offset-3"></div>
-								<div class="col-xs-offset-3">
-								<input type="hidden" name="mapImg"  id="mapImg" value=""  style="margin-left:10vw"align="center"/>
+								<div id="map" align="center"></div>
+								<input type="hidden" name="mapImg"  id="mapImg" value=""  style="margin-left:10vw" align="center"/>
 							  	</div>
 							  <div class="form-group" style="margin-top:3vh;" style="  font-family:JEJUGOTHIC !important;">
 							    <div class="col-sm-offset-4  col-sm-4 text-center">
 							      <button type="button" class="btn-dy" id="go" style="font-family:JEJUGOTHIC !important;">확 &nbsp;정</button>
-								  <a class="btn-dy" href="#" role="button" id="cancel" style="font-family:JEJUGOTHIC !important;">취&nbsp;소</a>
+								  <a class="btn-dy" href="#" role="button" id="cancel" style="font-family:JEJUGOTHIC !important;padding-top:6.4px;padding-bottom:6.4px">취&nbsp;소</a>
 							    </div>
 							  </div>
 							</form>

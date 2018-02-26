@@ -238,7 +238,7 @@ $( function() {
 	        	$(editor).summernote('editor.insertImage',data.relativeUrl);
 	        },
 	        error : function() {
-			alert("파일 업로드에 실패했습니다.")
+			swal("파일 업로드에 실패했습니다.");
 		}
 	    });
 	}
@@ -346,8 +346,6 @@ $( function() {
 				$('#blah').attr('src', e.target.result).attr('width', '300px');
 			}
 			reader.readAsDataURL(input.files[0]);
-			alert($('#file').val());
-			alert(e.target.result);
 		}
 	}
 

@@ -186,13 +186,6 @@
         });
       }
 	
-	$(function() {
-		
-		$("#goToList").on("click", function(){
-			
-			
-		}
-	})
 	
 	$(function() {
 		
@@ -341,7 +334,6 @@
 		<br/><br/>
 		<div class="col-sm-offset-10  col-sm-2 text-center">
 		      <button class="btn btn-outlined btn-theme btn-xs"  id="htmlToPDF" >PDF저장</button>
-		      <button class="btn btn-outlined btn-theme btn-xs"  id="goToList" >목록으로 돌아가기</button>
 		</div>
 		<hr/>
 		<div></div>

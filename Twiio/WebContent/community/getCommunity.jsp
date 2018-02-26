@@ -73,6 +73,7 @@
         	padding-top : 70px ;
             background-color: #f1eeee;
 			color: #666666 ;
+			font-family: "JEJUGOTHIC" !important;;
         }
         textarea {
 	  width: 100%;
@@ -93,7 +94,7 @@
 		  margin:0 0 40px 50px;
 		}
 		.button-2 a{
-		  font-family:arial;
+
 		  font-size:16px;
 		  color:#34495e;
 		  text-decoration:none;
@@ -231,9 +232,8 @@
 
 #thumbnailMainBox {
 	min-height: 1500px;
-	font-family:'JEJUMYEONGJO';
-	background: linear-gradient(-45deg, #08708A, transparent),linear-gradient(45deg, #ffffff, transparent);
 	border-radius: 8px;
+	border: dashed rgba(102, 102, 102, 1) 1px;
 	border-color: #000000;
 	border-width: 10px;
 	display: inline-block;
@@ -390,7 +390,10 @@ function resetData() {
 		 $("#write").on("click" , function() {
 			//alert('들어오니??');
 			if(${empty user.userId}){
-				 alert('로그인후 사용하여주세요');	 
+//				 alert('로그인후 사용하여주세요');
+                swal("로그인후 이용해주세요.",{
+                    icon: "warning",
+                });
 			 }
 			 else{
 				// alert('들어오니??');
@@ -598,10 +601,16 @@ function resetData() {
 		 	$(document).on("click", '#addfriendcommunity', function(){
 		 		var addfrienduserno = $('input[name=communityUserNo]').val();
 				 if(${empty user.userId}){
-					 alert('로그인후 사용하여주세요');	 
+//					 alert('로그인후 사용하여주세요');
+                     swal("로그인후 이용해주세요.",{
+                         icon: "warning",
+                     });
 				 }
-				 else if(${user.userNo}== addfrienduserno){
-					 alert('자기 자신을 친구 추가할수 없습니다.');
+				 else if((${empty user.userNo } ?'': ${user.userNo})== addfrienduserno){
+//					 alert('자기 자신을 친구 추가할수 없습니다.');
+                     swal("자기 자신을 친구 추가할수 없습니다.",{
+                         icon: "warning",
+                     });
 				 }else{
 					 $.ajax({
 							url : "/common/json/addFriend",
@@ -657,9 +666,15 @@ function resetData() {
 		 var reportusername = $('input[name=communityUserName]').val();
 		 
 		 if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo} == reportuserno){
-			 alert('자기자신은 신고 못합니다.');
+//			 alert('로그인후 사용하여주세요');
+             swal("로그인후 이용해주세요.",{
+                 icon: "warning",
+             });
+		 }else if((${empty user.userNo } ?'': ${user.userNo}) == reportuserno){
+//			 alert('자기자신은 신고 못합니다.');
+             swal("자기자신은 신고 못합니다.",{
+                 icon: "warning",
+             });
 	 	 }else{
 			$('#reportuser2').val(reportusername);
 			$('#reportuserno2').val(reportuserno);
@@ -711,9 +726,15 @@ function resetData() {
 		 var reportreplyno = $($('input[name=replyNo]')[$('.row2 a[name=addreport]').index(this)]).val();
 		 
 		 if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo} == reportuserno){
-			 alert('자기자신은 신고 못합니다.');
+//			 alert('로그인후 사용하여주세요');
+             swal("로그인후 이용해주세요.",{
+                 icon: "warning",
+             });
+		 }else if((${empty user.userNo } ?'': ${user.userNo}) == reportuserno){
+//			 alert('자기자신은 신고 못합니다.');
+             swal("자기자신은 신고 못합니다.",{
+                 icon: "warning",
+             });
 	 	 }else{
 			$('#reportuser').val(reportusername);
 			$('#reportuserno').val(reportuserno);
@@ -767,10 +788,16 @@ function resetData() {
 	$(document).on('click','.row2 a[name=addfriend]', function() {
 		 var addfrienduserno = $($('input[name=userNo]')[$('.row2 a[name=addfriend]').index(this)]).val();
 		 if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
+//			 alert('로그인후 사용하여주세요');
+             swal("로그인후 이용해주세요.",{
+                 icon: "warning",
+             });
 		 }
-		 else if(${user.userNo}== addfrienduserno){
-			 alert('자기 자신을 친구 추가할수 없습니다.');
+		 else if((${empty user.userNo } ?'': ${user.userNo})== addfrienduserno){
+//			 alert('자기 자신을 친구 추가할수 없습니다.');
+             swal("자기 자신을 친구 추가할수 없습니다.",{
+                 icon: "warning",
+             });
 		 }else{
 			 $.ajax({
 					url : "/common/json/addFriend",
@@ -825,9 +852,15 @@ function resetData() {
 		 var msgusername = $($('input[name=userName]')[$('.row2 a[name=addmessage]').index(this)]).val();
 		 
 		 if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo }== msguserno){
-			 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
+//			 alert('로그인후 사용하여주세요');
+             swal("로그인후 이용해주세요.",{
+                 icon: "warning",
+             });
+		 }else if((${empty user.userNo } ?'': ${user.userNo})== msguserno){
+//			 alert('자기 자신에게 쪽지를 보낼수 없습니다.');
+             swal("자기 자신에게 쪽지를 보낼수 없습니다.",{
+                 icon: "warning",
+             });
 		 }else{
 			$('#msgusername').val(msgusername);
 			$('#msguserno').val(msguserno);
@@ -884,8 +917,11 @@ function resetData() {
 		//alert(${user.userNo}+'==='+deleteuserno);
 		 
 		 if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo } == deleteuserno){
+//			 alert('로그인후 사용하여주세요');
+             swal("로그인후 이용해주세요.",{
+                 icon: "warning",
+             });
+		 }else if((${empty user.userNo } ?'': ${user.userNo}) == deleteuserno){
 			 swal({title: "댓글을 삭제 하시겠습니까?",
 				  icon: "warning",
 				  buttons: true,
@@ -926,13 +962,19 @@ function resetData() {
 		var updatecontent = $($('input[name=replyContent]')[$('.row2 a[name=updatereply]').index(this)]).val();
 		
 		if(${empty user.userId}){
-			 alert('로그인후 사용하여주세요');	 
-		 }else if(${user.userNo } == updateuserno){
+//			 alert('로그인후 사용하여주세요');
+            swal("로그인후 이용해주세요.",{
+                icon: "warning",
+            });
+		 }else if((${empty user.userNo } ?'': ${user.userNo}) == updateuserno){
 			 $('#updatereplyno').val(updatereplyno);
 			 $('#updatecontent').val(updatecontent);
 			 $('#updatemodalreply').modal('show');
 		 }else{
-		 	alert('자신의 댓글을 선택하여 지우세요.');
+//		 	alert('자신의 댓글을 선택하여 지우세요.');
+            swal("자신의 댓글을 선택하여 지우세요.",{
+                icon: "warning",
+            });
 		 }
 	});
 	
@@ -1039,35 +1081,30 @@ function resetData() {
 			<div class="row">
 				<div class="col-sm-12">
 						<div class="col-sm-12">
-								<c:if test="${community.communityType == '0'}">
-									<div style="color:#08708A;">&nbsp;&nbsp;[ Question Q&A ]</div>
-								</c:if>
-								<c:if test="${community.communityType == '1'}">
-									<div style="color:#08708A;">&nbsp;&nbsp;[ Trip Review ]</div>
-								</c:if>
+
 							<strong style="font-size: 2em;">
 					    	<c:if test="${community.communityType == 1}"> 	
 					    	
 					    	<c:if test="${community.communitySubTitle == 0}">
-					    		[도시]
+								[도시]</br>
 					    	</c:if>
 					    	<c:if test="${community.communitySubTitle == 1}">
-					   	 		[루트]
+					   	 		[루트]</br>
 					    	</c:if>
 					    	<c:if test="${community.communitySubTitle == 2}">
-					   	 		[교통]
+					   	 		[교통]</br>
 					    	</c:if>
 					    	<c:if test="${community.communitySubTitle == 3}">
-					    		[숙소]
+					    		[숙소]</br>
 					    	</c:if>
 					    	<c:if test="${community.communitySubTitle == 4}">
-					    		[쇼핑]
+					    		[쇼핑]</br>
 					    	</c:if>
 					    	<c:if test="${community.communitySubTitle == 5}">
-					    		[기타]
+					    		[기타]</br>
 					    	</c:if> 
 					       			|	   
-					       	</c:if>${community.communityTitle}
+							</c:if>${community.communityTitle}</br>
 					   		</strong>
 							<div class="pull-right" style="font-size: 1em; padding-top : 15px;">조회수  :  ${community.viewCount} | 등록일  :  ${community.regDate} | 작성자  :  ${community.userName}</div>
 						</div>

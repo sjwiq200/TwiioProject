@@ -324,6 +324,7 @@
 	  body {
             padding-top : 50px;
             background: #f4f4f4;
+            font-family: "JEJUGOTHIC" !important;
         }
         
         .btn.btn-default:hover, .btn.btn-default:active{
@@ -379,7 +380,6 @@ h2 {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
   border-radius: 23px;
-  font-family:TYPO_JEONGJOL;
   color: #545454;
   font-size: 16px;
   background: #ffffff;
@@ -427,7 +427,7 @@ h2 {
   border: solid #ffffff 0px !important;
   font-family:JEJUGOTHIC;
   color: #ffffff;
-  font-size: 1vw;
+  font-size: 0.8vw;
   background: #D73A31;
   opacity: 0.9;
   padding: 10px 25x 10px 25px;
@@ -451,7 +451,6 @@ h2 {
 }
 
 #thumbnailMainBox {
-   font-family:'JEJUMYEONGJO';
    border-color: #000000;
    display: inline-block;
    text-decoration: none;
@@ -483,8 +482,8 @@ h2 {
 		
 		<c:if test="${!empty user }">
 		<div class="col-sm-12" align="center" style="margin-top:10px;">
-           <button id="listRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>모든 방목록</button>
-           <button id="listMyRoom" class="btn-dy3" style="padding-top:10px;padding-bottom:10px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 방목록</button>
+           <button id="listRoom" class="btn-dy3" style="padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>모든 방목록</button>
+           <button id="listMyRoom" class="btn-dy3" style="padding-top:5px;padding-bottom:5px;padding-left:20px;padding-right:20px;font-family:\'JEJUGOTHIC\';"/>나의 방목록</button>
         </div>         
 		</c:if>
 						

@@ -324,7 +324,7 @@ function readURL(input) {
 <title>Insert title here</title>
 </head>
 <body>
-
+<jsp:include page="/layout/toolbar.jsp" />
 
  <div class="container">
       

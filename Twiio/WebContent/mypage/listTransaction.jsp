@@ -60,8 +60,6 @@
      body {
             padding-top : 100px ;
             background-color: #f4f4f4;
-			color: #666666 ;
-			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
         h1 {
 			text-align: center;
@@ -71,12 +69,12 @@
 			background-color: #fcfcfc;
 		}
         
-        <!-- ##### -->
+
         .ct_list_pop {margin-left: 80px; float: center;}
 
         td { cursor: default;}
 
-        span {color: gray; }
+        /*span {color: gray; }*/
 
    	   
 		.star-input>.input,
@@ -302,7 +300,7 @@
 		    padding: 8px 8px 8px 32px;
 		    text-decoration: none;
 	    	font-size: 25px;
-	  		color: #818181;
+	  		/*color: #818181;*/
 		    display: block;
 		    transition: 0.3s;
 			}
@@ -373,7 +371,7 @@
     
       //=============    검색 / page 두가지 경우 모두  Event  처리 =============   
       function fncGetList(currentPage) {
-    	  if(${resultPage.maxPage}>=currentPage){
+    	  if(${resultPage.maxPage}>=currentPage){ 
     		
          $("#currentPage").val(currentPage);
          $("form").attr("method" , "POST").attr("action" , "/product/listProduct?menu=${menu}").submit();
@@ -739,10 +737,13 @@
    
 </head>
 
+
 <body>
-   
+
+
+<jsp:include page="/layout/toolbar.jsp" />
    <!-- ToolBar Start /////////////////////////////////////-->
-   <jsp:include page="/layout/toolbar.jsp" />
+
       <!-- ToolBar End /////////////////////////////////////-->
    <!---------------------------------------사이드바--------------------------------------------------------->
 	<div id="mySidenav" class="sidenav" style="font-family:'JEJUMYEONGJO';">
@@ -836,11 +837,11 @@
 	<!---------------------------------------사이드바--------------------------------------------------------->
 	<!--  화면구성 div Start /////////////////////////////////////-->
    <!--  화면구성 div Start /////////////////////////////////////-->
-   <div class="container col-md-8 col-md-offset-2">
+   <div class="container col-md-8 col-md-offset-2" >
    	   <div class="col-md-12">
    	   <div class="table-responsive">
        <h1 style="font-family: 'Jeju Gothic', serif;">
-           	나의 구매 목록 :D
+           	나의 구매 목록
        </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
        
@@ -959,12 +960,7 @@
 			<div class="modal-dialog" align="center" style="background-color: black;">
 						<form name="addMainForm">
 				
-							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
-/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
- */ 							background-color: #ffffff;
- 							border-radius: 3% !important; 
- 							border: 1px dashed #3B3B3B;
- 							color: #3B3B3B !important;">
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'JEJUGOTHIC';background-color: #ffffff;border-radius: 3% !important; border: 1px dashed #3B3B3B;">
 								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 									<h1 class="modal-title">
@@ -1036,12 +1032,11 @@
 			<div class="modal-dialog" align="center" style="background-color: black;">
 						<form name="addMainForm">
 				
-							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'TYPO_JEONGJOL';
-/*  							background: linear-gradient(-45deg, #56B1BF, transparent),linear-gradient(45deg, #D73A31, transparent);
- */ 							background-color: #ffffff;
+							<div class="col-sm-12 form-group center-block contentsList" style="font-family: 'JEJUGOTHIC';
+							background-color: #ffffff;
  							border-radius: 3% !important; 
  							border: 1px dashed #3B3B3B;
- 							color: #3B3B3B !important;">
+ 							>
 								<div style="font-size:1.5em;font-family:Pacifico; margin-top:50px;margin-bottom:20px;color:#D73A31; opacity:0.8;">
 									<button type="button" class="close" data-dismiss="modal">&times;</button>
 									<h1 class="modal-title">

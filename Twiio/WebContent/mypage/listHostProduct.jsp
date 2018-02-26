@@ -58,7 +58,6 @@
     	body {
             padding-top : 100px ;
             background-color: #f4f4f4;
-			color: #666666 ;
 			font-family: "Source Sans Pro", Helvetica, sans-serif;
         }
         h1 {
@@ -68,7 +67,7 @@
 			border: 1px solid #ddd;
 			background-color: #fcfcfc;
 		}
-        span {color: gray; }
+        /*span {color: gray; }*/
        <!-- ##### -->
        
        .red{
@@ -106,7 +105,6 @@
 		    padding: 8px 8px 8px 32px;
 		    text-decoration: none;
 	    	font-size: 25px;
-	  		color: #818181;
 		    display: block;
 		    transition: 0.3s;
 			}
@@ -484,7 +482,7 @@ $(document).on("click",'td:nth-child(4) span[name="friendDelete"]', function(){
       <div class="col-md-12">
    	   <div class="table-responsive">
        <h1 style="font-family: 'Jeju Gothic', serif;">
-           	나의 판매 목록 :D
+           	나의 판매 목록
        </h1>
        <!-- table 위쪽 검색 Start /////////////////////////////////////-->
        

@@ -67,7 +67,7 @@ public class ScheduleRestController {
 		System.out.println("/schedule/json/addSchedule : POST");
 		
 		HttpClient httpClient = new DefaultHttpClient();
-        HttpPost httpPost = new HttpPost("http://192.168.0.54:8282/v1/requestFCM");
+        HttpPost httpPost = new HttpPost("http://192.168.0.9:8282/v1/requestFCM");
         httpPost.setHeader("Accept", "application/json");
         httpPost.setHeader("Content-Type", "application/json");
         

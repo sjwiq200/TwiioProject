@@ -75,9 +75,9 @@ h1 {
   -moz-border-radius: 23;
   border-radius: 23px;
   font-family:TYPO_JEONGJOL;
-  color: #D73A31;
+  color: #ffffff;
   font-size: 16px;
-  background: #ffffff;
+  background: #D73A31;
   padding: 6px 20px 6px 20px;
   border: solid #D73A31 2px;
   text-decoration: none;
@@ -91,30 +91,6 @@ h1 {
   color:#ffffff;
   opacity: 0.7;
 }
-
-.btn-dy1 {
-  -webkit-border-radius: 23;
-  -moz-border-radius: 23;
-  border-radius: 23px;
-  font-family:TYPO_JEONGJOL;
-  color: #ffffff;
-  font-size: 16px;
-  background: #D73A31;
-  padding: 6px 20px 6px 20px;
-  border: solid #D73A31 2px;
-  text-decoration: none;
-  margin-top: 3%;
-   opacity: 0.9;
-}
-
-.btn-dy1:hover {
-  background: #D73A31;
-  text-decoration: none;
-  color:#ffffff;
-  opacity: 0.7;
-}
-
-
 
 /* Button-dy css - listFriendRecommendation */
 .btn-dy2 {
@@ -517,7 +493,7 @@ div.caption{
 							<input type="hidden" id="priceCondition" name="priceCondition" value="${! empty search.priceCondition ? search.priceCondition : '' }" />
 							<input type="hidden" id="prodSearchType" name="prodSearchType" value="${! empty search.prodSearchType ? search.prodSearchType : '' }" />
 	    				 	<!-- <!— <button class="col-xs-6 btn btn-outlined btn-theme btn-sm" id="search" >검 &nbsp;색</button> —> -->
-	    				 	<button class="btn-dy1" id="search" align="left" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
+	    				 	<button class="btn-dy" id="search" align="left" style="padding-top:7px;padding-bottom:7px;padding-left:10px;padding-right:10px;font-family:\'JEJUGOTHIC\';">SEARCH</button>
 	    				</div>	
 	    				
 	    				<div class="col-sm-offset-1"></div>

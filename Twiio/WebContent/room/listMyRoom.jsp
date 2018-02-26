@@ -74,7 +74,7 @@
 			 })
 		
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.54:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master+'/${user.userName}','Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			 /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -237,6 +237,7 @@
  body {
     padding-top : 50px;
     background: #f4f4f4;
+    font-family: "JEJUGOTHIC" !important;
 }
 
 h2 {
@@ -257,7 +258,6 @@ h2 {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
   border-radius: 23px;
-  font-family:TYPO_JEONGJOL;
   color: #545454;
   font-size: 16px;
   background: #ffffff;
@@ -353,7 +353,6 @@ h2 {
 }
 
 #thumbnailMainBox {
-   font-family:'JEJUMYEONGJO';
    border-color: #000000;
    display: inline-block;
    text-decoration: none;

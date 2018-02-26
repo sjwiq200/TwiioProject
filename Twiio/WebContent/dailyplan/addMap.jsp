@@ -21,10 +21,14 @@
 
 <style type="text/css">
 
+	body{
+	font-family:'JEJUGOTHIC';
+	}
 	#map {
         max-width: 100%;
         max-height: 100%;
 		height: 300px;
+		font-family:'JEJUGOTHIC';
       }
       html, body {
         height: 100%;
@@ -318,7 +322,7 @@
 		
 
 </script>
-<body>
+<body style="font-family:'JEJUGOTHIC';">
 
 
 	<div class="row" style="font-family: 'JEJUGOTHIC';">

@@ -36,55 +36,173 @@
   	<link href="/resources/css/plan.css" rel="stylesheet" type="text/css" /> 
   	<link href="/resources/listProduct/css/responsive.css" rel="stylesheet" type="text/css" /> 
   	
-	
+	<!--  ///////////////////////// CSS ////////////////////////// -->
+	<style>
+       body > div.container{
+       
+        	border: 3px solid #D6CDB7;
+            margin-top: 10px;
+        }
+         body{
+        	background:  #f4f4f4;	
+        }
+        h1{
+        	color: rgba(215, 58, 49, 0.7);
+        	font-family: 'Pacifico', 'cursive';
+        	font-size: 45px;
+        }
+        .btn {	
+			letter-spacing: 1px;
+			text-decoration: none;
+			background: none;
+			-moz-user-select: none;
+			background-image: none;
+			border: 1px solid transparent;
+			border-radius: 0;
+			cursor: pointer;
+			display: inline-block;
+			margin-bottom: 0;
+			vertical-align: middle;
+			white-space: nowrap;
+			font-size: 14px;
+			line-height: 20px;
+			font-weight: 700;
+			text-transform: uppercase;
+			border: 2px solid;
+			padding: 8px 20px;	
+			margin-top: 10px;
+		}		
+		.btn.btn-primary:hover, .btn.btn-primary:active {	
+			color: #FFF;
+			background: #08708A;
+			border-color: #08708A;
+		}
+		
+		.btn.btn-primary {			
+			background: #f4f4f4;
+			color: #08708A;
+			border-color: #08708A;
+		}
+		.col-sm-offset-2.col-sm-8.text-center {
+			font-family: "lato-regular", Helvetica, Arial, sans-serif;
+		}
+		
+		.btn-dy2 {
+		  -webkit-border-radius: 23;
+		  -moz-border-radius: 23;
+		  border-radius: 23px;
+		  font-family:JEJUGOTHIC;
+		  color: #545454;
+		  font-size: 12px;
+		  background: #ffffff;
+		  padding: 8px 13px 8px 13px;
+		  border: solid #545454 0.5px;
+		  text-decoration: none;	 
+		}
+		
+		.btn-dy2:hover {
+		  background: #D73A31;
+		  opacity: 0.8;
+		  border: solid #545454 0px;
+		  text-decoration: none;
+		  color:#ffffff;
+		}	
+		
+		/* /////////////////dayoung////////////////// */
+		/* Button-dy css  */
+		.btn-dy {
+		  -webkit-border-radius: 23;
+		  -moz-border-radius: 23;
+		  border-radius: 23px;
+		  color: #ffffff;
+		  font-size: 16px;
+		  background: #D73A31;
+		  padding: 6px 20px 6px 20px;
+		  border: solid #D73A31 2px;
+		  text-decoration: none;
+		  margin-top: 3%;
+		   opacity: 0.9;
+		}
+		
+		.btn-dy:hover {
+		  background: #D73A31;
+		  text-decoration: none;
+		  color:#ffffff;
+		  opacity: 0.7;
+		}
+		
+		.jumbotron {
+			border-radius: 23px;
+		 	border: dashed rgba(255, 0, 0, 0.6) 2px;
+		}
+		
+		
+    </style>
+    
+     <!--  ///////////////////////// JavaScript ////////////////////////// -->
 	<script type="text/javascript">
 	
-	$(function(){
+		//============= "가입"  Event 연결 =============
+		 $(function() {
+			//==> DOM Object GET 3가지 방법 ==> 1. $(tagName) : 2.(#id) : 3.$(.className)
+			$( "#main" ).on("click" , function() {
+				/* self.location="/main.jsp"; */
+				/* opener.location.reload(); */
+				opener.location = "/product/listProduct";
+				window.close();
+			});
+			$( "#mypage" ).on("click" , function() {
+				/* self.location="/mypage/listTransaction"; */
+				opener.location = "/transaction/listTransaction";
+				window.close();
+			});
+		});	
 		
-		var tripDate=opener.document.getElementsByName("tripDate").value;
-		var count=opener.document.getElementsByName("count").value;
-		var totalPrice=opener.document.getElementsByName("totalPrice").value;
-		var buyerNo=opener.document.getElementsByName("buyerNo").value;
-		var requirement=opener.document.getElementsByName("requirement").value;
-		var productNo=opener.document.getElementsByName("productNo").value;
-		
-		alert(opener.document.getElementsByName("tripDate").value);
-		
-		$("input[name='tripDate']").val(tripDate);
-		$("input[name='count']").val(count);
-		$("input[name='totalPrice']").val(totalPrice);
-		$("input[name='buyerNo']").val(buyerNo);
-		$("input[name='requirement']").val(requirement);
-		$("input[name='productNo']").val(productNo);
-		
-		$("form.kakao").attr("method" , "POST").attr("action" , "/transaction/kakaoPayReady").submit();
-		});
 		
 	</script>
 	
-	
+	<script>
+	  
+	 
+		 
+	</script>
+    
 </head>
 
 <body>
 
 	
-	<div class="container-fluid">
+	<jsp:include page="/layout/toolbar.jsp" />
+	
+	<div class="container-fluid" align="center">
 	
 		
+		<h1 style="margin-top:10vw; margin-bottom:5vw;">Daily Tour</h1>
 		
 		
 		
-		<div class="jumbotron col-md-8 col-md-offset-2">
+		<div class="jumbotron col-md-8 col-md-offset-2" style="background-color:#ffffff;">
 		<!-- form Start /////////////////////////////////////-->
 		
-		<form class="kakao">
-		<input type="hidden" name="tripDate" value="${transaction.tripDate}" />
-		<input type="hidden" name="count" value="${transaction.tripDate}" />
-		<input type="hidden" name="totalPrice" value="${transaction.tripDate}" />
-		<input type="hidden" name="buyerNo" value="${transaction.tripDate}" />
-		<input type="hidden" name="requirement" value="${transaction.tripDate}" />
-		<input type="hidden" name="productNo" value="${transaction.tripDate}" />
-		</form>
+			
+		 <!-- <div class="row">
+		 <div class="col-md-12"> -->			  
+			  
+			  <div class="form-group">
+			   <div class="col-sm-offset-2  col-sm-8 text-center">
+			    결제를 성공적으로 마치셨습니다.<br/>
+			    구매 상세내역은 MyPage에서 확인할 수 있습니다.
+			    </div>
+			  </div>
+			  
+			  <div class="form-group">
+		    <div class="col-sm-offset-2  col-sm-8 text-center">
+		    <!-- disabled="disabled"  -->
+		      <button type="button"  id="main" class="btn-dy">확인</button>
+		      <button type="button"  id="mypage" class="btn-dy" >마이페이지</button>
+			  
+		    </div>
+		  </div>
 
 		
 		</div>

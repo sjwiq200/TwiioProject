@@ -252,8 +252,8 @@
 					userId = user.id;
 					userName = user.name;
 					image = image;
-					alert(userId);
-					alert(userName);
+					/* alert(userId);
+					alert(userName); */
 					//alert('이미지 ' + image);
 					
 					$("input:hidden[name='userfaceId']").val(userId);
@@ -334,9 +334,9 @@
 	<div class="container">
 		<!--  row Start /////////////////////////////////////-->
 				
-		 	 	<div class="jumbotron" style="font-family:'JEJUGOTHIC';">	
+		 	 	<div class="jumbotron" >	
 		 	 		
-		 	 		<h1 align="center" ><strong>LOGIN</strong></h1>
+		 	 		<h1 align="center" style="font-family:'JEJUGOTHIC';"><strong>LOGIN</strong></h1>
 		 	 		<h3 align="center" style="font-family: 'Pacifico', cursive !important;"><strong>Twiio</strong></h3>
 		 	 		
 			        <div class="panel-body">

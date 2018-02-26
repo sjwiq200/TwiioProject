@@ -66,7 +66,7 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.54:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master+'/${user.userName}','Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 
@@ -139,13 +139,13 @@
 															+'<div class="thumbnail" name="getPro" style="height:400px; margin-bottom:0; border:none;">'
 															
 															  if(JSONData[i].type == '식사'){
-																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
+																  displayValue += '<img src="/resources/images/room/delicious.jpg" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '체험' ) {
-																  displayValue += '<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">';
+																  displayValue += '<img src="/resources/images/room/adventure2.jpg" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '관람') {
-																  displayValue += '<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">';
+																  displayValue += '<img src="/resources/images/room/watch.jpg" alt="" class="img-rounded" style="height:190px;">';
 															  }
 															  else if(JSONData[i].type == '미정') {
 																  displayValue += '<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">';
@@ -211,9 +211,11 @@
 	
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	<style>
-body {
+	
+bbody {
     padding-top : 50px;
     background :#f4f4f4;
+    font-family: "JEJUGOTHIC" !important;
 }
 /*       
 .btn.btn-default:hover, .btn.btn-default:active{
@@ -256,7 +258,6 @@ h2 {
   -webkit-border-radius: 23;
   -moz-border-radius: 23;
   border-radius: 23px;
-  font-family:TYPO_JEONGJOL;
   color: #545454;
   font-size: 16px;
   background: #ffffff;
@@ -317,7 +318,7 @@ h2 {
   text-decoration: none;
   color:#ffffff;
 }
-
+img { max-width: 100%; height: auto; }
 
 /* ///////////Dayoung - Border/////////////    */      
 
@@ -327,7 +328,6 @@ h2 {
 }
 
 #thumbnailMainBox {
-   font-family:'JEJUMYEONGJO';
    border-color: #000000;
    display: inline-block;
    text-decoration: none;
@@ -441,14 +441,14 @@ h2 {
 		        <!-- <img src="https://i.pinimg.com/236x/90/fa/d5/90fad5ab4057d05ad3f82f4d12aa22da.jpg" alt="..." class="img-rounded"> -->
 				  <div class="thumbnailBox">
 				  <c:if test="${room.type == '식사'}">
-		        		<img src="/resources/images/room/hygge01.png" alt="" class="img-rounded" style="height:190px;">
+		        		<img src="/resources/images/room/delicious.jpg" alt="" class="img-rounded .img-responsive" style="height:190px;">
 				  </c:if>
 				  <c:if test="${room.type == '체험' }">
-				  	<img src="/resources/images/room/hygge02.png" alt="" class="img-rounded" style="height:190px;">
+				  	<img src="/resources/images/room/adventure2.jpg" alt="" class="img-rounded .img-responsive" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '관람' }">
-				  	<img src="/resources/images/room/hygge03.png" alt="" class="img-rounded" style="height:190px;">
+				  	<img src="/resources/images/room/watch.jpg" alt="" class="img-rounded" style="height:190px;">
 				  </c:if>
 				  	
 				  <c:if test="${room.type == '미정' }">

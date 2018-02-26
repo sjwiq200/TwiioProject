@@ -600,7 +600,7 @@ div[name='hostInfo']:hover {
 			 swal("로그인 후 이용해 주세요",{
 				  icon: "warning",
 				});
-		 }else if(${user.userNo }''== msguserno){
+		 }else if( (${empty user.userNo } ?'': ${user.userNo})== msguserno){
 			 //alert('자기 자신에게 쪽지를 보낼수 없습니다.');
 			 swal("자기 자신에게 쪽지를 보낼수 없습니다.",{
 				  icon: "warning",
@@ -665,7 +665,7 @@ $(document).on('click','.row2 a[name=addreport]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo}'' == reportuserno){
+	 }else if((${empty user.userNo } ?'': ${user.userNo}) == reportuserno){
 		 //alert('자기자신은 신고 못합니다.');
 		 swal("자기자신은 신고 못합니다.",{
 			  icon: "warning",
@@ -725,7 +725,7 @@ $(document).on('click','.row2 a[name=addfriend]', function() {
 			  icon: "warning",
 			});
 	 }
-	 else if(${user.userNo}''== addfrienduserno){
+	 else if((${empty user.userNo } ?'': ${user.userNo})== addfrienduserno){
 		 //alert('자기 자신을 친구 추가할수 없습니다.');
 		 swal("자기 자신을 친구 추가할수 없습니다.",{
 			  icon: "warning",
@@ -787,7 +787,7 @@ $(document).on('click','.row2 a[name=addmessage]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }''== msguserno){
+	 }else if((${empty user.userNo } ?'': ${user.userNo})== msguserno){
 		 //alert('자기 자신에게 쪽지를 보낼수 없습니다.');
 		 swal("자기 자신에게 쪽지를 보낼수 없습니다.",{
 			  icon: "warning",
@@ -851,7 +851,7 @@ $(document).on('click','.row2 a[name=deletereply]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }'' == deleteuserno){
+	 }else if((${empty user.userNo } ?'': ${user.userNo}) == deleteuserno){
 		 swal({title: "댓글을 삭제 하시겠습니까?",
 			  icon: "warning",
 			  buttons: true,
@@ -992,7 +992,7 @@ $(document).on('click','.row2 a[name=updatereply]', function() {
 		 swal("로그인후 이용해주세요.",{
 			  icon: "warning",
 			});
-	 }else if(${user.userNo }'' == updateuserno){
+	 }else if((${empty user.userNo } ?'': ${user.userNo}) == updateuserno){
 		 $('#updatereplyno').val(updatereplyno);
 		 $('#updatecontent').val(updatecontent);
 		 $('#updatemodalreply').modal('show');

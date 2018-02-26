@@ -564,10 +564,9 @@ body::-webkit-scrollbar-thumb {
 								"Content-Type" : "application/json"
 							},
 	    				success:function(JSONData){
+	    					alert("안");
+
 	    					user = JSONData.userList;
-	    					if(user== ""){
-	    						swal("선택하신 날짜에 같은 나라로 떠나는 친구들이 없네요. \n그래도 슬퍼하지 말아요\n 트위챗에서는 찾을 수 있지 않을까요? \n\nGOOD LUCK!");
-	    					}else{
 		    					for(var i=0;i<user.length;i++){
 		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+user[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'
     								+'<div class="col-sm-3 "  style="padding-top: 8px;" >'+user[i].userName+'</div>'
@@ -576,9 +575,8 @@ body::-webkit-scrollbar-thumb {
 		    					}
 		    				 $('#friendListForRec').html(result);
 		    				 $('#friendRec').modal('show'); 
-	    				}
 	    					},error: function(){
-	    					    swal("국가와 도시를 먼저 설정해주시기 바랍니다.");
+	    					    swal("선택하신 날짜에 같은 나라로 떠나는 친구들이 없네요. \n그래도 슬퍼하지 말아요\n 트위챗에서는 찾을 수 있지 않을까요? \n\nGOOD LUCK!");
 	    					  }
 	    					
 			    });
@@ -1437,7 +1435,7 @@ $( function() {
 		<div class="modal-dialog modal-lg">
 
 			<!-- Modal content-->
-			<div class="modal-content">
+			<div class="modal-content" style="font-family:'JEJUGOTHIC';"> 
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 					<h4 class="modal-title">
@@ -1458,16 +1456,16 @@ $( function() {
 	</div>
 	<!---------- Text Dialog ------------->
 	<div class="modal fade" id="addText" role="dialog">
-		<div class="modal-dialog">
+		<div class="modal-dialog modal-lg">
 			<!-- Modal content-->
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
+					<h4 class="modal-title" style="font-family:'JEJUGOTHIC';">
 						<Strong>글</Strong>
 					</h4>
 				</div>
-				<div class="modal-body">
+				<div class="modal-body" class="margin-left:30px;">
 					<jsp:include page="/dailyplan/addText.jsp" flush="true">
 						<jsp:param name="data" value="${dailyPlan.dailyPlanNo}" />
 						<jsp:param name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
@@ -1491,7 +1489,7 @@ $( function() {
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
-					<h4 class="modal-title">
+					<h4 class="modal-title" style="font-family:'JEJUGOTHIC';">
 						<Strong>사진</Strong>
 					</h4>
 				</div>
@@ -1502,14 +1500,14 @@ $( function() {
 							<div class="form-group">	
 									<div class="filebox bs3-primary preview-image">
 			                            <input class="upload-name col-sm-4 col-sm-offset-3"  value="파일선택" disabled="disabled" style="width: 200px;">
-			                            <label for="input_file" class="col-sm-2 col-offset-4">사진 선택</label> 
+			                            <label for="input_file" class="col-sm-2 col-offset-4" style="font-family:'JEJUGOTHIC';">사진 선택</label> 
 			                          <input type="file" id="input_file" name="uploadFile" class="upload-hidden"> 
 	                       			</div>
 							</div>
 							<br/>
 							<input type="hidden" name="dailyPlanNo" value="${dailyPlan.dailyPlanNo}" />
 							<input type="hidden" name="mainPlanNo" value="${dailyPlan.mainPlan.mainPlanNo}" />
-							<button name="add" class="btn btn-primary btn-sm col-sm-2 col-sm-offset-5 text-center" type="button">ADD</button>
+							<button name="add" class="btn btn-default btn-sm col-sm-2 col-sm-offset-5 text-center" type="button">ADD</button>
 						</form>
 						<br/>
 				</div>
@@ -1529,7 +1527,7 @@ $( function() {
 				<div class="modal-content">
 					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/bf2.jpg'); opcity:0.8;">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
+						<h4 class="modal-title" align="center" style="font-family:'JEJUGOTHIC';margin-top:50px; margin-bottom:50px; color:#ffffff;">
 							<Strong>나와 같은 곳, 같은 날짜에 </br> 떠나는 친구들을 만나보면 어떨까요?</Strong>
 						</h4>
 				</div>
@@ -1567,7 +1565,7 @@ $( function() {
 				<div class="modal-content">
 					<div class="modal-header" style="background-image: url('/resources/images/dailyPlanContent/currency.jpg'); opcity:0.8; ">
 						<button type="button" class="close" data-dismiss="modal">&times;</button>
-						<h4 class="modal-title" align="center" style="font-family: 'TYPO_JEONGJOL';margin-top:50px; margin-bottom:50px; color:#ffffff;">
+						<h4 class="modal-title" align="center" style="font-family:'JEJUGOTHIC';margin-top:50px; margin-bottom:50px; color:#ffffff;">
 							<Strong>환율 & 번역</Strong>
 						</h4>
 				</div>

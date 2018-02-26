@@ -220,8 +220,12 @@
 				
 				$.post( '/user/addUser', $('#addUserForm').serialize())
 				  .done(function( data ) {
-					  swal("회원가입이 완료되었습니다!","","success");
-					  $(location).attr('href', '/user/loginView.jsp');
+					  swal("회원가입이 완료되었습니다!","","success").then((next) =>{
+						  if(next){
+							  $(location).attr('href', '/user/loginView.jsp');		  
+						  }
+					  })
+					  
 				  }).fail(function( data ) {
 					  swal("회원가입에 실패하셨습니다. 다시 시도 해주세요.","","error");
 				  });

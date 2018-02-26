@@ -146,7 +146,7 @@ function fncKakaoPay() {
 
 function fncPayPal() {
 	//document.addPurchase.submit();
-	alert("paypal")
+	/* alert("paypal") */
 	$("form").attr("method" , "POST").attr("action" , "/transaction/payPal").submit();
 }
 
@@ -330,7 +330,7 @@ $(function() {
 	
 		    
 		    <div class="col-sm-12">
-		    	<div class="col-sm-offset-3 col-sm-3" ><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/></div>
+		    	<div class="col-sm-offset-3 col-sm-3" ><a id=kakaoPay-btn><img src="/resources/images/payment_KakaoTalk.png" style="width: 250px; height: 40px;"/></a></div>
 		    	<div class="col-sm-3 pay"><a id="paypal-button"></a></div>
 		    	<div class="col-sm-3"></div>
 		    </div>
