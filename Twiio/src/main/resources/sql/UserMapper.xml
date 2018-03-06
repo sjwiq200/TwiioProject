@@ -41,9 +41,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addUser"		parameterType="user" >
 	 	INSERT
-		INTO users( user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type,public_state) 
-		VALUES	 ( seq_users_user_no.nextval , 
-					#{userId} , 
+		INTO users(user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type,public_state) 
+		VALUES	 (  #{userId} , 
 					#{userName} , 
 					#{password:VARCHAR} , 
 					1 , 
@@ -51,7 +50,7 @@
 					#{userPhone:VARCHAR} , 
 					#{userGender:VARCHAR} , 
 					#{userEmail:VARCHAR} , 
-					SYSDATE , 
+					now() , 
 					#{userBirthday:DATE} , 
 					#{userRegisterType},
 					1)
@@ -60,7 +59,7 @@
 	 <!-- SQL : SELECT ONE -->
 	 <select 	id="getUser"	parameterType="string"	resultMap="userSelectMap">
 		SELECT
-		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, to_char(birth,'yyyy-mm-dd') birth, sign_up_type, public_state, resign, host_account, bank, main_plan_no_shared	
+		user_no , user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, public_state, resign, host_account, bank, main_plan_no_shared	
 		FROM users 
 		WHERE user_id = #{value}
 	 </select>
@@ -77,7 +76,7 @@
 		phone, gender, 
 		email , 
 		reg_date,
-		to_char(birth,'yyyy-mm-dd') birth, 
+		birth, 
 		sign_up_type, 
 		public_state, 
 		resign, 
@@ -144,7 +143,7 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="listUser"  parameterType="search"	resultMap="userSelectMap">
 	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 	  					FROM		(	SELECT user_no, user_id , user_name , password , user_type , profile_image, phone, gender, email , reg_date, birth, sign_up_type, 
 	  											public_state, resign, host_account, bank, main_plan_no_shared
 											FROM users
@@ -158,8 +157,8 @@
 													</if>
 												</where>
 											</if>
-											ORDER BY user_no ) inner_table
-						WHERE ROWNUM &lt;= #{endRowNum} )
+											ORDER BY user_no ) inner_table, (SELECT @RNUM := 0) rownum
+						WHERE @RNUM &lt;= #{endRowNum} ) mysql
 		WHERE row_seq BETWEEN #{startRowNum} AND #{endRowNum} 
 	 </select>
 	 
@@ -217,8 +216,8 @@
 	 
 	 <insert	id="addEvalUser"  parameterType="userEval" >
 	   INSERT INTO	usereval
-	   	(user_eval_no, profile_credit, attendance, user_no, target_no, schedule_no )
-		VALUES(seq_usereval_user_eval_no.nextval, #{profileTnF}, #{attendanceTnF}, #{userNo},#{targetNo},#{scheduleNo})
+	   	(profile_credit, attendance, user_no, target_no, schedule_no )
+		VALUES(#{profileTnF}, #{attendanceTnF}, #{userNo},#{targetNo},#{scheduleNo})
 	</insert>
 	
 	<select id="addEvalUserCheck" parameterType="userEval" resultType="int">

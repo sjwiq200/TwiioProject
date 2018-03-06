@@ -30,11 +30,11 @@
 	<!--SQL : INSERT  -->
 	<insert id="addCommunity" parameterType="community" useGeneratedKeys="true" keyColumn="community_no" keyProperty="communityNo">
 		INSERT 
-		INTO COMMUNITY 
-		VALUES (seq_community_community_no.nextval,
+		INTO COMMUNITY(community_title, user_no, reg_date, view_count, community_sub_title, community_type, community_content, user_name, thumbnail) 
+		VALUES (
 		#{communityTitle:VARCHAR},
 		#{userNo:NUMERIC},
-		SYSDATE,
+		now(),
 		#{viewCount:NUMERIC},
 		#{communitySubTitle:VARCHAR},
 		#{communityType:VARCHAR},
@@ -89,7 +89,7 @@
 	
 	<select id="listCommunity" parameterType="map" resultMap="communitytSelectMap">
 	SELECT *
-  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  		FROM ( SELECT inner_table.*, @RNUM := @RNUM+1 AS row_seq
   						FROM (
 							   SELECT * FROM 
   							   COMMUNITY 
@@ -109,8 +109,8 @@
 								</if>
 							   </otherwise>
 							   </choose>
-							   ORDER BY COMMUNITY_NO DESC) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+							   ORDER BY COMMUNITY_NO DESC) inner_table, (SELECT @RNUM := 0) rownum
+  						WHERE @RNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} ) mysql
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>

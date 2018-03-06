@@ -19,8 +19,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addDailyPlan"		parameterType="dailyPlan" >
 	 	INSERT
-		INTO daily_plan( daily_plan_no , main_plan_no , user_no , day , daily_date, daily_city, daily_country) 
-		VALUES	 (	seq_daily_plan_daily_plan_no.NEXTVAL  , #{mainPlan.mainPlanNo:NUMERIC} , #{user.userNo:NUMERIC} ,  #{day:NUMERIC} , 
+		INTO daily_plan( main_plan_no , user_no , day , daily_date, daily_city, daily_country) 
+		VALUES	 ( #{mainPlan.mainPlanNo:NUMERIC} , #{user.userNo:NUMERIC} ,  #{day:NUMERIC} , 
 							#{dailyDate:DATE} , #{dailyCity:VARCHAR} , #{dailyCountry:VARCHAR} )
 	 </insert>
 	 

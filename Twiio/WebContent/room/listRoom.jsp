@@ -66,7 +66,8 @@
 				 }
 			 })
 			 /* window.open("http://218.156.17.126:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
-			  window.open("http://192.168.0.9:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master+'/${user.userName}','Chat','location=no,menubar=no,resizable=no,status=no,right=0');
+			  /* window.open("http://192.168.0.54:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master+'/${user.userName}','Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */
+			  window.open("http://192.168.0.57:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master+'/${user.userName}','Chat','location=no,menubar=no,resizable=no,status=no,right=0');
 			   /* window.open("http://localhost:8282/#/"+roomKey+"/${user.userId}/${user.userNo}/"+master,'Chat','location=no,menubar=no,resizable=no,status=no,right=0'); */ 
 		 });
 		 

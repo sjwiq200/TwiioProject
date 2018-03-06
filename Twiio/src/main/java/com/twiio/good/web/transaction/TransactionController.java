@@ -148,9 +148,13 @@ public class TransactionController {
 		int total_amount = transaction.getTotalPrice();
 		int tax_free_amount = 0;
 		//System.out.println("여기 ::::::::::::::");
-		String approval_url = "http://192.168.0.35:8080/transaction/kakaoApproval";
-		String cancel_url = "http://192.168.0.35:8080/transaction/kakaoCancel";
-		String fail_url = "http://192.168.0.35:8080/transaction/kakaoFail";
+//		String approval_url = "http://192.168.0.54:8080/transaction/kakaoApproval";
+//		String cancel_url = "http://192.168.0.54:8080/transaction/kakaoCancel";
+//		String fail_url = "http://192.168.0.54:8080/transaction/kakaoFail";
+		
+		String approval_url = "http://192.168.0.57:8080/transaction/kakaoApproval";
+		String cancel_url = "http://192.168.0.57:8080/transaction/kakaoCancel";
+		String fail_url = "http://192.168.0.57:8080/transaction/kakaoFail";
 		String readyPayURL = "https://kapi.kakao.com/v1/payment/ready";
 		
 		//System.out.println("여기2 ::::::::::::::::::");

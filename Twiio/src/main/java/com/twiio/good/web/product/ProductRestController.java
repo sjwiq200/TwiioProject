@@ -84,7 +84,7 @@ public class ProductRestController {
 		System.out.println("들어오니6");
 		try {
 //		Thread.sleep(3500);
-		Thread.sleep(5500);
+		Thread.sleep(15000);
 		}catch(InterruptedException e) {
 		
 		}

@@ -411,9 +411,14 @@ public class InformationRestController {
 			
 			if(list.get(i+5).matches(	".*[¤¡-¤¾¤¿-¤Ó°¡-ÆR]+.*")) {
 				
-					System.out.println("°É·¯Áö´Ï@@"+list.get(i+5));
-					price.add(list.get(i+4));
-					i=i+4;
+				if(list.get(i+4).matches(".*[¤¡-¤¾¤¿-¤Ó°¡-ÆR]+.*"))
+					{
+						price.add("°¡°ÝÁ¤º¸ ¹ÌÀü´Þ");
+						i=i+3;
+					}else {
+						price.add(list.get(i+4));
+						i=i+4;
+					}
 				}else {
 					price.add(list.get(i+5));
 					i=i+5;

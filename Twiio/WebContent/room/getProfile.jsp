@@ -287,7 +287,8 @@
 							  <div class="form-group">
 							  	<label for="userEval" class="col-sm-offset-1 col-sm-3 control-label">평 점(참석/프로필)</label>
 								<div class="col-sm-4">
-							      <input type="text" class="form-control" id="userEval" name="userEval" value="${empty profile.userEval?0:profile.userEval} | ${empty profile.userEvalCredit?0:profile.userEvalCredit}" readonly>
+							      <%-- <input type="text" class="form-control" id="userEval" name="userEval" value="${empty profile.userEval?0:profile.userEval} | ${empty profile.userEvalCredit?0:profile.userEvalCredit}" readonly> --%>
+							      <input type="text" class="form-control" id="userEval" name="userEval" value="5점 | 2.5점" readonly>
 							    </div>
 							  </div>
 							  

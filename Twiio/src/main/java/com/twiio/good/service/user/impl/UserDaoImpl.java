@@ -157,7 +157,7 @@ import com.twiio.good.service.user.UserDao;
 			String host = "smtp.gmail.com";// smtp서버
 	         String subject = "Twiio 인증번호 전송";
 	         String fromName = "Twiio 관리자";
-	         String from = "eunae10193@gmail.com";// 관리자 메일 주소
+	         String from = "sjwiq100@gmail.com";// 관리자 메일 주소
 	         String to = email;// 인증번호 받을 유저의이메일
 	         
 	         System.out.println("메일메일"+email+"인증번호"+authNum);
@@ -177,7 +177,7 @@ import com.twiio.good.service.user.UserDao;
 
 				Session mailSession = Session.getInstance(props, new javax.mail.Authenticator() {
 					protected PasswordAuthentication getPasswordAuthentication() {
-						return new PasswordAuthentication("eunae10193@gmail.com", "eunae1019");
+						return new PasswordAuthentication("sjwiq100@gmail.com", "wodnwodn123");
 					}
 				});
 				Message msg = new MimeMessage(mailSession);

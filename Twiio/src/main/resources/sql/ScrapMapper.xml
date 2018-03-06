@@ -19,8 +19,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addScarp"		parameterType="scrap" >
 	 	INSERT
-		INTO scrap( scrap_no , user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type) 
-		VALUES	 (	seq_scrap_scrap_no.NEXTVAL  ,  #{user.userNo:NUMERIC} ,  #{mainPlan.mainPlanNo:NUMERIC} , 
+		INTO scrap( user_no , main_plan_no , community_no , scrap_title, scrap_content, scrap_type) 
+		VALUES	 ( #{user.userNo:NUMERIC} ,  #{mainPlan.mainPlanNo:NUMERIC} , 
 							#{community.communityNo:NUMERIC} , #{scrapTitle:VARCHAR} , #{scrapContent:CLOB} , #{scrapType:CHAR} )
 	 </insert>
 	 

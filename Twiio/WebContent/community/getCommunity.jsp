@@ -166,7 +166,7 @@
 			display: block;
 		    height: 1px;
 		    border: 0;
-		    border-top: 1px solid #08708A;
+		    border-top: 0.5px solid #a0a0a0;
 		    margin: 1em 0;
 		    padding: 0;
 		} 
@@ -230,21 +230,18 @@
       	
       }
 
-#thumbnailMainBox {
-	min-height: 1500px;
-	border-radius: 8px;
-	border: dashed rgba(102, 102, 102, 1) 1px;
-	border-color: #000000;
-	border-width: 10px;
-	display: inline-block;
-	padding: 1px;
-	text-decoration: none;
+	#thumbnailMainBox {
+	border-radius: 23px;
+		 	  border-radius: 23px;
+
+		 	font-family:JEJUGOTHIC !important;
 }
 
 #thumbnailMainThumbBox {
 	min-height: 1500px;
 	background: #fff;
 	display: inline-block;
+		border: dashed #08708A 1.3px;
 	border-radius: 6px;
 }
 
@@ -1061,7 +1058,6 @@ function resetData() {
    	 
    	 
    	 <div class="col-xs-12 inner" id="thumbnailMainBox">
-				<div align="center" class="col-xs-1">&nbsp;</div><!-- 그라디언트 보이게 해주려고 한 부분 -->
 				<div class="col-xs-12 inner" id="thumbnailMainThumbBox" align="center">
 					<div class="col-xs-12" >
    	 
@@ -1081,7 +1077,7 @@ function resetData() {
 			<div class="row">
 				<div class="col-sm-12">
 						<div class="col-sm-12">
-
+						<h4 align="center" align="margin-bottom:10px;color:#08708A">블라블라</h4>
 							<strong style="font-size: 2em;">
 					    	<c:if test="${community.communityType == 1}"> 	
 					    	
@@ -1103,7 +1099,7 @@ function resetData() {
 					    	<c:if test="${community.communitySubTitle == 5}">
 					    		[기타]</br>
 					    	</c:if> 
-					       			|	   
+					       				   
 							</c:if>${community.communityTitle}</br>
 					   		</strong>
 							<div class="pull-right" style="font-size: 1em; padding-top : 15px;">조회수  :  ${community.viewCount} | 등록일  :  ${community.regDate} | 작성자  :  ${community.userName}</div>
@@ -1424,7 +1420,6 @@ function resetData() {
 			<!------------------------------------------------updateReply---------------------------------------------------------->
 					</div>
 				</div>
-				<div align="right" class="col-xs-1">&nbsp;</div>
 			</div>
 			</div>
 </body>

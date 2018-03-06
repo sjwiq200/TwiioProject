@@ -54,8 +54,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addTransaction"		parameterType="transaction" >
 	 	INSERT
-		INTO transaction( tran_no , trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, refund_code, pay_to_host_date, tran_price) 
-		VALUES	 (	seq_TRANSACTION_TRAN_NO.NEXTVAL ,					
+		INTO transaction( trip_date , requirement, pay_type , product_no, host_no, tran_count, product_price, user_no, refund_code, pay_to_host_date, tran_price) 
+		VALUES	 (						
 					#{tripDate} , 
 					#{requirement:VARCHAR} , 
 					#{paymentType} , 
@@ -116,7 +116,7 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="listTransaction"  parameterType="map"	resultMap="transactionSelectMap">
 		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 	  					FROM		(	SELECT 
 									  	t.tran_no as tran_no, 
 									  	t.tran_date as tran_date, 
@@ -147,8 +147,8 @@
 						 				</where> -->
 						 				AND t.product_no = p.product_no								  	 
 									  	ORDER BY tran_date DESC
-									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
+									 ) inner_table, (SELECT @RNUM := 0) rownum
+						WHERE @RNU &lt;= #{search.endRowNum} ) mysql
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	 </select>
 	 
@@ -165,10 +165,10 @@
 	
 	<insert id="addRefund"	parameterType="refund" >
 	 	INSERT
-		INTO refund( refund_no , tran_no , refund_reg_date , refund_price , refund_account, refund_bank,user_no) 
-		VALUES	 (	seq_REFUND_REFUND_NO.NEXTVAL , 
+		INTO refund( tran_no , refund_reg_date , refund_price , refund_account, refund_bank,user_no) 
+		VALUES	 (	 
 					#{tranNo} , 
-					SYSDATE , 
+					now() , 
 					#{refundPrice} , 
 					#{refundAccount} , 
 					#{refundBank}, 
@@ -179,7 +179,7 @@
 	<update id="updateRefund" parameterType="refund">
 		UPDATE refund 
 		<set>
-		refund_confirm_date = SYSDATE
+		refund_confirm_date = now()
 		</set>
 		WHERE refund_no=#{refundNo}	
 	</update>
@@ -187,7 +187,7 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="listRefund"  parameterType="Search"	resultMap="refundSelectMap">
 		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 	  					FROM		(	SELECT r.tran_no as tran_no,
 											   r.refund_no as refund_no,
 											   to_char(r.refund_reg_date,'yyyy-mm-dd hh24:mi:ss') as refund_reg_date,
@@ -200,8 +200,8 @@
 									FROM refund r, users u
 									WHERE r.user_no=u.user_no							
 									ORDER BY refund_reg_date DESC
-									 ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+									 ) inner_table , (SELECT @RNUM := 0) rownum
+  						WHERE @RNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} ) mysql
   		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
   		AND #{currentPage}*#{pageSize}
 	 </select>
@@ -224,7 +224,7 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="listStarEval"  parameterType="map"	resultMap="transactionSelectMap">
 		SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 	  					FROM		(	SELECT
 	  										t.product_no as product_no , 
 	  										t.tran_no as tran_no , 
@@ -257,8 +257,8 @@
 										</if>
 									
 										ORDER BY tran_date DESC
-										) inner_table
-		WHERE ROWNUM &lt;= #{search.endRowNum} )
+										) inner_table, (SELECT @RNUM := 0) rownum
+		WHERE ROWNUM &lt;= #{search.endRowNum} ) mysql
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	 </select>	 
 	 	 
@@ -306,7 +306,7 @@
 		FROM users u,(
 		</if>
 				SELECT *
-			  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+			  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 			  					FROM		(	SELECT
 			  									<if test="evalType == 'product'">
 									 				product_no, ROUND(AVG(product_star_eval),1) as eval_product
@@ -322,8 +322,8 @@
 										 			GROUP BY host_no ORDER BY eval_host DESC
 										 		</if>
 										 		NULLS LAST
-											 ) inner_table
-								WHERE ROWNUM &lt;= 10 )
+											 ) inner_table, (SELECT @RNUM := 0) rownum
+								WHERE ROWNUM &lt;= 10 ) mysql
 						WHERE row_seq BETWEEN 1 AND 10) vt
 		<if test="evalType == 'product'">	
 		WHERE p.product_no=vt.product_no

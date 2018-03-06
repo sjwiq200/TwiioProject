@@ -564,8 +564,6 @@ body::-webkit-scrollbar-thumb {
 								"Content-Type" : "application/json"
 							},
 	    				success:function(JSONData){
-	    					alert("안");
-
 	    					user = JSONData.userList;
 		    					for(var i=0;i<user.length;i++){
 		    						result +='<div class="col-sm-3 col-sm-offset-1" ><img src="/resources/images/userimages/'+user[i].userImage+'" style="width: 50px; height: 50px;" class="media-photo"></div>'
@@ -588,8 +586,10 @@ body::-webkit-scrollbar-thumb {
 	            url:'/dailyplan/json/addFriend?userNo='+userNo,
 	            type:'get'
 	         });
+			 swal("친구로 추가 되었습니다.");
 	   var a = "#addToMyFriendList" + i;
 	    $("#addToMyFriendList"+i).attr('disabled','true'); 
+	   
 	}
 	
 /////////////////////////서비스 기능 구현///////////////////////////

@@ -27,6 +27,11 @@
 	<link rel="stylesheet" href="/resources/css/font.css" />
 	<!--  ///////////////////////// CSS ////////////////////////// -->
 	
+	  
+  <!-- ///////////////////////// Sweet Alert ////////////////////////// -->
+	<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+  
+	
 	<style>
  		body {
             padding-top : 100px;
@@ -267,10 +272,8 @@
  						swal("삭제되었습니다.", {
  					      icon: "success",
  					    });
- 						alert("삭제 성공");
  						window.location.reload();
  			    },error : function(request,error){
- 			    	alert(에러);
  			    }
  		  }); 
  		});
@@ -292,7 +295,7 @@
   			//modalmessage
 
   			if(modalMessageTitle==''| modalMessageContent==''){
-  				alert('내용과 제목을 입력하세요.');			 
+  				swal('내용과 제목을 입력하세요.');			 
   			}
   			else{
   			  	$.ajax({
@@ -310,7 +313,7 @@
   						"userName":"${user.userName}"
   					}),
   					success : function(JSONData) {
-  						alert("메시지가 보내기 성공.!!");
+  						swal("메시지 보내기 성공");
   						$('#modalwrite2').modal('toggle');
   				    } 
   			   });

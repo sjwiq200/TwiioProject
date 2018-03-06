@@ -110,6 +110,22 @@ public class UserRestController {
 		return userService.getUser(userId);
 	}
 	
+	@RequestMapping(value="json/getUserIos")
+	public boolean getUserIos(@RequestBody User userIOS) throws Exception{
+		System.out.println("/user/json/getUserIos/ : ");
+		
+		System.out.println(userIOS);
+		User user = userService.getUser(userIOS.getUserId());
+		if( user == null) {
+			return false;
+		}else if(user.getPassword().equals(userIOS.getPassword())) {
+			return true;
+		}else {
+			return false;
+		}
+		
+	}
+	
 	@RequestMapping( value="json/faceDetect", method=RequestMethod.POST )
 	public Map<String, Object> faceDetect(@RequestPart(value="file", required=false) MultipartFile file,
 							HttpSession httpsession,

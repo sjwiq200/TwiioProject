@@ -36,8 +36,8 @@
 	
 	 <insert 	id="addCurrency"		parameterType="currency" >
 	 	INSERT
-		INTO currency( currency_no, cur_unit, deal_bas_r, cur_nm, reg_date) 
-		VALUES	 (	seq_currency_currency_no.nextval , #{cur_unit} , #{deal_bas_r} , #{cur_nm} , SYSDATE )
+		INTO currency( cur_unit, deal_bas_r, cur_nm, reg_date) 
+		VALUES	 (	#{cur_unit} , #{deal_bas_r} , #{cur_nm} , now() )
 	 </insert>
 	 
 	 <select 	id="findCurrency"	parameterType="string"	resultMap="currencySelectMap">
@@ -54,14 +54,14 @@
 			cur_unit				=	#{cur_unit},
 			deal_bas_r				=	#{deal_bas_r},
 			cur_nm					=	#{cur_nm},
-			reg_date				=	SYSDATE
+			reg_date				=	now()
 	   	</set>
 	   	WHERE currency_no BETWEEN 1 AND 31
 	 </update>
 	 
 	 <delete id="deleteCurrency">
 	
-		delete currency 
+		delete from currency 
 	
 	</delete>
 	

@@ -30,8 +30,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addProduct"		parameterType="product" >
 	 	INSERT
-		INTO product( product_no , product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, thumbnail, product_delete) 
-		VALUES	 (	seq_PRODUCT_PRODUCT_NO.NEXTVAL ,
+		INTO product( product_title , product_price , product_type , trip_date, country, city, user_no, product_content, head_count, product_count, thumbnail, product_delete) 
+		VALUES	 (	
 					#{productName} , 
 					#{productPrice} , 
 					#{productType} , 
@@ -90,10 +90,10 @@
 	<!-- SQL : SELECT LIST -->
 	<select  id="listProduct"  parameterType="map"	resultMap="productSelectMap">
 	  	SELECT *
-	  	FROM (	SELECT inner_table.* , ROWNUM AS row_seq
+	  	FROM (	SELECT inner_table.* , @RNUM := @RNUM+1 AS row_seq
 	  					FROM		(	<include refid="listProductSql"/>
-									 ) inner_table
-						WHERE ROWNUM &lt;= #{search.endRowNum} )
+									 ) inner_table, (SELECT @RNUM := 0) rownum
+						WHERE @RNUM &lt;= #{search.endRowNum} ) mysql
 		WHERE row_seq BETWEEN #{search.startRowNum} AND #{search.endRowNum}
 	 </select>
 	 

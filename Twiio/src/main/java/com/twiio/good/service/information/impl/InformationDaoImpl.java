@@ -115,6 +115,8 @@ public class InformationDaoImpl implements InformationDao {
 	        returnList = objMapper.readValue(response.toString(),new TypeReference<List<Currency>>() {
 			});
 	        sqlSession.delete("InformationMapper.deleteCurrency");
+	        System.out.println("here is a deleteCurrency");
+	        System.out.println("here is a returnList ==> " +returnList);
 	        for(int i = 0; i<returnList.size(); i++) {
 	        	sqlSession.insert("InformationMapper.addCurrency", returnList.get(i));
 	        }

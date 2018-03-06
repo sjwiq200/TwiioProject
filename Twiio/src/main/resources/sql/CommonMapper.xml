@@ -53,9 +53,8 @@
 	<!--SQL : INSERT  -->
 	<insert id="addReport" parameterType="report" useGeneratedKeys="true" keyColumn="report_no" keyProperty="report_no">
 		INSERT 
-		INTO REPORT(report_no,user_no,report_content,report_title,report_reg_date,target_user_no,target_room_key,target_reply_no,target_community_no,user_name) 
+		INTO REPORT(user_no,report_content,report_title,report_reg_date,target_user_no,target_room_key,target_reply_no,target_community_no,user_name) 
 		VALUES (
-		seq_report_report_no.nextval,
 		#{userNo:NUMERIC},
 		#{reportContent:VARCHAR},
 		#{reportTitle:VARCHAR},
@@ -85,9 +84,9 @@
 	
 	<insert id="addFriend" parameterType="friend" useGeneratedKeys="true" keyColumn="no" keyProperty="no"> 
 		INSERT 
-		INTO FRIEND 
+		INTO FRIEND(user_no, friend_no)
 		VALUES (
-		seq_friend_user_no.nextval,
+		
 		#{userNo:NUMERIC},
 		#{friendNo:NUMERIC}
 		)
@@ -95,11 +94,11 @@
 	<!--SQL : INSERT  -->
 	<insert id="addReply" parameterType="reply" useGeneratedKeys="true" keyColumn="reply_no,reply_reg_date" keyProperty="replyNo,replyRegDate" >
 		INSERT 
-		INTO REPLY 
-		VALUES (seq_reply_reply_no.nextval,
+		INTO REPLY (user_no, reply_content, reply_reg_date, product_no, community_no, user_name)
+		VALUES (
 		#{userNo:NUMERIC},
 		#{replyContent:VARCHAR},
-		SYSDATE,
+		now(),
 		<if test="productNo == 0">
 		NULL
 		</if>
@@ -119,7 +118,7 @@
 	
 	<select id="listReport" parameterType="search" resultMap="reportSelectMap">
 	SELECT *
-  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  		FROM ( SELECT inner_table.*, @RNUM := @RNUM+1 AS row_seq
   						FROM (
 							   SELECT 
 							   r.user_name as user_name,
@@ -146,15 +145,15 @@
 										</if>
 								</if>
 							   ORDER BY R.REPORT_NO DESC
-  						 ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} )
+  						 ) inner_table, (SELECT @RNUM := 0) rownum
+  						WHERE @RNUM <![CDATA[<=]]> #{currentPage}*#{pageSize} ) mysql
   		WHERE row_seq BETWEEN (#{currentPage}-1)*#{pageSize}+1
   		AND #{currentPage}*#{pageSize}
 	</select>
 	
 	<select id="listFriend" parameterType="map" resultMap="friendSelectMap">
 	SELECT *
-  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  		FROM ( SELECT inner_table.*, @RNUM := @RNUM+1 AS row_seq
   						FROM (
 							   SELECT
 							   		USER_NO,
@@ -165,8 +164,8 @@
   							   WHERE USER_NO=#{friend.userNo}
   							   
 							   ORDER BY USER_NO
-							   ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+							   ) inner_table, (SELECT @RNUM := 0) rownum
+  						WHERE @RNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} ) mysql
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>
@@ -179,13 +178,13 @@
 	
 	<select id="listReply" parameterType="map" resultMap="replySelectMap">
 	SELECT *
-  		FROM ( SELECT inner_table.*, ROWNUM AS row_seq
+  		FROM ( SELECT inner_table.*, @RNUM := @RNUM+1 AS row_seq
   						FROM (
 							   SELECT
 							   		REPLY_NO,
 							   		USER_NO,
 							   		REPLY_CONTENT,
-							   		to_char(REPLY_REG_DATE,'yyyy-mm-dd hh24:mi:ss') as REPLY_REG_DATE,
+							   		REPLY_REG_DATE as REPLY_REG_DATE,
 							   		PRODUCT_NO,
 							   		COMMUNITY_NO,
 							   		USER_NAME
@@ -200,8 +199,8 @@
 									</if>									
 							  </where>
 							   ORDER BY REPLY_NO DESC
-							   ) inner_table
-  						WHERE ROWNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} )
+							   ) inner_table, (SELECT @RNUM := 0) rownum
+  						WHERE @RNUM <![CDATA[<=]]> #{search.currentPage}*#{search.pageSize} ) mysql
   		WHERE row_seq BETWEEN (#{search.currentPage}-1)*#{search.pageSize}+1
   		AND #{search.currentPage}*#{search.pageSize}
 	</select>

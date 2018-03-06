@@ -1,0 +1,268 @@
+휴지통 비우기 : purge recyclebin;
+
+1.
+
+CREATE TABLE users(
+	  user_no  int  AUTO_INCREMENT,
+	  host_account varchar(20),
+	  profile_image varchar(200),
+	  gender char(1),
+	  user_type varchar(1) NOT NULL,
+	  user_id varchar(20) NOT NULL,
+	  user_name varchar(20) NOT NULL,
+	  password varchar(20),
+	  birth DATE,
+	  reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	  phone varchar(15),
+	  email varchar(20),
+	  public_state varchar(1),
+	  sign_up_type varchar(1),
+	  resign varchar(1),
+	  bank varchar(20),
+	 main_plan_no_shared varchar(100),
+	 primary key(user_no)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+2.
+
+CREATE TABLE friend(
+	no int AUTO_INCREMENT,user_no int(10), friend_no int(10),primary key(no)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+	
+3.
+CREATE TABLE refund(
+	refund_no int AUTO_INCREMENT,
+	tran_no int NOT NULL,
+	refund_bank varchar(10),
+	refund_account varchar(20),
+	refund_price int NOT NULL,
+	refund_confirm_date DATE,
+	refund_reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	primary key(refund_no)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+4.
+
+CREATE TABLE product ( 
+	 product_no int AUTO_INCREMENT,
+	 product_title varchar(100),
+	 product_content text,
+	 product_price int NOT NULL,
+	 product_count int NOT NULL,
+	 user_no int NOT NULL,
+	 reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	 trip_date DATE,
+	 head_count int NOT NULL,
+	 country VARCHAR(100),
+	 city VARCHAR(100),
+	 view_count int,
+	product_type varchar(1),
+	thumbnail varchar(500),
+	product_delete varchar(1),
+	primary key(product_no)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+5.
+
+CREATE TABLE transaction ( 
+	 tran_no int AUTO_INCREMENT,
+	 tran_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	 trip_date DATE	 NOT NULL,
+	 requirement VARCHAR(100),
+	 pay_type CHAR(1),
+	 product_no int,
+	 host_no int,
+	 tran_count int NOT NULL,
+	 qr_code VARCHAR(100),
+	 product_price int,
+	 user_no int NOT NULL,
+	 refund_code CHAR(1),
+	 pay_to_host_date DATE,
+	 tran_price int,
+	 host_star_eval 	int,
+	 host_review VARCHAR(300),
+	 product_star_eval int,
+	 product_review VARCHAR(300),
+	primary key(tran_no)
+);
+
+
+
+6.
+
+CREATE TABLE main_plan(
+	 main_plan_no int AUTO_INCREMENT,
+	user_no int NOT NULL,
+	departure_date DATE,
+	arrival_date DATE,
+	country VARCHAR(100) NOT NULL,
+	city VARCHAR(100),
+	plan_title VARCHAR(300) NOT NULL,
+	main_thumbnail VARCHAR(300),
+	primary key(main_plan_no)
+);
+
+7.
+
+CREATE TABLE daily_plan(
+	daily_plan_no int AUTO_INCREMENT,
+	main_plan_no int ,
+	user_no int,
+	day int,
+	daily_date DATE,
+	daily_city VARCHAR(100),
+	daily_country VARCHAR(100),
+	primary key(daily_plan_no)
+);
+
+8.
+
+CREATE TABLE plan_content(
+	content_no int AUTO_INCREMENT,
+	daily_plan_no int,
+	scrap_no int,
+	content_type int ,
+	route VARCHAR(100),
+	map_url VARCHAR(500),
+	map_address VARCHAR(500),
+	map_phone VARCHAR(30),
+	map_website VARCHAR(100),
+	map_name VARCHAR(100),
+	map_image VARCHAR(300),
+	map_type VARCHAR(200),
+	departure_location VARCHAR(200),
+	arrival_location VARCHAR(200),
+	estimated_time VARCHAR(20),
+	route_type CHAR(1),
+	route_description text,
+	order_no int,
+	content_text text,
+	content_image VARCHAR(500),
+	result_for_mobile text,
+	primary key(content_no)
+);
+
+9.
+
+CREATE TABLE scrap(
+	scrap_no int AUTO_INCREMENT,
+	user_no int,
+	main_plan_no int,
+	community_no int,
+	scrap_title VARCHAR(300),
+	scrap_content text,
+	scrap_type CHAR(1),
+	primary key(scrap_no)
+);
+
+
+10.
+
+CREATE TABLE message (
+	message_no int AUTO_INCREMENT, 
+	to_user_no int,
+	from_user_no int,
+	message_content VARCHAR(300),
+	message_reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	message_type CHAR(1),
+	message_title VARCHAR(100),
+	product_no int,
+	primary key(message_no)
+);
+
+
+11.
+
+CREATE TABLE community(
+	community_no int AUTO_INCREMENT,
+	community_title VARCHAR(100),
+	user_no int,
+	reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	view_count int,
+	community_sub_title VARCHAR(20),
+	community_type CHAR(1),
+	community_content text,
+	user_name varchar(30),
+	thumbnail varchar(500),
+	primary key(community_no)
+);
+
+12. 
+
+CREATE TABLE likey(
+	likey_no int AUTO_INCREMENT,
+	likey CHAR(1),
+	user_no int,
+	community_no int,
+	primary key(likey_no)
+);
+
+13.
+
+CREATE TABLE reply(
+	reply_no int AUTO_INCREMENT,
+	user_no int,
+	reply_content VARCHAR(300),
+	reply_reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	product_no int,
+	community_no int,
+	user_name varchar(30),
+	primary key(reply_no)
+);
+
+14.
+
+CREATE TABLE report(
+	report_no int AUTO_INCREMENT,
+	user_no int,
+	report_content VARCHAR(500),
+	report_title VARCHAR(100),
+	report_reg_date timestamp DEFAULT CURRENT_TIMESTAMP,
+	target_user_no int,
+	target_room_no int,
+	target_reply_no int,
+	target_community_no int,
+	primary key(report_no)
+);
+
+
+
+15.
+
+CREATE TABLE usereval(
+	user_eval_no int AUTO_INCREMENT,
+	user_no int,
+	schedule_no int,
+	profile_credit CHAR(1),
+	attendance CHAR(1),
+	target_no int,
+	primary key(user_eval_no)
+);
+
+16.
+
+CREATE TABLE schedule(
+	schedule_no int AUTO_INCREMENT,
+	roomkey VARCHAR(10),
+	schedule_title VARCHAR(20),
+	schedule_date DATE,
+	schedule_address VARCHAR(50),
+	country VARCHAR(20),
+	city VARCHAR(20),
+	user_no_string VARCHAR(100),
+	primary key(schedule_no)
+);
+
+CREATE TABLE currency(
+	currency_no int AUTO_INCREMENT,
+	cur_unit varchar(100),
+	deal_bas_r varchar(100),
+	cur_nm varchar(100),
+	reg_date timestamp default current_timestamp,
+	primary key(currency_no)
+);
+	
+
+
+
+

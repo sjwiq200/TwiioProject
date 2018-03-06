@@ -485,8 +485,6 @@
 		var hostcontent=$('#message').val();
 		var productcontent=$('#message2').val();
 		var tranNo = $('#modalTranNo').val();
-		alert(tranNo);
-		alert(index+","+index2+","+hostcontent+","+productcontent+","+tranNo);
 		   $.ajax({
 					url : "/transaction/json/updateTransactionEval",
 					method : "POST" ,
@@ -585,7 +583,7 @@
 			var modalRefundAccount = $("#modalRefundAccount").val();
 			var modalRefundBank = $("#modalRefundBank").val();	
 			if(modalProductNo == '' || modalTranNo == '' || modalTotalPrice =='' || modalRefundAccount=='' || modalRefundBank==''){
-				alert("입력을 완료해주세요.");
+				/* alert("입력을 완료해주세요."); */
 			}else{
 				
 				swal({
@@ -670,7 +668,7 @@
 						location.reload();
 					});
  			    },error : function(request,error){
- 			    	alert(에러);
+ 			   /*  	alert(에러); */
  			    }
  		  }); 
  		});
@@ -692,7 +690,7 @@
   			//modalmessage
 
   			if(modalMessageTitle==''| modalMessageContent==''){
-  				alert('내용과 제목을 입력하세요.');			 
+  				/* alert('내용과 제목을 입력하세요.');	 */		 
   			}
   			else{
   			  	$.ajax({

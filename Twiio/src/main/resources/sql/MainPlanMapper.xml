@@ -21,8 +21,8 @@
 	<insert 	id="addMainPlan"	parameterType="mainPlan" useGeneratedKeys="true" keyColumn="main_plan_no" keyProperty="mainPlanNo">
 	
 	 	INSERT
-		INTO main_plan( main_plan_no , user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail) 
-		VALUES	 (	seq_main_plan_main_plan_no.NEXTVAL  , #{user.userNo:NUMERIC} , #{departureDate:DATE} ,  #{arrivalDate:DATE} , 
+		INTO main_plan( user_no , departure_date , arrival_date , country, city, plan_title, main_thumbnail) 
+		VALUES	 ( #{user.userNo:NUMERIC} , #{departureDate:DATE} ,  #{arrivalDate:DATE} , 
 							#{country:VARCHAR} , #{city:VARCHAR} , #{planTitle:VARCHAR} ,  #{mainThumbnail:VARCHAR} )
 
 	 </insert>
@@ -53,12 +53,12 @@
 	  
 	  <select  id="getMainPlanList"  parameterType="mainPlan"	resultMap="mainPlanSelectMap">
 	  SELECT * 
-	  FROM(SELECT inner_table.*, ROWNUM AS row_seq
+	  FROM(SELECT inner_table.*, @RNUM := @RNUM+1 AS row_seq
 	  				FROM (SELECT * FROM main_plan
 	  					WHERE user_no=#{user.userNo}
 	  					ORDER BY main_plan_no ASC
-	  					) inner_table
-	  			WHERE ROWNUM &lt;=#{endClick} ) 
+	  					) inner_table, (SELECT @RNUM := 0) rownum
+	  			WHERE @RNUM &lt;=#{endClick} )  mysql
 	  	
 	 </select>
 	

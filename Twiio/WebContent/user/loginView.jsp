@@ -352,8 +352,10 @@
 									<!-- <a id="facebook-login-btn" scope="public_profile,email" onlogin="checkLoginState();" data-max-rows="1" data-size="large"  
 									data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false">
 									<img src="/resources/images/facebooksm.png" /></a> -->
-									 <div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
-									 data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> 
+									 <!--<div class="fb-login-button" data-max-rows="1" data-size="large" data-button-type="continue_with" 
+									 data-show-faces="false" data-auto-logout-link="false" data-use-continue-as="false"></div> -->
+									 <fb:login-button scope="public_profile,email" class="fb-login-button" data-size="large" data-button-type="continue_with"
+									 onlogin="checkLoginState();"></fb:login-button>
 								</div>
 								
 								    <div class="col-sm-6" style="border-left:1px solid #ccc;height:160px">

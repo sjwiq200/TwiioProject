@@ -1,4 +1,5 @@
 eclipse.preferences.version=1
+encoding//SQL/createMySql.txt=UTF-8
 encoding//src/main/java/com/twiio/good/common/web/LogonCheckInterceptor.java=UTF-8
 encoding//src/main/java/com/twiio/good/service/user/impl/UserDaoImpl.java=UTF-8
 encoding//src/main/java/com/twiio/good/web/dailyplan/PlanRestController.java=UTF-8

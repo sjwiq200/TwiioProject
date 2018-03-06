@@ -19,8 +19,8 @@
 	<!-- SQL : INSERT -->
 	<insert 	id="addSchedule"		parameterType="schedule" >
 	 	INSERT
-		INTO schedule(schedule_no, roomkey, schedule_title, schedule_date, schedule_address, country, city,user_no_string) 
-		VALUES	 ( seq_schedule_schedule_no.nextval , 
+		INTO schedule(roomkey, schedule_title, schedule_date, schedule_address, country, city,user_no_string) 
+		VALUES	 (  
 					#{roomKey:VARCHAR} , 
 					#{scheduleTitle:VARCHAR} , 
 					#{scheduleDate:VARCHAR} , 

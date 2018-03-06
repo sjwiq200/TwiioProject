@@ -199,7 +199,10 @@ html, body {
 										<div class="caption">
 										 <div class="row">
 										 	<div class="col-md-5 thumbnailClass">
-										 		<img src="/resources/images/thumbnail_plan/main_thumbnail2.jpg" style="margin-left:80px;width: 300px; height:250px;border-radius: 2%;" class="img-responsive" alt="Responsive image" style="border-radius: 70%;"/> 
+										 	<img
+														src="/resources/images/thumbnail_plan/${mainPlan.mainThumbnail}"
+														style="width: 300px; height: 250px; display: block; border-radius: 2%;"
+														class="img-responsive" alt="Responsive image" />
 											</div>
 											<input type="hidden" name="mainPlanNo" value="${mainPlan.mainPlanNo}" />
 											<div class="col-md-6 textArea">

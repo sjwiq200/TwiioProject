@@ -167,7 +167,6 @@
 					      icon: "warning",
 					    });	
 				}else{
-					alert("ok");
 					$.ajax({
 						url : "/common/json/addFriend",
 						method:"POST",

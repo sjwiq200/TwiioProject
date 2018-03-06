@@ -116,7 +116,6 @@
  						swal("삭제되었습니다..", {
  					      icon: "success",
  					    });
- 						alert("삭제 성공");
  						window.location.reload();
  			    } 
  		  }); 
@@ -126,9 +125,6 @@
   		$(document).on("click",'td:nth-child(4) a[name="friendMessage"]', function(){
   			var userNo = $($('input[name=userNo]')[$('td:nth-child(4) a[name="friendMessage"]').index(this)]).val();
   			var userName = $($('input[name=userName]')[$('td:nth-child(4) a[name="friendMessage"]').index(this)]).val();
-  			
-  			alert(userNo);
-  			alert(userName);
   			$('#targetNo').val(userNo);
   			$('#toUsern').val(userName);
   			$("#modalwrite").modal('show');
@@ -142,7 +138,7 @@
   			//modalmessage
 
   			if(modalMessageTitle==''| modalMessageContent==''){
-  				alert('내용과 제목을 입력하세요.');			 
+  				swal('내용과 제목을 입력하세요.');			 
   			}
   			else{
   			  	$.ajax({
@@ -160,7 +156,7 @@
   						"userName":"${user.userName}"
   					}),
   					success : function(JSONData) {
-  						alert("메시지가 보내기 성공.!!");
+  						swal("메시지 보내기 성공");
   						$('#modalwrite').modal('toggle');
   				    } 
   			   });

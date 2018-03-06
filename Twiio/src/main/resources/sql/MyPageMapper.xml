@@ -22,8 +22,7 @@
 		
 	<!--SQL : INSERT  -->
 	<insert id="addMessage" parameterType="message" useGeneratedKeys="true" keyColumn="message_no" keyProperty="messageNo">
-		INSERT INTO MESSAGE VALUES(
-		seq_message_message_no.nextval,
+		INSERT INTO MESSAGE(to_user_no, from_user_no, message_content, message_reg_date, message_type,message_title, product_no, user_name,target_user_name) VALUES(
 		#{toUserNo:NUMERIC},
 		#{fromUserNo:NUMERIC},
 		#{messageContent:VARCHAR},
